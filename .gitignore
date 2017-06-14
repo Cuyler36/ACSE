@@ -1,0 +1,10 @@
+*.suo
+*.exe
+*.resources
+*.cache
+*.pdb
+*.db
+*.config
+bin/
+.vs/
+obj/

@@ -1,0 +1,2822 @@
+//Flowers
+0x009E, Red Tulips
+0x009F, White Tulips
+0x00A0, Yellow Tulips
+0x00A1, Pink Tulips
+0x00A2, Purple Tulips
+0x00A3, Black Tulips
+0x00A4, White Pansies
+0x00A5, Yellow Pansies
+0x00A6, Red Pansies
+0x00A7, Purple Pansies
+0x00A8, Orange Pansies
+0x00A9, Blue Pansies
+0x00AA, White Cosmos
+0x00AB, Red Cosmos
+0x00AC, Yellow Cosmos
+0x00AD, Pink Cosmos
+0x00AE, Orange Cosmos
+0x00AF, Black Cosmos
+0x00B0, Red Roses
+0x00B1, White Roses
+0x00B2, Yellow Roses
+0x00B3, Pink Roses
+0x00B4, Orange Roses
+0x00B5, Purple Roses
+0x00B6, Black Roses
+0x00B7, Blue Roses
+0x00B8, Gold Roses
+0x00B9, Red Carnation
+0x00BA, Pink Carnation
+0x00BB, White Carnation
+0x00BC, Jacob's Ladder
+0x00BD, Rafflesia
+//Flowers2
+0x00BE, Red Tulips
+0x00BF, White Tulips
+0x00C0, Yellow Tulips
+0x00C1, Pink Tulips
+0x00C2, Purple Tulips
+0x00C3, Black Tulips
+0x00C4, White Pansies
+0x00C5, Yellow Pansies
+0x00C6, Red Pansies
+0x00C7, Purple Pansies
+0x00C8, Orange Pansies
+0x00C9, Blue Pansies
+0x00CA, White Cosmos
+0x00CB, Red Cosmos
+0x00CC, Yellow Cosmos
+0x00CD, Pink Cosmos
+0x00CE, Orange Cosmos
+0x00CF, Black Cosmos
+0x00D0, Red Roses
+0x00D1, White Roses
+0x00D2, Yellow Roses
+0x00D3, Pink Roses
+0x00D4, Orange Roses
+0x00D5, Purple Roses
+0x00D6, Black Roses
+0x00D7, Blue Roses
+0x00D8, Gold Roses
+0x00D9, Red Carnation
+0x00DA, Pink Carnation
+0x00DB, White Carnation
+0x00DC, Jacob's Ladder
+0x00DD, Rafflesia
+//Misc
+0x0094, Hole
+0x00E2, Seed
+0x00E3, Bee Hive
+0x00E4, Weird Clover
+0x7000, Snowman 1
+0x7001, Snowman 2
+0x7002, Snowman 3
+//Buildings
+0x7003, Bus Stop Sign (Actor)
+0xD000, Sign (Actor)
+//Patterns
+0x0074, Pattern 1-1
+0x0075, Pattern 1-2
+0x0076, Pattern 1-3
+0x0077, Pattern 1-4
+0x0078, Pattern 1-5
+0x0079, Pattern 1-6
+0x007A, Pattern 1-7
+0x007B, Pattern 1-8
+0x007C, Pattern 2-1
+0x007D, Pattern 2-2
+0x007E, Pattern 2-3
+0x007F, Pattern 2-4
+0x0080, Pattern 2-5
+0x0081, Pattern 2-6
+0x0082, Pattern 2-7
+0x0083, Pattern 2-8
+0x0084, Pattern 3-1
+0x0085, Pattern 3-2
+0x0086, Pattern 3-3
+0x0087, Pattern 3-4
+0x0088, Pattern 3-5
+0x0089, Pattern 3-6
+0x008A, Pattern 3-7
+0x008B, Pattern 3-8
+0x008C, Pattern 4-1
+0x008D, Pattern 4-2
+0x008E, Pattern 4-3
+0x008F, Pattern 4-4
+0x0090, Pattern 4-5
+0x0091, Pattern 4-6
+0x0092, Pattern 4-7
+0x0093, Pattern 4-8
+//Rocks
+0x005B, Rock 1
+0x005C, Rock 2
+0x005D, Rock 3
+0x005E, Rock 4
+0x005F, Rock 5
+0x0065, Rock 6
+0x0066, Rock 7
+0x0067, Rock 8
+0x0068, Rock 9
+0x0069, Rock 10
+0x006A, Rock 11
+0x006B, Rock 12
+0x006C, Rock 13
+0x006D, Rock 14
+0x006E, Rock 15
+0x006F, Rock 16
+0x0070, Rock 17
+0x0071, Rock 18
+0x0072, Rock 19
+0x0073, Rock 20
+0x0060, Money Rock 1
+0x0061, Money Rock 2
+0x0062, Money Rock 3
+0x0063, Money Rock 4
+0x0064, Money Rock 5
+//Trees
+0x0001, Dead Sapling
+0x0002, Dead Sapling
+0x0003, Dead Pine Sapling
+0x0004, Dead Palm Sapling
+0x0005, Stump Size 1
+0x0006, Stump Size 2
+0x0007, Stump Size 3
+0x0008, Stump Size 4
+0x0009, Pine Stump Size 1
+0x000A, Pine Stump Size 2
+0x000B, Pine Stump Size 3
+0x000C, Pine Stump Size 4
+0x000E, Palm Stump Size 1
+0x000F, Palm Stump Size 2
+0x0010, Palm Stump Size 3
+0x0011, Tree Size 1
+0x0012, Tree Size 2
+0x0013, Tree Size 3
+0x0014, Tree Size 4
+0x0015, Tree Size 5
+0x0016, Furniture Tree
+0x0017, Bee Tree
+0x0018, Bell Tree
+0x0019, Apple Tree Size 1
+0x001A, Apple Tree Size 2
+0x001B, Apple Tree Size 3
+0x001C, Apple Tree Size 4
+0x001D, Apple Tree (no Fruit)
+0x001E, Apple Tree (no Fruit)
+0x001F, Apple Tree (no Fruit)
+0x0020, Apple Tree
+0x0021, Orange Tree Size 1
+0x0022, Orange Tree Size 2
+0x0023, Orange Tree Size 3
+0x0024, Orange Tree Size 4
+0x0025, Orange Tree (no Fruit)
+0x0026, Orange Tree (no Fruit)
+0x0027, Orange Tree (no Fruit)
+0x0028, Orange Tree
+0x0029, Pear Tree Size 1
+0x002A, Pear Tree Size 2
+0x002B, Pear Tree Size 3
+0x002C, Pear Tree Size 4
+0x002D, Pear Tree (no Fruit)
+0x002E, Pear Tree (no Fruit)
+0x002F, Pear Tree (no Fruit)
+0x0030, Pear Tree
+0x0031, Peach Tree Size 1
+0x0032, Peach Tree Size 2
+0x0033, Peach Tree Size 3
+0x0034, Peach Tree Size 4
+0x0035, Peach Tree (no Fruit)
+0x0036, Peach Tree (no Fruit)
+0x0037, Peach Tree (no Fruit)
+0x0038, Peach Tree
+0x0039, Cherry Tree Size 1
+0x003A, Cherry Tree Size 2
+0x003B, Cherry Tree Size 3
+0x003C, Cherry Tree Size 4
+0x003D, Cherry Tree (no Fruit)
+0x003E, Cherry Tree (no Fruit)
+0x003F, Cherry Tree (no Fruit)
+0x0040, Cherry Tree
+0x0041, Palm Tree Size 1
+0x0042, Palm Tree Size 2
+0x0043, Palm Tree Size 3
+0x0044, Palm Tree Size 4
+0x0045, Palm Tree (no Fruit)
+0x0046, Palm Tree (no Fruit)
+0x0047, Palm Tree (no Fruit)
+0x0048, Palm Tree
+0x0049, Money Tree Size 1
+0x004A, Money Tree Size 2
+0x004B, Money Tree Size 3
+0x004C, Money Tree Size 4
+0x004D, Money Tree
+0x004E, Pine Tree Size 1
+0x004F, Pine Tree Size 2
+0x0050, Pine Tree Size 3
+0x0051, Pine Tree Size 4
+0x0052, Pine Tree Size 5
+0x0053, Furniture Pine
+0x0054, Bee Pine
+0x0055, Bell Pine
+0x0056, Festive Pine
+//Turnips
+0x0095, Dead Turnip
+0x0096, Growing Turnip
+0x0097, Growing Turnip
+0x0098, Growing Turnip
+0x0099, Growing Turnip
+0x009A, Growing Turnip
+0x009B, Growing Turnip
+0x009C, Growing Turnip
+0x009D, Dead Turnip
+//Weeds
+0x0057, Weed
+0x0058, Weed
+0x0059, Weed
+0x005A, Weed
+0x00DE, Dandilion
+0x00DF, Dandilion Puff
+0x00E0, Dried Clover
+0x00E1, Dried Clover (lucky)
+//Bells
+0x9194, 100 Bells
+0x9198, 200 Bells
+0x919C, 300 Bells
+0x91A0, 400 Bells
+0x91A4, 500 Bells
+0x91A8, 600 Bells
+0x91AC, 700 Bells
+0x91B0, 800 Bells
+0x91B4, 900 Bells
+0x91B8, 1,000 Bells
+0x91BC, 2,000 Bells
+0x91C0, 3,000 Bells
+0x91C4, 4,000 Bells
+0x91C8, 5,000 Bells
+0x91CC, 6,000 Bells
+0x91D0, 7,000 Bells
+0x91D4, 8,000 Bells
+0x91D8, 9,000 Bells
+0x91DC, 10,000 Bells
+0x91E0, 11,000 Bells
+0x91E4, 12,000 Bells
+0x91E8, 13,000 Bells
+0x91EC, 14,000 Bells
+0x91F0, 15,000 Bells
+0x91F4, 16,000 Bells
+0x91F8, 17,000 Bells
+0x91FC, 18,000 Bells
+0x9200, 19,000 Bells
+0x9204, 20,000 Bells
+0x9208, 21,000 Bells
+0x920C, 22,000 Bells
+0x9210, 23,000 Bells
+0x9214, 24,000 Bells
+0x9218, 25,000 Bells
+0x921C, 26,000 Bells
+0x9220, 27,000 Bells
+0x9224, 28,000 Bells
+0x9228, 29,000 Bells
+0x922C, 30,000 Bells
+0x9230, 31,000 Bells
+0x9234, 32,000 Bells
+0x9238, 33,000 Bells
+0x923C, 34,000 Bells
+0x9240, 35,000 Bells
+0x9244, 36,000 Bells
+0x9248, 37,000 Bells
+0x924C, 38,000 Bells
+0x9250, 39,000 Bells
+0x9254, 40,000 Bells
+0x9258, 41,000 Bells
+0x925C, 42,000 Bells
+0x9260, 43,000 Bells
+0x9264, 44,000 Bells
+0x9268, 45,000 Bells
+0x926C, 46,000 Bells
+0x9270, 47,000 Bells
+0x9274, 48,000 Bells
+0x9278, 49,000 Bells
+0x927C, 50,000 Bells
+0x9280, 51,000 Bells
+0x9284, 52,000 Bells
+0x9288, 53,000 Bells
+0x928C, 54,000 Bells
+0x9290, 55,000 Bells
+0x9294, 56,000 Bells
+0x9298, 57,000 Bells
+0x929C, 58,000 Bells
+0x92A0, 59,000 Bells
+0x92A4, 60,000 Bells
+0x92A8, 61,000 Bells
+0x92AC, 62,000 Bells
+0x92B0, 63,000 Bells
+0x92B4, 64,000 Bells
+0x92B8, 65,000 Bells
+0x92BC, 66,000 Bells
+0x92C0, 67,000 Bells
+0x92C4, 68,000 Bells
+0x92C8, 69,000 Bells
+0x92CC, 70,000 Bells
+0x92D0, 71,000 Bells
+0x92D4, 72,000 Bells
+0x92D8, 73,000 Bells
+0x92DC, 74,000 Bells
+0x92E0, 75,000 Bells
+0x92E4, 76,000 Bells
+0x92E8, 77,000 Bells
+0x92EC, 78,000 Bells
+0x92F0, 79,000 Bells
+0x92F4, 80,000 Bells
+0x92F8, 81,000 Bells
+0x92FC, 82,000 Bells
+0x9300, 83,000 Bells
+0x9304, 84,000 Bells
+0x9308, 85,000 Bells
+0x930C, 86,000 Bells
+0x9310, 87,000 Bells
+0x9314, 88,000 Bells
+0x9318, 89,000 Bells
+0x931C, 90,000 Bells
+0x9320, 91,000 Bells
+0x9324, 92,000 Bells
+0x9328, 93,000 Bells
+0x932C, 94,000 Bells
+0x9330, 95,000 Bells
+0x9334, 96,000 Bells
+0x9338, 97,000 Bells
+0x933C, 98,000 Bells
+0x9340, 99,000 Bells
+//Equipment
+0xCE80, Axe
+0xCE84, Axe
+0xCE88, Axe
+0xCE8C, Axe
+0xCE90, Axe
+0xCE94, Axe
+0xCE98, Axe
+0xCE9C, Axe
+0xCEA0, Net
+0xCEA4, Fishing Rod
+0xCEA8, Timer
+0xCEAC, Watering Can
+0xCEB0, Shovel
+0xCEB4, Sparkler
+0xCEB8, Roman Candle
+0xCEBC, Party Popper
+0xCEC0, Golden Axe
+0xCEC4, Golden Net
+0xCEC8, Golden Rod
+0xCECC, Golden Can
+0xCED0, Golden Shovel
+0xCED4, Silver Axe
+0xCED8, Silver Net
+0xCEDC, Silver Rod
+0xCEE0, Silver Can
+0xCEE4, Silver Shovel
+0xCEE8, Bubble Wand
+0xCEEC, Slingshot
+0xCEF0, Silver Slingshot
+0xCEF4, Golden Slingshot
+0xCEF8, Bunny R. Balloon
+0xCEFC, Bunny O. Balloon
+0xCF00, Bunny Y. Balloon
+0xCF04, Bunny G. Balloon
+0xCF08, Bunny C. Balloon
+0xCF0C, Bunny B. Balloon
+0xCF10, Bunny I. Balloon
+0xCF14, Bunny P. Balloon
+0xCF18, Red Balloon
+0xCF1C, Orange Balloon
+0xCF20, Yellow Balloon
+0xCF24, Green Balloon
+0xCF28, Cyan Balloon
+0xCF2C, Blue Balloon
+0xCF30, Indigo Balloon
+0xCF34, Pink Balloon
+0xCF38, Red Pinwheel
+0xCF3C, Orange Pinwheel
+0xCF40, Yellow Pinwheel
+0xCF44, Green Pinwheel
+0xCF48, Cyan Pinwheel
+0xCF4C, Blue Pinwheel
+0xCF50, Indigo Pinwheel
+0xCF54, Pink Pinwheel
+//Fish
+0x9AF0, Bitterling
+0x9AF4, Pale Chub
+0x9AF8, Crucian Carp
+0x9AFC, Dace
+0x9B00, Barbel Steed
+0x9B04, Carp
+0x9B08, Koi
+0x9B0C, Goldfish
+0x9B10, Popeyed Goldfish
+0x9B14, Killifish
+0x9B18, Crawfish
+0x9B1C, Frog
+0x9B20, Freshwater Goby
+0x9B24, Loach
+0x9B28, Catfish
+0x9B2C, Eel
+0x9B30, Giant Snakehead
+0x9B34, Bluegill
+0x9B38, Yellow Perch
+0x9B3C, Black Bass
+0x9B40, Pike
+0x9B44, Pond Smelt
+0x9B48, Sweetfish
+0x9B4C, Cherry Salmon
+0x9B50, Char
+0x9B54, Rainbow Trout
+0x9B58, Stringfish
+0x9B5C, Salmon
+0x9B60, King Salmon
+0x9B64, Guppy
+0x9B68, Angelfish
+0x9B6C, Neon Tetra
+0x9B70, Piranha
+0x9B74, Arowana
+0x9B78, Dorado
+0x9B7C, Gar
+0x9B80, Arapaima
+0x9B84, Sea Butterfly
+0x9B88, Jellyfish
+0x9B8C, Sea Horse
+0x9B90, Clownfish
+0x9B94, Surgeonfish
+0x9B98, Butterflyfish
+0x9B9C, Napoleonfish
+0x9BA0, Zebra Turkeyfish
+0x9BA4, Puffer Fish
+0x9BA8, Horse Mackerel
+0x9BAC, Barred Knifejaw
+0x9BB0, Sea Bass
+0x9BB4, Red Snapper
+0x9BB8, Dab
+0x9BBC, Olive Flounder
+0x9BC0, Squid
+0x9BC4, Octopus
+0x9BC8, Lobster
+0x9BCC, Moray Eel
+0x9BD0, Football Fish
+0x9BD4, Tuna
+0x9BD8, Blue Marlin
+0x9BDC, Ray
+0x9BE0, Ocean Sunfish
+0x9BE4, Hammerhead Shark
+0x9BE8, Shark
+0x9BEC, Coelacanth
+//Flooring
+0xA2C0, Exotic Rug
+0xA2C4, Lovely Carpet
+0xA2C8, Classic Carpet
+0xA2CC, Ranch Flooring
+0xA2D0, Cabana Flooring
+0xA2D4, Blue Flooring
+0xA2D8, Modern Tile
+0xA2DC, Regal Carpet
+0xA2E0, Green Rug
+0xA2E4, Cabin Rug
+0xA2E8, Kiddie Carpet
+0xA2EC, Robo-floor
+0xA2F0, Snowman Carpet
+0xA2F4, Forest Floor
+0xA2F8, Pavé Floor
+0xA2FC, Egg Floor
+0xA300, Spooky Carpet
+0xA304, Harvest Rug
+0xA308, Jingle Carpet
+0xA30C, Princess Carpet
+0xA310, Gracie Carpet
+0xA314, Sweets Floor
+0xA318, Gorgeous Floor
+0xA31C, Western Desert
+0xA320, Lunar Surface
+0xA324, Closed Road
+0xA328, Boxing Ring Mat
+0xA32C, Backyard Lawn
+0xA330, Playroom Rug
+0xA334, Ship Deck
+0xA338, Lab Floor
+0xA33C, Classroom Floor
+0xA340, Bath Tile
+0xA344, Pastel-dot Rug
+0xA348, Checkered Tile
+0xA34C, Ceramic Tile
+0xA350, Diner Tile
+0xA354, Kitschy Tile
+0xA358, Red Tile
+0xA35C, Mosaic Tile
+0xA360, Chessboard Rug
+0xA364, Plaza Tile
+0xA368, Palace Tile
+0xA36C, Imperial Tile
+0xA370, Kitchen Tile
+0xA374, Stone Tile
+0xA378, Charcoal Tile
+0xA37C, Tatami
+0xA380, Planked Tatami
+0xA384, Mossy Carpet
+0xA388, Sand Garden
+0xA38C, Slate Flooring
+0xA390, Concrete Floor
+0xA394, Basement Floor
+0xA398, Parquet Floor
+0xA39C, Old Board Floor
+0xA3A0, Kitchen Flooring
+0xA3A4, Music-room Floor
+0xA3A8, Office Flooring
+0xA3AC, Opulent Rug
+0xA3B0, Plush Carpet
+0xA3B4, Ornate Rug
+0xA3B8, Fancy Carpet
+0xA3BC, Exquisite Rug
+0xA3C0, Persian Rug
+0xA3C4, Tartan Rug
+0xA3C8, Round Carpet
+0xA3CC, Citrus Carpet
+0xA3D0, Cowhide Rug
+0xA3D4, Birch Flooring
+0xA3D8, Plank Flooring
+0xA3DC, Bamboo Flooring
+0xA3E0, Steel Flooring
+0xA3E4, Shanty Mat
+0xA3E8, Ancient Tile
+0xA3EC, Illusion Floor
+0xA3F0, Daisy Meadow
+0xA3F4, Tropical Floor
+0xA3F8, Saharah's Desert
+0xA3FC, Sandlot
+0xA400, Sidewalk
+0xA404, Cloud Flooring
+0xA408, Common Floor
+0xA40C, Old Flooring
+0xA410, Block Floor
+0xA414, Cranny Floor
+0xA418, Convenient Floor
+0xA41C, Market Floor
+0xA420, Department Floor
+//Flowers
+0xB260, Red Tulips
+0xB264, White Tulips
+0xB268, Yellow Tulips
+0xB26C, Pink Tulips
+0xB270, Purple Tulips
+0xB274, Black Tulips
+0xB278, White Pansies
+0xB27C, Yellow Pansies
+0xB280, Red Pansies
+0xB284, Purple Pansies
+0xB288, Orange Pansies
+0xB28C, Blue Pansies
+0xB290, White Cosmos
+0xB294, Red Cosmos
+0xB298, Yellow Cosmos
+0xB29C, Pink Cosmos
+0xB2A0, Orange Cosmos
+0xB2A4, Black Cosmos
+0xB2A8, Red Roses
+0xB2AC, White Roses
+0xB2B0, Yellow Roses
+0xB2B4, Pink Roses
+0xB2B8, Orange Roses
+0xB2BC, Purple Roses
+0xB2C0, Black Roses
+0xB2C4, Blue Roses
+0xB2C8, Gold Roses
+0xB2CC, Red Carnation
+0xB2D0, Pink Carnation
+0xB2D4, White Carnation
+0xB2D8, Jacob's Ladder
+0xB2DC, Lucky Clover
+0xB2E0, Dandelions
+0xB2E4, Dandelion Puffs
+//Flowerbags
+0x9040, Red Tulip Bag
+0x9044, White Tulip Bag
+0x9048, Yellow Tulip Bag
+0x904C, Not Used
+0x9050, Not Used
+0x9054, Not Used
+0x9058, White Pansy Bag
+0x905C, Yellow Pansy Bag
+0x9060, Red Pansy Bag
+0x9064, Not Used
+0x9068, Not Used
+0x906C, Not Used
+0x9070, White Cosmos Bag
+0x9074, Red Cosmos Bag
+0x9078, Sun Cosmos Bag
+0x907C, Not Used
+0x9080, Not Used
+0x9084, Not Used
+0x9088, Red Rose Bag
+0x908C, White Rose Bag
+0x9090, Yellow Rose Bag
+0x9094, Not Used
+0x9098, Not Used
+0x909C, Not Used
+0x90A0, Not Used
+0x90A4, Not Used
+0x90A8, Red Carn. Bag
+0x90AC, Pink Carn. Bag
+0x90B0, White Carn. Bag
+//Fruits
+0x9000, Apple
+0x9004, Orange
+0x9008, Pear
+0x900C, Peach
+0x9010, Cherry
+0x9014, Coconut
+0x9018, Fossil
+0x901C, Sapling
+0x9020, Cedar Sapling
+0x9024, Pitfall Seed
+0x9028, Medicine
+0x902C, Present
+0x9030, Letter
+0x9034, Paper Bag
+0x9038, Note In A Bottle
+0x90C8, Red Paint
+0x90CC, Blue Paint
+0x90D0, Yellow Paint
+0x90D4, Green Paint
+0x90D8, Pink Paint
+0x90DC, Orange Paint
+0x90E0, Light Blue Paint
+0x90E4, Pea Green Paint
+0x90E8, Purple Paint
+0x90EC, Brown Paint
+0x90F0, White Paint
+0x90F4, Black Paint
+0x9104, Sold-out Sign
+0x9108, Sold-out Sign
+0x9140, Knife And Fork
+0x9144, Blue Candy
+0x9148, Red Candy
+0x914C, Yellow Candy
+0x9150, Green Candy
+0x9154, Chocolate Heart
+0x9158, Red Turnip Seed
+0x915C, Empty Lamp
+0x9160, Magic Lamp
+0x9164, Spaceship Part
+0x9348, Key
+0x934C, Key
+0x9350, Key
+0x9354, Key
+0x9358, Key
+0x935C, Key
+0x9360, Key
+0x9364, Key
+0x9370, Bunny Egg
+0x9374, Bunny Egg
+0x9378, Bunny Egg
+0x937C, Bunny Egg
+0x9380, Bunny Egg
+0x9384, Bunny Egg
+0x9388, Bunny Egg
+0x938C, Bunny Egg
+0x9390, Bunny Egg
+0x9394, Bunny Egg
+0x9398, Bunny Egg
+0x939C, Bunny Egg
+0x93A0, Bunny Egg
+0x93A4, Bunny Foil
+0x93A8, Bunny Foil
+0x93AC, Bunny Foil
+0x93B0, Bunny Foil
+0x93B4, Bunny Foil
+0x93B8, Bunny Foil
+0x93BC, Bunny Foil
+0x93C0, Bunny Foil
+0x93C4, Bunny Foil
+0x93C8, Bunny Foil
+0x93CC, Bunny Foil
+0x93D0, Bunny Foil
+0x93D4, Shopping Card
+0x93D8, Gold Card
+0x97D0, 10 Turnips
+0x97D4, 20 Turnips
+0x97D8, 30 Turnips
+0x97DC, 40 Turnips
+0x97E0, 50 Turnips
+0x97E4, 60 Turnips
+0x97E8, 70 Turnips
+0x97EC, 80 Turnips
+0x97F0, 90 Turnips
+0x97F4, 100 Turnips
+0x97F8, Spoiled Turnips
+0x97FC, Red Turnip
+0x9800, Red Turnip
+0x9804, Red Turnip
+0x9808, Red Turnip
+0x980C, Red Turnip
+0x9810, Red Turnip
+0x9814, Red Turnip
+0x9BF0, Empty Can
+0x9BF4, Boot
+0x9BF8, Old Tire
+//Glasses
+0xAF40, Blue Frames
+0xAF44, Red Glasses
+0xAF48, Yellow Glasses
+0xAF4C, Mint Glasses
+0xAF50, Purple Glasses
+0xAF54, Green Glasses
+0xAF58, Brown Glasses
+0xAF5C, Pink Glasses
+0xAF60, Thick Glasses
+0xAF64, Silver Frames
+0xAF68, Rimmed Glasses
+0xAF6C, Funky Glasses
+0xAF70, Tortoise Specs
+0xAF74, Gracie Glasses
+0xAF78, Pilot Shades
+0xAF7C, Sporty Shades
+0xAF80, Huge Shades
+0xAF84, Triangle Shades
+0xAF88, Tiny Shades
+0xAF8C, Heart Shades
+0xAF90, Star Shades
+0xAF94, 3-D Glasses
+0xAF98, Masquerade Mask
+0xAF9C, Superhero Mask
+0xAFA0, Goggles
+0xAFA4, Snorkel Mask
+0xAFA8, Eye Mask
+0xAFAC, HMD
+0xAFB0, Monocle
+0xAFB4, Doctor's Mirror
+0xAFB8, Eye Patch
+0xAFBC, Post-op Patch
+0xAFC0, Gas Mask
+0xAFC4, Hockey Mask
+0xAFC8, Clown Mask
+0xAFCC, Red Nose
+0xAFD0, Stache & Glasses
+0xAFD4, Big Bro Mustache
+0xAFD8, Bad Bro Stache
+0xAFDC, Curly Mustache
+0xAFE0, King's Beard
+0xAFE4, Doctor's Mask
+0xAFE8, Pacifier
+0xAFEC, Beak
+0xAFF0, Lemon Pack
+0xAFF4, Cucumber Pack
+0xAFF8, Bandage
+//Hats
+0xAC20, White Cap
+0xAC24, Red Cap
+0xAC28, Yellow Cap
+0xAC2C, Light Blue Cap
+0xAC30, Green Cap
+0xAC34, Star Cap
+0xAC38, 1-Up Cap
+0xAC3C, Purple Cap
+0xAC40, Blue Cap
+0xAC44, Blue Pom-pom Hat
+0xAC48, Green Knit Hat
+0xAC4C, Orange Knit Hat
+0xAC50, Pink Knit Hat
+0xAC54, Purple Knit Hat
+0xAC58, Red Pom-pom Hat
+0xAC5C, Badge Hat
+0xAC60, Straw Hat
+0xAC64, Grandpa Hat
+0xAC68, Paperboy Cap
+0xAC6C, Beret
+0xAC70, Dandy Hat
+0xAC74, Hunter's Cap
+0xAC78, Detective Hat
+0xAC7C, Top Hat
+0xAC80, Puffy Hat
+0xAC84, Gracie Hat
+0xAC88, Elegant Hat
+0xAC8C, Bandana
+0xAC90, Tulip Hat
+0xAC94, Do-rag
+0xAC98, Swimming Cap
+0xAC9C, Wizard's Cap
+0xACA0, Newsprint Helmet
+0xACA4, Festive Hat
+0xACA8, Big Bro's Hat
+0xACAC, Li'l Bro's Hat
+0xACB0, Wario Hat
+0xACB4, Bicycle Helmet
+0xACB8, Chef's Hat
+0xACBC, Combat Helmet
+0xACC0, Scholar's Hat
+0xACC4, Safety Helmet
+0xACC8, Police Cap
+0xACCC, Explorer's Hat
+0xACD0, Captain's Hat
+0xACD4, Sailor's Hat
+0xACD8, Silk Hat
+0xACDC, Outback Hat
+0xACE0, Dutch Hat
+0xACE4, Sombrero
+0xACE8, Tyrolean Hat
+0xACEC, Viking Helmet
+0xACF0, Cavalier Hat
+0xACF4, Pirate's Hat
+0xACF8, Jester's Cap
+0xACFC, Witch's Hat
+0xAD00, Melon Hat
+0xAD04, Strawberry Hat
+0xAD08, Kiwi Hat
+0xAD0C, Mandarin Hat
+0xAD10, Watermelon Hat
+0xAD14, Grape Hat
+0xAD18, Grape Hat
+0xAD1C, Red Ribbon
+0xAD20, Blue Ribbon
+0xAD24, Yellow Ribbon
+0xAD28, Heart Hairpin
+0xAD2C, Star Hairpin
+0xAD30, Moon Hairpin
+0xAD34, Green Feather
+0xAD38, Blue Feather
+0xAD3C, Yellow Feather
+0xAD40, Red Feather
+0xAD44, Purple Feather
+0xAD48, White Feather
+0xAD4C, Rainbow Feather
+0xAD50, Halo
+0xAD54, Royal Crown
+0xAD58, Crown
+0xADB0, Black Knit Cap
+0xADB4, Pilot's Cap
+0xADB8, Fireman's Hat
+0xADBC, Baby's Hat
+0xADC0, Turban
+0xADC4, Warbonnet
+0xADC8, Kaffiyeh
+0xADCC, Cow Bone
+0xADD0, Samurai Wig
+0xADD4, Geisha Wig
+0xADD8, Ninja Hood
+0xADDC, Powdered Wig
+0xADE0, Afro Wig
+0xADE4, Regent Wig
+0xADE8, Mohawk Wig
+0xADEC, Pigtail
+0xADF0, Bun Wig
+0xADF4, Tiara Hair
+0xADF8, Bridal Veil
+0xADFC, Headband
+0xAE00, Bunny Hood
+0xAE04, Cat Cap
+0xAE08, Bear Cap
+0xAE0C, Frog Cap
+0xAE10, Kappa Cap
+0xAE14, Helmet
+0xAE18, Hero's Cap
+0xAE1C, Laurel Wreath
+0xAE20, Racing Helmet
+0xAE24, Motocross Helmet
+0xAE28, Football Helmet
+0xAE2C, Knight's Helmet
+0xAE30, Roman Helmet
+0xAE34, Diving Mask
+0xAE38, Space Helmet
+0xAE3C, Ski Mask
+0xAE40, Wrestling Mask
+0xAE44, Dressing
+0xAE48, Retro Helmet
+0xAE4C, Red Zap Helmet
+0xAE50, Blue Zap Helmet
+0xAE54, Green Zap Helmet
+0xAE58, Pink Zap Helmet
+0xAE5C, Red Ogre Mask
+0xAE60, Blue Ogre Mask
+0xAE64, Majora's Mask
+0xAE68, Samus Mask
+0xAE6C, Midna's Mask
+0xAE70, Toad Hat
+0xAE74, Pumpkin Head
+0xAE78, King Tut Mask
+//Insects
+0x9960, Common Butterfly
+0x9964, Yellow Butterfly
+0x9968, Tiger Butterfly
+0x996C, Peacock
+0x9970, Monarch
+0x9974, Emperor
+0x9978, Agrias Butterfly
+0x997C, Raja Brooke
+0x9980, Birdwing
+0x9984, Moth
+0x9988, Oak Silk Moth
+0x998C, Honeybee
+0x9990, Bee
+0x9994, Long Locust
+0x9998, Migratory Locust
+0x999C, Mantis
+0x99A0, Orchid Mantis
+0x99A4, Brown Cicada
+0x99A8, Robust Cicada
+0x99AC, Walker Cicada
+0x99B0, Evening Cicada
+0x99B4, Lantern Fly
+0x99B8, Red Dragonfly
+0x99BC, Darner Dragonfly
+0x99C0, Banded Dragonfly
+0x99C4, Giant Petaltail
+0x99C8, Ant
+0x99CC, Pondskater
+0x99D0, Diving Beetle
+0x99D4, Snail
+0x99D8, Cricket
+0x99DC, Bell Cricket
+0x99E0, Grasshopper
+0x99E4, Mole Cricket
+0x99E8, Walking Leaf
+0x99EC, Walkingstick
+0x99F0, Bagworm
+0x99F4, Ladybug
+0x99F8, Violin Beetle
+0x99FC, Longhorn Beetle
+0x9A00, Dung Beetle
+0x9A04, Firefly
+0x9A08, Fruit Beetle
+0x9A0C, Scarab Beetle
+0x9A10, Jewel Beetle
+0x9A14, Miyama Stag
+0x9A18, Saw Stag Beetle
+0x9A1C, Giant Beetle
+0x9A20, Rainbow Stag
+0x9A24, Cyclommatus
+0x9A28, Golden Stag
+0x9A2C, Dynastid Beetle
+0x9A30, Atlas Beetle
+0x9A34, Elephant Beetle
+0x9A38, Hercules Beetle
+0x9A3C, Goliath Beetle
+0x9A40, Flea
+0x9A44, Pill Bug
+0x9A48, Mosquito
+0x9A4C, Fly
+0x9A50, Centipede
+0x9A54, Spider
+0x9A58, Tarantula
+0x9A5C, Scorpion
+//Songs
+0x94B0, K.K. Chorale
+0x94B4, K.K. March
+0x94B8, K.K. Waltz
+0x94BC, K.K. Swing
+0x94C0, K.K. Jazz
+0x94C4, K.K. Fusion
+0x94C8, K.K. Étude
+0x94CC, K.K. Lullaby
+0x94D0, K.K. Aria
+0x94D4, K.K. Samba
+0x94D8, K.K. Bossa
+0x94DC, K.K. Calypso
+0x94E0, K.K. Salsa
+0x94E4, K.K. Mambo
+0x94E8, K.K. Reggae
+0x94EC, K.K. Ska
+0x94F0, K.K. Tango
+0x94F4, K.K. Faire
+0x94F8, Aloha K.K.
+0x94FC, Lucky K.K.
+0x9500, K.K. Condor
+0x9504, K.K. Steppe
+0x9508, Imperial K.K.
+0x950C, K.K. Casbah
+0x9510, K.K. Safari
+0x9514, K.K. Folk
+0x9518, K.K. Rock
+0x951C, Rockin' K.K.
+0x9520, K.K. Ragtime
+0x9524, K.K. Gumbo
+0x9528, The K. Funk
+0x952C, K.K. Blues
+0x9530, Soulful K.K.
+0x9534, K.K. Soul
+0x9538, K.K. Cruisin'
+0x953C, K.K. Love Song
+0x9540, K.K. D & B
+0x9544, K.K. Technopop
+0x9548, DJ K.K.
+0x954C, Only Me
+0x9550, K.K. Country
+0x9554, Surfin' K.K.
+0x9558, K.K. Ballad
+0x955C, Comrade K.K.
+0x9560, K.K. Lament
+0x9564, Go K.K. Rider!
+0x9568, K.K. Dirge
+0x956C, K.K. Western
+0x9570, Mr. K.K.
+0x9574, Café K.K.
+0x9578, K.K. Parade
+0x957C, Señor K.K.
+0x9580, K.K. Song
+0x9584, I Love You
+0x9588, Two Days Ago
+0x958C, My Place
+0x9590, Forest Life
+0x9594, To The Edge
+0x9598, Pondering
+0x959C, K.K. Dixie
+0x95A0, K.K. Marathon
+0x95A4, King K.K.
+0x95A8, Mountain Song
+0x95AC, Marine Song 2001
+0x95B0, Neapolitan
+0x95B4, Steep Hill
+0x95B8, K.K. Rockabilly
+0x95BC, Agent K.K.
+0x95C0, K.K. Rally
+0x95C4, K.K. Metal
+0x95C8, Stale Cupcakes
+0x95CC, Spring Blossoms
+0x95D0, Wandering
+0x95D4, K.K. House
+0x95D8, K.K. Sonata
+0x95DC, Not Used
+0x95E0, Not Used
+0x95E4, Not Used
+//Mushrooms
+0x9168, Elegant Mushroom
+0x916C, Round Mushroom
+0x9170, Skinny Mushroom
+0x9174, Flat Mushroom
+0x9178, Rare Mushroom
+0x93E8, Forest Wall
+0x93EC, Forest Floor
+0x93F0, Mush Bed
+0x93F4, Mush Dresser
+0x93F8, Mush Closet
+0x93FC, Mush Chair
+0x9400, Mush Stool
+0x9404, Mush Table
+0x9408, Mush End Table
+0x940C, Mush Lamp
+0x9410, Mush Stand
+0x9414, Mush TV
+//Paper
+0x9640, Butterfly Paper (1)
+0x9641, Butterfly Paper (2)
+0x9642, Butterfly Paper (3)
+0x9643, Butterfly Paper (4)
+0x9644, Airmail Paper (1)
+0x9645, Airmail Paper (2)
+0x9646, Airmail Paper (3)
+0x9647, Airmail Paper (4)
+0x9648, New Year's Cards (1)
+0x9649, New Year's Cards (2)
+0x964A, New Year's Cards (3)
+0x964B, New Year's Cards (4)
+0x964C, Lacy Paper (1)
+0x964D, Lacy Paper (2)
+0x964E, Lacy Paper (3)
+0x964F, Lacy Paper (4)
+0x9650, Cloudy Paper (1)
+0x9651, Cloudy Paper (2)
+0x9652, Cloudy Paper (3)
+0x9653, Cloudy Paper (4)
+0x9654, Petal Paper (1)
+0x9655, Petal Paper (2)
+0x9656, Petal Paper (3)
+0x9657, Petal Paper (4)
+0x9658, Snowy Paper (1)
+0x9659, Snowy Paper (2)
+0x965A, Snowy Paper (3)
+0x965B, Snowy Paper (4)
+0x965C, Maple-leaf Paper (1)
+0x965D, Maple-leaf Paper (2)
+0x965E, Maple-leaf Paper (3)
+0x965F, Maple-leaf Paper (4)
+0x9660, Lined Paper (1)
+0x9661, Lined Paper (2)
+0x9662, Lined Paper (3)
+0x9663, Lined Paper (4)
+0x9664, Notebook Paper (1)
+0x9665, Notebook Paper (2)
+0x9666, Notebook Paper (3)
+0x9667, Notebook Paper (4)
+0x9668, Flowery Paper (1)
+0x9669, Flowery Paper (2)
+0x966A, Flowery Paper (3)
+0x966B, Flowery Paper (4)
+0x966C, Polka-dot Paper (1)
+0x966D, Polka-dot Paper (2)
+0x966E, Polka-dot Paper (3)
+0x966F, Polka-dot Paper (4)
+0x9670, Weathered Paper (1)
+0x9671, Weathered Paper (2)
+0x9672, Weathered Paper (3)
+0x9673, Weathered Paper (4)
+0x9674, Ribbon Paper (1)
+0x9675, Ribbon Paper (2)
+0x9676, Ribbon Paper (3)
+0x9677, Ribbon Paper (4)
+0x9678, Sparkly Paper (1)
+0x9679, Sparkly Paper (2)
+0x967A, Sparkly Paper (3)
+0x967B, Sparkly Paper (4)
+0x967C, Vine Paper (1)
+0x967D, Vine Paper (2)
+0x967E, Vine Paper (3)
+0x967F, Vine Paper (4)
+0x9680, Formal Paper (1)
+0x9681, Formal Paper (2)
+0x9682, Formal Paper (3)
+0x9683, Formal Paper (4)
+0x9684, Snowman Paper (1)
+0x9685, Snowman Paper (2)
+0x9686, Snowman Paper (3)
+0x9687, Snowman Paper (4)
+0x9688, Card Paper (1)
+0x9689, Card Paper (2)
+0x968A, Card Paper (3)
+0x968B, Card Paper (4)
+0x968C, Leopard Paper (1)
+0x968D, Leopard Paper (2)
+0x968E, Leopard Paper (3)
+0x968F, Leopard Paper (4)
+0x9690, Cow Paper (1)
+0x9691, Cow Paper (2)
+0x9692, Cow Paper (3)
+0x9693, Cow Paper (4)
+0x9694, Camouflage Paper (1)
+0x9695, Camouflage Paper (2)
+0x9696, Camouflage Paper (3)
+0x9697, Camouflage Paper (4)
+0x9698, Hamburger Paper (1)
+0x9699, Hamburger Paper (2)
+0x969A, Hamburger Paper (3)
+0x969B, Hamburger Paper (4)
+0x969C, Piano Paper (1)
+0x969D, Piano Paper (2)
+0x969E, Piano Paper (3)
+0x969F, Piano Paper (4)
+0x96A0, Nook Paper (1)
+0x96A1, Nook Paper (2)
+0x96A2, Nook Paper (3)
+0x96A3, Nook Paper (4)
+0x96A4, Invite Card (1)
+0x96A5, Invite Card (2)
+0x96A6, Invite Card (3)
+0x96A7, Invite Card (4)
+0x96A8, Birthday Card (1)
+0x96A9, Birthday Card (2)
+0x96AA, Birthday Card (3)
+0x96AB, Birthday Card (4)
+0x96AC, Four-leaf Paper (1)
+0x96AD, Four-leaf Paper (2)
+0x96AE, Four-leaf Paper (3)
+0x96AF, Four-leaf Paper (4)
+0x96B0, Town-hall Paper (1)
+0x96B1, Town-hall Paper (2)
+0x96B2, Town-hall Paper (3)
+0x96B3, Town-hall Paper (4)
+0x96B4, Tortimer Paper (1)
+0x96B5, Tortimer Paper (2)
+0x96B6, Tortimer Paper (3)
+0x96B7, Tortimer Paper (4)
+0x96B8, Insurance Paper (1)
+0x96B9, Insurance Paper (2)
+0x96BA, Insurance Paper (3)
+0x96BB, Insurance Paper (4)
+0x96BC, Academy Paper (1)
+0x96BD, Academy Paper (2)
+0x96BE, Academy Paper (3)
+0x96BF, Academy Paper (4)
+0x96C0, Lovely Paper (1)
+0x96C1, Lovely Paper (2)
+0x96C2, Lovely Paper (3)
+0x96C3, Lovely Paper (4)
+0x96C4, Rainbow Paper (1)
+0x96C5, Rainbow Paper (2)
+0x96C6, Rainbow Paper (3)
+0x96C7, Rainbow Paper (4)
+0x96C8, Egyptian Paper (1)
+0x96C9, Egyptian Paper (2)
+0x96CA, Egyptian Paper (3)
+0x96CB, Egyptian Paper (4)
+0x96CC, Lotus Paper (1)
+0x96CD, Lotus Paper (2)
+0x96CE, Lotus Paper (3)
+0x96CF, Lotus Paper (4)
+0x96D0, Tile Paper (1)
+0x96D1, Tile Paper (2)
+0x96D2, Tile Paper (3)
+0x96D3, Tile Paper (4)
+0x96D4, Mosaic Paper (1)
+0x96D5, Mosaic Paper (2)
+0x96D6, Mosaic Paper (3)
+0x96D7, Mosaic Paper (4)
+0x96D8, Elegant Paper (1)
+0x96D9, Elegant Paper (2)
+0x96DA, Elegant Paper (3)
+0x96DB, Elegant Paper (4)
+0x96DC, Town-view Paper (1)
+0x96DD, Town-view Paper (2)
+0x96DE, Town-view Paper (3)
+0x96DF, Town-view Paper (4)
+0x96E0, Chinese Paper (1)
+0x96E1, Chinese Paper (2)
+0x96E2, Chinese Paper (3)
+0x96E3, Chinese Paper (4)
+0x96E4, Ocean Paper (1)
+0x96E5, Ocean Paper (2)
+0x96E6, Ocean Paper (3)
+0x96E7, Ocean Paper (4)
+0x96E8, Industrial Paper (1)
+0x96E9, Industrial Paper (2)
+0x96EA, Industrial Paper (3)
+0x96EB, Industrial Paper (4)
+0x96EC, Fireworks Paper (1)
+0x96ED, Fireworks Paper (2)
+0x96EE, Fireworks Paper (3)
+0x96EF, Fireworks Paper (4)
+0x96F0, Floral Paper (1)
+0x96F1, Floral Paper (2)
+0x96F2, Floral Paper (3)
+0x96F3, Floral Paper (4)
+0x96F4, Mushroom Paper (1)
+0x96F5, Mushroom Paper (2)
+0x96F6, Mushroom Paper (3)
+0x96F7, Mushroom Paper (4)
+0x96F8, Star Paper (1)
+0x96F9, Star Paper (2)
+0x96FA, Star Paper (3)
+0x96FB, Star Paper (4)
+0x96FC, Composer Paper (1)
+0x96FD, Composer Paper (2)
+0x96FE, Composer Paper (3)
+0x96FF, Composer Paper (4)
+0x9700, Bathtub Paper (1)
+0x9701, Bathtub Paper (2)
+0x9702, Bathtub Paper (3)
+0x9703, Bathtub Paper (4)
+0x9704, SMB3 Paper (1)
+0x9705, SMB3 Paper (2)
+0x9706, SMB3 Paper (3)
+0x9707, SMB3 Paper (4)
+0x9708, Cool Paper (1)
+0x9709, Cool Paper (2)
+0x970A, Cool Paper (3)
+0x970B, Cool Paper (4)
+0x970C, Forest Paper (1)
+0x970D, Forest Paper (2)
+0x970E, Forest Paper (3)
+0x970F, Forest Paper (4)
+0x9710, Bubble Paper (1)
+0x9711, Bubble Paper (2)
+0x9712, Bubble Paper (3)
+0x9713, Bubble Paper (4)
+0x9714, Buttercup Paper (1)
+0x9715, Buttercup Paper (2)
+0x9716, Buttercup Paper (3)
+0x9717, Buttercup Paper (4)
+0x9718, Tartan Paper (1)
+0x9719, Tartan Paper (2)
+0x971A, Tartan Paper (3)
+0x971B, Tartan Paper (4)
+0x971C, Plaid Paper (1)
+0x971D, Plaid Paper (2)
+0x971E, Plaid Paper (3)
+0x971F, Plaid Paper (4)
+0x9720, Lemon-lime Paper (1)
+0x9721, Lemon-lime Paper (2)
+0x9722, Lemon-lime Paper (3)
+0x9723, Lemon-lime Paper (4)
+0x9724, Crater Paper (1)
+0x9725, Crater Paper (2)
+0x9726, Crater Paper (3)
+0x9727, Crater Paper (4)
+0x9728, Bejeweled Paper (1)
+0x9729, Bejeweled Paper (2)
+0x972A, Bejeweled Paper (3)
+0x972B, Bejeweled Paper (4)
+0x972C, Geometric Paper (1)
+0x972D, Geometric Paper (2)
+0x972E, Geometric Paper (3)
+0x972F, Geometric Paper (4)
+0x9730, Southwest Paper (1)
+0x9731, Southwest Paper (2)
+0x9732, Southwest Paper (3)
+0x9733, Southwest Paper (4)
+0x9734, Night-sky Paper (1)
+0x9735, Night-sky Paper (2)
+0x9736, Night-sky Paper (3)
+0x9737, Night-sky Paper (4)
+0x9738, Chic Paper (1)
+0x9739, Chic Paper (2)
+0x973A, Chic Paper (3)
+0x973B, Chic Paper (4)
+0x973C, Goldfish Paper (1)
+0x973D, Goldfish Paper (2)
+0x973E, Goldfish Paper (3)
+0x973F, Goldfish Paper (4)
+0x9740, Halloween Paper (1)
+0x9741, Halloween Paper (2)
+0x9742, Halloween Paper (3)
+0x9743, Halloween Paper (4)
+0x9744, Lantern Paper (1)
+0x9745, Lantern Paper (2)
+0x9746, Lantern Paper (3)
+0x9747, Lantern Paper (4)
+0x9748, Auction Paper (1)
+0x9749, Auction Paper (2)
+0x974A, Auction Paper (3)
+0x974B, Auction Paper (4)
+0x974C, Bulletin Paper (1)
+0x974D, Bulletin Paper (2)
+0x974E, Bulletin Paper (3)
+0x974F, Bulletin Paper (4)
+//Seashells
+0x9118, Pearl Oyster
+0x911C, Conch
+0x9120, White Scallop
+0x9124, Coral
+0x9128, Venus Comb
+0x912C, Scallop
+0x9130, Dall's Top
+0x9134, Porceletta
+0x9138, Sand Dollar
+//Shirts
+0xA518, Work Uniform
+0xA51C, One-ball Shirt
+0xA520, Two-ball Shirt
+0xA524, Three-ball Shirt
+0xA528, Four-ball Shirt
+0xA52C, Five-ball Shirt
+0xA530, Six-ball Shirt
+0xA534, Seven-ball Shirt
+0xA538, Eight-ball Shirt
+0xA53C, Nine-ball Shirt
+0xA540, Paw Shirt
+0xA544, Daisy Shirt
+0xA548, Tulip Shirt
+0xA54C, Cherry Shirt
+0xA550, Skull Shirt
+0xA554, U R Here Shirt
+0xA558, Lightning Shirt
+0xA55C, MVP Shirt
+0xA560, BB Shirt
+0xA564, Fish-bone Shirt
+0xA568, Frog Shirt
+0xA56C, Bear Shirt
+0xA570, Bunny Shirt
+0xA574, Elephant Shirt
+0xA578, Spade Shirt
+0xA57C, Diamond Shirt
+0xA580, Club Shirt
+0xA584, Heart Shirt
+0xA588, Big Star Shirt
+0xA58C, Bright Shirt
+0xA590, A Shirt
+0xA594, No. 1 Shirt
+0xA598, No. 2 Shirt
+0xA59C, No. 3 Shirt
+0xA5A0, No. 4 Shirt
+0xA5A4, No. 5 Shirt
+0xA5A8, No. 23 Shirt
+0xA5AC, No. 67 Shirt
+0xA5B0, Big Bro's Shirt
+0xA5B4, Li'l Bro's Shirt
+0xA5B8, Cloudy Shirt
+0xA5BC, Fresh Shirt
+0xA5C0, Dawn Shirt
+0xA5C4, Misty Shirt
+0xA5C8, Sunset Top
+0xA5CC, Deep Blue Tee
+0xA5D0, Peachy Shirt
+0xA5D4, Rainbow Shirt
+0xA5D8, Snowcone Shirt
+0xA5DC, Orange Tie-dye
+0xA5E0, Purple Tie-dye
+0xA5E4, Green Tie-dye
+0xA5E8, Blue Tie-dye
+0xA5EC, Red Tie-dye
+0xA5F0, Bold Check Shirt
+0xA5F4, Cafe Shirt
+0xA5F8, Checkered Shirt
+0xA5FC, Blue Check Shirt
+0xA600, Red Check Shirt
+0xA604, Houndstooth Knit
+0xA608, Houndstooth Tee
+0xA60C, Rugby Shirt
+0xA610, Green Bar Shirt
+0xA614, Yellow Bar Shirt
+0xA618, Grape Stripe Tee
+0xA61C, Beatnik Shirt
+0xA620, Red Bar Shirt
+0xA624, Blue Stripe Knit
+0xA628, Gelato Shirt
+0xA62C, Chain-gang Shirt
+0xA630, Speedway Shirt
+0xA634, Yellow Tartan
+0xA638, Fall Plaid Shirt
+0xA63C, Blue Tartan
+0xA640, Dapper Shirt
+0xA644, Natty Shirt
+0xA648, Blue Grid Shirt
+0xA64C, Red Grid Shirt
+0xA650, Dazed Shirt
+0xA654, Checkerboard Tee
+0xA658, Toad Shirt
+0xA65C, Dark Polka Shirt
+0xA660, Lite Polka Shirt
+0xA664, Bubble Gum Shirt
+0xA668, Funky Dot Shirt
+0xA66C, Gumdrop Shirt
+0xA670, Big Dot Shirt
+0xA674, Aqua Polka Shirt
+0xA678, Blue Pinstripe
+0xA67C, Yellow Pinstripe
+0xA680, Orange Pinstripe
+0xA684, Vegetarian Shirt
+0xA688, Racer Shirt
+0xA68C, American Shirt
+0xA690, Rally Shirt
+0xA694, Racer 6 Shirt
+0xA698, Vertigo Shirt
+0xA69C, Barber Shirt
+0xA6A0, Jade Check Print
+0xA6A4, Blue Check Print
+0xA6A8, Mint Gingham Top
+0xA6AC, Picnic Shirt
+0xA6B0, Candy Gingham
+0xA6B4, Lemon Gingham
+0xA6B8, Melon Gingham
+0xA6BC, Bad Plaid Shirt
+0xA6C0, Pink Tartan
+0xA6C4, Waffle Shirt
+0xA6C8, Gray Tartan
+0xA6CC, Red Argyle Top
+0xA6D0, Blue Argyle Top
+0xA6D4, Pink Argyle Top
+0xA6D8, Cyan Argyle Top
+0xA6DC, Chevron Shirt
+0xA6E0, Icy Shirt
+0xA6E4, Aurora Knit
+0xA6E8, Winter Sweater
+0xA6EC, Folk Shirt
+0xA6F0, Argyle Knit
+0xA6F4, Uncommon Shirt
+0xA6F8, Comfy Sweater
+0xA6FC, Beige Knit
+0xA700, Earthy Knit
+0xA704, Spring Shirt
+0xA708, Spunky Knit
+0xA70C, Deer Shirt
+0xA710, Monkey Shirt
+0xA714, Vogue Top
+0xA718, Citrus Gingham
+0xA71C, Floral Knit
+0xA720, Dreamy Shirt
+0xA724, Flowery Shirt
+0xA728, Silk Bloom Shirt
+0xA72C, Pop Bloom Shirt
+0xA730, Blossom Shirt
+0xA734, Loud Bloom Shirt
+0xA738, Rose Shirt
+0xA73C, Rose Sky Shirt
+0xA740, Lotus Shirt
+0xA744, Chocomint Shirt
+0xA748, Fern Shirt
+0xA74C, Blue Retro Shirt
+0xA750, Orange Check Tee
+0xA754, Leaf Shirt
+0xA758, Fall Leaf Shirt
+0xA75C, Straw Shirt
+0xA760, Grass Shirt
+0xA764, Snow Shirt
+0xA768, Lovely Shirt
+0xA76C, Bubble Shirt
+0xA770, Chichi Print
+0xA774, Coral Shirt
+0xA778, Groovy Shirt
+0xA77C, Cool Shirt
+0xA780, Swell Shirt
+0xA784, Blue Diamond Top
+0xA788, Prism Shirt
+0xA78C, Go-go Shirt
+0xA790, Flame Shirt
+0xA794, Danger Shirt
+0xA798, Gracie's Top
+0xA79C, Future Shirt
+0xA7A0, Optical Shirt
+0xA7A4, Twinkle Shirt
+0xA7A8, Star Shirt
+0xA7AC, Night Sky Tee
+0xA7B0, Amethyst Shirt
+0xA7B4, Nebula Shirt
+0xA7B8, Dice Shirt
+0xA7BC, Kiddie Shirt
+0xA7C0, Airy Shirt
+0xA7C4, Polar Fleece
+0xA7C8, Crossing Shirt
+0xA7CC, Splendid Shirt
+0xA7D0, Jagged Shirt
+0xA7D4, Subdued Print
+0xA7D8, Sharp Outfit
+0xA7DC, Painter's Smock
+0xA7E0, Blossoming Shirt
+0xA7E4, Jungle Camo
+0xA7E8, Arctic Camo
+0xA7EC, Desert Camo
+0xA7F0, Shirt Circuit
+0xA7F4, Pulse Shirt
+0xA7F8, Zebra Shirt
+0xA7FC, Tiger Shirt
+0xA800, Cow Shirt
+0xA804, Leopard Shirt
+0xA808, Giraffe Shirt
+0xA80C, Ladybug Shirt
+0xA810, Butterfly Shirt
+0xA814, Spiderweb Shirt
+0xA818, Caterpillar Tee
+0xA81C, Fiendish Shirt
+0xA820, Citrus Shirt
+0xA824, Kiwi Shirt
+0xA828, Watermelon Shirt
+0xA82C, Strawberry Shirt
+0xA830, Grape Shirt
+0xA834, Melon Shirt
+0xA838, Pink Wave Shirt
+0xA83C, Flan Shirt
+0xA840, Hot Dog Shirt
+0xA844, Sandwich Shirt
+0xA848, Noodle Shirt
+0xA84C, Ugly Shirt
+0xA850, Dragon Suit
+0xA854, Asian Shirt
+0xA858, Hot Spring Shirt
+0xA85C, New Spring Shirt
+0xA860, Crewel Shirt
+0xA864, Tropical Shirt
+0xA868, Ribbon Shirt
+0xA86C, Bodice
+0xA870, Laced Shirt
+0xA874, Circus Shirt
+0xA878, Green Vest
+0xA87C, Yellow Bolero
+0xA880, Noble Shirt
+0xA884, Turnip Top
+0xA888, Yodel Shirt
+0xA88C, Classic Top
+0xA890, Gaudy Sweater
+0xA894, Red Aloha Shirt
+0xA898, Blue Aloha Shirt
+0xA89C, Western Shirt
+0xA8A0, Red Riding Hoody
+0xA8A4, Royal Shirt
+0xA8A8, Witch Shirt
+0xA8AC, Firefighter Tee
+0xA8B0, Graduation Gown
+0xA8B4, Sky Shirt
+0xA8B8, Captain's Shirt
+0xA8BC, Burglar's Shirt
+0xA8C0, Jester Shirt
+0xA8C4, Doctor's Coat
+0xA8C8, Bone Shirt
+0xA8CC, Zipper Shirt
+0xA8D0, Mummy Shirt
+0xA8D4, Military Uniform
+0xA8D8, Sailor's Uniform
+0xA8DC, Reggae Shirt
+0xA8E0, Camel Shirt
+0xA8E4, Molecule Tee
+0xA8E8, Concierge Shirt
+0xA8EC, Kimono
+0xA8F0, Tuxedo
+0xA8F4, Explorer Shirt
+0xA8F8, Dutch Shirt
+0xA8FC, Toga
+0xA900, Cake Shirt
+0xA904, Waitress Shirt
+0xA908, Princess Shirt
+0xA90C, Fairy Tale Shirt
+0xA910, Spanish Shirt
+0xA914, Latin Uniform
+0xA918, Red Down Vest
+0xA91C, Blue Puffy Vest
+0xA920, One-way Tee
+0xA924, Beaded Shirt
+0xA928, Nile Shirt
+0xA92C, Wrap Shirt
+0xA930, Wrestler Shirt
+0xA934, Security Shirt
+0xA938, Poncho
+0xA93C, Fluffy Shirt
+0xA940, Cat Top
+0xA944, Bear Top
+0xA948, Frog Top
+0xA94C, Kappa Suit
+0xA950, Chinese Shirt
+0xA954, Pep Squad Shirt
+0xA958, Racing Shirt
+0xA95C, Orange Jumpsuit
+0xA960, Tin Shirt
+0xA964, Scale Armor Suit
+0xA968, Armor Suit
+0xA96C, Gold Armor Suit
+0xA970, Striking Outfit
+0xA974, Red Warmup Suit
+0xA978, Baseball Shirt
+0xA97C, Red Sweatsuit
+0xA980, Blue Sweatsuit
+0xA984, Leather Jerkin
+0xA988, Frock Coat
+0xA98C, Jingle Shirt
+0xA990, Space Suit
+0xA994, Caveman Tunic
+0xA998, Casual Outfit
+0xA99C, Kung-fu Gi
+0xA9A0, Pleather Vest
+0xA9A4, Maid Dress
+0xA9A8, Trenchcoat
+0xA9AC, Detective Outfit
+0xA9B0, Cycling Outfit
+0xA9B4, Chef's Outfit
+0xA9B8, Pirate's Coat
+0xA9BC, Persian Coat
+0xA9C0, Folk Tunic
+0xA9C4, Egyptian Outfit
+0xA9C8, Red Zap Suit
+0xA9CC, Blue Zap Suit
+0xA9D0, Green Zap Suit
+0xA9D4, Pink Zap Suit
+0xA9D8, Samurai Suit
+0xA9DC, Bathrobe
+0xA9E0, Moldy Shirt
+0xA9E4, Patched Shirt
+0xA9E8, Hero's Clothes
+0xA9EC, Varia Suit
+0xA9F0, New Year's Shirt
+0xA9F4, New Year's Shirt
+0xA9F8, New Year's Shirt
+0xA9FC, New Year's Shirt
+0xAA00, New Year's Shirt
+0xAA04, New Year's Shirt
+0xAA08, New Year's Shirt
+0xAA0C, New Year's Shirt
+0xAA10, New Year's Shirt
+0xAA14, New Year's Shirt
+0xAA18, New Year's Shirt
+0xAA1C, New Year's Shirt
+0xAA20, New Year's Shirt
+0xAA24, New Year's Shirt
+0xAA28, New Year's Shirt
+0xAA2C, New Year's Shirt
+0xAA30, New Year's Shirt
+0xAA34, New Year's Shirt
+0xAA38, New Year's Shirt
+0xAA3C, New Year's Shirt
+0xAA40, New Year's Shirt
+0xAA44, New Year's Shirt
+0xAA48, New Year's Shirt
+0xAA4C, New Year's Shirt
+0xAA50, New Year's Shirt
+0xAA54, New Year's Shirt
+0xAA58, New Year's Shirt
+0xAA5C, New Year's Shirt
+0xAA60, New Year's Shirt
+0xAA64, New Year's Shirt
+0xAA68, New Year's Shirt
+0xAA6C, New Year's Shirt
+0xAA70, New Year's Shirt
+0xAA74, New Year's Shirt
+0xAA78, New Year's Shirt
+0xAA7C, New Year's Shirt
+//Umbrellas
+0xAA90, Gelato Umbrella
+0xAA94, Bat Umbrella
+0xAA98, Lacy Parasol
+0xAA9C, Leaf Umbrella
+0xAAA0, Paper Parasol
+0xAAA4, Ribbon Umbrella
+0xAAA8, Red Umbrella
+0xAAAC, Blue Umbrella
+0xAAB0, Yellow Umbrella
+0xAAB4, Green Umbrella
+0xAAB8, Candy Umbrella
+0xAABC, Melon Umbrella
+0xAAC0, Mint Umbrella
+0xAAC4, Picnic Umbrella
+0xAAC8, Lemon Umbrella
+0xAACC, Toad Parasol
+0xAAD0, Eggy Parasol
+0xAAD4, Blue Dot Parasol
+0xAAD8, Daisy Umbrella
+0xAADC, Paw Umbrella
+0xAAE0, Petal Parasol
+0xAAE4, Busted Umbrella
+0xAAE8, Sunny Parasol
+0xAAEC, Beach Umbrella
+0xAAF0, Elegant Umbrella
+0xAAF4, Modern Umbrella
+0xAAF8, Leopard Umbrella
+0xAAFC, Zebra Umbrella
+0xAB00, Forest Umbrella
+0xAB04, Flame Umbrella
+0xAB08, Camo Umbrella
+0xAB0C, Spider Umbrella
+0xAB10, Gracie Umbrella
+0xAB14, Peach's Parasol
+//Wallpaper
+0x9FA0, Exotic Wall
+0x9FA4, Lovely Wall
+0x9FA8, Classic Wall
+0x9FAC, Ranch Wall
+0x9FB0, Cabana Wall
+0x9FB4, Blue Wall
+0x9FB8, Modern Wall
+0x9FBC, Regal Wall
+0x9FC0, Green Wall
+0x9FC4, Cabin Wall
+0x9FC8, Kiddie Wall
+0x9FCC, Robo-wall
+0x9FD0, Snowman Wall
+0x9FD4, Forest Wall
+0x9FD8, Egg Wall
+0x9FDC, Pavé Wall
+0x9FE0, Spooky Wall
+0x9FE4, Harvest Wall
+0x9FE8, Jingle Wall
+0x9FEC, Princess Wall
+0x9FF0, Gracie Wallpaper
+0x9FF4, Sweets Wall
+0x9FF8, Gorgeous Wall
+0x9FFC, Western Vista
+0xA000, Lunar Horizon
+0xA004, Blue Tarp
+0xA008, Ringside Seating
+0xA00C, Backyard Fence
+0xA010, Playroom Wall
+0xA014, Sea View
+0xA018, Lab Wall
+0xA01C, Classroom Wall
+0xA020, Bathhouse Wall
+0xA024, Pastel-dot Wall
+0xA028, Parlor Wall
+0xA02C, Mod Wall
+0xA030, Kitschy Wall
+0xA034, Groovy Wall
+0xA038, Backgammon Wall
+0xA03C, Mosaic Wall
+0xA040, Blue-trim Wall
+0xA044, Plaster Wall
+0xA048, Chic Wall
+0xA04C, Ornate Wall
+0xA050, Citrus Wall
+0xA054, Rose Wall
+0xA058, Old Brick Wall
+0xA05C, Shoji Screen
+0xA060, Gold Screen Wall
+0xA064, Tea-room Wall
+0xA068, Modern Screen
+0xA06C, Garden Wall
+0xA070, Mortar Wall
+0xA074, Stone Wall
+0xA078, Concrete Wall
+0xA07C, Basement Wall
+0xA080, Shanty Wall
+0xA084, Wood Paneling
+0xA088, Floral Wall
+0xA08C, Kitchen Wall
+0xA090, Music-room Wall
+0xA094, Manor Wall
+0xA098, Office Wall
+0xA09C, Plaza Wall
+0xA0A0, Lattice Wall
+0xA0A4, Stately Wall
+0xA0A8, Imperial Wall
+0xA0AC, Arched Window
+0xA0B0, Bamboo Wall
+0xA0B4, Ivy Wall
+0xA0B8, Ancient Wall
+0xA0BC, Exquisite Wall
+0xA0C0, Persian Wall
+0xA0C4, Industrial Wall
+0xA0C8, Library Wall
+0xA0CC, Illusion Wall
+0xA0D0, Meadow Vista
+0xA0D4, Tropical Vista
+0xA0D8, Desert Vista
+0xA0DC, Chainlink Fence
+0xA0E0, Tree-lined Wall
+0xA0E4, Sky Wall
+0xA0E8, Cityscape Wall
+0xA0EC, Dirt-clod Wall
+0xA0F0, Common Wall
+0xA0F4, Old Wallpaper
+0xA0F8, Mushroom Mural
+0xA0FC, Cranny Wall
+0xA100, Convenient Wall
+0xA104, Supermarket Wall
+0xA108, Department Wall
+//Series
+0xB710, Exotic Bed
+0xB714, Exotic Bureau
+0xB718, Exotic Wardrobe
+0xB71C, Exotic Bench
+0xB720, Exotic Chair
+0xB724, Exotic Table
+0xB728, Exotic End Table
+0xB72C, Exotic Lamp
+0xB730, Exotic Screen
+0xB734, Exotic Chest
+0xB738, Ranch Bed
+0xB73C, Ranch Dresser
+0xB740, Ranch Wardrobe
+0xB744, Ranch Couch
+0xB748, Ranch Armchair
+0xB74C, Ranch Chair
+0xB750, Ranch Table
+0xB754, Ranch Tea Table
+0xB758, Ranch Bookcase
+0xB75C, Ranch Hutch
+0xB760, Classic Bed
+0xB764, Classic Vanity
+0xB768, Classic Wardrobe
+0xB76C, Classic Chair
+0xB770, Classic Sofa
+0xB774, Classic Table
+0xB778, Classic Bookcase
+0xB77C, Classic Buffet
+0xB780, Classic Desk
+0xB784, Classic Clock
+0xB788, Regal Bed
+0xB78C, Regal Dresser
+0xB790, Regal Armoire
+0xB794, Regal Chair
+0xB798, Regal Sofa
+0xB79C, Regal Table
+0xB7A0, Regal Lamp
+0xB7A4, Regal Clock
+0xB7A8, Regal Bookcase
+0xB7AC, Regal Vanity
+0xB7B0, Blue Bed
+0xB7B4, Blue Bureau
+0xB7B8, Blue Wardrobe
+0xB7BC, Blue Chair
+0xB7C0, Blue Bench
+0xB7C4, Blue Table
+0xB7C8, Blue Bookcase
+0xB7CC, Blue Cabinet
+0xB7D0, Blue Clock
+0xB7D4, Blue Dresser
+0xB7D8, Cabana Bed
+0xB7DC, Cabana Dresser
+0xB7E0, Cabana Wardrobe
+0xB7E4, Cabana Chair
+0xB7E8, Cabana Armchair
+0xB7EC, Cabana Table
+0xB7F0, Cabana Lamp
+0xB7F4, Cabana Bookcase
+0xB7F8, Cabana Vanity
+0xB7FC, Cabana Screen
+0xB800, Green Bed
+0xB804, Green Dresser
+0xB808, Green Wardrobe
+0xB80C, Green Chair
+0xB810, Green Bench
+0xB814, Green Table
+0xB818, Green Desk
+0xB81C, Green Lamp
+0xB820, Green Counter
+0xB824, Green Pantry
+0xB828, Cabin Bed
+0xB82C, Cabin Dresser
+0xB830, Cabin Wardrobe
+0xB834, Cabin Chair
+0xB838, Cabin Armchair
+0xB83C, Cabin Couch
+0xB840, Cabin Table
+0xB844, Cabin Low Table
+0xB848, Cabin Bookcase
+0xB84C, Cabin Clock
+0xB850, Modern Bed
+0xB854, Modern Dresser
+0xB858, Modern Wardrobe
+0xB85C, Modern Chair
+0xB860, Modern Sofa
+0xB864, Modern End Table
+0xB868, Modern Desk
+0xB86C, Modern Table
+0xB870, Modern Cabinet
+0xB874, Modern Lamp
+0xB878, Kiddie Bed
+0xB87C, Kiddie Dresser
+0xB880, Kiddie Wardrobe
+0xB884, Kiddie Couch
+0xB888, Kiddie Chair
+0xB88C, Kiddie Table
+0xB890, Kiddie Bureau
+0xB894, Kiddie Bookcase
+0xB898, Kiddie Clock
+0xB89C, Kiddie Stereo
+0xB8A0, Lovely Bed
+0xB8A4, Lovely Dresser
+0xB8A8, Lovely Armoire
+0xB8AC, Lovely Chair
+0xB8B0, Lovely Loveseat
+0xB8B4, Lovely End Table
+0xB8B8, Lovely Table
+0xB8BC, Lovely Vanity
+0xB8C0, Lovely Kitchen
+0xB8C4, Lovely Lamp
+0xB8C8, Robo-bed
+0xB8CC, Robo-dresser
+0xB8D0, Robo-closet
+0xB8D4, Robo-sofa
+0xB8D8, Robo-chair
+0xB8DC, Robo-table
+0xB8E0, Robo-stereo
+0xB8E4, Robo-TV
+0xB8E8, Robo-clock
+0xB8EC, Robo-lamp
+0xB8F0, Snowman Bed
+0xB8F4, Snowman Dresser
+0xB8F8, Snowman Wardrobe
+0xB8FC, Snowman Chair
+0xB900, Snowman Sofa
+0xB904, Snowman Table
+0xB908, Snowman Fridge
+0xB90C, Snowman TV
+0xB910, Snowman Clock
+0xB914, Snowman Lamp
+0xB918, Mush Bed
+0xB91C, Mush Dresser
+0xB920, Mush Closet
+0xB924, Mush Chair
+0xB928, Mush Stool
+0xB92C, Mush Table
+0xB930, Mush End Table
+0xB934, Mush Lamp
+0xB938, Mush Stand
+0xB93C, Mush TV
+0xB940, Pavé Bed
+0xB944, Pavé Chest
+0xB948, Pavé Closet
+0xB94C, Pavé Sofa
+0xB950, Pavé Chair
+0xB954, Pavé Table
+0xB958, Pavé End Table
+0xB95C, Pavé Bookshelf
+0xB960, Pavé Bureau
+0xB964, Pavé Lamp
+0xB968, Egg Bed
+0xB96C, Egg Dresser
+0xB970, Egg Wardrobe
+0xB974, Egg Chair
+0xB978, Egg Bench
+0xB97C, Egg Table
+0xB980, Egg Stereo
+0xB984, Egg Toy Set
+0xB988, Egg Clock
+0xB98C, Egg Lamp
+0xB990, Spooky Bed
+0xB994, Spooky Dresser
+0xB998, Spooky Wardrobe
+0xB99C, Spooky Sofa
+0xB9A0, Spooky Chair
+0xB9A4, Spooky Table
+0xB9A8, Spooky Vanity
+0xB9AC, Spooky Bookcase
+0xB9B0, Spooky Clock
+0xB9B4, Spooky Lamp
+0xB9B8, Harvest Bed
+0xB9BC, Harvest Dresser
+0xB9C0, Harvest Bureau
+0xB9C4, Harvest Sofa
+0xB9C8, Harvest Chair
+0xB9CC, Harvest Table
+0xB9D0, Harvest Mirror
+0xB9D4, Harvest TV
+0xB9D8, Harvest Clock
+0xB9DC, Harvest Lamp
+0xB9E0, Jingle Bed
+0xB9E4, Jingle Dresser
+0xB9E8, Jingle Wardrobe
+0xB9EC, Jingle Sofa
+0xB9F0, Jingle Chair
+0xB9F4, Jingle Table
+0xB9F8, Jingle Shelves
+0xB9FC, Jingle Piano
+0xBA00, Jingle Clock
+0xBA04, Jingle Lamp
+0xBA08, Princess Bed
+0xBA0C, Princess Chest
+0xBA10, Princess Closet
+0xBA14, Princess Sofa
+0xBA18, Princess Chair
+0xBA1C, Princess Table
+0xBA20, Princess Curio
+0xBA24, Princess Dresser
+0xBA28, Princess Cage
+0xBA2C, Princess Lamp
+0xBA30, Gracie Bed
+0xBA34, Gracie Chest
+0xBA38, Gracie Wardrobe
+0xBA3C, Gracie Bench
+0xBA40, Gracie Chair
+0xBA44, Gracie Low Table
+0xBA48, Gracie Desk
+0xBA4C, Gracie Wagon
+0xBA50, Gracie Shelf
+0xBA54, Gracie Lamp
+0xBA58, Sweets Bed
+0xBA5C, Sweets Dresser
+0xBA60, Sweets Closet
+0xBA64, Sweets Sofa
+0xBA68, Sweets Chair
+0xBA6C, Sweets Table
+0xBA70, Sweets Minitable
+0xBA74, Sweets Bookcase
+0xBA78, Sweets Lamp
+0xBA7C, Sweets Minilamp
+0xBA80, Gorgeous Bed
+0xBA84, Gorgeous Chest
+0xBA88, Gorgeous Closet
+0xBA8C, Gorgeous Sofa
+0xBA90, Gorgeous Seat
+0xBA94, Gorgeous Stool
+0xBA98, Gorgeous Table
+0xBA9C, Gorgeous Desk
+0xBAA0, Gorgeous Counter
+0xBAA4, Gorgeous Lamp
+//Boxing
+0xBB3C, Boxing Barricade
+0xBB40, Red Corner
+0xBB44, Blue Corner
+0xBB48, Neutral Corner
+0xBB4C, Judge's Bell
+0xBB50, Boxing Mat
+0xBB54, Ringside Table
+0xBB58, Weight Bench
+0xBB5C, Sandbag
+0xBB60, Speed Bag
+//Classroom
+0xBC2C, Right Platform
+0xBC30, Left Platform
+0xBC34, Podium
+0xBC38, Teacher's Desk
+0xBC3C, Teacher's Chair
+0xBC40, School Desk
+0xBC44, School Chair
+0xBC48, Cubby Hole
+0xBC4C, Chalk Board
+0xBC50, Mop
+0xBC54, Skeleton
+0xBC58, Anatomical Model
+0xBC5C, Clear Model
+0xBC60, Hamster Cage
+0xBC64, Science Table
+//Construction
+0xBAF8, Detour Arrow
+0xBAFC, Handcart
+0xBB00, Iron Frame
+0xBB04, Manhole Cover
+0xBB08, Orange Cone
+0xBB0C, Traffic Cone
+0xBB10, Saw Horse
+0xBB14, Wet Roadway Sign
+0xBB18, Steam Roller
+0xBB1C, Jackhammer
+0xBB20, Striped Cone
+0xBB24, Cement Mixer
+0xBB28, Brown Drum
+0xBB2C, Green Drum
+0xBB30, Red Drum
+0xBB34, Haz-mat Barrel
+0xBB38, Oil Drum
+//Lab
+0xBBC8, Lab Bench
+0xBBCC, Lab Chair
+0xBBD0, Medicine Chest
+0xBBD4, Florence Flask
+0xBBD8, Amazing Machine
+0xBBDC, Unknown Machine
+0xBBE0, Complex Machine
+//Mario
+0xC138, Brick Block
+0xC13C, Coin
+0xC140, Flagpole
+0xC144, Fire Flower
+0xC148, Super Mushroom
+0xC14C, Koopa Shell
+0xC150, Starman
+0xC154, 1-Up Mushroom
+0xC158, ? Block
+0xC15C, Green Pipe
+0xC160, Fire Bar
+0xC164, Cannon
+//Garden
+0xBB64, Birdhouse
+0xBB68, Mr. Flamingo
+0xBB6C, Mrs. Flamingo
+0xBB70, Garden Gnome
+0xBB74, Bug Zapper
+0xBB78, Hammock
+0xBB7C, Bird Bath
+0xBB80, Picnic Table
+0xBB84, Bird Feeder
+0xBB88, Lawn Chair
+0xBB8C, Lawn Mower
+0xBB90, Barbecue
+0xBB94, Backyard Pool
+0xBB98, Sprinkler
+0xBB9C, Tiki Torch
+//Nursery
+0xBBA0, Elephant Slide
+0xBBA4, Stroller
+0xBBA8, Cradle
+0xBBAC, Baby Bed
+0xBBB0, Clackercart
+0xBBB4, Merry-go-round
+0xBBB8, Rocking Horse
+0xBBBC, Train Set
+0xBBC0, Wobbelina
+0xBBC4, Dolly
+//Ship
+0xBBE4, Helm
+0xBBE8, Barrel
+0xBBEC, Keg
+0xBBF0, Ship Cannon
+0xBBF4, Anchor
+0xBBF8, Ship Compass
+//Space
+0xBAD0, Asteroid
+0xBAD4, Moon
+0xBAD8, Lunar Lander
+0xBADC, Rocket
+0xBAE0, Lunar Rover
+0xBAE4, Satellite
+0xBAE8, Space Shuttle
+0xBAEC, Spaceman Sam
+0xBAF0, Space Station
+0xBAF4, Flying Saucer
+//Western
+0xBAA8, Cow Skull
+0xBAAC, Desert Cactus
+0xBAB0, Western Fence
+0xBAB4, Saddle Fence
+0xBAB8, Storefront
+0xBABC, Covered Wagon
+0xBAC0, Watering Trough
+0xBAC4, Tumbleweed
+0xBAC8, Well
+0xBACC, Wagon Wheel
+//Other1
+0xBBFC, Black Pawn
+0xBC00, Black Bishop
+0xBC04, Black King
+0xBC08, Black Knight
+0xBC0C, Black Queen
+0xBC10, Black Rook
+0xBC14, White Pawn
+0xBC18, White Bishop
+0xBC1C, White King
+0xBC20, White Knight
+0xBC24, White Queen
+0xBC28, White Rook
+0xBC68, Vaulting Horse
+0xBC6C, Ball Catcher
+0xBC70, High-jump Mat
+0xBC74, Hurdle
+0xBC78, Scoreboard
+0xBC7C, Folding Chair
+0xBC80, Vision Tester
+0xBC84, Trunk Measure
+0xBC88, Stadiometer
+0xBC8C, Scale
+0xBC90, Hospital Bed
+0xBC94, Hospital Screen
+0xBC98, IV Drip
+0xBC9C, Sink
+0xBCA0, Writing Desk
+0xBCA4, Writing Chair
+0xBCA8, Globe
+0xBCAC, Office Desk
+0xBCB0, Office Chair
+0xBCB4, Office Locker
+0xBCB8, Coffee Maker
+0xBCBC, Checkout Counter
+0xBCC0, Cash Register
+0xBCC4, Jukebox
+0xBCC8, Siphon
+0xBCCC, Giant Dharma
+0xBCD0, Dharma
+0xBCD4, Mini-dharma
+0xBCD8, Papa Bear
+0xBCDC, Mama Bear
+0xBCE0, Baby Bear
+0xBCE4, Papa Panda
+0xBCE8, Mama Panda
+0xBCEC, Baby Panda
+0xBCF0, Tall Cactus
+0xBCF4, Cactus
+0xBCF8, Round Cactus
+0xBCFC, Blue Golf Bag
+0xBD00, White Golf Bag
+0xBD04, Green Golf Bag
+0xBD08, Red Armchair
+0xBD0C, Red Sofa
+0xBD10, Bear Pole
+0xBD14, Eagle Pole
+0xBD18, Frog-woman Pole
+0xBD1C, Raven Pole
+0xBD20, Blue Lava Lamp
+0xBD24, Purple Lava Lamp
+0xBD28, Green Lava Lamp
+0xBD2C, Tea Table
+0xBD30, Hearth
+0xBD34, Screen
+0xBD38, Hibachi
+0xBD3C, Tea Tansu
+0xBD40, Paper Lantern
+0xBD44, Paulownia Closet
+0xBD48, Stair Dresser
+0xBD4C, Low Screen
+0xBD50, Paper Tiger
+0xBD54, Lucky Frog
+0xBD58, Sword
+0xBD5C, Bow
+0xBD60, Samurai Suit
+0xBD64, Black Katana
+0xBD68, White Katana
+0xBD6C, Ninja Sword
+0xBD70, Deer Scare
+0xBD74, Tall Lantern
+0xBD78, Spa Chair
+0xBD7C, Bath Mat
+0xBD80, Bucket
+0xBD84, Bathtub
+0xBD88, Milk Case
+0xBD8C, Ice-cream Case
+0xBD90, Washbasin
+0xBD94, Tea Vase
+0xBD98, Red Vase
+0xBD9C, Blue Vase
+0xBDA0, Lucky Cat
+0xBDA4, Lefty Lucky Cat
+0xBDA8, Lucky Black Cat
+0xBDAC, Lucky Gold Cat
+0xBDB0, Grapefruit Table
+0xBDB4, Lemon Table
+0xBDB8, Orange Chair
+0xBDBC, Lime Chair
+0xBDC0, Pear Wardrobe
+0xBDC4, Pear Dresser
+0xBDC8, Watermelon Chair
+0xBDCC, Melon Chair
+0xBDD0, Watermelon Table
+0xBDD4, Apple TV
+0xBDD8, Apple Clock
+0xBDDC, Lily-pad Table
+0xBDE0, Froggy Chair
+0xBDE4, Pine Chair
+0xBDE8, Pine Table
+0xBDEC, Tulip Chair
+0xBDF0, Tulip Table
+0xBDF4, Iris Chair
+0xBDF8, Iris Table
+0xBDFC, Daffodil Chair
+0xBE00, Daffodil Table
+//Other2
+0xBE64, Conga Drum
+0xBE68, Djimbe Drum
+0xBE6C, Timpano Drum
+0xBE70, Violin
+0xBE74, Cello
+0xBE78, Bass
+0xBE7C, Folk Guitar
+0xBE80, Country Guitar
+0xBE84, Rock Guitar
+0xBE88, Metal Guitar
+0xBE8C, Ukulele
+0xBE90, Ebony Piano
+0xBE94, Ivory Piano
+0xBE98, Upright Piano
+0xBE9C, Japanese Drum
+0xBEA0, Vibraphone
+0xBEA4, Biwa Lute
+0xBEA8, Harp
+0xBEAC, Metronome
+0xBEB0, Trash Can
+0xBEB4, Garbage Pail
+0xBEB8, Garbage Can
+0xBEBC, Trash Bin
+0xBEC0, Pantheon Post
+0xBEC4, Ionian Post
+0xBEC8, Corinthian Post
+0xBECC, Broken Post
+0xBED0, Pyramid
+0xBED4, Sphinx
+0xBED8, Mummy's Casket
+0xBEDC, Spaceman
+0xBEE0, Jomon Pottery
+0xBEE4, Tennis Table
+0xBEE8, Bowling Pins
+0xBEEC, Ball Return
+0xBEF0, Basketball Hoop
+0xBEF4, Billiard Table
+0xBEF8, Mahjong Table
+0xBEFC, Dart Board
+0xBF00, Pinball Machine
+0xBF04, Arcade Machine
+0xBF08, Tabletop Game
+0xBF0C, Stool
+0xBF10, Shogi Board
+0xBF14, Go Board
+0xBF18, Moai Statue
+0xBF1C, Tribal Mask
+0xBF20, Arc De Triomphe
+0xBF24, Merlion
+0xBF28, Pagoda
+0xBF2C, Plate Armor
+0xBF30, Mermaid Statue
+0xBF34, Mouth Of Truth
+0xBF38, Manneken Pis
+0xBF3C, Tower Of Pisa
+0xBF40, Compass
+0xBF44, Matryoshka
+0xBF48, Chocolates
+0xBF4C, Backpack
+0xBF50, Mountain Bike
+0xBF54, Propane Stove
+0xBF58, Cooler
+0xBF5C, Kayak
+0xBF60, Lantern
+0xBF64, Sleeping Bag
+0xBF68, Campfire
+0xBF6C, Bonfire
+0xBF70, TV With A VCR
+0xBF74, Wide-screen TV
+0xBF78, Retro TV
+0xBF7C, Kitchen Sink
+0xBF80, Kitchen Corner
+0xBF84, Deluxe Range
+0xBF88, Range
+0xBF8C, Stove
+0xBF90, Sink
+0xBF94, Tea Set
+0xBF98, Shave-ice Maker
+0xBF9C, Refrigerator
+0xBFA0, Retro Fridge
+0xBFA4, Microwave
+0xBFA8, Toaster
+0xBFAC, Mixer
+0xBFB0, Clothesline Pole
+0xBFB4, Doghouse
+0xBFB8, Beach Chair
+0xBFBC, Wave Breaker
+0xBFC0, Surfboard
+0xBFC4, Diver Dan
+0xBFC8, Beach Table
+0xBFCC, Treasure Chest
+0xBFD0, Life Ring
+0xBFD4, Snowboard
+0xBFD8, Sleigh
+0xBFDC, Snowman
+0xBFE0, Sunflower
+0xBFE4, Daffodil
+0xBFE8, Gerbera
+0xBFEC, Toilet
+0xBFF0, Super Toilet
+0xBFF4, Men's Toilet
+0xBFF8, Pink Box
+0xBFFC, Blue Box
+0xC000, Beige Box
+0xC004, Safe
+0xC008, Deluxe Washer
+0xC00C, Automatic Washer
+0xC010, Washer/dryer
+0xC014, Potbelly Stove
+0xC018, Space Heater
+0xC01C, Fireplace
+0xC020, Radiator
+0xC024, Phonograph
+0xC028, Turntable
+0xC02C, Reel-to-reel
+0xC030, Retro Stereo
+0xC034, Gold Stereo
+0xC038, Hi-fi Stereo
+0xC03C, High-end Stereo
+0xC040, Dice Stereo
+0xC044, Tape Deck
+0xC048, CD Player
+0xC04C, White Boom Box
+0xC050, Red Boom Box
+0xC054, Red Clock
+0xC058, Kitschy Clock
+0xC05C, Antique Clock
+0xC060, Cube Clock
+0xC064, Odd Clock
+0xC068, Glow Clock
+0xC06C, Owl Clock
+0xC070, Alarm Clock
+0xC074, Jade Econo-chair
+0xC078, Ruby Econo-chair
+0xC07C, Gold Econo-chair
+0xC080, Rocking Chair
+0xC084, Lefty Desk
+0xC088, Righty Desk
+0xC08C, Gas Pump
+0xC090, Extinguisher
+0xC094, Fire Hydrant
+0xC098, Racoon Figurine
+0xC09C, Barber's Pole
+0xC0A0, Candy Machine
+0xC0A4, Scarecrow
+0xC0A8, Birdcage
+0xC0AC, Nintendo Bench
+0xC0B0, Phone Box
+0xC0B4, Outdoor Bath
+0xC0B8, Wheat Field
+0xC0BC, Computer
+0xC0C0, Pineapple Bed
+0xC0C4, Glass-top Table
+0xC0C8, Blue Kotatsu
+0xC0CC, Pink Kotatsu
+0xC0D0, Cream Sofa
+0xC0D4, Storage Case
+0xC0D8, Clothes Closet
+0xC0DC, Claw-foot Tub
+0xC0E0, Shower
+0xC0E4, Massage Chair
+0xC0E8, Vacuum Cleaner
+0xC0EC, Bottled Ship
+0xC0F0, Water Bird
+0xC0F4, Executive Toy
+0xC0F8, Telescope
+0xC0FC, Miniature Car
+0xC100, Mochi Pestle
+0xC104, Sewing Machine
+0xC108, Cardboard Box
+0xC10C, Wooden Box
+0xC110, Fan
+0xC114, Candle
+0xC118, Mini-lamp
+0xC11C, Desk Light
+0xC120, Table Lamp
+0xC124, Throne
+0xC128, Basic Red Bed
+0xC12C, Basic Blue Bed
+0xC130, Basic Yellow Bed
+0xC134, Basic Green Bed
+//Other3
+0xC190, Birthday Cake
+0xC194, Jack-in-the-box
+0xC198, Kadomatsu
+0xC19C, Kagamimochi
+0xC1A0, Hinaningyo
+0xC1A4, Big Festive Tree
+0xC1A8, Festive Tree
+0xC1AC, Festive Flag
+0xC1B0, Festive Candle
+0xC1B4, Lovely Phone
+0xC1B8, Music Box
+0xC1BC, Portrait
+0xC1C0, Box Of Tissues
+0xC1C4, Piggy Bank
+0xC1C8, ABD
+0xC1CC, Leaf
+0xC1D0, Gold Trophy
+0xC1D4, Silver Trophy
+0xC1D8, Bug Trophy
+0xC1DC, Rice Cake
+0xC1E0, Dango
+0xC1E4, Bamboo Grass
+0xC1E8, Resetti Model
+0xC1EC, Cool Globe
+0xC1F0, Picnic Basket
+0xC1F4, Sailboat Model
+0xC1F8, Wheat Bundle
+0xC1FC, Espresso Maker
+0xC200, Stuffed Stocking
+0xC204, Snow Globe
+0xC208, Veggie Basket
+0xC20C, Yut
+0xC210, Hibiscus
+0xC214, Bureom
+0xC218, House Model
+0xC21C, Wide House Model
+0xC220, Two-story Model
+0xC224, Town Hall Model
+0xC228, Nook's Cranny
+0xC22C, Nook 'n' Go
+0xC230, Nookway
+0xC234, Nookington's
+0xC238, Museum Model
+0xC23C, Brown Pot
+0xC240, White Pot
+0xC244, Moth Orchid
+//Nintendo
+0xC168, Yoshi's Egg
+0xC16C, Banana
+0xC170, Triple Shells
+0xC174, Kart
+0xC178, Pikmin
+0xC17C, Blue Falcon
+0xC180, Master Sword
+0xC184, Arwing
+0xC188, Triforce
+0xC18C, Metroid
+//Gyroids
+0xB3F0, Mega Clankoid
+0xB3F4, Clankoid
+0xB3F8, Mini Clankoid
+0xB3FC, Tall Clankoid
+0xB400, Squat Dingloid
+0xB404, Mega Dingloid
+0xB408, Dingloid
+0xB40C, Mini Dingloid
+0xB410, Wee Dingloid
+0xB414, Tall Dingloid
+0xB418, Mega Percoloid
+0xB41C, Tall Percoloid
+0xB420, Mega Oombloid
+0xB424, Oombloid
+0xB428, Mini Oombloid
+0xB42C, Tall Oombloid
+0xB430, Rhythmoid
+0xB434, Mini Rhythmoid
+0xB438, Mega Puffoid
+0xB43C, Mini Puffoid
+0xB440, Tall Puffoid
+0xB444, Mega Lullaboid
+0xB448, Lullaboid
+0xB44C, Mini Lullaboid
+0xB450, Tall Lullaboid
+0xB454, Mega Sproid
+0xB458, Sproid
+0xB45C, Mini Sproid
+0xB460, Tall Sproid
+0xB464, Mega Bowtoid
+0xB468, Bowtoid
+0xB46C, Mini Bowtoid
+0xB470, Tall Bowtoid
+0xB474, Mega Tootoid
+0xB478, Tootoid
+0xB47C, Mini Tootoid
+0xB480, Mega Plinkoid
+0xB484, Plinkoid
+0xB488, Mini Plinkoid
+0xB48C, Mega Dekkoid
+0xB490, Dekkoid
+0xB494, Mini Dekkoid
+0xB498, Mega Buzzoid
+0xB49C, Buzzoid
+0xB4A0, Mini Buzzoid
+0xB4A4, Tall Buzzoid
+0xB4A8, Mega Drilloid
+0xB4AC, Drilloid
+0xB4B0, Mini Drilloid
+0xB4B4, Mega Echoid
+0xB4B8, Mini Echoid
+0xB4BC, Tall Echoid
+0xB4C0, Mega Lamentoid
+0xB4C4, Lamentoid
+0xB4C8, Mini Lamentoid
+0xB4CC, Tall Lamentoid
+0xB4D0, Mega Strumboid
+0xB4D4, Strumboid
+0xB4D8, Mini Strumboid
+0xB4DC, Tall Strumboid
+0xB4E0, Mega Croakoid
+0xB4E4, Croakoid
+0xB4E8, Mini Croakoid
+0xB4EC, Tall Croakoid
+0xB4F0, Mega Fizzoid
+0xB4F4, Mini Fizzoid
+0xB4F8, Mega Squelchoid
+0xB4FC, Squelchoid
+0xB500, Mini Squelchoid
+0xB504, Mega Howloid
+0xB508, Howloid
+0xB50C, Mini Howloid
+0xB510, Mega Nebuloid
+0xB514, Squat Nebuloid
+0xB518, Nebuloid
+0xB51C, Mini Nebuloid
+0xB520, Tall Nebuloid
+0xB524, Slim Nebuloid
+0xB528, Mega Gongoid
+0xB52C, Gongoid
+0xB530, Mini Gongoid
+0xB534, Tall Gongoid
+0xB538, Mega Poltergoid
+0xB53C, Poltergoid
+0xB540, Mini Poltergoid
+0xB544, Tall Poltergoid
+0xB548, Metatoid
+0xB54C, Mini Metatoid
+0xB550, Mega Bovoid
+0xB554, Tall Bovoid
+0xB558, Mega Oboid
+0xB55C, Oboid
+0xB560, Tall Oboid
+0xB564, Mega Dinkoid
+0xB568, Mini Dinkoid
+0xB56C, Mega Harmonoid
+0xB570, Harmonoid
+0xB574, Mini Harmonoid
+0xB578, Tall Harmonoid
+0xB57C, Tall Droploid
+0xB580, Mega Sputnoid
+0xB584, Sputnoid
+0xB588, Mini Sputnoid
+0xB58C, Tall Sputnoid
+0xB590, Mega Alloid
+0xB594, Mini Alloid
+0xB598, Tall Alloid
+0xB59C, Mega Timpanoid
+0xB5A0, Timpanoid
+0xB5A4, Mini Timpanoid
+0xB5A8, Tall Timpanoid
+0xB5AC, Gargloid
+0xB5B0, Mini Gargloid
+0xB5B4, Tall Gargloid
+0xB5B8, Warbloid
+0xB5BC, Mini Warbloid
+0xB5C0, Tall Warbloid
+0xB5C4, Mega Freakoid
+0xB5C8, Mini Freakoid
+0xB5CC, Mega Quazoid
+0xB5D0, Quazoid
+0xB5D4, Mini Quazoid
+0xB5D8, Tall Quazoid
+0xB5DC, Slim Quazoid
+0xB5E0, Mega Rustoid
+0xB5E4, Rustoid
+0xB5E8, Mini Rustoid
+//Fossils
+0xCC28, Amber
+0xCC2C, Ammonite
+0xCC30, Coprolite
+0xCC34, Dinosaur Egg
+0xCC38, Fern Fossil
+0xCC3C, Dinosaur Track
+0xCC40, Archaeopteryx
+0xCC44, Peking Man
+0xCC48, Shark Tooth
+0xCC4C, Trilobite
+0xCC50, T. Rex Skull
+0xCC54, T. Rex Torso
+0xCC58, T. Rex Tail
+0xCC5C, Tricera Skull
+0xCC60, Tricera Torso
+0xCC64, Tricera Tail
+0xCC68, Mammoth Skull
+0xCC6C, Mammoth Torso
+0xCC70, Ankylo Skull
+0xCC74, Ankylo Torso
+0xCC78, Ankylo Tail
+0xCC7C, Apato Skull
+0xCC80, Apato Torso
+0xCC84, Apato Tail
+0xCC88, Dimetrodon Skull
+0xCC8C, Dimetrodon Torso
+0xCC90, Dimetrodon Tail
+0xCC94, Iguanodon Skull
+0xCC98, Iguanodon Torso
+0xCC9C, Iguanodon Tail
+0xCCA0, Sabertooth Skull
+0xCCA4, Sabertooth Torso
+0xCCA8, Pachy Skull
+0xCCAC, Pachy Torso
+0xCCB0, Pachy Tail
+0xCCB4, Parasaur Skull
+0xCCB8, Parasaur Torso
+0xCCBC, Parasaur Tail
+0xCCC0, Seismo Skull
+0xCCC4, Seismo Chest
+0xCCC8, Seismo Hip
+0xCCCC, Seismo Tail
+0xCCD0, Plesio Skull
+0xCCD4, Plesio Neck
+0xCCD8, Plesio Torso
+0xCCDC, Stego Skull
+0xCCE0, Stego Torso
+0xCCE4, Stego Tail
+0xCCE8, Ptera Skull
+0xCCEC, Ptera Left Wing
+0xCCF0, Ptera Right Wing
+0xCCF4, Icthyo Skull
+0xCCF8, Icthyo Torso
+0xCCFC, Raptor Skull
+0xCD00, Raptor Torso
+0xCD04, Styraco Skull
+0xCD08, Styraco Torso
+0xCD0C, Styraco Tail
+//Paintings
+0xCD40, Dynamic Painting
+0xCD44, Solemn Painting
+0xCD48, Quaint Painting
+0xCD4C, Basic Painting
+0xCD50, Famous Painting
+0xCD54, Perfect Painting
+0xCD58, Amazing Painting
+0xCD5C, Nice Painting
+0xCD60, Moving Painting
+0xCD64, Common Painting
+0xCD68, Flowery Painting
+0xCD6C, Warm Painting
+0xCD70, Jolly Painting
+0xCD74, Fine Painting
+0xCD78, Scary Painting
+0xCD7C, Proper Painting
+0xCD80, Strange Painting
+0xCD84, Worthy Painting
+0xCD88, Calm Painting
+0xCD8C, Moody Painting
+0xCD90, Wistful Painting
+0xCD94, Serene Painting
+0xCD98, Scenic Painting
+0xCD9C, Dynamic Painting
+0xCDA0, Solemn Painting
+0xCDA4, Quaint Painting
+0xCDA8, Basic Painting
+0xCDAC, Famous Painting
+0xCDB0, Perfect Painting
+0xCDB4, Amazing Painting
+0xCDB8, Nice Painting
+0xCDBC, Moving Painting
+0xCDC0, Common Painting
+0xCDC4, Flowery Painting
+0xCDC8, Warm Painting
+0xCDCC, Jolly Painting
+0xCDD0, Fine Painting
+0xCDD4, Scary Painting
+0xCDD8, Proper Painting
+0xCDDC, Strange Painting
+0xCDE0, Worthy Painting
+0xCDE4, Calm Painting
+0xCDE8, Moody Painting
+0xCDEC, Wistful Painting
+0xCDF0, Serene Painting
+0xCDF4, Scenic Painting
+0xCDF8, Forged Painting
+0xCDFC, Forged Painting
+0xCE00, Forged Painting
+0xCE04, Forged Painting
+0xCE08, Forged Painting
+0xCE0C, Forged Painting
+0xCE10, Forged Painting
+0xCE14, Forged Painting
+0xCE18, Forged Painting
+0xCE1C, Forged Painting
+0xCE20, Forged Painting
+0xCE24, Forged Painting
+0xCE28, Forged Painting
+0xCE2C, Forged Painting
+0xCE30, Forged Painting
+0xCE34, Forged Painting
+0xCE38, Forged Painting
+0xCE3C, Forged Painting
+0xCE40, Forged Painting
+0xCE44, Forged Painting
+0xCE48, Forged Painting
+0xCE4C, Forged Painting
+0xCE50, Forged Painting
+//Plants
+0xBE04, Ponderosa Bonsai
+0xBE08, Pine Bonsai
+0xBE0C, Mugho Bonsai
+0xBE10, Plum Bonsai
+0xBE14, Holly Bonsai
+0xBE18, Azalea Bonsai
+0xBE1C, Maple Bonsai
+0xBE20, Hawthorn Bonsai
+0xBE24, Quince Bonsai
+0xBE28, Jasmine Bonsai
+0xBE2C, Pothos
+0xBE30, Coconut Palm
+0xBE34, Pachira
+0xBE38, Caladium
+0xBE3C, Croton
+0xBE40, Dracaena
+0xBE44, Lady Palm
+0xBE48, Aloe
+0xBE4C, Rubber Tree
+0xBE50, Snake Plant
+0xBE54, Fan Palm
+0xBE58, Corn Plant
+0xBE5C, Bromeliaceae
+0xBE60, Weeping Fig
+//Not Used
+0xC81C, Not Used (Invisible Chair)
+0xC820, Not Used (Moving Boxes)
+0xC824, Not Used (Moving Boxes)
+0xC828, Not Used (Moving Boxes)
+0xC82C, Not Used (Invisible Chair)
+0xC830, Not Used (Invisible Sofa)
+0xC834, Not Used (Invisible Chair)
+0xC838, Not Used (Invisible Chair)
+0xC83C, Not Used (Invisible Chair)
+//Empty
+0xFFF1, Empty

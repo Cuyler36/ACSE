@@ -1,0 +1,56 @@
+//Grass Acres
+0x0000, Grass Acre #1
+0x0001, Grass Acre #2
+0x0002, Grass Acre #3
+0x0003, Grass Acre (w/ Pond) #4
+0x0004, Grass Acre (w/ Pond) #5
+0x0005, Grass Acre (w/ Pond) #6
+0x0006, Grass Acre #7
+//Building Acres
+0x0007, Town Plaza #1
+0x0008, Town Plaza #2
+0x0009, Town Plaza #3
+0x000A, Town Hall #1
+0x000B, Town Hall #2
+0x000C, Town Hall (w/ Pond) #3
+0x000D, Re-Tail (w/ Pond) #1
+0x000E, Re-Tail (w/ Pond) #2
+0x000F, Re-Tail (w/ Pond) #3
+0x0010, Train Station #1
+0x0011, Train Station #2
+0x0012, Train Station (w/ Pond) #3
+//River Acres
+0x0013, River (East) #1
+0x0014, River (East) #2
+0x0015, River (East) #3
+0x0016, River (East > North) #1
+0x0017, River (East > North) #2
+0x0018, River (East > North) #3
+0x0019, River (East > South) #1
+0x001A, River (East > South) #2
+0x001B, River (East > South) #3
+0x001C, River (North) #1
+0x001D, River (North > East) #1
+0x001E, River (North > East) #2
+0x001F, River (North > East) #3
+0x0020, River (North > West) #1
+0x0021, River (North > West) #2
+0x0022, River (North > West) #3
+0x0023, River (South > East) #1
+0x0024, River (South > East) #2
+0x0025, River (South > East) #3
+0x0026, River (South > West) #1
+0x0027, River (South > West) #2
+0x0028, River (South > West) #3
+0x0029, River (West) #1
+0x002A, River (West) #2
+0x002B, River (West) #3
+0x002C, River (West > North) #1
+0x002D, River (West > North) #2
+0x002E, River (West > North) #3
+0x002F, River (West > South) #1
+0x0030, River (West > South) #2
+0x0031, River (West > South) #3
+0x0032, River (North) #2
+0x0033, River (South) #1
+//Lake and Waterfall Acres
