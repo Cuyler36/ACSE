@@ -1,6 +1,8 @@
 # ACSE - Animal Crossing Save Editor
 
-ACSE is a save editor for the GameCube version of Animal Crossing.
+## Outdated/Incorrect information. Update coming soon.
+
+ACSE is a save editor for the Animal Crossing game series.
 
 ## Features
 * Player Editing
