@@ -74,6 +74,16 @@ namespace ACSE
                 Image = Properties.Resources.no_tpc,
                 ContextMenuStrip = pictureContextMenu,
             };
+            //Temp
+            /*float[][] Test_Matrix =
+            {
+                new float[] {1, 0, 0, 0, 0},
+                new float[] {0, 1, 0, 0, 0 },
+                new float[] {0, 0, 1, 0, 0 },
+                new float[] {0, 0, 0, 1, 0 },
+                new float[] {0.2f, 0.2f, 0.2f, 0, 1 },
+            };
+            TPC_Picture.Image = Utility.Set_Image_Color(TPC_Picture.Image, new ColorMatrix(Test_Matrix));*/
             playersTab.Controls.Add(TPC_Picture);
             openSaveFile.FileOk += new CancelEventHandler(open_File_OK);
             
@@ -126,6 +136,16 @@ namespace ACSE
             Bindee.MouseMove += new MouseEventHandler(Players_Mouse_Move);
             Bindee.MouseLeave += new EventHandler(Hide_Tip);
         }
+        //TODO: Replace selectedItem.Text = lines with void method SetCurrentItem(Item New_Item). Will allow for setting of flags if NL/WA.
+        private void SetCurrentItem(Item New_Item)
+        {
+            if (New_Item != null)
+            {
+                selectedItem.SelectedValue = New_Item.ItemID;
+                itemFlag1.Text = New_Item.Flag1.ToString("X2");
+                itemFlag2.Text = New_Item.Flag2.ToString("X2");
+            }
+        }
 
         public void SetupEditor(Save save)
         {
@@ -143,7 +163,7 @@ namespace ACSE
             Island_Buried_Buffer = null;
             TPC_Picture.Image = Properties.Resources.no_tpc;
             Secure_NAND_Value_Form.Hide();
-            Item_List = SaveDataManager.GetItemInfo(save.Save_Type).ToList();
+            Item_List = SaveDataManager.GetItemInfo(save.Save_Type).ToList(); //Probably should rename to GetItemDictionary or GetItemList
             Item_List.Sort((x, y) => x.Key.CompareTo(y.Key));
             ItemData.ItemDatabase = Item_List;
             selectedItem.DataSource = new BindingSource(Item_List, null);
@@ -204,8 +224,9 @@ namespace ACSE
                 buildingsPanel.Controls[i].Dispose();
 
             //Set building panel visibility
-            buildingsPanel.Visible = (save.Save_Type == SaveType.City_Folk || save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo);
-            buildingsLabel.Visible = buildingsPanel.Visible;
+            bool Visibility = (save.Save_Type == SaveType.City_Folk || save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo);
+            buildingsPanel.Visible = Visibility;
+            buildingsLabel.Visible = Visibility;
             townPanel.Size = new Size(buildingsPanel.Visible ? 718 : 922, 517);
 
             //Cleanup old dictionary
@@ -293,7 +314,21 @@ namespace ACSE
             {
                 Villagers = new NewVillager[Current_Save_Info.Villager_Count];
                 for (int i = 0; i < Villagers.Length; i++)
-                    Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
+                    if (Save_File.Save_Type == SaveType.Animal_Crossing)
+                    {
+                        if (i < 15)
+                        {
+                            Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
+                        }
+                        else
+                        {
+                            Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Islander_Data, i, save);
+                        }
+                    }
+                    else
+                    {
+                        Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
+                    }
                 for (int i = villagerPanel.Controls.Count - 1; i > -1; i--)
                     if (villagerPanel.Controls[i] is Panel)
                     {
@@ -487,6 +522,7 @@ namespace ACSE
                 playerWetsuit.Image = Properties.Resources.X;
                 playerShoeColor.Enabled = false;
                 pocketsBackgroundPicturebox.Enabled = true;
+                playerIslandMedals.Enabled = false;
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
@@ -514,6 +550,7 @@ namespace ACSE
                 playerWetsuit.Image = Properties.Resources.X;
                 playerShoeColor.Enabled = false;
                 pocketsBackgroundPicturebox.Enabled = true;
+                playerIslandMedals.Enabled = false;
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
@@ -542,6 +579,7 @@ namespace ACSE
                 playerShoeColor.Enabled = true;
                 pocketsBackgroundPicturebox.Image = Properties.Resources.X;
                 pocketsBackgroundPicturebox.Enabled = false;
+                playerIslandMedals.Enabled = false;
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
@@ -567,6 +605,7 @@ namespace ACSE
                 pocketsBackgroundPicturebox.Image = Properties.Resources.X;
                 pocketsBackgroundPicturebox.Enabled = false;
                 playerWetsuit.Enabled = true;
+                playerIslandMedals.Enabled = true;
                 itemFlag1.Enabled = true;
                 itemFlag2.Enabled = true;
                 playerMeowCoupons.Enabled = Current_Save_Type == SaveType.Welcome_Amiibo;
@@ -651,7 +690,9 @@ namespace ACSE
                 playerWallet.Text = Player.Data.NL_Wallet.Value.ToString();
                 playerSavings.Text = Player.Data.NL_Savings.Value.ToString();
                 playerDebt.Text = Player.Data.NL_Debt.Value.ToString();
-                playerMeowCoupons.Text = Player.Data.MeowCoupons.Value.ToString();
+                playerIslandMedals.Text = Player.Data.Island_Medals.Value.ToString();
+                if (Save_File.Save_Type == SaveType.Welcome_Amiibo)
+                    playerMeowCoupons.Text = Player.Data.MeowCoupons.Value.ToString();
             }
         }
 
@@ -1043,20 +1084,28 @@ namespace ACSE
         {
             // TODO: Draw House Coordinate boxes for AC/WW, and also Furniture Boxes
             Panel Container = new Panel { Size = new Size(700, 30), Location = new Point(0, 20 + Villager.Index * 30) };
-            Label Index = new Label { AutoSize = false, Size = new Size(40, 20), TextAlign = ContentAlignment.MiddleCenter, Text = (Villager.Index + 1).ToString() };
-            ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 30), Location = new Point(40, 0) };
+            Label Index = new Label { AutoSize = false, Size = new Size(45, 20), TextAlign = ContentAlignment.MiddleCenter,
+                Text = (Save_File.Save_Type == SaveType.Animal_Crossing && Villager.Index == 15) ? "Islander" : (Villager.Index + 1).ToString() };
+            ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 30), Location = new Point(45, 0) };
             Villager_Selection_Box.Items.AddRange(Villager_Names);
             Villager_Selection_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(),Villager.Data.Villager_ID);
-            ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 30), Location = new Point(170, 0), DropDownWidth = 120 };
+            ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 30), Location = new Point(175, 0), DropDownWidth = 120 };
             Personality_Selection_Box.Items.AddRange(Personality_Database);
-            Personality_Selection_Box.SelectedIndex = Villager.Data.Personality;
-            TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 30), Location = new Point (260, 0), MaxLength = Villager.Offsets.CatchphraseSize, Text = Villager.Data.Catchphrase };
-            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(370, 0), Checked = Villager.Data.Status == 1 };
-            PictureBox Shirt_Box = new PictureBox {BorderStyle = BorderStyle.FixedSingle, Size = new Size(16, 16), Location = new Point(410, 3), Image = Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type)};
+            if (Save_File.Game_System == SaveGeneration.N3DS)
+            {
+                Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 9 ? Villager.Data.Personality : 8;
+            }
+            else
+            {
+                Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 7 ? Villager.Data.Personality : 6;
+            }
+            TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 30), Location = new Point (265, 0), MaxLength = Villager.Offsets.CatchphraseSize, Text = Villager.Data.Catchphrase };
+            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 0), Checked = Villager.Data.Status == 1 };
+            PictureBox Shirt_Box = new PictureBox {BorderStyle = BorderStyle.FixedSingle, Size = new Size(16, 16), Location = new Point(415, 3), Image = Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type)};
             if (Save_File.Save_Type == SaveType.Wild_World || Save_File.Save_Type == SaveType.City_Folk || Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
             {
                 //TODO: Add wallpaper/floor/song boxes
-                PictureBox Furniture_Box = new PictureBox { BorderStyle = BorderStyle.FixedSingle, Size = new Size(16 * Villager.Data.Furniture.Length, 16), Location = new Point(436, 3) };
+                PictureBox Furniture_Box = new PictureBox { BorderStyle = BorderStyle.FixedSingle, Size = new Size(16 * Villager.Data.Furniture.Length, 16), Location = new Point(441, 3) };
                 Refresh_PictureBox_Image(Furniture_Box, Inventory.GetItemPic(16, Villager.Data.Furniture.Length, Villager.Data.Furniture, Save_File.Save_Type));
 
                 Furniture_Box.MouseMove += delegate (object sender, MouseEventArgs e)
@@ -1075,13 +1124,33 @@ namespace ACSE
                     villagerToolTip.Hide(this);
                 };
 
+                Furniture_Box.MouseClick += delegate (object sender, MouseEventArgs e)
+                {
+                    int Item_Index = (e.X / 16) + (e.Y / 16) * ((sender as PictureBox).Width / 16);
+                    if (e.Button == MouseButtons.Right)
+                    {
+                        //selectedItem.SelectedValue = Villager.Data.Furniture[Item_Index].ItemID;
+                        SetCurrentItem(Villager.Data.Furniture[Item_Index]);
+                    }
+                    else if (e.Button == MouseButtons.Left)
+                    {
+                        Villager.Data.Furniture[Item_Index] = new Item((ushort)selectedItem.SelectedValue);
+                        Refresh_PictureBox_Image(Furniture_Box, Inventory.GetItemPic(16, Villager.Data.Furniture.Length, Villager.Data.Furniture, Save_File.Save_Type));
+                    }
+                };
+
                 Container.Controls.Add(Furniture_Box);
             }
             Villager_Selection_Box.SelectedIndexChanged += delegate (object sender, EventArgs e)
             {
                 int Villager_Idx = Array.IndexOf(Villager_Names, Villager_Selection_Box.Text);
                 if (Villager_Idx > -1)
+                {
                     Villager.Data.Villager_ID = Villager_Database.Keys.ElementAt(Villager_Idx);
+                    //Animal Crossing has a Villager "AI" byte. Normally its just the lower byte of the Villager ID, but it's always 0xFF for the Islander (setting a non-islander to it might cause problems).
+                    if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                        Villager.Data.Villager_AI = (Villager.Index == 15) ? (byte)0xFF : (byte)(Villager.Data.Villager_ID & 0xFF);
+                }
             };
 
             Personality_Selection_Box.SelectedIndexChanged += delegate (object sender, EventArgs e)
@@ -1108,6 +1177,22 @@ namespace ACSE
             Shirt_Box.MouseLeave += delegate (object sender, EventArgs e)
             {
                 villagerToolTip.Hide(this);
+            };
+
+            Shirt_Box.MouseClick += delegate (object sender, MouseEventArgs e)
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    SetCurrentItem(Villager.Data.Shirt);
+                    //selectedItem.SelectedValue = Villager.Data.Shirt.ItemID;
+                    itemFlag1.Text = Villager.Data.Shirt.Flag1.ToString("X2");
+                    itemFlag2.Text = Villager.Data.Shirt.Flag2.ToString("X2");
+                }
+                else if (e.Button == MouseButtons.Left)
+                {
+                    Villager.Data.Shirt = new Item((ushort)selectedItem.SelectedValue, byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text));
+                    Refresh_PictureBox_Image(Shirt_Box, Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type));
+                }
             };
 
             Container.Controls.Add(Index);
@@ -1172,7 +1257,7 @@ namespace ACSE
             BitmapData bitmapData = acreBitmap.LockBits(new Rectangle(0, 0, acreSize, acreSize), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
             System.Runtime.InteropServices.Marshal.Copy(bitmapBuffer, 0, bitmapData.Scan0, bitmapBuffer.Length);
             acreBitmap.UnlockBits(bitmapData);
-            return Island_Acre ? ((Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
+            return Island_Acre ? ((Save_File.Game_System == SaveGeneration.N3DS)
                 ? ImageGeneration.Draw_Buildings(acreBitmap, Island_Buildings, Acre - 5) : acreBitmap) : ImageGeneration.Draw_Buildings(acreBitmap, Buildings, Acre);
         }
 
@@ -1539,7 +1624,7 @@ namespace ACSE
                     Selected_Acre_ID = Island ? Island_Acres[Acre_Index].AcreID : Acres[Acre_Index].AcreID;
                     acreID.Text = "Acre ID: 0x" + Selected_Acre_ID.ToString("X");
                     if (Acre_Info != null)
-                        acreDesc.Text = Acre_Info[(byte)Selected_Acre_ID];
+                        acreDesc.Text = Acre_Info.ContainsKey((byte)Selected_Acre_ID) ? Acre_Info[(byte)Selected_Acre_ID] : "No Description";
                     else if (UInt16_Acre_Info != null)
                         if (Save_File.Save_Type == SaveType.Animal_Crossing && UInt16_Acre_Info.ContainsKey((ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)))
                             acreDesc.Text = UInt16_Acre_Info[(ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)];
@@ -1618,7 +1703,10 @@ namespace ACSE
             {
                 int Item_Index = (e.X / 16) + (e.Y / 16) * (ItemBox.Width / 16);
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.Pockets.Items[Item_Index].ItemID;
+                {
+                    //selectedItem.SelectedValue = Selected_Player.Data.Pockets.Items[Item_Index].ItemID;
+                    SetCurrentItem(Selected_Player.Data.Pockets.Items[Item_Index]);
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.Pockets.Items[Item_Index] = new Item((ushort)selectedItem.SelectedValue);
@@ -1628,7 +1716,10 @@ namespace ACSE
             else if (ItemBox == shirtPicturebox)
             {
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.Shirt.ItemID;
+                {
+                    //selectedItem.SelectedValue = Selected_Player.Data.Shirt.ItemID;
+                    SetCurrentItem(Selected_Player.Data.Shirt);
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.Shirt = new Item((ushort)selectedItem.SelectedValue);
@@ -1638,7 +1729,10 @@ namespace ACSE
             else if (ItemBox == heldItemPicturebox)
             {
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.HeldItem.ItemID;
+                {
+                    //selectedItem.SelectedValue = Selected_Player.Data.HeldItem.ItemID;
+                    SetCurrentItem(Selected_Player.Data.HeldItem);
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.HeldItem = new Item((ushort)selectedItem.SelectedValue);
@@ -1648,7 +1742,10 @@ namespace ACSE
             else if (ItemBox == hatPicturebox && hatPicturebox.Enabled)
             {
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.Hat.ItemID;
+                {
+                    SetCurrentItem(Selected_Player.Data.Hat);
+                    //selectedItem.SelectedValue = Selected_Player.Data.Hat.ItemID;
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.Hat = new Item((ushort)selectedItem.SelectedValue);
@@ -1658,7 +1755,10 @@ namespace ACSE
             else if (ItemBox == facePicturebox && facePicturebox.Enabled)
             {
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.FaceItem.ItemID;
+                {
+                    //selectedItem.SelectedValue = Selected_Player.Data.FaceItem.ItemID;
+                    SetCurrentItem(Selected_Player.Data.FaceItem);
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.FaceItem = new Item((ushort)selectedItem.SelectedValue);
@@ -1668,7 +1768,10 @@ namespace ACSE
             else if (ItemBox == pocketsBackgroundPicturebox && pocketsBackgroundPicturebox.Enabled)
             {
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.InventoryBackground.ItemID;
+                {
+                    //selectedItem.SelectedValue = Selected_Player.Data.InventoryBackground.ItemID;
+                    SetCurrentItem(Selected_Player.Data.InventoryBackground);
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.InventoryBackground = new Item((ushort)selectedItem.SelectedValue);
@@ -1678,7 +1781,10 @@ namespace ACSE
             else if (ItemBox == bedPicturebox && bedPicturebox.Enabled)
             {
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.Bed.ItemID;
+                {
+                    //selectedItem.SelectedValue = Selected_Player.Data.Bed.ItemID;
+                    SetCurrentItem(Selected_Player.Data.Bed);
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.Bed = new Item((ushort)selectedItem.SelectedValue);
@@ -1688,7 +1794,10 @@ namespace ACSE
             else if (ItemBox == pantsPicturebox && pantsPicturebox.Enabled)
             {
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.Pants.ItemID;
+                {
+                    //selectedItem.SelectedValue = Selected_Player.Data.Pants.ItemID;
+                    SetCurrentItem(Selected_Player.Data.Pants);
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.Pants = new Item((ushort)selectedItem.SelectedValue);
@@ -1698,7 +1807,10 @@ namespace ACSE
             else if (ItemBox == socksPicturebox && socksPicturebox.Enabled)
             {
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.Socks.ItemID;
+                {
+                    //selectedItem.SelectedValue = Selected_Player.Data.Socks.ItemID;
+                    SetCurrentItem(Selected_Player.Data.Socks);
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.Socks = new Item((ushort)selectedItem.SelectedValue);
@@ -1708,7 +1820,10 @@ namespace ACSE
             else if (ItemBox == shoesPicturebox && shoesPicturebox.Enabled)
             {
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.Shoes.ItemID;
+                {
+                    //selectedItem.SelectedValue = Selected_Player.Data.Shoes.ItemID;
+                    SetCurrentItem(Selected_Player.Data.Shoes);
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.Shoes = new Item((ushort)selectedItem.SelectedValue);
@@ -1718,7 +1833,10 @@ namespace ACSE
             else if (ItemBox == playerWetsuit && playerWetsuit.Enabled)
             {
                 if (e.Button == MouseButtons.Right)
-                    selectedItem.SelectedValue = Selected_Player.Data.Wetsuit.ItemID;
+                {
+                    //selectedItem.SelectedValue = Selected_Player.Data.Wetsuit.ItemID;
+                    SetCurrentItem(Selected_Player.Data.Wetsuit);
+                }
                 else if (e.Button == MouseButtons.Left)
                 {
                     Selected_Player.Data.Wetsuit = new Item((ushort)selectedItem.SelectedValue);
@@ -2348,6 +2466,21 @@ namespace ACSE
                 else
                 {
                     playerMeowCoupons.Text = Selected_Player.Data.MeowCoupons.Value.ToString();
+                }
+            }
+        }
+
+        private void playerIslandMedals_FocusLost(object sender, EventArgs e)
+        {
+            if (Save_File != null && Selected_Player != null && (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo))
+            {
+                if (uint.TryParse(playerIslandMedals.Text, out uint IslandMedals_Value))
+                {
+                    Selected_Player.Data.Island_Medals = new NL_Int32(IslandMedals_Value);
+                }
+                else
+                {
+                    playerIslandMedals.Text = Selected_Player.Data.Island_Medals.Value.ToString();
                 }
             }
         }

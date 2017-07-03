@@ -52,7 +52,7 @@ namespace ACSE
 
             if (Int_Checksum != Computed_Checksum)
             {
-                NewMainForm.Debug_Manager.WriteLine("Encrypted Int had an invalid Checksum at offset!", DebugLevel.Error);
+                NewMainForm.Debug_Manager.WriteLine("Encrypted Int had an invalid Checksum!", DebugLevel.Error);
                 Int_1 = 0;
                 Int_2 = 0;
                 Value = 0;

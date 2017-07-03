@@ -1277,6 +1277,14 @@ namespace ACSE
             Flag2 = (byte)(itemId >> 16);
             Name = ItemData.GetItemName(ItemID);
         }
+
+        public Item (ushort itemId, byte flag1, byte flag2)
+        {
+            ItemID = itemId;
+            Flag1 = flag1;
+            Flag2 = flag2;
+            Name = ItemData.GetItemName(ItemID);
+        }
     }
 
     public class WorldItem : Item

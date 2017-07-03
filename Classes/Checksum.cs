@@ -21,7 +21,7 @@ namespace ACSE
         public static ushort Calculate(byte[] buffer, int checksumOffset, bool little_endian = false)
         {
             ushort checksum = 0;
-            if (little_endian)
+            if (little_endian) //WW case
             {
                 for (int i = 0; i < checksumOffset; i += 2)
                     checksum += (ushort)((buffer[i + 1] << 8) + buffer[i]);
@@ -40,7 +40,11 @@ namespace ACSE
 
         public static bool Verify(byte[] buffer, int checksumOffset)
         {
-            return BitConverter.ToUInt16(new byte[2] { buffer[checksumOffset + 1], buffer[checksumOffset] }, 0) == Calculate(buffer, checksumOffset);
+            ushort Checksum = 0;
+            for (int i = 0; i < buffer.Length; i += 2)
+                Checksum += (ushort)((buffer[i] << 8) + buffer[i + 1]);
+            return Checksum == 0;
+            //return BitConverter.ToUInt16(new byte[2] { buffer[checksumOffset + 1], buffer[checksumOffset] }, 0) == Calculate(buffer, checksumOffset);
         }
 
         public static void Update(byte[] buffer, int checksumOffset)
@@ -124,7 +128,7 @@ namespace ACSE
         }
     }
 
-    //Used in New Leaf
+    //Used in New Leaf + Welcome Amiibo
     public static class NL_CRC32
     {
         public static uint[] NL_CRC_Table = {

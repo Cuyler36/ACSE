@@ -384,6 +384,7 @@ namespace ACSE
                 GeneratePatternBitmapFromImport(rawPatternArray);
         }
 
+        //AC / CF
         public void GeneratePatternBitmap()
         {
             byte[] patternRawData = Save_File == null ? DataConverter.ReadDataRaw(Offset + 0x20, 0x200) : Save_File.ReadByteArray(Offset + 0x20, 0x200);

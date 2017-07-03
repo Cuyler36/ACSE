@@ -41,6 +41,8 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
+            this.playerIslandMedals = new System.Windows.Forms.TextBox();
+            this.label40 = new System.Windows.Forms.Label();
             this.patternPanel = new System.Windows.Forms.Panel();
             this.label31 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -139,6 +141,7 @@
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.housesTab = new System.Windows.Forms.TabPage();
+            this.label41 = new System.Windows.Forms.Label();
             this.islandTab = new System.Windows.Forms.TabPage();
             this.islandPanel = new System.Windows.Forms.Panel();
             this.grassTab = new System.Windows.Forms.TabPage();
@@ -193,6 +196,7 @@
             this.townTab.SuspendLayout();
             this.villagerTab.SuspendLayout();
             this.villagerPanel.SuspendLayout();
+            this.housesTab.SuspendLayout();
             this.islandTab.SuspendLayout();
             this.grassTab.SuspendLayout();
             this.grassPanel.SuspendLayout();
@@ -291,6 +295,8 @@
             // 
             // playersTab
             // 
+            this.playersTab.Controls.Add(this.playerIslandMedals);
+            this.playersTab.Controls.Add(this.label40);
             this.playersTab.Controls.Add(this.patternPanel);
             this.playersTab.Controls.Add(this.label31);
             this.playersTab.Controls.Add(this.pictureBox1);
@@ -361,6 +367,24 @@
             this.playersTab.TabIndex = 0;
             this.playersTab.Text = "Players";
             this.playersTab.UseVisualStyleBackColor = true;
+            // 
+            // playerIslandMedals
+            // 
+            this.playerIslandMedals.Location = new System.Drawing.Point(251, 164);
+            this.playerIslandMedals.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.playerIslandMedals.Name = "playerIslandMedals";
+            this.playerIslandMedals.Size = new System.Drawing.Size(121, 20);
+            this.playerIslandMedals.TabIndex = 70;
+            this.playerIslandMedals.LostFocus += new System.EventHandler(this.playerIslandMedals_FocusLost);
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(155, 193);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(90, 13);
+            this.label40.TabIndex = 69;
+            this.label40.Text = "MEOW Coupons:";
             // 
             // patternPanel
             // 
@@ -446,7 +470,7 @@
             // 
             // playerMeowCoupons
             // 
-            this.playerMeowCoupons.Location = new System.Drawing.Point(251, 164);
+            this.playerMeowCoupons.Location = new System.Drawing.Point(251, 190);
             this.playerMeowCoupons.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerMeowCoupons.Name = "playerMeowCoupons";
             this.playerMeowCoupons.Size = new System.Drawing.Size(121, 20);
@@ -456,11 +480,11 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(155, 167);
+            this.label26.Location = new System.Drawing.Point(170, 167);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(90, 13);
+            this.label26.Size = new System.Drawing.Size(75, 13);
             this.label26.TabIndex = 59;
-            this.label26.Text = "MEOW Coupons:";
+            this.label26.Text = "Island Medals:";
             // 
             // label27
             // 
@@ -1057,10 +1081,10 @@
             // buildingsLabel
             // 
             this.buildingsLabel.AutoSize = true;
-            this.buildingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buildingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buildingsLabel.Location = new System.Drawing.Point(727, 7);
             this.buildingsLabel.Name = "buildingsLabel";
-            this.buildingsLabel.Size = new System.Drawing.Size(124, 31);
+            this.buildingsLabel.Size = new System.Drawing.Size(113, 29);
             this.buildingsLabel.TabIndex = 0;
             this.buildingsLabel.Text = "Buildings";
             // 
@@ -1251,7 +1275,7 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(275, 4);
+            this.label39.Location = new System.Drawing.Point(280, 4);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(67, 13);
             this.label39.TabIndex = 5;
@@ -1260,7 +1284,7 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(405, 4);
+            this.label36.Location = new System.Drawing.Point(410, 4);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(28, 13);
             this.label36.TabIndex = 4;
@@ -1269,7 +1293,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(358, 4);
+            this.label35.Location = new System.Drawing.Point(363, 4);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(37, 13);
             this.label35.TabIndex = 3;
@@ -1278,7 +1302,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(180, 4);
+            this.label34.Location = new System.Drawing.Point(185, 4);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(58, 13);
             this.label34.TabIndex = 2;
@@ -1304,6 +1328,7 @@
             // 
             // housesTab
             // 
+            this.housesTab.Controls.Add(this.label41);
             this.housesTab.Location = new System.Drawing.Point(4, 22);
             this.housesTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.housesTab.Name = "housesTab";
@@ -1311,6 +1336,16 @@
             this.housesTab.TabIndex = 4;
             this.housesTab.Text = "Houses";
             this.housesTab.UseVisualStyleBackColor = true;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label41.Location = new System.Drawing.Point(247, 264);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(436, 37);
+            this.label41.TabIndex = 0;
+            this.label41.Text = "Feature Not Implemented Yet";
             // 
             // islandTab
             // 
@@ -1576,6 +1611,8 @@
             this.villagerTab.PerformLayout();
             this.villagerPanel.ResumeLayout(false);
             this.villagerPanel.PerformLayout();
+            this.housesTab.ResumeLayout(false);
+            this.housesTab.PerformLayout();
             this.islandTab.ResumeLayout(false);
             this.grassTab.ResumeLayout(false);
             this.grassPanel.ResumeLayout(false);
@@ -1728,5 +1765,8 @@
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.ToolStripMenuItem secureValueToolStripMenuItem;
         private System.Windows.Forms.Panel islandPanel;
+        private System.Windows.Forms.TextBox playerIslandMedals;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label label41;
     }
 }

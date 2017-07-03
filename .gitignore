@@ -8,3 +8,4 @@
 bin/
 .vs/
 obj/
+*.cd

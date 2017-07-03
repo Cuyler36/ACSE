@@ -321,6 +321,7 @@ namespace ACSE
     public struct VillagerOffsets
     {
         public int Villager_ID;
+        public int Villager_AI;
         public int Catchphrase;
         public int CatchphraseSize;
         public int Nicknames;
@@ -346,6 +347,7 @@ namespace ACSE
     public struct VillagerDataStruct
     {
         public ushort Villager_ID;
+        public byte Villager_AI;
         public string Catchphrase;
         public string[] Nicknames;
         public byte Personality;
@@ -370,6 +372,7 @@ namespace ACSE
             Town_ID = 2,
             Town_Name = 4,
             Town_NameSize = 8,
+            Villager_AI = 0xC,
             Personality = 0xD,
             House_Coordinates = 0x899,
             House_CoordinatesSize = 4,
@@ -400,6 +403,13 @@ namespace ACSE
             Shirt = 0x6EC,
             Catchphrase = 0x6DE,
             CatchphraseSize = 0xA,
+            Villager_AI = -1, // Research
+            Town_ID = -1, //Research
+            Town_Name = -1, //Research
+            House_Coordinates = -1, //Research
+            Nicknames = -1, //Research
+            Status = -1, //Research
+            Umbrella = -1, //Research
             //Finish rest of offsets
         };
 
@@ -431,7 +441,8 @@ namespace ACSE
             Furniture = 0x2462,
             FurnitureCount = 16,
             House_Coordinates = -1,
-            Nicknames = -1 //Research
+            Nicknames = -1, //Research
+            Villager_AI = -1,
         };
 
         public static VillagerOffsets WA_Villager_Offsets = new VillagerOffsets
@@ -452,7 +463,8 @@ namespace ACSE
             Furniture = 0x2482,
             FurnitureCount = 16,
             House_Coordinates = -1,
-            Nicknames = -1 //Research
+            Nicknames = -1, //Research
+            Villager_AI = -1,
         };
 
         public static string[] AC_Personalities = new string[7]
@@ -597,6 +609,7 @@ namespace ACSE
     {
         public VillagerOffsets Offsets;
         public VillagerDataStruct Data;
+        public VillagerPlayerEntry[] PlayerEntries;
         public int Index;
         public int Offset;
         public string Name;
@@ -667,6 +680,15 @@ namespace ACSE
         public override string ToString()
         {
             return Name ?? "Unknown";
+        }
+
+        public VillagerPlayerEntry GetPlayerEntry(NewPlayer Player)
+        {
+            if (PlayerEntries != null)
+            {
+                return PlayerEntries.First(o => o.Player == Player);
+            }
+            return null;
         }
 
         public void Write()

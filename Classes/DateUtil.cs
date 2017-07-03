@@ -24,32 +24,51 @@ namespace ACSE
         public uint Day = 0;
         public uint Day_of_Week = 0;
         public uint Month = 0;
-        public uint Year = 0;
+        public uint Year = 2000; //Default
         public string Date_Time_String = "";
         public bool Is_PM = false;
 
-        public ACDate(byte[] dateData, bool reversed = false)
+        public ACDate(byte[] dateData)
         {
-            if (dateData.Length == 0x8)
+            switch (NewMainForm.Save_File.Save_Type)
             {
-                Second = dateData[0];
-                Minute = dateData[1];
-                Hour = dateData[2];
-                Day = dateData[3];
-                Day_of_Week = dateData[4];
-                Month = dateData[5];
-                Year = BitConverter.ToUInt16(new byte[] { dateData[7], dateData[6] }, 0);
+                case SaveType.Animal_Crossing:
+                if (dateData.Length == 0x8)
+                {
+                    Second = dateData[0];
+                    Minute = dateData[1];
+                    Hour = dateData[2];
+                    Day = dateData[3];
+                    Day_of_Week = dateData[4];
+                    Month = dateData[5];
+                    Year = BitConverter.ToUInt16(new byte[] { dateData[7], dateData[6] }, 0);
+                }
+                else if (dateData.Length == 0x4)
+                {
+                    Year = BitConverter.ToUInt16(new byte[] { dateData[1], dateData[0] }, 0);
+                    Month = dateData[2];
+                    Day = dateData[3];
+                }
+                    break;
+                case SaveType.New_Leaf:
+                case SaveType.Welcome_Amiibo:
+                    if (dateData.Length == 2)
+                    {
+                        Day = dateData[1];
+                        Month = dateData[0];
+                    }
+                    else if (dateData.Length == 4)
+                    {
+                        Day = dateData[3];
+                        Month = dateData[2];
+                        Year = (ushort)((dateData[1] << 8) + dateData[0]);
+                    }
+                    break;
             }
-            else if (dateData.Length == 0x4)
-            {
-                Year = BitConverter.ToUInt16(new byte[] { dateData[reversed ? 3 : 1], dateData[reversed ? 2 : 0] }, 0);
-                Month = dateData[reversed ? 1 : 2];
-                Day = dateData[reversed ? 0 : 3];
-            }
-
             Is_PM = Hour >= 12;
             Date_Time_String = string.Format("{0}:{1}:{2} {3}, {4}/{5}/{6}", (Hour % 12) == 0 ? 12 : Hour % 12,
                 Minute.ToString("D2"), Second.ToString("D2"), Is_PM ? "PM" : "AM", Month, Day, Year); //Default date/time string
+            //System.Windows.Forms.MessageBox.Show(Format("(M)/(D)/(y)"));
         }
 
         public string Format(string formatString) //Need to redo this if there is a more efficient/cleaner way
@@ -62,7 +81,7 @@ namespace ACSE
             formatString = formatString.Replace("(D)", Day.ToString("D2"));
             formatString = formatString.Replace("(w)", Day_of_Week.ToString());
             formatString = formatString.Replace("(W)", Enum.GetName(typeof(DayOfWeek), Day_of_Week));
-            formatString = formatString.Replace("(m)", Month.ToString());
+            formatString = formatString.Replace("(mo)", Month.ToString());
             formatString = formatString.Replace("(M)", Month.ToString("D2"));
             formatString = formatString.Replace("(y)", Year.ToString());
             formatString = formatString.Replace("(Y)", Year.ToString().Substring(2, 2));

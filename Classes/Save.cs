@@ -23,6 +23,16 @@ namespace ACSE
         Welcome_Amiibo
     }
 
+    public enum SaveGeneration
+    {
+        Unknown,
+        N64,
+        GCN,
+        NDS,
+        Wii,
+        N3DS //Nintendo 3DS (not New 3DS)
+    }
+
     public struct Offsets
     {
         public int Save_Size;
@@ -386,6 +396,31 @@ namespace ACSE
                     return "Unknown";
             }
         }
+        // This method is useful for grouping games by the console they were released on (since they're normally expansions/revisions)
+        public static SaveGeneration GetGameSystem(SaveType Save_Type)
+        {
+            if (Save_Type == SaveType.Doubutsu_no_Mori)
+            {
+                return SaveGeneration.N64;
+            }
+            else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            {
+                return SaveGeneration.GCN;
+            }
+            else if (Save_Type == SaveType.Wild_World)
+            {
+                return SaveGeneration.NDS;
+            }
+            else if (Save_Type == SaveType.City_Folk)
+            {
+                return SaveGeneration.Wii;
+            }
+            else if (Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
+            {
+                return SaveGeneration.N3DS;
+            }
+            return SaveGeneration.Unknown;
+        }
 
         public static Save_Info GetSaveInfo(SaveType Save_Type)
         {
@@ -612,6 +647,7 @@ namespace ACSE
     public class Save
     {
         public SaveType Save_Type;
+        public SaveGeneration Game_System;
         public byte[] Original_Save_Data;
         public byte[] Working_Save_Data;
         public int Save_Data_Start_Offset;
@@ -645,16 +681,23 @@ namespace ACSE
 
                 Save_Reader = new BinaryReader(Save_File);
 
-                Original_Save_Data = Save_Type == SaveType.Doubutsu_no_Mori ? SaveDataManager.ByteSwap(Save_Reader.ReadBytes((int)Save_File.Length)) : Save_Reader.ReadBytes((int)Save_File.Length);
+                Original_Save_Data = Save_Reader.ReadBytes((int)Save_File.Length);
                 Working_Save_Data = new byte[Original_Save_Data.Length];
                 Buffer.BlockCopy(Original_Save_Data, 0, Working_Save_Data, 0, Original_Save_Data.Length);
 
                 Save_Type = SaveDataManager.GetSaveType(Original_Save_Data);
+                Game_System = SaveDataManager.GetGameSystem(Save_Type);
                 Save_Name = Path.GetFileNameWithoutExtension(File_Path);
                 Save_Path = Path.GetDirectoryName(File_Path) + Path.DirectorySeparatorChar;
                 Save_Extension = Path.GetExtension(File_Path);
                 Save_ID = SaveDataManager.GetGameID(Save_Type);
                 Save_Data_Start_Offset = SaveDataManager.GetSaveDataOffset(Save_ID.ToLower(), Save_Extension.Replace(".", "").ToLower());
+
+                if (Save_Type == SaveType.Doubutsu_no_Mori)
+                {
+                    Original_Save_Data = SaveDataManager.ByteSwap(Original_Save_Data);
+                    Working_Save_Data = SaveDataManager.ByteSwap(Working_Save_Data);
+                }
 
                 if (Save_Type == SaveType.Wild_World || Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
                     Is_Big_Endian = false;

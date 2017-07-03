@@ -85,6 +85,7 @@
     <Content Include="Resources\Images\10.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Resources\Images\no_tpc.png" />
     <None Include="Resources\Images\Arrow.png" />
     <None Include="Resources\Images\Building.png" />
@@ -918,6 +919,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\NL_Acre_Images\acre_171.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\NL_Acre_Images\acre_172.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\NL_Acre_Images\acre_173.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\NL_Acre_Images\acre_174.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\NL_Acre_Images\acre_18.png">
@@ -2737,7 +2747,9 @@
     <Compile Include="Classes\ImageGeneration.cs" />
     <Compile Include="Classes\NL_Int32.cs" />
     <Compile Include="Classes\Save.cs" />
+    <Compile Include="Classes\SimpleTownInfo.cs" />
     <Compile Include="Classes\Utility.cs" />
+    <Compile Include="Classes\VillagerPlayerEntry.cs" />
     <Compile Include="Forms\AboutBox2.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -65,12 +65,14 @@ namespace ACSE
         public int Bed;
         public int Wetsuit;
         public int Birthday;
+        public int BirthdaySize;
         public int TownIdentifier;
         public int TownIdentifierSize;
         public int NL_Wallet;
         public int NL_Savings;
         public int NL_Debt;
         public int MeowCoupons;
+        public int Island_Medals;
     }
 
     public struct PlayerData
@@ -114,6 +116,7 @@ namespace ACSE
         public NL_Int32 NL_Savings;
         public NL_Int32 NL_Debt;
         public NL_Int32 MeowCoupons;
+        public NL_Int32 Island_Medals;
     }
 
     public static class PlayerInfo
@@ -170,6 +173,7 @@ namespace ACSE
             NL_Savings = -1,
             NL_Wallet = -1,
             MeowCoupons = -1,
+            Island_Medals = -1,
         };
 
         public static PlayerSaveInfo Wild_World = new PlayerSaveInfo
@@ -232,6 +236,7 @@ namespace ACSE
             NL_Savings = -1,
             NL_Wallet = -1,
             MeowCoupons = -1,
+            Island_Medals = -1,
         };
 
         public static PlayerSaveInfo City_Folk = new PlayerSaveInfo
@@ -287,6 +292,7 @@ namespace ACSE
             NL_Savings = -1,
             NL_Wallet = -1,
             MeowCoupons = -1,
+            Island_Medals = -1,
         };
 
         public static PlayerSaveInfo New_Leaf = new PlayerSaveInfo
@@ -314,16 +320,24 @@ namespace ACSE
             TownName = 0x55BE,
             TownNameSize = 0x12,
             Gender = 0x55BA,
+            Birthday = 0x55D4,
+            BirthdaySize = 2,
+            RegisterDate = 0x55D6,
+            RegisterDateSize = 0x4,
             TownPassCardImage = 0x5724,
+            NL_Savings = 0x6B6C,
+            NL_Debt = 0x6B74,
+            Island_Medals = 0x6B7C,
             Pockets = 0x6BB0,
+            NL_Wallet = 0x6E38,
             PocketsCount = 16,
-            MeowCoupons = -1,
             NookPoints = -1,
             Debt = -1,
             Bells = -1,
             Bed = -1,
             Savings = -1,
             ShoeColor = -1,
+            MeowCoupons = -1,
         };
 
         public static PlayerSaveInfo Welcome_Amiibo = new PlayerSaveInfo
@@ -351,11 +365,16 @@ namespace ACSE
             TownName = 0x55BE,
             TownNameSize = 0x12,
             Gender = 0x55BA,
+            Birthday = 0x55D4,
+            BirthdaySize = 0x2,
+            RegisterDate = 0x55D6,
+            RegisterDateSize = 0x4,
             TownPassCardImage = 0x5738,
             Pockets = 0x6BD0,
             PocketsCount = 16,
             NL_Savings = 0x6B8C,
             NL_Debt = 0x6B94,
+            Island_Medals = 0x6B9C,
             NL_Wallet = 0x6F08,
             MeowCoupons = 0x8D1C,
             NookPoints = -1,
@@ -678,6 +697,11 @@ namespace ACSE
                                 {
                                     uint[] Int_Data = SaveData.ReadUInt32Array(DataOffset, 2);
                                     Current_Field.SetValue(BoxedData, new NL_Int32(Int_Data[0], Int_Data[1]));
+                                }
+                                else if (FieldType == typeof(ACDate) && DataOffset > 0)
+                                {
+                                    Current_Field.SetValue(BoxedData, new ACDate(SaveData.ReadByteArray(DataOffset,
+                                        (int)typeof(PlayerSaveInfo).GetField(Field.Name + "Size").GetValue(Offsets))));
                                 }
                             }
                         }

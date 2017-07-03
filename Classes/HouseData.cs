@@ -160,7 +160,7 @@ namespace ACSE
             Town_Name = DataConverter.ReadString(offset + 8, 8).Trim();
             Player_ID = DataConverter.ReadUInt(offset + 0x10);
             Last_Entry_Date = new ACDate(DataConverter.ReadDataRaw(offset + 0x1C, 4));
-            Last_Upgrade_Date = new ACDate(DataConverter.ReadDataRaw(offset + 0x26, 4), true);
+            Last_Upgrade_Date = new ACDate(DataConverter.ReadDataRaw(offset + 0x26, 4)); //reversed
             //Garbage here
             House_Number = (byte)((offset - 0x9CE8) / 0x26B0);
             for (int i = 0; i < 3; i++)
