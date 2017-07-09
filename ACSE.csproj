@@ -90,27 +90,13 @@
     <None Include="Resources\Images\Arrow.png" />
     <None Include="Resources\Images\Building.png" />
     <Content Include="Resources\Images\AC Save Editor Logo.ico" />
-    <Content Include="Resources\Images\Acre_Images\00EC.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\Acre_Images\0100.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\Acre_Images\0184.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\Acre_Images\0234.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\Acre_Images\0270.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\Acre_Images\02C4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Images\Acre_Images\02EC.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Resources\Images\Acre_Images\00EC.jpg" />
+    <Content Include="Resources\Images\Acre_Images\0100.jpg" />
+    <Content Include="Resources\Images\Acre_Images\0184.jpg" />
+    <Content Include="Resources\Images\Acre_Images\0234.jpg" />
+    <Content Include="Resources\Images\Acre_Images\0270.jpg" />
+    <Content Include="Resources\Images\Acre_Images\02C4.jpg" />
+    <Content Include="Resources\Images\Acre_Images\02EC.jpg" />
     <Content Include="Resources\Images\Acre_Images\0324.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -126,9 +112,7 @@
     <Content Include="Resources\Images\Acre_Images\0350.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Images\Acre_Images\03C0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Resources\Images\Acre_Images\03C0.jpg" />
     <Content Include="Resources\Images\Acre_Images\0594.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
