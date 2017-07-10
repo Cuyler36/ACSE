@@ -56,6 +56,7 @@ namespace ACSE
         public int House_Data_Size;
         public int Villager_Data;
         public int Villager_Size;
+        public int Campsite_Visitor;
         public int Islander_Data;
         public int Debt; //Only global in WW
         public int Buildings; //CF/NL
@@ -123,6 +124,7 @@ namespace ACSE
             House_Data = 0x9CE8,
             House_Data_Size = 0x26B0,
             Island_Acre_Data = 0x17420,
+            Campsite_Visitor = 0x20644,
             Buildings = -1,
             Debt = -1,
             Grass_Wear = -1,
@@ -198,6 +200,8 @@ namespace ACSE
             Player_Size = 0x9F10,
             Villager_Data = 0x27C90,
             Villager_Size = 0x24F8,
+            Past_Villagers = 0x3F17E,
+            Campsite_Visitor = 0x3F1CA,
             Buildings = 0x49528,
             Buildings_Count = 58, //TODO: Add island buildings (Island Hut & Loaner Gyroid at 59 and 60)
             Acre_Data = 0x4DA04,
@@ -208,11 +212,9 @@ namespace ACSE
             Town_Name = 0x5C73A,
             Grass_Wear = 0x53E80,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
-            Past_Villagers = 0x3F17E,
             Island_Acre_Data = 0x6A408,
             Island_World_Data = 0x6A428,
             Island_Buildings = 0x6B428,
-            //Campsite_Villager = 0x3F1CA
         };
 
         public static Offsets Welcome_Amiibo_Offsets = new Offsets
@@ -222,6 +224,8 @@ namespace ACSE
             Player_Size = 0xA480,
             Villager_Data = 0x29250,
             Villager_Size = 0x2518,
+            Past_Villagers = 0x4087A,
+            Campsite_Visitor = 0x408C6,
             Buildings = 0x4BE08,
             Buildings_Count = 58, //TODO: Add island buildings (Island Hut & Loaner Gyroid at 59 and 60)
             Acre_Data = 0x53404,
@@ -232,13 +236,12 @@ namespace ACSE
             Town_Name = 0x6213A,
             Grass_Wear = 0x59880,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
-            Past_Villagers = 0x4087A,
             Island_Acre_Data = 0x6FE38,
             Island_World_Data = 0x6FE58,
             Island_Buildings = 0x70E58,
         };
 
-        public static Save_Info Animal_Crossing = new Save_Info
+        public static Save_Info Animal_Crossing = new Save_Info // Valid for GAFE and GAFP
         {
             Contains_Island = true,
             Has_Islander = true,

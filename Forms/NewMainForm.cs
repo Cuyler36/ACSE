@@ -59,6 +59,7 @@ namespace ACSE
         ushort Selected_Acre_ID = 0;
         int Selected_Building = -1;
         ushort Last_Selected_Item = 0;
+        EventHandler Campsite_EventHandler;
 
         public NewMainForm(Save save = null)
         {
@@ -118,6 +119,9 @@ namespace ACSE
             playerEyeColor.SelectedIndexChanged += new EventHandler((object sender, EventArgs e) => Eye_Color_Changed());
             playerShoeColor.SelectedIndexChanged += new EventHandler((object sender, EventArgs e) => Shoe_Color_Changed());
 
+            //Setup Campsite EventHandler
+            Campsite_EventHandler = new EventHandler((object sender, EventArgs e) => Campsite_Villager_Changed());
+
             //Setup Welcome Amiibo Caravan ComboBoxes
             caravan1ComboBox.DataSource = VillagerData.GetCaravanBindingSource();
             caravan2ComboBox.DataSource = VillagerData.GetCaravanBindingSource();
@@ -128,6 +132,25 @@ namespace ACSE
 
             if (save != null)
                 SetupEditor(save);
+        }
+
+        private void Campsite_Villager_Changed()
+        {
+            if (Save_File != null && campsiteComboBox.Enabled)
+            {
+                try
+                {
+                    if (campsiteComboBox.SelectedValue != null)
+                    {
+                        ushort Camper_ID = (ushort)campsiteComboBox.SelectedValue;
+                        Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Campsite_Visitor, Camper_ID, Save_File.Is_Big_Endian);
+                    }
+                }
+                catch
+                {
+                    // Implement Debug Line
+                }
+            }
         }
 
         private void BindPlayerItemBoxEvents(Control Bindee)
@@ -151,7 +174,7 @@ namespace ACSE
         {
             if (save.Save_Type == SaveType.Unknown)
             {
-                MessageBox.Show(string.Format("The file [{0}] could not be identified as a valid Animal Crossing save file.\n Please ensure you have a valid save file.",
+                MessageBox.Show(string.Format("The file [{0}] could not be identified as a valid Animal Crossing save file.\nPlease ensure you have a valid save file.",
                     save.Save_Name + save.Save_Extension), "Save File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -208,12 +231,32 @@ namespace ACSE
                 for (int i = villagerPanel.Controls.Count - 1; i > -1; i--)
                     if (villagerPanel.Controls[i] is Panel)
                         villagerPanel.Controls[i].Dispose();
+
                 //Add Campsite Villager Database
                 campsiteComboBox.DataSource = null;
-                if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
+                campsiteComboBox.SelectedValueChanged -= Campsite_EventHandler;
+                campsiteComboBox.Items.Clear();
+                campsiteComboBox.Enabled = true;
+                if (Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
+                {
                     campsiteComboBox.DataSource = new BindingSource(Villager_Database, null);
-                campsiteComboBox.DisplayMember = "Value";
-                campsiteComboBox.ValueMember = "Key";
+                    campsiteComboBox.DisplayMember = "Value";
+                    campsiteComboBox.ValueMember = "Key";
+                    //Load Campsite (or Igloo) Visitor
+                    try
+                    {
+                        ushort Camper_ID = Save_File.ReadUInt16(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Campsite_Visitor, Save_File.Is_Big_Endian);
+                        campsiteComboBox.SelectedValue = Camper_ID;
+
+                        //Setup Campsite Event
+                        campsiteComboBox.SelectedValueChanged += Campsite_EventHandler;
+                    }
+                    catch { } // TODO: Implement debug writeline.
+                }
+                else
+                {
+                    campsiteComboBox.Enabled = false;
+                }
                 //Set Caravan Availablity
                 caravan1ComboBox.Enabled = Save_File.Save_Type == SaveType.Welcome_Amiibo;
                 caravan2ComboBox.Enabled = caravan1ComboBox.Enabled;
