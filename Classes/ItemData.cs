@@ -688,7 +688,7 @@ namespace ACSE
                     return "Tree";
                 else if ((ID >= 0x5 && ID <= 0x7) || (ID >= 0xB && ID <= 0x10) || (ID >= 0x5000 && ID <= 0xB000) || (ID == 0xFE1D || ID == 0xFE1E))
                     return "Building";
-                else if ((ID >= 0x1000 && ID <= 0x15AC) || (ID >= 0x17AC && ID <= 0x1FFC) || (ID >= 0x3000 && ID <= 0x33C4))
+                else if ((ID >= 0x1000 && ID <= 0x15AC) || (ID >= 0x17AC && ID <= 0x1FFC) || (ID >= 0x3000 && ID <= 0x33C4) || ID == 0xFE20)
                     return "Furniture";
                 else
                     return "Unknown";
@@ -1365,6 +1365,23 @@ namespace ACSE
             Price = price;
             Sale_Type = sellType;
             Free = sellType == 0;
+        }
+    }
+
+    public class Shirt_Item : Item // Used in Animal Crossing only?
+    {
+        public byte Design_Database; // Specifies which Design Database to pull the design from. 0 = Default Shirt Database (Ex: 00 = Flame Shirt), 1 = Player's Patterns
+        public byte Design_ID; // Specifies which entry in the Database to use for the design
+
+        public Shirt_Item(ushort itemId, byte id, byte database = 0) : base(itemId)
+        {
+            Design_ID = database == 0 ? (byte)(itemId) : id;
+            Design_Database = database;
+        }
+
+        public byte[] GetBytes()
+        {
+            return new byte[4] { Design_Database, Design_ID, (byte)(ItemID >> 8), (byte)(ItemID) };
         }
     }
 

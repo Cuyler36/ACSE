@@ -2573,5 +2573,6 @@
 0xFE1D, Possible Bridge Location (/)
 0xFE1E, Possible Bridge Location (\)
 0xFE1F, Multispace Furniture Collision Box
+0xFE20, Custom Pattern
 0xFFFE, House Wall
 0xFFFF, Occupied/Unavailable

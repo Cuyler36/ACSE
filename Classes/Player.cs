@@ -139,7 +139,7 @@ namespace ACSE
             Debt = 0x90,
             HeldItem = 0x4A4,
             InventoryBackground = 0x1084,
-            Shirt = 0x108A, //The lower byte in the item id is also at 0x1089
+            Shirt = 0x108A, //If the shirt is a pattern, Player+0x1089 will be the pattern number. Otherwise, it's just the lower byte of the shirt id.
             Reset = 0x10F4,
             ResetSize = 8,
             Savings = 0x122C,
