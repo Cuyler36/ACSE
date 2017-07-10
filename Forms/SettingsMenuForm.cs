@@ -22,6 +22,7 @@ namespace ACSE
             imageSizeModeComboBox.SelectedIndexChanged += new EventHandler((object o, EventArgs e) => ImageResizeMode_Changed());
             debugLevelComboBox.SelectedIndex = (int)Properties.Settings.Default.DebugLevel;
             debugLevelComboBox.SelectedIndexChanged += new EventHandler((object o, EventArgs e) => DebugLevel_Changed());
+            scanForInt32Checkbox.Checked = Properties.Settings.Default.OutputInt32s;
         }
 
         private void ImageResizeMode_Changed()
@@ -33,6 +34,11 @@ namespace ACSE
         private void DebugLevel_Changed()
         {
             Properties.Settings.Default.DebugLevel = (DebugLevel)Math.Max(0, debugLevelComboBox.SelectedIndex);
+        }
+
+        private void scanForInt32Checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.OutputInt32s = scanForInt32Checkbox.Checked;
         }
 
         private void doneButton_Click(object sender, EventArgs e)

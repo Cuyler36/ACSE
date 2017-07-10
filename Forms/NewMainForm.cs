@@ -439,16 +439,18 @@ namespace ACSE
                     Acres[i] = new Normal_Acre(Acre_Data[i], i);
                 }
             }
+
             townNameBox.Text = new ACString(save.ReadByteArray(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Name,
                 Save_File.Save_Type == SaveType.City_Folk ? 16 : ((Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
                 ? 0x12 : 8)), save.Save_Type).Trim();
             SetupAcreEditorTreeView();
             SetupMapPictureBoxes();
+
             if (Buildings != null)
                SetupBuildingList();
-            //Fix_Buried_Empty_Spots(); //Temp
-            //Temp
-            //Utility.Scan_For_NL_Int32();
+            
+            if (Properties.Settings.Default.OutputInt32s)
+                Utility.Scan_For_NL_Int32();
         }
 
         public void SetPlayersEnabled()

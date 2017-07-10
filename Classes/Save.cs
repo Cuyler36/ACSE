@@ -347,7 +347,7 @@ namespace ACSE
             else if (Save_Data.Length == 0x72040 || Save_Data.Length == 0x72150)
             {
                 string Game_ID = Encoding.ASCII.GetString(Save_Data, Save_Data.Length == 0x72150 ? 0x110 : 0, 4);
-                if (Game_ID == "GAFE")
+                if (Game_ID == "GAFE" || Game_ID == "GAFP") // GAFP is PAL.
                     return SaveType.Animal_Crossing;
                 else if (Game_ID == "GAFJ")
                     return SaveType.Doubutsu_no_Mori_Plus;

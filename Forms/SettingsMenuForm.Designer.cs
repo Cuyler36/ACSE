@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.debugLevelComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.scanForInt32Checkbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // imageSizeModeComboBox
@@ -94,12 +95,26 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Debug Message Level:";
             // 
+            // scanForInt32Checkbox
+            // 
+            this.scanForInt32Checkbox.AutoSize = true;
+            this.scanForInt32Checkbox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.scanForInt32Checkbox.Location = new System.Drawing.Point(5, 60);
+            this.scanForInt32Checkbox.Name = "scanForInt32Checkbox";
+            this.scanForInt32Checkbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.scanForInt32Checkbox.Size = new System.Drawing.Size(190, 17);
+            this.scanForInt32Checkbox.TabIndex = 7;
+            this.scanForInt32Checkbox.Text = ":Scan and Output NL Int32 Offsets";
+            this.scanForInt32Checkbox.UseVisualStyleBackColor = true;
+            this.scanForInt32Checkbox.CheckedChanged += new System.EventHandler(this.scanForInt32Checkbox_CheckedChanged);
+            // 
             // SettingsMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(404, 167);
             this.ControlBox = false;
+            this.Controls.Add(this.scanForInt32Checkbox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.debugLevelComboBox);
             this.Controls.Add(this.label2);
@@ -121,5 +136,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox debugLevelComboBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox scanForInt32Checkbox;
     }
 }
