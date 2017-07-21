@@ -34,4 +34,5 @@ Then click on Animal Crossing, and click the Export GCI button.
 
 ### Modded GameCube/Wii
 Refer to the article here: https://wiki.dolphin-emu.org/index.php?title=Ripping_Games#Retrieving_Game_Saves
+
 I use a Soft-Modded Wii along with a Hard-Modded GameCube to extract Save Files.
