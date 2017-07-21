@@ -803,12 +803,6 @@ namespace ACSE
                     Working_Save_Data = SaveDataManager.ByteSwap(Working_Save_Data);
                 }
 
-                if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
-                {
-                    MessageBox.Show(Checksum.Verify(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x2E000).ToArray(), 0x12).ToString());
-                    MessageBox.Show(Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x2E000).ToArray(), 0x12).ToString("X"));
-                }
-
                 if (Save_Type == SaveType.Wild_World || Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
                     Is_Big_Endian = false;
 
