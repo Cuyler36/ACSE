@@ -45,8 +45,169 @@
 0x0274, Grass Acre #3
 0x0278, Grass Acre #4
 0x027C, Grass Acre #5
-0x0280, Grass Acre #6
+0x0280, Grass Acre w/ Pond #6
 0x0284, Grass Acre #7
 0x0288, Grass Acre #8
 0x028C, Grass Acre #9
 0x0290, Grass Acre #10
+//River Acres
+0x0060, River w/ Islet (Stone Bridges) (East > South)
+0x006C, River w/ Waterfall (South) #1
+0x0070, River w/ Train Track Bridge #1
+0x0084, River w/ Waterfall (South) #2
+0x008C, River w/ Waterfall (South) #3
+0x0090, River w/ Waterfall (East) #1
+0x00A0, River w/ Cliff (East) #1
+0x00A4, River w/ Cliff (West) #1
+0x00B0, River w/ Cliff (South) #1
+0x00B8, River w/ Corner Cliff (South) #1
+0x00BC, River w/ Corner Cliff (East) #1
+0x00C4, River w/ Corner Cliff (East) #2
+0x00C8, River w/ Corner Cliff (South) #2
+0x00D0, River w/ Cliff (South) #2
+0x00D8, River (South) #1
+0x00DC, River (East) #1
+0x00E0, River (West) #1
+0x00E4, River w/ Wooden Bridge (South > East)
+0x00E8, River (East > South) #1
+0x00EC, River (South > West) #1
+0x00F0, River (West > South) #1
+0x00F4, River w/ Waterfall (East) #2
+0x00F8, River w/ Waterfall (West) #1
+0x00FC, River w/ Waterfall (West) #2
+0x0100, River w/ Stone Bridge (South) #1
+0x0104, River w/ Islet (Stone Bridges) (East)
+0x0108, River w/ Stone Bridge (West) #1
+0x010C, River w/ Stone Bridge (South > East)
+0x0110, River w/ Stone Bridge (South > West)
+0x0114, River w/ Stone Bridge (West > South)
+0x0138, River w/ Corner Cliff (South) #3
+0x013C, River w/ Corner Cliff (West) #1
+0x0170, River (South) #2
+0x0174, River (South) #3
+0x0178, River (South > East) #1
+0x017C, River (East > South) #2
+0x0180, River (West > South) #2
+0x0184, River (West > South) #3
+0x0198, River w/ Cliff (South) #3
+0x019C, River w/ Cliff (South) #4
+0x01A8, River w/ Cliff (East) #2
+0x01AC, River w/ Cliff (West) #2
+0x01BC, River (South) #4
+0x01C0, River (South) #5
+0x01C4, River w/ Corner Cliff (South) #4
+0x01C8, River w/ Corner Cliff (East) #3
+0x01CC, River w/ Corner Cliff (South) #5
+0x01D0, River (South > West) #2
+0x01D4, River w/ Corner Cliff (East) #4
+0x01D8, River w/ Corner Cliff (West) #2
+0x01DC, River (East) #2
+0x01E0, River (West) #2
+0x01E4, River w/ Corner Cliff (West) #3
+0x01FC, River w/ Lake (South) #1
+0x0200, River w/ Waterfall (South) #4
+0x0204, River w/ Waterfall (South) #5
+0x0208, River w/ Cliff (East) #3
+0x020C, River w/ Cliff (West) #3
+0x0210, River w/ Waterfall (South) #6
+0x0214, River w/ Waterfall (South) #7
+0x0220, River (South) #6
+0x0224, River (East) #3
+0x0228, River (West) #4
+0x022C, River (South > East) #2
+0x0230, River (East > South) #2
+0x0234, River (South > West) #3
+0x0244, River w/ Waterfall (East) #3
+0x0248, River w/ Waterfall (East) #4
+0x024C, River w/ Wooden Bridge (South) #1
+0x0250, River w/ Wooden Bridge (East) #1
+0x0254, River w/ Wooden Bridge (South > East) #1
+0x0258, River w/ Wooden Bridge (West) #1
+0x025C, River w/ Wooden Bridge (East > South) #1
+0x0260, River w/ Islet (Wooden Bridge) (South > West)
+0x0264, River w/ Wooden Bridge (West > South) #1
+0x0268, River w/ Wooden Bridge (South) #2
+0x026C, River w/ Wooden Bridge (East) #2
+0x0270, River w/ Stone Bridge (West) #2
+0x02B8, River w/ Train Track Bridge #2
+0x02BC, River w/ Train Track Bridge #3
+0x02C0, River w/ Train Track Bridge #4
+0x02C4, River w/ Train Track Bridge #5
+0x02C8, River w/ Lake (East) #1
+0x02CC, River w/ Lake (West) #1
+0x02E8, River w/ Lake (South > West) #1
+0x02EC, River w/ Lake (West > South) #1
+0x02F8, River w/ Lake (South > East) #1
+0x02FC, River w/ Lake (East > South) #1
+0x0414, River w/ Waterfall (West) #3
+//Cliff & Ramp Acres
+0x0088, Ramp (South) #1
+0x009C, Cliff #1
+0x00A8, Corner Cliff #1
+0x00AC, Cliff #2
+0x00B4, Corner Cliff #2
+0x00C0, Corner Cliff #3
+0x00CC, Cliff #3
+0x00D4, Corner Cliff #4
+0x011C, Ramp (South) #2
+0x0120, Ramp (South) #3
+0x0124, Ramp (West) #1
+0x0128, Corner Ramp #1
+0x012C, Ramp (South) #4
+0x0130, Ramp (West) #2
+0x0134, Ramp (West) #3
+0x015C, Cliff #4
+0x0160, Cliff #5
+0x0164, Cliff #6
+0x0168, Cliff #7
+0x016C, Corner Cliff #5
+0x0188, Ramp (South) #5
+0x018C, Ramp (South) #6
+0x0190, Corner Ramp #2
+0x0194, Ramp (South) #7
+0x01A0, Cliff #8
+0x01A4, Cliff #9
+0x01B0, Corner Cliff #6
+0x01B4, Corner Cliff #7
+0x01B8, Cliff #10
+0x01E8, Corner Cliff #8
+0x01EC, Corner Cliff #9
+0x01F0, Cliff #11
+0x01F4, Corner Cliff #10
+0x0218, Cliff #12
+0x021C, Corner Cliff #11
+0x0320, Ramp (South) #8
+0x0410, Ramp (South) #9
+0x0418, Ramp (West) #4
+0x041C, Ramp (West) #5
+//Oceanfront Acres
+0x03A0, Oceanfront #1
+0x03A4, Oceanfront #2
+0x03B0, Oceanfront w/ River #1
+0x03C0, Oceanfront w/ River #2
+0x03C4, Oceanfront w/ River #3
+0x03C8, Oceanfront w/ River #4
+0x03CC, Oceanfront w/ River #5
+0x03D0, Oceanfront w/ River (Stone Bridge) #1
+0x03D4, Oceanfront w/ River (Wooden Bridge) #1
+0x03D8, Oceanfront w/ River (Stone Bridge) #2
+0x03F0, Oceanfront #3
+0x03F4, Oceanfront #4
+0x03F8, Oceanfront #5
+0x03FC, Oceanfront #6
+0x0400, Oceanfront #7
+0x0404, Oceanfront #8
+0x0408, Oceanfront #9
+0x040C, Oceanfront #10
+0x0498, Oceanfront w/ Dock #1
+0x05AC, Oceanfront w/ Dock #2
+0x05B0, Oceanfront w/ Dock #3
+//Island Acres
+0x04A0, Island (Right) #1
+0x04A4, Island (Left) #1
+0x0594, Island (Right) #2
+0x0598, Island (Left) #2
+0x059C, Island (Right) #3
+0x05A0, Island (Left) #3
+0x05A4, Island (Right) #4
+0x05A8, Island (Left) #4

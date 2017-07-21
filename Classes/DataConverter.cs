@@ -122,7 +122,7 @@ namespace ACSE
         {
             byte[] data = new byte[maxSize];
             //Buffer.BlockCopy(MainForm.SaveBuffer, offset, data, 0, maxSize);
-            return new ACString(data);
+            return new ACString(data, NewMainForm.Save_File.Save_Type);
         }
 
         public static void WriteString(int offset, string str, int maxSize)

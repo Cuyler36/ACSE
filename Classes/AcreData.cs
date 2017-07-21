@@ -16,6 +16,8 @@ namespace ACSE
     class AcreData
     {
         /*
+         * Doubutsu no Mori - Doubutsu no Mori e+ Acre Info
+         * 
          * Each acre consists of 4 height levels starting at the lowest height.
          * Example:
              * 0x0278 = Empty Acre (Lower) (4)
@@ -33,7 +35,7 @@ namespace ACSE
         {
             Dictionary<string, Image> Image_List = new Dictionary<string, Image>();
             string Image_Dir = NewMainForm.Assembly_Location + "\\Resources\\Images\\";
-            if (Save_Type == SaveType.Animal_Crossing)
+            if (Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
                 Image_Dir += "Acre_Images";
             else if (Save_Type == SaveType.Wild_World)
                 Image_Dir += "WW_Acre_Images";
@@ -64,46 +66,6 @@ namespace ACSE
             return acreData;
         }
 
-        public static ushort[] ClearWeeds(ushort[] acreBuffer)
-        {
-            int WeedsCleared = 0;
-            for (int i = 0; i < acreBuffer.Length; i++)
-            {
-                if (acreBuffer[i] >= 0x08 && acreBuffer[i] <= 0x0A)
-                {
-                    acreBuffer[i] = 0x00;
-                    WeedsCleared++;
-                }
-            }
-            MessageBox.Show("Weeds Cleared: " + WeedsCleared.ToString());
-            return acreBuffer;
-        }
-
-        public static ushort[] ClearTown(ushort[] buffer)
-        {
-            int itemsCleared = 0;
-            for (int i = 0; i < buffer.Length; i++)
-            {
-                if (buffer[i] < 0x4000)
-                {
-                    buffer[i] = 0x00;
-                    itemsCleared++;
-                }
-            }
-            MessageBox.Show("Items Cleared: " + itemsCleared.ToString());
-            return buffer;
-        }
-
-        /*public static string GetAcreName(ushort acreId)
-        {
-            foreach (KeyValuePair<ushort, string> acreData in Acres)
-            {
-                if (acreId == acreData.Key)
-                    return acreData.Value;
-            }
-            return "Unknown";
-        }*/
-
         public static Dictionary<int, Acre> GetAcreTileData(ushort[] acreBuffer)
         {
             Dictionary<int, Acre> AcreTileData = new Dictionary<int, Acre> { };
@@ -121,12 +83,14 @@ namespace ACSE
     public class Acre
     {
         public ushort AcreID = 0;
+        public ushort BaseAcreID = 0; // GCN/N64
         public int Index = 0;
         public string Name = "";
 
         public Acre(ushort acreId, int position)
         {
             AcreID = acreId;
+            BaseAcreID = (ushort)(acreId - acreId % 4);
             Index = position;
             //Name = AcreData.GetAcreName(acreId);
         }
@@ -177,12 +141,16 @@ namespace ACSE
         //TODO: Change BuriedData from byte[] to ushort[] and use updated code
         private int GetBuriedDataLocation(WorldItem item, int acre, SaveType saveType)
         {
-            int worldPosition = 0;
-            if (saveType == SaveType.Animal_Crossing || saveType == SaveType.City_Folk)
-                worldPosition = (acre * 256) + (15 - item.Location.X) + item.Location.Y * 16; //15 - item.Location.X because it's stored as a ushort in memory w/ reversed endianess
-            else if (saveType == SaveType.Wild_World)
-                worldPosition = (acre * 256) + item.Index;
-            return worldPosition / 8;
+            if (item != null)
+            {
+                int worldPosition = 0;
+                if (saveType == SaveType.Animal_Crossing || saveType == SaveType.Doubutsu_no_Mori_e_Plus || saveType == SaveType.City_Folk)
+                    worldPosition = (acre * 256) + (15 - item.Location.X) + item.Location.Y * 16; //15 - item.Location.X because it's stored as a ushort in memory w/ reversed endianess
+                else if (saveType == SaveType.Wild_World)
+                    worldPosition = (acre * 256) + item.Index;
+                return worldPosition / 8;
+            }
+            return -1;
         }
 
         public void SetBuriedInMemory(WorldItem item, int acre, byte[] burriedItemData, bool buried, SaveType saveType)

@@ -295,9 +295,9 @@ namespace ACSE
             Array.Reverse(playerId);
             Array.Reverse(metTownId);
 
-            Player_Name = new ACString(playerNameBytes).Trim();
-            Player_Town_Name = new ACString(playerTownName).Trim();
-            Met_Town_Name = new ACString(metTownName).Trim();
+            //Player_Name = new ACString(playerNameBytes).Trim();
+            //Player_Town_Name = new ACString(playerTownName).Trim();
+            //Met_Town_Name = new ACString(metTownName).Trim();
             Met_Date = new ACDate(metDate);
             Player_ID = BitConverter.ToUInt32(playerId, 0);
             Met_Town_ID = BitConverter.ToUInt16(metTownId, 0);
@@ -366,6 +366,29 @@ namespace ACSE
 
     public static class VillagerInfo
     {
+        public static VillagerOffsets Doubtusu_no_Mori_Plus_Villager_Offsets = new VillagerOffsets
+        {
+            Villager_ID = 0,
+            Town_ID = 2,
+            Town_Name = 4,
+            Town_NameSize = 6,
+            Villager_AI = 0xA, // Goes unused??
+            Personality = 0xB,
+            House_Coordinates = 0x4E1,
+            House_CoordinatesSize = 4,
+            Catchphrase = 0x4E5,
+            CatchphraseSize = 0x4,
+            Shirt = 0x520,
+            Status = -1, //Research
+            Umbrella = -1, //Research this as well
+            Furniture = -1, //No Furniture customization in AC
+            Carpet = -1,
+            Wallpaper = -1,
+            Nicknames = -1, //Inside of "Player Entries"
+            Song = -1,
+            //Add Player Entries (Relationships)
+        };
+
         public static VillagerOffsets AC_Villager_Offsets = new VillagerOffsets
         {
             Villager_ID = 0,
@@ -379,6 +402,29 @@ namespace ACSE
             Catchphrase = 0x89D,
             CatchphraseSize = 0xA,
             Shirt = 0x8E4,
+            Status = -1, //Research
+            Umbrella = -1, //Research this as well
+            Furniture = -1, //No Furniture customization in AC
+            Carpet = -1,
+            Wallpaper = -1,
+            Nicknames = -1, //Inside of "Player Entries"
+            Song = -1,
+            //Add Player Entries (Relationships)
+        };
+
+        public static VillagerOffsets Doubtusu_no_Mori_e_Plus_Villager_Offsets = new VillagerOffsets
+        {
+            Villager_ID = 0,
+            Town_ID = 2,
+            Town_Name = 4,
+            Town_NameSize = 6,
+            Villager_AI = 0xA, // Goes unused??
+            Personality = 0xB,
+            House_Coordinates = 0x591, // Confirm
+            House_CoordinatesSize = 4,
+            Catchphrase = 0x595, // Confirm
+            CatchphraseSize = 0x4,
+            Shirt = 0x5DA,
             Status = -1, //Research
             Umbrella = -1, //Research this as well
             Furniture = -1, //No Furniture customization in AC
@@ -486,7 +532,9 @@ namespace ACSE
         {
             switch (Save_Type)
             {
+                case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Animal_Crossing:
+                case SaveType.Doubutsu_no_Mori_e_Plus:
                     return AC_Personalities;
                 case SaveType.Wild_World:
                     return WW_Personalities;
@@ -505,6 +553,9 @@ namespace ACSE
             string Database_Filename = NewMainForm.Assembly_Location + "\\Resources\\{0}_Villagers_" + Language + ".txt";
             switch (Save_Type)
             {
+                //Temp
+                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.Doubutsu_no_Mori_e_Plus:
                 case SaveType.Animal_Crossing:
                     Database_Filename = string.Format(Database_Filename, "AC");
                     break;
@@ -556,7 +607,7 @@ namespace ACSE
                     }
                 }
             }
-            else if (Save_Type == SaveType.Animal_Crossing)
+            else if (Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
             {
                 while ((Line = Contents.ReadLine()) != null)
                 {
@@ -576,8 +627,12 @@ namespace ACSE
         {
             switch(Save_Type)
             {
+                case SaveType.Doubutsu_no_Mori_Plus:
+                    return Doubtusu_no_Mori_Plus_Villager_Offsets;
                 case SaveType.Animal_Crossing:
                     return AC_Villager_Offsets;
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    return Doubtusu_no_Mori_e_Plus_Villager_Offsets;
                 case SaveType.Wild_World:
                     return WW_Villager_Offsets;
                 case SaveType.New_Leaf:
@@ -693,6 +748,16 @@ namespace ACSE
 
         public void Write()
         {
+            // Set Villager TownID & Name
+            if (Offsets.Town_ID != -1)
+            {
+                Data.Town_ID = SaveData.ReadUInt16(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_ID, SaveData.Is_Big_Endian); // Might not be UInt16 in all games
+            }
+            if (Offsets.Town_Name != -1)
+            {
+                Data.Town_Name = SaveData.ReadString(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_Name,
+                    NewMainForm.Current_Save_Info.Save_Offsets.Town_NameSize);
+            }
             //MessageBox.Show(string.Format("Writing Villager #{0} with data offset of 0x{1}", Index, Offset.ToString("X")));
             Type VillagerOffsetData = typeof(VillagerOffsets);
             Type VillagerDataType = typeof(VillagerDataStruct);

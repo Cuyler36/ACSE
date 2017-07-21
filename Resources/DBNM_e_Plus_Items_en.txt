@@ -2795,6 +2795,37 @@
 0x5850, Player's Island House
 0x5851, Islander's House
 0x5852, Dock Signboard
+0x5853, Clock Stand
+0x5854, Lamppost
+0x5855, Windmill
+0x5856, Flower Clock
+0x5857, Helipad
+0x5858, Wind Turbine
+0x5859, Sewer Pipes
+0x585A, Stonehenge
+0x585B, Egg
+0x585C, Footprints
+0x585D, Geoglyph
+0x585E, Mushroom
+0x585F, Stone Guidepost
+0x5860, Stone Well
+0x5861, Fountain
+0x5862, Signboard (22)
+0x5863, Signboard (23)
+0x5864, Signboard (24)
+0x5865, Signboard (25)
+0x5866, Signboard (26)
+0x5867, Signboard (27)
+0x5868, Signboard (28)
+0x5869, Signboard (29)
+0x586A, Signboard (30)
+0x586B, Signboard (31)
+0x586C, Signboard (32)
+0x586D, Signboard (33)
+0x586E, Signboard (34)
+0x586F, Signboard (35)
+0x5870, Signboard (36)
+// Probably more Signboards
 0xA000, Upper Left House's Mailbox
 0xA001, Upper Right House's Mailbox
 0xA002, Lower Left House's Mailbox

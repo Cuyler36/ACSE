@@ -14,7 +14,7 @@ namespace ACSE
     {
         Unknown,
         Doubutsu_no_Mori,
-        Doubutsu_no_Mori_Plus,  //Possible to remove this? I can't even find a valid file on the internet... Perhaps I'll just buy a copy
+        Doubutsu_no_Mori_Plus,  // Bought a copy. Will dump to check the save files.
         Animal_Crossing,
         Doubutsu_no_Mori_e_Plus,
         Wild_World,
@@ -37,7 +37,9 @@ namespace ACSE
     {
         public int Save_Size;
         public int Checksum;
+        public int Town_ID;
         public int Town_Name;
+        public int Town_NameSize;
         public int Player_Start;
         public int Player_Size;
         public int Town_Data;
@@ -88,8 +90,10 @@ namespace ACSE
     public enum SaveFileDataOffset
     {
         nafjfla = 0,
+        gafjgci = 0x2040, // Doubutsu_no_Mori_Plus
         gafegci = 0x26040,
         gafegcs = 0x26150,
+        gaejgci = 0x10040, // Doubutsu_no_Mori_e_Plus
         admeduc = 0x1F4,
         admedss = 0x1F4,
         admedsv = 0,
@@ -102,10 +106,37 @@ namespace ACSE
 
     public static class SaveDataManager
     {
+        public static Offsets Doubutsu_no_Mori_Offsets = new Offsets{ }; // Probably shares a decent amount of offsets with Doubutsu_no_Mori_Plus
+
+        public static Offsets Doubutsu_no_Mori_Plus_Offsets = new Offsets
+        {
+            Save_Size = 0x1E000,
+            Player_Start = 0x20, // Might not be right
+            Player_Size = 0x1E00,
+            Island_Acre_Data = 0x13F60,
+            Island_World_Data = 0x1B450,
+            Island_World_Size = 0x400,
+            Island_Buried_Data = 0x1C908,
+            Island_Buried_Size = 0x40,
+            Islander_Data = 0x1C340,
+            Town_Data = 0x102E8,
+            Town_Data_Size = 0x3C00,
+            Acre_Data = 0x13EE8,
+            Acre_Data_Size = 0x8C,
+            Villager_Data = 0x13F78,
+            Villager_Size = 0x5C8,
+            Buried_Data = 0x19E0C, // Probably off a little
+            Buried_Data_Size = 0x3C0,
+            Town_NameSize = 6,
+            Checksum = 0x12,
+        };
+
         public static Offsets Animal_Crossing_Offsets = new Offsets
         {
             Save_Size = 0x26000,
             Town_Name = 0x9120,
+            Town_NameSize = 8,
+            Town_ID = 0x912A,
             Player_Start = 0x20,
             Player_Size = 0x2440,
             Villager_Data = 0x17438,
@@ -118,7 +149,7 @@ namespace ACSE
             Buried_Data_Size = 0x3C0,
             Island_World_Data = 0x22554,
             Island_World_Size = 0x400,
-            Island_Buried_Data = 0x23DC8, //C9
+            Island_Buried_Data = 0x23DC8,
             Island_Buried_Size = 0x40,
             Islander_Data = 0x23440,
             House_Data = 0x9CE8,
@@ -134,10 +165,31 @@ namespace ACSE
             Checksum = 0x12
         };
 
+        public static Offsets Doubutsu_no_Mori_e_Plus_Offsets = new Offsets
+        {
+            Save_Size = 0x2E000,
+            Player_Start = 0x1C0, // Might not be right
+            Player_Size = 0x26A0,
+            Island_World_Data = -1, // Each Player has their own island
+            Island_World_Size = 0x400,
+            Islander_Data = -1, // Confirm this in game. Couldn't find one in the save file.
+            Town_Data = 0x184C0,
+            Town_Data_Size = 0x3C00,
+            Acre_Data = 0x1C0C0,
+            Acre_Data_Size = 0x8C,
+            Villager_Data = 0x1C150,
+            Villager_Size = 0x680,
+            Buried_Data = 0x22B1C,
+            Buried_Data_Size = 0x3C0,
+            Town_NameSize = 6,
+            Checksum = 0x12,
+        };
+
         public static Offsets Wild_World_Offsets = new Offsets
         {
             Save_Size = 0x15FE0,
             Town_Name = 0x0004,
+            Town_NameSize = 8,
             Player_Start = 0x000C,
             Player_Size = 0x228C,
             Villager_Data = 0x8A3C,
@@ -160,6 +212,7 @@ namespace ACSE
             PWPs = -1,
             Island_Acre_Data = -1,
             Island_Buildings = -1,
+            Town_ID = -1, //
             Checksum = 0x15FDC
         };
 
@@ -173,6 +226,7 @@ namespace ACSE
             Acre_Data = 0x68414, //Don't forget about the additional acres before?
             Acre_Data_Size = 0x62,
             Town_Name = 0x640E8,
+            Town_NameSize = 16,
             Town_Data = 0x68476,
             Town_Data_Size = 0x3200,
             Buried_Data = 0x6B676,
@@ -191,6 +245,7 @@ namespace ACSE
             Villager_Data = -1, //finish this sometime
             Island_Acre_Data = -1,
             Island_Buildings = -1,
+            Town_ID = -1, //
         };
 
         public static Offsets New_Leaf_Offsets = new Offsets
@@ -210,11 +265,13 @@ namespace ACSE
             Town_Data_Size = 0x5000,
             Buried_Data = -1,
             Town_Name = 0x5C73A,
+            Town_NameSize = 8,
             Grass_Wear = 0x53E80,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
             Island_Acre_Data = 0x6A408,
             Island_World_Data = 0x6A428,
             Island_Buildings = 0x6B428,
+            Town_ID = -1, //
         };
 
         public static Offsets Welcome_Amiibo_Offsets = new Offsets
@@ -234,11 +291,30 @@ namespace ACSE
             Town_Data_Size = 0x5000,
             Buried_Data = -1,
             Town_Name = 0x6213A,
+            Town_NameSize = 8,
             Grass_Wear = 0x59880,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
             Island_Acre_Data = 0x6FE38,
             Island_World_Data = 0x6FE58,
             Island_Buildings = 0x70E58,
+            Town_ID = -1, //
+        };
+
+        public static Save_Info Doubutsu_no_Mori_Plus = new Save_Info // Valid for GAFE and GAFP
+        {
+            Contains_Island = true,
+            Has_Islander = true,
+            Player_JPEG_Picture = false,
+            Pattern_Count = 8,
+            Save_Offsets = Doubutsu_no_Mori_Plus_Offsets,
+            Acre_Count = 70,
+            X_Acre_Count = 7,
+            Town_Acre_Count = 30,
+            Island_Acre_Count = 2,
+            Island_X_Acre_Count = 2,
+            Town_Y_Acre_Start = 1,
+            Villager_Count = 16,
+            House_Rooms = new string[3] { "Main Floor", "Upper Floor", "Basement" } //Don't forget about island house
         };
 
         public static Save_Info Animal_Crossing = new Save_Info // Valid for GAFE and GAFP
@@ -255,6 +331,23 @@ namespace ACSE
             Island_X_Acre_Count = 2,
             Town_Y_Acre_Start = 1,
             Villager_Count = 16,
+            House_Rooms = new string[3] { "Main Floor", "Upper Floor", "Basement" } //Don't forget about island house
+        };
+
+        public static Save_Info Doubutsu_no_Mori_e_Plus = new Save_Info // Valid for GAEJ (Might need modifying)
+        {
+            Contains_Island = true,
+            Has_Islander = true,
+            Player_JPEG_Picture = false,
+            Pattern_Count = 8,
+            Save_Offsets = Doubutsu_no_Mori_e_Plus_Offsets,
+            Acre_Count = 70,
+            X_Acre_Count = 7,
+            Town_Acre_Count = 30,
+            Island_Acre_Count = 2,
+            Island_X_Acre_Count = 2,
+            Town_Y_Acre_Start = 1,
+            Villager_Count = 15, // Has an islander for every player
             House_Rooms = new string[3] { "Main Floor", "Upper Floor", "Basement" } //Don't forget about island house
         };
 
@@ -383,7 +476,7 @@ namespace ACSE
                     return "NAFJ";
                 case SaveType.Animal_Crossing:
                     return "GAFE";
-                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.Doubutsu_no_Mori_Plus: // The Save Data Sector still uses NAFJ as the identification marker
                     return "GAFJ";
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return "GAEJ";
@@ -429,8 +522,12 @@ namespace ACSE
         {
             switch(Save_Type)
             {
+                case SaveType.Doubutsu_no_Mori_Plus:
+                    return Doubutsu_no_Mori_Plus;
                 case SaveType.Animal_Crossing:
                     return Animal_Crossing;
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    return Doubutsu_no_Mori_e_Plus;
                 case SaveType.Wild_World:
                     return Wild_World;
                 case SaveType.City_Folk:
@@ -450,8 +547,12 @@ namespace ACSE
             string Item_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
             if (Save_Type == SaveType.Wild_World)
                 Item_DB_Location += "WW_Items_" + Language + ".txt";
+            else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus)
+                Item_DB_Location += "DBNM_Plus_Items_" + Language + ".txt";
             else if (Save_Type == SaveType.Animal_Crossing)
                 Item_DB_Location += "AC_Items_" + Language + ".txt";
+            else if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+                Item_DB_Location += "DBNM_e_Plus_Items_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
                 Item_DB_Location += "CF_Items_" + Language + ".txt";
             else if (Save_Type == SaveType.New_Leaf)
@@ -516,7 +617,7 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Acre_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Animal_Crossing)
+            if (Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
                 Acre_DB_Location += "AC_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
                 Acre_DB_Location += "CF_Acres_" + Language + ".txt";
@@ -593,7 +694,7 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Acre_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Animal_Crossing)
+            if (Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
                 Acre_DB_Location += "AC_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
                 Acre_DB_Location += "CF_Acres_" + Language + ".txt";
@@ -702,6 +803,12 @@ namespace ACSE
                     Working_Save_Data = SaveDataManager.ByteSwap(Working_Save_Data);
                 }
 
+                if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+                {
+                    MessageBox.Show(Checksum.Verify(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x2E000).ToArray(), 0x12).ToString());
+                    MessageBox.Show(Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x2E000).ToArray(), 0x12).ToString("X"));
+                }
+
                 if (Save_Type == SaveType.Wild_World || Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
                     Is_Big_Endian = false;
 
@@ -721,6 +828,11 @@ namespace ACSE
             {
                 Write(Save_Data_Start_Offset + 0x12, Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x26000).ToArray(), 0x12), true);
                 Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x26000).ToArray().CopyTo(Working_Save_Data, Save_Data_Start_Offset + 0x26000); //Update second save copy
+            }
+            else if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            {
+                Write(Save_Data_Start_Offset + 0x12, Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x2E000).ToArray(), 0x12), true);
+                Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x2E000).ToArray().CopyTo(Working_Save_Data, Save_Data_Start_Offset + 0x2E000); //Update second save copy
             }
             else if (Save_Type == SaveType.Wild_World)
             {

@@ -27,28 +27,37 @@ namespace ACSE
         public uint Year = 2000; //Default
         public string Date_Time_String = "";
         public bool Is_PM = false;
+        public bool Is_Birthday = false;
 
         public ACDate(byte[] dateData)
         {
             switch (NewMainForm.Save_File.Save_Type)
             {
+                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.Doubutsu_no_Mori_e_Plus:
                 case SaveType.Animal_Crossing:
-                if (dateData.Length == 0x8)
-                {
-                    Second = dateData[0];
-                    Minute = dateData[1];
-                    Hour = dateData[2];
-                    Day = dateData[3];
-                    Day_of_Week = dateData[4];
-                    Month = dateData[5];
-                    Year = BitConverter.ToUInt16(new byte[] { dateData[7], dateData[6] }, 0);
-                }
-                else if (dateData.Length == 0x4)
-                {
-                    Year = BitConverter.ToUInt16(new byte[] { dateData[1], dateData[0] }, 0);
-                    Month = dateData[2];
-                    Day = dateData[3];
-                }
+                    if (dateData.Length == 0x8)
+                    {
+                        Second = dateData[0];
+                        Minute = dateData[1];
+                        Hour = dateData[2];
+                        Day = dateData[3];
+                        Day_of_Week = dateData[4];
+                        Month = dateData[5];
+                        Year = BitConverter.ToUInt16(new byte[] { dateData[7], dateData[6] }, 0);
+                    }
+                    else if (dateData.Length == 0x4)
+                    {
+                        Year = BitConverter.ToUInt16(new byte[] { dateData[1], dateData[0] }, 0);
+                        Month = dateData[2];
+                        Day = dateData[3];
+                    }
+                    else if (dateData.Length == 0x2)
+                    {
+                        Month = dateData[0];
+                        Day = dateData[1];
+                        Is_Birthday = true;
+                    }
                     break;
                 case SaveType.New_Leaf:
                 case SaveType.Welcome_Amiibo:
@@ -56,6 +65,7 @@ namespace ACSE
                     {
                         Day = dateData[1];
                         Month = dateData[0];
+                        Is_Birthday = true; // ??
                     }
                     else if (dateData.Length == 4)
                     {
@@ -92,8 +102,10 @@ namespace ACSE
 
         public byte[] ToBytes()
         {
-            return new byte[8]
-                {
+            if (!Is_Birthday)
+            {
+                return new byte[8]
+                    {
                     (byte)Second,
                     (byte)Minute,
                     (byte)Hour,
@@ -102,7 +114,12 @@ namespace ACSE
                     (byte)Month,
                     (byte)((Year & 0xFF00) >> 8),
                     (byte)(Year & 0x00FF)
-                };
+                    };
+            }
+            else
+            {
+                return new byte[2] { (byte)Month, (byte)Day };
+            }
         }
     }
 

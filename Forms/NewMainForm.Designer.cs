@@ -171,7 +171,11 @@
             this.acreToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.label25 = new System.Windows.Forms.Label();
             this.villagerToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.selectedAcrePicturebox = new System.Windows.Forms.PictureBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.birthdayMonth = new System.Windows.Forms.ComboBox();
+            this.birthdayDay = new System.Windows.Forms.ComboBox();
+            this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
+            this.label43 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
@@ -201,7 +205,7 @@
             this.grassTab.SuspendLayout();
             this.grassPanel.SuspendLayout();
             this.pictureContextMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedAcrePicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -295,6 +299,9 @@
             // 
             // playersTab
             // 
+            this.playersTab.Controls.Add(this.birthdayDay);
+            this.playersTab.Controls.Add(this.label42);
+            this.playersTab.Controls.Add(this.birthdayMonth);
             this.playersTab.Controls.Add(this.playerIslandMedals);
             this.playersTab.Controls.Add(this.label40);
             this.playersTab.Controls.Add(this.patternPanel);
@@ -527,7 +534,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(398, 141);
+            this.label18.Location = new System.Drawing.Point(385, 141);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(62, 13);
             this.label18.TabIndex = 54;
@@ -539,7 +546,7 @@
             this.playerShoeColor.Items.AddRange(new object[] {
             "Male",
             "Female"});
-            this.playerShoeColor.Location = new System.Drawing.Point(466, 138);
+            this.playerShoeColor.Location = new System.Drawing.Point(453, 138);
             this.playerShoeColor.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerShoeColor.Name = "playerShoeColor";
             this.playerShoeColor.Size = new System.Drawing.Size(121, 21);
@@ -549,7 +556,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(565, 185);
+            this.label20.Location = new System.Drawing.Point(552, 185);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(27, 13);
             this.label20.TabIndex = 52;
@@ -558,7 +565,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(460, 185);
+            this.label19.Location = new System.Drawing.Point(447, 185);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(33, 13);
             this.label19.TabIndex = 51;
@@ -569,7 +576,7 @@
             this.tanTrackbar.AutoSize = false;
             this.tanTrackbar.BackColor = System.Drawing.SystemColors.Window;
             this.tanTrackbar.LargeChange = 1;
-            this.tanTrackbar.Location = new System.Drawing.Point(466, 166);
+            this.tanTrackbar.Location = new System.Drawing.Point(453, 166);
             this.tanTrackbar.Maximum = 4;
             this.tanTrackbar.Minimum = 1;
             this.tanTrackbar.Name = "tanTrackbar";
@@ -760,7 +767,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(415, 11);
+            this.label7.Location = new System.Drawing.Point(402, 11);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(45, 13);
             this.label7.TabIndex = 30;
@@ -769,7 +776,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(431, 172);
+            this.label6.Location = new System.Drawing.Point(418, 172);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(29, 13);
             this.label6.TabIndex = 29;
@@ -778,7 +785,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(405, 115);
+            this.label5.Location = new System.Drawing.Point(392, 115);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(55, 13);
             this.label5.TabIndex = 28;
@@ -787,7 +794,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(404, 89);
+            this.label4.Location = new System.Drawing.Point(391, 89);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 27;
@@ -796,7 +803,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(405, 63);
+            this.label3.Location = new System.Drawing.Point(392, 63);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(55, 13);
             this.label3.TabIndex = 26;
@@ -805,7 +812,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(399, 37);
+            this.label2.Location = new System.Drawing.Point(386, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(61, 13);
             this.label2.TabIndex = 25;
@@ -862,7 +869,7 @@
             this.playerGender.Items.AddRange(new object[] {
             "Male",
             "Female"});
-            this.playerGender.Location = new System.Drawing.Point(466, 8);
+            this.playerGender.Location = new System.Drawing.Point(453, 8);
             this.playerGender.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerGender.Name = "playerGender";
             this.playerGender.Size = new System.Drawing.Size(121, 21);
@@ -872,7 +879,7 @@
             // playerEyeColor
             // 
             this.playerEyeColor.FormattingEnabled = true;
-            this.playerEyeColor.Location = new System.Drawing.Point(466, 112);
+            this.playerEyeColor.Location = new System.Drawing.Point(453, 112);
             this.playerEyeColor.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerEyeColor.Name = "playerEyeColor";
             this.playerEyeColor.Size = new System.Drawing.Size(121, 21);
@@ -882,7 +889,7 @@
             // playerHairColor
             // 
             this.playerHairColor.FormattingEnabled = true;
-            this.playerHairColor.Location = new System.Drawing.Point(466, 86);
+            this.playerHairColor.Location = new System.Drawing.Point(453, 86);
             this.playerHairColor.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerHairColor.Name = "playerHairColor";
             this.playerHairColor.Size = new System.Drawing.Size(121, 21);
@@ -893,7 +900,7 @@
             // 
             this.playerHairType.DropDownWidth = 250;
             this.playerHairType.FormattingEnabled = true;
-            this.playerHairType.Location = new System.Drawing.Point(466, 60);
+            this.playerHairType.Location = new System.Drawing.Point(453, 60);
             this.playerHairType.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerHairType.Name = "playerHairType";
             this.playerHairType.Size = new System.Drawing.Size(121, 21);
@@ -904,7 +911,7 @@
             // 
             this.playerFace.DropDownWidth = 250;
             this.playerFace.FormattingEnabled = true;
-            this.playerFace.Location = new System.Drawing.Point(466, 34);
+            this.playerFace.Location = new System.Drawing.Point(453, 34);
             this.playerFace.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerFace.Name = "playerFace";
             this.playerFace.Size = new System.Drawing.Size(121, 21);
@@ -1439,9 +1446,9 @@
             // 
             // acreID
             // 
-            this.acreID.Location = new System.Drawing.Point(793, 638);
+            this.acreID.Location = new System.Drawing.Point(775, 637);
             this.acreID.Name = "acreID";
-            this.acreID.Size = new System.Drawing.Size(84, 13);
+            this.acreID.Size = new System.Drawing.Size(102, 14);
             this.acreID.TabIndex = 5;
             this.acreID.Text = "Acre ID: 0x0000\r\n";
             this.acreID.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1450,9 +1457,10 @@
             // 
             this.acreDesc.Location = new System.Drawing.Point(758, 656);
             this.acreDesc.Name = "acreDesc";
-            this.acreDesc.Size = new System.Drawing.Size(119, 28);
+            this.acreDesc.Size = new System.Drawing.Size(119, 13);
             this.acreDesc.TabIndex = 4;
             this.acreDesc.Text = "No Acre Selected";
+            this.acreDesc.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label21
             // 
@@ -1487,12 +1495,15 @@
             // 
             // selectedItem
             // 
+            this.selectedItem.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.selectedItem.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.selectedItem.FormattingEnabled = true;
             this.selectedItem.Location = new System.Drawing.Point(12, 637);
             this.selectedItem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.selectedItem.Name = "selectedItem";
             this.selectedItem.Size = new System.Drawing.Size(166, 21);
             this.selectedItem.TabIndex = 2;
+            this.selectedItem.SelectedValueChanged += new System.EventHandler(this.SelectedItem_Changed);
             // 
             // selectedItemText
             // 
@@ -1550,20 +1561,78 @@
             this.label25.TabIndex = 6;
             this.label25.Text = "Item Flags";
             // 
-            // selectedAcrePicturebox
+            // label42
             // 
-            this.selectedAcrePicturebox.Location = new System.Drawing.Point(883, 620);
-            this.selectedAcrePicturebox.Name = "selectedAcrePicturebox";
-            this.selectedAcrePicturebox.Size = new System.Drawing.Size(64, 64);
-            this.selectedAcrePicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.selectedAcrePicturebox.TabIndex = 3;
-            this.selectedAcrePicturebox.TabStop = false;
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(580, 11);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(48, 13);
+            this.label42.TabIndex = 72;
+            this.label42.Text = "Birthday:";
+            // 
+            // birthdayMonth
+            // 
+            this.birthdayMonth.FormattingEnabled = true;
+            this.birthdayMonth.Items.AddRange(new object[] {
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+            "Not Set"});
+            this.birthdayMonth.Location = new System.Drawing.Point(634, 8);
+            this.birthdayMonth.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.birthdayMonth.Name = "birthdayMonth";
+            this.birthdayMonth.Size = new System.Drawing.Size(77, 21);
+            this.birthdayMonth.TabIndex = 71;
+            this.birthdayMonth.Text = "Not Set";
+            // 
+            // birthdayDay
+            // 
+            this.birthdayDay.FormattingEnabled = true;
+            this.birthdayDay.Items.AddRange(new object[] {
+            "Not Set"});
+            this.birthdayDay.Location = new System.Drawing.Point(712, 8);
+            this.birthdayDay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.birthdayDay.Name = "birthdayDay";
+            this.birthdayDay.Size = new System.Drawing.Size(59, 21);
+            this.birthdayDay.TabIndex = 73;
+            this.birthdayDay.Text = "Not Set";
+            // 
+            // acreHeightTrackBar
+            // 
+            this.acreHeightTrackBar.AutoSize = false;
+            this.acreHeightTrackBar.LargeChange = 2;
+            this.acreHeightTrackBar.Location = new System.Drawing.Point(817, 672);
+            this.acreHeightTrackBar.Maximum = 3;
+            this.acreHeightTrackBar.Name = "acreHeightTrackBar";
+            this.acreHeightTrackBar.Size = new System.Drawing.Size(60, 20);
+            this.acreHeightTrackBar.TabIndex = 7;
+            this.acreHeightTrackBar.Scroll += new System.EventHandler(this.acreHeightTrackBar_Scroll);
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(745, 673);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(66, 13);
+            this.label43.TabIndex = 8;
+            this.label43.Text = "Acre Height:";
             // 
             // NewMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(963, 695);
+            this.Controls.Add(this.label43);
+            this.Controls.Add(this.acreHeightTrackBar);
             this.Controls.Add(this.acreDesc);
             this.Controls.Add(this.acreID);
             this.Controls.Add(this.label25);
@@ -1571,7 +1640,6 @@
             this.Controls.Add(this.itemFlag2);
             this.Controls.Add(this.itemFlag1);
             this.Controls.Add(this.selectedItemText);
-            this.Controls.Add(this.selectedAcrePicturebox);
             this.Controls.Add(this.selectedItem);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
@@ -1618,7 +1686,7 @@
             this.grassPanel.ResumeLayout(false);
             this.grassPanel.PerformLayout();
             this.pictureContextMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.selectedAcrePicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1713,7 +1781,6 @@
         private System.Windows.Forms.ToolTip acreToolTip;
         private System.Windows.Forms.Label acreID;
         private System.Windows.Forms.Label acreDesc;
-        private System.Windows.Forms.PictureBox selectedAcrePicturebox;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button waterFlowersButton;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
@@ -1768,5 +1835,10 @@
         private System.Windows.Forms.TextBox playerIslandMedals;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.ComboBox birthdayDay;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.ComboBox birthdayMonth;
+        private System.Windows.Forms.TrackBar acreHeightTrackBar;
+        private System.Windows.Forms.Label label43;
     }
 }
