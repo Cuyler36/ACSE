@@ -31,17 +31,36 @@
 0x001E, Hole (Right)
 0x001F, Hole (Left)
 0x0020, Hole (Bent & Angled Right)
+0x0021, Hole (Bent & Angled Left)?
+0x0022, Hole (Bent & Angled Down-Left)
+0x0023, Hole (Bent & Angled Down-Right)
+0x0024, Hole (Bent & Angled Back Up-Right)
+0x0025, Hole (Bent & Angled Back Up-Left)
+0x0026, Hole (Bent & Angled Up-Left)
+0x0027, Hole (Bent & Angled Up-Right)
 0x0028, Hole (Bent & Angled Down)
+0x0029, Hole (Bent & Angled Down-Left Slightly)
 0x002A, Buried Pitfall
+0x002B, Buried Pitfall (Angled Down)
+0x002C, Buried Pitfall (Angled Up)
+0x002D, Buried Pitfall (Angled Left)
+0x002E, Buried Pitfall (Angled Right)
+0x002F, Buried Pitfall (Angled Down-Left)
 0x0030, Buried Pitfall (Angled Down-Right)
+0x0031, Buried Pitfall (Angled Up-Left)
+0x0032, Buried Pitfall (Angled Up-Right)
 0x0038, Buried Pitfall (Angled)
 0x0040, Buried Pitfall (Bent Left)
 0x0048, Buried Pitfall (Bent Down-Left)
 0x0050, Buried Pitfall (Bent Left & Slightly Down)
+//0x0033 - 0x005B (Pitfall bs that corrupts inventory)
 0x005C, Glowing Spot
+0x005D, Hole w/ Glowing Spot
 0x005E, Tree (Bees)
 0x005F, Tree (Furniture)
 0x0060, Tree (Festive Lights)
+0x0061, Tree (Present)
+0x0062, Beehive (Disappears)
 0x0063, Rock (Type 1)
 0x0064, Rock (Type 2)
 0x0065, Rock (Type 3)
@@ -74,30 +93,188 @@
 0x0080, Golden Tree w/ Furniture
 0x0081, Golden Tree w/ Bees
 0x0082, Cedar Tree (Festive Lights)
-0x0083, Sapling (Doesn't Grow)
-0x0084, Small Tree (^)
-0x0085, Medium Tree (^)
-0x0086, Large Tree (^)
-0x0087, Fully Grown Tree (^)
-0x0088, Sapling (^)
-0x00BF, Flower Base
+0x0083, Sapling (No Hitbox)
+0x0084, Small Tree (No Hitbox)
+0x0085, Medium Tree (No Hitbox)
+0x0086, Large Tree (No Hitbox)
+0x0087, Fully Grown Tree (No Hitbox)
+0x0088, Apple Tree Sapling (No Hitbox)
+0x0089, Small Apple Tree (No Hitbox)
+0x008A, Medium Apple Tree (No Hitbox)
+0x008B, Large Apple Tree (No Hitbox)
+0x008C, Fully Grown Apple Tree (No Hitbox) #1
+0x008D, Fully Grown Apple Tree (No Hitbox) #2
+0x008E, Fully Grown Apple Tree (No Hitbox) #3
+0x008F, Apple Tree (No Hitbox)
+0x0090, Orange Tree Sapling (Doesn't grow)
+0x0091, Small Orange Tree (No Hitbox)
+0x0092, Medium Orange Tree (No Hitbox)
+0x0093, Large Orange Tree (No Hitbox)
+0x0094, Fully Grown Orange Tree (No Hitbox) #1
+0x0095, Fully Grown Orange Tree (No Hitbox) #2
+0x0096, Fully Grown Orange Tree (No Hitbox) #3
+0x0097, Orange Tree (No Hitbox)
+0x0098, Peach Tree Sapling (No Hitbox)
+0x0099, Small Peach Tree (No Hitbox)
+0x009A, Medium Peach Tree (No Hitbox)
+0x009B, Large Peach Tree (No Hitbox)
+0x009C, Fully Grown Peach Tree (No Hitbox) #1
+0x009D, Fully Grown Peach Tree (No Hitbox) #2
+0x009E, Fully Grown Peach Tree (No Hitbox) #3
+0x009F, Peach Tree (No Hitbox)
+0x00A0, Pear Tree Sapling (No Hitbox)
+0x00A1, Small Pear Tree (No Hitbox)
+0x00A2, Medium Pear Tree (No Hitbox)
+0x00A3, Large Pear Tree (No Hitbox)
+0x00A4, Fully Grown Pear Tree (No Hitbox) #1
+0x00A5, Fully Grown Pear Tree (No Hitbox) #2
+0x00A6, Fully Grown Pear Tree (No Hitbox) #3
+0x00A7, Pear Tree (No Hitbox)
+0x00A8, Cherry Tree Sapling (No Hitbox)
+0x00A9, Small Cherry Tree (No Hitbox)
+0x00AA, Medium Cherry Tree (No Hitbox)
+0x00AB, Large Cherry Tree (No Hitbox)
+0x00AC, Fully Grown Cherry Tree (No Hitbox) #1
+0x00AD, Fully Grown Cherry Tree (No Hitbox) #2
+0x00AE, Fully Grown Cherry Tree (No Hitbox) #3
+0x00AF, Cherry Tree (No Hitbox)
+0x00B0, Money Tree Sapling (No Hitbox) #1
+0x00B1, Small Money Tree (No Hitbox) #1
+0x00B2, Medium Money Tree (No Hitbox) #1
+0x00B3, Large Money Tree (No Hitbox) #1
+0x00B4, Money Tree (No Hitbox) #1
+0x00B5, Money Tree Sapling (No Hitbox) #2
+0x00B6, Small Money Tree (No Hitbox) #2
+0x00B7, Medium Money Tree (No Hitbox) #2
+0x00B8, Large Money Tree (No Hitbox) #2
+0x00B9, Money Tree (No Hitbox) #2
+0x00BA, Money Tree Sapling (No Hitbox) #3
+0x00BB, Small Money Tree (No Hitbox) #3
+0x00BC, Medium Money Tree (No Hitbox) #3
+0x00BD, Large Money Tree (No Hitbox) #3
+0x00BE, Money Tree (No Hitbox) #3
+0x00BF, Flower Petals #1 (No Hitbox)
+0x00C0, Flower Petals #2 (No Hitbox)
+0x00C1, Flower Petals #3 (No Hitbox)
+0x00C2, Flower Petals #4 (No Hitbox)
+0x00C3, Flower Petals #5 (No Hitbox)
+0x00C4, Flower Petals #6 (No Hitbox)
+0x00C5, Flower Petals #7 (No Hitbox)
+0x00C6, Flower Petals #8 (No Hitbox)
+0x00C7, Flower Petals #9 (No Hitbox)
+0x00C8, White Pansies (No Hitbox)
+0x00C9, Purple Pansies (No Hitbox)
+0x00CA, Yellow Pansies (No Hitbox)
+0x00CB, Yellow Cosmos (No Hitbox)
+0x00CC, Purple Cosmos (No Hitbox)
+0x00CD, Blue Cosmos (No Hitbox)
+0x00CE, Red Tulips (No Hitbox)
+0x00CF, White Tulips (No Hitbox)
+0x00D0, Yellow Tulips (No Hitbox)
+0x00D1, Dead Sapling (No Hitbox)
+0x00D2, Money Tree Sapling (No Hitbox) #4
+0x00D3, Small Money Tree (No Hitbox) #4
+0x00D4, Medium Money Tree (No Hitbox) #4
+0x00D5, Large Money Tree (No Hitbox) #4
+0x00D6, Money Tree (No Hitbox) #4
+0x00D7, Palm Tree Sapling (No Hitbox)
+0x00D8, Small Palm Tree (No Hitbox)
+0x00D9, Medium Palm Tree (No Hitbox)
+0x00DA, Large Palm Tree (No Hitbox)
+0x00DB, Fully Grown Palm Tree (No Hitbox) #1
+0x00DC, Fully Grown Palm Tree (No Hitbox) #2
+0x00DD, Fully Grown Palm Tree (No Hitbox) #3
+0x00DE, Palm Tree (No Hitbox)
+0x00DF, Dead Palm Tree Sapling (No Hitbox)
+0x00E0, Cedar Sapling (No Hitbox)
+0x00E1, Small Cedar Tree (No Hitbox)
+0x00E2, Medium Cedar Tree (No Hitbox)
+0x00E3, Large Cedar Tree (No Hitbox)
+0x00E4, Cedar Tree (No Hitbox)
+0x00E5, Dead Cedar Sapling (No Hitbox)
+0x00E6, Golden Sapling (No Hitbox)
+0x00E7, Small Golden Tree (No Hitbox)
+0x00E8, Medium Golden Tree (No Hitbox)
+0x00E9, Large Golden Tree (No Hitbox)
+0x00EA, Fully Grown Golden Tree (No Hitbox) #1
+0x00EB, Fully Grown Golden Tree (No Hitbox) #2
+0x00EC, Dead Golden Sapling (No Hitbox)
+0x00ED, Blue Fish #1
+0x0200, Blue Fish #2
+0x0300, Crucian Carp (Release Animation)
+0x0400, Blue Fish #3
+0x0500, Blue Fish #4
+0x0600, Blue Fish #5
+0x0700, Blue Fish #6
 0x0800, Sapling
-0x0802, Tree (Growing)
+0x0801, Small Tree
+0x0802, Medium Tree
+0x0803, Large Tree
 0x0804, Tree
 0x0805, Apple Tree Sapling
 0x0806, Small Apple Tree
 0x0807, Medium Apple Tree
 0x0808, Large Apple Tree
+0x0809, Fully Grown Apple Tree (No Fruit) #1
+0x080A, Fully Grown Apple Tree (No Fruit) #2
+0x080B, Fully Grown Apple Tree (No Fruit) #3
 0x080C, Apple Tree (Fruit)
+0x080D, Orange Tree Sapling
+0x080E, Small Orange Tree
+0x080F, Medium Orange Tree
+0x0810, Large Orange Tree
+0x0811, Fully Grown Orange Tree (No Fruit) #1
+0x0812, Fully Grown Orange Tree (No Fruit) #2
+0x0813, Fully Grown Orange Tree (No Fruit) #3
 0x0814, Orange Tree (Fruit)
+0x0815, Peach Tree Sapling
+0x0816, Small Peach Tree
+0x0817, Medium Peach Tree
+0x0818, Large Peach Tree
+0x0819, Fully Grown Peach Tree (No Fruit) #1
+0x081A, Fully Grown Peach Tree (No Fruit) #2
+0x081B, Fully Grown Peach Tree (No Fruit) #3
 0x081C, Peach Tree (Fruit)
+0x081D, Pear Tree Sapling
+0x081E, Small Pear Tree
+0x081F, Medium Pear Tree
+0x0820, Large Pear Tree
+0x0821, Fully Grown Pear Tree (No Fruit) #1
+0x0822, Fully Grown Pear Tree (No Fruit) #2
+0x0823, Fully Grown Pear Tree (No Fruit) #3
 0x0824, Pear Tree (Fruit)
-0x082C, Cherry Tree(Fruit)
-0x082D, Sapling
+0x0825, Cherry Tree Sapling
+0x0826, Small Cherry Tree
+0x0827, Medium Cherry Tree
+0x0828, Large Cherry Tree
+0x0829, Fully Grown Cherry Tree (No Fruit) #1
+0x082A, Fully Grown Cherry Tree (No Fruit) #2
+0x082B, Fully Grown Cherry Tree (No Fruit) #3
+0x082C, Cherry Tree (Fruit)
+0x082D, Money Tree Sapling (1,000 Bells)
+0x082E, Small Money Tree (1,000 Bells)
+0x082F, Medium Money Tree (1,000 Bells)
+0x0830, Large Money Tree (1,000 Bells)
 0x0831, Money Tree (1,000 Bells)
-0x0834, Medium Tree
-0x0836, Money Tree (10,000) Bells
+0x0832, Money Tree Sapling (10,000 Bells)
+0x0833, Small Money Tree (10,000 Bells)
+0x0834, Medium Money Tree (10,000 Bells)
+0x0835, Large Money Tree (10,000 Bells)
+0x0836, Money Tree (10,000 Bells)
+0x0837, Money Tree Sapling (30,000 Bells)
+0x0838, Small Money Tree (30,000 Bells)
+0x0839, Medium Money Tree (30,000 Bells)
+0x083A, Large Money Tree (30,000 Bells)
 0x083B, Money Tree (30,000 Bells)
+0x083C, Flower Petals #1
+0x083D, Flower Petals #2
+0x083E, Flower Petals #3
+0x083F, Flower Petals #4
+0x0840, Flower Petals #5
+0x0841, Flower Petals #6
+0x0842, Flower Petals #7
+0x0843, Flower Petals #8
+0x0844, Flower Petals #9
 0x0845, White Pansies
 0x0846, Purple Pansies
 0x0847, Yellow Pansies
@@ -107,12 +284,35 @@
 0x084B, Red Tulips
 0x084C, White Tulips
 0x084D, Yellow Tulips
-0x084E, Dead Sapling (1)
+0x084E, Dead Sapling
+0x084F, Money Tree Sapling (100 Bells)
+0x0850, Small Money Tree (100 Bells)
+0x0851, Medium Money Tree (100 Bells)
+0x0852, Large Money Tree (100 Bells)
+0x0853, Money Tree (100 Bells)
+0x0854, Palm Tree Sapling
+0x0855, Small Palm Tree
+0x0856, Medium Palm Tree
+0x0857, Large Palm Tree
+0x0858, Fully Grown Palm Tree (No Fruit) #1
+0x0859, Fully Grown Palm Tree (No Fruit) #2
+0x085A, Fully Grown Palm Tree (No Fruit) #3
 0x085B, Palm Tree (Fruit)
+0x085C, Dead Palm Tree Sapling
+0x085D, Cedar Sapling
+0x085E, Small Cedar Tree
+0x085F, Medium Cedar Tree
+0x0860, Large Cedar Tree
 0x0861, Cedar Tree
-0x0862, Dead Sapling (2)
+0x0862, Dead Cedar Sapling
+0x0863, Golden Sapling
+0x0864, Small Golden Tree
+0x0865, Medium Golden Tree
+0x0866, Large Golden Tree
 0x0867, Golden Tree (Golden Shovel)
 0x0868, Golden Tree
+0x0869, Dead Golden Sapling
+0x086A, Blue Fish #7
 0x0900, Placed Signboard w/ Player 1's Pattern #1
 0x0901, Placed Signboard w/ Player 1's Pattern #2
 0x0902, Placed Signboard w/ Player 1's Pattern #3
@@ -146,6 +346,12 @@
 0x091E, Placed Signboard w/ Player 4's Pattern #7
 0x091F, Placed Signboard w/ Player 4's Pattern #8
 0x0920, Placed Signboard
+0x0A00, Blue Fish #8
+0x0B00, Blue Fish #9
+0x0C00, Blue Fish #10
+0x0D00, Common Butterfly (Release Animation)
+0x0E00, Blue Fish #11 (Working Gift Bag in Inventory)
+0x0F00, Blue Fish #12
 0x1000, Spooky Wardrobe
 0x1004, Classic Wardrobe
 0x1008, Blue Wardrobe
@@ -2826,6 +3032,8 @@
 0x586F, Signboard (35)
 0x5870, Signboard (36)
 // Probably more Signboards
+0x8000, Beta Paper Airplane (Replicates Limitlessly)
+0x8003, Beta Yellow/Brown Rotating Cube
 0xA000, Upper Left House's Mailbox
 0xA001, Upper Right House's Mailbox
 0xA002, Lower Left House's Mailbox

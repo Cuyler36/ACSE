@@ -113,6 +113,8 @@ namespace ACSE
             Save_Size = 0x1E000,
             Player_Start = 0x20, // Might not be right
             Player_Size = 0x1E00,
+            Town_Name = 0x7820,
+            Town_ID = 0x7828,
             Island_Acre_Data = 0x13F60,
             Island_World_Data = 0x1B450,
             Island_World_Size = 0x400,
@@ -168,6 +170,8 @@ namespace ACSE
         public static Offsets Doubutsu_no_Mori_e_Plus_Offsets = new Offsets
         {
             Save_Size = 0x2E000,
+            Town_Name = 0x14,
+            Town_ID = 0x1C,
             Player_Start = 0x1C0, // Might not be right
             Player_Size = 0x26A0,
             Island_World_Data = -1, // Each Player has their own island
@@ -300,7 +304,7 @@ namespace ACSE
             Town_ID = -1, //
         };
 
-        public static Save_Info Doubutsu_no_Mori_Plus = new Save_Info // Valid for GAFE and GAFP
+        public static Save_Info Doubutsu_no_Mori_Plus = new Save_Info
         {
             Contains_Island = true,
             Has_Islander = true,
@@ -334,7 +338,7 @@ namespace ACSE
             House_Rooms = new string[3] { "Main Floor", "Upper Floor", "Basement" } //Don't forget about island house
         };
 
-        public static Save_Info Doubutsu_no_Mori_e_Plus = new Save_Info // Valid for GAEJ (Might need modifying)
+        public static Save_Info Doubutsu_no_Mori_e_Plus = new Save_Info
         {
             Contains_Island = true,
             Has_Islander = true,
@@ -418,11 +422,6 @@ namespace ACSE
             //3 drawers with 60 items per
         };
 
-        /// <summary>
-        /// Used for Doubutsu no Mori. Every four bytes is reversed in the save, so we change it back.
-        /// </summary>
-        /// <param name="saveBuff"></param>
-        /// <returns></returns>
         public static byte[] ByteSwap(byte[] saveBuff)
         {
             byte[] Corrected_Save = new byte[saveBuff.Length];
@@ -752,9 +751,11 @@ namespace ACSE
     {
         public SaveType Save_Type;
         public SaveGeneration Game_System;
+        public Save_Info Save_Info;
         public byte[] Original_Save_Data;
         public byte[] Working_Save_Data;
         public int Save_Data_Start_Offset;
+        public string Full_Save_Path;
         public string Save_Path;
         public string Save_Name;
         public string Save_Extension;
@@ -791,11 +792,13 @@ namespace ACSE
 
                 Save_Type = SaveDataManager.GetSaveType(Original_Save_Data);
                 Game_System = SaveDataManager.GetGameSystem(Save_Type);
+                Full_Save_Path = File_Path;
                 Save_Name = Path.GetFileNameWithoutExtension(File_Path);
                 Save_Path = Path.GetDirectoryName(File_Path) + Path.DirectorySeparatorChar;
                 Save_Extension = Path.GetExtension(File_Path);
                 Save_ID = SaveDataManager.GetGameID(Save_Type);
                 Save_Data_Start_Offset = SaveDataManager.GetSaveDataOffset(Save_ID.ToLower(), Save_Extension.Replace(".", "").ToLower());
+                Save_Info = SaveDataManager.GetSaveInfo(Save_Type);
 
                 if (Save_Type == SaveType.Doubutsu_no_Mori)
                 {
@@ -818,15 +821,11 @@ namespace ACSE
             string Full_Save_Name = Save_Path + Path.DirectorySeparatorChar + Save_Name + Save_Extension;
             Save_File = new FileStream(Full_Save_Name, FileMode.OpenOrCreate);
             Save_Writer = new BinaryWriter(Save_File);
-            if (Save_Type == SaveType.Animal_Crossing)
+            if (Game_System == SaveGeneration.GCN) // TODO: Condense Wild World and GCN save logic into one if statement
             {
-                Write(Save_Data_Start_Offset + 0x12, Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x26000).ToArray(), 0x12), true);
-                Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x26000).ToArray().CopyTo(Working_Save_Data, Save_Data_Start_Offset + 0x26000); //Update second save copy
-            }
-            else if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
-            {
-                Write(Save_Data_Start_Offset + 0x12, Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x2E000).ToArray(), 0x12), true);
-                Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x2E000).ToArray().CopyTo(Working_Save_Data, Save_Data_Start_Offset + 0x2E000); //Update second save copy
+                Write(Save_Data_Start_Offset + 0x12, Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(Save_Info.Save_Offsets.Save_Size).ToArray(), 0x12), true);
+                Working_Save_Data.Skip(Save_Data_Start_Offset).Take(Save_Info.Save_Offsets.Save_Size).ToArray().CopyTo(Working_Save_Data,
+                    Save_Data_Start_Offset + Save_Info.Save_Offsets.Save_Size); //Update second save copy
             }
             else if (Save_Type == SaveType.Wild_World)
             {

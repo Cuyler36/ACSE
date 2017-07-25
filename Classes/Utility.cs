@@ -40,5 +40,39 @@ namespace ACSE
                 }
             }
         }
+
+        public static void Increment_Town_ID(Save Save_File)
+        {
+            int Total_IDs = 0;
+            ushort Town_ID = Save_File.ReadUInt16(Save_File.Save_Data_Start_Offset + 8, true);
+            for (int i = 0x26040; i < 0x4C040; i += 2)
+            {
+                ushort Value = Save_File.ReadUInt16(i, true);
+                if (Value == Town_ID)
+                {
+                    Total_IDs++;
+                    Save_File.Write(i, (ushort)(Value + 1), true);
+                }
+            }
+            System.Windows.Forms.MessageBox.Show("Total IDs Replaced: " + Total_IDs);
+            Save_File.Flush();
+        }
+
+        public static byte[] Find_Villager_House(ushort Villager_ID) // TODO: Apply to WW
+        {
+            if (NewMainForm.Save_File != null)
+            {
+                ushort Villager_House_ID = (ushort)(0x5000 + (Villager_ID & 0xFF));
+                foreach (Normal_Acre Acre in NewMainForm.Town_Acres)
+                {
+                    WorldItem Villager_House = Acre.Acre_Items.FirstOrDefault(o => o.ItemID == Villager_House_ID);
+                    if (Villager_House != null)
+                    {
+                        return new byte[4] { (byte)(Acre.Index % 7), (byte)(Acre.Index / 7), (byte)(Villager_House.Location.X), (byte)(Villager_House.Location.Y + 1) };
+                    }
+                }
+            }
+            return new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF };
+        }
     }
 }

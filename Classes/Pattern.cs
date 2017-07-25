@@ -528,11 +528,17 @@ namespace ACSE
 
         public void Read()
         {
-            if (Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus || Save_File.Save_Type == SaveType.Doubutsu_no_Mori
-                || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus)
+            if (Save_File.Save_Type == SaveType.Animal_Crossing)
             {
                 Name = Save_File == null ? DataConverter.ReadString(Offset, 0x10).Trim() : new ACString(Save_File.ReadByteArray(Offset, 0x10), Save_File.Save_Type).Trim();
                 Palette = Save_File == null ? DataConverter.ReadData(Offset + 0x10, 0x1)[0] : Save_File.ReadByte(Offset + 0x10);
+                GeneratePatternBitmap();
+            }
+            else if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus || Save_File.Save_Type == SaveType.Doubutsu_no_Mori
+                || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus)
+            {
+                Name = new ACString(Save_File.ReadByteArray(Offset, 0xA), Save_File.Save_Type).Trim();
+                Palette = Save_File.ReadByte(Offset + 0xA);
                 GeneratePatternBitmap();
             }
             else if (Save_File.Save_Type == SaveType.Wild_World)

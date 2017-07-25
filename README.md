@@ -1,7 +1,7 @@
 # ACSE - Animal Crossing Save Editor
 ![ACSE](https://github.com/Cuyler36/ACSE/blob/master/Resources/ACSE_Logo_2.png)
 
-If you don't want support for anything other than the NTSC-U/PAL version of Animal Crossing for Gamecube, you can get the old version [here](https://github.com/Cuyler36/ACSE-OLD/releases/tag/0.4.5).
+If you don't want support for anything other than the NTSC-U/PAL version of Animal Crossing for GameCube, you can get the old version [here](https://github.com/Cuyler36/ACSE-OLD/releases/tag/0.4.5).
 ## Outdated Information. Update coming soon.
 
 ACSE is a save editor for the Animal Crossing game series.

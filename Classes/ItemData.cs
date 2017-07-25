@@ -464,7 +464,7 @@ namespace ACSE
                     return "Fossil";
                 else if ((ID >= 0x2200 && ID <= 0x225B) || ID == 0x251E)
                     return "Tool";  //0x251E = Signboard (not a 'tool', but it's still classified as one)
-                else if ((ID >= 0x1 && ID <= 0x4) || (ID >= 0x005E && ID <= 0x0060) || ID == 0x69 || (ID >= 0x0070 && ID <= 0x0082) || (ID >= 0x0800 && ID <= 0x0868))
+                else if ((ID >= 0x1 && ID <= 0x4) || (ID >= 0x005E && ID <= 0x0060) || ID == 0x69 || (ID >= 0x0070 && ID <= 0x0082) || (ID >= 0x0800 && ID <= 0x0869))
                     return "Tree";
                 else if ((ID >= 0x5 && ID <= 0x7) || (ID >= 0xB && ID <= 0x10) || (ID >= 0x5000 && ID <= 0xB000) || (ID == 0xFE1D || ID == 0xFE1E))
                     return "Building";

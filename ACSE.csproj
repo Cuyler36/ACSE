@@ -58,12 +58,6 @@
   <ItemGroup>
     <Content Include=".gitattributes" />
     <Content Include="ACSE_Logo_2.ico" />
-    <Content Include="Resources\AC Save Editor Logo.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\ACSE_Logo_2.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\AC_Acres_en.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

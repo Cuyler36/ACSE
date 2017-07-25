@@ -56,265 +56,16 @@ namespace ACSE
             {
                 foreach (var v in WA_Special_Villagers)
                 {
-                    SimpleVillager SpecialVillager = new SimpleVillager();
-                    SpecialVillager.Villager_ID = v.Key;
-                    SpecialVillager.Name = v.Value;
+                    SimpleVillager SpecialVillager = new SimpleVillager
+                    {
+                        Villager_ID = v.Key,
+                        Name = v.Value
+                    };
                     WA_Database.Add(v.Key, SpecialVillager);
                 }
                 return new BindingSource(WA_Database, null);
             }
             return new BindingSource(WA_Special_Villagers, null);
-        }
-
-        public static Dictionary<ushort, string> Villagers = new Dictionary<ushort, string>()
-        {
-            
-        };
-
-        public static List<KeyValuePair<ushort, string>> VillagerDatabase = new List<KeyValuePair<ushort, string>>();
-
-        public static void CreateVillagerDatabase()
-        {
-            foreach (KeyValuePair<ushort, string> k in Villagers)
-                VillagerDatabase.Add(k);
-        }
-
-        public static string[] Personalities = new string[6]
-        {
-            "Lazy", "Normal", "Peppy", "Jock", "Cranky", "Snooty"
-        };
-
-        public static string GetVillagerName(ushort villagerId)
-        {
-            if (Villagers.ContainsKey(villagerId))
-                return Villagers[villagerId];
-            return villagerId == 0x0 ? "No Villager" : "Unknown";
-        }
-
-        public static string GetVillagerPersonality(int type)
-        {
-            return type < 6 ? Personalities[type] : "Lazy";
-        }
-
-        public static int GetVillagerPersonalityID(string personality)
-        {
-            return Array.IndexOf(Personalities, personality) > -1 ? Array.IndexOf(Personalities, personality) : 0;
-        }
-
-        public static ushort GetVillagerID(string villagerName)
-        {
-            if (Villagers.ContainsValue(villagerName))
-                return Villagers.FirstOrDefault(x => x.Value == villagerName).Key;
-            return 0xE000;
-        }
-
-        public static ushort GetVillagerIdByIndex(int i)
-        {
-            if (Villagers.Count > i)
-                return Villagers.Keys.ElementAt(i);
-            return 0xE000;
-        }
-    }
-
-    public class Villager
-    {
-        public ushort ID = 0;
-        public ushort TownIdentifier = 0;
-        public string Name = "";
-        public string Personality = "";
-        public byte PersonalityID = 0;
-        public int Index = 0;
-        public string Catchphrase = "";
-        public bool Exists = false;
-        public bool Modified = false;
-        public Item Shirt;
-        public byte[] House_Coords = new byte[4]; //X-Acre, Y-Acre, Y-Position, X-Position - 1 (This is actually the location of their sign, also dictates map location)
-        public Villager_Player_Entry[] Villager_Player_Entries = new Villager_Player_Entry[7];
-        public int Offset = 0;
-
-        public Villager(int idx)
-        {
-            Index = idx;
-            //Offset = Index == 16 ? MainForm.Islander_Offset : MainForm.VillagerData_Offset + (Index - 1) * 0x988;
-            ID = DataConverter.ReadUShort(Offset);
-            TownIdentifier = DataConverter.ReadUShort(Offset + 2);
-            Name = VillagerData.GetVillagerName(ID);
-            PersonalityID = DataConverter.ReadDataRaw(Offset + 0xD, 1)[0];
-            Personality = VillagerData.GetVillagerPersonality(PersonalityID);
-            Catchphrase = DataConverter.ReadString(Offset + 0x89D, 10).Trim();
-            Shirt = new Item(DataConverter.ReadUShort(Offset + 0x8E4));
-            House_Coords = DataConverter.ReadDataRaw(Offset + 0x899, 4); //Could make this WorldCoords class if used for other things
-            //House_Coords[2] = (byte)(House_Coords[2] + 1);
-            //House_Coords[3] = (byte)(House_Coords[3] + 1); //X-Position is the position of the Villager Name Sign, which is to the left of the house object, so we add one.
-            Exists = ID != 0x0000 && ID != 0xFFFF;
-            for (int i = 0; i < 7; i++)
-            {
-                int Entry_Offset = Offset + 0x10 + (i * 0x138); //Offset + 16 data bytes + entrynum * entrysize
-                uint Player_ID = DataConverter.ReadUInt(Entry_Offset + 0x10);
-                if (Player_ID < 0xFFFFFFFF && Player_ID >= 0xF0000000)
-                    Villager_Player_Entries[i] = new Villager_Player_Entry(DataConverter.ReadDataRaw(Entry_Offset, 0x138), Entry_Offset);
-            }
-        }
-
-        public void Write()
-        {
-            //House_Coords[2] = (byte)(House_Coords[2] - 1);
-            //House_Coords[3] = (byte)(House_Coords[3] - 1);
-            DataConverter.Write(Offset, ID);
-            DataConverter.Write(Offset + 2, TownIdentifier);
-            //DataConverter.WriteString(Offset + 4, DataConverter.ReadString(MainForm.Town_Name_Offset, 8).Trim(), 8); //Set town name
-            DataConverter.WriteByte(Offset + 0xC, Index == 16 ? (byte)0xFF : (byte)(ID & 0x00FF)); //Normally same as villager identifier, but is 0xFF for islanders. This is likely the byte for what AI the villager will use.
-            DataConverter.WriteByte(Offset + 0xD, PersonalityID);
-            DataConverter.WriteString(Offset + 0x89D, Catchphrase, 10);
-            DataConverter.WriteByteArray(Offset + 0x899, House_Coords, false);
-            if (Shirt != null)
-                DataConverter.Write(Offset + 0x8E4, Shirt.ItemID);
-            if (!Exists && Modified)
-            {
-                DataConverter.WriteByteArray(Offset + 0x8EB, new byte[] { 0xFF, 0x01 }, false); //This byte might be the met flag. Setting it just in case
-                Exists = true;
-                if (Index < 16)
-                    Add_House();
-            }
-            foreach (Villager_Player_Entry Entry in Villager_Player_Entries)
-                if (Entry != null && Entry.Exists)
-                    Entry.Write(); //Update Player Entries
-            Modified = false;
-            //Second byte here is always a random number. This could be responsible for the Villager's AI, but I'm not sure. Just writing it for good measure.
-            //If the Villager's house location is out of bounds, (or just left 0xFFFF) the game will pick a random signboard as the new house location and write it on load.
-        }
-
-        public void Delete()
-        {
-            if (Index < 16) //Don't delete islander
-            {
-                //if (Properties.Settings.Default.ModifyVillagerHouse)
-                    //Remove_House();
-                ID = 0;
-                TownIdentifier = 0xFFFF;
-                PersonalityID = 6;
-                Catchphrase = "";
-                House_Coords = new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF };
-                Shirt = new Item(0);
-                Exists = false;
-                Modified = false;
-            }
-        }
-
-        public void Remove_House()
-        {
-            ushort House_ID = BitConverter.ToUInt16(new byte[] { (byte)(ID & 0x00FF), 0x50 }, 0);
-            /*ushort[] World_Buffer = DataConverter.ReadUShortArray(MainForm.AcreData_Offset, MainForm.AcreData_Size / 2);
-            for (int i = 0; i < World_Buffer.Length; i++)
-            {
-                if (World_Buffer[i] == House_ID)
-                {
-                    for (int x = i - 17; x < i - 14; x++) //First Row
-                        World_Buffer[x] = 0;
-                    for (int x = i - 1; x < i + 2; x++) //Middle Row
-                        World_Buffer[x] = 0;
-                    for (int x = i + 15; x < i + 18; x++) //Final Row
-                        World_Buffer[x] = 0;
-                    World_Buffer[i] = BitConverter.ToUInt16(new byte[] { (byte)(new Random().Next(0x10, 0x25)), 0x58 }, 0); //New Signboard to replace house
-                    //This is akin to actual game behavior
-                }
-            }*/
-            //DataConverter.Write(MainForm.AcreData_Offset, World_Buffer);
-        }
-
-        public void Add_House()
-        {
-            ushort House_ID = BitConverter.ToUInt16(new byte[] { (byte)(ID & 0x00FF), 0x50 }, 0);
-            /*ushort[] World_Buffer = DataConverter.ReadUShortArray(MainForm.AcreData_Offset, MainForm.AcreData_Size / 2);
-            if (House_Coords[0] > 5 || House_Coords[1] > 6 || House_Coords[2] > 15 || House_Coords[3] > 15) //Houses can't be on edge of acres
-                return;
-            int Position = (House_Coords[0] - 1) * 256 + (House_Coords[1] - 1) * 1280 + (House_Coords[2]) + (House_Coords[3] - 1) * 16; //X Acre + Y Acre + X Pos + Y Pos
-            if (Position > 0x1E00) //7,680 item spots per town (minus island acres) (5 * 6 * 16^2)
-                return;
-            for (int x = Position - 17; x < Position - 14; x++) //First Row
-                World_Buffer[x] = 0xFFFF;
-            for (int x = Position - 1; x < Position + 2; x++) //Middle Row
-                World_Buffer[x] = 0xFFFF;
-            for (int x = Position + 15; x < Position + 18; x++) //Final Row
-                World_Buffer[x] = 0xFFFF;
-            World_Buffer[Position] = House_ID;
-            World_Buffer[Position + 15] = 0xA012; //Add Nameplate
-
-            DataConverter.Write(MainForm.AcreData_Offset, World_Buffer);*/
-        }
-
-        public Villager_Player_Entry[] Get_Player_Entries(uint Matching_Player_ID)
-        {
-            return Villager_Player_Entries.Where(Entry => Entry.Player_ID == Matching_Player_ID).ToArray();
-        }
-    }
-
-    /*
-      Animal Crossing: Population Growing Villager Player Entry Structure:
-
-        Villager Player Entry Structure (Size: 0x138)
-        Player Name: 0x000 - 0x007
-        Town Name: 0x008 - 0x00F
-        Player ID: 0x010 - 0x013
-        Met Date: 0x014 - 0x01B
-        Met Town Name: 0x01C - 0x023
-        Met Town ID: 0x024 - 0x025
-        Padding??: 0x026 - 0x027
-        Unknown Data: 0x028 - 0x02F
-        Friendship: 0x030 (Min = 0 (1), Max = 7F (128))
-        Unknown Bytes: 0x031 - 0x032
-        Saved Message: 0x033? - 0x138
-    */
-    public class Villager_Player_Entry
-    {
-        public bool Exists = false;
-        public int Offset;
-        //Struct Start
-        public string Player_Name;
-        public string Player_Town_Name;
-        public uint Player_ID;
-        public ACDate Met_Date;
-        public string Met_Town_Name;
-        public ushort Met_Town_ID;
-        public byte[] Garbage = new byte[8]; //I have no idea wtf these are for. Might investigate some day.
-        public sbyte Friendship;
-        public Mail Saved_Letter; //Going to have to change this to a custom class, as it strips most mail header data (Length is 0x100? Message part is still 0xF8)
-        //
-
-        public Villager_Player_Entry(byte[] entryData, int offset)
-        {
-            Exists = true;
-            Offset = offset;
-            byte[] playerNameBytes = new byte[8], playerTownName = new byte[8], metTownName = new byte[8], metDate = new byte[8], playerId = new byte[4], metTownId = new byte[2];
-            Buffer.BlockCopy(entryData, 0, playerNameBytes, 0, 8);
-            Buffer.BlockCopy(entryData, 8, playerTownName, 0, 8);
-            Buffer.BlockCopy(entryData, 0x1C, metTownName, 0, 8);
-            Buffer.BlockCopy(entryData, 0x10, playerId, 0, 4);
-            Buffer.BlockCopy(entryData, 0x14, metDate, 0, 8);
-            Buffer.BlockCopy(entryData, 0x24, metTownId, 0, 2);
-            Array.Reverse(playerId);
-            Array.Reverse(metTownId);
-
-            //Player_Name = new ACString(playerNameBytes).Trim();
-            //Player_Town_Name = new ACString(playerTownName).Trim();
-            //Met_Town_Name = new ACString(metTownName).Trim();
-            Met_Date = new ACDate(metDate);
-            Player_ID = BitConverter.ToUInt32(playerId, 0);
-            Met_Town_ID = BitConverter.ToUInt16(metTownId, 0);
-            Friendship = (sbyte)entryData[0x30];
-        }
-
-        public void Max_Friendship()
-        {
-            Friendship = 0x7F;
-        }
-
-        public void Write()
-        {
-            //Player Name is handled by renaming the player
-            //DataConverter.WriteByteArray(Offset + 0x8, DataConverter.ReadDataRaw(MainForm.Town_Name_Offset, 8)); //Update Town Name
-            //if (DataConverter.ReadUShort(8) == Met_Town_ID)
-            //    DataConverter.WriteByteArray(Offset + 0x1C, DataConverter.ReadDataRaw(MainForm.Town_Name_Offset, 8)); //Update Met Town Name
         }
     }
 
@@ -339,7 +90,7 @@ namespace ACSE
         public int Furniture;
         public int FurnitureCount;
         public int House_Coordinates;
-        public int House_CoordinatesSize;
+        public int House_CoordinatesCount;
         public int Status;
     }
 
@@ -359,7 +110,7 @@ namespace ACSE
         public Item Carpet;
         public Item Wallpaper;
         public Item[] Furniture;
-        public byte[] House_Coordinates; //Animal Crossing only?
+        public byte[] House_Coordinates; //N64 - NDS
         public byte Status;
         //Player Entries?
     }
@@ -375,7 +126,7 @@ namespace ACSE
             Villager_AI = 0xA, // Goes unused??
             Personality = 0xB,
             House_Coordinates = 0x4E1,
-            House_CoordinatesSize = 4,
+            House_CoordinatesCount = 4,
             Catchphrase = 0x4E5,
             CatchphraseSize = 0x4,
             Shirt = 0x520,
@@ -398,7 +149,7 @@ namespace ACSE
             Villager_AI = 0xC,
             Personality = 0xD,
             House_Coordinates = 0x899,
-            House_CoordinatesSize = 4,
+            House_CoordinatesCount = 4,
             Catchphrase = 0x89D,
             CatchphraseSize = 0xA,
             Shirt = 0x8E4,
@@ -421,7 +172,7 @@ namespace ACSE
             Villager_AI = 0xA, // Goes unused??
             Personality = 0xB,
             House_Coordinates = 0x591, // Confirm
-            House_CoordinatesSize = 4,
+            House_CoordinatesCount = 4,
             Catchphrase = 0x595, // Confirm
             CatchphraseSize = 0x4,
             Shirt = 0x5DA,
@@ -600,9 +351,11 @@ namespace ACSE
                 {
                     if (Line.Contains("0x"))
                     {
-                        SimpleVillager Entry = new SimpleVillager();
-                        Entry.Villager_ID = ushort.Parse(Line.Substring(2, 2), NumberStyles.AllowHexSpecifier);
-                        Entry.Name = Line.Substring(6);
+                        SimpleVillager Entry = new SimpleVillager
+                        {
+                            Villager_ID = ushort.Parse(Line.Substring(2, 2), NumberStyles.AllowHexSpecifier),
+                            Name = Line.Substring(6)
+                        };
                         Database.Add(Entry.Villager_ID, Entry);
                     }
                 }
@@ -613,9 +366,11 @@ namespace ACSE
                 {
                     if (Line.Contains("0x"))
                     {
-                        SimpleVillager Entry = new SimpleVillager();
-                        Entry.Villager_ID = ushort.Parse(Line.Substring(2, 4), NumberStyles.AllowHexSpecifier);
-                        Entry.Name = Line.Substring(8);
+                        SimpleVillager Entry = new SimpleVillager
+                        {
+                            Villager_ID = ushort.Parse(Line.Substring(2, 4), NumberStyles.AllowHexSpecifier),
+                            Name = Line.Substring(8)
+                        };
                         Database.Add(Entry.Villager_ID, Entry);
                     }
                 }
@@ -791,6 +546,10 @@ namespace ACSE
                             else if (FieldType == typeof(byte))
                             {
                                 SaveData.Write(DataOffset, (byte)VillagerDataType.GetField(Field.Name).GetValue(Data));
+                            }
+                            else if (FieldType == typeof(byte[]))
+                            {
+                                SaveData.Write(DataOffset, (byte[])VillagerDataType.GetField(Field.Name).GetValue(Data));
                             }
                             else if (FieldType == typeof(ushort))
                             {

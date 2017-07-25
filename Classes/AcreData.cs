@@ -107,14 +107,14 @@ namespace ACSE
     {
         public WorldItem[] Acre_Items = new WorldItem[16 * 16];
 
-        public Normal_Acre(ushort acreId, int position, ushort[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, uint[] nl_items = null) : base(acreId, position)
+        public Normal_Acre(ushort acreId, int position, ushort[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, uint[] nl_items = null, int townPosition = -1) : base(acreId, position)
         {
             if (items != null)
                 for (int i = 0; i < 256; i++)
                 {
                     Acre_Items[i] = new WorldItem(items[i], i);
                     if (burriedItemData != null)
-                        SetBuried(Acre_Items[i], position, burriedItemData, saveType); //Broken in original save editor lol.. needs a position - 1 to function properly
+                        SetBuried(Acre_Items[i], townPosition == -1 ? position : townPosition, burriedItemData, saveType); //Broken in original save editor lol.. needs a position - 1 to function properly
                 }
             else if (nl_items != null)
             {
@@ -131,12 +131,12 @@ namespace ACSE
         public Normal_Acre(ushort acreId, int position, uint[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.Animal_Crossing)
             : this(acreId, position, null, null, saveType, items) { }
 
-        public Normal_Acre(ushort acreId, int position, WorldItem[] items, byte[] buriedItemData = null, SaveType saveType = SaveType.Animal_Crossing) : base(acreId, position)
+        public Normal_Acre(ushort acreId, int position, WorldItem[] items, byte[] buriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, int townPosition = -1) : base(acreId, position)
         {
             Acre_Items = items;
-            if (buriedItemData != null)
+            if (buriedItemData != null && townPosition > -1)
                 for (int i = 0; i < 256; i++)
-                    SetBuried(Acre_Items[i], position, buriedItemData, saveType);
+                    SetBuried(Acre_Items[i], townPosition, buriedItemData, saveType);
         }
         //TODO: Change BuriedData from byte[] to ushort[] and use updated code
         private int GetBuriedDataLocation(WorldItem item, int acre, SaveType saveType)

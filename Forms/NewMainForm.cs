@@ -31,8 +31,8 @@ namespace ACSE
         Image Selected_Pattern = null;
         Panel[] Building_List_Panels;
         Normal_Acre[] Acres;
-        Normal_Acre[] Town_Acres;
-        Normal_Acre[] Island_Acres;
+        public static Normal_Acre[] Town_Acres;
+        public static Normal_Acre[] Island_Acres;
         Building[] Buildings;
         Building[] Island_Buildings;
         public static Save Save_File;
@@ -432,35 +432,6 @@ namespace ACSE
             if (Selected_Player != null && Selected_Player.Exists)
                 playerEditorSelect.SelectedIndex = Array.IndexOf(Players, Selected_Player);
 
-            //Load Villagers
-            if (Save_File.Save_Type != SaveType.City_Folk)
-            {
-                Villagers = new NewVillager[Current_Save_Info.Villager_Count];
-                for (int i = 0; i < Villagers.Length; i++)
-                    if (Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus)
-                    {
-                        if (i < 15)
-                        {
-                            Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
-                        }
-                        else
-                        {
-                            Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Islander_Data, i, save);
-                        }
-                    }
-                    else
-                    {
-                        Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
-                    }
-                for (int i = villagerPanel.Controls.Count - 1; i > -1; i--)
-                    if (villagerPanel.Controls[i] is Panel)
-                    {
-                        villagerPanel.Controls[i].Dispose();
-                    }
-                foreach (NewVillager v in Villagers)
-                    GenerateVillagerPanel(v);
-            }
-
             //Load Town Info
             Acres = new Normal_Acre[Current_Save_Info.Acre_Count];
             Town_Acres = new Normal_Acre[Current_Save_Info.Town_Acre_Count];
@@ -499,7 +470,7 @@ namespace ACSE
                     {
                         Items_Buff = save.ReadUInt16Array(save.Save_Data_Start_Offset +
                             Current_Save_Info.Save_Offsets.Town_Data + x * 512, 256, true);
-                        Town_Acres[x] = new Normal_Acre(Acre_Data[i], x, Items_Buff, Buried_Buffer, SaveType.Animal_Crossing);
+                        Town_Acres[x] = new Normal_Acre(Acre_Data[i], i, Items_Buff, Buried_Buffer, SaveType.Animal_Crossing, null, x);
                         x++;
                     }
                     Acres[i] = new Normal_Acre(Acre_Data[i], i);
@@ -570,9 +541,41 @@ namespace ACSE
 
             if (Buildings != null)
                SetupBuildingList();
-            
+
+            //Load Villagers
+            if (Save_File.Save_Type != SaveType.City_Folk)
+            {
+                Villagers = new NewVillager[Current_Save_Info.Villager_Count];
+                for (int i = 0; i < Villagers.Length; i++)
+                    if (Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus)
+                    {
+                        if (i < 15)
+                        {
+                            Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
+                        }
+                        else
+                        {
+                            Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Islander_Data, i, save);
+                        }
+                    }
+                    else
+                    {
+                        Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
+                    }
+                for (int i = villagerPanel.Controls.Count - 1; i > -1; i--)
+                    if (villagerPanel.Controls[i] is Panel)
+                    {
+                        villagerPanel.Controls[i].Dispose();
+                    }
+                foreach (NewVillager v in Villagers)
+                    GenerateVillagerPanel(v);
+            }
+
             if (Properties.Settings.Default.OutputInt32s)
                 Utility.Scan_For_NL_Int32();
+
+            //if (Save_File.Save_Type == SaveType.Animal_Crossing)
+                //Utility.Increment_Town_ID(Save_File);
         }
 
         public void SetPlayersEnabled()
@@ -955,11 +958,26 @@ namespace ACSE
                 if (Save_File.Save_Type == SaveType.Wild_World)
                     acreID.Text = "Acre ID: 0x" + Selected_Acre_ID.ToString("X2");
                 else
-                    acreID.Text = "Acre ID: 0x" + Selected_Acre_ID.ToString("X4");
+                    acreID.Text = "Acre ID: 0x" + (Selected_Acre_ID + Acre_Height_Modifier).ToString("X4");
                 if (Acre_Info != null && Acre_Info.ContainsKey((byte)Selected_Acre_ID))
                     acreDesc.Text = Acre_Info[(byte)Selected_Acre_ID];
                 else if (UInt16_Filed_Acre_Data != null)
                     acreDesc.Text = Node.Text;
+                // Warnings for N64/GameCube titles
+                if (Save_File.Game_System == SaveGeneration.GCN)
+                {
+                    if (Node.Parent.Text == "Beta Acres")
+                    {
+                        MessageBox.Show("Placing beta acres in the Town Region (anywhere your map would show) will cause your game to crash when you open the map! It's recommended you only place them in border acres or ocean/island acres!", "Beta Acre Warning");
+                    }
+                    else if (Node.Tag != null && ushort.TryParse((string)Node.Tag, NumberStyles.AllowHexSpecifier, null, out ushort Acre_ID))
+                    {
+                        if (Acre_ID == 0x0118 || Acre_ID == 0x0294 || Acre_ID == 0x0298)
+                        {
+                            MessageBox.Show("Placing a dump acre without adding a dump item to the acre will cause your game to crash. Please be careful!", "Dump Placement Warning");
+                        }
+                    }
+                }
             }
         }
 
@@ -1100,7 +1118,7 @@ namespace ACSE
                                 {
                                     InterpolationMode = InterpolationMode.HighQualityBicubic,
                                     Size = new Size(128, 128),
-                                    Location = new Point((x - 1) * 128, (Town_Acre / (Current_Save_Info.X_Acre_Count - 2)) * 128),
+                                    Location = new Point((x - 1) * 129, (Town_Acre / (Current_Save_Info.X_Acre_Count - 2)) * 129),
                                     Image = Town_Acres[Town_Acre_Count] != null ? Town_Acre_Bitmap : null,
                                     BackgroundImage = Acre_Image,
                                     BackgroundImageLayout = ImageLayout.Stretch,
@@ -1281,8 +1299,14 @@ namespace ACSE
                         Refresh_PictureBox_Image(Furniture_Box, Inventory.GetItemPic(16, Villager.Data.Furniture.Length, Villager.Data.Furniture, Save_File.Save_Type));
                     }
                 };
-
                 Container.Controls.Add(Furniture_Box);
+            }
+            if (Save_File.Save_Type == SaveType.Animal_Crossing)
+            {
+                /*byte[] Location = Utility.Find_Villager_House(Villager.Data.Villager_ID);
+                MessageBox.Show(string.Format("{0}, {1}, {2}, {3}",
+                    Location[0] == Villager.Data.House_Coordinates[0], Location[1] == Villager.Data.House_Coordinates[1],
+                    Location[2] == Villager.Data.House_Coordinates[2], Location[3] == Villager.Data.House_Coordinates[3]));*/
             }
             Villager_Selection_Box.SelectedIndexChanged += delegate (object sender, EventArgs e)
             {
@@ -1293,6 +1317,10 @@ namespace ACSE
                     //Animal Crossing has a Villager "AI" byte. Normally its just the lower byte of the Villager ID, but it's always 0xFF for the Islander (setting a non-islander to it might cause problems).
                     if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                         Villager.Data.Villager_AI = (Villager.Index == 15) ? (byte)0xFF : (byte)(Villager.Data.Villager_ID & 0xFF);
+                    if (Villager.Data.Villager_ID == 0 && Save_File.Game_System == SaveGeneration.GCN)
+                    {
+                        Villager.Data.House_Coordinates = new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF };
+                    }
                 }
             };
 
@@ -2361,16 +2389,20 @@ namespace ACSE
 
         private void open_File_OK(object sender, EventArgs e)
         {
+            OpenFileDialog File_Dialog = sender as OpenFileDialog;
             if (Save_File != null)
             {
-                DialogResult Result = MessageBox.Show("A file is already being edited. Would you like to save before opening another file?", "Save File?", MessageBoxButtons.YesNo);
-                if (Result == DialogResult.Yes)
+                if (File_Dialog.FileName != Save_File.Full_Save_Path) // Make sure reopening the same file doesn't ask to save it.
                 {
-                    Save_File.Flush();
+                    DialogResult Result = MessageBox.Show("A file is already being edited. Would you like to save before opening another file?", "Save File?", MessageBoxButtons.YesNo);
+                    if (Result == DialogResult.Yes)
+                    {
+                        Save_File.Flush();
+                    }
+                    //Add Save_File.Close(); ??
                 }
-                //Add Save_File.Close(); ??
             }
-            SetupEditor(new Save((sender as OpenFileDialog).FileName));
+            SetupEditor(new Save(File_Dialog.FileName));
         }
 
         private void clearWeedsButton_Click(object sender, EventArgs e)
@@ -2545,7 +2577,7 @@ namespace ACSE
 
         private void secureValueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
+            if (Save_File != null && Save_File.Game_System == SaveGeneration.N3DS)
                 Secure_NAND_Value_Form.Show();
         }
 

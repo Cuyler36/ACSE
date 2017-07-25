@@ -5,11 +5,18 @@ using System.Text;
 
 namespace ACSE
 {
+    public enum GrassType
+    {
+        Circle,
+        Square,
+        Triangle
+    }
+
     public class SimpleTownInfo
     {
         public ushort TownID;
         public string TownName;
-        // More??
+        public GrassType GrassType;
 
         public SimpleTownInfo(ushort TownId, string Town_Name)
         {

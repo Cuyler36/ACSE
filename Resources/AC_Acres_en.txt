@@ -211,3 +211,8 @@
 0x05A0, Island (Left) #3
 0x05A4, Island (Right) #4
 0x05A8, Island (Left) #4
+//Beta Acres
+0x0074, Grass Beta Acre
+0x0078, Ramp Beta Acre
+0x007C, Lake Beta Acre
+0x0080, River Beta Acre
