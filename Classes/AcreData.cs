@@ -78,6 +78,53 @@ namespace ACSE
             }
             return AcreTileData;
         }
+
+        public static Dictionary<byte, Image> Load_AC_Map_Icons()
+        {
+            string Icon_Directory = NewMainForm.Assembly_Location + "\\Resources\\Images\\AC_Map_Icons";
+            Dictionary<byte, Image> Icons = new Dictionary<byte, Image>();
+            if (Directory.Exists(Icon_Directory))
+            {
+                foreach (string Icon_File in Directory.GetFiles(Icon_Directory))
+                {
+                    if (byte.TryParse(Path.GetFileNameWithoutExtension(Icon_File), out byte Index))
+                    {
+                        Icons.Add(Index, Image.FromFile(Icon_File));
+                    }
+                }
+            }
+            return Icons;
+        }
+
+        public static Dictionary<ushort, byte> Load_AC_Map_Index()
+        {
+            string Index_File = NewMainForm.Assembly_Location + "\\Resources\\AC_Map_Icon_Index.txt";
+            if (File.Exists(Index_File))
+            {
+                try
+                {
+                    using (StreamReader Index_Reader = File.OpenText(Index_File))
+                    {
+                        Dictionary<ushort, byte> Icon_Index = new Dictionary<ushort, byte>();
+                        string Line;
+                        while ((Line = Index_Reader.ReadLine()) != null)
+                        {
+                            if (Line.Contains("0x"))
+                            {
+                                string Acre_ID_Str = Line.Substring(0, 6).Replace("0x", ""), Index_Str = Line.Substring(7).Trim();
+                                if (ushort.TryParse(Acre_ID_Str, NumberStyles.AllowHexSpecifier, null, out ushort Acre_ID) && byte.TryParse(Index_Str, out byte Index))
+                                {
+                                    Icon_Index.Add(Acre_ID, Index);
+                                }
+                            }
+                        }
+                        return Icon_Index;
+                    }
+                }
+                catch { }
+            }
+            return null;
+        }
     }
 
     public class Acre

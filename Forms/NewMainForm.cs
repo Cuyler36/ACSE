@@ -64,6 +64,8 @@ namespace ACSE
         PictureBoxWithInterpolationMode selectedAcrePicturebox;
         int Last_Month = 0;
         ushort Acre_Height_Modifier = 0;
+        Dictionary<ushort, byte> AC_Map_Icon_Index;
+        Dictionary<byte, Image> AC_Map_Icons;
 
         public NewMainForm(Save save = null)
         {
@@ -148,6 +150,15 @@ namespace ACSE
             //Birthday Event Hookups
             birthdayMonth.LostFocus += new EventHandler((object sender, EventArgs e) => Birthday_Month_FocusLost());
             birthdayDay.LostFocus += new EventHandler((object sender, EventArgs e) => Birthday_Day_FocusLost());
+
+            //Custom Acre ID Event Hookup
+            acreCustomIdBox.TextChanged += delegate (object sender, EventArgs e)
+            {
+                if (Save_File != null && ushort.TryParse(acreCustomIdBox.Text, NumberStyles.AllowHexSpecifier, null, out ushort Custom_ID))
+                {
+                    Set_Selected_Acre(Custom_ID);
+                }
+            };
 
             if (save != null)
                 SetupEditor(save);
@@ -257,9 +268,14 @@ namespace ACSE
                     save.Save_Name + save.Save_Extension), "Save File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            Save_File = null; //Set to null so we can set the checkbox to false without having the method run
+            townMapViewCheckbox.Checked = false;
+            townMapViewCheckbox.Enabled = save.Game_System == SaveGeneration.GCN;
             Save_File = save;
             Debug_Manager.WriteLine("Save File Loaded");
             Acre_Height_Modifier = 0;
+            Selected_Acre_ID = 0;
+            selectedAcrePicturebox.Image = null;
             Buildings = null;
             Island_Buildings = null;
             Buried_Buffer = null;
@@ -808,7 +824,7 @@ namespace ACSE
             if (shoesPicturebox.Enabled)
                 Refresh_PictureBox_Image(shoesPicturebox, Inventory.GetItemPic(16, Player.Data.Shoes, Save_File.Save_Type));
             if (playerEyeColor.Enabled && playerEyeColor.Items.Count > 0)
-                playerEyeColor.SelectedIndex = Player.Data.EyeColor;
+                try { playerEyeColor.SelectedIndex = Player.Data.EyeColor; } catch { } // Breaks on Welcome Amiibo. Some update broke it? Look into it.
             if (playerWetsuit.Enabled)
                 Refresh_PictureBox_Image(playerWetsuit, Inventory.GetItemPic(16, Player.Data.Wetsuit, Save_File.Save_Type));
 
@@ -941,6 +957,32 @@ namespace ACSE
                     selectedItemText.Text = string.Format("Selected Item: [0x{0}]", Item_ID.ToString("X4"));
             }
         }
+
+        private void Set_Selected_Acre(ushort AcreID)
+        {
+            Selected_Acre_ID = AcreID;
+            if (Save_File.Game_System == SaveGeneration.GCN)
+            {
+                acreHeightTrackBar.Value = Selected_Acre_ID % 4;
+                Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
+                Selected_Acre_ID -= (ushort)acreHeightTrackBar.Value;
+            }
+            string Acre_ID_Str = Selected_Acre_ID.ToString(Save_File.Save_Type == SaveType.Wild_World ? "X2 " : "X4");
+            if (Save_File.Is_Big_Endian)
+                selectedAcrePicturebox.Image = Acre_Image_List.ContainsKey(Acre_ID_Str) ? Acre_Image_List[Acre_ID_Str] : Acre_Image_List["FFFF"];
+            else
+                selectedAcrePicturebox.Image = Acre_Image_List.ContainsKey(Acre_ID_Str) ? Acre_Image_List[Acre_ID_Str] : Acre_Image_List["FF"];
+            if (Save_File.Save_Type == SaveType.Wild_World)
+                acreID.Text = "Acre ID: 0x" + Selected_Acre_ID.ToString("X2");
+            else
+                acreID.Text = "Acre ID: 0x" + (Selected_Acre_ID + Acre_Height_Modifier).ToString("X4");
+            if (Acre_Info != null && Acre_Info.ContainsKey((byte)Selected_Acre_ID))
+                acreDesc.Text = Acre_Info[(byte)AcreID];
+            else if (UInt16_Acre_Info != null)
+                acreDesc.Text = UInt16_Acre_Info.ContainsKey(Selected_Acre_ID) ? UInt16_Acre_Info[Selected_Acre_ID] : "No Acre Description";
+
+        }
+
         // TODO: Change byte based indexes to use Dictionary<ushort, Dictionary<ushort, string>>
         public void Acre_Tree_View_Entry_Clicked(object sender, TreeViewEventArgs e)
         {
@@ -2760,6 +2802,49 @@ namespace ACSE
             }
         }
 
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Save_File != null && Save_File.Game_System == SaveGeneration.GCN)
+            {
+                if (AC_Map_Icons == null)
+                {
+                    AC_Map_Icons = AcreData.Load_AC_Map_Icons();
+                }
+                if (AC_Map_Icon_Index == null)
+                {
+                    AC_Map_Icon_Index = AcreData.Load_AC_Map_Index();
+                }
+                if (townMapViewCheckbox.Checked)
+                {
+                    if (AC_Map_Icon_Index != null && AC_Map_Icons != null)
+                    {
+                        for (int i = 0; i < Acres.Length; i++)
+                        {
+                            if (AC_Map_Icon_Index.ContainsKey(Acres[i].AcreID) && AC_Map_Icons.ContainsKey(AC_Map_Icon_Index[Acres[i].AcreID]))
+                            {
+                                Acre_Map[i].BackgroundImage = AC_Map_Icons[AC_Map_Icon_Index[Acres[i].AcreID]];
+                            }
+                            else if (AC_Map_Icon_Index.ContainsKey(Acres[i].BaseAcreID) && AC_Map_Icons.ContainsKey(AC_Map_Icon_Index[Acres[i].BaseAcreID]))
+                            {
+                                Acre_Map[i].BackgroundImage = AC_Map_Icons[AC_Map_Icon_Index[Acres[i].BaseAcreID]];
+                            }
+                            else
+                            {
+                                Acre_Map[i].BackgroundImage = AC_Map_Icons[99];
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < Acres.Length; i++)
+                    {
+                        Acre_Map[i].BackgroundImage = Get_Acre_Image(Acres[i], Acres[i].BaseAcreID.ToString("X4"));
+                    }
+                }
+            }
+        }
+
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings_Menu.Show();
@@ -2843,11 +2928,14 @@ namespace ACSE
 
         protected override void OnPaint(PaintEventArgs paintEventArgs)
         {
-            if (UseInternalInterpolationSetting)
-                paintEventArgs.Graphics.InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode; //InterpolationMode;
-            else
-                paintEventArgs.Graphics.InterpolationMode = InterpolationMode;
-            base.OnPaint(paintEventArgs);
+            if (paintEventArgs != null)
+            {
+                if (UseInternalInterpolationSetting)
+                    paintEventArgs.Graphics.InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode; //InterpolationMode;
+                else
+                    paintEventArgs.Graphics.InterpolationMode = InterpolationMode;
+                try { base.OnPaint(paintEventArgs); } catch { MessageBox.Show("Error: PictureBox: " + Name); }
+            }
         }
 
         protected override void OnPaintBackground(PaintEventArgs paintEventArgs)
@@ -2856,7 +2944,7 @@ namespace ACSE
                 paintEventArgs.Graphics.InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode; //InterpolationMode;
             else
                 paintEventArgs.Graphics.InterpolationMode = InterpolationMode;
-            base.OnPaintBackground(paintEventArgs);
+            try { base.OnPaintBackground(paintEventArgs); } catch { MessageBox.Show("Error: PictureBox: " + Name); }
         }
     }
 }

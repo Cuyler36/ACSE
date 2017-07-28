@@ -538,7 +538,7 @@ namespace ACSE
                                     SaveData.Write(DataOffset, (ushort)VillagerDataType.GetField(Field.Name).GetValue(Data), SaveData.Is_Big_Endian);
                                 }
                             }
-                            else if (FieldType == typeof(string))
+                            else if (FieldType == typeof(string) && SaveData.Game_System != SaveGeneration.N3DS) // Temp 3DS exclusion
                             {
                                 SaveData.Write(DataOffset, ACString.GetBytes((string)VillagerDataType.GetField(Field.Name).GetValue(Data),
                                     (int)VillagerOffsetData.GetField(Field.Name + "Size").GetValue(Offsets)));

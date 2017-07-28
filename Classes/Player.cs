@@ -949,6 +949,18 @@ namespace ACSE
                                     SaveData.Write(DataOffset, Items, SaveData.Is_Big_Endian);
                                 }
                             }
+                            else if (FieldType == typeof(Item))
+                            {
+                                Item Item = (Item)PlayerDataType.GetField(Field.Name).GetValue(Data);
+                                if (SaveData.Game_System == SaveGeneration.N3DS)
+                                {
+                                    SaveData.Write(DataOffset, Item.ToUInt32());
+                                }
+                                else
+                                {
+                                    SaveData.Write(DataOffset, Item.ItemID, SaveData.Is_Big_Endian);
+                                }
+                            }
                             else if (FieldType == typeof(NL_Int32))
                             {
                                 if (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo)
@@ -958,7 +970,7 @@ namespace ACSE
                                     SaveData.Write(DataOffset + 4, Encrypted_Int.Int_2);
                                 }
                             }
-                            else if (FieldType == typeof(ACDate))
+                            else if (FieldType == typeof(ACDate) && SaveData.Game_System == SaveGeneration.GCN)
                             {
                                 SaveData.Write(DataOffset, ((ACDate)PlayerDataType.GetField(Field.Name).GetValue(Data)).ToBytes());
                             }

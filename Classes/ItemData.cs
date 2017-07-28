@@ -1016,6 +1016,11 @@ namespace ACSE
             Flag2 = flag2;
             Name = ItemData.GetItemName(ItemID);
         }
+
+        public uint ToUInt32()
+        {
+            return (uint)((Flag1 << 24) + (Flag2 << 16) + ItemID);
+        }
     }
 
     public class WorldItem : Item

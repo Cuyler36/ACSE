@@ -216,3 +216,4 @@
 0x0078, Ramp Beta Acre
 0x007C, Lake Beta Acre
 0x0080, River Beta Acre
+0x039C, Slope Test Beta Acre

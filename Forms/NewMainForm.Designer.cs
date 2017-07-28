@@ -41,6 +41,9 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
+            this.birthdayDay = new System.Windows.Forms.ComboBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.birthdayMonth = new System.Windows.Forms.ComboBox();
             this.playerIslandMedals = new System.Windows.Forms.TextBox();
             this.label40 = new System.Windows.Forms.Label();
             this.patternPanel = new System.Windows.Forms.Panel();
@@ -171,11 +174,11 @@
             this.acreToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.label25 = new System.Windows.Forms.Label();
             this.villagerToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.label42 = new System.Windows.Forms.Label();
-            this.birthdayMonth = new System.Windows.Forms.ComboBox();
-            this.birthdayDay = new System.Windows.Forms.ComboBox();
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.acreCustomIdBox = new System.Windows.Forms.TextBox();
+            this.townMapViewCheckbox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
@@ -374,6 +377,51 @@
             this.playersTab.TabIndex = 0;
             this.playersTab.Text = "Players";
             this.playersTab.UseVisualStyleBackColor = true;
+            // 
+            // birthdayDay
+            // 
+            this.birthdayDay.FormattingEnabled = true;
+            this.birthdayDay.Items.AddRange(new object[] {
+            "Not Set"});
+            this.birthdayDay.Location = new System.Drawing.Point(712, 8);
+            this.birthdayDay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.birthdayDay.Name = "birthdayDay";
+            this.birthdayDay.Size = new System.Drawing.Size(59, 21);
+            this.birthdayDay.TabIndex = 73;
+            this.birthdayDay.Text = "Not Set";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(580, 11);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(48, 13);
+            this.label42.TabIndex = 72;
+            this.label42.Text = "Birthday:";
+            // 
+            // birthdayMonth
+            // 
+            this.birthdayMonth.FormattingEnabled = true;
+            this.birthdayMonth.Items.AddRange(new object[] {
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+            "Not Set"});
+            this.birthdayMonth.Location = new System.Drawing.Point(634, 8);
+            this.birthdayMonth.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.birthdayMonth.Name = "birthdayMonth";
+            this.birthdayMonth.Size = new System.Drawing.Size(77, 21);
+            this.birthdayMonth.TabIndex = 71;
+            this.birthdayMonth.Text = "Not Set";
             // 
             // playerIslandMedals
             // 
@@ -1028,6 +1076,9 @@
             // 
             // acresTab
             // 
+            this.acresTab.Controls.Add(this.townMapViewCheckbox);
+            this.acresTab.Controls.Add(this.acreCustomIdBox);
+            this.acresTab.Controls.Add(this.label44);
             this.acresTab.Controls.Add(this.acreTreeView);
             this.acresTab.Controls.Add(this.acrePanel);
             this.acresTab.Location = new System.Drawing.Point(4, 22);
@@ -1043,7 +1094,7 @@
             // 
             this.acreTreeView.Location = new System.Drawing.Point(745, 7);
             this.acreTreeView.Name = "acreTreeView";
-            this.acreTreeView.Size = new System.Drawing.Size(180, 551);
+            this.acreTreeView.Size = new System.Drawing.Size(180, 505);
             this.acreTreeView.TabIndex = 1;
             // 
             // acrePanel
@@ -1561,51 +1612,6 @@
             this.label25.TabIndex = 6;
             this.label25.Text = "Item Flags";
             // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(580, 11);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(48, 13);
-            this.label42.TabIndex = 72;
-            this.label42.Text = "Birthday:";
-            // 
-            // birthdayMonth
-            // 
-            this.birthdayMonth.FormattingEnabled = true;
-            this.birthdayMonth.Items.AddRange(new object[] {
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-            "Not Set"});
-            this.birthdayMonth.Location = new System.Drawing.Point(634, 8);
-            this.birthdayMonth.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.birthdayMonth.Name = "birthdayMonth";
-            this.birthdayMonth.Size = new System.Drawing.Size(77, 21);
-            this.birthdayMonth.TabIndex = 71;
-            this.birthdayMonth.Text = "Not Set";
-            // 
-            // birthdayDay
-            // 
-            this.birthdayDay.FormattingEnabled = true;
-            this.birthdayDay.Items.AddRange(new object[] {
-            "Not Set"});
-            this.birthdayDay.Location = new System.Drawing.Point(712, 8);
-            this.birthdayDay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.birthdayDay.Name = "birthdayDay";
-            this.birthdayDay.Size = new System.Drawing.Size(59, 21);
-            this.birthdayDay.TabIndex = 73;
-            this.birthdayDay.Text = "Not Set";
-            // 
             // acreHeightTrackBar
             // 
             this.acreHeightTrackBar.AutoSize = false;
@@ -1625,6 +1631,35 @@
             this.label43.Size = new System.Drawing.Size(66, 13);
             this.label43.TabIndex = 8;
             this.label43.Text = "Acre Height:";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(745, 541);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(84, 13);
+            this.label44.TabIndex = 2;
+            this.label44.Text = "Custom Acre ID:";
+            // 
+            // acreCustomIdBox
+            // 
+            this.acreCustomIdBox.Location = new System.Drawing.Point(835, 538);
+            this.acreCustomIdBox.Name = "acreCustomIdBox";
+            this.acreCustomIdBox.Size = new System.Drawing.Size(90, 20);
+            this.acreCustomIdBox.TabIndex = 3;
+            // 
+            // townMapViewCheckbox
+            // 
+            this.townMapViewCheckbox.AutoSize = true;
+            this.townMapViewCheckbox.Enabled = false;
+            this.townMapViewCheckbox.Location = new System.Drawing.Point(745, 518);
+            this.townMapViewCheckbox.Name = "townMapViewCheckbox";
+            this.townMapViewCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.townMapViewCheckbox.Size = new System.Drawing.Size(106, 17);
+            this.townMapViewCheckbox.TabIndex = 4;
+            this.townMapViewCheckbox.Text = ":Town Map View";
+            this.townMapViewCheckbox.UseVisualStyleBackColor = true;
+            this.townMapViewCheckbox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // NewMainForm
             // 
@@ -1673,6 +1708,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.hatPicturebox)).EndInit();
             this.playerEditorSelect.ResumeLayout(false);
             this.acresTab.ResumeLayout(false);
+            this.acresTab.PerformLayout();
             this.townTab.ResumeLayout(false);
             this.townTab.PerformLayout();
             this.villagerTab.ResumeLayout(false);
@@ -1840,5 +1876,8 @@
         private System.Windows.Forms.ComboBox birthdayMonth;
         private System.Windows.Forms.TrackBar acreHeightTrackBar;
         private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.TextBox acreCustomIdBox;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.CheckBox townMapViewCheckbox;
     }
 }
