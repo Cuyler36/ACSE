@@ -75,6 +75,116 @@ namespace ACSE
             return new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF };
         }
 
+        public static bool[] Check_Perfect_Town_Requirements(Normal_Acre[] Acres, bool Make_Perfect = false)
+        {
+            bool[] Acre_Results = new bool[Acres.Length];
+            int Points = 0;
+            for (int i = 0; i < Acre_Results.Length; i++)
+            {
+                Normal_Acre Acre = Acres[i];
+                switch (NewMainForm.Save_File.Game_System)
+                {
+                    case SaveGeneration.N64:
+                    case SaveGeneration.GCN:
+                        //TODO: Implement Special Acre Check (Player Houses, Train Station, Oceanfront Acres, Lake Acres, Wishing Well, & Museum
+                        //Special Acre Info: < 9 Trees, 0 Points | 9 - 11, 1 Point | 12 - 14, 2 Points | 15 - 17, 1 Point | > 18, 0 Points
+                        int Tree_Count = 0;
+                        int Weed_Count = 0;
+                        for (int o = 0; o < 256; o++)
+                        {
+                            WorldItem Item = Acre.Acre_Items[o];
+                            if (Item.Name == "Weed")
+                            {
+                                Weed_Count++;
+                                if (Make_Perfect)
+                                {
+                                    Acre.Acre_Items[o] = new WorldItem(0, o);
+                                }
+                            }
+                            else if (ItemData.GetItemType(Item.ItemID) == "Tree")
+                            {
+                                Tree_Count++;
+                            }
+                        }
+                        if (Make_Perfect)
+                        {
+                            if (Tree_Count > 14)
+                            {
+                                for (int o = 0; o < Tree_Count - 13; o++)
+                                {
+                                    for (int x = 0; x < 256; x++)
+                                    {
+                                        if (ItemData.GetItemType(Acre.Acre_Items[x].ItemID) == "Tree")
+                                        {
+                                            Acre.Acre_Items[x] = new WorldItem(0, x);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            else if (Tree_Count < 12)
+                            {
+                                for (int o = 0; o < 13 - Tree_Count; o++)
+                                {
+                                    for (int x = 0; x < 256; x++)
+                                    {
+                                        // Check to make sure the item directly above, below, and to the left and right isn't already occupied.
+                                        if (Acre.Acre_Items[x].ItemID == 0 && (x < 16 || Acre.Acre_Items[x - 16].ItemID == 0) && (x > 239 || Acre.Acre_Items[x + 16].ItemID == 0)
+                                            && (x == 0 || Acre.Acre_Items[x - 1].ItemID == 0) && (x == 255 || Acre.Acre_Items[x + 1].ItemID == 0))
+                                        {
+                                            Acre.Acre_Items[x] = new WorldItem(0x0804, x);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Acre_Results[i] = Make_Perfect || ((Tree_Count > 11 && Tree_Count < 15) && Weed_Count < 4);
+                        if (Acre_Results[i])
+                        {
+                            Points++;
+                        }
+                        break;
+                    case SaveGeneration.NDS:
+                    case SaveGeneration.Wii:
+                    case SaveGeneration.N3DS:
+                        throw new NotImplementedException();
+                }
+            }
+            return Acre_Results;
+        }
+
+        public static void Place_Structure(Normal_Acre Acre, int Start_Index, List<ushort[]> Structure_Info)
+        {
+            if (Start_Index > -1 && Start_Index < 256)
+            {
+                if (NewMainForm.Save_File.Game_System == SaveGeneration.GCN)
+                {
+                    for (int y = 0; y < Structure_Info.Count; y++)
+                    {
+                        for (int x = 0; x < Structure_Info[y].Length; x++)
+                        {
+                            int Index = Start_Index + y * 16 + x;
+                            if (Index < 256)
+                            {
+                                switch (Structure_Info[y][x])
+                                {
+                                    case 0: // Just for alignment
+                                        break;
+                                    case 1:
+                                        Acre.Acre_Items[Index] = new WorldItem(0xFFFF, Index);
+                                        break;
+                                    default:
+                                        Acre.Acre_Items[Index] = new WorldItem(Structure_Info[y][x], Index);
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public static Normal_Acre[] Generate_Random_Town_Layout()
         {
             Normal_Acre[] Acres = new Normal_Acre[70];

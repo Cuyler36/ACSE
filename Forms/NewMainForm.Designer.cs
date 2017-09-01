@@ -39,21 +39,20 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secureValueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearWeedsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
+            this.resettiCheckBox = new System.Windows.Forms.CheckBox();
             this.birthdayDay = new System.Windows.Forms.ComboBox();
             this.label42 = new System.Windows.Forms.Label();
             this.birthdayMonth = new System.Windows.Forms.ComboBox();
             this.playerIslandMedals = new System.Windows.Forms.TextBox();
             this.label40 = new System.Windows.Forms.Label();
             this.patternPanel = new System.Windows.Forms.Panel();
-            this.label31 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.dresserCPictureBox = new System.Windows.Forms.PictureBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.dresserBPictureBox = new System.Windows.Forms.PictureBox();
-            this.label28 = new System.Windows.Forms.Label();
+            this.islandBoxText = new System.Windows.Forms.Label();
+            this.islandPictureBox = new System.Windows.Forms.PictureBox();
+            this.dresserText = new System.Windows.Forms.Label();
             this.dresserAPictureBox = new System.Windows.Forms.PictureBox();
             this.playerMeowCoupons = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
@@ -113,6 +112,9 @@
             this.player3 = new System.Windows.Forms.TabPage();
             this.player4 = new System.Windows.Forms.TabPage();
             this.acresTab = new System.Windows.Forms.TabPage();
+            this.townMapViewCheckbox = new System.Windows.Forms.CheckBox();
+            this.acreCustomIdBox = new System.Windows.Forms.TextBox();
+            this.label44 = new System.Windows.Forms.Label();
             this.acreTreeView = new System.Windows.Forms.TreeView();
             this.acrePanel = new System.Windows.Forms.Panel();
             this.townTab = new System.Windows.Forms.TabPage();
@@ -176,15 +178,14 @@
             this.villagerToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.acreCustomIdBox = new System.Windows.Forms.TextBox();
-            this.townMapViewCheckbox = new System.Windows.Forms.CheckBox();
+            this.removeAllItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.waterFlowersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.makeFruitsPerfectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.replaceItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dresserCPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dresserBPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.islandPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dresserAPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bedPicturebox)).BeginInit();
@@ -215,7 +216,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem});
+            this.editToolStripMenuItem,
+            this.tasksToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(963, 24);
@@ -284,6 +286,25 @@
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
+            // tasksToolStripMenuItem
+            // 
+            this.tasksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearWeedsToolStripMenuItem,
+            this.removeAllItemsToolStripMenuItem,
+            this.waterFlowersToolStripMenuItem,
+            this.makeFruitsPerfectToolStripMenuItem,
+            this.replaceItemsToolStripMenuItem});
+            this.tasksToolStripMenuItem.Name = "tasksToolStripMenuItem";
+            this.tasksToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.tasksToolStripMenuItem.Text = "Tasks";
+            // 
+            // clearWeedsToolStripMenuItem
+            // 
+            this.clearWeedsToolStripMenuItem.Enabled = false;
+            this.clearWeedsToolStripMenuItem.Name = "clearWeedsToolStripMenuItem";
+            this.clearWeedsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.clearWeedsToolStripMenuItem.Text = "Clear Weeds";
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.playersTab);
@@ -302,19 +323,16 @@
             // 
             // playersTab
             // 
+            this.playersTab.Controls.Add(this.resettiCheckBox);
             this.playersTab.Controls.Add(this.birthdayDay);
             this.playersTab.Controls.Add(this.label42);
             this.playersTab.Controls.Add(this.birthdayMonth);
             this.playersTab.Controls.Add(this.playerIslandMedals);
             this.playersTab.Controls.Add(this.label40);
             this.playersTab.Controls.Add(this.patternPanel);
-            this.playersTab.Controls.Add(this.label31);
-            this.playersTab.Controls.Add(this.pictureBox1);
-            this.playersTab.Controls.Add(this.label30);
-            this.playersTab.Controls.Add(this.dresserCPictureBox);
-            this.playersTab.Controls.Add(this.label29);
-            this.playersTab.Controls.Add(this.dresserBPictureBox);
-            this.playersTab.Controls.Add(this.label28);
+            this.playersTab.Controls.Add(this.islandBoxText);
+            this.playersTab.Controls.Add(this.islandPictureBox);
+            this.playersTab.Controls.Add(this.dresserText);
             this.playersTab.Controls.Add(this.dresserAPictureBox);
             this.playersTab.Controls.Add(this.playerMeowCoupons);
             this.playersTab.Controls.Add(this.label26);
@@ -377,6 +395,18 @@
             this.playersTab.TabIndex = 0;
             this.playersTab.Text = "Players";
             this.playersTab.UseVisualStyleBackColor = true;
+            // 
+            // resettiCheckBox
+            // 
+            this.resettiCheckBox.AutoSize = true;
+            this.resettiCheckBox.Location = new System.Drawing.Point(583, 36);
+            this.resettiCheckBox.Name = "resettiCheckBox";
+            this.resettiCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.resettiCheckBox.Size = new System.Drawing.Size(99, 17);
+            this.resettiCheckBox.TabIndex = 74;
+            this.resettiCheckBox.Text = ":Reset Pending";
+            this.resettiCheckBox.UseVisualStyleBackColor = true;
+            this.resettiCheckBox.CheckedChanged += new System.EventHandler(this.resettiCheckBox_CheckedChanged);
             // 
             // birthdayDay
             // 
@@ -451,77 +481,47 @@
             this.patternPanel.Size = new System.Drawing.Size(150, 553);
             this.patternPanel.TabIndex = 0;
             // 
-            // label31
+            // islandBoxText
             // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(391, 324);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(56, 13);
-            this.label31.TabIndex = 68;
-            this.label31.Text = "Island Box";
+            this.islandBoxText.AutoSize = true;
+            this.islandBoxText.Location = new System.Drawing.Point(127, 324);
+            this.islandBoxText.Name = "islandBoxText";
+            this.islandBoxText.Size = new System.Drawing.Size(56, 13);
+            this.islandBoxText.TabIndex = 68;
+            this.islandBoxText.Text = "Island Box";
+            this.islandBoxText.Visible = false;
             // 
-            // pictureBox1
+            // islandPictureBox
             // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(378, 340);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(82, 130);
-            this.pictureBox1.TabIndex = 67;
-            this.pictureBox1.TabStop = false;
+            this.islandPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.islandPictureBox.Enabled = false;
+            this.islandPictureBox.Location = new System.Drawing.Point(114, 340);
+            this.islandPictureBox.Name = "islandPictureBox";
+            this.islandPictureBox.Size = new System.Drawing.Size(82, 130);
+            this.islandPictureBox.TabIndex = 67;
+            this.islandPictureBox.TabStop = false;
+            this.islandPictureBox.Visible = false;
             // 
-            // label30
+            // dresserText
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(303, 324);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(53, 13);
-            this.label30.TabIndex = 66;
-            this.label30.Text = "Dresser C";
-            // 
-            // dresserCPictureBox
-            // 
-            this.dresserCPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dresserCPictureBox.Location = new System.Drawing.Point(290, 340);
-            this.dresserCPictureBox.Name = "dresserCPictureBox";
-            this.dresserCPictureBox.Size = new System.Drawing.Size(82, 194);
-            this.dresserCPictureBox.TabIndex = 65;
-            this.dresserCPictureBox.TabStop = false;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(215, 324);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(53, 13);
-            this.label29.TabIndex = 64;
-            this.label29.Text = "Dresser B";
-            // 
-            // dresserBPictureBox
-            // 
-            this.dresserBPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dresserBPictureBox.Location = new System.Drawing.Point(202, 340);
-            this.dresserBPictureBox.Name = "dresserBPictureBox";
-            this.dresserBPictureBox.Size = new System.Drawing.Size(82, 194);
-            this.dresserBPictureBox.TabIndex = 63;
-            this.dresserBPictureBox.TabStop = false;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(127, 324);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(53, 13);
-            this.label28.TabIndex = 62;
-            this.label28.Text = "Dresser A";
+            this.dresserText.AutoSize = true;
+            this.dresserText.Location = new System.Drawing.Point(218, 324);
+            this.dresserText.Name = "dresserText";
+            this.dresserText.Size = new System.Drawing.Size(48, 13);
+            this.dresserText.TabIndex = 62;
+            this.dresserText.Text = "Dressers";
+            this.dresserText.Visible = false;
             // 
             // dresserAPictureBox
             // 
             this.dresserAPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dresserAPictureBox.Location = new System.Drawing.Point(114, 340);
+            this.dresserAPictureBox.Enabled = false;
+            this.dresserAPictureBox.Location = new System.Drawing.Point(202, 340);
             this.dresserAPictureBox.Name = "dresserAPictureBox";
             this.dresserAPictureBox.Size = new System.Drawing.Size(82, 194);
             this.dresserAPictureBox.TabIndex = 61;
             this.dresserAPictureBox.TabStop = false;
+            this.dresserAPictureBox.Visible = false;
             // 
             // playerMeowCoupons
             // 
@@ -1090,6 +1090,35 @@
             this.acresTab.Text = "Acres";
             this.acresTab.UseVisualStyleBackColor = true;
             // 
+            // townMapViewCheckbox
+            // 
+            this.townMapViewCheckbox.AutoSize = true;
+            this.townMapViewCheckbox.Enabled = false;
+            this.townMapViewCheckbox.Location = new System.Drawing.Point(745, 518);
+            this.townMapViewCheckbox.Name = "townMapViewCheckbox";
+            this.townMapViewCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.townMapViewCheckbox.Size = new System.Drawing.Size(106, 17);
+            this.townMapViewCheckbox.TabIndex = 4;
+            this.townMapViewCheckbox.Text = ":Town Map View";
+            this.townMapViewCheckbox.UseVisualStyleBackColor = true;
+            this.townMapViewCheckbox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // acreCustomIdBox
+            // 
+            this.acreCustomIdBox.Location = new System.Drawing.Point(835, 538);
+            this.acreCustomIdBox.Name = "acreCustomIdBox";
+            this.acreCustomIdBox.Size = new System.Drawing.Size(90, 20);
+            this.acreCustomIdBox.TabIndex = 3;
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(745, 541);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(84, 13);
+            this.label44.TabIndex = 2;
+            this.label44.Text = "Custom Acre ID:";
+            // 
             // acreTreeView
             // 
             this.acreTreeView.Location = new System.Drawing.Point(745, 7);
@@ -1615,6 +1644,7 @@
             // acreHeightTrackBar
             // 
             this.acreHeightTrackBar.AutoSize = false;
+            this.acreHeightTrackBar.Enabled = false;
             this.acreHeightTrackBar.LargeChange = 2;
             this.acreHeightTrackBar.Location = new System.Drawing.Point(817, 672);
             this.acreHeightTrackBar.Maximum = 3;
@@ -1632,34 +1662,33 @@
             this.label43.TabIndex = 8;
             this.label43.Text = "Acre Height:";
             // 
-            // label44
+            // removeAllItemsToolStripMenuItem
             // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(745, 541);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(84, 13);
-            this.label44.TabIndex = 2;
-            this.label44.Text = "Custom Acre ID:";
+            this.removeAllItemsToolStripMenuItem.Enabled = false;
+            this.removeAllItemsToolStripMenuItem.Name = "removeAllItemsToolStripMenuItem";
+            this.removeAllItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.removeAllItemsToolStripMenuItem.Text = "Remove All Items";
             // 
-            // acreCustomIdBox
+            // waterFlowersToolStripMenuItem
             // 
-            this.acreCustomIdBox.Location = new System.Drawing.Point(835, 538);
-            this.acreCustomIdBox.Name = "acreCustomIdBox";
-            this.acreCustomIdBox.Size = new System.Drawing.Size(90, 20);
-            this.acreCustomIdBox.TabIndex = 3;
+            this.waterFlowersToolStripMenuItem.Enabled = false;
+            this.waterFlowersToolStripMenuItem.Name = "waterFlowersToolStripMenuItem";
+            this.waterFlowersToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.waterFlowersToolStripMenuItem.Text = "Water Flowers";
             // 
-            // townMapViewCheckbox
+            // makeFruitsPerfectToolStripMenuItem
             // 
-            this.townMapViewCheckbox.AutoSize = true;
-            this.townMapViewCheckbox.Enabled = false;
-            this.townMapViewCheckbox.Location = new System.Drawing.Point(745, 518);
-            this.townMapViewCheckbox.Name = "townMapViewCheckbox";
-            this.townMapViewCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.townMapViewCheckbox.Size = new System.Drawing.Size(106, 17);
-            this.townMapViewCheckbox.TabIndex = 4;
-            this.townMapViewCheckbox.Text = ":Town Map View";
-            this.townMapViewCheckbox.UseVisualStyleBackColor = true;
-            this.townMapViewCheckbox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.makeFruitsPerfectToolStripMenuItem.Enabled = false;
+            this.makeFruitsPerfectToolStripMenuItem.Name = "makeFruitsPerfectToolStripMenuItem";
+            this.makeFruitsPerfectToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.makeFruitsPerfectToolStripMenuItem.Text = "Make Fruits Perfect";
+            // 
+            // replaceItemsToolStripMenuItem
+            // 
+            this.replaceItemsToolStripMenuItem.Enabled = false;
+            this.replaceItemsToolStripMenuItem.Name = "replaceItemsToolStripMenuItem";
+            this.replaceItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.replaceItemsToolStripMenuItem.Text = "Replace Items";
             // 
             // NewMainForm
             // 
@@ -1690,9 +1719,7 @@
             this.tabControl1.ResumeLayout(false);
             this.playersTab.ResumeLayout(false);
             this.playersTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dresserCPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dresserBPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.islandPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dresserAPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bedPicturebox)).EndInit();
@@ -1847,13 +1874,8 @@
         private System.Windows.Forms.PictureBox playerWetsuit;
         private System.Windows.Forms.TextBox playerMeowCoupons;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.PictureBox dresserCPictureBox;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.PictureBox dresserBPictureBox;
-        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label islandBoxText;
+        private System.Windows.Forms.PictureBox islandPictureBox;
         private System.Windows.Forms.PictureBox dresserAPictureBox;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label34;
@@ -1879,5 +1901,13 @@
         private System.Windows.Forms.TextBox acreCustomIdBox;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.CheckBox townMapViewCheckbox;
+        private System.Windows.Forms.Label dresserText;
+        private System.Windows.Forms.CheckBox resettiCheckBox;
+        private System.Windows.Forms.ToolStripMenuItem tasksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearWeedsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeAllItemsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem waterFlowersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem makeFruitsPerfectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem replaceItemsToolStripMenuItem;
     }
 }

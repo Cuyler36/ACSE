@@ -232,6 +232,7 @@
 0xE0E5, Yodel
 0xE0E6, Rowan
 0xE0E7, June
+//Cheri is not an Islander
 0xE0E8, Cheri
 0xE0E9, Pigleg
 0xE0EA, Ankha

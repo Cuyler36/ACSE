@@ -2688,7 +2688,7 @@
 0x33C4, DUMMY
 0x4000, House Stairs #1
 0x4001, House Stairs #2
-0x4080, House Exit Zone
+0x4080, Warp Zone
 0x5000, Bob's House
 0x5001, Olivia's House
 0x5002, Mitzi's House
@@ -3042,8 +3042,19 @@
 0xA005, Upper Right House's Gyroid
 0xA006, Lower Left House's Gyroid
 0xA007, Lower Right House's Gyroid
+0xA008, Snowman #1
+0xA009, Snowman #2
+0xA00A, Snowman #3
+0xA00B, Snowman #4
+0xA00C, Snowman #5
+0xA00D, Snowman #6
+0xA00E, Snowman #7
+0xA00F, Snowman #8
+0xA010, Snowman #9
 0xA011, Train Caboose Door
 0xA012, Villager Signboard
+0xA013, Player (Laying on Side, Soft-locks Game, Seen in Wrong-warp)
+0xA016, Player (Standing, Soft-locks Game)
 0xFE1B, House Exit Flooring
 0xFE1D, Possible Bridge Location (/)
 0xFE1E, Possible Bridge Location (\)

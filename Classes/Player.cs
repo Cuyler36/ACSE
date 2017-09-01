@@ -55,6 +55,7 @@ namespace ACSE
         public int LastPlayDateSize;
         public int Reset;
         public int ResetSize;
+        public int ResetCount;
         public int Catalog; //Remember in e+ and before, your catalog "includes" your encyclopedia...
         public int CatalogSize;
         public int Encyclopedia;
@@ -106,6 +107,7 @@ namespace ACSE
         public ACDate LastPlayDate;
         public ACDate RegisterDate;
         public ACDate Birthday;
+        public bool Reset;
         public byte Gender;
         public byte HairType;
         public byte HairColor;
@@ -178,6 +180,7 @@ namespace ACSE
             NL_Wallet = -1,
             MeowCoupons = -1,
             Island_Medals = -1,
+            ResetCount = -1,
         };
 
         public static PlayerSaveInfo Animal_Crossing = new PlayerSaveInfo
@@ -192,6 +195,7 @@ namespace ACSE
             TownIdentifierSize = 2,
             Gender = 0x14,
             FaceType = 0x15,
+            ResetCount = 0x16,
             Pockets = 0x68,
             PocketsCount = 15,
             Bells = 0x8C,
@@ -289,6 +293,7 @@ namespace ACSE
             NL_Wallet = -1,
             MeowCoupons = -1,
             Island_Medals = -1,
+            ResetCount = -1,
         };
 
         public static PlayerSaveInfo Wild_World = new PlayerSaveInfo
@@ -352,6 +357,7 @@ namespace ACSE
             NL_Wallet = -1,
             MeowCoupons = -1,
             Island_Medals = -1,
+            ResetCount = -1,
         };
 
         public static PlayerSaveInfo City_Folk = new PlayerSaveInfo
@@ -408,6 +414,7 @@ namespace ACSE
             NL_Wallet = -1,
             MeowCoupons = -1,
             Island_Medals = -1,
+            ResetCount = -1,
         };
 
         public static PlayerSaveInfo New_Leaf = new PlayerSaveInfo
@@ -453,6 +460,7 @@ namespace ACSE
             Savings = -1,
             ShoeColor = -1,
             MeowCoupons = -1,
+            ResetCount = -1,
         };
 
         public static PlayerSaveInfo Welcome_Amiibo = new PlayerSaveInfo
@@ -498,6 +506,7 @@ namespace ACSE
             Bed = -1,
             Savings = -1,
             ShoeColor = -1,
+            ResetCount = -1,
         };
 
         public static PlayerSaveInfo GetPlayerInfo(SaveType Save_Type)
@@ -768,45 +777,51 @@ namespace ACSE
             Exists = SaveData.ReadByte(offset + Offsets.Identifier) != 0 && SaveData.ReadByte(offset + Offsets.Identifier) != 0xFF;
             if (Exists)
             {
+                Type PlayerDataType = typeof(PlayerData);
+                Type PlayerSaveInfoType = typeof(PlayerSaveInfo);
                 object BoxedData = new PlayerData();
-                foreach (var Field in typeof(PlayerSaveInfo).GetFields(BindingFlags.Public | BindingFlags.Instance))
+                foreach (var Field in PlayerSaveInfoType.GetFields(BindingFlags.Public | BindingFlags.Instance))
                     if (Field.GetValue(Offsets) != null && !Field.Name.Contains("Count") && !Field.Name.Contains("Size"))
-                        if (typeof(PlayerData).GetField(Field.Name) != null)
+                        if (PlayerDataType.GetField(Field.Name) != null)
                         {
                             if (Field.FieldType == typeof(int) && (int)Field.GetValue(Offsets) != -1)
                             {
-                                var Current_Field = typeof(PlayerData).GetField(Field.Name);
+                                var Current_Field = PlayerDataType.GetField(Field.Name);
                                 Type FieldType = Current_Field.FieldType;
                                 int DataOffset = Offset + (int)Field.GetValue(Offsets);
 
                                 if (Field.Name == "TownPassCardImage" && (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo))
                                 {
-                                    typeof(PlayerData).GetField("TownPassCardData").SetValue(BoxedData, SaveData.ReadByteArray(DataOffset, 0x1400));
+                                    PlayerDataType.GetField("TownPassCardData").SetValue(BoxedData, SaveData.ReadByteArray(DataOffset, 0x1400));
                                     Current_Field.SetValue(BoxedData,
-                                        ImageGeneration.GetTPCImage((byte[])typeof(PlayerData).GetField("TownPassCardData").GetValue(BoxedData)));
+                                        ImageGeneration.GetTPCImage((byte[])PlayerDataType.GetField("TownPassCardData").GetValue(BoxedData)));
+                                }
+                                else if (Field.Name == "Reset" && save.Game_System == SaveGeneration.GCN)
+                                {
+                                    Current_Field.SetValue(BoxedData, SaveData.ReadUInt32(DataOffset, SaveData.Is_Big_Endian) != 0);
                                 }
                                 else if (FieldType == typeof(byte))
                                     Current_Field.SetValue(BoxedData, SaveData.ReadByte(DataOffset));
-                                else if (FieldType == typeof(byte[]) && typeof(PlayerSaveInfo).GetField(Field.Name + "Count") != null)
+                                else if (FieldType == typeof(byte[]) && PlayerSaveInfoType.GetField(Field.Name + "Count") != null)
                                     Current_Field.SetValue(BoxedData, SaveData.ReadByteArray(DataOffset,
-                                        (int)typeof(PlayerSaveInfo).GetField(Field.Name + "Count").GetValue(Offsets)));
+                                        (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets)));
                                 else if (FieldType == typeof(ushort))
                                     Current_Field.SetValue(BoxedData, SaveData.ReadUInt16(DataOffset, SaveData.Is_Big_Endian));
                                 else if (FieldType == typeof(ushort[]))
                                     Current_Field.SetValue(BoxedData, SaveData.ReadUInt16Array(DataOffset,
-                                        (int)typeof(PlayerSaveInfo).GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian));
+                                        (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian));
                                 else if (FieldType == typeof(uint))
                                     Current_Field.SetValue(BoxedData, SaveData.ReadUInt32(DataOffset, SaveData.Is_Big_Endian));
                                 else if (FieldType == typeof(string))
                                     Current_Field.SetValue(BoxedData, new ACString(SaveData.ReadByteArray(DataOffset,
-                                        (int)typeof(PlayerSaveInfo).GetField(Field.Name + "Size").GetValue(Offsets)), SaveData.Save_Type).Trim());
+                                        (int)PlayerSaveInfoType.GetField(Field.Name + "Size").GetValue(Offsets)), SaveData.Save_Type).Trim());
                                 else if (FieldType == typeof(Inventory))
                                     if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
                                         Current_Field.SetValue(BoxedData, new Inventory(SaveData.ReadUInt32Array(DataOffset,
-                                            (int)typeof(PlayerSaveInfo).GetField(Field.Name + "Count").GetValue(Offsets), false)));
+                                            (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), false)));
                                     else
                                         Current_Field.SetValue(BoxedData, new Inventory(SaveData.ReadUInt16Array(DataOffset,
-                                            (int)typeof(PlayerSaveInfo).GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian)));
+                                            (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian)));
                                 else if (FieldType == typeof(Item))
                                     if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
                                         Current_Field.SetValue(BoxedData, new Item(SaveData.ReadUInt32(DataOffset, false)));
@@ -820,7 +835,7 @@ namespace ACSE
                                 else if (FieldType == typeof(ACDate) && DataOffset > 0)
                                 {
                                     Current_Field.SetValue(BoxedData, new ACDate(SaveData.ReadByteArray(DataOffset,
-                                        (int)typeof(PlayerSaveInfo).GetField(Field.Name + "Size").GetValue(Offsets))));
+                                        (int)PlayerSaveInfoType.GetField(Field.Name + "Size").GetValue(Offsets))));
                                 }
                             }
                         }
@@ -877,6 +892,10 @@ namespace ACSE
                             if (Field.Name == "TownPassCardImage" && (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo))
                             {
                                 SaveData.Write(DataOffset, Data.TownPassCardData);
+                            }
+                            else if (Field.Name == "Reset" && SaveData.Game_System == SaveGeneration.GCN)
+                            {
+                                SaveData.Write(DataOffset, Data.Reset ? (uint)0x250C : (uint)0 ,SaveData.Is_Big_Endian);
                             }
                             else if (FieldType == typeof(string))
                             {

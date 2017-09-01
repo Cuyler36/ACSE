@@ -93,6 +93,7 @@ namespace ACSE
         gafjgci = 0x2040, // Doubutsu_no_Mori_Plus
         gafegci = 0x26040,
         gafegcs = 0x26150,
+        gaferaw = 0x30000,
         gaejgci = 0x10040, // Doubutsu_no_Mori_e_Plus
         admeduc = 0x1F4,
         admedss = 0x1F4,
@@ -269,7 +270,7 @@ namespace ACSE
             Town_Data_Size = 0x5000,
             Buried_Data = -1,
             Town_Name = 0x5C73A,
-            Town_NameSize = 8,
+            Town_NameSize = 16,
             Grass_Wear = 0x53E80,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
             Island_Acre_Data = 0x6A408,
@@ -295,7 +296,7 @@ namespace ACSE
             Town_Data_Size = 0x5000,
             Buried_Data = -1,
             Town_Name = 0x6213A,
-            Town_NameSize = 8,
+            Town_NameSize = 16,
             Grass_Wear = 0x59880,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
             Island_Acre_Data = 0x6FE38,
@@ -443,6 +444,16 @@ namespace ACSE
             {
                 string Game_ID = Encoding.ASCII.GetString(Save_Data, Save_Data.Length == 0x72150 ? 0x110 : 0, 4);
                 if (Game_ID == "GAFE" || Game_ID == "GAFP") // GAFP is PAL.
+                    return SaveType.Animal_Crossing;
+                else if (Game_ID == "GAFJ")
+                    return SaveType.Doubutsu_no_Mori_Plus;
+                else if (Game_ID == "GAEJ")
+                    return SaveType.Doubutsu_no_Mori_e_Plus;
+            }
+            else if (Save_Data.Length == 0x200000) // Nintendont RAW file length
+            {
+                string Game_ID = Encoding.ASCII.GetString(Save_Data, 0x2000, 4);
+                if (Game_ID == "GAFE" || Game_ID == "GAFP")
                     return SaveType.Animal_Crossing;
                 else if (Game_ID == "GAFJ")
                     return SaveType.Doubutsu_no_Mori_Plus;

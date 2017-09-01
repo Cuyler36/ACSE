@@ -387,7 +387,8 @@ namespace ACSE
         //AC / CF
         public void GeneratePatternBitmap()
         {
-            byte[] patternRawData = Save_File == null ? DataConverter.ReadDataRaw(Offset + 0x20, 0x200) : Save_File.ReadByteArray(Offset + 0x20, 0x200);
+            byte[] patternRawData = Save_File.Save_Type == SaveType.City_Folk ? Save_File.ReadByteArray(Offset, 0x200) : Save_File.ReadByteArray(Offset + 0x20, 0x200);
+            uint[][] Palette_Data = Save_File.Save_Type == SaveType.City_Folk ? PatternData.CF_Palette_Data : PatternData.AC_Palette_Data;
             if (PatternData.AC_Palette_Data.Length >= Palette + 1)
             {
                 byte[][] Block_Data = new byte[32][];
@@ -397,7 +398,7 @@ namespace ACSE
                     Buffer.BlockCopy(patternRawData, block * 16, Block, 0, 16);
                     Block_Data[block] = Block;
                 }
-                byte[][] Sorted_Block_Data = new byte[32][]; // Ayy I finally derived the formula! (04/28/2017) Now to write the reverse equation (should just be reverse assigned)
+                byte[][] Sorted_Block_Data = new byte[32][];
                 for (int Grouped_Block = 0; Grouped_Block < 4; Grouped_Block++)
                 {
                     for (int Double_Block = 0; Double_Block < 4; Double_Block++)
@@ -453,51 +454,6 @@ namespace ACSE
             BitmapData bitmapData = Pattern_Bitmap.LockBits(new Rectangle(0, 0, 32, 32), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
             System.Runtime.InteropServices.Marshal.Copy(patternBitmapBuffer, 0, bitmapData.Scan0, patternBitmapBuffer.Length);
             Pattern_Bitmap.UnlockBits(bitmapData);
-        }
-
-        //Add "pro" patterns (supports four patterns in one)
-        public void GenerateCFPatternBitmap()
-        {
-            byte[] Raw_Data = Save_File.ReadByteArray(Offset, 0x200);
-            {
-                List<byte[]> Block_Data = new List<byte[]>();
-                for (int block = 0; block < 32; block++)
-                {
-                    byte[] Block = new byte[16];
-                    Buffer.BlockCopy(Raw_Data, block * 16, Block, 0, 16);
-                    Block_Data.Add(Block);
-                }
-                List<byte[]> Sorted_Block_Data = new List<byte[]>() //Too lazy to derive the actual formula to decode it, so I'll sort it manually
-                {
-                    Block_Data[0], Block_Data[2], Block_Data[4], Block_Data[6],
-                    Block_Data[1], Block_Data[3], Block_Data[5], Block_Data[7],
-                    Block_Data[8], Block_Data[10], Block_Data[12], Block_Data[14],
-                    Block_Data[9], Block_Data[11], Block_Data[13], Block_Data[15],
-                    Block_Data[16], Block_Data[18], Block_Data[20], Block_Data[22],
-                    Block_Data[17], Block_Data[19], Block_Data[21], Block_Data[23],
-                    Block_Data[24], Block_Data[26], Block_Data[28], Block_Data[30],
-                    Block_Data[25], Block_Data[27], Block_Data[29], Block_Data[31],
-                };
-                int pos = 0;
-                for (int i = 0; i < 8; i++)
-                {
-                    for (int y = 0; y < 4; y++)
-                    {
-                        for (int x = 0; x < 16; x++)
-                        {
-                            byte RightPixel = (byte)(Sorted_Block_Data[i * 4 + x / 4][x % 4 + y * 4] & 0x0F);
-                            byte LeftPixel = (byte)((Sorted_Block_Data[i * 4 + x / 4][x % 4 + y * 4] & 0xF0) >> 4);
-                            Buffer.BlockCopy(BitConverter.GetBytes(PatternData.CF_Palette_Data[Palette][Math.Max(0, LeftPixel - 1)]), 0, patternBitmapBuffer, pos * 4, 4);
-                            Buffer.BlockCopy(BitConverter.GetBytes(PatternData.CF_Palette_Data[Palette][Math.Max(0, RightPixel - 1)]), 0, patternBitmapBuffer, (pos + 1) * 4, 4);
-                            pos += 2;
-                        }
-                    }
-                }
-                Pattern_Bitmap = new Bitmap(32, 32, PixelFormat.Format32bppArgb);
-                BitmapData bitmapData = Pattern_Bitmap.LockBits(new Rectangle(0, 0, 32, 32), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-                System.Runtime.InteropServices.Marshal.Copy(patternBitmapBuffer, 0, bitmapData.Scan0, patternBitmapBuffer.Length);
-                Pattern_Bitmap.UnlockBits(bitmapData);
-            }
         }
 
         //NL Patterns have a custom palette, created by the user by choosing 15 colors
@@ -556,7 +512,7 @@ namespace ACSE
                 CreatorName = new ACString(Save_File.ReadByteArray(Offset + 0x838, 16), SaveType.City_Folk).Trim();
                 Name = new ACString(Save_File.ReadByteArray(Offset + 0x84C, 32), SaveType.City_Folk).Trim();
                 Palette = Save_File.ReadByte(Offset + 0x86F);
-                GenerateCFPatternBitmap();
+                GeneratePatternBitmap();
             }
             else if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
             {

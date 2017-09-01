@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -66,6 +67,8 @@ namespace ACSE
         ushort Acre_Height_Modifier = 0;
         Dictionary<ushort, byte> AC_Map_Icon_Index;
         Dictionary<byte, Image> AC_Map_Icons;
+        private byte[] Building_DB;
+        private string[] Building_Names;
 
         public NewMainForm(Save save = null)
         {
@@ -92,7 +95,7 @@ namespace ACSE
             };
             TPC_Picture.Image = Utility.Set_Image_Color(TPC_Picture.Image, new ColorMatrix(Test_Matrix));*/
             playersTab.Controls.Add(TPC_Picture);
-            openSaveFile.FileOk += new CancelEventHandler(open_File_OK);
+            //openSaveFile.FileOk += new CancelEventHandler(open_File_OK);
 
             Main_Tabs = new TabPage[tabControl1.TabCount];
             for (int i = 0; i < tabControl1.TabCount; i++)
@@ -271,6 +274,7 @@ namespace ACSE
             Save_File = null; //Set to null so we can set the checkbox to false without having the method run
             townMapViewCheckbox.Checked = false;
             townMapViewCheckbox.Enabled = save.Game_System == SaveGeneration.GCN;
+            acreHeightTrackBar.Enabled = save.Game_System == SaveGeneration.GCN;
             Save_File = save;
             Debug_Manager.WriteLine("Save File Loaded");
             Acre_Height_Modifier = 0;
@@ -302,6 +306,16 @@ namespace ACSE
                 Filed_Acre_Data = null;
                 Acre_Info = null;
             }
+
+            //Clear Acre Images
+            if (Acre_Map != null)
+                foreach (PictureBoxWithInterpolationMode Box in Acre_Map)
+                    Box.BackgroundImage = null;
+            if (Town_Acre_Map != null)
+                foreach (PictureBoxWithInterpolationMode Box in Town_Acre_Map)
+                    Box.BackgroundImage = null;
+
+            selectedAcrePicturebox.Image = null;
 
             //Clear Acre TreeView (Hopefully .Remove doesn't cause a Memory Leak)
             while (acreTreeView.Nodes.Count > 0)
@@ -669,6 +683,12 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
+                dresserAPictureBox.Visible = false;
+                dresserAPictureBox.Enabled = false;
+                islandPictureBox.Visible = false;
+                islandPictureBox.Enabled = false;
+                dresserText.Visible = false;
+                islandBoxText.Visible = false;
                 tanTrackbar.Maximum = 9;
             }
             else if (Current_Save_Type == SaveType.Wild_World)
@@ -697,6 +717,12 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
+                dresserAPictureBox.Visible = true;
+                dresserAPictureBox.Enabled = true;
+                islandPictureBox.Visible = false;
+                islandPictureBox.Enabled = false;
+                dresserText.Visible = true;
+                islandBoxText.Visible = false;
                 tanTrackbar.Maximum = 4;
             }
             else if (Current_Save_Type == SaveType.City_Folk)
@@ -726,6 +752,12 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
+                dresserAPictureBox.Visible = true;
+                dresserAPictureBox.Enabled = true;
+                islandPictureBox.Visible = false;
+                islandPictureBox.Enabled = false;
+                dresserText.Visible = true;
+                islandBoxText.Visible = false;
                 tanTrackbar.Maximum = 8;
             }
             else if (Current_Save_Type == SaveType.New_Leaf || Current_Save_Type == SaveType.Welcome_Amiibo)
@@ -752,6 +784,12 @@ namespace ACSE
                 itemFlag1.Enabled = true;
                 itemFlag2.Enabled = true;
                 playerMeowCoupons.Enabled = Current_Save_Type == SaveType.Welcome_Amiibo;
+                dresserAPictureBox.Visible = true;
+                dresserAPictureBox.Enabled = true;
+                islandPictureBox.Visible = true;
+                islandPictureBox.Enabled = true;
+                dresserText.Visible = true;
+                islandBoxText.Visible = true;
                 tanTrackbar.Maximum = 16;
             }
         }
@@ -834,6 +872,8 @@ namespace ACSE
             for (int i = 0; i < Player.Data.Patterns.Length; i++)
                 if (Player.Data.Patterns[i] != null && Player.Data.Patterns[i].Pattern_Bitmap != null)
                     Refresh_PictureBox_Image(Pattern_Boxes[i], Player.Data.Patterns[i].Pattern_Bitmap, false, false);
+
+            resettiCheckBox.Checked = Player.Data.Reset;
 
             if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
             {
@@ -1434,44 +1474,39 @@ namespace ACSE
 
         private Bitmap GenerateAcreItemsBitmap(WorldItem[] items, int Acre, bool Island_Acre = false)
         {
-            const int itemSize = 4 * 2;
-            const int acreSize = 64 * 2;
-            Bitmap acreBitmap = new Bitmap(acreSize, acreSize); //ImageGeneration.Draw_Buildings(new Bitmap(acreSize, acreSize, PixelFormat.Format32bppArgb), Buildings, Acre);
-            byte[] bitmapBuffer = new byte[4 * (acreSize * acreSize)]; //= ImageGeneration.BitmapToByteArray(acreBitmap);
+            const int itemSize = 8;
+            const int acreSize = 128;
+            Bitmap acreBitmap = new Bitmap(acreSize, acreSize);
+            byte[] bitmapBuffer = new byte[4 * (acreSize * acreSize)];
             for (int i = 0; i < 256; i++)
+            {
+                WorldItem item = items[i];
+                if (item.Name != "Empty")
                 {
-                    WorldItem item = items[i];
-                    if (item.Name != "Empty")
-                    {
-                        uint itemColor = ItemData.GetItemColor(ItemData.GetItemType(item.ItemID, Save_File.Save_Type));
-                        //MessageBox.Show("ID: " + item.ItemID.ToString("X4") + " | Name: " + item.Name + " | Color: " + itemColor.ToString("X"));
-                        //Draw Item Box
-                        for (int x = 0; x < itemSize * itemSize; x++)
-                            Buffer.BlockCopy(BitConverter.GetBytes(itemColor), 0, bitmapBuffer,
-                                ((item.Location.Y * itemSize + x / itemSize) * acreSize * 4) + ((item.Location.X * itemSize + x % itemSize) * 4), 4);
-
-                        //Draw X for buried item
-                        if (item.Burried)
-                        {
-                            for (int z = 2; z < itemSize - 1; z++)
-                            {
-                                Buffer.BlockCopy(BitConverter.GetBytes(0xFF000000), 0, bitmapBuffer,
-                                    ((item.Location.Y * itemSize + z) * acreSize * 4) + ((item.Location.X * itemSize + z) * 4), 4);
-                                Buffer.BlockCopy(BitConverter.GetBytes(0xFF000000), 0, bitmapBuffer,
-                                    ((item.Location.Y * itemSize + z) * acreSize * 4) + ((item.Location.X * itemSize + itemSize - z) * 4), 4);
-                            }
-                        }
-                    }
+                    uint itemColor = ItemData.GetItemColor(ItemData.GetItemType(item.ItemID, Save_File.Save_Type));
+                    // Draw Item Box
+                    for (int x = 0; x < itemSize * itemSize; x++)
+                        Buffer.BlockCopy(BitConverter.GetBytes(itemColor), 0, bitmapBuffer,
+                            ((item.Location.Y * itemSize + x / itemSize) * acreSize * 4) + ((item.Location.X * itemSize + x % itemSize) * 4), 4);
                 }
-            //Draw Border
-            for (int i = 0; i < acreSize * acreSize; i++)
-                if (i % itemSize == 0 || (i / (16 * itemSize)) % itemSize == 0)
-                    Buffer.BlockCopy(BitConverter.GetBytes(0x50FFFFFF), 0, bitmapBuffer, ((i / (16 * itemSize)) * acreSize * 4) + ((i % (16 * itemSize)) * 4), 4);
+            }
             BitmapData bitmapData = acreBitmap.LockBits(new Rectangle(0, 0, acreSize, acreSize), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-            System.Runtime.InteropServices.Marshal.Copy(bitmapBuffer, 0, bitmapData.Scan0, bitmapBuffer.Length);
+            Marshal.Copy(bitmapBuffer, 0, bitmapData.Scan0, bitmapBuffer.Length);
             acreBitmap.UnlockBits(bitmapData);
-            return Island_Acre ? ((Save_File.Game_System == SaveGeneration.N3DS)
-                ? ImageGeneration.Draw_Buildings(acreBitmap, Island_Buildings, Acre - 5) : acreBitmap) : ImageGeneration.Draw_Buildings(acreBitmap, Buildings, Acre);
+            // Draw Buried X
+            ImageGeneration.Draw_Buried_Icons(acreBitmap, items);
+            // Draw Border
+            ImageGeneration.Draw_Grid(acreBitmap, 8);
+            // Draw Buildings (if needed)
+            if (Save_File.Game_System == SaveGeneration.Wii || Save_File.Game_System == SaveGeneration.N3DS)
+            {
+                return Island_Acre ? ((Save_File.Game_System == SaveGeneration.N3DS)
+                    ? ImageGeneration.Draw_Buildings(acreBitmap, Island_Buildings, Acre - 5) : acreBitmap) : ImageGeneration.Draw_Buildings(acreBitmap, Buildings, Acre);
+            }
+            else
+            {
+                return acreBitmap;
+            }
         }
 
         public void Pattern_Export_Click(object sender, EventArgs e, int Idx)
@@ -1555,9 +1590,6 @@ namespace ACSE
                 Set_Palette.Click += (object sender, EventArgs e) => Not_Implemented();
             }
         }
-
-        private byte[] Building_DB;
-        private string[] Building_Names;
 
         private void Building_List_Index_Changed(object sender, EventArgs e)
         {
@@ -2426,7 +2458,22 @@ namespace ACSE
             {
                 openSaveFile.FileName = "";
             }
-            openSaveFile.ShowDialog();
+            if (openSaveFile.ShowDialog() == DialogResult.OK)
+            {
+                if (Save_File != null)
+                {
+                    if (openSaveFile.FileName != Save_File.Full_Save_Path) // Make sure reopening the same file doesn't ask to save it.
+                    {
+                        DialogResult Result = MessageBox.Show("A file is already being edited. Would you like to save before opening another file?", "Save File?", MessageBoxButtons.YesNo);
+                        if (Result == DialogResult.Yes)
+                        {
+                            Save_File.Flush();
+                        }
+                        //Add Save_File.Close(); ??
+                    }
+                }
+                SetupEditor(new Save(openSaveFile.FileName));
+            }
         }
 
         private void open_File_OK(object sender, EventArgs e)
@@ -2842,6 +2889,15 @@ namespace ACSE
                         Acre_Map[i].BackgroundImage = Get_Acre_Image(Acres[i], Acres[i].BaseAcreID.ToString("X4"));
                     }
                 }
+            }
+        }
+
+        //TODO: Implement for WW+
+        private void resettiCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Save_File != null && Selected_Player != null && Save_File.Game_System == SaveGeneration.GCN)
+            {
+                Selected_Player.Data.Reset = resettiCheckBox.Checked;
             }
         }
 

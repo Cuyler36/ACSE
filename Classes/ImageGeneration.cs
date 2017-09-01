@@ -39,6 +39,30 @@ namespace ACSE
 
         }
 
+        public static void Draw_Buried_Icons(Bitmap Map, WorldItem[] Items, int Item_Size = 8, bool Use_Text = false)
+        {
+            Graphics Bitmap_Graphics = Graphics.FromImage(Map);
+            Bitmap_Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Bitmap_Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            for (int i = 0; i < Items.Length; i++)
+            {
+                WorldItem Item = Items[i];
+                if (Item.Burried)
+                {
+                    if (Use_Text)
+                    {
+                        Bitmap_Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                        Bitmap_Graphics.DrawString("X", new Font("Tahoma", 8), Brushes.White, new RectangleF(Item.Location.X * 8, Item.Location.Y * 8, 8, 8));
+                    }
+                    else
+                        Bitmap_Graphics.DrawImage(Properties.Resources.Buried, Item.Location.X * 8, Item.Location.Y * 8, 8, 8);
+                }
+            }
+            Bitmap_Graphics.Flush();
+            Bitmap_Graphics.Dispose();
+        }
+
         public static Bitmap Draw_Grid(Bitmap Map, int Item_Size, uint Grid_Color = 0x41444444, int Grid_Pixel_Size = 1)
         {
             Graphics Bitmap_Graphics = Graphics.FromImage(Map);
@@ -85,6 +109,7 @@ namespace ACSE
             else
                 Bitmap_Graphics.DrawImage(Properties.Resources.Building, Building_to_Draw.X_Pos * 8, Building_to_Draw.Y_Pos * 8, 8, 8);
             Bitmap_Graphics.Flush();
+            Bitmap_Graphics.Dispose();
             return Acre_Map;
         }
 
