@@ -36,5 +36,25 @@ namespace ACSE
             new string[8] { "Bass", "Large Bass", "Bluegill", "Giant Catfish", "Giant Snakehead", "Barbel Steed", "Dace", "Pale Chub" },
             new string[8] { "Barred Knifejaw", "Arapaima", "", "", "", "", "", "" }
         };
+
+        private static Dictionary<int, byte> GetBitMap(SaveType Save_Type)
+        {
+            switch (Save_Type)
+            {
+                case SaveType.Animal_Crossing:
+                    return Animal_Crossing_Encyclopedia_Bit_Map;
+                default:
+                    throw new NotImplementedException(string.Format("Encyclopedia Bit Map for save type {0} has not been implemented!", Save_Type.ToString()));
+            }
+        }
+
+        public static void FillEncylopedia(Save Save_File, NewPlayer Player)
+        {
+            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
+            foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+            {
+                Save_File.Write(Player.Offset + Bit_Value.Key, Bit_Value.Value); // TODO: This will remove the furniture entries in Animal Crossing (since Fish/Insects are included in the catalog bitmap)
+            }
+        }
     }
 }
