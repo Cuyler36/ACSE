@@ -169,5 +169,13 @@ namespace ACSE
         {
             return (byte)typeMap[Variant.GetType()].DynamicInvoke(Variant);
         }
+
+        public static byte[] GetBits(byte Value)
+        {
+            byte[] Bits = new byte[8];
+            for (int i = 0; i < 8; i++)
+                Bits[i] = (byte)((Value >> i) & 1);
+            return Bits;
+        }
     }
 }

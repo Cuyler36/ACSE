@@ -41,6 +41,10 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearWeedsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeAllItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.waterFlowersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.makeFruitsPerfectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.replaceItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
             this.resettiCheckBox = new System.Windows.Forms.CheckBox();
@@ -118,17 +122,12 @@
             this.acreTreeView = new System.Windows.Forms.TreeView();
             this.acrePanel = new System.Windows.Forms.Panel();
             this.townTab = new System.Windows.Forms.TabPage();
-            this.perfectFruitsButton = new System.Windows.Forms.Button();
             this.buildingsLabel = new System.Windows.Forms.Label();
-            this.reviveFlowersButton = new System.Windows.Forms.Button();
             this.buildingsPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.townNameBox = new System.Windows.Forms.TextBox();
             this.townPanel = new System.Windows.Forms.Panel();
-            this.waterFlowersButton = new System.Windows.Forms.Button();
-            this.clearWeedsButton = new System.Windows.Forms.Button();
             this.buriedCheckbox = new System.Windows.Forms.CheckBox();
-            this.clearItemsButton = new System.Windows.Forms.Button();
             this.villagerTab = new System.Windows.Forms.TabPage();
             this.caravan2ComboBox = new System.Windows.Forms.ComboBox();
             this.label38 = new System.Windows.Forms.Label();
@@ -178,10 +177,7 @@
             this.villagerToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
-            this.removeAllItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.waterFlowersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.makeFruitsPerfectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.replaceItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.townInfoLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
@@ -304,6 +300,38 @@
             this.clearWeedsToolStripMenuItem.Name = "clearWeedsToolStripMenuItem";
             this.clearWeedsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.clearWeedsToolStripMenuItem.Text = "Clear Weeds";
+            this.clearWeedsToolStripMenuItem.Click += new System.EventHandler(this.clearWeedsToolStripMenuItem_Click);
+            // 
+            // removeAllItemsToolStripMenuItem
+            // 
+            this.removeAllItemsToolStripMenuItem.Enabled = false;
+            this.removeAllItemsToolStripMenuItem.Name = "removeAllItemsToolStripMenuItem";
+            this.removeAllItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.removeAllItemsToolStripMenuItem.Text = "Remove All Items";
+            this.removeAllItemsToolStripMenuItem.Click += new System.EventHandler(this.removeAllItemsToolStripMenuItem_Click);
+            // 
+            // waterFlowersToolStripMenuItem
+            // 
+            this.waterFlowersToolStripMenuItem.Enabled = false;
+            this.waterFlowersToolStripMenuItem.Name = "waterFlowersToolStripMenuItem";
+            this.waterFlowersToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.waterFlowersToolStripMenuItem.Text = "Water Flowers";
+            this.waterFlowersToolStripMenuItem.Click += new System.EventHandler(this.waterFlowersToolStripMenuItem_Click);
+            // 
+            // makeFruitsPerfectToolStripMenuItem
+            // 
+            this.makeFruitsPerfectToolStripMenuItem.Enabled = false;
+            this.makeFruitsPerfectToolStripMenuItem.Name = "makeFruitsPerfectToolStripMenuItem";
+            this.makeFruitsPerfectToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.makeFruitsPerfectToolStripMenuItem.Text = "Make Fruits Perfect";
+            this.makeFruitsPerfectToolStripMenuItem.Click += new System.EventHandler(this.makeFruitsPerfectToolStripMenuItem_Click);
+            // 
+            // replaceItemsToolStripMenuItem
+            // 
+            this.replaceItemsToolStripMenuItem.Enabled = false;
+            this.replaceItemsToolStripMenuItem.Name = "replaceItemsToolStripMenuItem";
+            this.replaceItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.replaceItemsToolStripMenuItem.Text = "Replace Items";
             // 
             // tabControl1
             // 
@@ -1136,17 +1164,13 @@
             // 
             // townTab
             // 
-            this.townTab.Controls.Add(this.perfectFruitsButton);
+            this.townTab.Controls.Add(this.townInfoLabel);
             this.townTab.Controls.Add(this.buildingsLabel);
-            this.townTab.Controls.Add(this.reviveFlowersButton);
             this.townTab.Controls.Add(this.buildingsPanel);
             this.townTab.Controls.Add(this.label1);
             this.townTab.Controls.Add(this.townNameBox);
             this.townTab.Controls.Add(this.townPanel);
-            this.townTab.Controls.Add(this.waterFlowersButton);
-            this.townTab.Controls.Add(this.clearWeedsButton);
             this.townTab.Controls.Add(this.buriedCheckbox);
-            this.townTab.Controls.Add(this.clearItemsButton);
             this.townTab.Location = new System.Drawing.Point(4, 22);
             this.townTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.townTab.Name = "townTab";
@@ -1154,16 +1178,6 @@
             this.townTab.TabIndex = 2;
             this.townTab.Text = "Town";
             this.townTab.UseVisualStyleBackColor = true;
-            // 
-            // perfectFruitsButton
-            // 
-            this.perfectFruitsButton.Location = new System.Drawing.Point(593, 10);
-            this.perfectFruitsButton.Name = "perfectFruitsButton";
-            this.perfectFruitsButton.Size = new System.Drawing.Size(103, 22);
-            this.perfectFruitsButton.TabIndex = 14;
-            this.perfectFruitsButton.Text = "Perfect Fruit Trees";
-            this.perfectFruitsButton.UseVisualStyleBackColor = true;
-            this.perfectFruitsButton.Click += new System.EventHandler(this.perfectFruitsButton_Click);
             // 
             // buildingsLabel
             // 
@@ -1174,15 +1188,6 @@
             this.buildingsLabel.Size = new System.Drawing.Size(113, 29);
             this.buildingsLabel.TabIndex = 0;
             this.buildingsLabel.Text = "Buildings";
-            // 
-            // reviveFlowersButton
-            // 
-            this.reviveFlowersButton.Location = new System.Drawing.Point(499, 10);
-            this.reviveFlowersButton.Name = "reviveFlowersButton";
-            this.reviveFlowersButton.Size = new System.Drawing.Size(88, 22);
-            this.reviveFlowersButton.TabIndex = 13;
-            this.reviveFlowersButton.Text = "Revive Flowers";
-            this.reviveFlowersButton.UseVisualStyleBackColor = true;
             // 
             // buildingsPanel
             // 
@@ -1217,26 +1222,6 @@
             this.townPanel.Size = new System.Drawing.Size(718, 517);
             this.townPanel.TabIndex = 1;
             // 
-            // waterFlowersButton
-            // 
-            this.waterFlowersButton.Location = new System.Drawing.Point(409, 10);
-            this.waterFlowersButton.Name = "waterFlowersButton";
-            this.waterFlowersButton.Size = new System.Drawing.Size(84, 22);
-            this.waterFlowersButton.TabIndex = 10;
-            this.waterFlowersButton.Text = "Water Flowers";
-            this.waterFlowersButton.UseVisualStyleBackColor = true;
-            this.waterFlowersButton.Click += new System.EventHandler(this.waterFlowersButton_Click);
-            // 
-            // clearWeedsButton
-            // 
-            this.clearWeedsButton.Location = new System.Drawing.Point(237, 10);
-            this.clearWeedsButton.Name = "clearWeedsButton";
-            this.clearWeedsButton.Size = new System.Drawing.Size(80, 22);
-            this.clearWeedsButton.TabIndex = 5;
-            this.clearWeedsButton.Text = "Clear Weeds";
-            this.clearWeedsButton.UseVisualStyleBackColor = true;
-            this.clearWeedsButton.Click += new System.EventHandler(this.clearWeedsButton_Click);
-            // 
             // buriedCheckbox
             // 
             this.buriedCheckbox.AutoSize = true;
@@ -1246,15 +1231,6 @@
             this.buriedCheckbox.TabIndex = 8;
             this.buriedCheckbox.Text = "Buried";
             this.buriedCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // clearItemsButton
-            // 
-            this.clearItemsButton.Location = new System.Drawing.Point(323, 10);
-            this.clearItemsButton.Name = "clearItemsButton";
-            this.clearItemsButton.Size = new System.Drawing.Size(80, 22);
-            this.clearItemsButton.TabIndex = 6;
-            this.clearItemsButton.Text = "Clear Items";
-            this.clearItemsButton.UseVisualStyleBackColor = true;
             // 
             // villagerTab
             // 
@@ -1535,12 +1511,12 @@
             // 
             // acreDesc
             // 
-            this.acreDesc.Location = new System.Drawing.Point(758, 656);
+            this.acreDesc.Location = new System.Drawing.Point(669, 651);
             this.acreDesc.Name = "acreDesc";
-            this.acreDesc.Size = new System.Drawing.Size(119, 13);
+            this.acreDesc.Size = new System.Drawing.Size(208, 18);
             this.acreDesc.TabIndex = 4;
             this.acreDesc.Text = "No Acre Selected";
-            this.acreDesc.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.acreDesc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label21
             // 
@@ -1645,7 +1621,7 @@
             // 
             this.acreHeightTrackBar.AutoSize = false;
             this.acreHeightTrackBar.Enabled = false;
-            this.acreHeightTrackBar.LargeChange = 2;
+            this.acreHeightTrackBar.LargeChange = 1;
             this.acreHeightTrackBar.Location = new System.Drawing.Point(817, 672);
             this.acreHeightTrackBar.Maximum = 3;
             this.acreHeightTrackBar.Name = "acreHeightTrackBar";
@@ -1662,33 +1638,14 @@
             this.label43.TabIndex = 8;
             this.label43.Text = "Acre Height:";
             // 
-            // removeAllItemsToolStripMenuItem
+            // townInfoLabel
             // 
-            this.removeAllItemsToolStripMenuItem.Enabled = false;
-            this.removeAllItemsToolStripMenuItem.Name = "removeAllItemsToolStripMenuItem";
-            this.removeAllItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.removeAllItemsToolStripMenuItem.Text = "Remove All Items";
-            // 
-            // waterFlowersToolStripMenuItem
-            // 
-            this.waterFlowersToolStripMenuItem.Enabled = false;
-            this.waterFlowersToolStripMenuItem.Name = "waterFlowersToolStripMenuItem";
-            this.waterFlowersToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.waterFlowersToolStripMenuItem.Text = "Water Flowers";
-            // 
-            // makeFruitsPerfectToolStripMenuItem
-            // 
-            this.makeFruitsPerfectToolStripMenuItem.Enabled = false;
-            this.makeFruitsPerfectToolStripMenuItem.Name = "makeFruitsPerfectToolStripMenuItem";
-            this.makeFruitsPerfectToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.makeFruitsPerfectToolStripMenuItem.Text = "Make Fruits Perfect";
-            // 
-            // replaceItemsToolStripMenuItem
-            // 
-            this.replaceItemsToolStripMenuItem.Enabled = false;
-            this.replaceItemsToolStripMenuItem.Name = "replaceItemsToolStripMenuItem";
-            this.replaceItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.replaceItemsToolStripMenuItem.Text = "Replace Items";
+            this.townInfoLabel.AutoSize = true;
+            this.townInfoLabel.Location = new System.Drawing.Point(237, 14);
+            this.townInfoLabel.Name = "townInfoLabel";
+            this.townInfoLabel.Size = new System.Drawing.Size(99, 13);
+            this.townInfoLabel.TabIndex = 13;
+            this.townInfoLabel.Text = "X: 0 | Y: 0 | Index: 0";
             // 
             // NewMainForm
             // 
@@ -1835,9 +1792,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.PictureBox pocketsBackgroundPicturebox;
         private System.Windows.Forms.ToolTip townToolTip;
-        private System.Windows.Forms.Button clearWeedsButton;
         private System.Windows.Forms.CheckBox buriedCheckbox;
-        private System.Windows.Forms.Button clearItemsButton;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TrackBar tanTrackbar;
@@ -1845,7 +1800,6 @@
         private System.Windows.Forms.Label acreID;
         private System.Windows.Forms.Label acreDesc;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Button waterFlowersButton;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox campsiteComboBox;
@@ -1866,8 +1820,6 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.PictureBox bedPicturebox;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Button perfectFruitsButton;
-        private System.Windows.Forms.Button reviveFlowersButton;
         private System.Windows.Forms.Label buildingsLabel;
         private System.Windows.Forms.Panel buildingsPanel;
         private System.Windows.Forms.Label label27;
@@ -1909,5 +1861,6 @@
         private System.Windows.Forms.ToolStripMenuItem waterFlowersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem makeFruitsPerfectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replaceItemsToolStripMenuItem;
+        private System.Windows.Forms.Label townInfoLabel;
     }
 }

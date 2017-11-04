@@ -1241,7 +1241,7 @@
 0x1DD8, Soccer
 0x1DDC, Excitebike
 0x1DE0, Wario's Woods
-0x1DE4, Ice Climber
+0x1DE4, Ice Climbers
 0x1DE8, Mario Bros
 0x1DEC, Super Mario Bros
 0x1DF0, Legend of Zelda
@@ -2023,7 +2023,7 @@
 0x24FC, Fetching Outfit
 0x24FD, Snow Shirt
 0x24FE, Melon Gingham
-0x24FF, Unknown
+0x24FF, Mannequin Wood Shirt
 0x2500, Corrupt
 0x2501, Corrupt
 0x2502, Corrupt
@@ -2140,6 +2140,10 @@
 0x2640, Block Flooring
 0x2641, Boxing Ring Mat
 0x2642, Harvest Rug
+0x2643, Nook's Cranny Floor
+0x2644, Nook 'n' Go Floor
+0x2645, Nookway Floor
+0x2646, Nookington's Floor
 0x2700, Chic Wall
 0x2701, Classic Wall
 0x2702, Parlor Wall
@@ -2207,6 +2211,10 @@
 0x2740, Mushroom Mural
 0x2741, Ringside Seating
 0x2742, Harvest Wall
+0x2743, Nook's Cranny Wall
+0x2744, Nook 'n' Go Wall
+0x2745, Nookway Wall
+0x2746, Nookington's Wall
 0x2800, Apple
 0x2801, Cherry
 0x2802, Pear

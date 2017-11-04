@@ -184,8 +184,13 @@ namespace ACSE
             Acre_Data_Size = 0x8C,
             Villager_Data = 0x1C150,
             Villager_Size = 0x680,
+            // Shop Size 0x223A8 (appears to be the upper nibble of the byte 0 = 0, 4 = 1, 8 = 2, C = 3)
+            // Shop Spend count = 0x223AC (uint)
+            // Shop Visitor Spend count = 0x223C0 (uint)
+            // Weather = 0x22B19 (byte)
             Buried_Data = 0x22B1C,
             Buried_Data_Size = 0x3C0,
+            // Shop update in progress byte (0x2E004 (Has to be 1B))
             Town_NameSize = 6,
             Checksum = 0x12,
         };
@@ -447,7 +452,7 @@ namespace ACSE
                     return SaveType.Animal_Crossing;
                 else if (Game_ID == "GAFJ")
                     return SaveType.Doubutsu_no_Mori_Plus;
-                else if (Game_ID == "GAEJ")
+                else if (Game_ID == "GAEJ" || Game_ID == "GAEE") // GAEE temp, save file struct will likely change
                     return SaveType.Doubutsu_no_Mori_e_Plus;
             }
             else if (Save_Data.Length == 0x200000) // Nintendont RAW file length

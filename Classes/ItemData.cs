@@ -456,7 +456,7 @@ namespace ACSE
                     return "Raffle Ticket";
                 else if ((ID >= 0x2600 && ID <= 0x2642) || (ID >= 0x2700 && ID <= 0x2742))
                     return "Wall/Floor";
-                else if (ID >= 0x2400 && ID <= 0x24FE)
+                else if (ID >= 0x2400 && ID <= 0x24FF)
                     return "Clothes";
                 else if (ID >= 0x15B0 && ID <= 0x17A8)
                     return "Gyroids";
@@ -567,11 +567,14 @@ namespace ACSE
                     return "Rock";
                 else if (ID >= 0x0060 && ID <= 0x0064)
                     return "Money Rock";
-                //0x74 - 0x93 = Patterns
+                else if (ID >= 0x0074 && ID <= 0x0093)
+                    return "Pattern";
                 //0x94 = Hole
                 //0x95 - 0x9C = Turnip
-                else if (ID >= 0x009E && ID <= 0x00DC)
+                else if (ID >= 0x009E && ID <= 0x00BD)
                     return "Flower";
+                else if (ID >= 0x00BE && ID <= 0x00DD)
+                    return "Parched Flower";
                 else if (ID >= 0x9118 && ID <= 0x9138)
                     return "Shell";
                 else if (ID >= 0x9194 && ID <= 0x9340)
@@ -587,7 +590,7 @@ namespace ACSE
                 else
                     return "Unknown";
             }
-            else if (Save_Type == SaveType.New_Leaf) //perhaps add WA to this as well
+            else if (Save_Type == SaveType.New_Leaf)
             {
                 if (ID == 0x7FFE)
                     return "Empty";

@@ -93,113 +93,129 @@
 0x0080, Golden Tree w/ Furniture
 0x0081, Golden Tree w/ Bees
 0x0082, Cedar Tree (Festive Lights)
-0x0083, Sapling (No Hitbox)
-0x0084, Small Tree (No Hitbox)
-0x0085, Medium Tree (No Hitbox)
-0x0086, Large Tree (No Hitbox)
-0x0087, Fully Grown Tree (No Hitbox)
-0x0088, Apple Tree Sapling (No Hitbox)
-0x0089, Small Apple Tree (No Hitbox)
-0x008A, Medium Apple Tree (No Hitbox)
-0x008B, Large Apple Tree (No Hitbox)
-0x008C, Fully Grown Apple Tree (No Hitbox) #1
-0x008D, Fully Grown Apple Tree (No Hitbox) #2
-0x008E, Fully Grown Apple Tree (No Hitbox) #3
-0x008F, Apple Tree (No Hitbox)
-0x0090, Orange Tree Sapling (Doesn't grow)
-0x0091, Small Orange Tree (No Hitbox)
-0x0092, Medium Orange Tree (No Hitbox)
-0x0093, Large Orange Tree (No Hitbox)
-0x0094, Fully Grown Orange Tree (No Hitbox) #1
-0x0095, Fully Grown Orange Tree (No Hitbox) #2
-0x0096, Fully Grown Orange Tree (No Hitbox) #3
-0x0097, Orange Tree (No Hitbox)
-0x0098, Peach Tree Sapling (No Hitbox)
-0x0099, Small Peach Tree (No Hitbox)
-0x009A, Medium Peach Tree (No Hitbox)
-0x009B, Large Peach Tree (No Hitbox)
-0x009C, Fully Grown Peach Tree (No Hitbox) #1
-0x009D, Fully Grown Peach Tree (No Hitbox) #2
-0x009E, Fully Grown Peach Tree (No Hitbox) #3
-0x009F, Peach Tree (No Hitbox)
-0x00A0, Pear Tree Sapling (No Hitbox)
-0x00A1, Small Pear Tree (No Hitbox)
-0x00A2, Medium Pear Tree (No Hitbox)
-0x00A3, Large Pear Tree (No Hitbox)
-0x00A4, Fully Grown Pear Tree (No Hitbox) #1
-0x00A5, Fully Grown Pear Tree (No Hitbox) #2
-0x00A6, Fully Grown Pear Tree (No Hitbox) #3
-0x00A7, Pear Tree (No Hitbox)
-0x00A8, Cherry Tree Sapling (No Hitbox)
-0x00A9, Small Cherry Tree (No Hitbox)
-0x00AA, Medium Cherry Tree (No Hitbox)
-0x00AB, Large Cherry Tree (No Hitbox)
-0x00AC, Fully Grown Cherry Tree (No Hitbox) #1
-0x00AD, Fully Grown Cherry Tree (No Hitbox) #2
-0x00AE, Fully Grown Cherry Tree (No Hitbox) #3
-0x00AF, Cherry Tree (No Hitbox)
-0x00B0, Money Tree Sapling (No Hitbox) #1
-0x00B1, Small Money Tree (No Hitbox) #1
-0x00B2, Medium Money Tree (No Hitbox) #1
-0x00B3, Large Money Tree (No Hitbox) #1
-0x00B4, Money Tree (No Hitbox) #1
-0x00B5, Money Tree Sapling (No Hitbox) #2
-0x00B6, Small Money Tree (No Hitbox) #2
-0x00B7, Medium Money Tree (No Hitbox) #2
-0x00B8, Large Money Tree (No Hitbox) #2
-0x00B9, Money Tree (No Hitbox) #2
-0x00BA, Money Tree Sapling (No Hitbox) #3
-0x00BB, Small Money Tree (No Hitbox) #3
-0x00BC, Medium Money Tree (No Hitbox) #3
-0x00BD, Large Money Tree (No Hitbox) #3
-0x00BE, Money Tree (No Hitbox) #3
-0x00BF, Flower Petals #1 (No Hitbox)
-0x00C0, Flower Petals #2 (No Hitbox)
-0x00C1, Flower Petals #3 (No Hitbox)
-0x00C2, Flower Petals #4 (No Hitbox)
-0x00C3, Flower Petals #5 (No Hitbox)
-0x00C4, Flower Petals #6 (No Hitbox)
-0x00C5, Flower Petals #7 (No Hitbox)
-0x00C6, Flower Petals #8 (No Hitbox)
-0x00C7, Flower Petals #9 (No Hitbox)
-0x00C8, White Pansies (No Hitbox)
-0x00C9, Purple Pansies (No Hitbox)
-0x00CA, Yellow Pansies (No Hitbox)
-0x00CB, Yellow Cosmos (No Hitbox)
-0x00CC, Purple Cosmos (No Hitbox)
-0x00CD, Blue Cosmos (No Hitbox)
-0x00CE, Red Tulips (No Hitbox)
-0x00CF, White Tulips (No Hitbox)
-0x00D0, Yellow Tulips (No Hitbox)
-0x00D1, Dead Sapling (No Hitbox)
-0x00D2, Money Tree Sapling (No Hitbox) #4
-0x00D3, Small Money Tree (No Hitbox) #4
-0x00D4, Medium Money Tree (No Hitbox) #4
-0x00D5, Large Money Tree (No Hitbox) #4
-0x00D6, Money Tree (No Hitbox) #4
-0x00D7, Palm Tree Sapling (No Hitbox)
-0x00D8, Small Palm Tree (No Hitbox)
-0x00D9, Medium Palm Tree (No Hitbox)
-0x00DA, Large Palm Tree (No Hitbox)
-0x00DB, Fully Grown Palm Tree (No Hitbox) #1
-0x00DC, Fully Grown Palm Tree (No Hitbox) #2
-0x00DD, Fully Grown Palm Tree (No Hitbox) #3
-0x00DE, Palm Tree (No Hitbox)
-0x00DF, Dead Palm Tree Sapling (No Hitbox)
-0x00E0, Cedar Sapling (No Hitbox)
-0x00E1, Small Cedar Tree (No Hitbox)
-0x00E2, Medium Cedar Tree (No Hitbox)
-0x00E3, Large Cedar Tree (No Hitbox)
-0x00E4, Cedar Tree (No Hitbox)
-0x00E5, Dead Cedar Sapling (No Hitbox)
-0x00E6, Golden Sapling (No Hitbox)
-0x00E7, Small Golden Tree (No Hitbox)
-0x00E8, Medium Golden Tree (No Hitbox)
-0x00E9, Large Golden Tree (No Hitbox)
-0x00EA, Fully Grown Golden Tree (No Hitbox) #1
-0x00EB, Fully Grown Golden Tree (No Hitbox) #2
-0x00EC, Dead Golden Sapling (No Hitbox)
-0x00ED, Blue Fish #1
+0x0083, Crackable Rock (Type 1)
+0x0084, Crackable Rock (Type 2)
+0x0085, Crackable Rock (Type 3)
+0x0086, Crackable Rock (Type 4)
+0x0087, Crackable Rock (Type 5)
+0x0088, Cracked Rock (Type 1)
+0x0089, Cracked Rock (Type 2)
+0x008A, Cracked Rock (Type 3)
+0x008B, Cracked Rock (Type 4)
+0x008C, Cracked Rock (Type 5)
+0x008D, Reset Center Hole (Type 1)
+0x008E, Reset Center Hole (Type 2)
+0x008F, Reset Center Hole (Type 3)
+0x0090, Reset Center Hole (Type 4)
+0x0091, Reset Center Hole (Type 5)
+0x0092, Jacob's Ladder
+0x0093, Sapling (No Hitbox)
+0x0094, Small Tree (No Hitbox)
+0x0095, Medium Tree (No Hitbox)
+0x0096, Large Tree (No Hitbox)
+0x0097, Fully Grown Tree (No Hitbox)
+0x0098, Apple Tree Sapling (No Hitbox)
+0x0099, Small Apple Tree (No Hitbox)
+0x009A, Medium Apple Tree (No Hitbox)
+0x009B, Large Apple Tree (No Hitbox)
+0x009C, Fully Grown Apple Tree (No Hitbox) #1
+0x009D, Fully Grown Apple Tree (No Hitbox) #2
+0x009E, Fully Grown Apple Tree (No Hitbox) #3
+0x009F, Apple Tree (No Hitbox)
+0x00A0, Orange Tree Sapling (Doesn't grow)
+0x00A1, Small Orange Tree (No Hitbox)
+0x00A2, Medium Orange Tree (No Hitbox)
+0x00A3, Large Orange Tree (No Hitbox)
+0x00A4, Fully Grown Orange Tree (No Hitbox) #1
+0x00A5, Fully Grown Orange Tree (No Hitbox) #2
+0x00A6, Fully Grown Orange Tree (No Hitbox) #3
+0x00A7, Orange Tree (No Hitbox)
+0x00A8, Peach Tree Sapling (No Hitbox)
+0x00A9, Small Peach Tree (No Hitbox)
+0x00AA, Medium Peach Tree (No Hitbox)
+0x00AB, Large Peach Tree (No Hitbox)
+0x00AC, Fully Grown Peach Tree (No Hitbox) #1
+0x00AD, Fully Grown Peach Tree (No Hitbox) #2
+0x00AE, Fully Grown Peach Tree (No Hitbox) #3
+0x00AF, Peach Tree (No Hitbox)
+0x00B0, Pear Tree Sapling (No Hitbox)
+0x00B1, Small Pear Tree (No Hitbox)
+0x00B2, Medium Pear Tree (No Hitbox)
+0x00B3, Large Pear Tree (No Hitbox)
+0x00B4, Fully Grown Pear Tree (No Hitbox) #1
+0x00B5, Fully Grown Pear Tree (No Hitbox) #2
+0x00B6, Fully Grown Pear Tree (No Hitbox) #3
+0x00B7, Pear Tree (No Hitbox)
+0x00B8, Cherry Tree Sapling (No Hitbox)
+0x00B9, Small Cherry Tree (No Hitbox)
+0x00BA, Medium Cherry Tree (No Hitbox)
+0x00BB, Large Cherry Tree (No Hitbox)
+0x00BC, Fully Grown Cherry Tree (No Hitbox) #1
+0x00BD, Fully Grown Cherry Tree (No Hitbox) #2
+0x00BE, Fully Grown Cherry Tree (No Hitbox) #3
+0x00BF, Cherry Tree (No Hitbox)
+0x00C0, Money Tree Sapling (No Hitbox) #1
+0x00C1, Small Money Tree (No Hitbox) #1
+0x00C2, Medium Money Tree (No Hitbox) #1
+0x00C3, Large Money Tree (No Hitbox) #1
+0x00C4, Money Tree (No Hitbox) #1
+0x00C5, Money Tree Sapling (No Hitbox) #2
+0x00C6, Small Money Tree (No Hitbox) #2
+0x00C7, Medium Money Tree (No Hitbox) #2
+0x00C8, Large Money Tree (No Hitbox) #2
+0x00C9, Money Tree (No Hitbox) #2
+0x00CA, Money Tree Sapling (No Hitbox) #3
+0x00CB, Small Money Tree (No Hitbox) #3
+0x00CC, Medium Money Tree (No Hitbox) #3
+0x00CD, Large Money Tree (No Hitbox) #3
+0x00CE, Money Tree (No Hitbox) #3
+0x00CF, Flower Petals #1 (No Hitbox)
+0x00D0, Flower Petals #2 (No Hitbox)
+0x00D1, Flower Petals #3 (No Hitbox)
+0x00D2, Flower Petals #4 (No Hitbox)
+0x00D3, Flower Petals #5 (No Hitbox)
+0x00D4, Flower Petals #6 (No Hitbox)
+0x00D5, Flower Petals #7 (No Hitbox)
+0x00D6, Flower Petals #8 (No Hitbox)
+0x00D7, Flower Petals #9 (No Hitbox)
+0x00D8, White Pansies (No Hitbox)
+0x00D9, Purple Pansies (No Hitbox)
+0x00DA, Yellow Pansies (No Hitbox)
+0x00DB, Yellow Cosmos (No Hitbox)
+0x00DC, Purple Cosmos (No Hitbox)
+0x00DD, Blue Cosmos (No Hitbox)
+0x00DE, Red Tulips (No Hitbox)
+0x00DF, White Tulips (No Hitbox)
+0x00E0, Yellow Tulips (No Hitbox)
+0x00E1, Dead Sapling (No Hitbox)
+0x00E2, Money Tree Sapling (No Hitbox) #4
+0x00E3, Small Money Tree (No Hitbox) #4
+0x00E4, Medium Money Tree (No Hitbox) #4
+0x00E5, Large Money Tree (No Hitbox) #4
+0x00E6, Money Tree (No Hitbox) #4
+0x00E7, Palm Tree Sapling (No Hitbox)
+0x00E8, Small Palm Tree (No Hitbox)
+0x00E9, Medium Palm Tree (No Hitbox)
+0x00EA, Large Palm Tree (No Hitbox)
+0x00EB, Fully Grown Palm Tree (No Hitbox) #1
+0x00EC, Fully Grown Palm Tree (No Hitbox) #2
+0x00ED, Fully Grown Palm Tree (No Hitbox) #3
+0x00EE, Palm Tree (No Hitbox)
+0x00EF, Dead Palm Tree Sapling (No Hitbox)
+0x00F0, Cedar Sapling (No Hitbox)
+0x00F1, Small Cedar Tree (No Hitbox)
+0x00F2, Medium Cedar Tree (No Hitbox)
+0x00F3, Large Cedar Tree (No Hitbox)
+0x00F4, Cedar Tree (No Hitbox)
+0x00F5, Dead Cedar Sapling (No Hitbox)
+0x00F6, Golden Sapling (No Hitbox)
+0x00F7, Small Golden Tree (No Hitbox)
+0x00F8, Medium Golden Tree (No Hitbox)
+0x00F9, Large Golden Tree (No Hitbox)
+0x00FA, Fully Grown Golden Tree (No Hitbox) #1
+0x00FB, Fully Grown Golden Tree (No Hitbox) #2
+0x00FC, Dead Golden Sapling (No Hitbox)
+0x00FD, Blue Fish #1
 0x0200, Blue Fish #2
 0x0300, Crucian Carp (Release Animation)
 0x0400, Blue Fish #3
@@ -1146,236 +1162,236 @@
 0x1C5C, Spider (Furniture)
 0x1C60, Ant (Furniture)
 0x1C64, Mosquito (Furniture)
-0x1C68, Crucian Carp (Furniture)
-0x1C6C, Brook Trout (Furniture)
-0x1C70, Carp (Furniture)
-0x1C74, Koi (Furniture)
-0x1C78, Catfish (Furniture)
-0x1C7C, Small Bass (Furniture)
-0x1C80, Bass (Furniture)
-0x1C84, Large Bass (Furniture)
-0x1C88, Bluegill (Furniture)
-0x1C8C, Giant Catfish (Furniture)
-0x1C90, Giant Snakehead (Furniture)
-0x1C94, Barbel Steed (Furniture)
-0x1C98, Dace (Furniture)
-0x1C9C, Pale Chub (Furniture)
-0x1CA0, Bitterling (Furniture)
-0x1CA4, Loach (Furniture)
-0x1CA8, Pond Smelt (Furniture)
-0x1CAC, Sweetfish (Furniture)
-0x1CB0, Cherry Salmon (Furniture)
-0x1CB4, Large Char (Furniture)
-0x1CB8, Rainbow Trout (Furniture)
-0x1CBC, Stringfish (Furniture)
-0x1CC0, Salmon (Furniture)
-0x1CC4, Goldfish (Furniture)
-0x1CC8, Piranha (Furniture)
-0x1CCC, Arowana (Furniture)
-0x1CD0, Eel (Furniture)
-0x1CD4, Freshwater Goby (Furniture)
-0x1CD8, Angelfish (Furniture)
-0x1CDC, Guppy (Furniture)
-0x1CE0, Popeyed Goldfish (Furniture)
-0x1CE4, Coelacanth (Furniture)
-0x1CE8, Crawfish (Furniture)
-0x1CEC, Frog (Furniture)
-0x1CF0, Killifish (Furniture)
-0x1CF4, Jellyfish (Furniture)
-0x1CF8, Sea Bass (Furniture)
-0x1CFC, Red Snapper (Furniture)
-0x1D00, Barred Knifejaw (Furniture)
-0x1D04, Arapaima (Furniture)
-0x1D08, Gelato Umbrella (Furniture)
-0x1D0C, Daffodil Parasol (Furniture)
-0x1D10, Berry Umbrella (Furniture)
-0x1D14, Orange Umbrella (Furniture)
-0x1D18, Mod Umbrella (Furniture)
-0x1D1C, Petal Parasol (Furniture)
-0x1D20, Ribbon Parasol (Furniture)
-0x1D24, Gingham Parasol (Furniture)
-0x1D28, Plaid Parasol (Furniture)
-0x1D2C, Lacy Parasol (Furniture)
-0x1D30, Elegant Umbrella (Furniture)
-0x1D34, Dainty Parasol (Furniture)
-0x1D38, Classic Umbrella (Furniture)
-0x1D3C, Nintendo Parasol (Furniture)
-0x1D40, Bumbershoot (Furniture)
-0x1D44, Sunny Parasol (Furniture)
-0x1D48, Batbrella (Furniture)
-0x1D4C, Checked Umbrella (Furniture)
-0x1D50, Yellow Umbrella (Furniture)
-0x1D54, Leaf Umbrella (Furniture)
-0x1D58, Lotus Parasol (Furniture)
-0x1D5C, Paper Parasol (Furniture)
-0x1D60, Polka Parasol (Furniture)
-0x1D64, Sharp Umbrella (Furniture)
-0x1D68, Twig Parasol (Furniture)
-0x1D6C, Noodle Parasol (Furniture)
-0x1D70, Hypno Parasol (Furniture)
-0x1D74, Pastel Parasol (Furniture)
-0x1D78, Retro Umbrella (Furniture)
-0x1D7C, Icy Umbrella (Furniture)
-0x1D80, Blue Umbrella (Furniture)
-0x1D84, Flame Umbrella (Furniture)
-0x1D88, My Umbrella 1 (Furniture)
-0x1D8C, My Umbrella 2 (Furniture)
-0x1D90, My Umbrella 3 (Furniture)
-0x1D94, My Umbrella 4 (Furniture)
-0x1D98, My Umbrella 5 (Furniture)
-0x1D9C, My Umbrella 6 (Furniture)
-0x1DA0, My Umbrella 7 (Furniture)
-0x1DA4, My Umbrella 8 (Furniture)
-0x1DA8, Clu Clu Land
-0x1DAC, Balloon Fight
-0x1DB0, Donkey Kong
-0x1DB4, DK Jr MATH
-0x1DB8, Pinball
-0x1DBC, Tennis
-0x1DC0, Golf
-0x1DC4, Punchout
-0x1DC8, Baseball
-0x1DCC, Clu Clu Land D
-0x1DD0, Donkey Kong 3
-0x1DD4, Donky Kong Jr
-0x1DD8, Soccer
-0x1DDC, Excitebike
-0x1DE0, Wario's Woods
-0x1DE4, Ice Climber
-0x1DE8, Mario Bros
-0x1DEC, Super Mario Bros
-0x1DF0, Legend of Zelda
-0x1DF4, NES
-0x1DF8, Phonograph
-0x1DFC, Turntable
-0x1E00, Jukebox
-0x1E04, Red Boom Box
-0x1E08, White Boom Box
-0x1E0C, High-end Stereo
-0x1E10, Hi-fi Stereo
-0x1E14, Lovely Stereo
-0x1E18, Jingle Lamp
-0x1E1C, Jingle Chair
-0x1E20, Jingle Shelves
-0x1E24, Jingle Sofa
-0x1E28, Jingle Bed
-0x1E2C, Jingle Clock
-0x1E30, Jingle Table
-0x1E34, Jingle Piano
-0x1E38, Aiko Figurine
-0x1E3C, Robo-Stereo
-0x1E40, Dice Stereo
-0x1E44, Apple Clock
-0x1E48, Robo-clock
-0x1E4C, Kitschy Clock
-0x1E50, Antique Clock
-0x1E54, Reel-to-reel
-0x1E58, Tape Deck
-0x1E5C, CD Player
-0x1E60, Glow Clock
-0x1E64, Odd Clock
-0x1E68, Red Clock
-0x1E6C, Cube Clock
-0x1E70, Owl Clock
-0x1E74, Lucky Cat
-0x1E78, Lucky Black Cat
-0x1E7C, Samurai Suit
-0x1E80, Racoon Obje
-0x1E84, Lucky Frog
-0x1E88, Big Festive Tree
-0x1E8C, White Rook
-0x1E90, Black Rook
-0x1E94, White Queen
-0x1E98, Black Queen
-0x1E9C, White Bishop
-0x1EA0, Black Bishop
-0x1EA4, White King
-0x1EA8, Black King
-0x1EAC, White Knight
-0x1EB0, Black Knight
-0x1EB4, White Pawn
-0x1EB8, Black Pawn
-0x1EBC, Festive Tree
-0x1EC0, Kiddie Clock
-0x1EC4, Kiddie Bed
-0x1EC8, Kiddie Table
-0x1ECC, Kiddie Couch
-0x1ED0, Kiddie Stereo
-0x1ED4, Kiddie Chair
-0x1ED8, Kiddie Bookcase
-0x1EDC, Alcove
-0x1EE0, Hearth
-0x1EE4, Chalk Board
-0x1EE8, Mop
-0x1EEC, Tricera Skull
-0x1EF0, Tricera Tail
-0x1EF4, Tricera Torso
-0x1EF8, T-rex Skull
-0x1EFC, T-rex Tail
-0x1F00, T-rex Torso
-0x1F04, Apato Skull
-0x1F08, Apato Tail
-0x1F0C, Apato Torso
-0x1F10, Stego Skull
-0x1F14, Stego Tail
-0x1F18, Stego Torso
-0x1F1C, Ptera Skull
-0x1F20, Ptera Right Wing
-0x1F24, Ptera Left Wing
-0x1F28, Plesio Skull
-0x1F2C, Plesio Neck
-0x1F30, Plesio Torso
-0x1F34, Mammoth Skull
-0x1F38, Mammoth Torso
-0x1F3C, Amber
-0x1F40, Dinosaur Track
-0x1F44, Ammonite
-0x1F48, Dinosaur Egg
-0x1F4C, Trilobite
-0x1F50, Modern Lamp
-0x1F54, Snowman Fridge
-0x1F58, Snowman Table
-0x1F5C, Snowman Bed
-0x1F60, Snowman Chair
-0x1F64, Snowman Lamp
-0x1F68, Snowman Sofa
-0x1F6C, Snowman TV
-0x1F70, Snowman Dresser
-0x1F74, Snowman Wardrobe
-0x1F78, Snowman Clock
-0x1F7C, Tricera D
-0x1F80, T-rex D
-0x1F84, Bronto D
-0x1F88, Ptera D
-0x1F8C, HUTABAD
-0x1F90, Mammoth D
-0x1F94, Stego D
-0x1F98, Stego D2
-0x1F9C, Fossil (Furniture)
-0x1FA0, Shogi Piece
-0x1FA4, Chocolates
-0x1FA8, Post Box
-0x1FAC, Piggy Bank
-0x1FB0, Tissue
-0x1FB4, Tribal Mask
-0x1FB8, Matryoshka
-0x1FBC, Legend of Zelda
-0x1FC0, Bottled Shop
-0x1FC4, Tiger Bobblehead
-0x1FC8, Moai Statue
-0x1FCC, Aerobics Radio
-0x1FD0, Pagoda
-0x1FD4, Fishing Bear
-0x1FD8, Mouth of Truth
-0x1FDC, Chinese Lioness
-0x1FE0, Tower of Pisa
-0x1FE4, Merlion
-0x1FE8, Manekin Pis
-0x1FEC, Tokyo Tower
-0x1FF0, Red Balloon
-0x1FF4, Yellow Balloon
-0x1FF8, Blue Balloon
-0x1FFC, Green Balloon
+0x1C68, Birdwing Butterfly (Furniture)
+0x1C6C, Dung Beetle (Furniture)
+0x1C70, Diving Beetle (Furniture)
+0x1C74, Hercules Beetle
+0x1C78, Crab (Furniture)
+0x1C7C, Flea (Furniture)
+0x1C80, Hermit Crab (Furniture)
+0x1C84, Coconut Crab (Furniture)
+0x1C88, Crucian Carp (Furniture)
+0x1C8C, Brook Trout (Furniture)
+0x1C90, Carp (Furniture)
+0x1C94, Koi (Furniture)
+0x1C98, Catfish (Furniture)
+0x1C9C, Small Bass (Furniture)
+0x1CA0, Bass (Furniture)
+0x1CA4, Large Bass (Furniture)
+0x1CA8, Bluegill (Furniture)
+0x1CAC, Giant Catfish (Furniture)
+0x1CB0, Giant Snakehead (Furniture)
+0x1CB4, Barbel Steed (Furniture)
+0x1CB8, Dace (Furniture)
+0x1CBC, Pale Chub (Furniture)
+0x1CC0, Bitterling (Furniture)
+0x1CC4, Loach (Furniture)
+0x1CC8, Pond Smelt (Furniture)
+0x1CCC, Sweetfish (Furniture)
+0x1CD0, Cherry Salmon (Furniture)
+0x1CD4, Large Char (Furniture)
+0x1CD8, Rainbow Trout (Furniture)
+0x1CDC, Stringfish (Furniture)
+0x1CE0, Salmon (Furniture)
+0x1CE4, Goldfish (Furniture)
+0x1CE8, Piranha (Furniture)
+0x1CEC, Arowana (Furniture)
+0x1CF0, Eel (Furniture)
+0x1CF4, Freshwater Goby (Furniture)
+0x1CF8, Angelfish (Furniture)
+0x1CFC, Guppy (Furniture)
+0x1D00, Popeyed Goldfish (Furniture)
+0x1D04, Coelacanth (Furniture)
+0x1D08, Crawfish (Furniture)
+0x1D0C, Frog (Furniture)
+0x1D10, Killifish (Furniture)
+0x1D14, Jellyfish (Furniture)
+0x1D18, Sea Bass (Furniture)
+0x1D1C, Red Snapper (Furniture)
+0x1D20, Barred Knifejaw (Furniture)
+0x1D24, Arapaima (Furniture)
+0x1D28, Puffer Fish (Furniture)
+0x1D2C, Dab (Furniture)
+0x1D30, Squid (Furniture)
+0x1D34, Swordfish (Furniture)
+0x1D38, Flounder (Furniture)
+0x1D3C, Octopus (Furniture)
+0x1D40, Seahorse (Furniture)
+0x1D44, Horse Mackerel (Furniture)
+0x1D48, Gelato Umbrella (Furniture)
+0x1D4C, Daffodil Parasol (Furniture)
+0x1D50, Berry Umbrella (Furniture)
+0x1D54, Orange Umbrella (Furniture)
+0x1D58, Mod Umbrella (Furniture)
+0x1D5C, Petal Parasol (Furniture)
+0x1D60, Ribbon Parasol (Furniture)
+0x1D64, Gingham Parasol (Furniture)
+0x1D68, Plaid Parasol (Furniture)
+0x1D6C, Lacy Parasol (Furniture)
+0x1D70, Elegant Umbrella (Furniture)
+0x1D74, Dainty Parasol (Furniture)
+0x1D78, Classic Umbrella (Furniture)
+0x1D7C, Nintendo Parasol (Furniture)
+0x1D80, Bumbershoot (Furniture)
+0x1D84, Sunny Parasol (Furniture)
+0x1D88, Batbrella (Furniture)
+0x1D8C, Checked Umbrella (Furniture)
+0x1D90, Yellow Umbrella (Furniture)
+0x1D94, Leaf Umbrella (Furniture)
+0x1D98, Lotus Parasol (Furniture)
+0x1D9C, Paper Parasol (Furniture)
+0x1DA0, Polka Parasol (Furniture)
+0x1DA4, Sharp Umbrella (Furniture)
+0x1DA8, Twig Parasol (Furniture)
+0x1DAC, Noodle Parasol (Furniture)
+0x1DB0, Hypno Parasol (Furniture)
+0x1DB4, Pastel Parasol (Furniture)
+0x1DB8, Retro Umbrella (Furniture)
+0x1DBC, Icy Umbrella (Furniture)
+0x1DC0, Blue Umbrella (Furniture)
+0x1DC4, Flame Umbrella (Furniture)
+0x1DC8, My Umbrella 1 (Furniture)
+0x1DCC, My Umbrella 2 (Furniture)
+0x1DD0, My Umbrella 3 (Furniture)
+0x1DD4, My Umbrella 4 (Furniture)
+0x1DD8, My Umbrella 5 (Furniture)
+0x1DDC, My Umbrella 6 (Furniture)
+0x1DE0, My Umbrella 7 (Furniture)
+0x1DE4, My Umbrella 8 (Furniture)
+0x1DE8, Clu Clu Land
+0x1DEC, Balloon Fight
+0x1DF0, Donkey Kong
+0x1DF4, DK Jr MATH
+0x1DF8, Pinball
+0x1DFC, Tennis
+0x1E00, Golf
+0x1E04, Punchout
+0x1E08, Baseball
+0x1E0C, Clu Clu Land D
+0x1E10, Donkey Kong 3
+0x1E14, Donky Kong Jr
+0x1E18, Soccer
+0x1E1C, Excitebike
+0x1E20, Wario's Woods
+0x1E24, Ice Climber
+0x1E28, Mario Bros
+0x1E2C, Super Mario Bros
+0x1E30, Legend of Zelda
+0x1E34, NES
+0x1E38, Phonograph
+0x1E3C, Turntable
+0x1E40, Jukebox
+0x1E44, Red Boom Box
+0x1E48, White Boom Box
+0x1E4C, High-end Stereo
+0x1E50, Hi-fi Stereo
+0x1E54, Lovely Stereo
+0x1E58, Jingle Lamp
+0x1E5C, Jingle Chair
+0x1E60, Jingle Shelves
+0x1E64, Jingle Sofa
+0x1E68, Jingle Bed
+0x1E6C, Jingle Clock
+0x1E70, Jingle Table
+0x1E74, Jingle Piano
+0x1E78, Aiko Figurine
+0x1E7C, Robo-Stereo
+0x1E80, Dice Stereo
+0x1E84, Apple Clock
+0x1E88, Robo-clock
+0x1E8C, Kitschy Clock
+0x1E90, Antique Clock
+0x1E94, Reel-to-reel
+0x1E98, Tape Deck
+0x1E9C, CD Player
+0x1EA0, Glow Clock
+0x1EA4, Odd Clock
+0x1EA8, Red Clock
+0x1EAC, Cube Clock
+0x1EB0, Owl Clock
+0x1EB4, Lucky Cat
+0x1EB8, Lucky Black Cat
+0x1EBC, Samurai Suit
+0x1EC0, Racoon Obje
+0x1EC4, Lucky Frog
+0x1EC8, Big Festive Tree
+0x1ECC, White Rook
+0x1ED0, Black Rook
+0x1ED4, White Queen
+0x1ED8, Black Queen
+0x1EDC, White Bishop
+0x1EE0, Black Bishop
+0x1EE4, White King
+0x1EE8, Black King
+0x1EEC, White Knight
+0x1EF0, Black Knight
+0x1EF4, White Pawn
+0x1EF8, Black Pawn
+0x1EFC, Festive Tree
+0x1F00, Kiddie Clock
+0x1F04, Kiddie Bed
+0x1F08, Kiddie Table
+0x1F0C, Kiddie Couch
+0x1F10, Kiddie Stereo
+0x1F14, Kiddie Chair
+0x1F18, Kiddie Bookcase
+0x1F1C, Alcove
+0x1F20, Hearth
+0x1F24, Chalk Board
+0x1F28, Mop
+0x1F2C, Tricera Skull
+0x1F30, Tricera Tail
+0x1F34, Tricera Torso
+0x1F38, T-rex Skull
+0x1F3C, T-rex Tail
+0x1F40, T-rex Torso
+0x1F44, Apato Skull
+0x1F48, Apato Tail
+0x1F4C, Apato Torso
+0x1F50, Stego Skull
+0x1F54, Stego Tail
+0x1F58, Stego Torso
+0x1F5C, Ptera Skull
+0x1F60, Ptera Right Wing
+0x1F64, Ptera Left Wing
+0x1F68, Plesio Skull
+0x1F6C, Plesio Neck
+0x1F70, Plesio Torso
+0x1F74, Mammoth Skull
+0x1F78, Mammoth Torso
+0x1F7C, Amber
+0x1F80, Dinosaur Track
+0x1F84, Ammonite
+0x1F88, Dinosaur Egg
+0x1F8C, Trilobite
+0x1F90, Modern Lamp
+0x1F94, Snowman Fridge
+0x1F98, Snowman Table
+0x1F9C, Snowman Bed
+0x1FA0, Snowman Chair
+0x1FA4, Snowman Lamp
+0x1FA8, Snowman Sofa
+0x1FAC, Snowman TV
+0x1FB0, Snowman Dresser
+0x1FB4, Snowman Wardrobe
+0x1FB8, Snowman Clock
+0x1FBC, Tricera D
+0x1FC0, T-rex D
+0x1FC4, Bronto D
+0x1FC8, Ptera D
+0x1FCC, HUTABAD
+0x1FD0, Mammoth D
+0x1FD4, Stego D
+0x1FD8, Stego D2
+0x1FDC, Fossil (Furniture)
+0x1FE0, Shogi Piece
+0x1FE4, Chocolates
+0x1FE8, Post Box
+0x1FEC, Piggy Bank
+0x1FF0, Tissue
+0x1FF4, Tribal Mask
+0x1FF8, Matryoshka
+0x1FFC, Legend of Zelda
 0x2000, Airmail Paper (1)
 0x2001, Sparkly Paper (1)
 0x2002, Bamboo Paper (1)
@@ -1728,6 +1744,19 @@
 0x2259, Fan Fan
 0x225A, Flower Fan
 0x225B, Leaf Fan
+0x225C, Party Popper
+0x225D, White Pansy
+0x225E, Purple Pansy
+0x225F, Yellow Pansy
+0x2260, Yellow Cosmos
+0x2261, Pink Cosmos
+0x2262, Blue Cosmos
+0x2263, Red Tulip
+0x2264, White Tulip
+0x2265, Yellow Tulip
+0x2266, Jacob's Ladder
+0x2267, Medicine
+//2268, Crucian Carp (When caught?)
 0x2300, Crucian Carp
 0x2301, Brook Trout
 0x2302, Carp
@@ -1768,6 +1797,14 @@
 0x2325, Red Snapper
 0x2326, Barred Knifejaw
 0x2327, Arapaima
+0x2328, Puffer Fish
+0x2329, Dab
+0x232A, Squid
+0x232B, Swordfish
+0x232C, Flounder
+0x232D, Octopus
+0x232E, Seahorse
+0x232F, Horse Mackerel
 0x2400, Flame Shirt
 0x2401, Paw Shirt
 0x2402, Wavy Pink Shirt
@@ -2023,10 +2060,10 @@
 0x24FC, Fetching Outfit
 0x24FD, Snow Shirt
 0x24FE, Melon Gingham
-0x24FF, Unknown
-0x2500, Corrupt
-0x2501, Corrupt
-0x2502, Corrupt
+0x24FF, Mannekin Shirt
+0x2500, Quest Letter
+0x2501, Quest Item
+0x2502, Quest Money
 0x2503, Videotape
 0x2504, Organizer
 0x2505, Pokémon Pikachu
@@ -2037,13 +2074,13 @@
 0x250A, Watch
 0x250B, Handkerchief
 0x250C, Glasses Case
-0x250D, Money1000Bell (First Payment you give Nook?)
+0x250D, Money1000Bell
 0x250E, Empty Can
 0x250F, Boot
 0x2510, Old Tire
 0x2511, Fossil
 0x2512, Pitfall
-0x2513, Corrupt (Pitfall)
+0x2513, Fortune Slip
 0x2514, Lion's Paw
 0x2515, Wentletrap
 0x2516, Venus Comb
@@ -2052,9 +2089,9 @@
 0x2519, White Scallop
 0x251A, Conch
 0x251B, Coral
-0x251C, Present (Drop to Open)(Chess Table)
-0x251D, Corrupt (Present) (Map Sprite)
-0x251E, Signboard (Not Placeable)
+0x251C, Present
+0x251D, Town Map
+0x251E, Signboard
 0x251F, Present (Drop to Open)(Golden Net)
 0x2520, Present (Drop to Open)(Golden Axe)
 0x2521, Present (Drop to Open)(Golden Shovel)
@@ -2140,6 +2177,8 @@
 0x2640, Block Flooring
 0x2641, Boxing Ring Mat
 0x2642, Harvest Rug
+0x2643, Bathhouse Tile
+0x2644, Japanese Floor
 0x2700, Chic Wall
 0x2701, Classic Wall
 0x2702, Parlor Wall
@@ -2207,8 +2246,10 @@
 0x2740, Mushroom Mural
 0x2741, Ringside Seating
 0x2742, Harvest Wall
+0x2743, Bathhouse Wall
+0x2744, Japanese Wall
 0x2800, Apple
-0x2801, Cherry Shirt
+0x2801, Cherry
 0x2802, Pear
 0x2803, Peach
 0x2804, Orange
@@ -2278,9 +2319,94 @@
 0x2A31, Café K.K.
 0x2A32, K.K. Parade
 0x2A33, Señor K.K.
-0x2A34, K.K. Song
-0x2A35, I Love You
-0x2A36, Two Days Ago
+0x2A34, My Place
+0x2A35, Forest Life
+0x2A36, To the Edge
+0x2A37, K.K. Song
+0x2A38, I Love You
+0x2A39, Two Days Ago
+0x2A3A, K.K. Marathon
+0x2A3B, Pondering
+0x2A3C, K.K. Rockabilly
+0x2A3D, K.K. Dixie
+0x2A3E, K.K. Metal
+0x2A3F, King K.K.
+0x2A40, K.K. Rally
+0x2A41, Agent K.K.
+0x2A42, Marine Song 2001
+0x2A43, Neapolitan
+0x2A44, Mountain Song
+0x2A45, Steep Hill
+0x2A46, K.K. Chorale (Vocal)
+0x2A47, K.K. March (Vocal)
+0x2A48, K.K. Waltz (Vocal)
+0x2A49, K.K. Swing (Vocal)
+0x2A4A, K.K. Jazz (Vocal)
+0x2A4B, K.K. Fusion (Vocal)
+0x2A4C, K.K. Etude (Vocal)
+0x2A4D, K.K. Lullaby (Vocal)
+0x2A4E, K.K. Aria (Vocal)
+0x2A4F, K.K. Samba (Vocal)
+0x2A50, K.K. Bossa (Vocal)
+0x2A51, K.K. Calypso (Vocal)
+0x2A52, K.K. Salsa (Vocal)
+0x2A53, K.K. Mambo (Vocal)
+0x2A54, K.K. Reggae (Vocal)
+0x2A55, K.K. Ska (Vocal)
+0x2A56, K.K. Tango (Vocal)
+0x2A57, K.K. Faire (Vocal)
+0x2A58, Aloha K.K. (Vocal)
+0x2A59, Lucky K.K. (Vocal)
+0x2A5A, K.K. Condor (Vocal)
+0x2A5B, K.K. Steppe (Vocal)
+0x2A5C, Imperial K.K. (Vocal)
+0x2A5D, K.K. Casbah (Vocal)
+0x2A5E, K.K. Safari (Vocal)
+0x2A5F, K.K. Folk (Vocal)
+0x2A60, K.K. Rock (Vocal)
+0x2A61, Rockin' K.K. (Vocal)
+0x2A62, K.K. Ragtime (Vocal)
+0x2A63, K.K. Gumbo (Vocal)
+0x2A64, The K. Funk (Vocal)
+0x2A65, K.K. Blues (Vocal)
+0x2A66, Soulful K.K. (Vocal)
+0x2A67, K.K. Soul (Vocal)
+0x2A68, K.K. Cruisin' (Vocal)
+0x2A69, K.K. Love Song (Vocal)
+0x2A6A, K.K. D & B (Vocal)
+0x2A6B, K.K. Technopop (Vocal)
+0x2A6C, DJ K.K. (Vocal)
+0x2A6D, Only Me (Vocal)
+0x2A6E, K.K. Country (Vocal)
+0x2A6F, Surfin' K.K. (Vocal)
+0x2A70, K.K. Ballad (Vocal)
+0x2A71, Comrade K.K. (Vocal)
+0x2A72, K.K. Lament (Vocal)
+0x2A73, Go K.K. Rider! (Vocal)
+0x2A74, K.K. Dirge (Vocal)
+0x2A75, K.K. Western (Vocal)
+0x2A76, Mr. K.K. (Vocal)
+0x2A77, Café K.K. (Vocal)
+0x2A78, K.K. Parade (Vocal)
+0x2A79, Señor K.K. (Vocal)
+0x2A7A, My Place (Vocal)
+0x2A7B, Forest Life (Vocal)
+0x2A7C, To the Edge (Vocal)
+0x2A7D, K.K. Song (Vocal)
+0x2A7E, I Love You (Vocal)
+0x2A7F, Two Days Ago (Vocal)
+0x2A80, K.K. Marathon (Vocal)
+0x2A81, Pondering (Vocal)
+0x2A82, K.K. Rockabilly (Vocal)
+0x2A83, K.K. Dixie (Vocal)
+0x2A84, K.K. Metal (Vocal)
+0x2A85, King K.K. (Vocal)
+0x2A86, K.K. Rally (Vocal)
+0x2A87, Agent K.K. (Vocal)
+0x2A88, Marine Song 2001 (Vocal)
+0x2A89, Neapolitan (Vocal)
+0x2A8A, Mountain Song (Vocal)
+0x2A8B, Steep Hill (Vocal)
 0x2B00, College Rule
 0x2B01, School Pad
 0x2B02, Organizer
@@ -2433,259 +2559,305 @@
 0x2D25, Spider
 0x2D26, Ant
 0x2D27, Mosquito
-0x2D28, Spirit (1)
-0x2D29, Spirit (2)
-0x2D2A, Spirit (3)
-0x2D2B, Spirit (4)
-0x2D2C, Spirit (5)
+0x2D28, Birdwing Bufferfly
+0x2D29, Dung Beetle
+0x2D2A, Diving Beetle
+0x2D2B, Hercules Beetle
+0x2D2C, Crab
+0x2D2D, Flea
+0x2D2E, Hermit Crab
+0x2D2F, Coconut Crab
+0x2D30, Spirit (1)
+0x2D31, Spirit (2)
+0x2D32, Spirit (3)
+0x2D33, Spirit (4)
+0x2D34, Spirit (5)
 0x2E00, Grab Bag (1)
 0x2E01, Grab Bag (2)
 0x2F00, 10 Turnips
 0x2F01, 50 Turnips
 0x2F02, 100 Turnips
 0x2F03, Spoiled Turnips
-0x3000, Purple Balloon
-0x3004, Bunny P. Balloon
-0x3008, Bunny B. Balloon
-0x300C, Bunny O. Balloon
-0x3010, Lady Liberty
-0x3014, Arc De Triomphe
-0x3018, Stone Coin
-0x301C, Mermaid Statue
-0x3020, Post Model
-0x3024, House Model
-0x3028, Manor Model
-0x302C, Police Model
-0x3030, Museum Model
-0x3034, Plate Armor
-0x3038, Moon Dumpling
-0x303C, Bean Set
-0x3040, Osechi
-0x3044, Lovely Phone
-0x3048, Market Model
-0x304C, Katrina's Tent
-0x3050, Chinese Lion
-0x3054, Tanabata Palm
-0x3058, Spring Medal
-0x305C, Fall Medal
-0x3060, Shop Model
-0x3064, Compass
-0x3068, Long-life Noodle
-0x306C, Bass Boat
-0x3070, Lighthouse Model
-0x3074, Life Ring
-0x3078, Tree Model
-0x307C, Pink Tree Model
-0x3080, Weed Model
-0x3084, Tailor Model
-0x3088, Dump Model
-0x308C, Mortar Ball
-0x3090, Snowman
-0x3094, Miniature Car
-0x3098, Big Catch Flag
-0x309C, Moon
-0x30A0, Locomotive Model
-0x30A4, Dolly
-0x30A8, Station Model 1
-0x30AC, Station Model 2
-0x30B0, Station Model 3
-0x30B4, Station Model 4
-0x30B8, Station Model 5
-0x30BC, Station Model 6
-0x30C0, Station Model 7
-0x30C4, Station Model 8
-0x30C8, Station Model 9
-0x30CC, Station Model 10
-0x30D0, Station Model 11
-0x30D4, Station Model 12
-0x30D8, Station Model 13
-0x30DC, Station Model 14
-0x30E0, Station Model 15
-0x30E4, Well Model
-0x30E8, Grass Model
-0x30EC, Track Model
-0x30F0, Dirt Model
-0x30F4, Train Car Model
-0x30F8, Orange Box
-0x30FC, College Rule
-0x3100, School Pad
-0x3104, Organizer
-0x3108, Diary
-0x310C, Journal
-0x3110, Pink Diary
-0x3114, Captain's Log
-0x3118, Blue Diary
-0x311C, French Notebook
-0x3120, Scroll
-0x3124, Pink Plaid Pad
-0x3128, Blue Polka Pad
-0x312C, Green Plaid Pad
-0x3130, Red Polka Pad
-0x3134, Yellow Plaid Pad
-0x3138, Calligraphy Pad
-0x313C, Golden Net
-0x3140, Golden Axe
-0x3144, Golden Shovel
-0x3148, Golden Rod
-0x314C, Bluebell Fan
-0x3150, Plum Fan
-0x3154, Bamboo Fan
-0x3158, Cloud Fan
-0x315C, Maple Fan
-0x3160, Fan Fan
-0x3164, Flower Fan
-0x3168, Leaf Fan
-0x316C, Yellow Pinwheel
-0x3170, Red Pinwheel
-0x3174, Tiger Pinwheel
-0x3178, Green Pinwheel
-0x317C, Pink Pinwheel
-0x3180, Striped Pinwheel
-0x3184, Flower Pinwheel
-0x3188, Fancy Pinwheel
-0x318C, Net
-0x3190, Axe
-0x3194, Shovel
-0x3198, Fishing Rod
-0x319C, Crab Stew
-0x31A0, Fireplace
-0x31A4, Igloo Model
-0x31A8, Snowy Tree Model
-0x31AC, Snowcone Machine
-0x31B0, Treasure Chest
-0x31B4, Beach Chair
-0x31B8, Beach Table
-0x31BC, Hibachi Grill
-0x31C0, Surfboard
-0x31C4, Snowboard
-0x31C8, Wave Breaker
-0x31CC, Ukulele
-0x31D0, Diver Dan
-0x31D4, Snow Bunny
-0x31D8, Scary Painting
-0x31DC, Novel Painting
-0x31E0, Sleigh
-0x31E4, Nintendo Bench
-0x31E8, G Logo
-0x31EC, Merge Sign
-0x31F0, Bottle Rocket
-0x31F4, Wet Roadway Sign
-0x31F8, Detour Sign
-0x31FC, Men at Work Sign
-0x3200, Lefty Desk
-0x3204, Righty Desk
-0x3208, School Desk
-0x320C, Flagman Sign
-0x3210, Fishing Trophy
-0x3214, Jersey Barrier
-0x3218, Speed Sign
-0x321C, Golf Trophy
-0x3220, Teacher's Desk
-0x3224, Haz-mat Barrel
-0x3228, Tennis Trophy
-0x322C, Saw Horse
-0x3230, Kart Trophy
-0x3234, Bug Zapper
-0x3238, Telescope
-0x323C, Coffee Machine
-0x3240, Bird Bath
-0x3244, Barbecue
-0x3248, Radiator
-0x324C, Lawn Chair
-0x3250, Chess Table
-0x3254, Candy Machine
-0x3258, Backyard Pool
-0x325C, Cement Mixer
-0x3260, Jackhammer
-0x3264, Tiki Torch
-0x3268, Birdhouse
-0x326C, Potbelly Stove
-0x3270, Bus Stop
-0x3274, Hamster Cage
-0x3278, Flip-top Desk
-0x327C, Festive Flag
-0x3280, Super Tortimer
-0x3284, Bird Feeder
-0x3288, Teacher's Chair
-0x328C, Steam roller
-0x3290, Mr. Flamingo
-0x3294, Mailbox
-0x3298, Festive Candle
-0x329C, Hammock
-0x32A0, Garden Gnome
-0x32A4, Mrs. Flamingo
-0x32A8, Spring Medal (again?)
-0x32AC, Autumn Medal
-0x32B0, Tumbleweed
-0x32B4, Cow Skull
-0x32B8, Oil Drum
-0x32BC, Saddle Fence
-0x32C0, Western Fence
-0x32C4, Watering Trough
-0x32C8, Luigi Trophy
-0x32CC, Mario Trophy
-0x32D0, Harvest Lamp
-0x32D4, Covered Wagon
-0x32D8, Storefront
-0x32DC, Picnic Table
-0x32E0, Harvest Table
-0x32E4, Harvest TV
-0x32E8, Harvest Bed
-0x32EC, Harvest Chair
-0x32F0, Harvest Clock
-0x32F4, Harvest Sofa
-0x32F8, Green Pipe
-0x32FC, Brick Block
-0x3300, Harvest Bureau
-0x3304, Flagpole
-0x3308, Harvest Dresser
-0x330C, Super Mushroom
-0x3310, Harvest Mirror
-0x3314, Coin
-0x3318, ? Block
-0x331C, Starman
-0x3320, Koopa Shell
-0x3324, Cannon
-0x3328, Desert Cactus
-0x332C, Fire Flower
-0x3330, Wagon Wheel
-0x3334, Well
-0x3338, Boxing Barricade
-0x333C, Neutral Corner
-0x3340, Red Corner
-0x3344, Blue Corner
-0x3348, Boxing Mat
-0x334C, Ringside Table
-0x3350, Speed Bag
-0x3354, Sandbag
-0x3358, Weight Bench
-0x335C, Campfire
-0x3360, Bonfire
-0x3364, Kayak
-0x3368, Sprinkler
-0x336C, Tent Model
-0x3370, Backpack
-0x3374, Angler Trophy
-0x3378, Pansy Model 1
-0x337C, Pansy Model 2
-0x3380, Pansy Model 3
-0x3384, Cosmos Model 1
-0x3388, Cosmos Model 2
-0x338C, Cosmos Model 3
-0x3390, Tulip Model 1
-0x3394, Tulip Model 2
-0x3398, Tulip Model 3
-0x339C, Lantern
-0x33A0, Lawn Mower
-0x33A4, Cooler
-0x33A8, Mountain Bike
-0x33AC, Sleeping Bag
-0x33B0, Propane Stove
-0x33B4, Cornucopia
-0x33B8, Judge's Bell
-0x33BC, Noisemaker
-0x33C0, Chowder
-0x33C4, DUMMY
+0x3000, Bottled Shop
+0x3004, Tiger Bobblehead
+0x3008, Moai Statue
+0x300C, Aerobics Radio
+0x3010, Pagoda
+0x3014, Fishing Bear
+0x3018, Mouth of Truth
+0x301C, Chinese Lioness
+0x3020, Tower of Pisa
+0x3024, Merlion
+0x3028, Manekin Pis
+0x302C, Tokyo Tower
+0x3030, Red Balloon
+0x3034, Yellow Balloon
+0x3038, Blue Balloon
+0x303C, Green Balloon
+0x3040, Purple Balloon
+0x3044, Bunny P. Balloon
+0x3048, Bunny B. Balloon
+0x304C, Bunny O. Balloon
+0x3050, Lady Liberty
+0x3054, Arc De Triomphe
+0x3058, Stone Coin
+0x305C, Mermaid Statue
+0x3060, Post Model
+0x3064, House Model
+0x3068, Manor Model
+0x306C, Police Model
+0x3070, Museum Model
+0x3074, Plate Armor
+0x3078, Moon Dumpling
+0x307C, Bean Set
+0x3080, Osechi
+0x3084, Lovely Phone
+0x3088, Market Model
+0x308C, Katrina's Tent
+0x3090, Chinese Lion
+0x3094, Tanabata Palm
+0x3098, Spring Medal
+0x309C, Fall Medal
+0x30A0, Shop Model
+0x30A4, Compass
+0x30A8, Long-life Noodle
+0x30AC, Bass Boat
+0x30B0, Lighthouse Model
+0x30B4, Life Ring
+0x30B8, Tree Model
+0x30BC, Pink Tree Model
+0x30C0, Weed Model
+0x30C4, Tailor Model
+0x30C8, Dump Model
+0x30CC, Mortar Ball
+0x30D0, Snowman
+0x30D4, Miniature Car
+0x30D8, Big Catch Flag
+0x30DC, Moon
+0x30E0, Locomotive Model
+0x30E4, Dolly
+0x30E8, Station Model 1
+0x30EC, Station Model 2
+0x30F0, Station Model 3
+0x30F4, Station Model 4
+0x30F8, Station Model 5
+0x30FC, Station Model 6
+0x3100, Station Model 7
+0x3104, Station Model 8
+0x3108, Station Model 9
+0x310C, Station Model 10
+0x3110, Station Model 11
+0x3114, Station Model 12
+0x3118, Station Model 13
+0x311C, Station Model 14
+0x3120, Station Model 15
+0x3124, Well Model
+0x3128, Grass Model
+0x312C, Track Model
+0x3130, Dirt Model
+0x3134, Train Car Model
+0x3138, Orange Box
+0x313C, College Rule
+0x3140, School Pad
+0x3144, Organizer
+0x3148, Diary
+0x314C, Journal
+0x3150, Pink Diary
+0x3154, Captain's Log
+0x3158, Blue Diary
+0x315C, French Notebook
+0x3160, Scroll
+0x3164, Pink Plaid Pad
+0x3168, Blue Polka Pad
+0x316C, Green Plaid Pad
+0x3170, Red Polka Pad
+0x3174, Yellow Plaid Pad
+0x3178, Calligraphy Pad
+0x317C, Golden Net
+0x3180, Golden Axe
+0x3184, Golden Shovel
+0x3188, Golden Rod
+0x318C, Bluebell Fan
+0x3190, Plum Fan
+0x3194, Bamboo Fan
+0x3198, Cloud Fan
+0x319C, Maple Fan
+0x31A0, Fan Fan
+0x31A4, Flower Fan
+0x31A8, Leaf Fan
+0x31AC, Yellow Pinwheel
+0x31B0, Red Pinwheel
+0x31B4, Tiger Pinwheel
+0x31B8, Green Pinwheel
+0x31BC, Pink Pinwheel
+0x31C0, Striped Pinwheel
+0x31C4, Flower Pinwheel
+0x31C8, Fancy Pinwheel
+0x31CC, Net
+0x31D0, Axe
+0x31D4, Shovel
+0x31D8, Fishing Rod
+0x31DC, Crab Stew
+0x31E0, Fireplace
+0x31E4, Igloo Model
+0x31E8, Snowy Tree Model
+0x31EC, Snowcone Machine
+0x31F0, Treasure Chest
+0x31F4, Beach Chair
+0x31F8, Beach Table
+0x31FC, Hibachi Grill
+0x3200, Surfboard
+0x3204, Snowboard
+0x3208, Wave Breaker
+0x320C, Ukulele
+0x3210, Diver Dan
+0x3214, Snow Bunny
+0x3218, Scary Painting
+0x321C, Novel Painting
+0x3220, Sleigh
+0x3224, Nintendo Bench
+0x3228, G Logo
+0x322C, Merge Sign
+0x3230, Bottle Rocket
+0x3234, Wet Roadway Sign
+0x3238, Detour Sign
+0x323C, Men at Work Sign
+0x3240, Lefty Desk
+0x3244, Righty Desk
+0x3248, School Desk
+0x324C, Flagman Sign
+0x3250, Fishing Trophy
+0x3254, Jersey Barrier
+0x3258, Speed Sign
+0x325C, Golf Trophy
+0x3260, Teacher's Desk
+0x3264, Haz-mat Barrel
+0x3268, Tennis Trophy
+0x326C, Saw Horse
+0x3270, Kart Trophy
+0x3274, Bug Zapper
+0x3278, Telescope
+0x327C, Coffee Machine
+0x3280, Bird Bath
+0x3284, Barbecue
+0x3288, Radiator
+0x328C, Lawn Chair
+0x3290, Chess Table
+0x3294, Candy Machine
+0x3298, Backyard Pool
+0x329C, Cement Mixer
+0x32A0, Jackhammer
+0x32A4, Tiki Torch
+0x32A8, Birdhouse
+0x32AC, Potbelly Stove
+0x32B0, Bus Stop
+0x32B4, Hamster Cage
+0x32B8, Flip-top Desk
+0x32BC, Festive Flag
+0x32C0, Super Tortimer
+0x32C4, Bird Feeder
+0x32C8, Teacher's Chair
+0x32CC, Steam roller
+0x32D0, Mr. Flamingo
+0x32D4, Mailbox
+0x32D8, Festive Candle
+0x32DC, Hammock
+0x32E0, Garden Gnome
+0x32E4, Mrs. Flamingo
+0x32E8, Spring Medal (again?)
+0x32EC, Autumn Medal
+0x32F0, Tumbleweed
+0x32F4, Cow Skull
+0x32F8, Oil Drum
+0x32FC, Saddle Fence
+0x3300, Western Fence
+0x3304, Watering Trough
+0x3308, Luigi Trophy
+0x330C, Mario Trophy
+0x3310, Harvest Lamp
+0x3314, Covered Wagon
+0x3318, Storefront
+0x331C, Picnic Table
+0x3320, Harvest Table
+0x3324, Harvest TV
+0x3328, Harvest Bed
+0x332C, Harvest Chair
+0x3330, Harvest Clock
+0x3334, Harvest Sofa
+0x3338, Green Pipe
+0x333C, Brick Block
+0x3340, Harvest Bureau
+0x3344, Flagpole
+0x3348, Harvest Dresser
+0x334C, Super Mushroom
+0x3350, Harvest Mirror
+0x3354, Coin
+0x3358, ? Block
+0x335C, Starman
+0x3360, Koopa Shell
+0x3364, Cannon
+0x3368, Desert Cactus
+0x336C, Fire Flower
+0x3370, Wagon Wheel
+0x3374, Well
+0x3378, Boxing Barricade
+0x337C, Neutral Corner
+0x3380, Red Corner
+0x3384, Blue Corner
+0x3388, Boxing Mat
+0x338C, Ringside Table
+0x3390, Speed Bag
+0x3394, Sandbag
+0x3398, Weight Bench
+0x339C, Campfire
+0x33A0, Bonfire
+0x33A4, Kayak
+0x33A8, Sprinkler
+0x33AC, Tent Model
+0x33B0, Backpack
+0x33B4, Angler Trophy
+0x33B8, Pansy Model 1
+0x33BC, Pansy Model 2
+0x33C0, Pansy Model 3
+0x33C4, Cosmos Model 1
+0x33C8, Cosmos Model 2
+0x33CC, Cosmos Model 3
+0x33D0, Tulip Model 1
+0x33D4, Tulip Model 2
+0x33D8, Tulip Model 3
+0x33DC, Lantern
+0x33E0, Lawn Mower
+0x33E4, Cooler
+0x33E8, Mountain Bike
+0x33EC, Sleeping Bag
+0x33F0, Propane Stove
+0x33F4, Cornucopia
+0x33F8, Judge's Bell
+0x33FC, Noisemaker
+0x3400, Chowder
+0x3404, Party Popper (Furniture)
+0x3408, Apple Box
+0x340C, Scarecrow
+0x3410, Joumon Vase
+0x3414, Bathtub
+0x3418, Basketball Hoop
+0x341C, Mummy's Casket
+0x3420, Mandarin Box
+0x3424, Jumping Boy Sign
+0x3428, Fire Hydrant
+0x342C, Dogu (Ancient Statue)
+0x3430, Pinball Machine
+0x3434, Drum Set
+0x3438, Wooden Crate
+0x343C, Rocking Horse
+0x3440, Shower
+0x3444, Helm
+0x3448, Dart Board
+0x344C, Canopy Bed
+0x3450, Paw Sign
+0x3454, Display Dish
+0x3458, Nook's Billboard
+0x345C, DUMMY
 0x4000, House Stairs #1
 0x4001, House Stairs #2
 0x4080, Warp Zone

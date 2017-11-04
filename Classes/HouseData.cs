@@ -102,8 +102,6 @@ namespace ACSE
             //Expanded Room + Basement (From Expanded Room), 2nd Floor (From Expanded Room), 2nd Floor (From Basement), Statue (From Basement)
         };
 
-        //Rewrote all methods here to be significantly shorter. I originally wrote them when I had just started in C#.
-
         public static int ReadHouseSize(ushort[] houseBuffer, bool includesPadding = true)
         {
             int x;
@@ -301,8 +299,8 @@ namespace ACSE
     public class Messageboard_Post
     {
         public ACString Post;
-        public string Post_String;
-        public ACDate Post_Date;
+        public string Post_String; // 0xC0 Bytes
+        public ACDate Post_Date; // 0x08 Bytes
 
         public Messageboard_Post(int offset)
         {

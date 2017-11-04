@@ -31,39 +31,39 @@
 0x00BB, White Carnation
 0x00BC, Jacob's Ladder
 0x00BD, Rafflesia
-//Flowers2
-0x00BE, Red Tulips
-0x00BF, White Tulips
-0x00C0, Yellow Tulips
-0x00C1, Pink Tulips
-0x00C2, Purple Tulips
-0x00C3, Black Tulips
-0x00C4, White Pansies
-0x00C5, Yellow Pansies
-0x00C6, Red Pansies
-0x00C7, Purple Pansies
-0x00C8, Orange Pansies
-0x00C9, Blue Pansies
-0x00CA, White Cosmos
-0x00CB, Red Cosmos
-0x00CC, Yellow Cosmos
-0x00CD, Pink Cosmos
-0x00CE, Orange Cosmos
-0x00CF, Black Cosmos
-0x00D0, Red Roses
-0x00D1, White Roses
-0x00D2, Yellow Roses
-0x00D3, Pink Roses
-0x00D4, Orange Roses
-0x00D5, Purple Roses
-0x00D6, Black Roses
-0x00D7, Blue Roses
-0x00D8, Gold Roses
-0x00D9, Red Carnation
-0x00DA, Pink Carnation
-0x00DB, White Carnation
-0x00DC, Jacob's Ladder
-0x00DD, Rafflesia
+//Parched Flowers
+0x00BE, Red Tulips (Wilted)
+0x00BF, White Tulips (Wilted)
+0x00C0, Yellow Tulips (Wilted)
+0x00C1, Pink Tulips (Wilted)
+0x00C2, Purple Tulips (Wilted)
+0x00C3, Black Tulips (Wilted)
+0x00C4, White Pansies (Wilted)
+0x00C5, Yellow Pansies (Wilted)
+0x00C6, Red Pansies (Wilted)
+0x00C7, Purple Pansies (Wilted)
+0x00C8, Orange Pansies (Wilted)
+0x00C9, Blue Pansies (Wilted)
+0x00CA, White Cosmos (Wilted)
+0x00CB, Red Cosmos (Wilted)
+0x00CC, Yellow Cosmos (Wilted)
+0x00CD, Pink Cosmos (Wilted)
+0x00CE, Orange Cosmos (Wilted)
+0x00CF, Black Cosmos (Wilted)
+0x00D0, Red Roses (Wilted)
+0x00D1, White Roses (Wilted)
+0x00D2, Yellow Roses (Wilted)
+0x00D3, Pink Roses (Wilted)
+0x00D4, Orange Roses (Wilted)
+0x00D5, Purple Roses (Wilted)
+0x00D6, Black Roses (Wilted)
+0x00D7, Blue Roses (Wilted)
+0x00D8, Gold Roses (Wilted)
+0x00D9, Red Carnation (Wilted)
+0x00DA, Pink Carnation (Wilted)
+0x00DB, White Carnation (Wilted)
+0x00DC, Jacob's Ladder (Wilted)
+0x00DD, Rafflesia (Wilted)
 //Misc
 0x0094, Hole
 0x00E2, Seed

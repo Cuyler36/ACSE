@@ -69,6 +69,7 @@ namespace ACSE
         Dictionary<byte, Image> AC_Map_Icons;
         private byte[] Building_DB;
         private string[] Building_Names;
+        private PictureBoxWithInterpolationMode NL_Grass_Overlay;
 
         public NewMainForm(Save save = null)
         {
@@ -250,12 +251,12 @@ namespace ACSE
             }
         }
 
-        public ushort GetCurrentItem()
+        private ushort GetCurrentItem()
         {
             return selectedItem.SelectedValue == null ? new Item().ItemID : (ushort)selectedItem.SelectedValue;
         }
 
-        public void SelectedItem_Changed(object sender, EventArgs e)
+        private void SelectedItem_Changed(object sender, EventArgs e)
         {
             if (selectedItem.SelectedValue == null)
             {
@@ -263,7 +264,7 @@ namespace ACSE
             }
         }
 
-        public void SetupEditor(Save save)
+        private void SetupEditor(Save save)
         {
             if (save.Save_Type == SaveType.Unknown)
             {
@@ -280,6 +281,7 @@ namespace ACSE
             Acre_Height_Modifier = 0;
             Selected_Acre_ID = 0;
             selectedAcrePicturebox.Image = null;
+            selectedAcrePicturebox.BackgroundImage = null;
             Buildings = null;
             Island_Buildings = null;
             Buried_Buffer = null;
@@ -314,8 +316,6 @@ namespace ACSE
             if (Town_Acre_Map != null)
                 foreach (PictureBoxWithInterpolationMode Box in Town_Acre_Map)
                     Box.BackgroundImage = null;
-
-            selectedAcrePicturebox.Image = null;
 
             //Clear Acre TreeView (Hopefully .Remove doesn't cause a Memory Leak)
             while (acreTreeView.Nodes.Count > 0)
@@ -604,11 +604,17 @@ namespace ACSE
             if (Properties.Settings.Default.OutputInt32s)
                 Utility.Scan_For_NL_Int32();
 
+            // Enable Tasks
+            clearWeedsToolStripMenuItem.Enabled = true;
+            removeAllItemsToolStripMenuItem.Enabled = true;
+            waterFlowersToolStripMenuItem.Enabled = Save_File.Game_System != SaveGeneration.GCN && Save_File.Game_System != SaveGeneration.N64;
+            makeFruitsPerfectToolStripMenuItem.Enabled = Save_File.Game_System == SaveGeneration.N3DS;
+
             //if (Save_File.Save_Type == SaveType.Animal_Crossing)
                 //Utility.Increment_Town_ID(Save_File);
         }
 
-        public void SetPlayersEnabled()
+        private void SetPlayersEnabled()
         {
             for (int i = 0; i < 4; i++)
                 if (Players[i] != null)
@@ -618,7 +624,7 @@ namespace ACSE
                         playerEditorSelect.TabPages.Remove(Player_Tabs[i]);
         }
 
-        public void SetMainTabEnabled(string tabName, bool enabled)
+        private void SetMainTabEnabled(string tabName, bool enabled)
         {
             IntPtr h = tabControl1.Handle; //Necessary to use TabPages.Insert... (Can switch to tabControl1.CreateControl()) if wanted
             if (!enabled)
@@ -643,7 +649,7 @@ namespace ACSE
             }
         }
 
-        public void SetEnabledControls(SaveType Current_Save_Type)
+        private void SetEnabledControls(SaveType Current_Save_Type)
         {
             Text = string.Format("ACSE - {1} - [{0}]", Current_Save_Type.ToString().Replace("_", " ").Replace(" Plus", "+"), Save_File.Save_Name);
             itemFlag1.Text = "00";
@@ -887,7 +893,7 @@ namespace ACSE
             }
         }
 
-        public void Gender_Changed()
+        private void Gender_Changed()
         {
             if (Save_File == null)
                 return;
@@ -901,7 +907,7 @@ namespace ACSE
             Selected_Player.Data.Gender = playerGender.Text == "Female" ? (byte)1 : (byte)0;
         }
 
-        public void Face_Changed()
+        private void Face_Changed()
         {
             if (Save_File != null && Selected_Player != null && playerFace.SelectedIndex > -1)
             {
@@ -909,7 +915,7 @@ namespace ACSE
             }
         }
 
-        public void Hair_Changed()
+        private void Hair_Changed()
         {
             if (Save_File != null && Selected_Player != null && playerHairType.SelectedIndex > -1)
             {
@@ -917,7 +923,7 @@ namespace ACSE
             }
         }
 
-        public void Hair_Color_Changed()
+        private void Hair_Color_Changed()
         {
             if (Save_File != null && Selected_Player != null && playerHairColor.SelectedIndex > -1)
             {
@@ -925,7 +931,7 @@ namespace ACSE
             }
         }
 
-        public void Eye_Color_Changed()
+        private void Eye_Color_Changed()
         {
             if (Save_File != null && Selected_Player != null && playerEyeColor.SelectedIndex > -1)
             {
@@ -933,7 +939,7 @@ namespace ACSE
             }
         }
 
-        public void Shoe_Color_Changed()
+        private void Shoe_Color_Changed()
         {
             if (Save_File != null && Selected_Player != null && playerShoeColor.SelectedIndex > -1)
             {
@@ -941,7 +947,7 @@ namespace ACSE
             }
         }
 
-        public void SetupAcreEditorTreeView()
+        private void SetupAcreEditorTreeView()
         {
             if (Filed_Acre_Data != null)
             {
@@ -958,9 +964,10 @@ namespace ACSE
                     {
                         TreeNode Acre = new TreeNode
                         {
-                            Tag = Acre_ID.ToString("X2"),
-                            Text = Acre_Info != null ? Acre_Info[Acre_ID] : Acre_ID.ToString("X2")
+                            Tag = Acre_ID.ToString("X2")
                         };
+                        Text = Acre_Info != null ? Acre_Info[Acre_ID] : (string)Acre.Tag;
+                        Acre.Name = (string)Acre.Tag;
                         Acre_Type.Nodes.Add(Acre);
                     }
                 }
@@ -983,13 +990,14 @@ namespace ACSE
                             Tag = Acre_Info.Key.ToString("X4"),
                             Text = Acre_Info.Value
                         };
+                        Acre.Name = (string)Acre.Tag;
                         Acre_Type.Nodes.Add(Acre);
                     }
                 }
             }
         }
 
-        public void Item_Selected_Index_Changed(object sender, EventArgs e)
+        private void Item_Selected_Index_Changed(object sender, EventArgs e)
         {
             if (selectedItem.SelectedValue != null)
             {
@@ -1021,10 +1029,29 @@ namespace ACSE
             else if (UInt16_Acre_Info != null)
                 acreDesc.Text = UInt16_Acre_Info.ContainsKey(Selected_Acre_ID) ? UInt16_Acre_Info[Selected_Acre_ID] : "No Acre Description";
 
+            if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+            {
+                if (Is_Ocean(AcreID))
+                {
+                    selectedAcrePicturebox.Image = Acre_Image_List["03DC"];
+                }
+            }
+
+            foreach (TreeNode Node in acreTreeView.Nodes)
+            {
+                TreeNode[] Matching_Nodes = Node.Nodes.Find(Acre_ID_Str, true);
+                if (Matching_Nodes.Length > 0)
+                {
+                    Node.Toggle();
+                    acreTreeView.SelectedNode = Matching_Nodes[0];
+                    acreTreeView.Focus();
+                    return;
+                }
+            }
         }
 
         // TODO: Change byte based indexes to use Dictionary<ushort, Dictionary<ushort, string>>
-        public void Acre_Tree_View_Entry_Clicked(object sender, TreeViewEventArgs e)
+        private void Acre_Tree_View_Entry_Clicked(object sender, TreeViewEventArgs e)
         {
             TreeNode Node = acreTreeView.SelectedNode;
             if (Node != null && Node.Tag != null)
@@ -1045,6 +1072,14 @@ namespace ACSE
                     acreDesc.Text = Acre_Info[(byte)Selected_Acre_ID];
                 else if (UInt16_Filed_Acre_Data != null)
                     acreDesc.Text = Node.Text;
+
+                if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                {
+                    if (Is_Ocean(Selected_Acre_ID))
+                    {
+                        selectedAcrePicturebox.Image = Acre_Image_List["03DC"];
+                    }
+                }
                 // Warnings for N64/GameCube titles
                 if (Save_File.Game_System == SaveGeneration.GCN)
                 {
@@ -1107,9 +1142,7 @@ namespace ACSE
             return Acre_Image;
         }
 
-        private PictureBoxWithInterpolationMode NL_Grass_Overlay;
-
-        public void SetupMapPictureBoxes()
+        private void SetupMapPictureBoxes()
         {
             if (Acre_Map != null)
                 for (int i = 0; i < Acre_Map.Length; i++)
@@ -1509,7 +1542,7 @@ namespace ACSE
             }
         }
 
-        public void Pattern_Export_Click(object sender, EventArgs e, int Idx)
+        private void Pattern_Export_Click(object sender, EventArgs e, int Idx)
         {
             if (Idx > -1 && Selected_Player != null && Selected_Player.Data.Patterns.Length > Idx)
             {
@@ -1520,13 +1553,13 @@ namespace ACSE
         }
 
         //TODO: Remove this when I finish all methods
-        public void Not_Implemented()
+        private void Not_Implemented()
         {
             MessageBox.Show("Feature not yet implemented! Sorry for that.");
         }
 
         //Add ContextMenuStrips for importing/exporting patterns & renaming/setting palette
-        public void SetupPatternBoxes()
+        private void SetupPatternBoxes()
         {
             for (int i = patternPanel.Controls.Count - 1; i > -1; i--)
                 if (patternPanel.Controls[i] is PictureBoxWithInterpolationMode)
@@ -1800,6 +1833,8 @@ namespace ACSE
             (sender as PictureBox).Image = Acre_Highlight_Image;
             if (Override || e.X != Last_Acre_X || e.Y != Last_Acre_Y)
             {
+                acreToolTip.Hide(this);
+                acreToolTip.RemoveAll();
                 int Acre_Idx = Array.IndexOf(Island ? NL_Island_Acre_Map : Acre_Map, sender as PictureBox);
                 Acre Hovered_Acre = Island ? Island_Acres[Acre_Idx] : Acres[Acre_Idx];
                 if (Acre_Info != null)
@@ -1876,6 +1911,7 @@ namespace ACSE
                 {
                     selectedAcrePicturebox.Image = Acre_Box.BackgroundImage;
                     Selected_Acre_ID = Island ? Island_Acres[Acre_Index].AcreID : Acres[Acre_Index].AcreID;
+                    string Acre_Str = Save_File.Game_System == SaveGeneration.NDS ? Selected_Acre_ID.ToString("X2") : Selected_Acre_ID.ToString("X4");
                     if (Save_File.Game_System == SaveGeneration.GCN)
                     {
                         acreHeightTrackBar.Value = Selected_Acre_ID % 4;
@@ -1899,6 +1935,18 @@ namespace ACSE
                             acreDesc.Text = "No Acre Description";
                     else
                         acreDesc.Text = "No Acre Description";
+
+                    foreach (TreeNode Node in acreTreeView.Nodes)
+                    {
+                        TreeNode[] Matching_Nodes = Node.Nodes.Find(Acre_Str, true);
+                        if (Matching_Nodes.Length > 0)
+                        {
+                            Node.Toggle();
+                            acreTreeView.SelectedNode = Matching_Nodes[0];
+                            acreTreeView.Focus();
+                            return;
+                        }
+                    }
                 }
             }
         }
@@ -1917,6 +1965,8 @@ namespace ACSE
         {
             if ((e.X != Last_X || e.Y != Last_Y) && Save_File != null)
             {
+                playersToolTip.Hide(this);
+                playersToolTip.RemoveAll();
                 PictureBox Box = sender as PictureBox;
                 Last_X = e.X;
                 Last_Y = e.Y;
@@ -2120,6 +2170,8 @@ namespace ACSE
         {
             if ((e.X != Last_Pat_X || e.Y != Last_Pat_Y) && Save_File != null && Selected_Player.Exists)
             {
+                patternToolTip.Hide(this);
+                patternToolTip.RemoveAll();
                 Last_Pat_X = e.X;
                 Last_Pat_Y = e.Y;
                 int Idx = Array.IndexOf(Pattern_Boxes, sender as PictureBox);
@@ -2307,6 +2359,8 @@ namespace ACSE
             (sender as Control).Capture = false;
             if ((Override || (e.X != Last_Town_X || e.Y != Last_Town_Y)) && Save_File != null)
             {
+                townToolTip.Hide(this);
+                townToolTip.RemoveAll();
                 Last_Town_X = e.X;
                 Last_Town_Y = e.Y;
                 int idx = Island ? Array.IndexOf(Island_Acre_Map, sender as PictureBox) : Array.IndexOf(Town_Acre_Map, sender as PictureBoxWithInterpolationMode);
@@ -2316,6 +2370,8 @@ namespace ACSE
                 int Acre = idx;
                 if (index > 255)
                     return;
+                // Set Info Label
+                townInfoLabel.Text = string.Format("X: {0} | Y: {1} | Index: {2}", X, Y, index);
                 WorldItem Item = Island ? Island_Acres[Acre].Acre_Items[index] : Town_Acres[Acre].Acre_Items[index];
                 if (Clicking)
                     Handle_Town_Click(sender, Item, Acre, index, e, Island);
@@ -2901,6 +2957,33 @@ namespace ACSE
             }
         }
 
+        private void clearWeedsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clearWeedsButton_Click(sender, e);
+        }
+
+        private void removeAllItemsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Town_Acres.Length; i++)
+            {
+                for (int x = 0; x < Town_Acres[i].Acre_Items.Length; x++)
+                {
+                    Town_Acres[i].Acre_Items[x] = new WorldItem(Town_Acres[i].Acre_Items[x].Index);
+                }
+                Town_Acre_Map[i].Image = GenerateAcreItemsBitmap(Town_Acres[i].Acre_Items, i, false);
+            }
+        }
+
+        private void makeFruitsPerfectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            perfectFruitsButton_Click(sender, e);
+        }
+
+        private void waterFlowersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            waterFlowersButton_Click(sender, e);
+        }
+
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings_Menu.Show();
@@ -2927,7 +3010,13 @@ namespace ACSE
                     }
                     else if (Save_File.Save_Type == SaveType.City_Folk)
                     {
-                        //CF Implementation here
+                        for (int i = 0; i < 256; i++)
+                        {
+                            if (ItemData.GetItemType(Acre.Acre_Items[i].ItemID, Save_File.Save_Type) == "Parched Flower")
+                            {
+                                Acre.Acre_Items[i] = new WorldItem((ushort)(Acre.Acre_Items[i].ItemID - 0x20), Acre.Acre_Items[i].Index);
+                            }
+                        }
                     }
                     else if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
                     {
@@ -2990,7 +3079,7 @@ namespace ACSE
                     paintEventArgs.Graphics.InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode; //InterpolationMode;
                 else
                     paintEventArgs.Graphics.InterpolationMode = InterpolationMode;
-                try { base.OnPaint(paintEventArgs); } catch { MessageBox.Show("Error: PictureBox: " + Name); }
+                try { base.OnPaint(paintEventArgs); } catch { }
             }
         }
 
@@ -3000,7 +3089,7 @@ namespace ACSE
                 paintEventArgs.Graphics.InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode; //InterpolationMode;
             else
                 paintEventArgs.Graphics.InterpolationMode = InterpolationMode;
-            try { base.OnPaintBackground(paintEventArgs); } catch { MessageBox.Show("Error: PictureBox: " + Name); }
+            try { base.OnPaintBackground(paintEventArgs); } catch { }
         }
     }
 }

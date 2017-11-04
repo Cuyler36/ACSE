@@ -75,7 +75,6 @@ namespace ACSE
                     Valid = true; // Is this right?
                 }
             }
-            //System.Windows.Forms.MessageBox.Show("Value = " + Value.ToString());
         }
 
         public NL_Int32(uint Unencrypted_Int)
@@ -88,7 +87,6 @@ namespace ACSE
             Encrypted_Int = (Encrypted_Int >> (0x1C - Shift_Value)) + (Encrypted_Int << (Shift_Value + 4));
             uint Encryption_Data = (uint)(Adjust_Value + (Shift_Value << 16) + (GetChecksum(Encrypted_Int) << 24));
 
-            //System.Windows.Forms.MessageBox.Show("Encryped Int is decrypted properly: " + (new NL_Int32(Encrypted_Int, Encryption_Data).Value == Unencrypted_Int).ToString());
             Int_1 = Encrypted_Int;
             Int_2 = Encryption_Data;
             Value = Unencrypted_Int;
