@@ -321,6 +321,17 @@ namespace ACSE
                 int Width = BitConverter.ToInt32(Bitmap_Buffer, 0x12);
                 int Height = BitConverter.ToInt32(Bitmap_Buffer, 0x16);
 
+                if (Width != 32 || Height != 32)
+                {
+                    MessageBox.Show("Pattern Import Error: Image must be sized to 32x32!");
+                    return null;
+                }
+                else if (DataSize < 3 || DataSize > 4)
+                {
+                    MessageBox.Show("Pattern Import Error: Image must have either 24bpp or 32bpp color depth!");
+                    return null;
+                }
+
                 if (DataSize == 3 || DataSize == 4)
                 {
                     byte[] Image_Data = Bitmap_Buffer.Skip(BitConverter.ToInt32(Bitmap_Buffer.Skip(0xA).Take(4).ToArray(), 0)).ToArray();

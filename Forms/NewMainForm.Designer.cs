@@ -1636,9 +1636,8 @@
             // 
             // exportPatternFile
             // 
-            this.exportPatternFile.DefaultExt = "*.bmp";
-            this.exportPatternFile.Filter = "Bitmap File | *.bmp";
-            this.exportPatternFile.FileOk += new System.ComponentModel.CancelEventHandler(this.exportPatternFile_FileOk);
+            this.exportPatternFile.DefaultExt = "*.png";
+            this.exportPatternFile.Filter = "Portable Network Graphics | *.png";
             // 
             // label25
             // 

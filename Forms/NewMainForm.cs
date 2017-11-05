@@ -1547,8 +1547,11 @@ namespace ACSE
             if (Idx > -1 && Selected_Player != null && Selected_Player.Data.Patterns.Length > Idx)
             {
                 Selected_Pattern = Selected_Player.Data.Patterns[Idx].Pattern_Bitmap;
-                exportPatternFile.FileName = Selected_Player.Data.Patterns[Idx].Name + ".bmp";
-                exportPatternFile.ShowDialog();
+                exportPatternFile.FileName = Selected_Player.Data.Patterns[Idx].Name + ".png";
+                if (exportPatternFile.ShowDialog() == DialogResult.OK && Selected_Pattern != null)
+                {
+                    Selected_Pattern.Save(exportPatternFile.FileName);
+                }
             }
         }
 
@@ -1560,8 +1563,12 @@ namespace ACSE
                 {
                     if (File.Exists(importPatternFile.FileName) && Path.GetExtension(importPatternFile.FileName) == ".png")
                     {
-                        Selected_Player.Data.Patterns[Idx].Import(ImageGeneration.GetBitmapDataFromPNG(importPatternFile.FileName));
-                        Refresh_PictureBox_Image(Pattern_Boxes[Idx], Selected_Player.Data.Patterns[Idx].Pattern_Bitmap, false, false);
+                        uint[] Pixel_Data = ImageGeneration.GetBitmapDataFromPNG(importPatternFile.FileName);
+                        if (Pixel_Data != null)
+                        {
+                            Selected_Player.Data.Patterns[Idx].Import(Pixel_Data);
+                            Refresh_PictureBox_Image(Pattern_Boxes[Idx], Selected_Player.Data.Patterns[Idx].Pattern_Bitmap, false, false);
+                        }
                     }
                 }
             }
@@ -2901,14 +2908,6 @@ namespace ACSE
         {
             if (Save_File != null && playerGender.SelectedIndex > -1)
                 Selected_Player.Data.Gender = (byte)playerGender.SelectedIndex;
-        }
-
-        private void exportPatternFile_FileOk(object sender, CancelEventArgs e)
-        {
-            if (Selected_Pattern != null)
-            {
-                Selected_Pattern.Save(exportPatternFile.FileName);
-            }
         }
 
         private void acreHeightTrackBar_Scroll(object sender, EventArgs e)
