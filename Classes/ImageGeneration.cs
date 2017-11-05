@@ -360,8 +360,8 @@ namespace ACSE
             catch
             {
                 NewMainForm.Debug_Manager.WriteLine("Unable to import pattern!", DebugLevel.Error);
-                Console.WriteLine("Failed to Import Pattern!");
-                return new uint[0];
+                MessageBox.Show("Pattern Import Error: Failed to import the image!");
+                return null;
             }
         }
     }
