@@ -71,6 +71,34 @@ namespace ACSE
             new string[8] { "Popeyed Goldfish", "Coelacanth", "Crawfish", "Frog", "Killifish", "Jellyfish", "Sea Bass", "Red Snapper" },
         };
 
+        public static Dictionary<int, byte> New_Leaf_Encyclopedia_Bit_Map = new Dictionary<int, byte>
+        {
+            { 0x6C51, 0xC0 }, // Insect -- can be equal to FF even if C0 unlock everything in this byte
+            { 0x6C52, 0xFF },
+            { 0x6C53, 0xFF },
+            { 0x6C54, 0xFF },
+            { 0x6C55, 0xFF },
+            { 0x6C56, 0xFF },
+            { 0x6C57, 0xFF },
+            { 0x6C58, 0xFF },
+            { 0x6C59, 0xFF },
+            { 0x6C5A, 0x3F },
+            { 0x6C5C, 0xFE }, // Fish
+            { 0x6C5D, 0xFF },
+            { 0x6C5E, 0xFF },
+            { 0x6C5F, 0xFF },
+            { 0x6C60, 0xFF },
+            { 0x6C61, 0xFF },
+            { 0x6C62, 0xFF },
+            { 0x6C63, 0xFF },
+            { 0x6C64, 0xFF },
+            { 0x6C65, 0xD1 }, // Sea Food 
+            { 0x6C66, 0xFF },
+            { 0x6C67, 0xFF },
+            { 0x6C68, 0xFF },
+            { 0x6C69, 0x07 },
+        };
+
         public static Dictionary<int, byte> Welcome_Amiibo_Encyclopedia_Bit_Map = new Dictionary<int, byte>
         {
             { 0x6C71, 0xC0 }, // Insect -- can be equal to FF even if C0 unlock everything in this byte
@@ -99,7 +127,7 @@ namespace ACSE
             { 0x6C89, 0x07 },
         };
 
-        public static string[][] Welcome_Amiibo_Encyclopedia_Names = new string[24][]
+        public static string[][] New_Leaf_Encyclopedia_Names = new string[24][]
         {
             // Insect
             new string[8] { "", "", "", "", "", "", "Common Butterfly", "Yellow Butterfly" },
@@ -138,6 +166,8 @@ namespace ACSE
                     return Animal_Crossing_Encyclopedia_Bit_Map;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return Doubutsu_no_Mori_e_Plus_Encyclopedia_Bit_Map;
+                case SaveType.New_Leaf:
+                    return New_Leaf_Encyclopedia_Bit_Map;
                 case SaveType.Welcome_Amiibo:
                     return Welcome_Amiibo_Encyclopedia_Bit_Map;
                 default:
