@@ -45,6 +45,8 @@
             this.waterFlowersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.makeFruitsPerfectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fillEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
             this.resettiCheckBox = new System.Windows.Forms.CheckBox();
@@ -178,8 +180,6 @@
             this.villagerToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
-            this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fillEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
@@ -335,6 +335,21 @@
             this.replaceItemsToolStripMenuItem.Name = "replaceItemsToolStripMenuItem";
             this.replaceItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.replaceItemsToolStripMenuItem.Text = "Replace Items";
+            // 
+            // extrasToolStripMenuItem
+            // 
+            this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fillEncyclopediaToolStripMenuItem});
+            this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
+            this.extrasToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.extrasToolStripMenuItem.Text = "Extras";
+            // 
+            // fillEncyclopediaToolStripMenuItem
+            // 
+            this.fillEncyclopediaToolStripMenuItem.Name = "fillEncyclopediaToolStripMenuItem";
+            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.fillEncyclopediaToolStripMenuItem.Text = "Fill Encyclopedia";
+            this.fillEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.fillEncyclopediaToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -1614,6 +1629,11 @@
             this.playersToolTip.ReshowDelay = 0;
             this.playersToolTip.UseAnimation = false;
             // 
+            // importPatternFile
+            // 
+            this.importPatternFile.DefaultExt = "*.png";
+            this.importPatternFile.Filter = "Portable Network Graphics|*.png";
+            // 
             // exportPatternFile
             // 
             this.exportPatternFile.DefaultExt = "*.bmp";
@@ -1649,21 +1669,6 @@
             this.label43.Size = new System.Drawing.Size(66, 13);
             this.label43.TabIndex = 8;
             this.label43.Text = "Acre Height:";
-            // 
-            // extrasToolStripMenuItem
-            // 
-            this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fillEncyclopediaToolStripMenuItem});
-            this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
-            this.extrasToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
-            this.extrasToolStripMenuItem.Text = "Extras";
-            // 
-            // fillEncyclopediaToolStripMenuItem
-            // 
-            this.fillEncyclopediaToolStripMenuItem.Name = "fillEncyclopediaToolStripMenuItem";
-            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.fillEncyclopediaToolStripMenuItem.Text = "Fill Encyclopedia";
-            this.fillEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.fillEncyclopediaToolStripMenuItem_Click);
             // 
             // NewMainForm
             // 

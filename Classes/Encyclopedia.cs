@@ -84,7 +84,7 @@ namespace ACSE
             }
         }
 
-        public static void FillEncylopedia(Save Save_File, NewPlayer Player)
+        public static void FillEncyclopedia(Save Save_File, NewPlayer Player)
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
             foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)

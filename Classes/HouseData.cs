@@ -154,7 +154,7 @@ namespace ACSE
         public House(int offset)
         {
             Offset = offset;
-            Owning_Player_Name = DataConverter.ReadString(offset, 8).Trim();
+/*            Owning_Player_Name = DataConverter.ReadString(offset, 8).Trim();
             Town_Name = DataConverter.ReadString(offset + 8, 8).Trim();
             Player_ID = DataConverter.ReadUInt(offset + 0x10);
             Last_Entry_Date = new ACDate(DataConverter.ReadDataRaw(offset + 0x1C, 4));
@@ -173,6 +173,7 @@ namespace ACSE
 
             Gyroid_Message = DataConverter.ReadString(offset + 0x25F4, 0x80);
             Cockroach_Count = DataConverter.ReadByte(offset + 0x2648);
+            */
             //MessageBox.Show(Gyroid_Message.Clean());
         }
     }
@@ -262,6 +263,7 @@ namespace ACSE
 
         public Mail(int offset, bool Player_Mail = false)
         {
+            /*
             this.Player_Mail = Player_Mail;
             Offset = Player_Mail ? offset : offset - 0x2A;
             if (Player_Mail)
@@ -282,6 +284,7 @@ namespace ACSE
             Stationary_Type = new Item((ushort)((0x20 << 8) + DataConverter.ReadByte(Offset + 0x31)));
             Message_Data = DataConverter.ReadString(Offset + 0x32, 0xF8);
             Message = Message_Data.Clean();
+            */
         }
 
         public string GetMessage()
@@ -304,9 +307,9 @@ namespace ACSE
 
         public Messageboard_Post(int offset)
         {
-            Post = DataConverter.ReadString(offset, 0xC0);
+            //Post = DataConverter.ReadString(offset, 0xC0);
             Post_String = Post.Clean();
-            Post_Date = new ACDate(DataConverter.ReadDataRaw(offset + 0xC0, 8));
+            //Post_Date = new ACDate(DataConverter.ReadDataRaw(offset + 0xC0, 8));
             //MessageBox.Show(string.Format("{0}\n\nPosted at:\n{1}", Post_String, Post_Date.Date_Time_String));
         }
     }

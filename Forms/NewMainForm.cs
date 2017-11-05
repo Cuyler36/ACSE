@@ -1552,6 +1552,21 @@ namespace ACSE
             }
         }
 
+        private void Pattern_Import_Click(object sender, EventArgs e, int Idx)
+        {
+            if (Idx > -1 && Selected_Player != null)
+            {
+                if (importPatternFile.ShowDialog() == DialogResult.OK)
+                {
+                    if (File.Exists(importPatternFile.FileName) && Path.GetExtension(importPatternFile.FileName) == ".png")
+                    {
+                        Selected_Player.Data.Patterns[Idx].Import(ImageGeneration.GetBitmapDataFromPNG(importPatternFile.FileName));
+                        Refresh_PictureBox_Image(Pattern_Boxes[Idx], Selected_Player.Data.Patterns[Idx].Pattern_Bitmap, false, false);
+                    }
+                }
+            }
+        }
+
         //TODO: Remove this when I finish all methods
         private void Not_Implemented()
         {
@@ -1618,7 +1633,7 @@ namespace ACSE
 
                 // ToolStrip Item Events
                 Export.Click += new EventHandler((object sender, EventArgs e) => Pattern_Export_Click(sender, e, Array.IndexOf(Pattern_Boxes, patternBox)));
-                Import.Click += (object sender, EventArgs e) => Not_Implemented();
+                Import.Click += new EventHandler((object sender, EventArgs e) => Pattern_Import_Click(sender, e, Array.IndexOf(Pattern_Boxes, patternBox)));
                 Rename.Click += (object sender, EventArgs e) => Not_Implemented();
                 Set_Palette.Click += (object sender, EventArgs e) => Not_Implemented();
             }
@@ -2986,7 +3001,7 @@ namespace ACSE
 
         private void fillEncyclopediaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Encyclopedia.FillEncylopedia(Save_File, Selected_Player);
+            Encyclopedia.FillEncyclopedia(Save_File, Selected_Player);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
