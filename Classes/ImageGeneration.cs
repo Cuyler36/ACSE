@@ -304,5 +304,54 @@ namespace ACSE
             NewMainForm.Debug_Manager.WriteLine("Unable to find JPEG End-of-File marker. No TPC?", DebugLevel.Error);
             return Properties.Resources.no_tpc;
         }
+
+        public static uint[] GetBitmapDataFromPNG(string PNG_Location)
+        {
+            try
+            {
+                byte[] Bitmap_Buffer = null;
+                using (MemoryStream Stream = new MemoryStream())
+                {
+                    Image Img = Image.FromFile(PNG_Location);
+                    Img.Save(Stream, ImageFormat.Bmp);
+                    Bitmap_Buffer = Stream.ToArray();
+                }
+
+                int DataSize = Bitmap_Buffer[0x1C] / 8;
+                int Width = BitConverter.ToInt32(Bitmap_Buffer, 0x12);
+                int Height = BitConverter.ToInt32(Bitmap_Buffer, 0x16);
+
+                if (DataSize == 3 || DataSize == 4)
+                {
+                    byte[] Image_Data = Bitmap_Buffer.Skip(BitConverter.ToInt32(Bitmap_Buffer.Skip(0xA).Take(4).ToArray(), 0)).ToArray();
+                    uint[] Pixel_Data = new uint[Image_Data.Length / DataSize];
+
+                    for (int i = 0; i < Pixel_Data.Length; i++)
+                    {
+                        int Index = i * DataSize;
+                        Pixel_Data[i] = (uint)((0xFF << 24) | (Image_Data[Index + 2] << 16) | (Image_Data[Index + 1] << 8) | Image_Data[Index]); // i + 3 would be alpha data
+                    }
+
+                    // Flip Vertically
+                    Array.Reverse(Pixel_Data);
+
+                    // Flip Horizontally
+                    for (int i = 0; i < Pixel_Data.Length; i += Width)
+                        Array.Reverse(Pixel_Data, i, Width);
+
+                    return Pixel_Data;
+                }
+                else
+                {
+                    return new uint[0];
+                }
+            }
+            catch
+            {
+                NewMainForm.Debug_Manager.WriteLine("Unable to import pattern!", DebugLevel.Error);
+                Console.WriteLine("Failed to Import Pattern!");
+                return new uint[0];
+            }
+        }
     }
 }
