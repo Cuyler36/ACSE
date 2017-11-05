@@ -2984,6 +2984,11 @@ namespace ACSE
             waterFlowersButton_Click(sender, e);
         }
 
+        private void fillEncyclopediaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Encyclopedia.FillEncylopedia(Save_File, Selected_Player);
+        }
+
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings_Menu.Show();

@@ -122,6 +122,7 @@
             this.acreTreeView = new System.Windows.Forms.TreeView();
             this.acrePanel = new System.Windows.Forms.Panel();
             this.townTab = new System.Windows.Forms.TabPage();
+            this.townInfoLabel = new System.Windows.Forms.Label();
             this.buildingsLabel = new System.Windows.Forms.Label();
             this.buildingsPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -177,7 +178,8 @@
             this.villagerToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
-            this.townInfoLabel = new System.Windows.Forms.Label();
+            this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fillEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
@@ -213,7 +215,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
-            this.tasksToolStripMenuItem});
+            this.tasksToolStripMenuItem,
+            this.extrasToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(963, 24);
@@ -1179,6 +1182,15 @@
             this.townTab.Text = "Town";
             this.townTab.UseVisualStyleBackColor = true;
             // 
+            // townInfoLabel
+            // 
+            this.townInfoLabel.AutoSize = true;
+            this.townInfoLabel.Location = new System.Drawing.Point(237, 14);
+            this.townInfoLabel.Name = "townInfoLabel";
+            this.townInfoLabel.Size = new System.Drawing.Size(99, 13);
+            this.townInfoLabel.TabIndex = 13;
+            this.townInfoLabel.Text = "X: 0 | Y: 0 | Index: 0";
+            // 
             // buildingsLabel
             // 
             this.buildingsLabel.AutoSize = true;
@@ -1638,14 +1650,20 @@
             this.label43.TabIndex = 8;
             this.label43.Text = "Acre Height:";
             // 
-            // townInfoLabel
+            // extrasToolStripMenuItem
             // 
-            this.townInfoLabel.AutoSize = true;
-            this.townInfoLabel.Location = new System.Drawing.Point(237, 14);
-            this.townInfoLabel.Name = "townInfoLabel";
-            this.townInfoLabel.Size = new System.Drawing.Size(99, 13);
-            this.townInfoLabel.TabIndex = 13;
-            this.townInfoLabel.Text = "X: 0 | Y: 0 | Index: 0";
+            this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fillEncyclopediaToolStripMenuItem});
+            this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
+            this.extrasToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.extrasToolStripMenuItem.Text = "Extras";
+            // 
+            // fillEncyclopediaToolStripMenuItem
+            // 
+            this.fillEncyclopediaToolStripMenuItem.Name = "fillEncyclopediaToolStripMenuItem";
+            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.fillEncyclopediaToolStripMenuItem.Text = "Fill Encyclopedia";
+            this.fillEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.fillEncyclopediaToolStripMenuItem_Click);
             // 
             // NewMainForm
             // 
@@ -1862,5 +1880,7 @@
         private System.Windows.Forms.ToolStripMenuItem makeFruitsPerfectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replaceItemsToolStripMenuItem;
         private System.Windows.Forms.Label townInfoLabel;
+        private System.Windows.Forms.ToolStripMenuItem extrasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fillEncyclopediaToolStripMenuItem;
     }
 }
