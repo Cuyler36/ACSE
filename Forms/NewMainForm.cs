@@ -2616,8 +2616,11 @@ namespace ACSE
             if (Save_File != null)
             {
                 Array.Clear(Grass_Wear, 0, Grass_Wear.Length);
-                for (int i = 0; i < Grass_Map.Length; i++)
-                    Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                if (Save_File.Save_Type == SaveType.City_Folk)
+                    for (int i = 0; i < Grass_Map.Length; i++)
+                        Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                    NL_Grass_Overlay.Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear);
             }
         }
 
@@ -2627,8 +2630,11 @@ namespace ACSE
             {
                 for (int i = 0; i < Grass_Wear.Length; i++)
                     Grass_Wear[i] = 0xFF;
-                for (int i = 0; i < Grass_Map.Length; i++)
-                    Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                if (Save_File.Save_Type == SaveType.City_Folk)
+                    for (int i = 0; i < Grass_Map.Length; i++)
+                        Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                    NL_Grass_Overlay.Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear);
             }
         }
 
@@ -2639,8 +2645,11 @@ namespace ACSE
                 byte.TryParse(grassLevelBox.Text, out byte Set_Value);
                 for (int i = 0; i < Grass_Wear.Length; i++)
                     Grass_Wear[i] = Set_Value;
-                for (int i = 0; i < Grass_Map.Length; i++)
-                    Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                if (Save_File.Save_Type == SaveType.City_Folk)
+                    for (int i = 0; i < Grass_Map.Length; i++)
+                        Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                    NL_Grass_Overlay.Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear);
             }
         }
 
