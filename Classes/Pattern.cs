@@ -100,59 +100,59 @@ namespace ACSE
         {
             new uint [15]
             {
-                0xFF0000FF, 0xFF3173FF, 0xFF00ADFF, 0xFF00FFFF, 0xFF00FFAD, 0xFF00FF52, 0xFF00FF00, 0xFF52AD00, 0xFFAD5200, 0xFFFF0000, 0xFFFF0052, 0xFFFF00AD, 0xFFFF00FF, 0xFF000000, 0xFFFFFFFF
+                0xFFFF0000, 0xFFFF7331, 0xFFFFAD00, 0xFFFFFF00, 0xFFADFF00, 0xFF52FF00, 0xFF00FF00, 0xFF00AD52, 0xFF0052AD, 0xFF0000FF, 0xFF5200FF, 0xFFAD00FF, 0xFFFF00FF, 0xFF000000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFF7B7BFF, 0xFF7BB5FF, 0xFF7BE7FF, 0xFF7BFFFF, 0xFF7BFFDE, 0xFF7BFFAD, 0xFF7BFF7B, 0xFF84AD52, 0xFFAD8452, 0xFFFF7B7B, 0xFFFF7BB5, 0xFFFF7BE7, 0xFFFF7BFF, 0xFF000000, 0xFFFFFFFF
+                0xFFFF7B7B, 0xFFFFB57B, 0xFFFFE77B, 0xFFFFFF7B, 0xFFDEFF7B, 0xFFADFF7B, 0xFF7BFF7B, 0xFF52AD84, 0xFF5284AD, 0xFF7B7BFF, 0xFFB57BFF, 0xFFE77BFF, 0xFFFF7BFF, 0xFF000000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFF0000A5, 0xFF0031A5, 0xFF0073A5, 0xFF00A5A5, 0xFF00A573, 0xFF00A531, 0xFF00A500, 0xFF215200, 0xFF522100, 0xFFA50000, 0xFFA50031, 0xFFA50073, 0xFFA500A5, 0xFF000000, 0xFFFFFFFF
+                0xFFA50000, 0xFFA53100, 0xFFA57300, 0xFFA5A500, 0xFF73A500, 0xFF31A500, 0xFF00A500, 0xFF005221, 0xFF002152, 0xFF0000A5, 0xFF3100A5, 0xFF7300A5, 0xFFA500A5, 0xFF000000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFF009C00, 0xFF6BCE5A, 0xFFDEFFB5, 0xFF6B9C00, 0xFFA5CE52, 0xFFD6FFAD, 0xFFAD5200, 0xFFD68429, 0xFFFFAD5A, 0xFFFF0000, 0xFFFF6B4A, 0xFFDE4A31, 0xFFB52118, 0xFF8C0000, 0xFFFFFFFF
+                0xFF009C00, 0xFF5ACE6B, 0xFFB5FFDE, 0xFF009C6B, 0xFF52CEA5, 0xFFADFFD6, 0xFF0052AD, 0xFF2984D6, 0xFF5AADFF, 0xFF0000FF, 0xFF4A6BFF, 0xFF314ADE, 0xFF1821B5, 0xFF00008C, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFF0073AD, 0xFF42ADD6, 0xFF8CDEFF, 0xFF3908FF, 0xFF6B4AFF, 0xFF9C94FF, 0xFFFF00AD, 0xFFFF63D6, 0xFFFFCEFF, 0xFF9CBDFF, 0xFF7394DE, 0xFF4A63BD, 0xFF21399C, 0xFF00107B, 0xFFFFFFFF
+                0xFFAD7300, 0xFFD6AD42, 0xFFFFDE8C, 0xFFFF0839, 0xFFFF4A6B, 0xFFFF949C, 0xFFAD00FF, 0xFFD663FF, 0xFFFFCEFF, 0xFFFFBD9C, 0xFFDE9473, 0xFFBD634A, 0xFF9C3921, 0xFF7B1000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFF0000FF, 0xFF0052FF, 0xFF5AB5FF, 0xFFADEFFF, 0xFF00107B, 0xFF314AA5, 0xFF6B84D6, 0xFF9CBDFF, 0xFFFFAD5A, 0xFFFFC684, 0xFFFFE7AD, 0xFFFFFFD6, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
+                0xFFFF0000, 0xFFFF5200, 0xFFFFB55A, 0xFFFFEFAD, 0xFF7B1000, 0xFFA54A31, 0xFFD6846B, 0xFFFFBD9C, 0xFF5AADFF, 0xFF84C6FF, 0xFFADE7FF, 0xFFD6FFFF, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFF00FF00, 0xFF42FF42, 0xFF8CFF8C, 0xFFD6FFD6, 0xFFFF0000, 0xFFFF4242, 0xFFFF8C8C, 0xFFFFD6D6, 0xFF0000FF, 0xFF4242FF, 0xFF8C8CFF, 0xFFD6D6FF, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
+                0xFF00FF00, 0xFF42FF42, 0xFF8CFF8C, 0xFFD6FFD6, 0xFF0000FF, 0xFF4242FF, 0xFF8C8CFF, 0xFFD6D6FF, 0xFFFF0000, 0xFFFF4242, 0xFFFF8C8C, 0xFFFFD6D6, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFF003100, 0xFF426342, 0xFF849C84, 0xFFC6D6C6, 0xFF00107B, 0xFF294AA5, 0xFF5A8CD6, 0xFF8CC6FF, 0xFF00B5D6, 0xFF39CEE7, 0xFF7BDEF7, 0xFFBDF7FF, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
+                0xFF003100, 0xFF426342, 0xFF849C84, 0xFFC6D6C6, 0xFF7B1000, 0xFFA54A29, 0xFFD68C5A, 0xFFFFC68C, 0xFFD6B500, 0xFFE7CE39, 0xFFF7DE7B, 0xFFFFF7BD, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFFFF0000, 0xFF0000FF, 0xFF00FFFF, 0xFFFF4242, 0xFF4242FF, 0xFF42FFFF, 0xFFFF8C8C, 0xFF8C8CFF, 0xFF8CFFFF, 0xFFFFD6D6, 0xFFD6D6FF, 0xFFD6FFFF, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
+                0xFF0000FF, 0xFFFF0000, 0xFFFFFF00, 0xFF4242FF, 0xFFFF4242, 0xFFFFFF42, 0xFF8C8CFF, 0xFFFF8C8C, 0xFFFFFF8C, 0xFFD6D6FF, 0xFFFFD6D6, 0xFFFFFFD6, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFF00FF00, 0xFFFF0000, 0xFFFF00FF, 0xFF42FF42, 0xFFFF4242, 0xFFFF42FF, 0xFF8CFF8C, 0xFFFF8C8C, 0xFFFF8CFF, 0xFFD6FFD6, 0xFFFFD6D6, 0xFFFFD6FF, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
+                0xFF00FF00, 0xFF0000FF, 0xFFFF00FF, 0xFF42FF42, 0xFF4242FF, 0xFFFF42FF, 0xFF8CFF8C, 0xFF8C8CFF, 0xFFFF8CFF, 0xFFD6FFD6, 0xFFD6D6FF, 0xFFFFD6FF, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFF0000FF, 0xFF007BFF, 0xFF00FFFF, 0xFF00FF84, 0xFF00FF00, 0xFF7B8400, 0xFFFF0000, 0xFFFF007B, 0xFFFF94FF, 0xFF00B5D6, 0xFF0010BD, 0xFF00105A, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
+                0xFFFF0000, 0xFFFF7B00, 0xFFFFFF00, 0xFF84FF00, 0xFF00FF00, 0xFF00847B, 0xFF0000FF, 0xFF7B00FF, 0xFFFF94FF, 0xFFD6B500, 0xFFBD1000, 0xFF5A1000, 0xFF6B6B6B, 0xFF000000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFF639410, 0xFF527B08, 0xFF398C10, 0xFF319C31, 0xFF4AA5CE, 0xFF3994CE, 0xFF4A8CBD, 0xFF318CD6, 0xFF4A73AD, 0xFF315A8C, 0xFF29426B, 0xFFFFEF84, 0xFFEFCE31, 0xFFC6A500, 0xFFFFFFFF
+                0xFF109463, 0xFF087B52, 0xFF108C39, 0xFF319C31, 0xFFCEA54A, 0xFFCE9439, 0xFFBD8C4A, 0xFFD68C31, 0xFFAD734A, 0xFF8C5A31, 0xFF6B4229, 0xFF84EFFF, 0xFF31CEEF, 0xFF00A5C6, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFFE7DED6, 0xFFDECEB5, 0xFFEFEFE7, 0xFFF7F7F7, 0xFF7B7384, 0xFF6B8C94, 0xFF637B84, 0xFF5A849C, 0xFFB59C73, 0xFF2929FF, 0xFF00FFFF, 0xFFFF2194, 0xFFBD9C00, 0xFF000000, 0xFFFFFFFF
+                0xFFD6DEE7, 0xFFB5CEDE, 0xFFE7EFEF, 0xFFF7F7F7, 0xFF84737B, 0xFF948C6B, 0xFF847B63, 0xFF9C845A, 0xFF739CB5, 0xFFFF2929, 0xFFFFFF00, 0xFF9421FF, 0xFF009CBD, 0xFF000000, 0xFFFFFFFF
             },
             new uint [15]
             {
-                0xFFFFFFFF, 0xFFEFEFF7, 0xFFDEDEE7, 0xFFCECED6, 0xFFB5B5C6, 0xFFA5A5B5, 0xFF9494A5, 0xFF84849C, 0xFF6B6B8C, 0xFF5A5A7B, 0xFF4A4A6B, 0xFF31315A, 0xFF21214A, 0xFF101042, 0xFF000031
+                0xFFFFFFFF, 0xFFF7EFEF, 0xFFE7DEDE, 0xFFD6CECE, 0xFFC6B5B5, 0xFFB5A5A5, 0xFFA59494, 0xFF9C8484, 0xFF8C6B6B, 0xFF7B5A5A, 0xFF6B4A4A, 0xFF5A3131, 0xFF4A2121, 0xFF421010, 0xFF310000
             },
             new uint [15]
             {
@@ -160,9 +160,9 @@ namespace ACSE
             },
             new uint [15]
             {
-                0xFF7B8CFF, 0xFF0000FF, 0xFF007BFF, 0xFF00FFFF, 0xFF008400, 0xFF00FF00, 0xFFFF0000, 0xFFFF9C00, 0xFFFF00D6, 0xFFFF6BFF, 0xFF00009C, 0xFF0094FF, 0xFF94BDFF, 0xFF000000, 0xFFFFFFFF
+                0xFFFF8C7B, 0xFFFF0000, 0xFFFF7B00, 0xFFFFFF00, 0xFF008400, 0xFF00FF00, 0xFF0000FF, 0xFF009CFF, 0xFFD600FF, 0xFFFF6BFF, 0xFF9C0000, 0xFFFF9400, 0xFFFFBD94, 0xFF000000, 0xFFFFFFFF
             },
-        };
+        }; 
 
         public static uint[][] CF_Palette_Data = new uint[16][]
         {
@@ -448,24 +448,18 @@ namespace ACSE
             byte[] Raw_Data = Import_Data ?? Save_File.ReadByteArray(Offset, 0x200);
             byte[] Expanded_Data = new byte[0x400];
 
-            if (Import_Data == null)
+            for (int i = 0; i < 0x200; i++)
             {
-                for (int i = 0; i < 0x200; i++)
-                {
-                    Expanded_Data[i * 2] = (byte)(Raw_Data[i] & 0x0F);  //Left is Right
-                    Expanded_Data[i * 2 + 1] = (byte)((Raw_Data[i] & 0xF0) >> 4); //Right is Left
-                }
+                Expanded_Data[i * 2] = (byte)(Raw_Data[i] & 0x0F);  //Left is Right
+                Expanded_Data[i * 2 + 1] = (byte)((Raw_Data[i] & 0xF0) >> 4); //Right is Left
             }
 
             uint[] Palette_Array = PatternData.WW_Palette_Data[Palette];
-            //All colors are reversed in there... fix sometime pls
+            
             for (int i = 0; i < 0x400; i++)
             {
                 int color_idx = Math.Max(0, Expanded_Data[i] - 1);
-                uint color = Palette_Array[color_idx];
-                byte[] color_bytes = BitConverter.GetBytes(color);
-                byte[] corrected_bytes = new byte[4] {color_bytes[2], color_bytes[1], color_bytes[0], 0xFF };
-                Buffer.BlockCopy(corrected_bytes, 0, patternBitmapBuffer, i * 4, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(Palette_Array[color_idx]), 0, patternBitmapBuffer, i * 4, 4);
             }
             Pattern_Bitmap = new Bitmap(32, 32, PixelFormat.Format32bppArgb);
             BitmapData bitmapData = Pattern_Bitmap.LockBits(new Rectangle(0, 0, 32, 32), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
@@ -487,13 +481,10 @@ namespace ACSE
                 PaletteData[i] = PatternData.NL_Palette_Data[Custom_Palette[i]];
 
             //Expand data for working with
-            if (Import_Data == null)
+            for (int i = 0; i < 0x200; i++)
             {
-                for (int i = 0; i < 0x200; i++)
-                {
-                    Expanded_Data[i * 2] = (byte)(Raw_Data[i] & 0x0F);
-                    Expanded_Data[i * 2 + 1] = (byte)((Raw_Data[i] >> 4) & 0x0F);
-                }
+                Expanded_Data[i * 2] = (byte)(Raw_Data[i] & 0x0F);
+                Expanded_Data[i * 2 + 1] = (byte)((Raw_Data[i] >> 4) & 0x0F);
             }
 
             //Convert palette color index to argb color

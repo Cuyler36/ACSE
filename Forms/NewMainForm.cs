@@ -1547,8 +1547,11 @@ namespace ACSE
             if (Idx > -1 && Selected_Player != null && Selected_Player.Data.Patterns.Length > Idx)
             {
                 Selected_Pattern = Selected_Player.Data.Patterns[Idx].Pattern_Bitmap;
-                exportPatternFile.FileName = Selected_Player.Data.Patterns[Idx].Name + ".bmp";
-                exportPatternFile.ShowDialog();
+                exportPatternFile.FileName = Selected_Player.Data.Patterns[Idx].Name + ".png";
+                if (exportPatternFile.ShowDialog() == DialogResult.OK && Selected_Pattern != null)
+                {
+                    Selected_Pattern.Save(exportPatternFile.FileName);
+                }
             }
         }
 
@@ -1560,8 +1563,12 @@ namespace ACSE
                 {
                     if (File.Exists(importPatternFile.FileName) && Path.GetExtension(importPatternFile.FileName) == ".png")
                     {
-                        Selected_Player.Data.Patterns[Idx].Import(ImageGeneration.GetBitmapDataFromPNG(importPatternFile.FileName));
-                        Refresh_PictureBox_Image(Pattern_Boxes[Idx], Selected_Player.Data.Patterns[Idx].Pattern_Bitmap, false, false);
+                        uint[] Pixel_Data = ImageGeneration.GetBitmapDataFromPNG(importPatternFile.FileName);
+                        if (Pixel_Data != null)
+                        {
+                            Selected_Player.Data.Patterns[Idx].Import(Pixel_Data);
+                            Refresh_PictureBox_Image(Pattern_Boxes[Idx], Selected_Player.Data.Patterns[Idx].Pattern_Bitmap, false, false);
+                        }
                     }
                 }
             }
@@ -2609,8 +2616,11 @@ namespace ACSE
             if (Save_File != null)
             {
                 Array.Clear(Grass_Wear, 0, Grass_Wear.Length);
-                for (int i = 0; i < Grass_Map.Length; i++)
-                    Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                if (Save_File.Save_Type == SaveType.City_Folk)
+                    for (int i = 0; i < Grass_Map.Length; i++)
+                        Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                    NL_Grass_Overlay.Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear);
             }
         }
 
@@ -2620,8 +2630,11 @@ namespace ACSE
             {
                 for (int i = 0; i < Grass_Wear.Length; i++)
                     Grass_Wear[i] = 0xFF;
-                for (int i = 0; i < Grass_Map.Length; i++)
-                    Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                if (Save_File.Save_Type == SaveType.City_Folk)
+                    for (int i = 0; i < Grass_Map.Length; i++)
+                        Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                    NL_Grass_Overlay.Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear);
             }
         }
 
@@ -2632,8 +2645,11 @@ namespace ACSE
                 byte.TryParse(grassLevelBox.Text, out byte Set_Value);
                 for (int i = 0; i < Grass_Wear.Length; i++)
                     Grass_Wear[i] = Set_Value;
-                for (int i = 0; i < Grass_Map.Length; i++)
-                    Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                if (Save_File.Save_Type == SaveType.City_Folk)
+                    for (int i = 0; i < Grass_Map.Length; i++)
+                        Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
+                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                    NL_Grass_Overlay.Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear);
             }
         }
 
@@ -2901,14 +2917,6 @@ namespace ACSE
         {
             if (Save_File != null && playerGender.SelectedIndex > -1)
                 Selected_Player.Data.Gender = (byte)playerGender.SelectedIndex;
-        }
-
-        private void exportPatternFile_FileOk(object sender, CancelEventArgs e)
-        {
-            if (Selected_Pattern != null)
-            {
-                Selected_Pattern.Save(exportPatternFile.FileName);
-            }
         }
 
         private void acreHeightTrackBar_Scroll(object sender, EventArgs e)
