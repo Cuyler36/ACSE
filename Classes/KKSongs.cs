@@ -64,7 +64,7 @@ namespace ACSE
                 case SaveType.Welcome_Amiibo:
                     return Welcome_Amiibo_KKSongs_Bit_Map;
                 default:
-                    throw new NotImplementedException(string.Format("Encyclopedia Bit Map for save type {0} has not been implemented!", Save_Type.ToString()));
+                    throw new NotImplementedException(string.Format("K.K. Songs Bit Map for save type {0} has not been implemented!", Save_Type.ToString()));
             }
         }
 
