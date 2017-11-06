@@ -966,7 +966,7 @@ namespace ACSE
                         {
                             Tag = Acre_ID.ToString("X2")
                         };
-                        Text = Acre_Info != null ? Acre_Info[Acre_ID] : (string)Acre.Tag;
+                        Acre.Text = Acre_Info != null ? Acre_Info[Acre_ID] : (string)Acre.Tag;
                         Acre.Name = (string)Acre.Tag;
                         Acre_Type.Nodes.Add(Acre);
                     }
