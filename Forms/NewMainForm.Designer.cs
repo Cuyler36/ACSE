@@ -47,6 +47,7 @@
             this.replaceItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fillEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getAllKKSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
             this.resettiCheckBox = new System.Windows.Forms.CheckBox();
@@ -180,7 +181,6 @@
             this.villagerToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
-            this.getAllKKSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
@@ -349,9 +349,16 @@
             // fillEncyclopediaToolStripMenuItem
             // 
             this.fillEncyclopediaToolStripMenuItem.Name = "fillEncyclopediaToolStripMenuItem";
-            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.fillEncyclopediaToolStripMenuItem.Text = "Fill Encyclopedia";
             this.fillEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.fillEncyclopediaToolStripMenuItem_Click);
+            // 
+            // getAllKKSongsToolStripMenuItem
+            // 
+            this.getAllKKSongsToolStripMenuItem.Name = "getAllKKSongsToolStripMenuItem";
+            this.getAllKKSongsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.getAllKKSongsToolStripMenuItem.Text = "Fill Song Library";
+            this.getAllKKSongsToolStripMenuItem.Click += new System.EventHandler(this.getAllKKSongsToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -1670,13 +1677,6 @@
             this.label43.Size = new System.Drawing.Size(66, 13);
             this.label43.TabIndex = 8;
             this.label43.Text = "Acre Height:";
-            // 
-            // getAllKKSongsToolStripMenuItem
-            // 
-            this.getAllKKSongsToolStripMenuItem.Name = "getAllKKSongsToolStripMenuItem";
-            this.getAllKKSongsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.getAllKKSongsToolStripMenuItem.Text = "Get All K.K. Songs";
-            this.getAllKKSongsToolStripMenuItem.Click += new System.EventHandler(this.getAllKKSongsToolStripMenuItem_Click);
             // 
             // NewMainForm
             // 

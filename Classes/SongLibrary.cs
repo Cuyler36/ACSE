@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ACSE
 {
-    class KKSongs
+    class SongLibrary
     {
         public static Dictionary<int, byte> Welcome_Amiibo_KKSongs_Bit_Map = new Dictionary<int, byte>
         {

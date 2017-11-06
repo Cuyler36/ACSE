@@ -3014,7 +3014,7 @@ namespace ACSE
 
         private void getAllKKSongsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            KKSongs.FillKKSongs(Save_File, Selected_Player);
+            SongLibrary.FillKKSongs(Save_File, Selected_Player);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)

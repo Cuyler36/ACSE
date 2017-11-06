@@ -2891,7 +2891,7 @@
     <Compile Include="Classes\DebugManager.cs" />
     <Compile Include="Classes\Encyclopedia.cs" />
     <Compile Include="Classes\ImageGeneration.cs" />
-    <Compile Include="Classes\KKSongs.cs" />
+    <Compile Include="Classes\SongLibrary.cs" />
     <Compile Include="Classes\NL_Int32.cs" />
     <Compile Include="Classes\Save.cs" />
     <Compile Include="Classes\SecretCode.cs" />
