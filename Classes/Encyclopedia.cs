@@ -92,7 +92,8 @@ namespace ACSE
 
         public static Dictionary<int, byte> New_Leaf_Encyclopedia_Bit_Map = new Dictionary<int, byte>
         {
-            { 0x6C51, 0xC0 }, // Insect -- can be equal to FF even if C0 unlock everything in this byte
+            { 0x6C50, 0xC0 }, // Insect -- can be equal to FF even if C0 unlock everything in this byte
+            { 0x6C51, 0xFF },
             { 0x6C52, 0xFF },
             { 0x6C53, 0xFF },
             { 0x6C54, 0xFF },
@@ -100,23 +101,55 @@ namespace ACSE
             { 0x6C56, 0xFF },
             { 0x6C57, 0xFF },
             { 0x6C58, 0xFF },
-            { 0x6C59, 0xFF },
-            { 0x6C5A, 0x3F },
-            { 0x6C5C, 0xFE }, // Fish
+            { 0x6C59, 0x3F },
+            { 0x6C5A, 0x80 }, // Fish
+            { 0x6C5B, 0xFF },
+            { 0x6C5C, 0xFF },
             { 0x6C5D, 0xFF },
             { 0x6C5E, 0xFF },
             { 0x6C5F, 0xFF },
             { 0x6C60, 0xFF },
             { 0x6C61, 0xFF },
             { 0x6C62, 0xFF },
-            { 0x6C63, 0xFF },
-            { 0x6C64, 0xFF },
-            { 0x6C65, 0xD1 }, // Sea Food 
+            { 0x6C63, 0x7F }, 
+            { 0x6C64, 0xF8 }, // Sea Food 
+            { 0x6C65, 0xFF },
             { 0x6C66, 0xFF },
             { 0x6C67, 0xFF },
-            { 0x6C68, 0xFF },
-            { 0x6C69, 0x07 },
+            { 0x6C68, 0x01 },
         };
+
+        public static string[][] New_Leaf_Encyclopedia_Names = new string[25][]
+{
+            // Insect
+            new string[8] { "", "", "", "", "", "", "Common Butterfly", "Yellow Butterfly" },
+            new string[8] { "Tiger butterfly", "Peacock butterfly", "Monarch Butterfly", "Emperor butterfly", "Agrias butterfly", "Raja B. butterfly", "Birdwing butterfly", "Moth" },
+            new string[8] { "Oak silk moth", "Honeybee", "Bee", "Long locust", "Migraty locust", "Rice grasshoper", "Mantis", "Orchid mantis" },
+            new string[8] { "Brown cicada", "Robust cicada", "Giant cicada", "Walker cicada", "Evening cicada", "Cicada shell", "Lantern fly", "Red dragonfly" },
+            new string[8] { "Darner dragonfly", "Banded dragonfly", "Peltaltail dragonfly", "Ant", "Pondskater", "Diving beetle", "Stinkbug", "Snail" },
+            new string[8] { "Cricket", "Bell cricket", "Grasshopper", "Mole cricket", "Walking leaf", "Walking stick", "Bagworm", "Ladybug" },
+            new string[8] { "Violin beetle", "Longhorn beetle", "Tiger beetle", "Dung beetle", "Wharf roach", "Hermit crab", "Firefly", "Fruit beetle" },
+            new string[8] { "Scarab beetle", "Jewel beetle", "Miyama stag", "Saw stag", "Giant stag", "Rainbow stag", "Cyclommatus stag", "Golden stag" },
+            new string[8] { "Horned dynastid", "Horned atlas", "Horned elephant", "Horned hercules", "Goliath beetle", "Flea", "Pill bug", "Mosquito" },
+            new string[8] { "Fly", "House centipede", "Centipede", "Spider", "Tarantula", "Scorpion", "", "" },
+            // Fish
+            new string[8] { "", "", "", "", "", "", "", "Bitterling" },
+            new string[8] { "Pale chub", "Crucian carp", "Dace", "Barbel steed", "Carp", "Koi", "Goldfish", "Pop-eyed goldfish" },
+            new string[8] { "Killifish", "Crawfish", "Soft-shelled turtle", "Tadpole", "Frog", "Freshwater goby", "Loach", "Catfish" },
+            new string[8] { "Eel", "Giant snakehead", "Bluegill", "Yellow perch", "Black bass", "Pike", "Pond smelt", "Sweetfish" },
+            new string[8] { "Cherry salmon", "Char", "Rainbow trout", "Stringfish", "Salmon", "King salmon", "Mitten crab", "Guppy" },
+            new string[8] { "Nibble fish", "Angelfish", "Neon tetra", "Piranha", "Arowana", "Dorado", "Gar", "Arapaima" },
+            new string[8] { "Saddled bichir", "Sea butterfly", "Sea horse", "Clown fish", "Suregeonfish", "Butterfly fish", "Napeleonfish", "Zebra turkeyfish" },
+            new string[8] { "Blowfish", "Puffer fish", "Horse mackerel", "Barred knifejaw", "Sea bass", "Red snapper", "Dab", "Olive flounder" },
+            new string[8] { "Squid", "Moray eel", "Ribbon eel", "Football fish", "Tuna", "Blue marlin", "Giant trevally", "Ray" },
+            new string[8] { "Ocean sunfish", "Hammerhead shark", "Shark", "Saw shark", "Whale shark", "Oarfish", "Coelacanth", "" },
+            // Sea Food
+            new string[8] { "", "", "", "Seaweed", "Sea grapes", "Sea urchin", "Acorn barnacle", "Oyster" },
+            new string[8] { "Turban shell", "Abalone", "Ear shell", "Clam", "Peral oyster", "Scallop", "Sea anemone", "Sea star" },
+            new string[8] { "Sea cucumber", "Sea slug", "Flatworm", "Mantis shrimp", "Sweet shrimp", "Tiger prawn", "Spiny lobster", "Lobster" },
+            new string[8] { "Snow crab", "Horsehair crab", "Red king crab", "Spider crab", "Octopus", "Spotted garden eel", "Chambered nautilus", "Horseshoe crab" },
+            new string[8] { "Giant isopod", "", "", "", "", "", "", "" },
+};
 
         public static Dictionary<int, byte> Welcome_Amiibo_Encyclopedia_Bit_Map = new Dictionary<int, byte>
         {
@@ -146,7 +179,7 @@ namespace ACSE
             { 0x6C89, 0x07 },
         };
 
-        public static string[][] New_Leaf_Encyclopedia_Names = new string[24][]
+        public static string[][] Welcome_Amiibo_Encyclopedia_Names = new string[24][]
         {
             // Insect
             new string[8] { "", "", "", "", "", "", "Common Butterfly", "Yellow Butterfly" },

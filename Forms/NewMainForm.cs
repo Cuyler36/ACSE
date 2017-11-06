@@ -3012,6 +3012,11 @@ namespace ACSE
             Encyclopedia.FillEncyclopedia(Save_File, Selected_Player);
         }
 
+        private void getAllKKSongsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            KKSongs.FillKKSongs(Save_File, Selected_Player);
+        }
+
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings_Menu.Show();
