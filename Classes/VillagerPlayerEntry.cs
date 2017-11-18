@@ -11,7 +11,7 @@ namespace ACSE
         public NewPlayer Player;
         public ACDate MetDate;
         public SimpleTownInfo MetTownInfo;
-        public Mail Saved_Letter;
+        //public Mail Saved_Letter;
         public byte Friendship;
     }
 }

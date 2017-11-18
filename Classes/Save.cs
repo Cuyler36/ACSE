@@ -65,6 +65,7 @@ namespace ACSE
         public int Buildings_Count;
         public int Grass_Wear;
         public int Grass_Wear_Size;
+        public int Grass_Type;
         public int PWPs; //NL only
         public int Past_Villagers;
         public int[] CRC_Offsets;
@@ -98,7 +99,7 @@ namespace ACSE
         admeduc = 0x1F4,
         admedss = 0x1F4,
         admedsv = 0,
-        admesav = 0,
+        admesav = 0, // These are for v1.0
         ruuedat = 0,
         edgedat = 0x80,
         edgebin = 0, //RAM Dump
@@ -130,6 +131,7 @@ namespace ACSE
             Villager_Size = 0x5C8,
             Buried_Data = 0x19E0C, // Probably off a little
             Buried_Data_Size = 0x3C0,
+            Grass_Type = -1,
             Town_NameSize = 6,
             Checksum = 0x12,
         };
@@ -159,6 +161,7 @@ namespace ACSE
             House_Data_Size = 0x26B0,
             Island_Acre_Data = 0x17420,
             Campsite_Visitor = 0x20644,
+            Grass_Type = 0x24184,
             Buildings = -1,
             Debt = -1,
             Grass_Wear = -1,
@@ -190,6 +193,7 @@ namespace ACSE
             // Weather = 0x22B19 (byte)
             Buried_Data = 0x22B1C,
             Buried_Data_Size = 0x3C0,
+            Grass_Type = 0x24484,
             // Shop update in progress byte (0x2E004 (Has to be 1B))
             Town_NameSize = 6,
             Checksum = 0x12,
@@ -210,6 +214,7 @@ namespace ACSE
             Town_Data_Size = 0x2000,
             Buried_Data = 0xE354,
             Buried_Data_Size = 0x200,
+            Grass_Type = 0xE554,
             House_Data = 0xE558,
             House_Data_Size = 0x15A0,
             Debt = 0xFAE8,
@@ -243,6 +248,7 @@ namespace ACSE
             Buried_Data_Size = 400,
             Grass_Wear = 0x6BCB6,
             Grass_Wear_Size = 0x1900,
+            Grass_Type = 0x6D5B7,
             House_Data = 0x6D5C0,
             House_Data_Size = 0x15C0,
             Checksum = -1,
@@ -278,6 +284,7 @@ namespace ACSE
             Town_NameSize = 16,
             Grass_Wear = 0x53E80,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
+            Grass_Type = 0x4DA01,
             Island_Acre_Data = 0x6A408,
             Island_World_Data = 0x6A428,
             Island_Buildings = 0x6B428,
@@ -304,6 +311,7 @@ namespace ACSE
             Town_NameSize = 16,
             Grass_Wear = 0x59880,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
+            Grass_Type = 0x53401,
             Island_Acre_Data = 0x6FE38,
             Island_World_Data = 0x6FE58,
             Island_Buildings = 0x70E58,

@@ -100,7 +100,7 @@ namespace ACSE
         public Item Bed;
         public Item Wetsuit; //NL only
         public Item[] Dessers;
-        public Mail[] Letters;
+        //public Mail[] Letters;
         public Pattern[] Patterns;
         public byte[] Emotions; //Add Emotions class?
         public ushort NookPoints;

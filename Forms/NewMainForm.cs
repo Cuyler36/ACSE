@@ -119,6 +119,18 @@ namespace ACSE
             };
             Controls.Add(selectedAcrePicturebox);
 
+            //Town Name TextBox LostFocus
+            townNameBox.LostFocus += TownName_Box_FocusLost;
+
+            //Grass Type ComboBox SelectedIndexChanged
+            grassTypeBox.SelectedIndexChanged += delegate (object sender, EventArgs e)
+            {
+                if (grassTypeBox.SelectedIndex > -1 && Save_File != null && Current_Save_Info.Save_Offsets.Grass_Type != -1)
+                {
+                    Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Type, (byte)grassTypeBox.SelectedIndex);
+                }
+            };
+
             //Player Item PictureBox Event Hookups
             BindPlayerItemBoxEvents(inventoryPicturebox);
             BindPlayerItemBoxEvents(heldItemPicturebox);
@@ -455,19 +467,26 @@ namespace ACSE
             Selected_Player = Players.FirstOrDefault(o => o.Exists);
             //Temp
             if (Selected_Player == null)
-                MessageBox.Show("Players are all null!");
+                MessageBox.Show("No Player was found on the file!", "Player Find Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
                 Reload_Player(Selected_Player);
             SetPlayersEnabled();
             if (Selected_Player != null && Selected_Player.Exists)
                 playerEditorSelect.SelectedIndex = Array.IndexOf(Players, Selected_Player);
 
+            // Grass Type Stuff
+            grassTypeBox.Items.Clear();
+            grassTypeBox.Enabled = true;
+
             //Load Town Info
             Acres = new Normal_Acre[Current_Save_Info.Acre_Count];
             Town_Acres = new Normal_Acre[Current_Save_Info.Town_Acre_Count];
-            //TEMP PLS REDO
+            
             if (save.Save_Type == SaveType.Wild_World)
             {
+                foreach (var Enum in Enum.GetValues(typeof(Wild_World_Grass_Type)))
+                    grassTypeBox.Items.Add(Enum);
+
                 Acre_Info = SaveDataManager.GetAcreInfo(SaveType.Wild_World);
                 int x = 0;
                 byte[] Acre_Data = save.ReadByteArray(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Acre_Data, 36);
@@ -485,8 +504,11 @@ namespace ACSE
                     Acres[i] = new Normal_Acre(Acre_Data[i], i);
                 }
             }
-            else if (save.Save_Type == SaveType.Animal_Crossing || save.Save_Type == SaveType.Doubutsu_no_Mori_Plus || save.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            else if (save.Game_System == SaveGeneration.GCN || save.Game_System == SaveGeneration.N64)
             {
+                foreach (var Enum in Enum.GetValues(typeof(Animal_Crossing_Grass_Type)))
+                    grassTypeBox.Items.Add(Enum);
+
                 UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.Animal_Crossing);
                 int x = 0;
                 ushort[] Acre_Data = save.ReadUInt16Array(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Acre_Data, Current_Save_Info.Acre_Count, true);
@@ -508,6 +530,9 @@ namespace ACSE
             }
             else if (save.Save_Type == SaveType.City_Folk)
             {
+                foreach (var Enum in Enum.GetValues(typeof(City_Folk_Grass_Type)))
+                    grassTypeBox.Items.Add(Enum);
+
                 UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.City_Folk);
                 Buildings = ItemData.GetBuildings(save);
                 int x = 0;
@@ -527,8 +552,11 @@ namespace ACSE
                     Acres[i] = new Normal_Acre(Acre_Data[i], i);
                 }
             }
-            else if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
+            else if (save.Game_System == SaveGeneration.N3DS)
             {
+                foreach (var Enum in Enum.GetValues(typeof(New_Leaf_Grass_Type)))
+                    grassTypeBox.Items.Add(Enum);
+
                 UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(Save_File.Save_Type);
                 if (Selected_Player != null)
                 {
@@ -564,8 +592,10 @@ namespace ACSE
                 }
             }
 
+            townNameBox.MaxLength = Current_Save_Info.Save_Offsets.Town_NameSize;
             townNameBox.Text = new ACString(save.ReadByteArray(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Name,
                 Current_Save_Info.Save_Offsets.Town_NameSize), save.Save_Type).Trim();
+
             SetupAcreEditorTreeView();
             SetupMapPictureBoxes();
 
@@ -609,6 +639,13 @@ namespace ACSE
             removeAllItemsToolStripMenuItem.Enabled = true;
             waterFlowersToolStripMenuItem.Enabled = Save_File.Game_System != SaveGeneration.GCN && Save_File.Game_System != SaveGeneration.N64;
             makeFruitsPerfectToolStripMenuItem.Enabled = Save_File.Game_System == SaveGeneration.N3DS;
+
+            // Set Grass Type
+            if (Current_Save_Info.Save_Offsets.Grass_Type != -1)
+            {
+                byte Grass_Type = Save_File.ReadByte(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Type);
+                grassTypeBox.SelectedIndex = (Save_File.Game_System == SaveGeneration.NDS ? Utility.GetWildWorldGrassBaseType(Grass_Type) : (Grass_Type < 3 ? Grass_Type : 0));
+            }
 
             //if (Save_File.Save_Type == SaveType.Animal_Crossing)
                 //Utility.Increment_Town_ID(Save_File);
@@ -890,6 +927,15 @@ namespace ACSE
                 playerIslandMedals.Text = Player.Data.Island_Medals.Value.ToString();
                 if (Save_File.Save_Type == SaveType.Welcome_Amiibo)
                     playerMeowCoupons.Text = Player.Data.MeowCoupons.Value.ToString();
+            }
+        }
+
+        private void TownName_Box_FocusLost(object sender, EventArgs e)
+        {
+            if (Save_File != null && !string.IsNullOrEmpty(townNameBox.Text.Trim()))
+            {
+                Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Name, ACString.GetBytes(townNameBox.Text.Trim()));
+                townNameBox.Text = townNameBox.Text.Trim();
             }
         }
 
@@ -3014,7 +3060,7 @@ namespace ACSE
 
         private void getAllKKSongsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SongLibrary.FillKKSongs(Save_File, Selected_Player);
+            SongLibrary.FillSongLibrary(Save_File, Selected_Player);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)

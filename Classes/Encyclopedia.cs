@@ -225,15 +225,18 @@ namespace ACSE
                 case SaveType.Welcome_Amiibo:
                     return Welcome_Amiibo_Encyclopedia_Bit_Map;
                 default:
-                    throw new NotImplementedException(string.Format("Encyclopedia Bit Map for save type {0} has not been implemented!", Save_Type.ToString()));
+                    System.Windows.Forms.MessageBox.Show("Encylopedia data for this game has not been implemented yet!", "Unimplemented Notification",
+                        System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                    return null;
             }
         }
 
         public static void FillEncyclopedia(Save Save_File, NewPlayer Player)
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
-            foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
-                Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));
+            if (Current_Bit_Map != null)
+                foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+                    Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));
         }
     }
 }

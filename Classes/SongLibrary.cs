@@ -7,23 +7,7 @@ namespace ACSE
 {
     class SongLibrary
     {
-        public static Dictionary<int, byte> Welcome_Amiibo_KKSongs_Bit_Map = new Dictionary<int, byte>
-        {
-            { 0x8F9C, 0xFF },
-            { 0x8F9D, 0xFF },
-            { 0x8F9E, 0xFF },
-            { 0x8F9F, 0xFF },
-            { 0x8FA0, 0xFF },
-            { 0x8FA1, 0xFF },
-            { 0x8FA2, 0xFF },
-            { 0x8FA3, 0xFF },
-            { 0x8FA4, 0xFF },
-            { 0x8FA5, 0xFF },
-            { 0x8FA6, 0xFF },
-            { 0x8FA7, 0x07 }
-        };
-
-        public static Dictionary<int, byte> New_Leaf_KKSongs_Bit_Map = new Dictionary<int, byte>
+        public static Dictionary<int, byte> New_Leaf_SongLibrary_Bit_Map = new Dictionary<int, byte>
         {
             { 0x8C54, 0xFF },
             { 0x8C55, 0xFF },
@@ -39,7 +23,23 @@ namespace ACSE
             { 0x8FAF, 0x07 }
         };
 
-        public static string[][] New_Leaf_KKSongs_Names = new string[12][]
+        public static Dictionary<int, byte> Welcome_Amiibo_SongLibrary_Bit_Map = new Dictionary<int, byte>
+        {
+            { 0x8F9C, 0xFF },
+            { 0x8F9D, 0xFF },
+            { 0x8F9E, 0xFF },
+            { 0x8F9F, 0xFF },
+            { 0x8FA0, 0xFF },
+            { 0x8FA1, 0xFF },
+            { 0x8FA2, 0xFF },
+            { 0x8FA3, 0xFF },
+            { 0x8FA4, 0xFF },
+            { 0x8FA5, 0xFF },
+            { 0x8FA6, 0xFF },
+            { 0x8FA7, 0x07 }
+        };
+
+        public static string[][] New_Leaf_SongLibrary_Names = new string[12][]
         {
             new string[8] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Étude", "K.K. Lullaby" },
             new string[8] { "K.K. Aria", "K.K. Samba", "K.K. Bossa", "K.K. Calypso", "K.K. Salsa", "K.K. Mambo", "K.K. Reggae", "K.K. Ska" },
@@ -60,19 +60,22 @@ namespace ACSE
             switch (Save_Type)
             {
                 case SaveType.New_Leaf:
-                    return New_Leaf_KKSongs_Bit_Map;
+                    return New_Leaf_SongLibrary_Bit_Map;
                 case SaveType.Welcome_Amiibo:
-                    return Welcome_Amiibo_KKSongs_Bit_Map;
+                    return Welcome_Amiibo_SongLibrary_Bit_Map;
                 default:
-                    throw new NotImplementedException(string.Format("K.K. Songs Bit Map for save type {0} has not been implemented!", Save_Type.ToString()));
+                    System.Windows.Forms.MessageBox.Show("Songs for this game have not been implemented yet!", "Unimplemented Notification",
+                        System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                    return null;
             }
         }
 
-        public static void FillKKSongs(Save Save_File, NewPlayer Player)
+        public static void FillSongLibrary(Save Save_File, NewPlayer Player)
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
-            foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
-                Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));
+            if (Current_Bit_Map != null)
+                foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+                    Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));
         }
     }
 }
