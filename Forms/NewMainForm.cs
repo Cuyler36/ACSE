@@ -286,8 +286,8 @@ namespace ACSE
             }
             Save_File = null; //Set to null so we can set the checkbox to false without having the method run
             townMapViewCheckbox.Checked = false;
-            townMapViewCheckbox.Enabled = save.Game_System == SaveGeneration.GCN;
-            acreHeightTrackBar.Enabled = save.Game_System == SaveGeneration.GCN;
+            townMapViewCheckbox.Enabled = save.Game_System == SaveGeneration.N64 || save.Game_System == SaveGeneration.GCN;
+            acreHeightTrackBar.Enabled = save.Game_System == SaveGeneration.N64 || save.Game_System == SaveGeneration.GCN;
             Save_File = save;
             Debug_Manager.WriteLine("Save File Loaded");
             Acre_Height_Modifier = 0;
@@ -455,7 +455,7 @@ namespace ACSE
                     playerEyeColor.Items.Add(Eye_Color);
                 Secure_NAND_Value_Form.Set_Secure_NAND_Value(Save_File.ReadUInt64(0));
             }
-            else if (save.Save_Type == SaveType.Animal_Crossing || save.Save_Type == SaveType.Doubutsu_no_Mori_Plus || save.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            else if (save.Save_Type == SaveType.Doubutsu_no_Mori || save.Save_Type == SaveType.Animal_Crossing || save.Save_Type == SaveType.Doubutsu_no_Mori_Plus || save.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
             {
                 foreach (string Face_Name in PlayerInfo.AC_Faces)
                     playerFace.Items.Add(Face_Name);
@@ -631,7 +631,7 @@ namespace ACSE
                     GenerateVillagerPanel(v);
             }
 
-            if (Properties.Settings.Default.OutputInt32s)
+            if (Properties.Settings.Default.OutputInt32s && Save_File.Game_System == SaveGeneration.N3DS)
                 Utility.Scan_For_NL_Int32();
 
             // Enable Tasks
@@ -695,6 +695,9 @@ namespace ACSE
             //Load all tabs so alignment is kept
             SetMainTabEnabled("islandTab", true);
             SetMainTabEnabled("grassTab", true);
+
+            playerSavings.Enabled = Current_Save_Type != SaveType.Doubutsu_no_Mori;
+            tanTrackbar.Enabled = Current_Save_Type != SaveType.Doubutsu_no_Mori;
 
             if (Current_Save_Type == SaveType.Doubutsu_no_Mori || Current_Save_Type == SaveType.Doubutsu_no_Mori_Plus
                 || Current_Save_Type == SaveType.Animal_Crossing || Current_Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
@@ -912,9 +915,10 @@ namespace ACSE
             if (Player.Data.Tan <= tanTrackbar.Maximum)
                 tanTrackbar.Value = Player.Data.Tan + 1;
 
-            for (int i = 0; i < Player.Data.Patterns.Length; i++)
-                if (Player.Data.Patterns[i] != null && Player.Data.Patterns[i].Pattern_Bitmap != null)
-                    Refresh_PictureBox_Image(Pattern_Boxes[i], Player.Data.Patterns[i].Pattern_Bitmap, false, false);
+            if (Player.Data.Patterns != null)
+                for (int i = 0; i < Player.Data.Patterns.Length; i++)
+                    if (Player.Data.Patterns[i] != null && Player.Data.Patterns[i].Pattern_Bitmap != null)
+                        Refresh_PictureBox_Image(Pattern_Boxes[i], Player.Data.Patterns[i].Pattern_Bitmap, false, false);
 
             resettiCheckBox.Checked = Player.Data.Reset;
 
@@ -1055,7 +1059,7 @@ namespace ACSE
         private void Set_Selected_Acre(ushort AcreID)
         {
             Selected_Acre_ID = AcreID;
-            if (Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
             {
                 acreHeightTrackBar.Value = Selected_Acre_ID % 4;
                 Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
@@ -1127,7 +1131,7 @@ namespace ACSE
                     }
                 }
                 // Warnings for N64/GameCube titles
-                if (Save_File.Game_System == SaveGeneration.GCN)
+                if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                 {
                     if (Node.Parent.Text == "Beta Acres")
                     {
@@ -1155,7 +1159,7 @@ namespace ACSE
             Image Acre_Image = null;
             if (Acre_Image_List != null)
             {
-                if ((Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+                if ((Save_File.Save_Type == SaveType.Doubutsu_no_Mori || Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
                     && ushort.TryParse(Acre_ID_Str, NumberStyles.AllowHexSpecifier, null, out ushort ID))
                 {
                     
@@ -1245,7 +1249,7 @@ namespace ACSE
                     string Acre_ID_Str = "";
                     if (Save_File.Save_Type == SaveType.Wild_World)
                         Acre_ID_Str = CurrentAcre.AcreID.ToString("X2");
-                    else if (Save_File.Game_System == SaveGeneration.GCN)
+                    else if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                         Acre_ID_Str = (CurrentAcre.AcreID - (CurrentAcre.AcreID % 4)).ToString("X4");
 
                     Image Acre_Image = Get_Acre_Image(CurrentAcre, Acre_ID_Str);
@@ -1980,7 +1984,7 @@ namespace ACSE
                     selectedAcrePicturebox.Image = Acre_Box.BackgroundImage;
                     Selected_Acre_ID = Island ? Island_Acres[Acre_Index].AcreID : Acres[Acre_Index].AcreID;
                     string Acre_Str = Save_File.Game_System == SaveGeneration.NDS ? Selected_Acre_ID.ToString("X2") : Selected_Acre_ID.ToString("X4");
-                    if (Save_File.Game_System == SaveGeneration.GCN)
+                    if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                     {
                         acreHeightTrackBar.Value = Selected_Acre_ID % 4;
                         Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
@@ -1988,14 +1992,14 @@ namespace ACSE
                     }
                     if (Save_File.Save_Type == SaveType.Wild_World)
                         acreID.Text = "Acre ID: 0x" + Selected_Acre_ID.ToString("X2");
-                    else if (Save_File.Game_System == SaveGeneration.GCN)
+                    else if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                         acreID.Text = "Acre ID: 0x" + (Selected_Acre_ID + Acre_Height_Modifier).ToString("X4");
                     else
                         acreID.Text = "Acre ID: 0x" + Selected_Acre_ID.ToString("X4");
                     if (Acre_Info != null)
                         acreDesc.Text = Acre_Info.ContainsKey((byte)Selected_Acre_ID) ? Acre_Info[(byte)Selected_Acre_ID] : "No Description";
                     else if (UInt16_Acre_Info != null)
-                        if (Save_File.Game_System == SaveGeneration.GCN && UInt16_Acre_Info.ContainsKey((ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)))
+                        if ((Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN) && UInt16_Acre_Info.ContainsKey((ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)))
                             acreDesc.Text = UInt16_Acre_Info[(ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)];
                         else if (UInt16_Acre_Info.ContainsKey(Selected_Acre_ID))
                             acreDesc.Text = UInt16_Acre_Info[Selected_Acre_ID];
@@ -2967,7 +2971,7 @@ namespace ACSE
 
         private void acreHeightTrackBar_Scroll(object sender, EventArgs e)
         {
-            if (Save_File != null && Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
             {
                 Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
                 acreID.Text = "Acre ID: 0x" + (Selected_Acre_ID + Acre_Height_Modifier).ToString("X4");
@@ -2976,7 +2980,7 @@ namespace ACSE
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (Save_File != null && Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
             {
                 if (AC_Map_Icons == null)
                 {
@@ -3020,7 +3024,7 @@ namespace ACSE
         //TODO: Implement for WW+
         private void resettiCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (Save_File != null && Selected_Player != null && Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File != null && Selected_Player != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
             {
                 Selected_Player.Data.Reset = resettiCheckBox.Checked;
             }

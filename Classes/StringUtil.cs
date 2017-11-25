@@ -679,6 +679,7 @@ namespace ACSE
             String_Bytes = stringBuffer;
             switch (saveType)
             {
+                case SaveType.Doubutsu_no_Mori:
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     Char_Dictionary = StringUtil.Doubutsu_no_Mori_e_Plus_Char_Map;
@@ -693,7 +694,7 @@ namespace ACSE
                     Char_Dictionary = null;
                     break;
             }
-            if ((saveType == SaveType.Doubutsu_no_Mori_Plus || saveType == SaveType.Animal_Crossing || saveType == SaveType.Doubutsu_no_Mori_e_Plus
+            if ((saveType == SaveType.Doubutsu_no_Mori || saveType == SaveType.Doubutsu_no_Mori_Plus || saveType == SaveType.Animal_Crossing || saveType == SaveType.Doubutsu_no_Mori_e_Plus
                 || saveType == SaveType.Wild_World) && Char_Dictionary != null)
                 foreach (byte b in stringBuffer)
                     if (Char_Dictionary.ContainsKey(b))
@@ -729,7 +730,7 @@ namespace ACSE
                         returnedString[x] = 0x20;
                 return returnedString;
             }
-            else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            else if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
             {
                 byte[] String_Bytes = new byte[maxSize > 0 ? maxSize : String.Length];
                 for (int i = 0; i < String.Length; i++)

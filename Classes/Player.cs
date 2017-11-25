@@ -126,6 +126,63 @@ namespace ACSE
 
     public static class PlayerInfo
     {
+        public static PlayerSaveInfo Doubutsu_no_Mori = new PlayerSaveInfo
+        {
+            Name = 0,
+            NameSize = 6,
+            TownName = 6,
+            TownNameSize = 6,
+            Identifier = 0xC,
+            IdentifierSize = 2,
+            TownIdentifier = 0xE,
+            TownIdentifierSize = 2,
+            Gender = 0x10, //
+            FaceType = 0x11, //
+            Pockets = 0x14,
+            PocketsCount = 15,
+            Bells = 0x38,
+            Debt = 0x3C, 
+            HeldItem = 0x3EC,
+            InventoryBackground = 0xA72,
+            Shirt = 0xA78,
+            Birthday = -1,
+            BirthdaySize = 2,
+            Reset = -1, //
+            ResetSize = 8,
+            Savings = -1, // Does DnM have savings?
+            Patterns = -1, // No Patterns in DnM
+            PatternCount = 8,
+            PatternSize = 0x220, //Actual Size is 0x200, with the first 0x20 bytes for Name, then for palette & padding?
+            Tan = -1, // Confirm in-game (I don't think DnM has tans)
+            TownPassCardImage = -1,
+            HairType = -1,
+            Bed = -1,
+            Catalog = -1, //Actually research
+            Encyclopedia = -1,
+            Dressers = -1,
+            Emotions = -1,
+            EyeColor = -1,
+            FaceItem = -1,
+            FriendCode = -1,
+            HairColor = -1,
+            Hat = -1,
+            LastPlayDate = -1,
+            Messages = -1,
+            NookPoints = -1,
+            Pants = -1,
+            RegisterDate = -1,
+            ShoeColor = -1,
+            Shoes = -1,
+            Socks = -1,
+            Wetsuit = -1,
+            NL_Debt = -1,
+            NL_Savings = -1,
+            NL_Wallet = -1,
+            MeowCoupons = -1,
+            Island_Medals = -1,
+            ResetCount = -1,
+        };
+
         public static PlayerSaveInfo Doubutsu_no_Mori_Plus = new PlayerSaveInfo
         {
             Name = 0,
@@ -513,6 +570,8 @@ namespace ACSE
         {
             switch (Save_Type)
             {
+                case SaveType.Doubutsu_no_Mori:
+                    return Doubutsu_no_Mori;
                 case SaveType.Doubutsu_no_Mori_Plus:
                     return Doubutsu_no_Mori_Plus;
                 case SaveType.Animal_Crossing:
