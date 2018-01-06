@@ -68,7 +68,7 @@
 0x00D8, River (South) #1
 0x00DC, River (East) #1
 0x00E0, River (West) #1
-0x00E4, River w/ Wooden Bridge (South > East)
+0x00E4, River (South > East) #1
 0x00E8, River (East > South) #1
 0x00EC, River (South > West) #1
 0x00F0, River (West > South) #1
@@ -85,7 +85,7 @@
 0x013C, River w/ Corner Cliff (West) #1
 0x0170, River (South) #2
 0x0174, River (South) #3
-0x0178, River (South > East) #1
+0x0178, River (South > East) #2
 0x017C, River (East > South) #2
 0x0180, River (West > South) #2
 0x0184, River (West > South) #3
@@ -114,7 +114,7 @@
 0x0220, River (South) #6
 0x0224, River (East) #3
 0x0228, River (West) #4
-0x022C, River (South > East) #2
+0x022C, River (South > East) #3
 0x0230, River (East > South) #2
 0x0234, River (South > West) #3
 0x0244, River w/ Waterfall (East) #3
@@ -236,36 +236,48 @@
 0x04E4, Ocean #22
 0x04E8, Ocean #23
 0x04EC, Ocean #24
-0x04F8, Ocean #25
-0x0504, Ocean #26
-0x0518, Ocean #27
-0x051C, Ocean #28
-0x0530, Ocean #29
-0x0534, Ocean #30
-0x0538, Ocean #31
-0x053C, Ocean #32
-0x0540, Ocean #33
-0x0544, Ocean #34
-0x0548, Ocean #35
-0x054C, Ocean #36
-0x0550, Ocean #37
-0x0554, Ocean #38
-0x0558, Ocean #39
-0x055C, Ocean #40
-0x0560, Ocean #41
-0x0564, Ocean #42
-0x0568, Ocean #43
-0x056C, Ocean #44
-0x0570, Ocean #45
-0x0574, Ocean #46
-0x0578, Ocean #47
-0x057C, Ocean #48
-0x0580, Ocean #49
-0x0584, Ocean #50
-0x0588, Ocean #51
-0x058C, Ocean #52
-0x05B4, Ocean #53
-0x05B8, Ocean #54
+0x04F0, Ocean #25
+0x04F4, Ocean #26
+0x04F8, Ocean #27
+0x04FC, Ocean #28
+0x0500, Ocean #29
+0x0504, Ocean #30
+0x0508, Ocean #31
+0x050C, Ocean #32
+0x0510, Ocean #33
+0x0514, Ocean #34
+0x0518, Ocean #35
+0x051C, Ocean #36
+0x0520, Ocean #37
+0x0524, Ocean #38
+0x0528, Ocean #39
+0x052C, Ocean #40
+0x0530, Ocean #41
+0x0534, Ocean #42
+0x0538, Ocean #43
+0x053C, Ocean #44
+0x0540, Ocean #45
+0x0544, Ocean #46
+0x0548, Ocean #47
+0x054C, Ocean #48
+0x0550, Ocean #49
+0x0554, Ocean #50
+0x0558, Ocean #51
+0x055C, Ocean #52
+0x0560, Ocean #53
+0x0564, Ocean #54
+0x0568, Ocean #55
+0x056C, Ocean #56
+0x0570, Ocean #57
+0x0574, Ocean #58
+0x0578, Ocean #59
+0x057C, Ocean #60
+0x0580, Ocean #61
+0x0584, Ocean #62
+0x0588, Ocean #63
+0x058C, Ocean #64
+0x05B4, Ocean #65
+0x05B8, Ocean #66
 //Beta Acres
 0x0074, Grass Beta Acre
 0x0078, Ramp Beta Acre
@@ -290,3 +302,10 @@
 0x0300, Inside of Katrina's Tent
 0x0304, Game Loading/Saving Area
 0x0390, Inside of Nookingtons
+0x0458, Inside of Museum Main Room
+0x045C, Inside of Museum Painting Room
+0x0460, Inside of Museum Fossil Room
+0x0468, Inside of Museum Fish Room
+0x047C, Inside of Tailor's
+0x0590, Inside of Lighthouse
+0x05BC, Inside of Camping Tent

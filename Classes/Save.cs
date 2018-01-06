@@ -66,6 +66,7 @@ namespace ACSE
         public int Grass_Wear;
         public int Grass_Wear_Size;
         public int Grass_Type;
+        public int Weather;
         public int PWPs; //NL only
         public int Past_Villagers;
         public int[] CRC_Offsets;
@@ -168,6 +169,7 @@ namespace ACSE
             Acre_Data_Size = 0x8C,
             Town_Data = 0x137A8,
             Town_Data_Size = 0x3C00,
+            Weather = 0x20F19,
             Buried_Data = 0x20F1C,
             Buried_Data_Size = 0x3C0,
             Island_World_Data = 0x22554,
@@ -196,6 +198,8 @@ namespace ACSE
             Town_ID = 0x1C,
             Player_Start = 0x1C0, // Might not be right
             Player_Size = 0x26A0,
+            House_Data = 0xA340,
+            House_Data_Size = 0x3860,
             Island_World_Data = -1, // Each Player has their own island
             Island_World_Size = 0x400,
             Islander_Data = -1, // Confirm this in game. Couldn't find one in the save file.
@@ -208,7 +212,7 @@ namespace ACSE
             // Shop Size 0x223A8 (appears to be the upper nibble of the byte 0 = 0, 4 = 1, 8 = 2, C = 3)
             // Shop Spend count = 0x223AC (uint)
             // Shop Visitor Spend count = 0x223C0 (uint)
-            // Weather = 0x22B19 (byte)
+            Weather = 0x22B19,
             Buried_Data = 0x22B1C,
             Buried_Data_Size = 0x3C0,
             Grass_Type = 0x24484,
@@ -246,6 +250,7 @@ namespace ACSE
             Island_Acre_Data = -1,
             Island_Buildings = -1,
             Town_ID = -1, //
+            Weather = -1,
             Checksum = 0x15FDC
         };
 
@@ -280,6 +285,7 @@ namespace ACSE
             Island_Acre_Data = -1,
             Island_Buildings = -1,
             Town_ID = -1, //
+            Weather = -1,
         };
 
         public static Offsets New_Leaf_Offsets = new Offsets
@@ -301,12 +307,15 @@ namespace ACSE
             Town_Name = 0x5C73A,
             Town_NameSize = 16,
             Grass_Wear = 0x53E80,
+            House_Data = 0x57F7A,
+            House_Data_Size = 0x1228,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
             Grass_Type = 0x4DA01,
             Island_Acre_Data = 0x6A408,
             Island_World_Data = 0x6A428,
             Island_Buildings = 0x6B428,
             Town_ID = -1, //
+            Weather = -1,
         };
 
         public static Offsets Welcome_Amiibo_Offsets = new Offsets
@@ -330,10 +339,14 @@ namespace ACSE
             Grass_Wear = 0x59880,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
             Grass_Type = 0x53401,
+            House_Data = 0x5D97A,
+            House_Data_Size = 0x1228,
             Island_Acre_Data = 0x6FE38,
             Island_World_Data = 0x6FE58,
             Island_Buildings = 0x70E58,
+            // ShopSize = 0x621F0, (two bytes in a row?)
             Town_ID = -1, //
+            Weather = -1,
         };
 
         public static Save_Info Doubutsu_no_Mori = new Save_Info
@@ -887,17 +900,12 @@ namespace ACSE
             string Full_Save_Name = Save_Path + Path.DirectorySeparatorChar + Save_Name + Save_Extension;
             Save_File = new FileStream(Full_Save_Name, FileMode.OpenOrCreate);
             Save_Writer = new BinaryWriter(Save_File);
-            if (Game_System == SaveGeneration.N64 || Game_System == SaveGeneration.GCN) // TODO: Condense Wild World and GCN save logic into one if statement
+            if (Game_System == SaveGeneration.N64 || Game_System == SaveGeneration.GCN || Game_System == SaveGeneration.NDS)
             {
-                Write(Save_Data_Start_Offset + 0x12, Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(Save_Info.Save_Offsets.Save_Size).ToArray(), 0x12), true);
+                Write(Save_Data_Start_Offset + Save_Info.Save_Offsets.Checksum, Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(Save_Info.Save_Offsets.Save_Size).ToArray(),
+                    Save_Info.Save_Offsets.Checksum, !Is_Big_Endian), Is_Big_Endian);
                 Working_Save_Data.Skip(Save_Data_Start_Offset).Take(Save_Info.Save_Offsets.Save_Size).ToArray().CopyTo(Working_Save_Data,
                     Save_Data_Start_Offset + Save_Info.Save_Offsets.Save_Size); //Update second save copy
-            }
-            else if (Save_Type == SaveType.Wild_World)
-            {
-                Write(Save_Data_Start_Offset + 0x15FDC, Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x15FE0).ToArray(),
-                    0x15FDC, true));
-                Working_Save_Data.Skip(Save_Data_Start_Offset).Take(0x15FE0).ToArray().CopyTo(Working_Save_Data, Save_Data_Start_Offset + 0x15FE0); //Update both save copies on WW
             }
             else if (Save_Type == SaveType.City_Folk)
             {
@@ -979,16 +987,15 @@ namespace ACSE
             }
             else
             {
-                dynamic Data_Array = data;
                 if (Data_Type == typeof(byte[]))
-                    for (int i = 0; i < Data_Array.Length; i++)
-                        Working_Save_Data[offset + i] = Data_Array[i];
+                    for (int i = 0; i < data.Length; i++)
+                        Working_Save_Data[offset + i] = data[i];
                 else
                 {
-                    int Data_Size = Marshal.SizeOf(Data_Array[0]);
-                    for (int i = 0; i < Data_Array.Length; i++)
+                    int Data_Size = Marshal.SizeOf(data[0]);
+                    for (int i = 0; i < data.Length; i++)
                     {
-                        byte[] Byte_Array = BitConverter.GetBytes(Data_Array[i]);
+                        byte[] Byte_Array = BitConverter.GetBytes(data[i]);
                         if (reversed)
                             Array.Reverse(Byte_Array);
                         Byte_Array.CopyTo(Working_Save_Data, offset + i * Data_Size);
@@ -997,14 +1004,12 @@ namespace ACSE
             }
         }
 
-        //Used for replacing instances of player/town names. Possibly other uses?
         public void FindAndReplaceByteArray(int end, byte[] oldarr, byte[] newarr)
         {
-            for (int i = Save_Data_Start_Offset; i < Save_Data_Start_Offset + end; i += 2) //Every? dword or larger is aligned
+            for (int i = Save_Data_Start_Offset; i < Save_Data_Start_Offset + end; i += 2)
             {
                 if (Enumerable.SequenceEqual(ReadByteArray(i, oldarr.Length), oldarr))
                 {
-                    MessageBox.Show("Match found at offset: 0x" + i.ToString("X"));
                     Write(i, newarr, Is_Big_Endian);
                 }
             }
@@ -1060,7 +1065,7 @@ namespace ACSE
              return new ACString(ReadByteArray(offset, length), Save_Type).Trim();
         }
 
-        public string[] ReadStringArray(int offset, int length, int count) //Only useful for strings of matching lengths, possibly "fix" this in the future
+        public string[] ReadStringArray(int offset, int length, int count)
         {
             string[] String_Array = new string[count];
             for (int i = 0; i < count; i++)
@@ -1068,7 +1073,7 @@ namespace ACSE
             return String_Array;
         }
 
-        public string[] ReadStringArrayWithVariedLengths(int offset, int count, byte endCharByte, int maxLength = 10) // ^^ Fixed it ^^
+        public string[] ReadStringArrayWithVariedLengths(int offset, int count, byte endCharByte, int maxLength = 10)
         {
             string[] String_Array = new string[count];
             int lastOffset = 0;

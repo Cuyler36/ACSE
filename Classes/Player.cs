@@ -853,6 +853,7 @@ namespace ACSE
     {
         public PlayerSaveInfo Offsets;
         public PlayerData Data;
+        public House House;
         public int Index;
         public int Offset;
         public bool Exists = false;
@@ -961,6 +962,10 @@ namespace ACSE
                     for (int i = 0; i < Data.Patterns.Length; i++)
                         Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, save);
                 }
+
+                // Get the Player's House
+                House = HouseInfo.GetHouse(this, save.Save_Type);
+                Console.WriteLine(string.Format("Player {0}'s house = {1}", Index, House));
             }
         }
 

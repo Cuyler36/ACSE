@@ -53,7 +53,6 @@
 0x0040, Buried Pitfall (Bent Left)
 0x0048, Buried Pitfall (Bent Down-Left)
 0x0050, Buried Pitfall (Bent Left & Slightly Down)
-//0x0033 - 0x005B (Pitfall bs that corrupts inventory)
 0x005C, Glowing Spot
 0x005D, Hole w/ Glowing Spot
 0x005E, Tree (Bees)
@@ -2694,8 +2693,8 @@
 0x33BC, Noisemaker
 0x33C0, Chowder
 0x33C4, DUMMY
-0x4000, House Stairs #1
-0x4001, House Stairs #2
+0x4000, House Stairs Warp #1
+0x4001, House Stairs Warp #2
 0x4080, Warp Zone
 0x5000, Bob's House
 0x5001, Olivia's House
@@ -3037,5 +3036,5 @@
 0xFE1E, Possible Bridge Location (\)
 0xFE1F, Multispace Furniture Collision Box
 0xFE20, Custom Pattern
-0xFFFE, House Wall
-0xFFFF, Occupied/Unavailable
+0xFFFE, House Reserved Space
+0xFFFF, World Reserved Space

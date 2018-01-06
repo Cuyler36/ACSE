@@ -438,6 +438,8 @@ namespace ACSE
                     return "Shell";
                 else if (ID >= 0x2A00 && ID <= 0x2A36)
                     return "Song";
+                else if (ID >= 0x2B00 && ID <= 0x2B0F)
+                    return "Diary";
                 else if (ID >= 0x2000 && ID <= 0x20FF)
                     return "Paper";
                 else if (ID >= 0x2F00 && ID <= 0x2F03)
@@ -466,9 +468,11 @@ namespace ACSE
                     return "Tool";  //0x251E = Signboard (not a 'tool', but it's still classified as one)
                 else if ((ID >= 0x1 && ID <= 0x4) || (ID >= 0x005E && ID <= 0x0060) || ID == 0x69 || (ID >= 0x0070 && ID <= 0x0082) || (ID >= 0x0800 && ID <= 0x0869))
                     return "Tree";
-                else if ((ID >= 0x5 && ID <= 0x7) || (ID >= 0xB && ID <= 0x10) || (ID >= 0x5000 && ID <= 0xB000) || (ID == 0xFE1D || ID == 0xFE1E))
+                else if (ID >= 0x4000 && ID < 0x5000)
+                    return "HouseObject";
+                else if ((ID >= 0x5 && ID <= 0x7) || (ID >= 0xB && ID <= 0x10) || (ID >= 0x5000 && ID <= 0xB000) || ID >= 0xFE00)
                     return "Building";
-                else if ((ID >= 0x1000 && ID <= 0x15AC) || (ID >= 0x17AC && ID <= 0x1FFC) || (ID >= 0x3000 && ID <= 0x33C4) || ID == 0xFE20)
+                else if ((ID >= 0x1000 && ID <= 0x15AC) || (ID >= 0x17AC && ID <= 0x1FFC) || (ID >= 0x3000 && ID <= 0x33C4)) // || ID >= 0xFE20
                     return "Furniture";
                 else
                     return "Unknown";
@@ -745,8 +749,11 @@ namespace ACSE
                     return 0xDD999999;
                 case "Building":
                     return 0xFF777777;
+                case "Diary":
+                    return 0xC8FF007F;
+                case "HouseObject":
+                    return 0xC8A59895;
                 case "Unknown":
-                    return 0xC8FF0000;
                 default:
                     return 0xC8FF0000;
             }
@@ -1012,6 +1019,14 @@ namespace ACSE
             Name = ItemData.GetItemName(ItemID);
         }
 
+        public Item(Item CloningItem)
+        {
+            ItemID = CloningItem.ItemID;
+            Flag1 = CloningItem.Flag1;
+            Flag2 = CloningItem.Flag2;
+            Name = CloningItem.Name;
+        }
+
         public Item (ushort itemId, byte flag1, byte flag2)
         {
             ItemID = itemId;
@@ -1023,6 +1038,31 @@ namespace ACSE
         public uint ToUInt32()
         {
             return (uint)((Flag1 << 24) + (Flag2 << 16) + ItemID);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Item)
+            {
+                var ComparingItem = obj as Item;
+                return (ComparingItem.ItemID == ItemID && ComparingItem.Flag1 == Flag1 && ComparingItem.Flag2 == Flag2);
+            }
+            else if (obj is ushort)
+            {
+                return (ushort)obj == ItemID;
+            }
+
+            return false;
+        }
+
+        public static bool operator == (Item obj1, Item obj2)
+        {
+            return Equals(obj1, obj2);
+        }
+
+        public static bool operator != (Item obj1, Item obj2)
+        {
+            return !Equals(obj1, obj2);
         }
     }
 
@@ -1039,19 +1079,30 @@ namespace ACSE
             Index = position;
         }
 
-        public WorldItem(ushort itemId, byte flag1, byte flag2, int position) : this(itemId, position)
+        public WorldItem(ushort itemId, byte flag1, byte flag2, int position) : base(itemId)
         {
             Flag1 = flag1;
             Flag2 = flag2;
             Burried = Flag1 == 0x80;
             Watered = Flag1 == 0x40;
-
+            Location = new Point(position % 16, position / 16);
+            Index = position;
         }
 
         public WorldItem(int position) : base()
         {
             Location = new Point(position % 16, position / 16);
             Index = position;
+        }
+
+        public WorldItem(WorldItem CloningItem)
+        {
+            ItemID = CloningItem.ItemID;
+            Flag1 = CloningItem.Flag1;
+            Flag2 = CloningItem.Flag2;
+            Name = CloningItem.Name;
+            Index = CloningItem.Index;
+            Location = new Point(Index % 16, Index / 16);
         }
 
         public WorldItem(uint itemId, int position) : base(itemId)
@@ -1065,6 +1116,31 @@ namespace ACSE
             Burried = Flag1 == 0x80;
             Watered = Flag1 == 0x40;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is WorldItem)
+            {
+                var ComparingItem = obj as WorldItem;
+                return (ComparingItem.ItemID == ItemID && ComparingItem.Flag1 == Flag1 && ComparingItem.Flag2 == Flag2);
+            }
+            else if (obj is ushort)
+            {
+                return (ushort)obj == ItemID;
+            }
+
+            return false;
+        }
+
+        public static bool operator ==(WorldItem obj1, WorldItem obj2)
+        {
+            return Equals(obj1, obj2);
+        }
+
+        public static bool operator !=(WorldItem obj1, WorldItem obj2)
+        {
+            return !Equals(obj1, obj2);
+        }
     }
 
     public class Furniture : Item
@@ -1074,10 +1150,63 @@ namespace ACSE
 
         public Furniture(ushort itemId) : base(itemId)
         {
-            BaseItemID = (ushort)(ItemID - (ItemID % 4));
-            if (ItemData.GetItemType(itemId, NewMainForm.Save_File.Save_Type) == "Furniture")
+            if (NewMainForm.Save_File.Game_System == SaveGeneration.N3DS)
             {
-                Rotation = (ItemID % 4) * 90;
+                BaseItemID = itemId;
+                Rotation = 0;
+            }
+            else
+            {
+                BaseItemID = (ushort)(ItemID - (ItemID % 4));
+                if (ItemData.GetItemType(itemId, NewMainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(itemId, NewMainForm.Save_File.Save_Type).Equals("Gyroids"))
+                {
+                    Rotation = (ItemID % 4) * 90;
+                }
+            }
+        }
+
+        public Furniture(uint item) : base(item)
+        {
+            BaseItemID = ItemID;
+            Rotation = ((Flag2 >> 4) / 4) * 90;
+        }
+
+        public Furniture(ushort item, byte flag1, byte flag2) : base (item, flag1, flag2)
+        {
+            if (NewMainForm.Save_File.Game_System == SaveGeneration.N3DS)
+            {
+                BaseItemID = ItemID;
+                Rotation = ((Flag2 >> 4) / 4) * 90;
+            }
+            else
+            {
+                BaseItemID = (ushort)(ItemID - (ItemID % 4));
+                if (ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type).Equals("Gyroids"))
+                {
+                    Rotation = (ItemID % 4) * 90;
+                }
+            }
+        }
+
+        public Furniture(Item item)
+        {
+            ItemID = item.ItemID;
+            Name = item.Name;
+            Flag1 = item.Flag1;
+            Flag2 = item.Flag2;
+
+            if (NewMainForm.Save_File.Game_System == SaveGeneration.N3DS)
+            {
+                BaseItemID = ItemID;
+                Rotation = ((Flag2 >> 4) / 4) * 90;
+            }
+            else
+            {
+                BaseItemID = (ushort)(ItemID - (ItemID % 4));
+                if (ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type).Equals("Gyroids"))
+                {
+                    Rotation = (ItemID % 4) * 90;
+                }
             }
         }
 
@@ -1088,6 +1217,24 @@ namespace ACSE
                 Rotation = degrees;
                 ItemID = (ushort)(BaseItemID + (degrees / 90));
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Furniture)
+            {
+                var ComparingItem = obj as Furniture;
+                if (NewMainForm.Save_File.Game_System == SaveGeneration.N3DS)
+                    return (ComparingItem.ItemID == ItemID && ComparingItem.Flag1 == Flag1 && ComparingItem.Flag2 == Flag2);
+                else
+                    return ComparingItem.BaseItemID == BaseItemID;
+            }
+            else if (obj is ushort)
+            {
+                return (ushort)obj == ItemID;
+            }
+
+            return false;
         }
     }
 

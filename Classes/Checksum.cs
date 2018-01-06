@@ -24,16 +24,16 @@ namespace ACSE
             if (little_endian) //WW case
             {
                 for (int i = 0; i < checksumOffset; i += 2)
-                    checksum += (ushort)((buffer[i + 1] << 8) + buffer[i]);
+                    checksum += (ushort)((buffer[i + 1] << 8) | buffer[i]);
                 for (int i = checksumOffset + 2; i < buffer.Length - 1; i += 2)
-                    checksum += (ushort)((buffer[i + 1] << 8) + buffer[i]);
+                    checksum += (ushort)((buffer[i + 1] << 8) | buffer[i]);
             }
             else
             {
                 for (int i = 0; i < checksumOffset; i += 2)
-                    checksum += (ushort)((buffer[i] << 8) + buffer[i + 1]);
+                    checksum += (ushort)((buffer[i] << 8) | buffer[i + 1]);
                 for (int i = checksumOffset + 2; i < buffer.Length - 1; i += 2)
-                    checksum += (ushort)((buffer[i] << 8) + buffer[i + 1]);
+                    checksum += (ushort)((buffer[i] << 8) | buffer[i + 1]);
             }
             return (ushort)-checksum;
         }
@@ -44,14 +44,6 @@ namespace ACSE
             for (int i = 0; i < buffer.Length; i += 2)
                 Checksum += (ushort)((buffer[i] << 8) + buffer[i + 1]);
             return Checksum == 0;
-            //return BitConverter.ToUInt16(new byte[2] { buffer[checksumOffset + 1], buffer[checksumOffset] }, 0) == Calculate(buffer, checksumOffset);
-        }
-
-        public static void Update(byte[] buffer, int checksumOffset)
-        {
-            byte[] chksumBytes = BitConverter.GetBytes(Calculate(buffer, checksumOffset));
-            Array.Reverse(chksumBytes);
-            chksumBytes.CopyTo(buffer, checksumOffset);
         }
     }
 

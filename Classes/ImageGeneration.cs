@@ -63,7 +63,7 @@ namespace ACSE
             Bitmap_Graphics.Dispose();
         }
 
-        public static Bitmap Draw_Grid(Bitmap Map, int Item_Size, uint Grid_Color = 0x41444444, int Grid_Pixel_Size = 1)
+        public static Bitmap Draw_Grid(Bitmap Map, int Item_Size, uint Grid_Color = 0xAAAAAAAA, int Grid_Pixel_Size = 1)
         {
             Graphics Bitmap_Graphics = Graphics.FromImage(Map);
             Bitmap_Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -149,21 +149,23 @@ namespace ACSE
             Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             for (int i = 0; i < Furniture.Length; i++)
             {
-                if (Furniture[i].Name != "Empty")
+                string ItemType = ItemData.GetItemType(Furniture[i].ItemID, NewMainForm.Save_File.Save_Type);
+                if (Furniture[i].Name != "Empty" && (ItemType.Equals("Furniture") || ItemType.Equals("Gyroids")))
                 {
                     Image Arrow = Properties.Resources.Arrow;
+
                     if (Furniture[i].Rotation > 0)
                     {
-                        switch(Furniture[i].Rotation)
+                        switch(Furniture[i].Rotation % 360)
                         {
                             case 90:
-                                Arrow.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                                Arrow.RotateFlip(RotateFlipType.Rotate270FlipNone);
                                 break;
                             case 180:
                                 Arrow.RotateFlip(RotateFlipType.Rotate180FlipNone);
                                 break;
                             case 270:
-                                Arrow.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                                Arrow.RotateFlip(RotateFlipType.Rotate90FlipNone);
                                 break;
                         }
                     }

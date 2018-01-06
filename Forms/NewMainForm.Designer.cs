@@ -149,7 +149,6 @@
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.housesTab = new System.Windows.Forms.TabPage();
-            this.label41 = new System.Windows.Forms.Label();
             this.islandTab = new System.Windows.Forms.TabPage();
             this.islandPanel = new System.Windows.Forms.Panel();
             this.grassTab = new System.Windows.Forms.TabPage();
@@ -183,6 +182,26 @@
             this.label43 = new System.Windows.Forms.Label();
             this.grassTypeBox = new System.Windows.Forms.ComboBox();
             this.grassLabel = new System.Windows.Forms.Label();
+            this.replacedTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.replacingTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label28 = new System.Windows.Forms.Label();
+            this.houseSizeComboBox = new System.Windows.Forms.ComboBox();
+            this.housePanel = new System.Windows.Forms.Panel();
+            this.houseToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.basementCheckBox = new System.Windows.Forms.CheckBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.roofColorComboBox = new System.Windows.Forms.ComboBox();
+            this.houseTabSelect = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label30 = new System.Windows.Forms.Label();
+            this.houseOwnerComboBox = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.weatherComboBox = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
@@ -211,6 +230,7 @@
             this.grassPanel.SuspendLayout();
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
+            this.houseTabSelect.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -232,6 +252,7 @@
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
+            this.toolStripSeparator1,
             this.aboutToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -240,28 +261,28 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -277,14 +298,14 @@
             // secureValueToolStripMenuItem
             // 
             this.secureValueToolStripMenuItem.Name = "secureValueToolStripMenuItem";
-            this.secureValueToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.secureValueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.secureValueToolStripMenuItem.Text = "Secure Value";
             this.secureValueToolStripMenuItem.Click += new System.EventHandler(this.secureValueToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -334,7 +355,10 @@
             // 
             // replaceItemsToolStripMenuItem
             // 
-            this.replaceItemsToolStripMenuItem.Enabled = false;
+            this.replaceItemsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.replacedTextBox,
+            this.replacingTextBox,
+            this.replaceToolStripMenuItem});
             this.replaceItemsToolStripMenuItem.Name = "replaceItemsToolStripMenuItem";
             this.replaceItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.replaceItemsToolStripMenuItem.Text = "Replace Items";
@@ -1193,6 +1217,8 @@
             // 
             // townTab
             // 
+            this.townTab.Controls.Add(this.weatherComboBox);
+            this.townTab.Controls.Add(this.label31);
             this.townTab.Controls.Add(this.grassLabel);
             this.townTab.Controls.Add(this.grassTypeBox);
             this.townTab.Controls.Add(this.townInfoLabel);
@@ -1213,7 +1239,7 @@
             // townInfoLabel
             // 
             this.townInfoLabel.AutoSize = true;
-            this.townInfoLabel.Location = new System.Drawing.Point(396, 14);
+            this.townInfoLabel.Location = new System.Drawing.Point(549, 14);
             this.townInfoLabel.Name = "townInfoLabel";
             this.townInfoLabel.Size = new System.Drawing.Size(99, 13);
             this.townInfoLabel.TabIndex = 13;
@@ -1431,7 +1457,15 @@
             // 
             // housesTab
             // 
-            this.housesTab.Controls.Add(this.label41);
+            this.housesTab.Controls.Add(this.houseOwnerComboBox);
+            this.housesTab.Controls.Add(this.label30);
+            this.housesTab.Controls.Add(this.houseTabSelect);
+            this.housesTab.Controls.Add(this.roofColorComboBox);
+            this.housesTab.Controls.Add(this.label29);
+            this.housesTab.Controls.Add(this.basementCheckBox);
+            this.housesTab.Controls.Add(this.housePanel);
+            this.housesTab.Controls.Add(this.houseSizeComboBox);
+            this.housesTab.Controls.Add(this.label28);
             this.housesTab.Location = new System.Drawing.Point(4, 22);
             this.housesTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.housesTab.Name = "housesTab";
@@ -1439,16 +1473,6 @@
             this.housesTab.TabIndex = 4;
             this.housesTab.Text = "Houses";
             this.housesTab.UseVisualStyleBackColor = true;
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label41.Location = new System.Drawing.Point(247, 264);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(436, 37);
-            this.label41.TabIndex = 0;
-            this.label41.Text = "Feature Not Implemented Yet";
             // 
             // islandTab
             // 
@@ -1684,6 +1708,7 @@
             // 
             // grassTypeBox
             // 
+            this.grassTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.grassTypeBox.Enabled = false;
             this.grassTypeBox.FormattingEnabled = true;
             this.grassTypeBox.Location = new System.Drawing.Point(307, 11);
@@ -1699,6 +1724,178 @@
             this.grassLabel.Size = new System.Drawing.Size(64, 13);
             this.grassLabel.TabIndex = 15;
             this.grassLabel.Text = "Grass Type:";
+            // 
+            // replacedTextBox
+            // 
+            this.replacedTextBox.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.replacedTextBox.MaxLength = 10;
+            this.replacedTextBox.Name = "replacedTextBox";
+            this.replacedTextBox.Size = new System.Drawing.Size(100, 23);
+            this.replacedTextBox.Text = "Replaced";
+            // 
+            // replacingTextBox
+            // 
+            this.replacingTextBox.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.replacingTextBox.MaxLength = 10;
+            this.replacingTextBox.Name = "replacingTextBox";
+            this.replacingTextBox.Size = new System.Drawing.Size(100, 23);
+            this.replacingTextBox.Text = "Replacing";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // replaceToolStripMenuItem
+            // 
+            this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
+            this.replaceToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.replaceToolStripMenuItem.Text = "Replace";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(12, 12);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(64, 13);
+            this.label28.TabIndex = 0;
+            this.label28.Text = "House Size:";
+            // 
+            // houseSizeComboBox
+            // 
+            this.houseSizeComboBox.FormattingEnabled = true;
+            this.houseSizeComboBox.Location = new System.Drawing.Point(82, 9);
+            this.houseSizeComboBox.Name = "houseSizeComboBox";
+            this.houseSizeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.houseSizeComboBox.TabIndex = 1;
+            // 
+            // housePanel
+            // 
+            this.housePanel.AutoScroll = true;
+            this.housePanel.Location = new System.Drawing.Point(3, 36);
+            this.housePanel.Name = "housePanel";
+            this.housePanel.Size = new System.Drawing.Size(925, 500);
+            this.housePanel.TabIndex = 2;
+            // 
+            // basementCheckBox
+            // 
+            this.basementCheckBox.AutoSize = true;
+            this.basementCheckBox.Enabled = false;
+            this.basementCheckBox.Location = new System.Drawing.Point(813, 11);
+            this.basementCheckBox.Name = "basementCheckBox";
+            this.basementCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.basementCheckBox.Size = new System.Drawing.Size(115, 17);
+            this.basementCheckBox.TabIndex = 3;
+            this.basementCheckBox.Text = "Basement Enabled";
+            this.houseToolTip.SetToolTip(this.basementCheckBox, "Toggles whether the basement is enabled in the N64/GCN Titles");
+            this.basementCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(209, 12);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(60, 13);
+            this.label29.TabIndex = 4;
+            this.label29.Text = "Roof Color:";
+            // 
+            // roofColorComboBox
+            // 
+            this.roofColorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.roofColorComboBox.FormattingEnabled = true;
+            this.roofColorComboBox.Location = new System.Drawing.Point(275, 9);
+            this.roofColorComboBox.Name = "roofColorComboBox";
+            this.roofColorComboBox.Size = new System.Drawing.Size(96, 21);
+            this.roofColorComboBox.TabIndex = 5;
+            // 
+            // houseTabSelect
+            // 
+            this.houseTabSelect.Controls.Add(this.tabPage1);
+            this.houseTabSelect.Controls.Add(this.tabPage2);
+            this.houseTabSelect.Controls.Add(this.tabPage3);
+            this.houseTabSelect.Controls.Add(this.tabPage4);
+            this.houseTabSelect.Location = new System.Drawing.Point(3, 542);
+            this.houseTabSelect.Name = "houseTabSelect";
+            this.houseTabSelect.SelectedIndex = 0;
+            this.houseTabSelect.Size = new System.Drawing.Size(925, 22);
+            this.houseTabSelect.TabIndex = 6;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(917, 0);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "House 1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(917, 0);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "House 2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(917, 0);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "House 3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(917, 0);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "House 4";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(377, 12);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(41, 13);
+            this.label30.TabIndex = 7;
+            this.label30.Text = "Owner:";
+            // 
+            // houseOwnerComboBox
+            // 
+            this.houseOwnerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.houseOwnerComboBox.FormattingEnabled = true;
+            this.houseOwnerComboBox.Location = new System.Drawing.Point(424, 9);
+            this.houseOwnerComboBox.Name = "houseOwnerComboBox";
+            this.houseOwnerComboBox.Size = new System.Drawing.Size(121, 21);
+            this.houseOwnerComboBox.TabIndex = 8;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(396, 14);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(51, 13);
+            this.label31.TabIndex = 16;
+            this.label31.Text = "Weather:";
+            // 
+            // weatherComboBox
+            // 
+            this.weatherComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.weatherComboBox.Enabled = false;
+            this.weatherComboBox.FormattingEnabled = true;
+            this.weatherComboBox.Location = new System.Drawing.Point(453, 11);
+            this.weatherComboBox.Name = "weatherComboBox";
+            this.weatherComboBox.Size = new System.Drawing.Size(90, 21);
+            this.weatherComboBox.TabIndex = 17;
+            this.townToolTip.SetToolTip(this.weatherComboBox, "Sets the weather. Note that this will only work if you set it the same in-game da" +
+        "y as you dumped it.");
             // 
             // NewMainForm
             // 
@@ -1760,6 +1957,7 @@
             this.grassPanel.PerformLayout();
             this.pictureContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
+            this.houseTabSelect.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1897,7 +2095,6 @@
         private System.Windows.Forms.Panel islandPanel;
         private System.Windows.Forms.TextBox playerIslandMedals;
         private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.Label label41;
         private System.Windows.Forms.ComboBox birthdayDay;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.ComboBox birthdayMonth;
@@ -1920,5 +2117,25 @@
         private System.Windows.Forms.ToolStripMenuItem getAllKKSongsToolStripMenuItem;
         private System.Windows.Forms.Label grassLabel;
         private System.Windows.Forms.ComboBox grassTypeBox;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripTextBox replacedTextBox;
+        private System.Windows.Forms.ToolStripTextBox replacingTextBox;
+        private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
+        private System.Windows.Forms.Panel housePanel;
+        private System.Windows.Forms.ComboBox houseSizeComboBox;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.ToolTip houseToolTip;
+        private System.Windows.Forms.CheckBox basementCheckBox;
+        private System.Windows.Forms.ComboBox roofColorComboBox;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TabControl houseTabSelect;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.ComboBox houseOwnerComboBox;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.ComboBox weatherComboBox;
+        private System.Windows.Forms.Label label31;
     }
 }

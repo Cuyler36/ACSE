@@ -187,6 +187,7 @@ namespace ACSE
 
         public static Normal_Acre[] Generate_Random_Town_Layout()
         {
+            // mRF_MakePerfectBit returns 0x1FF
             Normal_Acre[] Acres = new Normal_Acre[70];
             Random Random_Generator = new Random();
             int Town_Cliff_Count = 1;
@@ -220,6 +221,105 @@ namespace ACSE
                 return Seasonal_Grass_Value;
             else
                 return (byte)((Seasonal_Grass_Value - 1) % 3); // May not be right.
+        }
+
+        public static void FloodFillItemArray(ref Item[] Items, int ItemsPerRow, int StartIndex, Item OriginalItem, Item NewItem)
+        {
+            int Rows = Items.Length / ItemsPerRow;
+            Stack<Point> LocationStack = new Stack<Point>();
+
+            int X = StartIndex % ItemsPerRow;
+            int Y = StartIndex / ItemsPerRow;
+
+            LocationStack.Push(new Point(X, Y));
+
+            while (LocationStack.Count > 0)
+            {
+                Point p = LocationStack.Pop();
+                int Idx = p.X + p.Y * ItemsPerRow;
+
+                if (p.X < ItemsPerRow && p.X > 0 &&
+                        p.Y < Rows && p.Y > 0) // Make sure we stay within bounds
+                {
+                    Item i = Items[Idx];
+                    if (i == OriginalItem)
+                    {
+                        Items[Idx] = new Item(NewItem);
+                        LocationStack.Push(new Point(p.X - 1, p.Y));
+                        LocationStack.Push(new Point(p.X + 1, p.Y));
+                        LocationStack.Push(new Point(p.X, p.Y - 1));
+                        LocationStack.Push(new Point(p.X, p.Y + 1));
+                    }
+                }
+            }
+        }
+
+        public static void FloodFillWorldItemArray(ref WorldItem[] Items, int ItemsPerRow, int StartIndex, WorldItem OriginalItem, WorldItem NewItem)
+        {
+            int Rows = Items.Length / ItemsPerRow;
+            Stack<Point> LocationStack = new Stack<Point>();
+            List<int> PreviousPoints = new List<int>();
+
+            int X = StartIndex % ItemsPerRow;
+            int Y = StartIndex / ItemsPerRow;
+
+            LocationStack.Push(new Point(X, Y));
+
+            while (LocationStack.Count > 0)
+            {
+                Point p = LocationStack.Pop();
+
+                int Idx = p.X + p.Y * ItemsPerRow;
+                //PreviousPoints.Add(Idx); // TODO: FIX
+
+                if (p.X < ItemsPerRow && p.X > 0 &&
+                        p.Y < Rows && p.Y > 0) // Make sure we stay within bounds
+                {
+                    WorldItem i = Items[Idx];
+                    if (i.Equals(OriginalItem))
+                    {
+                        Items[Idx] = new WorldItem(NewItem);
+                        LocationStack.Push(new Point(p.X - 1, p.Y));
+                        LocationStack.Push(new Point(p.X + 1, p.Y));
+                        LocationStack.Push(new Point(p.X, p.Y - 1));
+                        LocationStack.Push(new Point(p.X, p.Y + 1));
+                    }
+                }
+            }
+        }
+
+        public static void FloodFillFurnitureArray(ref Furniture[] Items, int ItemsPerRow, int StartIndex, Furniture OriginalItem, Furniture NewItem)
+        {
+            int Rows = Items.Length / ItemsPerRow;
+            Stack<Point> LocationStack = new Stack<Point>();
+            List<int> PreviousPoints = new List<int>();
+
+            int X = StartIndex % ItemsPerRow;
+            int Y = StartIndex / ItemsPerRow;
+
+            LocationStack.Push(new Point(X, Y));
+
+            while (LocationStack.Count > 0)
+            {
+                Point p = LocationStack.Pop();
+
+                int Idx = p.X + p.Y * ItemsPerRow;
+                //PreviousPoints.Add(Idx); // TODO: FIX
+
+                if (p.X < ItemsPerRow && p.X > 0 &&
+                        p.Y < Rows && p.Y > 0) // Make sure we stay within bounds
+                {
+                    Furniture i = Items[Idx];
+                    if (i.Equals(OriginalItem))
+                    {
+                        Items[Idx] = new Furniture(NewItem);
+                        LocationStack.Push(new Point(p.X - 1, p.Y));
+                        LocationStack.Push(new Point(p.X + 1, p.Y));
+                        LocationStack.Push(new Point(p.X, p.Y - 1));
+                        LocationStack.Push(new Point(p.X, p.Y + 1));
+                    }
+                }
+            }
         }
     }
 }

@@ -7,6 +7,17 @@ namespace ACSE
 {
     class SongLibrary
     {
+        public static Dictionary<int, byte> Animal_Crossing_SongLibrary_Bit_Map = new Dictionary<int, byte>
+        {
+            { 0x2684, 0xFF },
+            { 0x2685, 0xFF },
+            { 0x2686, 0xFF },
+            { 0x2687, 0xFF },
+            { 0x2689, 0x7F },
+            { 0x268A, 0xFF },
+            { 0x268B, 0xFF },
+        };
+
         public static Dictionary<int, byte> New_Leaf_SongLibrary_Bit_Map = new Dictionary<int, byte>
         {
             { 0x8C54, 0xFF },
@@ -39,6 +50,17 @@ namespace ACSE
             { 0x8FA7, 0x07 }
         };
 
+        public static string[][] Animal_Crossing_SongLibrary_Names = new string[7][]
+        {
+            new string[8] { "K.K. Safari", "K.K. Folk", "K.K. Rock", "Rockin' K.K.", "K.K. Ragtime", "K.K. Gumbo", "The K. Funk", "K.K. Blues" },
+            new string[8] { "K.K. Tango", "K.K. Faire", "Aloha K.K.", "Lucky K.K.", "K.K. Condor", "K.K. Steppe", "Imperial K.K.", "K.K. Casbah" },
+            new string[8] { "K.K. Aria", "K.K. Samba", "K.K. Bossa", "K.K. Calypso", "K.K. Salsa", "K.K. Mambo", "K.K. Reggae", "K.K. Ska" },
+            new string[8] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Etude", "K.K. Lullaby" },
+            new string[8] { "Mr. K.K.", "Café K.K.", "K.K. Parade", "Señor K.K.", "K.K. Song", "I Love You", "Two Days Ago", "" },
+            new string[8] { "K.K. Country", "Surfin' K.K.", "K.K. Ballad", "Comrade K.K.", "K.K. Lament", "Go K.K. Rider!", "K.K. Dirge", "K.K. Western" },
+            new string[8] { "Soulful K.K.", "K.K. Soul", "K.K. Crusin'", "K.K. Love Song", "K.K. D & B", "K.K. Technopop", "DJ K.K.", "Only Me" }
+        };
+
         public static string[][] New_Leaf_SongLibrary_Names = new string[12][]
         {
             new string[8] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Étude", "K.K. Lullaby" },
@@ -59,6 +81,8 @@ namespace ACSE
         {
             switch (Save_Type)
             {
+                case SaveType.Animal_Crossing:
+                    return Animal_Crossing_SongLibrary_Bit_Map;
                 case SaveType.New_Leaf:
                     return New_Leaf_SongLibrary_Bit_Map;
                 case SaveType.Welcome_Amiibo:
@@ -74,8 +98,15 @@ namespace ACSE
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
             if (Current_Bit_Map != null)
-                foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
-                    Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));
+                if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                {
+                    if (Player.House != null)
+                        foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+                            Save_File.Write(Player.House.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.House.Offset + Bit_Value.Key) | Bit_Value.Value));
+                }
+                else
+                    foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+                        Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));
         }
     }
 }
