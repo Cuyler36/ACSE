@@ -499,6 +499,14 @@ namespace ACSE
             while (pastVillagersPanel.Controls.Count > 0)
                 pastVillagersPanel.Controls[0].Dispose();
 
+            // Clear Hair Preview Box
+            if (hairPictureBox.Image != null)
+            {
+                var Image = hairPictureBox.Image;
+                hairPictureBox.Image = null;
+                Image.Dispose();
+            }
+
             Acre_Image_List = AcreData.GetAcreImageSet(save.Save_Type);
             SetEnabledControls(Save_File.Save_Type);
             SetupPatternBoxes();
@@ -1039,7 +1047,7 @@ namespace ACSE
 
             resettiCheckBox.Checked = Player.Data.Reset;
 
-            if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
+            if (Save_File.Game_System == SaveGeneration.N3DS)
             {
                 Refresh_PictureBox_Image(TPC_Picture, Player.Data.TownPassCardImage, false, false);
                 playerWallet.Text = Player.Data.NL_Wallet.Value.ToString();
@@ -1091,6 +1099,8 @@ namespace ACSE
             if (Save_File != null && Selected_Player != null && playerHairType.SelectedIndex > -1)
             {
                 Selected_Player.Data.HairType = (byte)playerHairType.SelectedIndex;
+                if (Save_File.Game_System == SaveGeneration.NDS || Save_File.Game_System == SaveGeneration.Wii || Save_File.Game_System == SaveGeneration.N3DS)
+                    Refresh_PictureBox_Image(hairPictureBox, ImageGeneration.GetHairImage(Save_File.Game_System, Selected_Player.Data.HairType, Selected_Player.Data.HairColor));
             }
         }
 
@@ -1099,6 +1109,8 @@ namespace ACSE
             if (Save_File != null && Selected_Player != null && playerHairColor.SelectedIndex > -1)
             {
                 Selected_Player.Data.HairColor = (byte)playerHairColor.SelectedIndex;
+                if (Save_File.Game_System == SaveGeneration.NDS || Save_File.Game_System == SaveGeneration.Wii || Save_File.Game_System == SaveGeneration.N3DS)
+                    Refresh_PictureBox_Image(hairPictureBox, ImageGeneration.GetHairImage(Save_File.Game_System, Selected_Player.Data.HairType, Selected_Player.Data.HairColor));
             }
         }
 

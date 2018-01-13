@@ -203,6 +203,7 @@
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
             this.houseToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.hairPictureBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
@@ -233,6 +234,7 @@
             this.grassPanel.SuspendLayout();
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -420,6 +422,7 @@
             // 
             // playersTab
             // 
+            this.playersTab.Controls.Add(this.hairPictureBox);
             this.playersTab.Controls.Add(this.facePreviewPictureBox);
             this.playersTab.Controls.Add(this.resettiCheckBox);
             this.playersTab.Controls.Add(this.birthdayDay);
@@ -1963,6 +1966,15 @@
             this.label43.TabIndex = 8;
             this.label43.Text = "Acre Height:";
             // 
+            // hairPictureBox
+            // 
+            this.hairPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.hairPictureBox.Location = new System.Drawing.Point(580, 63);
+            this.hairPictureBox.Name = "hairPictureBox";
+            this.hairPictureBox.Size = new System.Drawing.Size(40, 40);
+            this.hairPictureBox.TabIndex = 76;
+            this.hairPictureBox.TabStop = false;
+            // 
             // NewMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2024,6 +2036,7 @@
             this.grassPanel.PerformLayout();
             this.pictureContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2204,5 +2217,6 @@
         private System.Windows.Forms.PictureBox facePreviewPictureBox;
         private System.Windows.Forms.ComboBox nativeFruitBox;
         private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.PictureBox hairPictureBox;
     }
 }

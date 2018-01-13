@@ -137,13 +137,13 @@ namespace ACSE
 
             int HouseSize = HouseInfo.GetHouseSize(Offset, NewMainForm.Save_File.Save_Type);
             bool Basement = false;
-            Console.WriteLine("House Index: " + Index);
-            Console.WriteLine("House Offset: 0x" + Offset.ToString("X"));
-            Console.WriteLine("House Size: " + HouseSize.ToString());
+            //Console.WriteLine("House Index: " + Index);
+            //Console.WriteLine("House Offset: 0x" + Offset.ToString("X"));
+            //Console.WriteLine("House Size: " + HouseSize.ToString());
             if (NewMainForm.Save_File.Game_System == SaveGeneration.N64 || NewMainForm.Save_File.Game_System == SaveGeneration.GCN)
             {
                 Basement = HouseInfo.HasBasement(Offset, NewMainForm.Save_File.Save_Type);
-                Console.WriteLine("Basement: " + Basement.ToString());
+                //Console.WriteLine("Basement: " + Basement.ToString());
             }
 
             // Load House Data

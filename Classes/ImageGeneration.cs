@@ -39,6 +39,24 @@ namespace ACSE
 
         }
 
+        private static void ReplaceGrayscaleColor(ref Bitmap EditingImage, Color ReplacingColor)
+        {
+            for (int y = 0; y < EditingImage.Height; y++)
+            {
+                for (int x = 0; x < EditingImage.Width; x++)
+                {
+                    Color Pixel = EditingImage.GetPixel(x, y);
+                    if (Pixel.A > 0 && (Pixel.R == Pixel.B) && (Pixel.R == Pixel.G))
+                    {
+                        // The pixel is gray
+                        float Vibrance = Pixel.R / (float)255;
+
+                        EditingImage.SetPixel(x, y, Color.FromArgb(Pixel.A, (int)(ReplacingColor.R * Vibrance), (int)(ReplacingColor.G * Vibrance), (int)(ReplacingColor.B * Vibrance)));
+                    }
+                }
+            }
+        }
+
         public static void Draw_Buried_Icons(Bitmap Map, WorldItem[] Items, int Item_Size, bool Use_Text = false)
         {
             Graphics Bitmap_Graphics = Graphics.FromImage(Map);
@@ -400,6 +418,38 @@ namespace ACSE
                 }
             }
             return FaceImage;
+        }
+
+        public static Bitmap GetHairImage(SaveGeneration Save_Generation, int Index, int ColorIndex)
+        {
+            Bitmap HairImage = null;
+            string HairFolder = NewMainForm.Assembly_Location + "\\Resources\\Images\\Hair Styles";
+            if (Directory.Exists(HairFolder))
+            {
+                // TODO: Wild World, City Folk
+                if (Save_Generation == SaveGeneration.N3DS)
+                {
+                    HairFolder += "\\New Leaf";
+                }
+
+                if (Directory.Exists(HairFolder))
+                {
+                    string HairImageFile = HairFolder + "\\" + Index + ".png";
+                    if (File.Exists(HairImageFile))
+                    {
+                        try
+                        {
+                            HairImage = (Bitmap)Image.FromFile(HairImageFile);
+                            ReplaceGrayscaleColor(ref HairImage, Color.FromArgb((int)PlayerInfo.NL_Hair_Color_Values[ColorIndex]));
+                        }
+                        catch
+                        {
+                            NewMainForm.Debug_Manager.WriteLine(string.Format("Could not open hair file: {0}", HairImageFile), DebugLevel.Error);
+                        }
+                    }
+                }
+            }
+            return HairImage;
         }
     }
 }

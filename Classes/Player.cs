@@ -815,6 +815,12 @@ namespace ACSE
             "Black", "Brown", "Green", "Gray", "Blue", "Light Blue", "Light Blue", "Light Blue"
         };
 
+        public static uint[] NL_Hair_Color_Values = new uint[16]
+        {
+            0xFF593A38, 0xFF935929, 0xFFEF572E, 0xFF41A6DC, 0xFFFFE779, 0xFF8BCF62, 0xFFEE798B, 0xFFFFF8DE,
+            0xFF171806, 0xFF550601, 0xFFBB0C07, 0xFF001449, 0xFFDEA70F, 0xFF015A22, 0xFFAD75BC, 0xFF7A795A
+        };
+
         //TODO: Name NL Faces
         public static string[] NL_Male_Faces = new string[12]
         {
