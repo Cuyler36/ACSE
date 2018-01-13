@@ -70,5 +70,29 @@ namespace ACSE.Properties {
                 this["OutputInt32s"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        public ushort TownMapSize {
+            get {
+                return ((ushort)(this["TownMapSize"]));
+            }
+            set {
+                this["TownMapSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("96")]
+        public byte AcreMapSize {
+            get {
+                return ((byte)(this["AcreMapSize"]));
+            }
+            set {
+                this["AcreMapSize"] = value;
+            }
+        }
     }
 }

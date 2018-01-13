@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -55,7 +54,7 @@ namespace ACSE
         byte[] Grass_Wear;
         AboutBox1 About_Box = new AboutBox1();
         SecureValueForm Secure_NAND_Value_Form = new SecureValueForm();
-        SettingsMenuForm Settings_Menu = new SettingsMenuForm();
+        SettingsMenuForm Settings_Menu;
         int ScrollbarWidth = SystemInformation.VerticalScrollBarWidth;
         bool Clicking = false;
         byte[] Buried_Buffer;
@@ -78,16 +77,28 @@ namespace ACSE
 
         #region MapSizeVariables
 
-        private static int TownMapCellSize = 16;
+        private static int TownMapCellSize = Properties.Settings.Default.TownMapSize / 16;
         private static int TownMapTotalSize = TownMapCellSize * 16;
 
-        private static int AcreMapSize = 128;
+        private static int AcreMapSize = Properties.Settings.Default.AcreMapSize;
 
         #endregion
 
         public NewMainForm(Save save = null)
         {
             InitializeComponent();
+
+            // Clamp Map Sizes
+            if (TownMapCellSize < 8)
+            {
+                TownMapCellSize = 8;
+                TownMapTotalSize = 8 * 16;
+            }
+
+            if (AcreMapSize < 64)
+                AcreMapSize = 64;
+
+            Settings_Menu = new SettingsMenuForm(this);
             TPC_Picture = new PictureBoxWithInterpolationMode
             {
                 Name = "TPC_PictureBox",
@@ -129,7 +140,8 @@ namespace ACSE
                 Location = new Point(883, 620),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 BackgroundImageLayout = ImageLayout.Stretch,
-                InterpolationMode = InterpolationMode.HighQualityBicubic
+                InterpolationMode = InterpolationMode.HighQualityBicubic,
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Right
             };
             Controls.Add(selectedAcrePicturebox);
 
@@ -208,6 +220,27 @@ namespace ACSE
             if (save != null)
                 SetupEditor(save);
         }
+
+        #region Settings Changing Functions
+
+        public void SetMapPictureBoxSize(ushort Size)
+        {
+            TownMapTotalSize = Size;
+            TownMapCellSize = Size / 16;
+
+            if (Save_File != null)
+                SetupMapPictureBoxes();
+        }
+
+        public void SetAcreMapPictureBoxSize(byte Size)
+        {
+            AcreMapSize = Size;
+
+            if (Save_File != null)
+                SetupMapPictureBoxes();
+        }
+
+        #endregion
 
         #region Replace MenuStrip Construction
 

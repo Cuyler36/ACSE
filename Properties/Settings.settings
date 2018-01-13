@@ -14,5 +14,11 @@
     <Setting Name="OutputInt32s" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="TownMapSize" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">256</Value>
+    </Setting>
+    <Setting Name="AcreMapSize" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">96</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

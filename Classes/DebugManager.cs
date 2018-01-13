@@ -21,22 +21,11 @@ namespace ACSE
 
         public DebugManager()
         {
-            var FilePath = Get_Log_File_Path();
-            if (File.Exists(FilePath) && !CheckLogSizeOK())
-            {
-                try
-                {
-                    File.Delete(FilePath);
-                    Console.WriteLine("Log file exceeded maximum file length and was deleted.");
-                }
-                catch { Console.WriteLine("Unable to delete log file!"); }
-            }
+            CheckAndDeleteLogFile();
 
             if (Properties.Settings.Default.DebugLevel > 0)
             {
-                Log_File = new FileStream(FilePath, FileMode.OpenOrCreate);
-                Log_Writer = new StreamWriter(Log_File);
-                Log_Writer.BaseStream.Seek(0, SeekOrigin.End);
+                InitiateDebugLogWriter();
                 Enabled = true;
                 WriteLine("========== Debug Log Initiated ==========");
             }
@@ -46,10 +35,56 @@ namespace ACSE
             }
         }
 
+        public void CloseDebugLogWriter()
+        {
+            if (Log_Writer != null)
+                Log_Writer.Close();
+            if (Log_File != null)
+                Log_File.Close();
+
+            Enabled = false;
+        }
+
+        public void InitiateDebugLogWriter()
+        {
+            CloseDebugLogWriter();
+
+            try
+            {
+                Log_File = new FileStream(Get_Log_File_Path(), FileMode.OpenOrCreate);
+                Log_Writer = new StreamWriter(Log_File);
+                Log_Writer.BaseStream.Seek(0, SeekOrigin.End);
+            }
+            catch
+            {
+                Enabled = false;
+                Console.WriteLine("Unable to open or create the debug log file!");
+            }
+        }
+
         private bool CheckLogSizeOK()
         {
             var Info = new FileInfo(Get_Log_File_Path());
             return Info.Length <= MaxLogSize;
+        }
+
+        private void DeleteLogFile(string FilePath)
+        {
+            try
+            {
+                File.Delete(FilePath);
+                Console.WriteLine("Log file exceeded maximum file length and was deleted.");
+            }
+            catch { Console.WriteLine("Unable to delete log file!"); }
+        }
+
+        private void CheckAndDeleteLogFile()
+        {
+            var FilePath = Get_Log_File_Path();
+            if (File.Exists(FilePath) && !CheckLogSizeOK())
+            {
+                DeleteLogFile(FilePath);
+            }
         }
 
         public bool Log_File_Exists()
@@ -66,6 +101,12 @@ namespace ACSE
         {
             if (Log_Writer != null && Level <= Properties.Settings.Default.DebugLevel)
             {
+                if (!CheckLogSizeOK())
+                {
+                    CloseDebugLogWriter();
+                    DeleteLogFile(Get_Log_File_Path());
+                    InitiateDebugLogWriter();
+                }
                 Log_Writer.WriteLine(string.Format("[{0}] - ({1}) - {2} => {3}", Level, NewMainForm.Save_File != null
                     ? NewMainForm.Save_File.Save_Type.ToString().Replace("_", " ") : "No Save", DateTime.Now, Contents));
                 Log_Writer.Flush();
