@@ -185,36 +185,6 @@ namespace ACSE
             }
         }
 
-        public static Normal_Acre[] Generate_Random_Town_Layout()
-        {
-            // mRF_MakePerfectBit returns 0x1FF
-            Normal_Acre[] Acres = new Normal_Acre[70];
-            Random Random_Generator = new Random();
-            int Town_Cliff_Count = 1;
-            int Bridge_Count = 0;
-            int Ramp_Count = 0;
-            bool River_Turned = false;
-            bool Cliff_Turned = false;
-            int Random = Random_Generator.Next(1, 20);
-            if (Random > 18)
-                Town_Cliff_Count++;
-            Acres[0] = new Normal_Acre((ushort)(0x0344 + Town_Cliff_Count), 0);
-            Acres[6] = new Normal_Acre((ushort)(0x0348 + Town_Cliff_Count), 6);
-            int River_Start_Acre = Random_Generator.Next(1, 5);
-            // Generate Border layer
-            for (int i = 1; i < 6; i++)
-            {
-                Acres[i] = new Normal_Acre((i == River_Start_Acre) ? (ushort)(0x0328 + Town_Cliff_Count) : (ushort)(0x0324 + Town_Cliff_Count), i);
-            }
-            // Generate Cliffs
-            for (int i = 0; i < Town_Cliff_Count; i++)
-            {
-                int Starting_Offset = 21 + (i * 7) + (Town_Cliff_Count == 1 ? Random_Generator.Next(0, 1) : 0) * 7;
-                //TODO: Add more Node Labels to the Acre list for parsing
-            }
-            return Acres;
-        }
-
         public static byte GetWildWorldGrassBaseType(byte Seasonal_Grass_Value)
         {
             if (Seasonal_Grass_Value < 3)

@@ -93,16 +93,16 @@
 0x019C, River w/ Cliff (South) #4
 0x01A8, River w/ Cliff (East) #2
 0x01AC, River w/ Cliff (West) #2
-0x01BC, River (South) #4
-0x01C0, River (South) #5
+0x01BC, River (East) #2
+0x01C0, River (West) #2
 0x01C4, River w/ Corner Cliff (South) #4
 0x01C8, River w/ Corner Cliff (East) #3
 0x01CC, River w/ Corner Cliff (South) #5
 0x01D0, River (South > West) #2
 0x01D4, River w/ Corner Cliff (East) #4
 0x01D8, River w/ Corner Cliff (West) #2
-0x01DC, River (East) #2
-0x01E0, River (West) #2
+0x01DC, River (East) #3
+0x01E0, River (West) #3
 0x01E4, River w/ Corner Cliff (West) #3
 0x01FC, River w/ Lake (South) #1
 0x0200, River w/ Waterfall (South) #4
@@ -111,8 +111,8 @@
 0x020C, River w/ Cliff (West) #3
 0x0210, River w/ Waterfall (South) #6
 0x0214, River w/ Waterfall (South) #7
-0x0220, River (South) #6
-0x0224, River (East) #3
+0x0220, River (South) #4
+0x0224, River (East) #4
 0x0228, River (West) #4
 0x022C, River (South > East) #3
 0x0230, River (East > South) #2

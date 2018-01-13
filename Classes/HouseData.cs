@@ -259,11 +259,11 @@ namespace ACSE
             var Offsets = HouseInfo.GetHouseOffsets(SaveData.Save_Type);
 
             // Set House TownID & Name
-            if (Offsets.Town_ID != -1)
+            if (Offsets.Owning_Player_Name != -1 && Owner != null && Offsets.Town_ID != -1)
             {
                 Data.Town_ID = SaveData.ReadUInt16(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_ID, SaveData.Is_Big_Endian); // Might not be UInt16 in all games
             }
-            if (Offsets.Town_Name != -1)
+            if (Offsets.Owning_Player_Name != -1 && Owner != null && Offsets.Town_Name != -1)
             {
                 Data.Town_Name = SaveData.ReadString(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_Name,
                     NewMainForm.Current_Save_Info.Save_Offsets.Town_NameSize);
@@ -361,9 +361,9 @@ namespace ACSE
             Town_NameSize = 6,
             Owning_Player_ID = 0xC,
             Town_ID = 0xE,
-            House_Upgrade_Size = 0x26,
+            House_Upgrade_Size = 0x26, // Island is included in house upgrade size (size of 4)
             Roof_Color = 0x28, // 0x29 = Roof color on next house upgrade?
-            Room_Start = 0x38,
+            Room_Start = 0x30,
             Room_Count = 3,
             Room_Size = 0x8A8,
             Layer_Count = 4,
@@ -497,6 +497,17 @@ namespace ACSE
                     return (NewMainForm.Save_File.Working_Save_Data[Offset + 0x2A] >> 5) & 7;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return (NewMainForm.Save_File.Working_Save_Data[Offset + 0x26] >> 5) & 7;
+                default:
+                    return 0;
+            }
+        }
+
+        public static int GetHouseUpgradeSize(int Offset, SaveType Save_Type)
+        {
+            switch (Save_Type)
+            {
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    return (NewMainForm.Save_File.Working_Save_Data[Offset + 0x26] >> 2) & 7;
                 default:
                     return 0;
             }

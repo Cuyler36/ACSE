@@ -67,6 +67,7 @@ namespace ACSE
         public int Grass_Wear_Size;
         public int Grass_Type;
         public int Weather;
+        public int NativeFruit;
         public int PWPs; //NL only
         public int Past_Villagers;
         public int[] CRC_Offsets;
@@ -216,6 +217,7 @@ namespace ACSE
             Buried_Data = 0x22B1C,
             Buried_Data_Size = 0x3C0,
             Grass_Type = 0x24484,
+            NativeFruit = 0x2259C,
             // Shop update in progress byte (0x2E004 (Has to be 1B))
             Town_NameSize = 6,
             Checksum = 0x12,

@@ -73,6 +73,17 @@ namespace ACSE
         private byte[] Building_DB;
         private string[] Building_Names;
         private PictureBoxWithInterpolationMode NL_Grass_Overlay;
+        private PlaceholderTextBox ReplaceItemBox;
+        private PlaceholderTextBox ReplacingItemBox;
+
+        #region MapSizeVariables
+
+        private static int TownMapCellSize = 16;
+        private static int TownMapTotalSize = TownMapCellSize * 16;
+
+        private static int AcreMapSize = 128;
+
+        #endregion
 
         public NewMainForm(Save save = null)
         {
@@ -191,9 +202,54 @@ namespace ACSE
             basementCheckBox.CheckedChanged += BasementCheckBoxCheckChanged;
             houseTabSelect.Selected += House_Tab_Index_Changed;
 
+            // Construct Replace Item Menu
+            ConstructReplaceItemMenu();
+
             if (save != null)
                 SetupEditor(save);
         }
+
+        #region Replace MenuStrip Construction
+
+        private void ConstructReplaceItemMenu()
+        {
+            ReplaceItemBox = new PlaceholderTextBox();
+            ReplaceItemBox.PlaceholderText = "Replaced ID";
+            ReplaceItemBox.Size = new Size(replaceToolStripMenuItem.Size.Width, 18);
+            ReplaceItemBox.MaxLength = 4;
+
+            ReplacingItemBox = new PlaceholderTextBox();
+            ReplacingItemBox.PlaceholderText = "Replacing ID";
+            ReplacingItemBox.Size = new Size(replaceToolStripMenuItem.Size.Width, 18);
+            ReplaceItemBox.MaxLength = 4;
+
+            var ReplaceToolStripHost = new ToolStripControlHost(ReplaceItemBox);
+            var ReplacingToolStripHost = new ToolStripControlHost(ReplacingItemBox);
+
+            ReplaceToolStripHost.AutoSize = false;
+            ReplacingToolStripHost.AutoSize = false;
+
+            ReplaceToolStripHost.Size = ReplaceItemBox.Size;
+            ReplacingToolStripHost.Size = ReplacingItemBox.Size;
+
+            replaceItemsToolStripMenuItem.DropDown.Items.Insert(0, ReplaceToolStripHost);
+            replaceItemsToolStripMenuItem.DropDown.Items.Insert(1, ReplacingToolStripHost);
+
+            ReplaceItemBox.TextChanged += new EventHandler((object s, EventArgs e) => ReplaceVerifyHex(ReplaceItemBox));
+            ReplacingItemBox.TextChanged += new EventHandler((object s, EventArgs e) => ReplaceVerifyHex(ReplacingItemBox));
+        }
+
+        private void ReplaceVerifyHex(PlaceholderTextBox TextBox)
+        {
+            string Text = TextBox.Text;
+            if (!int.TryParse(Text, NumberStyles.HexNumber, NumberFormatInfo.CurrentInfo, out int Hex) && Text != string.Empty)
+            {
+                TextBox.Text = Text.Remove(Text.Length - 1, 1);
+                TextBox.SelectionStart = TextBox.Text.Length;
+            }
+        }
+
+        #endregion
 
         private void Birthday_Month_FocusLost()
         {
@@ -427,7 +483,7 @@ namespace ACSE
             bool Visibility = (save.Save_Type == SaveType.City_Folk || save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo);
             buildingsPanel.Visible = Visibility;
             buildingsLabel.Visible = Visibility;
-            townPanel.Size = new Size(buildingsPanel.Visible ? 718 : 922, 517);
+            townPanel.Size = new Size(Visibility ? townTab.Size.Width - 213 : townTab.Size.Width - 9, townTab.Size.Height);
 
             //Cleanup old dictionary
             if (Acre_Image_List != null)
@@ -683,11 +739,16 @@ namespace ACSE
             if (Properties.Settings.Default.OutputInt32s && Save_File.Game_System == SaveGeneration.N3DS)
                 Utility.Scan_For_NL_Int32();
 
+            // Set TextBox max values
+            playerTownName.MaxLength = Current_Save_Info.Save_Offsets.Town_NameSize;
+            playerName.MaxLength = Current_Save_Info.Save_Offsets.Town_NameSize; // As far as I know, town name and player name are always the same size
+
             // Enable Tasks
             clearWeedsToolStripMenuItem.Enabled = true;
             removeAllItemsToolStripMenuItem.Enabled = true;
             waterFlowersToolStripMenuItem.Enabled = Save_File.Game_System != SaveGeneration.GCN && Save_File.Game_System != SaveGeneration.N64;
             makeFruitsPerfectToolStripMenuItem.Enabled = Save_File.Game_System == SaveGeneration.N3DS;
+            replaceItemsToolStripMenuItem.Enabled = true;
 
             // Set Grass Type
             if (Current_Save_Info.Save_Offsets.Grass_Type != -1)
@@ -695,6 +756,9 @@ namespace ACSE
                 byte Grass_Type = Save_File.ReadByte(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Type);
                 grassTypeBox.SelectedIndex = (Save_File.Game_System == SaveGeneration.NDS ? Utility.GetWildWorldGrassBaseType(Grass_Type) : (Grass_Type < 3 ? Grass_Type : 0));
             }
+
+            // Set Native Fruit Types
+            SetPossibleNativeFruits(save.Game_System);
 
             // Set Weather Info
             weatherComboBox.Enabled = true;
@@ -985,6 +1049,9 @@ namespace ACSE
                 if (Save_File.Save_Type == SaveType.Welcome_Amiibo)
                     playerMeowCoupons.Text = Player.Data.MeowCoupons.Value.ToString();
             }
+
+            // Set Face Image
+            Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Game_System, Player.Data.FaceType, Selected_Player.Data.Gender));
         }
 
         private void TownName_Box_FocusLost(object sender, EventArgs e)
@@ -1015,6 +1082,7 @@ namespace ACSE
             if (Save_File != null && Selected_Player != null && playerFace.SelectedIndex > -1)
             {
                 Selected_Player.Data.FaceType = (byte)playerFace.SelectedIndex;
+                Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Game_System, Selected_Player.Data.FaceType, Selected_Player.Data.Gender));
             }
         }
 
@@ -1096,6 +1164,30 @@ namespace ACSE
                         Acre.Name = (string)Acre.Tag;
                         Acre_Type.Nodes.Add(Acre);
                     }
+                }
+            }
+        }
+
+        private void SetPossibleNativeFruits(SaveGeneration Save_Generation)
+        {
+
+            nativeFruitBox.Items.Clear();
+            nativeFruitBox.Enabled = false;
+            if (Current_Save_Info.Save_Offsets.NativeFruit > 0)
+            {
+                nativeFruitBox.Enabled = true;
+                if (Save_Generation == SaveGeneration.N64 || Save_Generation == SaveGeneration.GCN)
+                {
+                    nativeFruitBox.Items.Add("Apple");
+                    nativeFruitBox.Items.Add("Cherry");
+                    nativeFruitBox.Items.Add("Pear");
+                    nativeFruitBox.Items.Add("Peach");
+                    nativeFruitBox.Items.Add("Orange");
+
+                    int FruitIndex = Save_File.ReadUInt16(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.NativeFruit, true) - 0x2800;
+
+                    if (FruitIndex > -1 && FruitIndex < nativeFruitBox.Items.Count)
+                        nativeFruitBox.SelectedIndex = FruitIndex;
                 }
             }
         }
@@ -1309,8 +1401,8 @@ namespace ACSE
 
                     Acre_Map[Acre] = new PictureBoxWithInterpolationMode()
                     {
-                        Size = new Size(64, 64),
-                        Location = new Point(x * 64, (Acre / Current_Save_Info.X_Acre_Count) * 64),
+                        Size = new Size(AcreMapSize, AcreMapSize),
+                        Location = new Point(x * AcreMapSize, (Acre / Current_Save_Info.X_Acre_Count) * AcreMapSize),
                         BackgroundImage = Acre_Image,
                         SizeMode = PictureBoxSizeMode.StretchImage,
                         BackgroundImageLayout = ImageLayout.Stretch,
@@ -1335,8 +1427,8 @@ namespace ACSE
                                 Town_Acre_Map[Town_Acre] = new PictureBoxWithInterpolationMode()
                                 {
                                     InterpolationMode = InterpolationMode.HighQualityBicubic,
-                                    Size = new Size(128, 128),
-                                    Location = new Point((x - 1) * 129, (Town_Acre / (Current_Save_Info.X_Acre_Count - 2)) * 129),
+                                    Size = new Size(TownMapTotalSize, TownMapTotalSize),
+                                    Location = new Point((x - 1) * (TownMapTotalSize + 1), (Town_Acre / (Current_Save_Info.X_Acre_Count - 2)) * (TownMapTotalSize + 1)),
                                     Image = Town_Acres[Town_Acre_Count] != null ? Town_Acre_Bitmap : null,
                                     BackgroundImage = Acre_Image,
                                     BackgroundImageLayout = ImageLayout.Stretch,
@@ -1420,7 +1512,7 @@ namespace ACSE
                         {
                             Island_Acre_Map[Idx] = new PictureBoxWithInterpolationMode
                             {
-                                Size = new Size(128, 128),
+                                Size = new Size(TownMapTotalSize, TownMapTotalSize),
                                 BackgroundImage = Get_Acre_Image(Island_Acres[Idx], Acre_ID_Str),
                                 Image = GenerateAcreItemsBitmap(Island_Acres[Idx].Acre_Items, Island_Acres[Idx].Index, true),
                                 SizeMode = PictureBoxSizeMode.StretchImage,
@@ -1433,15 +1525,15 @@ namespace ACSE
                             Island_Acre_Map[Idx].MouseDown += new MouseEventHandler((object sender, MouseEventArgs e) => Town_Mouse_Down(sender, e, true));
                             Island_Acre_Map[Idx].MouseUp += new MouseEventHandler(Town_Mouse_Up);
                             Island_Acre_Map[Idx].Location = (Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus)
-                                ? new Point(X * 128, Y * 128) : new Point(((X - 1) % 4) * 128, (Y - 1) * 128);
+                                ? new Point(X * TownMapTotalSize, Y * TownMapTotalSize) : new Point(((X - 1) % 4) * TownMapTotalSize, (Y - 1) * TownMapTotalSize);
                             islandPanel.Controls.Add(Island_Acre_Map[Idx]);
                         }
-                        if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
+                        if (Save_File.Game_System == SaveGeneration.N3DS)
                         {
                             NL_Island_Acre_Map[Idx] = new PictureBoxWithInterpolationMode
                             {
-                                Size = new Size(64, 64),
-                                Location = new Point(X * 64, 280 + Y * 64),
+                                Size = new Size(AcreMapSize, AcreMapSize),
+                                Location = new Point(X * AcreMapSize, TownMapTotalSize * 2 + 24 + Y * AcreMapSize),
                                 BackgroundImage = Get_Acre_Image(Island_Acres[Idx], Island_Acres[Idx].AcreID.ToString("X")),
                                 SizeMode = PictureBoxSizeMode.StretchImage,
                                 BackgroundImageLayout = ImageLayout.Stretch,
@@ -1837,8 +1929,9 @@ namespace ACSE
 
         private Bitmap GenerateAcreItemsBitmap(WorldItem[] items, int Acre, bool Island_Acre = false)
         {
-            const int itemSize = 8;
-            const int acreSize = 128;
+            int itemSize = TownMapCellSize;
+            int acreSize = TownMapTotalSize;
+            int width = itemSize * 16;
             Bitmap acreBitmap = new Bitmap(acreSize, acreSize);
             byte[] bitmapBuffer = new byte[4 * (acreSize * acreSize)];
             for (int i = 0; i < 256; i++)
@@ -1853,18 +1946,25 @@ namespace ACSE
                             ((item.Location.Y * itemSize + x / itemSize) * acreSize * 4) + ((item.Location.X * itemSize + x % itemSize) * 4), 4);
                 }
             }
+            // Draw Border
+            //ImageGeneration.Draw_Grid(acreBitmap, 8);
+            for (int i = 0; i < (width * width); i++)
+                if ((i / itemSize > 0 && i % (itemSize * 16) > 0 && i % (itemSize) == 0) || (i / (itemSize * 16) > 0 && (i / (itemSize * 16)) % (itemSize) == 0))
+                    Buffer.BlockCopy(BitConverter.GetBytes(0x56FFFFFF), 0, bitmapBuffer,
+                        ((i / (itemSize * 16)) * width * 4) + ((i % (itemSize * 16)) * 4), 4);
+
+            // Construct Bitmap
             BitmapData bitmapData = acreBitmap.LockBits(new Rectangle(0, 0, acreSize, acreSize), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
             Marshal.Copy(bitmapBuffer, 0, bitmapData.Scan0, bitmapBuffer.Length);
             acreBitmap.UnlockBits(bitmapData);
             // Draw Buried X
-            ImageGeneration.Draw_Buried_Icons(acreBitmap, items);
-            // Draw Border
-            ImageGeneration.Draw_Grid(acreBitmap, 8);
+            ImageGeneration.Draw_Buried_Icons(acreBitmap, items, TownMapCellSize);
             // Draw Buildings (if needed)
             if (Save_File.Game_System == SaveGeneration.Wii || Save_File.Game_System == SaveGeneration.N3DS)
             {
                 return Island_Acre ? ((Save_File.Game_System == SaveGeneration.N3DS)
-                    ? ImageGeneration.Draw_Buildings(acreBitmap, Island_Buildings, Acre - 5) : acreBitmap) : ImageGeneration.Draw_Buildings(acreBitmap, Buildings, Acre);
+                    ? ImageGeneration.Draw_Buildings(acreBitmap, Island_Buildings, Acre - 5, TownMapCellSize) : acreBitmap)
+                    : ImageGeneration.Draw_Buildings(acreBitmap, Buildings, Acre, TownMapCellSize);
             }
             else
             {
@@ -2640,7 +2740,7 @@ namespace ACSE
                     }
                     if (buriedCheckbox.Checked)
                     {
-                        if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
+                        if (Save_File.Game_System == SaveGeneration.N3DS)
                         {
                             if (Island)
                             {
@@ -2729,8 +2829,8 @@ namespace ACSE
                 Last_Town_X = e.X;
                 Last_Town_Y = e.Y;
                 int idx = Island ? Array.IndexOf(Island_Acre_Map, sender as PictureBox) : Array.IndexOf(Town_Acre_Map, sender as PictureBoxWithInterpolationMode);
-                int X = e.X / (4 * 2);
-                int Y = e.Y / (4 * 2);
+                int X = e.X / TownMapCellSize;
+                int Y = e.Y / TownMapCellSize;
                 int index = X + Y * 16;
                 int Acre = idx;
                 if (index > 255)
@@ -3367,6 +3467,41 @@ namespace ACSE
             SongLibrary.FillSongLibrary(Save_File, Selected_Player);
         }
 
+        private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Town_Acres != null && ushort.TryParse(ReplaceItemBox.Text, NumberStyles.HexNumber, null, out ushort ReplaceId)
+                && ushort.TryParse(ReplacingItemBox.Text, NumberStyles.HexNumber, null, out ushort ReplacingId))
+            {
+                string ReplacingName = ItemData.GetItemName(ReplacingId);
+                bool Unbury = ReplacingName.Equals("Empty");
+                
+                for (int i = 0; i < Town_Acres.Length; i++)
+                {
+                    bool Changed = false;
+                    Normal_Acre Acre = Town_Acres[i];
+                    if (Acre.Acre_Items != null)
+                    {
+                        foreach (WorldItem Item in Acre.Acre_Items)
+                        {
+                            if (Item.ItemID == ReplaceId)
+                            {
+                                Changed = true;
+                                Item.ItemID = ReplacingId;
+                                Item.Name = ReplacingName;
+                                if (Item.Burried && Unbury)
+                                {
+                                    Item.Burried = false;
+                                    Item.Flag1 &= 0x7F;
+                                }
+                            }
+                        }
+                    }
+                    if (Changed)
+                        Refresh_PictureBox_Image(Town_Acre_Map[i], GenerateAcreItemsBitmap(Acre.Acre_Items, i)); // TODO: Make this work on island acres somehow.
+                }
+            }
+        }
+
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings_Menu.Show();
@@ -3429,8 +3564,8 @@ namespace ACSE
         private void Town_Mouse_Down(object sender, MouseEventArgs e, bool Island = false)
         {
             int idx = Island ? Array.IndexOf(Island_Acre_Map, sender as PictureBoxWithInterpolationMode) : Array.IndexOf(Town_Acre_Map, sender as PictureBoxWithInterpolationMode);
-            int X = e.X / (4 * 2);
-            int Y = e.Y / (4 * 2);
+            int X = e.X / TownMapCellSize;
+            int Y = e.Y / TownMapCellSize;
             int index = X + Y * 16;
             int Acre = idx;
             if (index > 255)
@@ -3443,21 +3578,6 @@ namespace ACSE
         private void Town_Mouse_Up(object sender, EventArgs e)
         {
             Clicking = false;
-        }
-
-        // Replace TextBoxes
-        private void ReplaceTextBoxFocusLost(object sender, EventArgs e)
-        {
-            var TextBox = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(TextBox.Text))
-                TextBox.Text = sender == replacedTextBox ? "Replaced" : "Replacing";
-        }
-
-        private void ReplaceTextBoxFocusGained(object sender, EventArgs e)
-        {
-            var TextBox = sender as TextBox;
-            if (TextBox.Text.Equals("Replaced") || TextBox.Text.Equals("Replacing"))
-                TextBox.Text = "";
         }
     }
 

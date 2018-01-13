@@ -42,7 +42,7 @@ namespace ACSE
             { 0x1B, "Û" },
             { 0x1C, "Ü" },
             { 0x1D, "ß" },
-            { 0x1E, "Þ" },
+            { 0x1E, "\u00DE" }, // Latin Capital Thorn
             { 0x1F, "à" },
             { 0x20, " " },
             { 0x21, "!" },
@@ -139,8 +139,8 @@ namespace ACSE
             { 0x7C, "é" },
             { 0x7D, "ê" },
             { 0x7E, "ë" },
-            { 0x7F, "□" },
-            { 0x80, "�" },
+            { 0x7F, "□" }, // Control Character
+            { 0x80, "�" }, // Not used?
             { 0x81, "ì" },
             { 0x82, "í" },
             { 0x83, "î" },
@@ -161,7 +161,7 @@ namespace ACSE
             { 0x92, "ü" },
             { 0x93, "ý" },
             { 0x94, "ÿ" },
-            { 0x95, "þ" },
+            { 0x95, "\u00FE" }, // Latin lowercase thorn
             { 0x96, "Ý" },
             { 0x97, "¦" },
             { 0x98, "§" },
@@ -222,52 +222,7 @@ namespace ACSE
             { 0xCF, "🐞" },
             { 0xD0, ";" },
             { 0xD1, "#" },
-            //0xD2
-            //0xD3
             { 0xD4, "⚷" },
-            //0xD5
-            //0xD6
-            //0xD7
-            //0xD8
-            //0xD9
-            //0xDA
-            //0xDB
-            //0xDC
-            //0xDD
-            //0xDE
-            //0xDF
-            //0xE0
-            //0xE1
-            //0xE2
-            //0xE3
-            //0xE4
-            //0xE5
-            //0xE6
-            //0xE7
-            //0xE8
-            //0xE9
-            //0xEA
-            //0xEB
-            //0xEC
-            //0xED
-            //0xEE
-            //0xEF
-            //0xF0
-            //0xF1
-            //0xF2
-            //0xF3
-            //0xF4
-            //0xF5
-            //0xF6
-            //0xF7
-            //0xF8
-            //0xF9
-            //0xFA
-            //0xFB
-            //0xFC
-            //0xFD
-            //0xFE
-            //0xFF
         };
 
         public static Dictionary<byte, string> Doubutsu_no_Mori_e_Plus_Char_Map = new Dictionary<byte, string>
@@ -331,7 +286,7 @@ namespace ACSE
             { 0x38, "8" },
             { 0x39, "9" },
             { 0x3A, ":" },
-            { 0x3B, ";" }, // Actually is this: 🌢 (it's double width, I need to write a better text utility)
+            { 0x3B, "🌢" }, // Unicode
             { 0x3C, "<" },
             { 0x3D, "+" },
             { 0x3E, ">" },
@@ -364,7 +319,7 @@ namespace ACSE
             { 0x59, "Y" },
             { 0x5A, "Z" },
             { 0x5B, "も" },
-            { 0x5C, "\\" }, // Angry symbol (or annoyed)
+            { 0x5C, "💢" }, // Unicode
             { 0x5D, "や" },
             { 0x5E, "ゆ" },
             { 0x5F, "_" },
@@ -399,7 +354,7 @@ namespace ACSE
             { 0x7C, "り" },
             { 0x7D, "る" },
             { 0x7E, "れ" },
-            { 0x7F, "�" }, // Cont Character
+            { 0x7F, "�" }, // Control Character
             { 0x80, "□" }, // Tag Character
             { 0x81, "。" },
             { 0x82, "｢" },
