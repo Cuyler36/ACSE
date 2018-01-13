@@ -45,38 +45,73 @@ namespace ACSE
                 Image_Dir += "NL_Acre_Images";
             else if (Save_Type == SaveType.Welcome_Amiibo)
                 Image_Dir += "WA_Acre_Images";
+
             if (Directory.Exists(Image_Dir))
-                foreach (string File in Directory.GetFiles(Image_Dir))
-                    Image_List.Add((Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
-                        ? ushort.Parse(Path.GetFileNameWithoutExtension(File).Replace("acre_", "")).ToString("X4") : Path.GetFileNameWithoutExtension(File), Image.FromFile(File));
+            {
+                var Files = Directory.GetFiles(Image_Dir);
+                for (int i = 0; i < Files.Length; i++)
+                {
+                    var File = Files[i];
+                    var Extension = Path.GetExtension(File);
+                    if (Extension.Equals(".jpg") || Extension.Equals(".png"))
+                    {
+                        try
+                        {
+                            Image_List.Add((Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
+                                ? ushort.Parse(Path.GetFileNameWithoutExtension(File).Replace("acre_", "")).ToString("X4") : Path.GetFileNameWithoutExtension(File), Image.FromFile(File));
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(string.Format("An error occured while loading the acre images! File Index: {0} | File Name: {1} | Error:\n{2}", i, Path.GetFileName(File), ex.Message));
+                        }
+                    }
+                }
+            }
             else
                 MessageBox.Show("Acre Images Folder doesn't exist!");
             return Image_List;
         }
 
-        public Dictionary<int, Item> GetAcreData(ushort[] acreBuffer)
+        public static Image FetchAcreImage(SaveType Save_Type, ushort AcreId)
         {
-            Dictionary<int, Item> acreData = new Dictionary<int, Item> { };
-            int i = 0;
-            foreach (ushort cellData in acreBuffer)
+            string Image_Dir = NewMainForm.Assembly_Location + "\\Resources\\Images\\";
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs its own set?
+                Image_Dir += "Acre_Images";
+            else if (Save_Type == SaveType.Wild_World)
+                Image_Dir += "WW_Acre_Images";
+            else if (Save_Type == SaveType.City_Folk)
+                Image_Dir += "CF_Acre_Images";
+            else if (Save_Type == SaveType.New_Leaf)
+                Image_Dir += "NL_Acre_Images";
+            else if (Save_Type == SaveType.Welcome_Amiibo)
+                Image_Dir += "WA_Acre_Images";
+            else
+                return null;
+            if (Directory.Exists(Image_Dir))
             {
-                acreData.Add(i, new Item(cellData));
-                i++;
-            }
-            return acreData;
-        }
+                foreach (string File in Directory.GetFiles(Image_Dir))
+                {
+                    var Extension = Path.GetExtension(File);
+                    if (Extension.Equals(".png") || Extension.Equals(".jpg"))
+                    {
+                        if (Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
+                        {
+                            if (ushort.TryParse(Path.GetFileNameWithoutExtension(File).Replace("acre_", ""), out ushort FileAcreId))
+                            {
+                                if (FileAcreId == AcreId)
+                                {
+                                    return Image.FromFile(File);
+                                }
+                            }
+                        }
+                        else
+                        {
 
-        public static Dictionary<int, Acre> GetAcreTileData(ushort[] acreBuffer)
-        {
-            Dictionary<int, Acre> AcreTileData = new Dictionary<int, Acre> { };
-            int i = 0;
-            foreach (ushort acre in acreBuffer)
-            {
-                //MessageBox.Show(acre.ToString("X"));
-                i++;
-                AcreTileData.Add(i, new Acre(acre, i));
+                        }
+                    }
+                }
             }
-            return AcreTileData;
+            return null;
         }
 
         public static Dictionary<byte, Image> Load_AC_Map_Icons()
@@ -87,18 +122,54 @@ namespace ACSE
             {
                 foreach (string Icon_File in Directory.GetFiles(Icon_Directory))
                 {
-                    if (byte.TryParse(Path.GetFileNameWithoutExtension(Icon_File), out byte Index))
+                    var Extension = Path.GetExtension(Icon_File);
+                    if (Extension.Equals(".png") || Extension.Equals(".jpg"))
                     {
-                        Icons.Add(Index, Image.FromFile(Icon_File));
+                        if (byte.TryParse(Path.GetFileNameWithoutExtension(Icon_File), out byte Index))
+                        {
+                            Icons.Add(Index, Image.FromFile(Icon_File));
+                        }
                     }
                 }
             }
             return Icons;
         }
 
-        public static Dictionary<ushort, byte> Load_AC_Map_Index()
+        public static Image FetchACMapIcon(byte Index)
         {
-            string Index_File = NewMainForm.Assembly_Location + "\\Resources\\AC_Map_Icon_Index.txt";
+            string Icon_Directory = NewMainForm.Assembly_Location + "\\Resources\\Images\\AC_Map_Icons";
+            if (Directory.Exists(Icon_Directory))
+            {
+                foreach (string Icon_File in Directory.GetFiles(Icon_Directory))
+                {
+                    if (byte.TryParse(Path.GetFileNameWithoutExtension(Icon_File), out byte FileIndex))
+                    {
+                        if (FileIndex == Index)
+                        {
+                            return Image.FromFile(Icon_File);
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static Dictionary<ushort, byte> Load_AC_Map_Index(SaveType saveType)
+        {
+            string Index_File = NewMainForm.Assembly_Location;
+            switch (saveType)
+            {
+                case SaveType.Doubutsu_no_Mori:
+                case SaveType.Doubutsu_no_Mori_Plus:
+                    Index_File += "\\Resources\\DnM_Map_Icon_Index.txt";
+                    break;
+                case SaveType.Animal_Crossing:
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                default:
+                    Index_File += "\\Resources\\AC_Map_Icon_Index.txt";
+                    break;
+            }
+            
             if (File.Exists(Index_File))
             {
                 try

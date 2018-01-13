@@ -39,7 +39,25 @@ namespace ACSE
 
         }
 
-        public static void Draw_Buried_Icons(Bitmap Map, WorldItem[] Items, int Item_Size = 8, bool Use_Text = false)
+        private static void ReplaceGrayscaleColor(ref Bitmap EditingImage, Color ReplacingColor)
+        {
+            for (int y = 0; y < EditingImage.Height; y++)
+            {
+                for (int x = 0; x < EditingImage.Width; x++)
+                {
+                    Color Pixel = EditingImage.GetPixel(x, y);
+                    if (Pixel.A > 0 && (Pixel.R == Pixel.B) && (Pixel.R == Pixel.G))
+                    {
+                        // The pixel is gray
+                        float Vibrance = Pixel.R / (float)255;
+
+                        EditingImage.SetPixel(x, y, Color.FromArgb(Pixel.A, (int)(ReplacingColor.R * Vibrance), (int)(ReplacingColor.G * Vibrance), (int)(ReplacingColor.B * Vibrance)));
+                    }
+                }
+            }
+        }
+
+        public static void Draw_Buried_Icons(Bitmap Map, WorldItem[] Items, int Item_Size, bool Use_Text = false)
         {
             Graphics Bitmap_Graphics = Graphics.FromImage(Map);
             Bitmap_Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -53,17 +71,17 @@ namespace ACSE
                     if (Use_Text)
                     {
                         Bitmap_Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                        Bitmap_Graphics.DrawString("X", new Font("Tahoma", 8), Brushes.White, new RectangleF(Item.Location.X * 8, Item.Location.Y * 8, 8, 8));
+                        Bitmap_Graphics.DrawString("X", new Font("Tahoma", Item_Size), Brushes.White, new RectangleF(Item.Location.X * Item_Size, Item.Location.Y * Item_Size, Item_Size, Item_Size));
                     }
                     else
-                        Bitmap_Graphics.DrawImage(Properties.Resources.Buried, Item.Location.X * 8, Item.Location.Y * 8, 8, 8);
+                        Bitmap_Graphics.DrawImage(Properties.Resources.Buried, Item.Location.X * Item_Size + 1, Item.Location.Y * Item_Size + 1, Item_Size - 1, Item_Size - 1);
                 }
             }
             Bitmap_Graphics.Flush();
             Bitmap_Graphics.Dispose();
         }
 
-        public static Bitmap Draw_Grid(Bitmap Map, int Item_Size, uint Grid_Color = 0x41444444, int Grid_Pixel_Size = 1)
+        public static Bitmap Draw_Grid(Bitmap Map, int Item_Size, uint Grid_Color = 0xFFAAAAAA, int Grid_Pixel_Size = 1)
         {
             Graphics Bitmap_Graphics = Graphics.FromImage(Map);
             Bitmap_Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -94,9 +112,9 @@ namespace ACSE
             return Acre_Highlight;
         }
 
-        public static Bitmap Draw_Building(Bitmap Acre_Map, Building Building_to_Draw, bool Use_Text = false)
+        public static Bitmap Draw_Building(Bitmap Acre_Map, Building Building_to_Draw, int ItemSize,  bool Use_Text = false)
         {
-            RectangleF RectF = new RectangleF(Building_to_Draw.X_Pos * 8, Building_to_Draw.Y_Pos * 8, 8, 8);
+            RectangleF RectF = new RectangleF(Building_to_Draw.X_Pos * ItemSize, Building_to_Draw.Y_Pos * ItemSize, ItemSize, ItemSize);
             Graphics Bitmap_Graphics = Graphics.FromImage(Acre_Map);
             Bitmap_Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             Bitmap_Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -104,16 +122,16 @@ namespace ACSE
             if (Use_Text)
             {
                 Bitmap_Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                Bitmap_Graphics.DrawString("B", new Font("Tahoma", 8), Brushes.White, RectF);
+                Bitmap_Graphics.DrawString("B", new Font("Tahoma", ItemSize), Brushes.White, RectF);
             }
             else
-                Bitmap_Graphics.DrawImage(Properties.Resources.Building, Building_to_Draw.X_Pos * 8, Building_to_Draw.Y_Pos * 8, 8, 8);
+                Bitmap_Graphics.DrawImage(Properties.Resources.Building, Building_to_Draw.X_Pos * ItemSize, Building_to_Draw.Y_Pos * ItemSize, ItemSize, ItemSize);
             Bitmap_Graphics.Flush();
             Bitmap_Graphics.Dispose();
             return Acre_Map;
         }
 
-        public static Bitmap Draw_Buildings(Bitmap Acre_Map, Building[] Building_List, int Acre)
+        public static Bitmap Draw_Buildings(Bitmap Acre_Map, Building[] Building_List, int Acre, int ItemSize)
         {
             if (Building_List == null)
                 return Acre_Map;
@@ -121,7 +139,7 @@ namespace ACSE
             {
                 if (B.Exists && B.Acre_Index == Acre)
                 {
-                    Draw_Building(Acre_Map, B);
+                    Draw_Building(Acre_Map, B, ItemSize);
                 }
             }
             return Acre_Map;
@@ -149,21 +167,23 @@ namespace ACSE
             Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             for (int i = 0; i < Furniture.Length; i++)
             {
-                if (Furniture[i].Name != "Empty")
+                string ItemType = ItemData.GetItemType(Furniture[i].ItemID, NewMainForm.Save_File.Save_Type);
+                if (Furniture[i].Name != "Empty" && (ItemType.Equals("Furniture") || ItemType.Equals("Gyroids")))
                 {
                     Image Arrow = Properties.Resources.Arrow;
+
                     if (Furniture[i].Rotation > 0)
                     {
-                        switch(Furniture[i].Rotation)
+                        switch (Furniture[i].Rotation % 360)
                         {
                             case 90:
-                                Arrow.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                                Arrow.RotateFlip(RotateFlipType.Rotate270FlipNone);
                                 break;
                             case 180:
                                 Arrow.RotateFlip(RotateFlipType.Rotate180FlipNone);
                                 break;
                             case 270:
-                                Arrow.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                                Arrow.RotateFlip(RotateFlipType.Rotate90FlipNone);
                                 break;
                         }
                     }
@@ -294,7 +314,7 @@ namespace ACSE
             }
             if (TPC_Bytes[TPC_Bytes.Length - 1] == 0xD9 && TPC_Bytes[TPC_Bytes.Length - 2] == 0xFF)
                 return Image.FromStream(new MemoryStream(TPC_Bytes));
-            for (int i = TPC_Bytes.Length - 1; i > 0; i --)
+            for (int i = TPC_Bytes.Length - 1; i > 0; i--)
             {
                 if (i > 0 && TPC_Bytes[i - 1] == 0xFF && TPC_Bytes[i] == 0xD9)
                 {
@@ -363,6 +383,73 @@ namespace ACSE
                 MessageBox.Show("Pattern Import Error: Failed to import the image!");
                 return null;
             }
+        }
+
+        public static Image GetFaceImage(SaveGeneration Save_Generation, int Index, byte Gender)
+        {
+            Image FaceImage = null;
+            string FacesFolder = NewMainForm.Assembly_Location + "\\Resources\\Images\\Faces";
+            if (Directory.Exists(FacesFolder))
+            {
+                // TODO: Wild World+
+                if (Save_Generation == SaveGeneration.N64 || Save_Generation == SaveGeneration.GCN)
+                {
+                    FacesFolder += "\\Animal Crossing";
+                }
+                else if (Save_Generation == SaveGeneration.N3DS)
+                {
+                    FacesFolder += "\\New Leaf\\" + (Gender == 1 ? "Female" : "Male");
+                }
+
+                if (Directory.Exists(FacesFolder))
+                {
+                    string FaceImageFile = FacesFolder + "\\" + Index + ".bmp";
+                    if (File.Exists(FaceImageFile))
+                    {
+                        try
+                        {
+                            FaceImage = Image.FromFile(FaceImageFile);
+                        }
+                        catch
+                        {
+                            NewMainForm.Debug_Manager.WriteLine(string.Format("Could not open face file: {0}", FaceImageFile), DebugLevel.Error);
+                        }
+                    }
+                }
+            }
+            return FaceImage;
+        }
+
+        public static Bitmap GetHairImage(SaveGeneration Save_Generation, int Index, int ColorIndex)
+        {
+            Bitmap HairImage = null;
+            string HairFolder = NewMainForm.Assembly_Location + "\\Resources\\Images\\Hair Styles";
+            if (Directory.Exists(HairFolder))
+            {
+                // TODO: Wild World, City Folk
+                if (Save_Generation == SaveGeneration.N3DS)
+                {
+                    HairFolder += "\\New Leaf";
+                }
+
+                if (Directory.Exists(HairFolder))
+                {
+                    string HairImageFile = HairFolder + "\\" + Index + ".png";
+                    if (File.Exists(HairImageFile))
+                    {
+                        try
+                        {
+                            HairImage = (Bitmap)Image.FromFile(HairImageFile);
+                            ReplaceGrayscaleColor(ref HairImage, Color.FromArgb((int)PlayerInfo.NL_Hair_Color_Values[ColorIndex]));
+                        }
+                        catch
+                        {
+                            NewMainForm.Debug_Manager.WriteLine(string.Format("Could not open hair file: {0}", HairImageFile), DebugLevel.Error);
+                        }
+                    }
+                }
+            }
+            return HairImage;
         }
     }
 }
