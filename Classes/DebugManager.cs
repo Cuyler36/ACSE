@@ -16,13 +16,25 @@ namespace ACSE
         private static string Log_File_Name = "ACSE_Log";
         private FileStream Log_File;
         private StreamWriter Log_Writer;
+        private int MaxLogSize = 5000000; // 5MB Max Size
         public bool Enabled = false;
 
         public DebugManager()
         {
+            var FilePath = Get_Log_File_Path();
+            if (File.Exists(FilePath) && !CheckLogSizeOK())
+            {
+                try
+                {
+                    File.Delete(FilePath);
+                    Console.WriteLine("Log file exceeded maximum file length and was deleted.");
+                }
+                catch { Console.WriteLine("Unable to delete log file!"); }
+            }
+
             if (Properties.Settings.Default.DebugLevel > 0)
             {
-                Log_File = new FileStream(Get_Log_File_Path(), FileMode.OpenOrCreate);
+                Log_File = new FileStream(FilePath, FileMode.OpenOrCreate);
                 Log_Writer = new StreamWriter(Log_File);
                 Log_Writer.BaseStream.Seek(0, SeekOrigin.End);
                 Enabled = true;
@@ -32,6 +44,12 @@ namespace ACSE
             {
                 Enabled = false;
             }
+        }
+
+        private bool CheckLogSizeOK()
+        {
+            var Info = new FileInfo(Get_Log_File_Path());
+            return Info.Length <= MaxLogSize;
         }
 
         public bool Log_File_Exists()

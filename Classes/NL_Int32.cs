@@ -70,7 +70,7 @@ namespace ACSE
                 }
                 else
                 {
-                    NewMainForm.Debug_Manager.WriteLine("Invalid Shift Count was detected!", DebugLevel.Error);
+                    NewMainForm.Debug_Manager.WriteLine("Invalid Shift Count was detected!", DebugLevel.Info);
                     Value = (Int_A << Right_Shift_Count) - (Adjust_Value + 0x8F187432);
                     Valid = true; // Is this right?
                 }

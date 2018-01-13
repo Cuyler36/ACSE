@@ -9,7 +9,7 @@
       <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="DebugLevel" Type="ACSE.DebugLevel" Scope="User">
-      <Value Profile="(Default)">Info</Value>
+      <Value Profile="(Default)">Error</Value>
     </Setting>
     <Setting Name="OutputInt32s" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

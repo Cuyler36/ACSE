@@ -3639,9 +3639,6 @@
     <Compile Include="Classes\Save.cs" />
     <Compile Include="Classes\SecretCode.cs" />
     <Compile Include="Classes\SimpleTownInfo.cs" />
-    <Compile Include="Classes\ToolStripPlaceholderTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Classes\Utility.cs" />
     <Compile Include="Classes\VillagerPlayerEntry.cs" />
     <Compile Include="Classes\Weather.cs" />
