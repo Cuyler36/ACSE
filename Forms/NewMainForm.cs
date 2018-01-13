@@ -119,6 +119,18 @@ namespace ACSE
             };
             Controls.Add(selectedAcrePicturebox);
 
+            //Town Name TextBox LostFocus
+            townNameBox.LostFocus += TownName_Box_FocusLost;
+
+            //Grass Type ComboBox SelectedIndexChanged
+            grassTypeBox.SelectedIndexChanged += delegate (object sender, EventArgs e)
+            {
+                if (grassTypeBox.SelectedIndex > -1 && Save_File != null && Current_Save_Info.Save_Offsets.Grass_Type != -1)
+                {
+                    Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Type, (byte)grassTypeBox.SelectedIndex);
+                }
+            };
+
             //Player Item PictureBox Event Hookups
             BindPlayerItemBoxEvents(inventoryPicturebox);
             BindPlayerItemBoxEvents(heldItemPicturebox);
@@ -274,8 +286,8 @@ namespace ACSE
             }
             Save_File = null; //Set to null so we can set the checkbox to false without having the method run
             townMapViewCheckbox.Checked = false;
-            townMapViewCheckbox.Enabled = save.Game_System == SaveGeneration.GCN;
-            acreHeightTrackBar.Enabled = save.Game_System == SaveGeneration.GCN;
+            townMapViewCheckbox.Enabled = save.Game_System == SaveGeneration.N64 || save.Game_System == SaveGeneration.GCN;
+            acreHeightTrackBar.Enabled = save.Game_System == SaveGeneration.N64 || save.Game_System == SaveGeneration.GCN;
             Save_File = save;
             Debug_Manager.WriteLine("Save File Loaded");
             Acre_Height_Modifier = 0;
@@ -443,7 +455,7 @@ namespace ACSE
                     playerEyeColor.Items.Add(Eye_Color);
                 Secure_NAND_Value_Form.Set_Secure_NAND_Value(Save_File.ReadUInt64(0));
             }
-            else if (save.Save_Type == SaveType.Animal_Crossing || save.Save_Type == SaveType.Doubutsu_no_Mori_Plus || save.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            else if (save.Save_Type == SaveType.Doubutsu_no_Mori || save.Save_Type == SaveType.Animal_Crossing || save.Save_Type == SaveType.Doubutsu_no_Mori_Plus || save.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
             {
                 foreach (string Face_Name in PlayerInfo.AC_Faces)
                     playerFace.Items.Add(Face_Name);
@@ -455,19 +467,26 @@ namespace ACSE
             Selected_Player = Players.FirstOrDefault(o => o.Exists);
             //Temp
             if (Selected_Player == null)
-                MessageBox.Show("Players are all null!");
+                MessageBox.Show("No Player was found on the file!", "Player Find Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
                 Reload_Player(Selected_Player);
             SetPlayersEnabled();
             if (Selected_Player != null && Selected_Player.Exists)
                 playerEditorSelect.SelectedIndex = Array.IndexOf(Players, Selected_Player);
 
+            // Grass Type Stuff
+            grassTypeBox.Items.Clear();
+            grassTypeBox.Enabled = true;
+
             //Load Town Info
             Acres = new Normal_Acre[Current_Save_Info.Acre_Count];
             Town_Acres = new Normal_Acre[Current_Save_Info.Town_Acre_Count];
-            //TEMP PLS REDO
+            
             if (save.Save_Type == SaveType.Wild_World)
             {
+                foreach (var Enum in Enum.GetValues(typeof(Wild_World_Grass_Type)))
+                    grassTypeBox.Items.Add(Enum);
+
                 Acre_Info = SaveDataManager.GetAcreInfo(SaveType.Wild_World);
                 int x = 0;
                 byte[] Acre_Data = save.ReadByteArray(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Acre_Data, 36);
@@ -485,8 +504,11 @@ namespace ACSE
                     Acres[i] = new Normal_Acre(Acre_Data[i], i);
                 }
             }
-            else if (save.Save_Type == SaveType.Animal_Crossing || save.Save_Type == SaveType.Doubutsu_no_Mori_Plus || save.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            else if (save.Game_System == SaveGeneration.GCN || save.Game_System == SaveGeneration.N64)
             {
+                foreach (var Enum in Enum.GetValues(typeof(Animal_Crossing_Grass_Type)))
+                    grassTypeBox.Items.Add(Enum);
+
                 UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.Animal_Crossing);
                 int x = 0;
                 ushort[] Acre_Data = save.ReadUInt16Array(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Acre_Data, Current_Save_Info.Acre_Count, true);
@@ -508,6 +530,9 @@ namespace ACSE
             }
             else if (save.Save_Type == SaveType.City_Folk)
             {
+                foreach (var Enum in Enum.GetValues(typeof(City_Folk_Grass_Type)))
+                    grassTypeBox.Items.Add(Enum);
+
                 UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.City_Folk);
                 Buildings = ItemData.GetBuildings(save);
                 int x = 0;
@@ -527,8 +552,11 @@ namespace ACSE
                     Acres[i] = new Normal_Acre(Acre_Data[i], i);
                 }
             }
-            else if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
+            else if (save.Game_System == SaveGeneration.N3DS)
             {
+                foreach (var Enum in Enum.GetValues(typeof(New_Leaf_Grass_Type)))
+                    grassTypeBox.Items.Add(Enum);
+
                 UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(Save_File.Save_Type);
                 if (Selected_Player != null)
                 {
@@ -564,8 +592,10 @@ namespace ACSE
                 }
             }
 
+            townNameBox.MaxLength = Current_Save_Info.Save_Offsets.Town_NameSize;
             townNameBox.Text = new ACString(save.ReadByteArray(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Name,
                 Current_Save_Info.Save_Offsets.Town_NameSize), save.Save_Type).Trim();
+
             SetupAcreEditorTreeView();
             SetupMapPictureBoxes();
 
@@ -601,7 +631,7 @@ namespace ACSE
                     GenerateVillagerPanel(v);
             }
 
-            if (Properties.Settings.Default.OutputInt32s)
+            if (Properties.Settings.Default.OutputInt32s && Save_File.Game_System == SaveGeneration.N3DS)
                 Utility.Scan_For_NL_Int32();
 
             // Enable Tasks
@@ -609,6 +639,13 @@ namespace ACSE
             removeAllItemsToolStripMenuItem.Enabled = true;
             waterFlowersToolStripMenuItem.Enabled = Save_File.Game_System != SaveGeneration.GCN && Save_File.Game_System != SaveGeneration.N64;
             makeFruitsPerfectToolStripMenuItem.Enabled = Save_File.Game_System == SaveGeneration.N3DS;
+
+            // Set Grass Type
+            if (Current_Save_Info.Save_Offsets.Grass_Type != -1)
+            {
+                byte Grass_Type = Save_File.ReadByte(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Type);
+                grassTypeBox.SelectedIndex = (Save_File.Game_System == SaveGeneration.NDS ? Utility.GetWildWorldGrassBaseType(Grass_Type) : (Grass_Type < 3 ? Grass_Type : 0));
+            }
 
             //if (Save_File.Save_Type == SaveType.Animal_Crossing)
                 //Utility.Increment_Town_ID(Save_File);
@@ -658,6 +695,9 @@ namespace ACSE
             //Load all tabs so alignment is kept
             SetMainTabEnabled("islandTab", true);
             SetMainTabEnabled("grassTab", true);
+
+            playerSavings.Enabled = Current_Save_Type != SaveType.Doubutsu_no_Mori;
+            tanTrackbar.Enabled = Current_Save_Type != SaveType.Doubutsu_no_Mori;
 
             if (Current_Save_Type == SaveType.Doubutsu_no_Mori || Current_Save_Type == SaveType.Doubutsu_no_Mori_Plus
                 || Current_Save_Type == SaveType.Animal_Crossing || Current_Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
@@ -875,9 +915,10 @@ namespace ACSE
             if (Player.Data.Tan <= tanTrackbar.Maximum)
                 tanTrackbar.Value = Player.Data.Tan + 1;
 
-            for (int i = 0; i < Player.Data.Patterns.Length; i++)
-                if (Player.Data.Patterns[i] != null && Player.Data.Patterns[i].Pattern_Bitmap != null)
-                    Refresh_PictureBox_Image(Pattern_Boxes[i], Player.Data.Patterns[i].Pattern_Bitmap, false, false);
+            if (Player.Data.Patterns != null)
+                for (int i = 0; i < Player.Data.Patterns.Length; i++)
+                    if (Player.Data.Patterns[i] != null && Player.Data.Patterns[i].Pattern_Bitmap != null)
+                        Refresh_PictureBox_Image(Pattern_Boxes[i], Player.Data.Patterns[i].Pattern_Bitmap, false, false);
 
             resettiCheckBox.Checked = Player.Data.Reset;
 
@@ -890,6 +931,15 @@ namespace ACSE
                 playerIslandMedals.Text = Player.Data.Island_Medals.Value.ToString();
                 if (Save_File.Save_Type == SaveType.Welcome_Amiibo)
                     playerMeowCoupons.Text = Player.Data.MeowCoupons.Value.ToString();
+            }
+        }
+
+        private void TownName_Box_FocusLost(object sender, EventArgs e)
+        {
+            if (Save_File != null && !string.IsNullOrEmpty(townNameBox.Text.Trim()))
+            {
+                Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Name, ACString.GetBytes(townNameBox.Text.Trim()));
+                townNameBox.Text = townNameBox.Text.Trim();
             }
         }
 
@@ -966,7 +1016,7 @@ namespace ACSE
                         {
                             Tag = Acre_ID.ToString("X2")
                         };
-                        Text = Acre_Info != null ? Acre_Info[Acre_ID] : (string)Acre.Tag;
+                        Acre.Text = Acre_Info != null ? Acre_Info[Acre_ID] : (string)Acre.Tag;
                         Acre.Name = (string)Acre.Tag;
                         Acre_Type.Nodes.Add(Acre);
                     }
@@ -1009,7 +1059,7 @@ namespace ACSE
         private void Set_Selected_Acre(ushort AcreID)
         {
             Selected_Acre_ID = AcreID;
-            if (Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
             {
                 acreHeightTrackBar.Value = Selected_Acre_ID % 4;
                 Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
@@ -1081,7 +1131,7 @@ namespace ACSE
                     }
                 }
                 // Warnings for N64/GameCube titles
-                if (Save_File.Game_System == SaveGeneration.GCN)
+                if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                 {
                     if (Node.Parent.Text == "Beta Acres")
                     {
@@ -1109,7 +1159,7 @@ namespace ACSE
             Image Acre_Image = null;
             if (Acre_Image_List != null)
             {
-                if ((Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+                if ((Save_File.Save_Type == SaveType.Doubutsu_no_Mori || Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
                     && ushort.TryParse(Acre_ID_Str, NumberStyles.AllowHexSpecifier, null, out ushort ID))
                 {
                     
@@ -1199,7 +1249,7 @@ namespace ACSE
                     string Acre_ID_Str = "";
                     if (Save_File.Save_Type == SaveType.Wild_World)
                         Acre_ID_Str = CurrentAcre.AcreID.ToString("X2");
-                    else if (Save_File.Game_System == SaveGeneration.GCN)
+                    else if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                         Acre_ID_Str = (CurrentAcre.AcreID - (CurrentAcre.AcreID % 4)).ToString("X4");
 
                     Image Acre_Image = Get_Acre_Image(CurrentAcre, Acre_ID_Str);
@@ -1934,7 +1984,7 @@ namespace ACSE
                     selectedAcrePicturebox.Image = Acre_Box.BackgroundImage;
                     Selected_Acre_ID = Island ? Island_Acres[Acre_Index].AcreID : Acres[Acre_Index].AcreID;
                     string Acre_Str = Save_File.Game_System == SaveGeneration.NDS ? Selected_Acre_ID.ToString("X2") : Selected_Acre_ID.ToString("X4");
-                    if (Save_File.Game_System == SaveGeneration.GCN)
+                    if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                     {
                         acreHeightTrackBar.Value = Selected_Acre_ID % 4;
                         Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
@@ -1942,14 +1992,14 @@ namespace ACSE
                     }
                     if (Save_File.Save_Type == SaveType.Wild_World)
                         acreID.Text = "Acre ID: 0x" + Selected_Acre_ID.ToString("X2");
-                    else if (Save_File.Game_System == SaveGeneration.GCN)
+                    else if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                         acreID.Text = "Acre ID: 0x" + (Selected_Acre_ID + Acre_Height_Modifier).ToString("X4");
                     else
                         acreID.Text = "Acre ID: 0x" + Selected_Acre_ID.ToString("X4");
                     if (Acre_Info != null)
                         acreDesc.Text = Acre_Info.ContainsKey((byte)Selected_Acre_ID) ? Acre_Info[(byte)Selected_Acre_ID] : "No Description";
                     else if (UInt16_Acre_Info != null)
-                        if (Save_File.Game_System == SaveGeneration.GCN && UInt16_Acre_Info.ContainsKey((ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)))
+                        if ((Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN) && UInt16_Acre_Info.ContainsKey((ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)))
                             acreDesc.Text = UInt16_Acre_Info[(ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)];
                         else if (UInt16_Acre_Info.ContainsKey(Selected_Acre_ID))
                             acreDesc.Text = UInt16_Acre_Info[Selected_Acre_ID];
@@ -2921,7 +2971,7 @@ namespace ACSE
 
         private void acreHeightTrackBar_Scroll(object sender, EventArgs e)
         {
-            if (Save_File != null && Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
             {
                 Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
                 acreID.Text = "Acre ID: 0x" + (Selected_Acre_ID + Acre_Height_Modifier).ToString("X4");
@@ -2930,7 +2980,7 @@ namespace ACSE
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (Save_File != null && Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
             {
                 if (AC_Map_Icons == null)
                 {
@@ -2974,7 +3024,7 @@ namespace ACSE
         //TODO: Implement for WW+
         private void resettiCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (Save_File != null && Selected_Player != null && Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File != null && Selected_Player != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
             {
                 Selected_Player.Data.Reset = resettiCheckBox.Checked;
             }
@@ -3014,7 +3064,7 @@ namespace ACSE
 
         private void getAllKKSongsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            KKSongs.FillKKSongs(Save_File, Selected_Player);
+            SongLibrary.FillSongLibrary(Save_File, Selected_Player);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)

@@ -213,5 +213,13 @@ namespace ACSE
             }
             return Acres;
         }
+
+        public static byte GetWildWorldGrassBaseType(byte Seasonal_Grass_Value)
+        {
+            if (Seasonal_Grass_Value < 3)
+                return Seasonal_Grass_Value;
+            else
+                return (byte)((Seasonal_Grass_Value - 1) % 3); // May not be right.
+        }
     }
 }

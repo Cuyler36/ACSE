@@ -35,7 +35,7 @@ namespace ACSE
         {
             Dictionary<string, Image> Image_List = new Dictionary<string, Image>();
             string Image_Dir = NewMainForm.Assembly_Location + "\\Resources\\Images\\";
-            if (Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs its own set?
                 Image_Dir += "Acre_Images";
             else if (Save_Type == SaveType.Wild_World)
                 Image_Dir += "WW_Acre_Images";

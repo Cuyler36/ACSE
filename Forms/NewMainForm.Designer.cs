@@ -47,6 +47,7 @@
             this.replaceItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fillEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getAllKKSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
             this.resettiCheckBox = new System.Windows.Forms.CheckBox();
@@ -180,7 +181,8 @@
             this.villagerToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
-            this.getAllKKSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.grassTypeBox = new System.Windows.Forms.ComboBox();
+            this.grassLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
@@ -349,9 +351,16 @@
             // fillEncyclopediaToolStripMenuItem
             // 
             this.fillEncyclopediaToolStripMenuItem.Name = "fillEncyclopediaToolStripMenuItem";
-            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.fillEncyclopediaToolStripMenuItem.Text = "Fill Encyclopedia";
             this.fillEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.fillEncyclopediaToolStripMenuItem_Click);
+            // 
+            // getAllKKSongsToolStripMenuItem
+            // 
+            this.getAllKKSongsToolStripMenuItem.Name = "getAllKKSongsToolStripMenuItem";
+            this.getAllKKSongsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.getAllKKSongsToolStripMenuItem.Text = "Fill Song Library";
+            this.getAllKKSongsToolStripMenuItem.Click += new System.EventHandler(this.getAllKKSongsToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -1184,6 +1193,8 @@
             // 
             // townTab
             // 
+            this.townTab.Controls.Add(this.grassLabel);
+            this.townTab.Controls.Add(this.grassTypeBox);
             this.townTab.Controls.Add(this.townInfoLabel);
             this.townTab.Controls.Add(this.buildingsLabel);
             this.townTab.Controls.Add(this.buildingsPanel);
@@ -1202,7 +1213,7 @@
             // townInfoLabel
             // 
             this.townInfoLabel.AutoSize = true;
-            this.townInfoLabel.Location = new System.Drawing.Point(237, 14);
+            this.townInfoLabel.Location = new System.Drawing.Point(396, 14);
             this.townInfoLabel.Name = "townInfoLabel";
             this.townInfoLabel.Size = new System.Drawing.Size(99, 13);
             this.townInfoLabel.TabIndex = 13;
@@ -1671,12 +1682,23 @@
             this.label43.TabIndex = 8;
             this.label43.Text = "Acre Height:";
             // 
-            // getAllKKSongsToolStripMenuItem
+            // grassTypeBox
             // 
-            this.getAllKKSongsToolStripMenuItem.Name = "getAllKKSongsToolStripMenuItem";
-            this.getAllKKSongsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.getAllKKSongsToolStripMenuItem.Text = "Get All K.K. Songs";
-            this.getAllKKSongsToolStripMenuItem.Click += new System.EventHandler(this.getAllKKSongsToolStripMenuItem_Click);
+            this.grassTypeBox.Enabled = false;
+            this.grassTypeBox.FormattingEnabled = true;
+            this.grassTypeBox.Location = new System.Drawing.Point(307, 11);
+            this.grassTypeBox.Name = "grassTypeBox";
+            this.grassTypeBox.Size = new System.Drawing.Size(83, 21);
+            this.grassTypeBox.TabIndex = 14;
+            // 
+            // grassLabel
+            // 
+            this.grassLabel.AutoSize = true;
+            this.grassLabel.Location = new System.Drawing.Point(237, 14);
+            this.grassLabel.Name = "grassLabel";
+            this.grassLabel.Size = new System.Drawing.Size(64, 13);
+            this.grassLabel.TabIndex = 15;
+            this.grassLabel.Text = "Grass Type:";
             // 
             // NewMainForm
             // 
@@ -1896,5 +1918,7 @@
         private System.Windows.Forms.ToolStripMenuItem extrasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fillEncyclopediaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getAllKKSongsToolStripMenuItem;
+        private System.Windows.Forms.Label grassLabel;
+        private System.Windows.Forms.ComboBox grassTypeBox;
     }
 }

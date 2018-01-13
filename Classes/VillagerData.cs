@@ -117,6 +117,21 @@ namespace ACSE
 
     public static class VillagerInfo
     {
+        public static VillagerOffsets Doubutsu_no_Mori_Villager_Offsets = new VillagerOffsets
+        {
+            Villager_ID = 0,
+            Town_ID = 2,
+            Town_Name = 4,
+            Town_NameSize = 6,
+            Villager_AI = 0xA,
+            Personality = 0xB,
+            House_Coordinates = 0x4E1,
+            House_CoordinatesCount = 4,
+            Catchphrase = 0x4E5,
+            CatchphraseSize = 0x4,
+            Shirt = 0x520
+        };
+
         public static VillagerOffsets Doubtusu_no_Mori_Plus_Villager_Offsets = new VillagerOffsets
         {
             Villager_ID = 0,
@@ -283,6 +298,7 @@ namespace ACSE
         {
             switch (Save_Type)
             {
+                case SaveType.Doubutsu_no_Mori:
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Animal_Crossing:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
@@ -304,7 +320,7 @@ namespace ACSE
             string Database_Filename = NewMainForm.Assembly_Location + "\\Resources\\{0}_Villagers_" + Language + ".txt";
             switch (Save_Type)
             {
-                //Temp
+                case SaveType.Doubutsu_no_Mori: // TODO: Needs its own database (no islanders or punchy)
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                 case SaveType.Animal_Crossing:
@@ -360,7 +376,7 @@ namespace ACSE
                     }
                 }
             }
-            else if (Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            else if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
             {
                 while ((Line = Contents.ReadLine()) != null)
                 {
@@ -382,6 +398,8 @@ namespace ACSE
         {
             switch(Save_Type)
             {
+                case SaveType.Doubutsu_no_Mori:
+                    return Doubutsu_no_Mori_Villager_Offsets;
                 case SaveType.Doubutsu_no_Mori_Plus:
                     return Doubtusu_no_Mori_Plus_Villager_Offsets;
                 case SaveType.Animal_Crossing:

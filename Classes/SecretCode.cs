@@ -23,7 +23,7 @@ namespace ACSE
         {
             0x62, 0x4B, 0x7A, 0x35, 0x63, 0x71, 0x59, 0x5A, 0x4F, 0x64, 0x74, 0x36, 0x6E, 0x6C, 0x42, 0x79,
             0x6F, 0x38, 0x34, 0x4C, 0x6B, 0x25, 0x41, 0x51, 0x6D, 0x44, 0x50, 0x49, 0x37, 0x26, 0x52, 0x73,
-            0x77, 0x55, 0x23, 0x72, 0x33, 0x45, 0x78, 0x4D, 0x43, 0x40, 0x65, 0x39, 0x67, 0x76, 0x56, 0x47,
+            0x77, 0x55, 0x23, 0x72, 0x33, 0x45, 0x78, 0x4D, 0x43, 0x40, 0x65, 0x39, 0x67, 0x76, 0x56, 0x47, // 0x23 should be 0xD1 ?
             0x75, 0x4E, 0x69, 0x58, 0x57, 0x66, 0x54, 0x4A, 0x46, 0x53, 0x48, 0x70, 0x32, 0x61, 0x6A, 0x68
         };
 
@@ -281,6 +281,112 @@ namespace ACSE
             } while (Loop_End_Count != 0);
 
             return Data; // REMOVE THIS
+        }
+
+        // From Game Code
+        private static byte[] AC_Allowed_Characters = new byte[0x40]
+        {
+            0x62, 0x4B, 0x7A, 0x35, 0x63, 0x71, 0x59, 0x5A, 0x4F, 0x64, 0x74, 0x36, 0x6E, 0x6C, 0x42, 0x79,
+            0x6F, 0x38, 0x34, 0x4C, 0x6B, 0x25, 0x41, 0x51, 0x6D, 0x44, 0x50, 0x49, 0x37, 0x26, 0x52, 0x73,
+            0x77, 0x55, 0xD1, 0x72, 0x33, 0x45, 0x78, 0x4D, 0x43, 0x40, 0x65, 0x39, 0x67, 0x76, 0x56, 0x47,
+            0x75, 0x4E, 0x69, 0x58, 0x57, 0x66, 0x54, 0x4A, 0x46, 0x53, 0x48, 0x70, 0x32, 0x61, 0x6A, 0x68
+        };
+        /// <summary>
+        /// Allows 0 to be read as uppercase O and 1 to be read as lowercase L
+        /// </summary>
+        /// <param name="Input"></param>
+        /// <returns></returns>
+        private static byte[] Adjust_Letter(byte[] Input)
+        {
+            byte[] Adjusted_Letters = new byte[28];
+            for (int i = 0; i < 28; i++)
+            {
+                byte Current_Letter = Input[i];
+                if (Current_Letter == 0x31)
+                    Adjusted_Letters[i] = 0x6C;
+                else if (Current_Letter == 0x30)
+                    Adjusted_Letters[i] = 0x4F;
+                else
+                    Adjusted_Letters[i] = Current_Letter;
+            }
+            return Adjusted_Letters;
+        }
+
+        private static byte Change_Password_Font_Code_Subroutine(byte Character)
+        {
+            for (int i = 0; i < 0x40; i++)
+            {
+                if (Character == AC_Allowed_Characters[i])
+                    return (byte)i;
+            }
+            return 0xFF;
+        }
+
+        private static byte[] Change_Password_Font_Code(byte[] Input)
+        {
+            byte[] Output = new byte[28];
+            for (int i = 0; i < 28; i++)
+            {
+                byte Changed_Font_Code = Change_Password_Font_Code_Subroutine(Input[i]);
+                if (Changed_Font_Code == 0xFF)
+                {
+                    System.Windows.Forms.MessageBox.Show(string.Format("An invalid character was detected in the password! The password cannot be decoded! The invalid character is {0}",
+                        StringUtil.AC_CharacterDictionary[Input[i]]));
+                    throw new IndexOutOfRangeException("An invalid character was detected in the password!");
+                }
+                Output[i] = Changed_Font_Code;
+            }
+            return Output;
+        }
+
+        private static byte[] Change_8bits_Code(byte[] Input)
+        {
+            byte[] Output = new byte[Input.Length];
+            int A = 0;
+            int B = 0;
+            int C = 0;
+            int D = 0;
+
+            int Index = 0;
+            int StoreIndex = 0;
+
+            while (true)
+            {
+                byte Current_Byte = Input[Index];
+                Current_Byte >>= B;
+                B++;
+                Current_Byte &= 1;
+                Current_Byte <<= C;
+                C++;
+                D |= Current_Byte;
+
+                if (C > 7)
+                {
+                    A++;
+                    Output[StoreIndex] = (byte)D;
+                    C = 0;
+                    StoreIndex++;
+                    if (A >= 0x15)
+                        return Output;
+                    D = 0;
+                }
+
+                if (B >= 6)
+                {
+                    B = 0;
+                    Index++;
+                }
+            }
+        }
+
+        public static byte[] Transposition_Cipher(byte[] Input)
+        {
+            byte[] Output = new byte[Input.Length];
+            int A = 1;
+            int Modifier = Input[0x09]; // 0x12 is one too
+
+            int Value = (Modifier << 3) & 0x78;
+            return Output;
         }
     }
 

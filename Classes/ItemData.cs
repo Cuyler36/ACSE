@@ -417,7 +417,7 @@ namespace ACSE
 
         public static string GetItemType(ushort ID, SaveType Save_Type = SaveType.Animal_Crossing)
         {
-            if (Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM, DnM+, and DnMe+ need their own cases
                 if (ID == 0)
                     return "Empty";
                 else if (ID == 0xFFFF)

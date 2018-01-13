@@ -65,6 +65,7 @@ namespace ACSE
         public int Buildings_Count;
         public int Grass_Wear;
         public int Grass_Wear_Size;
+        public int Grass_Type;
         public int PWPs; //NL only
         public int Past_Villagers;
         public int[] CRC_Offsets;
@@ -98,7 +99,7 @@ namespace ACSE
         admeduc = 0x1F4,
         admedss = 0x1F4,
         admedsv = 0,
-        admesav = 0,
+        admesav = 0, // These are for v1.0
         ruuedat = 0,
         edgedat = 0x80,
         edgebin = 0, //RAM Dump
@@ -107,7 +108,25 @@ namespace ACSE
 
     public static class SaveDataManager
     {
-        public static Offsets Doubutsu_no_Mori_Offsets = new Offsets{ }; // Probably shares a decent amount of offsets with Doubutsu_no_Mori_Plus
+        public static Offsets Doubutsu_no_Mori_Offsets = new Offsets // Remember that these addresses are valid *after* byteswapping
+        {
+            Save_Size = 0x10000,
+            Player_Start = 0x20,
+            Player_Size = 0xBD0,
+            Town_Name = 0x2F60,
+            Town_NameSize = 6,
+            Town_ID = 0x2F68,
+            Acre_Data = 0x9EA8,
+            Acre_Data_Size = 0x70,
+            Villager_Data = 0x9F18,
+            Villager_Size = 0x528,
+            Town_Data = 0x62A8,
+            Town_Data_Size = 0x3C00,
+            Buried_Data = 0xF43C, // Might be F43A
+            Buried_Data_Size = 0x3C0,
+            Checksum = 0x12,
+            Grass_Type = -1 // Find
+        };
 
         public static Offsets Doubutsu_no_Mori_Plus_Offsets = new Offsets
         {
@@ -130,6 +149,7 @@ namespace ACSE
             Villager_Size = 0x5C8,
             Buried_Data = 0x19E0C, // Probably off a little
             Buried_Data_Size = 0x3C0,
+            Grass_Type = -1,
             Town_NameSize = 6,
             Checksum = 0x12,
         };
@@ -159,6 +179,7 @@ namespace ACSE
             House_Data_Size = 0x26B0,
             Island_Acre_Data = 0x17420,
             Campsite_Visitor = 0x20644,
+            Grass_Type = 0x24184,
             Buildings = -1,
             Debt = -1,
             Grass_Wear = -1,
@@ -190,6 +211,7 @@ namespace ACSE
             // Weather = 0x22B19 (byte)
             Buried_Data = 0x22B1C,
             Buried_Data_Size = 0x3C0,
+            Grass_Type = 0x24484,
             // Shop update in progress byte (0x2E004 (Has to be 1B))
             Town_NameSize = 6,
             Checksum = 0x12,
@@ -210,6 +232,7 @@ namespace ACSE
             Town_Data_Size = 0x2000,
             Buried_Data = 0xE354,
             Buried_Data_Size = 0x200,
+            Grass_Type = 0xE554,
             House_Data = 0xE558,
             House_Data_Size = 0x15A0,
             Debt = 0xFAE8,
@@ -243,6 +266,7 @@ namespace ACSE
             Buried_Data_Size = 400,
             Grass_Wear = 0x6BCB6,
             Grass_Wear_Size = 0x1900,
+            Grass_Type = 0x6D5B7,
             House_Data = 0x6D5C0,
             House_Data_Size = 0x15C0,
             Checksum = -1,
@@ -278,6 +302,7 @@ namespace ACSE
             Town_NameSize = 16,
             Grass_Wear = 0x53E80,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
+            Grass_Type = 0x4DA01,
             Island_Acre_Data = 0x6A408,
             Island_World_Data = 0x6A428,
             Island_Buildings = 0x6B428,
@@ -304,10 +329,27 @@ namespace ACSE
             Town_NameSize = 16,
             Grass_Wear = 0x59880,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
+            Grass_Type = 0x53401,
             Island_Acre_Data = 0x6FE38,
             Island_World_Data = 0x6FE58,
             Island_Buildings = 0x70E58,
             Town_ID = -1, //
+        };
+
+        public static Save_Info Doubutsu_no_Mori = new Save_Info
+        {
+            Contains_Island = false,
+            Has_Islander = false,
+            Player_JPEG_Picture = false,
+            Pattern_Count = 0,
+            Save_Offsets = Doubutsu_no_Mori_Offsets,
+            Acre_Count = 56,
+            X_Acre_Count = 7,
+            Town_Acre_Count = 30,
+            Town_Y_Acre_Start = 1,
+            Island_Acre_Count = 0,
+            Island_X_Acre_Count = 0,
+            Villager_Count = 15
         };
 
         public static Save_Info Doubutsu_no_Mori_Plus = new Save_Info
@@ -537,6 +579,8 @@ namespace ACSE
         {
             switch(Save_Type)
             {
+                case SaveType.Doubutsu_no_Mori:
+                    return Doubutsu_no_Mori;
                 case SaveType.Doubutsu_no_Mori_Plus:
                     return Doubutsu_no_Mori_Plus;
                 case SaveType.Animal_Crossing:
@@ -562,6 +606,8 @@ namespace ACSE
             string Item_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
             if (Save_Type == SaveType.Wild_World)
                 Item_DB_Location += "WW_Items_" + Language + ".txt";
+            else if (Save_Type == SaveType.Doubutsu_no_Mori)
+                Item_DB_Location += "AC_Items_" + Language + ".txt"; // TODO: Determine DnM item list
             else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus)
                 Item_DB_Location += "DBNM_Plus_Items_" + Language + ".txt";
             else if (Save_Type == SaveType.Animal_Crossing)
@@ -632,7 +678,7 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Acre_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs to have a custom list, since the docks/islands don't exist
                 Acre_DB_Location += "AC_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
                 Acre_DB_Location += "CF_Acres_" + Language + ".txt";
@@ -709,7 +755,7 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Acre_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // DnM needs custom database
                 Acre_DB_Location += "AC_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
                 Acre_DB_Location += "CF_Acres_" + Language + ".txt";
@@ -820,6 +866,10 @@ namespace ACSE
                 {
                     Original_Save_Data = SaveDataManager.ByteSwap(Original_Save_Data);
                     Working_Save_Data = SaveDataManager.ByteSwap(Working_Save_Data);
+                    /*using (var Swapped_Save = new FileStream(Save_Path + "\\" + Save_Name + "_ByteSwapped" + Save_Extension, FileMode.Create))
+                    {
+                        Swapped_Save.Write(Original_Save_Data, 0, Original_Save_Data.Length);
+                    }*/
                 }
 
                 if (Save_Type == SaveType.Wild_World || Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
@@ -837,7 +887,7 @@ namespace ACSE
             string Full_Save_Name = Save_Path + Path.DirectorySeparatorChar + Save_Name + Save_Extension;
             Save_File = new FileStream(Full_Save_Name, FileMode.OpenOrCreate);
             Save_Writer = new BinaryWriter(Save_File);
-            if (Game_System == SaveGeneration.GCN) // TODO: Condense Wild World and GCN save logic into one if statement
+            if (Game_System == SaveGeneration.N64 || Game_System == SaveGeneration.GCN) // TODO: Condense Wild World and GCN save logic into one if statement
             {
                 Write(Save_Data_Start_Offset + 0x12, Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(Save_Info.Save_Offsets.Save_Size).ToArray(), 0x12), true);
                 Working_Save_Data.Skip(Save_Data_Start_Offset).Take(Save_Info.Save_Offsets.Save_Size).ToArray().CopyTo(Working_Save_Data,

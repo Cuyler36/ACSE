@@ -2622,7 +2622,7 @@
 0x329C, Hammock
 0x32A0, Garden Gnome
 0x32A4, Mrs. Flamingo
-0x32A8, Spring Medal (again?)
+0x32A8, Spring Medal
 0x32AC, Autumn Medal
 0x32B0, Tumbleweed
 0x32B4, Cow Skull

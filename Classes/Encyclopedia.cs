@@ -71,6 +71,25 @@ namespace ACSE
             new string[8] { "Popeyed Goldfish", "Coelacanth", "Crawfish", "Frog", "Killifish", "Jellyfish", "Sea Bass", "Red Snapper" },
         };
 
+        public static Dictionary<int, byte> Wild_World_Encyclopedia_Bit_Map = new Dictionary<int, byte>
+        {
+            { 0x1BDD, 0xFE },
+            { 0x1BDE, 0xFF },
+            { 0x1BDF, 0xFF },
+            { 0x1BE0, 0xFF },
+            { 0x1BE1, 0xFF },
+            { 0x1BE2, 0xFF },
+            { 0x1BE3, 0xFF },
+            { 0x1BE4, 0xFF },
+            { 0x1BE5, 0xFF },
+            { 0x1BE6, 0xFF },
+            { 0x1BE7, 0xFF },
+            { 0x1BE8, 0xFF },
+            { 0x1BE9, 0xFF },
+            { 0x1BEA, 0xFF },
+            { 0x1BEB, 0x01 }
+        };
+
         public static Dictionary<int, byte> New_Leaf_Encyclopedia_Bit_Map = new Dictionary<int, byte>
         {
             { 0x6C50, 0xC0 }, // Insect -- can be equal to FF even if C0 unlock everything in this byte
@@ -199,20 +218,25 @@ namespace ACSE
                     return Animal_Crossing_Encyclopedia_Bit_Map;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return Doubutsu_no_Mori_e_Plus_Encyclopedia_Bit_Map;
+                case SaveType.Wild_World:
+                    return Wild_World_Encyclopedia_Bit_Map;
                 case SaveType.New_Leaf:
                     return New_Leaf_Encyclopedia_Bit_Map;
                 case SaveType.Welcome_Amiibo:
                     return Welcome_Amiibo_Encyclopedia_Bit_Map;
                 default:
-                    throw new NotImplementedException(string.Format("Encyclopedia Bit Map for save type {0} has not been implemented!", Save_Type.ToString()));
+                    System.Windows.Forms.MessageBox.Show("Encylopedia data for this game has not been implemented yet!", "Unimplemented Notification",
+                        System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                    return null;
             }
         }
 
         public static void FillEncyclopedia(Save Save_File, NewPlayer Player)
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
-            foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
-                Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));
+            if (Current_Bit_Map != null)
+                foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+                    Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));
         }
     }
 }
