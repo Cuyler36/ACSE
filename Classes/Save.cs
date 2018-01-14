@@ -190,6 +190,7 @@ namespace ACSE
             PWPs = -1,
             Island_Buildings = -1,
             Checksum = 0x12
+            // Lighthouse Event active: 0x2416F (byte != 0)
         };
 
         public static Offsets Doubutsu_no_Mori_e_Plus_Offsets = new Offsets

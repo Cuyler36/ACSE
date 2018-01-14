@@ -69,6 +69,8 @@ namespace ACSE
         ushort Acre_Height_Modifier = 0;
         Dictionary<ushort, byte> AC_Map_Icon_Index;
         Dictionary<byte, Image> AC_Map_Icons;
+        Island[] Islands;
+        Island SelectedIsland;
         private byte[] Building_DB;
         private string[] Building_Names;
         private PictureBoxWithInterpolationMode NL_Grass_Overlay;
@@ -301,7 +303,7 @@ namespace ACSE
                 Last_Month = birthdayMonth.SelectedIndex;
             }
 
-            if (Selected_Player != null)
+            if (Selected_Player != null && Selected_Player.Data.Birthday != null)
             {
                 if (birthdayMonth.SelectedIndex < 1 || birthdayMonth.SelectedIndex > 12)
                 {
@@ -316,7 +318,7 @@ namespace ACSE
 
         private void Birthday_Day_FocusLost()
         {
-            if (Selected_Player != null)
+            if (Selected_Player != null && Selected_Player.Data.Birthday != null)
             {
                 if (birthdayDay.Items.Count < 2 || birthdayDay.SelectedIndex < 1 || birthdayDay.SelectedIndex > 31)
                 {
@@ -609,6 +611,23 @@ namespace ACSE
             // Grass Type Stuff
             grassTypeBox.Items.Clear();
             grassTypeBox.Enabled = true;
+
+            // Load islands if DnMe+
+            SelectedIsland = null;
+            islandSelectionTab.Visible = save.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus;
+            if (save.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            {
+                Islands = new Island[4];
+
+                for (int i = 0; i < 4; i++)
+                {
+                    int IslandOffset = save.Save_Data_Start_Offset + 0xC560 + i * 0x3860;
+                    Islands[i] = new Island(IslandOffset, Players, save);
+                }
+
+                islandSelectionTab.SelectedIndex = 0;
+                SelectedIsland = Islands[0];
+            }
 
             //Load Town Info
             Acres = new Normal_Acre[Current_Save_Info.Acre_Count];
@@ -1558,18 +1577,26 @@ namespace ACSE
                             Island_Acre_Map[Idx] = new PictureBoxWithInterpolationMode
                             {
                                 Size = new Size(TownMapTotalSize, TownMapTotalSize),
-                                BackgroundImage = Get_Acre_Image(Island_Acres[Idx], Acre_ID_Str),
-                                Image = GenerateAcreItemsBitmap(Island_Acres[Idx].Acre_Items, Island_Acres[Idx].Index, true),
                                 SizeMode = PictureBoxSizeMode.StretchImage,
                                 BackgroundImageLayout = ImageLayout.Stretch,
                                 InterpolationMode = InterpolationMode.HighQualityBicubic,
                                 UseInternalInterpolationSetting = false,
                             };
+                            if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+                            {
+                                Island_Acre_Map[Idx].Image = GenerateAcreItemsBitmap(SelectedIsland.Items[Idx], Idx, true);
+                                Island_Acre_Map[Idx].BackgroundImage = Get_Acre_Image(Acres[0x3C + Idx], Acres[0x3C + Idx].BaseAcreID.ToString("X4"));
+                            }
+                            else
+                            {
+                                Island_Acre_Map[Idx].Image = GenerateAcreItemsBitmap(Island_Acres[Idx].Acre_Items, Island_Acres[Idx].Index, true);
+                                Island_Acre_Map[Idx].BackgroundImage = Get_Acre_Image(Island_Acres[Idx], Acre_ID_Str);
+                            }
                             Island_Acre_Map[Idx].MouseMove += new MouseEventHandler((object sender, MouseEventArgs e) => Town_Move(sender, e, true));
                             Island_Acre_Map[Idx].MouseLeave += new EventHandler(Hide_Town_Tip);
                             Island_Acre_Map[Idx].MouseDown += new MouseEventHandler((object sender, MouseEventArgs e) => Town_Mouse_Down(sender, e, true));
                             Island_Acre_Map[Idx].MouseUp += new MouseEventHandler(Town_Mouse_Up);
-                            Island_Acre_Map[Idx].Location = (Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus)
+                            Island_Acre_Map[Idx].Location = (Save_File.Game_System == SaveGeneration.GCN)
                                 ? new Point(X * TownMapTotalSize, Y * TownMapTotalSize) : new Point(((X - 1) % 4) * TownMapTotalSize, (Y - 1) * TownMapTotalSize);
                             islandPanel.Controls.Add(Island_Acre_Map[Idx]);
                         }
@@ -2779,7 +2806,12 @@ namespace ACSE
                     else
                     {
                         if (Island)
-                            Island_Acres[Acre].Acre_Items[index] = new WorldItem(GetCurrentItem(), index);
+                        {
+                            if (SelectedIsland == null)
+                                Island_Acres[Acre].Acre_Items[index] = new WorldItem(GetCurrentItem(), index);
+                            else
+                                SelectedIsland.Items[Acre][index] = new WorldItem(GetCurrentItem(), index);
+                        }
                         else
                             Town_Acres[Acre].Acre_Items[index] = new WorldItem(GetCurrentItem(), index);
                     }
@@ -2807,14 +2839,32 @@ namespace ACSE
                         else
                         {
                             if (Island)
-                                Island_Acres[Acre].SetBuriedInMemory(Island_Acres[Acre].Acre_Items[index], Acre, Island_Buried_Buffer, true, Save_File.Save_Type);
+                            {
+                                if (SelectedIsland != null)
+                                {
+                                    // TODO: Island buried items
+                                }
+                                else
+                                    Island_Acres[Acre].SetBuriedInMemory(Island_Acres[Acre].Acre_Items[index], Acre, Island_Buried_Buffer, true, Save_File.Save_Type);
+                            }
                             else
                                 Town_Acres[Acre].SetBuriedInMemory(Town_Acres[Acre].Acre_Items[index], Acre, Buried_Buffer, true, Save_File.Save_Type);
                         }
                     }
                 }
                 var OldImage = Box.Image;
-                Box.Image = GenerateAcreItemsBitmap(Island ? Island_Acres[Acre].Acre_Items : Town_Acres[Acre].Acre_Items, Acre, Island);
+                WorldItem[] Items = null;
+                if (Island)
+                {
+                    if (SelectedIsland == null)
+                        Items = Island_Acres[Acre].Acre_Items;
+                    else
+                        Items = SelectedIsland.Items[Acre];
+                }
+                else
+                    Items = Town_Acres[Acre].Acre_Items;
+
+                Refresh_PictureBox_Image(Box, GenerateAcreItemsBitmap(Items, Acre, Island));
                 Box.Refresh();
                 OldImage.Dispose();
                 Town_Move(sender, e, Island, true); // Force ToolTip update
@@ -2857,8 +2907,30 @@ namespace ACSE
             {
                 PictureBoxWithInterpolationMode Box = sender as PictureBoxWithInterpolationMode;
                 Box.Capture = false;
-                var Items = Island ? Island_Acres[Acre].Acre_Items : Town_Acres[Acre].Acre_Items;
+                WorldItem[] Items = null;
+                if (Island)
+                {
+                    if (SelectedIsland == null)
+                        Items = Island_Acres[Acre].Acre_Items;
+                    else
+                        Items = SelectedIsland.Items[Acre];
+                }
+                else
+                {
+                    Items = Town_Acres[Acre].Acre_Items;
+                }
                 Utility.FloodFillWorldItemArray(ref Items, 16, index, Items[index], new WorldItem(GetCurrentItem(), byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text), Items[index].Index));
+                if (Island)
+                {
+                    if (SelectedIsland == null)
+                        Island_Acres[Acre].Acre_Items = Items;
+                    else
+                        SelectedIsland.Items[Acre] = Items;
+                }
+                else
+                {
+                    Town_Acres[Acre].Acre_Items = Items;
+                }
                 Refresh_PictureBox_Image(Box, GenerateAcreItemsBitmap(Items, Acre, Island));
             }
         }
@@ -2882,8 +2954,17 @@ namespace ACSE
                     return;
                 // Set Info Label
                 townInfoLabel.Text = string.Format("X: {0} | Y: {1} | Index: {2}", X, Y, index);
-                WorldItem Item = Island ? Island_Acres[Acre].Acre_Items[index] : Town_Acres[Acre].Acre_Items[index];
-                if (Clicking)
+                WorldItem Item = null;
+                if (Island)
+                {
+                    if (SelectedIsland == null)
+                        Item = Island_Acres[Acre].Acre_Items[index];
+                    else
+                        Item = SelectedIsland.Items[Acre][index];
+                }
+                else
+                    Item = Town_Acres[Acre].Acre_Items[index];
+                if (Clicking && !Override)
                     Handle_Town_Click(sender, Item, Acre, index, e, Island);
                 if (Buildings != null)
                 {
@@ -3624,6 +3705,36 @@ namespace ACSE
         {
             Clicking = false;
         }
+
+
+        #region Doubutsu no Mori e+ Islands
+
+        private void IslandTabIndexChanged(object sender, TabControlEventArgs e)
+        {
+            if (islandSelectionTab.SelectedIndex < 0 || islandSelectionTab.SelectedIndex > 3)
+                return;
+            SelectedIsland = Islands[islandSelectionTab.SelectedIndex];
+            if (SelectedIsland != null)
+            {
+                ReloadIslandItemPicture();
+            }
+        }
+
+        private void ReloadIslandItemPicture()
+        {
+            if (SelectedIsland != null)
+            {
+                if (SelectedIsland.Items != null)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Refresh_PictureBox_Image(Island_Acre_Map[i], GenerateAcreItemsBitmap(SelectedIsland.Items[i], i, true));
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>

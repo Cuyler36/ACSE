@@ -3629,6 +3629,7 @@
     <Compile Include="Classes\Enums.cs" />
     <Compile Include="Classes\Generation.cs" />
     <Compile Include="Classes\ImageGeneration.cs" />
+    <Compile Include="Classes\Island.cs" />
     <Compile Include="Classes\Message.cs" />
     <Compile Include="Classes\PlaceholderTextBox.cs">
       <SubType>Component</SubType>

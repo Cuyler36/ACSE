@@ -205,7 +205,7 @@ namespace ACSE
             Birthday = 0xAE2,
             BirthdaySize = 2,
             Reset = 0x10F4, //
-            ResetSize = 8,
+            ResetSize = 4,
             Savings = 0x11B4,
             Patterns = 0xC40,
             PatternCount = 8,
@@ -263,7 +263,7 @@ namespace ACSE
             Birthday = 0x10A6,
             BirthdaySize = 2,
             Reset = 0x10F4,
-            ResetSize = 8,
+            ResetSize = 4,
             Savings = 0x122C,
             Patterns = 0x1240,
             PatternCount = 8,
@@ -316,8 +316,10 @@ namespace ACSE
             HeldItem = 0x874,
             InventoryBackground = 0xFF0,
             Shirt = 0xFF6,
-            Reset = 0x10F4, //
-            ResetSize = 8,
+            Birthday = 0x1018,
+            BirthdaySize = 2,
+            Reset = 0x1064,
+            ResetSize = 4,
             Savings = 0x11B4,
             Patterns = 0x11C0,
             PatternCount = 8,
@@ -326,7 +328,6 @@ namespace ACSE
             TownPassCardImage = -1,
             HairType = -1,
             Bed = -1,
-            Birthday = -1,
             Catalog = -1, //Actually research
             Encyclopedia = -1,
             Dressers = -1,
