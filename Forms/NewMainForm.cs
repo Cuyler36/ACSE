@@ -432,6 +432,41 @@ namespace ACSE
                 basementCheckBox.Enabled = true;
             }
 
+            // Enable Controls
+            playerName.Enabled = true;
+            playerTownName.Enabled = true;
+            playerWallet.Enabled = true;
+            playerDebt.Enabled = true;
+            playerSavings.Enabled = true;
+            playerGender.Enabled = true;
+            playerFace.Enabled = true;
+            tanTrackbar.Enabled = true;
+            birthdayDay.Enabled = true;
+            birthdayMonth.Enabled = true;
+            resettiCheckBox.Enabled = true;
+            saveAsToolStripMenuItem.Enabled = true;
+            saveToolStripMenuItem.Enabled = true;
+            secureValueToolStripMenuItem.Enabled = save.Game_System == SaveGeneration.N3DS;
+            clearWeedsToolStripMenuItem.Enabled = true;
+            removeAllItemsToolStripMenuItem.Enabled = true;
+            replaceItemsToolStripMenuItem.Enabled = true;
+            fillEncyclopediaToolStripMenuItem.Enabled = true;
+            getAllKKSongsToolStripMenuItem.Enabled = true;
+            acreCustomIdBox.Enabled = true;
+            selectedItem.Enabled = true;
+            townNameBox.Enabled = true;
+            buriedCheckbox.Enabled = true;
+            grassTypeBox.Enabled = true;
+            weatherComboBox.Enabled = true;
+            nativeFruitBox.Enabled = true;
+            houseSizeComboBox.Enabled = true;
+            roofColorComboBox.Enabled = true;
+            houseOwnerComboBox.Enabled = true;
+            grassLevelBox.Enabled = true;
+            setAllGrass.Enabled = true;
+            reviveGrass.Enabled = true;
+            removeGrass.Enabled = true;
+
             //Clear Acre Images
             if (Acre_Map != null)
                 foreach (PictureBoxWithInterpolationMode Box in Acre_Map)
@@ -2558,7 +2593,7 @@ namespace ACSE
                 }
                 else if (e.Button == MouseButtons.Middle)
                 {
-                    Utility.FloodFillItemArray(ref Selected_Player.Data.Pockets.Items, 16, Item_Index, Selected_Player.Data.Pockets.Items[Item_Index], new Item(GetCurrentItem(), byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text)));
+                    Utility.FloodFillItemArray(ref Selected_Player.Data.Pockets.Items, inventoryPicturebox.Size.Width / 16, Item_Index, Selected_Player.Data.Pockets.Items[Item_Index], new Item(GetCurrentItem(), byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text)));
                     Refresh_PictureBox_Image(inventoryPicturebox, Inventory.GetItemPic(16, inventoryPicturebox.Size.Width / 16, Selected_Player.Data.Pockets.Items, Save_File.Save_Type));
                 }
             }
@@ -2920,17 +2955,6 @@ namespace ACSE
                     Items = Town_Acres[Acre].Acre_Items;
                 }
                 Utility.FloodFillWorldItemArray(ref Items, 16, index, Items[index], new WorldItem(GetCurrentItem(), byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text), Items[index].Index));
-                if (Island)
-                {
-                    if (SelectedIsland == null)
-                        Island_Acres[Acre].Acre_Items = Items;
-                    else
-                        SelectedIsland.Items[Acre] = Items;
-                }
-                else
-                {
-                    Town_Acres[Acre].Acre_Items = Items;
-                }
                 Refresh_PictureBox_Image(Box, GenerateAcreItemsBitmap(Items, Acre, Island));
             }
         }
