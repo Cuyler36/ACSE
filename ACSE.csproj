@@ -36,6 +36,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Debug\</OutputPath>
+    <NoWarn>IDE1006</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -3623,10 +3624,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AcreData.cs" />
+    <Compile Include="Classes\AlertToggledEventArgs.cs" />
     <Compile Include="Classes\DateUtil.cs" />
     <Compile Include="Classes\DebugManager.cs" />
     <Compile Include="Classes\Encyclopedia.cs" />
     <Compile Include="Classes\Enums.cs" />
+    <Compile Include="Classes\Extensions\EndianExtensions.cs" />
     <Compile Include="Classes\Generation.cs" />
     <Compile Include="Classes\ImageGeneration.cs" />
     <Compile Include="Classes\Island.cs" />
@@ -3640,6 +3643,12 @@
     <Compile Include="Classes\Save.cs" />
     <Compile Include="Classes\SecretCode.cs" />
     <Compile Include="Classes\SimpleTownInfo.cs" />
+    <Compile Include="Classes\ToggableAlertForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\ToggableAlertForm.Designer.cs">
+      <DependentUpon>ToggableAlertForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Classes\Utility.cs" />
     <Compile Include="Classes\VillagerPlayerEntry.cs" />
     <Compile Include="Classes\Weather.cs" />
@@ -3690,6 +3699,9 @@
     <Compile Include="Classes\VillagerData.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Classes\ToggableAlertForm.resx">
+      <DependentUpon>ToggableAlertForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBox2.resx">
       <DependentUpon>AboutBox2.cs</DependentUpon>
     </EmbeddedResource>

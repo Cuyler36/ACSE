@@ -236,7 +236,6 @@
             this.housesTab.SuspendLayout();
             this.houseTabSelect.SuspendLayout();
             this.islandTab.SuspendLayout();
-            this.islandPanel.SuspendLayout();
             this.islandSelectionTab.SuspendLayout();
             this.grassTab.SuspendLayout();
             this.grassPanel.SuspendLayout();
@@ -1762,6 +1761,7 @@
             // 
             // islandTab
             // 
+            this.islandTab.Controls.Add(this.islandSelectionTab);
             this.islandTab.Controls.Add(this.islandPanel);
             this.islandTab.Location = new System.Drawing.Point(4, 22);
             this.islandTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -1777,25 +1777,23 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.islandPanel.AutoScroll = true;
-            this.islandPanel.Controls.Add(this.islandSelectionTab);
             this.islandPanel.Location = new System.Drawing.Point(3, 3);
             this.islandPanel.Name = "islandPanel";
-            this.islandPanel.Size = new System.Drawing.Size(925, 562);
+            this.islandPanel.Size = new System.Drawing.Size(925, 530);
             this.islandPanel.TabIndex = 0;
             // 
             // islandSelectionTab
             // 
-            this.islandSelectionTab.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.islandSelectionTab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.islandSelectionTab.Controls.Add(this.tabPage5);
             this.islandSelectionTab.Controls.Add(this.tabPage6);
             this.islandSelectionTab.Controls.Add(this.tabPage7);
             this.islandSelectionTab.Controls.Add(this.tabPage8);
-            this.islandSelectionTab.Location = new System.Drawing.Point(3, 541);
+            this.islandSelectionTab.Location = new System.Drawing.Point(3, 540);
             this.islandSelectionTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.islandSelectionTab.Name = "islandSelectionTab";
             this.islandSelectionTab.SelectedIndex = 0;
-            this.islandSelectionTab.Size = new System.Drawing.Size(922, 21);
+            this.islandSelectionTab.Size = new System.Drawing.Size(210, 21);
             this.islandSelectionTab.TabIndex = 14;
             this.islandSelectionTab.Visible = false;
             // 
@@ -1805,7 +1803,7 @@
             this.tabPage5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage5.Size = new System.Drawing.Size(914, 0);
+            this.tabPage5.Size = new System.Drawing.Size(202, 0);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "Island 1";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2137,7 +2135,6 @@
             this.housesTab.PerformLayout();
             this.houseTabSelect.ResumeLayout(false);
             this.islandTab.ResumeLayout(false);
-            this.islandPanel.ResumeLayout(false);
             this.islandSelectionTab.ResumeLayout(false);
             this.grassTab.ResumeLayout(false);
             this.grassPanel.ResumeLayout(false);

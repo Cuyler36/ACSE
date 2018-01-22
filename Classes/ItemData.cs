@@ -894,13 +894,13 @@ namespace ACSE
 
         public static string GetItemName(ushort itemID)
         {
-            var Found = ItemDatabase.Where(o => o.Key == itemID).Select(o => new { Key = o.Key, Value = o.Value }).FirstOrDefault();
+            var Found = ItemDatabase.Where(o => o.Key == itemID).Select(o => new { o.Key, o.Value }).FirstOrDefault();
             if (Found != null)
                 return Found.Value;
             else
             {
                 ushort BaseID = (ushort)(itemID - (itemID % 4));
-                var FoundBase = ItemDatabase.Where(o => o.Key == BaseID).Select(o => new { Key = o.Key, Value = o.Value }).FirstOrDefault();
+                var FoundBase = ItemDatabase.Where(o => o.Key == BaseID).Select(o => new { o.Key, o.Value }).FirstOrDefault();
                 if (FoundBase != null)
                     return FoundBase.Value;
                 else

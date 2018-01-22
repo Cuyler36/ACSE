@@ -212,11 +212,13 @@ namespace ACSE
             for (int i = 0; i < Offsets.Room_Count; i++)
             {
                 int RoomOffset = Offset + Offsets.Room_Start + i * Offsets.Room_Size;
-                var Room = new Room();
-                Room.Index = i;
-                Room.Offset = RoomOffset;
-                Room.Name = RoomNames[i];
-                Room.Layers = new Layer[Offsets.Layer_Count];
+                var Room = new Room
+                {
+                    Index = i,
+                    Offset = RoomOffset,
+                    Name = RoomNames[i],
+                    Layers = new Layer[Offsets.Layer_Count]
+                };
 
                 if (SaveData.Game_System == SaveGeneration.N64 || SaveData.Game_System == SaveGeneration.GCN) // TODO: Songs
                 {
@@ -227,11 +229,13 @@ namespace ACSE
                 for (int x = 0; x < Offsets.Layer_Count; x++)
                 {
                     int LayerOffset = RoomOffset + Offsets.Layer_Size * x;
-                    var Layer = new Layer();
-                    Layer.Offset = LayerOffset;
-                    Layer.Index = x;
-                    Layer.Items = new Furniture[ItemsPerLayer];
-                    Layer.Parent = Room;
+                    var Layer = new Layer
+                    {
+                        Offset = LayerOffset,
+                        Index = x,
+                        Items = new Furniture[ItemsPerLayer],
+                        Parent = Room
+                    };
 
                     // Load furniture for the layer
                     for (int f = 0; f < ItemsPerLayer; f++)

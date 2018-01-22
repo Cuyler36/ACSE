@@ -94,5 +94,29 @@ namespace ACSE.Properties {
                 this["AcreMapSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowDumpAcreWarning {
+            get {
+                return ((bool)(this["ShowDumpAcreWarning"]));
+            }
+            set {
+                this["ShowDumpAcreWarning"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowBetaAcreWarning {
+            get {
+                return ((bool)(this["ShowBetaAcreWarning"]));
+            }
+            set {
+                this["ShowBetaAcreWarning"] = value;
+            }
+        }
     }
 }

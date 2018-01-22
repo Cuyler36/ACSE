@@ -88,8 +88,10 @@ namespace ACSE
             Bitmap_Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
             Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             int Num_Lines_X = Map.Width / Item_Size, Num_Lines_Y = Map.Height / Item_Size;
-            Pen Grid_Pen = new Pen(new SolidBrush(Color.FromArgb((int)Grid_Color)));
-            Grid_Pen.Width = Grid_Pixel_Size;
+            Pen Grid_Pen = new Pen(new SolidBrush(Color.FromArgb((int)Grid_Color)))
+            {
+                Width = Grid_Pixel_Size
+            };
             for (int Y = 1; Y < Num_Lines_Y; Y++)
                 Bitmap_Graphics.DrawLine(Grid_Pen, 0, Y * Item_Size - 1, Map.Width, Y * Item_Size - 1);
             for (int X = 1; X < Num_Lines_X; X++)
@@ -103,8 +105,10 @@ namespace ACSE
         {
             Bitmap Acre_Highlight = new Bitmap(64, 64);
             Graphics Bitmap_Graphics = Graphics.FromImage(Acre_Highlight);
-            Pen Border_Color = new Pen(Color.FromArgb(0x80, Color.Gold));
-            Border_Color.Width = 8;
+            Pen Border_Color = new Pen(Color.FromArgb(0x80, Color.Gold))
+            {
+                Width = 8
+            };
             Bitmap_Graphics.DrawRectangle(Border_Color, new Rectangle(0, 0, 64, 64));
             Bitmap_Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x80, Color.Yellow)), new Rectangle(4, 4, 56, 56));
             Bitmap_Graphics.Flush();

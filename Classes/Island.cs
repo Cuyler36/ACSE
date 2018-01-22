@@ -28,22 +28,26 @@ namespace ACSE
 
             public Cottage(int Offset, Save SaveData)
             {
-                MainRoom = new Room();
-                MainRoom.Offset = Offset;
-                MainRoom.Name = "Cabana";
-                MainRoom.Layers = new Layer[4];
+                MainRoom = new Room
+                {
+                    Offset = Offset,
+                    Name = "Cabana",
+                    Layers = new Layer[4],
 
-                MainRoom.Carpet = new Item((ushort)(0x2600 | SaveData.ReadByte(Offset + 0x8A0)));
-                MainRoom.Wallpaper = new Item((ushort)(0x2700 | SaveData.ReadByte(Offset + 0x8A1)));
+                    Carpet = new Item((ushort)(0x2600 | SaveData.ReadByte(Offset + 0x8A0))),
+                    Wallpaper = new Item((ushort)(0x2700 | SaveData.ReadByte(Offset + 0x8A1)))
+                };
 
                 for (int x = 0; x < 4; x++)
                 {
                     int LayerOffset = Offset + 0x228 * x;
-                    var Layer = new Layer();
-                    Layer.Offset = LayerOffset;
-                    Layer.Index = x;
-                    Layer.Items = new Furniture[256];
-                    Layer.Parent = MainRoom;
+                    var Layer = new Layer
+                    {
+                        Offset = LayerOffset,
+                        Index = x,
+                        Items = new Furniture[256],
+                        Parent = MainRoom
+                    };
 
                     // Load furniture for the layer
                     for (int f = 0; f < 256; f++)
