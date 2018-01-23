@@ -104,9 +104,6 @@ namespace ACSE
             if (AcreMapSize < 64)
                 AcreMapSize = 64;
 
-            // TEST
-            Console.WriteLine((0xFEDCBA9876543210).Reverse().ToString("X8"));
-
             Settings_Menu = new SettingsMenuForm(this);
             TPC_Picture = new PictureBoxWithInterpolationMode
             {

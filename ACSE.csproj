@@ -3649,6 +3649,7 @@
     <Compile Include="Classes\ToggableAlertForm.Designer.cs">
       <DependentUpon>ToggableAlertForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Utilities\PatternUtility.cs" />
     <Compile Include="Classes\Utility.cs" />
     <Compile Include="Classes\VillagerPlayerEntry.cs" />
     <Compile Include="Classes\Weather.cs" />
