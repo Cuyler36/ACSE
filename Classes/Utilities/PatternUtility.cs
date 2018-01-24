@@ -91,6 +91,15 @@ namespace ACSE.Classes.Utilities
             return OutputBuffer;
         }
 
+        private static Bitmap CreateBitmap(byte[] PatternBitmapBuffer, uint Width = 32, uint Height = 32)
+        {
+            Bitmap Pattern_Bitmap = new Bitmap((int)Width, (int)Height, PixelFormat.Format32bppArgb);
+            BitmapData bitmapData = Pattern_Bitmap.LockBits(new Rectangle(0, 0, (int)Width, (int)Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            System.Runtime.InteropServices.Marshal.Copy(PatternBitmapBuffer, 0, bitmapData.Scan0, PatternBitmapBuffer.Length);
+            Pattern_Bitmap.UnlockBits(bitmapData);
+            return Pattern_Bitmap;
+        }
+
         public static byte[] DecodeC4(byte[] C4ImageData, uint Width = 32, uint Height = 32)
         {
             return C4ImageSubroutineDecode(DecompressC4(C4ImageData), Width, Height);
@@ -107,13 +116,36 @@ namespace ACSE.Classes.Utilities
 
             for (int i = 0; i < DecodedC4ImageData.Length; i++)
                 Buffer.BlockCopy(BitConverter.GetBytes(Palette[DecodedC4ImageData[i] - 1]), 0, PatternBitmapBuffer, i * 4, 4);
+            
+            return CreateBitmap(PatternBitmapBuffer, Width, Height);
+        }
 
-            Bitmap Pattern_Bitmap = new Bitmap(32, 32, PixelFormat.Format32bppArgb);
-            BitmapData bitmapData = Pattern_Bitmap.LockBits(new Rectangle(0, 0, 32, 32), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-            System.Runtime.InteropServices.Marshal.Copy(PatternBitmapBuffer, 0, bitmapData.Scan0, PatternBitmapBuffer.Length);
-            Pattern_Bitmap.UnlockBits(bitmapData);
+        public static Bitmap GeneratePalettePreview(uint[] Palette, uint Width = 32, uint Height = 480)
+        {
+            byte[] PaletteBitmapBuffer = new byte[Width * Height * 4];
+            int PaletteColorDataLength = (int)(Width * (Height / 15) * 4); // There are 15 colors in a Palette.
+            int PaletteIndex = -1;
 
-            return Pattern_Bitmap;
+            for (int i = 0; i < PaletteBitmapBuffer.Length; i += 4)
+            {
+                if (i % PaletteColorDataLength == 0)
+                    PaletteIndex++;
+
+                Buffer.BlockCopy(BitConverter.GetBytes(Palette[PaletteIndex]), 0, PaletteBitmapBuffer, i, 4);
+            }
+
+            return ImageGeneration.DrawGrid2(CreateBitmap(PaletteBitmapBuffer, Width, Height), (int)Width, new Size((int)Width, (int)Height), null, false, false);
+        }
+
+        public static byte[] CondenseNonBlockPattern(byte[] Buffer)
+        {
+            byte[] Pattern_Buffer = new byte[Buffer.Length / 2];
+            for (int i = 0; i < Pattern_Buffer.Length; i++)
+            {
+                int idx = i * 2;
+                Pattern_Buffer[i] = (byte)((Buffer[idx + 1] << 4) | Buffer[idx]);
+            }
+            return Pattern_Buffer;
         }
     }
 }

@@ -62,7 +62,7 @@ namespace ACSE
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(string.Format("An error occured while loading the acre images! File Index: {0} | File Name: {1} | Error:\n{2}", i, Path.GetFileName(File), ex.Message));
+                            MessageBox.Show(string.Format("An error occured while loading the acre images! File Index: {0} | File Name: {1}\nError:\n{2}", i, Path.GetFileName(File), ex.Message));
                         }
                     }
                 }

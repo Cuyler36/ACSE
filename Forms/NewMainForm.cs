@@ -8,7 +8,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 using ACSE.Classes;
 
@@ -16,10 +15,12 @@ namespace ACSE
 {
     public partial class NewMainForm : Form
     {
+        #region Variables
         public static readonly string Assembly_Location = Directory.GetCurrentDirectory();
         public static DebugManager Debug_Manager = new DebugManager();
         TabPage[] Main_Tabs;
         TabPage[] Player_Tabs = new TabPage[4];
+        TabPage[] PlayerPattern_Tabs = new TabPage[4];
         NewPlayer[] Players = new NewPlayer[4];
         House[] Houses;
         NewVillager[] Villagers;
@@ -33,6 +34,8 @@ namespace ACSE
         PictureBoxWithInterpolationMode[] Island_House_Boxes;
         PictureBoxWithInterpolationMode TPC_Picture;
         Image Selected_Pattern = null;
+        int SelectedPaletteIndex = 0;
+        Pattern SelectedPatternObject;
         Panel[] Building_List_Panels;
         Normal_Acre[] Acres;
         public static Normal_Acre[] Town_Acres;
@@ -89,6 +92,7 @@ namespace ACSE
         private static int AcreMapSize = Properties.Settings.Default.AcreMapSize;
 
         #endregion
+        #endregion
 
         public NewMainForm(Save save = null)
         {
@@ -134,10 +138,13 @@ namespace ACSE
                 Main_Tabs[i] = tabControl1.TabPages[i];
             for (int i = 0; i < playerEditorSelect.TabCount; i++)
                 Player_Tabs[i] = playerEditorSelect.TabPages[i];
+            for (int i = 0; i < patternGroupTabControl.TabCount; i++)
+                PlayerPattern_Tabs[i] = patternGroupTabControl.TabPages[i];
 
             selectedItem.SelectedValueChanged += new EventHandler(Item_Selected_Index_Changed);
             acreTreeView.AfterSelect += new TreeViewEventHandler(Acre_Tree_View_Entry_Clicked);
             playerEditorSelect.Selected += new TabControlEventHandler(Player_Tab_Index_Changed);
+            patternGroupTabControl.Selected += new TabControlEventHandler(Player_Tab_Index_Changed);
 
             //Setup selectedAcrePictureBox
             selectedAcrePicturebox = new PictureBoxWithInterpolationMode
@@ -225,6 +232,10 @@ namespace ACSE
 
             // Island Tab Index Changed
             islandSelectionTab.Selected += IslandTabIndexChanged;
+
+            // Palette Change Buttons
+            paletteNextButton.MouseClick += new MouseEventHandler((object sender, MouseEventArgs e) => ChangePatternPalette(1));
+            palettePreviousButton.MouseClick += new MouseEventHandler((object sender, MouseEventArgs e) => ChangePatternPalette(-1));
 
             if (save != null)
                 SetupEditor(save);
@@ -413,6 +424,7 @@ namespace ACSE
             selectedAcrePicturebox.BackgroundImage = null;
             Buildings = null;
             Island_Buildings = null;
+            SelectedPatternObject = null;
             Buried_Buffer = null;
             Island_Buried_Buffer = null;
             Selected_House = null;
@@ -906,11 +918,21 @@ namespace ACSE
         private void SetPlayersEnabled()
         {
             for (int i = 0; i < 4; i++)
+            {
                 if (Players[i] != null)
+                {
                     if (Players[i].Exists && playerEditorSelect.TabPages.IndexOf(Player_Tabs[i]) < 0)
+                    {
                         playerEditorSelect.TabPages.Insert(i, Player_Tabs[i]);
+                        patternGroupTabControl.TabPages.Insert(i, PlayerPattern_Tabs[i]);
+                    }
                     else if (!Players[i].Exists && playerEditorSelect.TabPages.IndexOf(Player_Tabs[i]) > -1)
+                    {
                         playerEditorSelect.TabPages.Remove(Player_Tabs[i]);
+                        patternGroupTabControl.TabPages.Remove(PlayerPattern_Tabs[i]);
+                    }
+                }
+            }
         }
 
         private void SetMainTabEnabled(string tabName, bool enabled)
@@ -947,6 +969,7 @@ namespace ACSE
             //Load all tabs so alignment is kept
             SetMainTabEnabled("islandTab", true);
             SetMainTabEnabled("grassTab", true);
+            SetMainTabEnabled("patternsTab", true);
 
             playerSavings.Enabled = Current_Save_Type != SaveType.Doubutsu_no_Mori;
             tanTrackbar.Enabled = Current_Save_Type != SaveType.Doubutsu_no_Mori;
@@ -954,7 +977,8 @@ namespace ACSE
             if (Current_Save_Type == SaveType.Doubutsu_no_Mori || Current_Save_Type == SaveType.Doubutsu_no_Mori_Plus
                 || Current_Save_Type == SaveType.Animal_Crossing || Current_Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
             {
-                SetMainTabEnabled("islandTab", Current_Save_Type == SaveType.Doubutsu_no_Mori ? false : true);
+                SetMainTabEnabled("islandTab", Current_Save_Type != SaveType.Doubutsu_no_Mori);
+                SetMainTabEnabled("patternsTab", Current_Save_Type != SaveType.Doubutsu_no_Mori);
                 SetMainTabEnabled("grassTab", false);
                 playerTownName.Enabled = true;
                 playerHairType.Enabled = false;
@@ -993,6 +1017,7 @@ namespace ACSE
             {
                 SetMainTabEnabled("islandTab", false);
                 SetMainTabEnabled("grassTab", false);
+                SetMainTabEnabled("patternsTab", true);
                 playerTownName.Enabled = true;
                 playerHairType.Enabled = true;
                 playerHairColor.Enabled = true;
@@ -1027,6 +1052,7 @@ namespace ACSE
             {
                 SetMainTabEnabled("islandTab", false);
                 SetMainTabEnabled("grassTab", true);
+                SetMainTabEnabled("patternsTab", true);
                 playerTownName.Enabled = true;
                 playerHairType.Enabled = true;
                 playerHairColor.Enabled = true;
@@ -1062,6 +1088,7 @@ namespace ACSE
             {
                 SetMainTabEnabled("islandTab", true);
                 SetMainTabEnabled("grassTab", true);
+                SetMainTabEnabled("patternsTab", true);
                 playerTownName.Enabled = false;
                 playerHairType.Enabled = true;
                 playerHairColor.Enabled = true;
@@ -1168,9 +1195,20 @@ namespace ACSE
                 tanTrackbar.Value = Player.Data.Tan + 1;
 
             if (Player.Data.Patterns != null)
+            {
                 for (int i = 0; i < Player.Data.Patterns.Length; i++)
+                {
                     if (Player.Data.Patterns[i] != null && Player.Data.Patterns[i].Pattern_Bitmap != null)
+                    {
                         Refresh_PictureBox_Image(Pattern_Boxes[i], Player.Data.Patterns[i].Pattern_Bitmap, false, false);
+                    }
+                }
+                patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Pattern_Boxes[0].Image, 16, new Size (513, 513));
+                paletteSelectionPictureBox.Image = ACSE.Classes.Utilities.PatternUtility.GeneratePalettePreview(Player.Data.Patterns[0].PaletteData,
+                    (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
+                SelectedPatternObject = Player.Data.Patterns[0];
+                patternNameTextBox.Text = SelectedPatternObject.Name;
+            }
 
             resettiCheckBox.Checked = Player.Data.Reset;
 
@@ -2789,13 +2827,37 @@ namespace ACSE
             }
         }
 
+        private void ChangePatternPalette(int Additive)
+        {
+            if (SelectedPatternObject != null && Save_File != null && Save_File.Game_System != SaveGeneration.N3DS) // TODO: Allow New Leaf / Welcome Amiibo to change their color palette somehow
+            {
+                if (SelectedPatternObject.Palette + Additive < 0)
+                    SelectedPatternObject.Palette = 15;
+                else if (SelectedPatternObject.Palette + Additive > 15)
+                    SelectedPatternObject.Palette = 0;
+                else
+                    SelectedPatternObject.Palette += (byte)Additive;
+
+                if (Save_File.Game_System != SaveGeneration.N3DS)
+                    SelectedPatternObject.PaletteData = SelectedPatternObject.GetPaletteArray(Save_File.Game_System)[SelectedPatternObject.Palette];
+                SelectedPaletteIndex = SelectedPatternObject.Palette;
+                paletteSelectionPictureBox.Image = ACSE.Classes.Utilities.PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData,
+                    (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
+                SelectedPatternObject.RedrawBitmap();
+                Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
+                patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
+                Pattern_Boxes[SelectedPatternObject.Index].Image = Selected_Pattern;
+                patternEditorPictureBox.Refresh();
+            }
+        }
+
         //Add ContextMenuStrips for importing/exporting patterns & renaming/setting palette
         private void SetupPatternBoxes()
         {
-            for (int i = patternPanel.Controls.Count - 1; i > -1; i--)
-                if (patternPanel.Controls[i] is PictureBoxWithInterpolationMode)
+            for (int i = patternEditorPreviewPanel.Controls.Count - 1; i > -1; i--)
+                if (patternEditorPreviewPanel.Controls[i] is PictureBoxWithInterpolationMode)
                 {
-                    PictureBoxWithInterpolationMode disposingBox = patternPanel.Controls[i] as PictureBoxWithInterpolationMode;
+                    PictureBoxWithInterpolationMode disposingBox = patternEditorPreviewPanel.Controls[i] as PictureBoxWithInterpolationMode;
                     var Old_Image = disposingBox.Image;
                     disposingBox.Dispose();
                     if (Old_Image != null)
@@ -2834,24 +2896,105 @@ namespace ACSE
                 {
                     InterpolationMode = InterpolationMode.NearestNeighbor,
                     Name = "pattern" + i.ToString(),
-                    Size = new Size(128, 128),
+                    Size = new Size(64, 64),
                     SizeMode = PictureBoxSizeMode.StretchImage,
+                    BackgroundImageLayout = ImageLayout.Stretch,
                     BorderStyle = BorderStyle.FixedSingle,
-                    Location = new Point(Current_Save_Info.Pattern_Count > 4 ? (22 - ScrollbarWidth) / 2 : 11, 3 + i * 131),
-                    Image = Acre_Image_List.Keys.Contains("FF") ? Acre_Image_List["FF"] : null,
+                    Location = new Point((i % 2) * 72, 3 + (i / 2) * 72),
                     ContextMenuStrip = PatternStrip,
                     UseInternalInterpolationSetting = true,
                 };
                 patternBox.MouseMove += new MouseEventHandler(Pattern_Move);
                 patternBox.MouseLeave += new EventHandler(Hide_Pat_Tip);
                 Pattern_Boxes[i] = patternBox;
-                patternPanel.Controls.Add(patternBox);
+                patternEditorPreviewPanel.Controls.Add(patternBox);
 
                 // ToolStrip Item Events
                 Export.Click += new EventHandler((object sender, EventArgs e) => Pattern_Export_Click(sender, e, Array.IndexOf(Pattern_Boxes, patternBox)));
                 Import.Click += new EventHandler((object sender, EventArgs e) => Pattern_Import_Click(sender, e, Array.IndexOf(Pattern_Boxes, patternBox)));
                 Rename.Click += (object sender, EventArgs e) => Not_Implemented();
                 Set_Palette.Click += (object sender, EventArgs e) => Not_Implemented();
+
+                patternBox.MouseClick += delegate (object sender, MouseEventArgs e)
+                {
+                    SelectedPatternObject = Selected_Player.Data.Patterns[Array.IndexOf(Pattern_Boxes, patternBox)];
+                    Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
+                    paletteSelectionPictureBox.Image = ACSE.Classes.Utilities.PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData,
+                        (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
+                    patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
+                    patternNameTextBox.Text = SelectedPatternObject.Name;
+                };
+            }
+
+            patternEditorPictureBox.Image = null;
+            patternEditorPictureBox.InterpolationMode = InterpolationMode.NearestNeighbor;
+        }
+
+        private void PaletteImageBox_Click(object sender, MouseEventArgs e)
+        {
+            if (SelectedPatternObject != null)
+                SelectedPaletteIndex = e.Y / (paletteSelectionPictureBox.Height / 15);
+        }
+
+
+        bool PatternEditorMouseDown = false;
+        int LastPatternPixel = -1;
+
+        private void PatternEditorBox_Click(object sender, MouseEventArgs e)
+        {
+            if (SelectedPatternObject != null)
+            {
+                int CellX = e.X / (patternEditorPictureBox.Width / 32);
+                int CellY = e.Y / (patternEditorPictureBox.Height / 32);
+
+                int PixelPosition = CellY * 32 + CellX;
+                if (LastPatternPixel != PixelPosition && PixelPosition > -1 && PixelPosition < SelectedPatternObject.DecodedData.Length && CellX < 32)
+                {
+                    LastPatternPixel = PixelPosition;
+                    SelectedPatternObject.DecodedData[PixelPosition] = (byte)(SelectedPaletteIndex + 1);
+                    SelectedPatternObject.RedrawBitmap();
+                    Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
+                    Pattern_Boxes[SelectedPatternObject.Index].Image = Selected_Pattern;
+                    patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
+                    patternEditorPictureBox.Refresh();
+                }
+            }
+        }
+
+        private void PatternEditorBox_MouseLeave(object sender, EventArgs e)
+        {
+            PatternEditorMouseDown = false;
+            LastPatternPixel = -1;
+        }
+
+        private void PatternEditorBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (SelectedPatternObject != null)
+            {
+                PatternEditorMouseDown = true;
+                PatternEditorBox_Click(sender, e);
+            }
+        }
+
+        private void PatternEditorBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            PatternEditorMouseDown = false;
+            LastPatternPixel = -1;
+        }
+
+        private void PatternEditorBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (PatternEditorMouseDown && SelectedPatternObject != null)
+            {
+                PatternEditorBox_Click(sender, e);
+            }
+        }
+
+        private void PatternEditorNameBox_TextChanged(object sender, EventArgs e)
+        {
+            if (SelectedPatternObject != null)
+            {
+                SelectedPatternObject.Name = patternNameTextBox.Text;
             }
         }
 

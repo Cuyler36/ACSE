@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ACSE
+﻿namespace ACSE
 {
     /// <summary>
     /// Island class for Doubutsu no Mori e+

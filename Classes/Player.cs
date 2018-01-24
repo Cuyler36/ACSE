@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.IO;
 
 namespace ACSE
 {
@@ -967,7 +960,7 @@ namespace ACSE
                 {
                     Data.Patterns = new Pattern[Offsets.PatternCount];
                     for (int i = 0; i < Data.Patterns.Length; i++)
-                        Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, save);
+                        Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, i, save);
                 }
 
                 // Get the Player's House

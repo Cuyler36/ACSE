@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Resources;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -99,6 +96,34 @@ namespace ACSE
             Bitmap_Graphics.Flush();
             Bitmap_Graphics.Dispose();
             return Map;
+        }
+
+        public static Bitmap DrawGrid2(Image Img, int CellSize, Size ImageSize, Pen GridPen = null, bool Resize = true, bool DrawHorizontal = true)
+        {
+            if (GridPen == null)
+                GridPen = Pens.Black;
+
+            Bitmap GridBitmap = Resize ? new Bitmap(ImageSize.Width, ImageSize.Height) : new Bitmap(Img);
+
+            using (Graphics GridGraphics = Graphics.FromImage(GridBitmap))
+            {
+                GridGraphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                if (Resize)
+                    GridGraphics.DrawImage(Img, new Rectangle(0, 0, ImageSize.Width, ImageSize.Height), new RectangleF((float)-0.5, (float)-0.5, 32, 32), GraphicsUnit.Pixel);
+
+                if (DrawHorizontal)
+                    for (int X = 0; X < GridBitmap.Width; X += CellSize)
+                    {
+                        GridGraphics.DrawLine(GridPen, X, 0, X, GridBitmap.Height);
+                    }
+
+                for (int Y = 0; Y < GridBitmap.Height; Y += CellSize)
+                {
+                    GridGraphics.DrawLine(GridPen, 0, Y, GridBitmap.Width, Y);
+                }
+            }
+
+            return GridBitmap;
         }
 
         public static Bitmap Draw_Acre_Highlight()

@@ -29,7 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TabPage patternsTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewMainForm));
+            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
+            this.palettePreviousButton = new System.Windows.Forms.Button();
+            this.paletteNextButton = new System.Windows.Forms.Button();
+            this.paletteSelectionPictureBox = new System.Windows.Forms.PictureBox();
+            this.patternEditorPanel = new System.Windows.Forms.Panel();
+            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
+            this.patternEditorPreviewPanel = new System.Windows.Forms.Panel();
+            this.patternGroupTabControl = new System.Windows.Forms.TabControl();
+            this.player1Tab = new System.Windows.Forms.TabPage();
+            this.player2Tab = new System.Windows.Forms.TabPage();
+            this.player3Tab = new System.Windows.Forms.TabPage();
+            this.player4Tab = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -172,12 +185,12 @@
             this.houseSizeComboBox = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.islandTab = new System.Windows.Forms.TabPage();
-            this.islandPanel = new System.Windows.Forms.Panel();
             this.islandSelectionTab = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.islandPanel = new System.Windows.Forms.Panel();
             this.grassTab = new System.Windows.Forms.TabPage();
             this.grassPanel = new System.Windows.Forms.Panel();
             this.removeGrass = new System.Windows.Forms.Button();
@@ -209,6 +222,12 @@
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
             this.houseToolTip = new System.Windows.Forms.ToolTip(this.components);
+            patternsTab = new System.Windows.Forms.TabPage();
+            patternsTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
+            this.patternEditorPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
+            this.patternGroupTabControl.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
@@ -243,6 +262,159 @@
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
+            // patternsTab
+            // 
+            patternsTab.Controls.Add(this.patternNameTextBox);
+            patternsTab.Controls.Add(this.palettePreviousButton);
+            patternsTab.Controls.Add(this.paletteNextButton);
+            patternsTab.Controls.Add(this.paletteSelectionPictureBox);
+            patternsTab.Controls.Add(this.patternEditorPanel);
+            patternsTab.Controls.Add(this.patternEditorPreviewPanel);
+            patternsTab.Controls.Add(this.patternGroupTabControl);
+            patternsTab.Location = new System.Drawing.Point(4, 22);
+            patternsTab.Name = "patternsTab";
+            patternsTab.Size = new System.Drawing.Size(931, 565);
+            patternsTab.TabIndex = 8;
+            patternsTab.Text = "Patterns";
+            patternsTab.UseVisualStyleBackColor = true;
+            // 
+            // patternNameTextBox
+            // 
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
+            this.patternNameTextBox.MaxLength = 16;
+            this.patternNameTextBox.Name = "patternNameTextBox";
+            this.patternNameTextBox.PlaceholderText = "Pattern Name";
+            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.patternNameTextBox.TabIndex = 0;
+            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
+            // 
+            // palettePreviousButton
+            // 
+            this.palettePreviousButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.palettePreviousButton.Location = new System.Drawing.Point(120, 507);
+            this.palettePreviousButton.Name = "palettePreviousButton";
+            this.palettePreviousButton.Size = new System.Drawing.Size(23, 23);
+            this.palettePreviousButton.TabIndex = 19;
+            this.palettePreviousButton.Text = "<";
+            this.palettePreviousButton.UseVisualStyleBackColor = true;
+            // 
+            // paletteNextButton
+            // 
+            this.paletteNextButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.paletteNextButton.Location = new System.Drawing.Point(149, 507);
+            this.paletteNextButton.Name = "paletteNextButton";
+            this.paletteNextButton.Size = new System.Drawing.Size(23, 23);
+            this.paletteNextButton.TabIndex = 18;
+            this.paletteNextButton.Text = ">";
+            this.paletteNextButton.UseVisualStyleBackColor = true;
+            // 
+            // paletteSelectionPictureBox
+            // 
+            this.paletteSelectionPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.paletteSelectionPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.paletteSelectionPictureBox.Location = new System.Drawing.Point(130, 21);
+            this.paletteSelectionPictureBox.Name = "paletteSelectionPictureBox";
+            this.paletteSelectionPictureBox.Size = new System.Drawing.Size(32, 480);
+            this.paletteSelectionPictureBox.TabIndex = 17;
+            this.paletteSelectionPictureBox.TabStop = false;
+            this.paletteSelectionPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PaletteImageBox_Click);
+            // 
+            // patternEditorPanel
+            // 
+            this.patternEditorPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patternEditorPanel.Controls.Add(this.patternEditorPictureBox);
+            this.patternEditorPanel.Location = new System.Drawing.Point(209, 21);
+            this.patternEditorPanel.MaximumSize = new System.Drawing.Size(513, 513);
+            this.patternEditorPanel.MinimumSize = new System.Drawing.Size(513, 513);
+            this.patternEditorPanel.Name = "patternEditorPanel";
+            this.patternEditorPanel.Size = new System.Drawing.Size(513, 513);
+            this.patternEditorPanel.TabIndex = 16;
+            // 
+            // patternEditorPictureBox
+            // 
+            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
+            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
+            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.patternEditorPictureBox.TabIndex = 0;
+            this.patternEditorPictureBox.TabStop = false;
+            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
+            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
+            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
+            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
+            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
+            // 
+            // patternEditorPreviewPanel
+            // 
+            this.patternEditorPreviewPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.patternEditorPreviewPanel.AutoScroll = true;
+            this.patternEditorPreviewPanel.Location = new System.Drawing.Point(788, 3);
+            this.patternEditorPreviewPanel.Name = "patternEditorPreviewPanel";
+            this.patternEditorPreviewPanel.Size = new System.Drawing.Size(140, 531);
+            this.patternEditorPreviewPanel.TabIndex = 15;
+            // 
+            // patternGroupTabControl
+            // 
+            this.patternGroupTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.patternGroupTabControl.Controls.Add(this.player1Tab);
+            this.patternGroupTabControl.Controls.Add(this.player2Tab);
+            this.patternGroupTabControl.Controls.Add(this.player3Tab);
+            this.patternGroupTabControl.Controls.Add(this.player4Tab);
+            this.patternGroupTabControl.Location = new System.Drawing.Point(6, 542);
+            this.patternGroupTabControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.patternGroupTabControl.Name = "patternGroupTabControl";
+            this.patternGroupTabControl.SelectedIndex = 0;
+            this.patternGroupTabControl.Size = new System.Drawing.Size(925, 21);
+            this.patternGroupTabControl.TabIndex = 14;
+            // 
+            // player1Tab
+            // 
+            this.player1Tab.Location = new System.Drawing.Point(4, 22);
+            this.player1Tab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.player1Tab.Name = "player1Tab";
+            this.player1Tab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.player1Tab.Size = new System.Drawing.Size(917, 0);
+            this.player1Tab.TabIndex = 1;
+            this.player1Tab.Text = "Player1";
+            this.player1Tab.UseVisualStyleBackColor = true;
+            // 
+            // player2Tab
+            // 
+            this.player2Tab.Location = new System.Drawing.Point(4, 22);
+            this.player2Tab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.player2Tab.Name = "player2Tab";
+            this.player2Tab.Size = new System.Drawing.Size(917, 0);
+            this.player2Tab.TabIndex = 2;
+            this.player2Tab.Text = "Player2";
+            this.player2Tab.UseVisualStyleBackColor = true;
+            // 
+            // player3Tab
+            // 
+            this.player3Tab.Location = new System.Drawing.Point(4, 22);
+            this.player3Tab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.player3Tab.Name = "player3Tab";
+            this.player3Tab.Size = new System.Drawing.Size(917, 0);
+            this.player3Tab.TabIndex = 3;
+            this.player3Tab.Text = "Player3";
+            this.player3Tab.UseVisualStyleBackColor = true;
+            // 
+            // player4Tab
+            // 
+            this.player4Tab.Location = new System.Drawing.Point(4, 22);
+            this.player4Tab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.player4Tab.Name = "player4Tab";
+            this.player4Tab.Size = new System.Drawing.Size(917, 0);
+            this.player4Tab.TabIndex = 4;
+            this.player4Tab.Text = "Player4";
+            this.player4Tab.UseVisualStyleBackColor = true;
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -271,7 +443,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -279,7 +451,7 @@
             // 
             this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -287,19 +459,19 @@
             // 
             this.saveAsToolStripMenuItem.Enabled = false;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(111, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -316,14 +488,14 @@
             // 
             this.secureValueToolStripMenuItem.Enabled = false;
             this.secureValueToolStripMenuItem.Name = "secureValueToolStripMenuItem";
-            this.secureValueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.secureValueToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.secureValueToolStripMenuItem.Text = "Secure Value";
             this.secureValueToolStripMenuItem.Click += new System.EventHandler(this.secureValueToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -424,6 +596,7 @@
             this.tabControl1.Controls.Add(this.housesTab);
             this.tabControl1.Controls.Add(this.islandTab);
             this.tabControl1.Controls.Add(this.grassTab);
+            this.tabControl1.Controls.Add(patternsTab);
             this.tabControl1.Location = new System.Drawing.Point(12, 27);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabControl1.Name = "tabControl1";
@@ -1771,17 +1944,6 @@
             this.islandTab.Text = "Island";
             this.islandTab.UseVisualStyleBackColor = true;
             // 
-            // islandPanel
-            // 
-            this.islandPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.islandPanel.AutoScroll = true;
-            this.islandPanel.Location = new System.Drawing.Point(3, 3);
-            this.islandPanel.Name = "islandPanel";
-            this.islandPanel.Size = new System.Drawing.Size(925, 530);
-            this.islandPanel.TabIndex = 0;
-            // 
             // islandSelectionTab
             // 
             this.islandSelectionTab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -1813,7 +1975,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(914, 0);
+            this.tabPage6.Size = new System.Drawing.Size(202, 0);
             this.tabPage6.TabIndex = 2;
             this.tabPage6.Text = "Island 2";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1823,7 +1985,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(914, 0);
+            this.tabPage7.Size = new System.Drawing.Size(202, 0);
             this.tabPage7.TabIndex = 3;
             this.tabPage7.Text = "Island 3";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1833,10 +1995,21 @@
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(914, 0);
+            this.tabPage8.Size = new System.Drawing.Size(202, 0);
             this.tabPage8.TabIndex = 4;
             this.tabPage8.Text = "Island 4";
             this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // islandPanel
+            // 
+            this.islandPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.islandPanel.AutoScroll = true;
+            this.islandPanel.Location = new System.Drawing.Point(3, 3);
+            this.islandPanel.Name = "islandPanel";
+            this.islandPanel.Size = new System.Drawing.Size(925, 530);
+            this.islandPanel.TabIndex = 0;
             // 
             // grassTab
             // 
@@ -2101,6 +2274,12 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "NewMainForm";
             this.Text = "ACSE";
+            patternsTab.ResumeLayout(false);
+            patternsTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).EndInit();
+            this.patternEditorPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
+            this.patternGroupTabControl.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -2327,5 +2506,17 @@
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.Panel patternEditorPreviewPanel;
+        private System.Windows.Forms.TabControl patternGroupTabControl;
+        private System.Windows.Forms.TabPage player1Tab;
+        private System.Windows.Forms.TabPage player2Tab;
+        private System.Windows.Forms.TabPage player3Tab;
+        private System.Windows.Forms.TabPage player4Tab;
+        private System.Windows.Forms.Panel patternEditorPanel;
+        private PictureBoxWithInterpolationMode patternEditorPictureBox;
+        private System.Windows.Forms.PictureBox paletteSelectionPictureBox;
+        private System.Windows.Forms.Button palettePreviousButton;
+        private System.Windows.Forms.Button paletteNextButton;
+        private PlaceholderTextBox patternNameTextBox;
     }
 }
