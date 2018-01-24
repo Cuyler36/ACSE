@@ -482,6 +482,7 @@ namespace ACSE
                     break;
                 case SaveGeneration.N3DS:
                     GenerateNLPatternBitmap(DecodedData, false);
+                    Write(ACSE.Classes.Utilities.PatternUtility.CondenseNonBlockPattern(DecodedData));
                     break;
             }
         }

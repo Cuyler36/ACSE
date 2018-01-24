@@ -1203,6 +1203,7 @@ namespace ACSE
                         Refresh_PictureBox_Image(Pattern_Boxes[i], Player.Data.Patterns[i].Pattern_Bitmap, false, false);
                     }
                 }
+                SelectedPaletteIndex = 0;
                 patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Pattern_Boxes[0].Image, 16, new Size (513, 513));
                 paletteSelectionPictureBox.Image = ACSE.Classes.Utilities.PatternUtility.GeneratePalettePreview(Player.Data.Patterns[0].PaletteData,
                     (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
@@ -2951,7 +2952,7 @@ namespace ACSE
                 if (LastPatternPixel != PixelPosition && PixelPosition > -1 && PixelPosition < SelectedPatternObject.DecodedData.Length && CellX < 32)
                 {
                     LastPatternPixel = PixelPosition;
-                    SelectedPatternObject.DecodedData[PixelPosition] = (byte)(SelectedPaletteIndex + 1);
+                    SelectedPatternObject.DecodedData[PixelPosition] = Save_File.Game_System == SaveGeneration.N3DS ? (byte)SelectedPaletteIndex : (byte)(SelectedPaletteIndex + 1);
                     SelectedPatternObject.RedrawBitmap();
                     Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
                     Pattern_Boxes[SelectedPatternObject.Index].Image = Selected_Pattern;

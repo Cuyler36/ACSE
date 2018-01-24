@@ -73,7 +73,6 @@
             this.birthdayMonth = new System.Windows.Forms.ComboBox();
             this.playerIslandMedals = new System.Windows.Forms.TextBox();
             this.label40 = new System.Windows.Forms.Label();
-            this.patternPanel = new System.Windows.Forms.Panel();
             this.islandBoxText = new System.Windows.Forms.Label();
             this.islandPictureBox = new System.Windows.Forms.PictureBox();
             this.dresserText = new System.Windows.Forms.Label();
@@ -614,7 +613,6 @@
             this.playersTab.Controls.Add(this.birthdayMonth);
             this.playersTab.Controls.Add(this.playerIslandMedals);
             this.playersTab.Controls.Add(this.label40);
-            this.playersTab.Controls.Add(this.patternPanel);
             this.playersTab.Controls.Add(this.islandBoxText);
             this.playersTab.Controls.Add(this.islandPictureBox);
             this.playersTab.Controls.Add(this.dresserText);
@@ -777,18 +775,6 @@
             this.label40.Size = new System.Drawing.Size(90, 13);
             this.label40.TabIndex = 69;
             this.label40.Text = "MEOW Coupons:";
-            // 
-            // patternPanel
-            // 
-            this.patternPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.patternPanel.AutoScroll = true;
-            this.patternPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.patternPanel.Location = new System.Drawing.Point(775, 8);
-            this.patternPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.patternPanel.Name = "patternPanel";
-            this.patternPanel.Size = new System.Drawing.Size(150, 553);
-            this.patternPanel.TabIndex = 0;
             // 
             // islandBoxText
             // 
@@ -2345,7 +2331,6 @@
         private System.Windows.Forms.TabPage player2;
         private System.Windows.Forms.TabPage player3;
         private System.Windows.Forms.TabPage player4;
-        private System.Windows.Forms.Panel patternPanel;
         private System.Windows.Forms.Label playerShirtText;
         private System.Windows.Forms.Label playerSavingsText;
         private System.Windows.Forms.Label playerDebtText;
