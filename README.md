@@ -33,7 +33,7 @@ ACSE is a save editor for the Animal Crossing game series. It currently supports
 
 ## Screenshots
 
-![Player Editor](https://puu.sh/z7su8/d1bb30fd90.png)
+![Player Editor](https://puu.sh/z9jMu/94b9965e09.png)
 
 ![Acre Editor](https://puu.sh/z7swO/c985034d8e.png)
 
