@@ -2803,11 +2803,11 @@ namespace ACSE
         {
             if (Idx > -1 && Selected_Player != null && Selected_Player.Data.Patterns.Length > Idx)
             {
-                Selected_Pattern = Selected_Player.Data.Patterns[Idx].Pattern_Bitmap;
+                var ExportPattern = Selected_Player.Data.Patterns[Idx].Pattern_Bitmap;
                 exportPatternFile.FileName = Selected_Player.Data.Patterns[Idx].Name + ".png";
-                if (exportPatternFile.ShowDialog() == DialogResult.OK && Selected_Pattern != null)
+                if (exportPatternFile.ShowDialog() == DialogResult.OK && ExportPattern != null)
                 {
-                    Selected_Pattern.Save(exportPatternFile.FileName);
+                    ExportPattern.Save(exportPatternFile.FileName);
                 }
             }
         }
@@ -2825,6 +2825,12 @@ namespace ACSE
                         {
                             Selected_Player.Data.Patterns[Idx].Import(Pixel_Data);
                             Refresh_PictureBox_Image(Pattern_Boxes[Idx], Selected_Player.Data.Patterns[Idx].Pattern_Bitmap, false, false);
+
+                            if (SelectedPatternObject.Index == Idx)
+                            {
+                                Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
+                                patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
+                            }
                         }
                     }
                 }
