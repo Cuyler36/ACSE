@@ -120,18 +120,8 @@ namespace ACSE
                 Image = Properties.Resources.no_tpc,
                 ContextMenuStrip = pictureContextMenu,
             };
-            //Temp
-            /*float[][] Test_Matrix =
-            {
-                new float[] {1, 0, 0, 0, 0},
-                new float[] {0, 1, 0, 0, 0 },
-                new float[] {0, 0, 1, 0, 0 },
-                new float[] {0, 0, 0, 1, 0 },
-                new float[] {0.2f, 0.2f, 0.2f, 0, 1 },
-            };
-            TPC_Picture.Image = Utility.Set_Image_Color(TPC_Picture.Image, new ColorMatrix(Test_Matrix));*/
+
             playersTab.Controls.Add(TPC_Picture);
-            //openSaveFile.FileOk += new CancelEventHandler(open_File_OK);
 
             Main_Tabs = new TabPage[tabControl1.TabCount];
             for (int i = 0; i < tabControl1.TabCount; i++)
@@ -972,6 +962,9 @@ namespace ACSE
             itemFlag2.Text = "00";
 
             //Load all tabs so alignment is kept
+            SetMainTabEnabled("islandTab", false);
+            SetMainTabEnabled("grassTab", false);
+            SetMainTabEnabled("patternsTab", false);
             SetMainTabEnabled("islandTab", true);
             SetMainTabEnabled("grassTab", true);
             SetMainTabEnabled("patternsTab", true);
@@ -1208,11 +1201,12 @@ namespace ACSE
                         Refresh_PictureBox_Image(Pattern_Boxes[i], Player.Data.Patterns[i].Pattern_Bitmap, false, false);
                     }
                 }
-                SelectedPaletteIndex = 0;
+                SelectedPaletteIndex = Player.Data.Patterns[0].Palette;
                 patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Pattern_Boxes[0].Image, 16, new Size (513, 513));
                 paletteSelectionPictureBox.Image = ACSE.Classes.Utilities.PatternUtility.GeneratePalettePreview(Player.Data.Patterns[0].PaletteData,
                     (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
                 SelectedPatternObject = Player.Data.Patterns[0];
+                paletteIndexLabel.Text = "Palette: " + (SelectedPatternObject.Palette + 1);
                 patternNameTextBox.Text = SelectedPatternObject.Name;
             }
 
@@ -2547,9 +2541,12 @@ namespace ACSE
 
         private void Player_Tab_Index_Changed(object sender, TabControlEventArgs e)
         {
-            if (playerEditorSelect.SelectedIndex < 0 || playerEditorSelect.SelectedIndex > 3)
+            var SenderTab = sender as TabControl;
+            if (SenderTab.SelectedIndex < 0 || SenderTab.SelectedIndex > 3)
                 return;
-            Selected_Player = Players[playerEditorSelect.SelectedIndex];
+            Selected_Player = Players[SenderTab.SelectedIndex];
+            playerEditorSelect.SelectedIndex = SenderTab.SelectedIndex;
+            patternGroupTabControl.SelectedIndex = SenderTab.SelectedIndex;
             if (Selected_Player != null && Selected_Player.Exists)
                 Reload_Player(Selected_Player);
         }
@@ -2847,6 +2844,7 @@ namespace ACSE
                 if (Save_File.Game_System != SaveGeneration.N3DS)
                     SelectedPatternObject.PaletteData = SelectedPatternObject.GetPaletteArray(Save_File.Game_System)[SelectedPatternObject.Palette];
                 SelectedPaletteIndex = SelectedPatternObject.Palette;
+                paletteIndexLabel.Text = "Palette: " + (SelectedPatternObject.Palette + 1);
                 paletteSelectionPictureBox.Image = ACSE.Classes.Utilities.PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData,
                     (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
                 SelectedPatternObject.RedrawBitmap();
@@ -2860,6 +2858,9 @@ namespace ACSE
         //Add ContextMenuStrips for importing/exporting patterns & renaming/setting palette
         private void SetupPatternBoxes()
         {
+            paletteNextButton.Visible = Save_File.Game_System != SaveGeneration.N3DS;
+            palettePreviousButton.Visible = Save_File.Game_System != SaveGeneration.N3DS;
+
             for (int i = patternEditorPreviewPanel.Controls.Count - 1; i > -1; i--)
                 if (patternEditorPreviewPanel.Controls[i] is PictureBoxWithInterpolationMode)
                 {
@@ -2883,20 +2884,9 @@ namespace ACSE
                     Name = "import",
                     Text = "Import"
                 };
-                ToolStripMenuItem Rename = new ToolStripMenuItem()
-                {
-                    Name = "rename",
-                    Text = "Rename"
-                };
-                ToolStripMenuItem Set_Palette = new ToolStripMenuItem()
-                {
-                    Name = "setPalette",
-                    Text = "Set Palette"
-                };
+
                 PatternStrip.Items.Add(Import);
                 PatternStrip.Items.Add(Export);
-                PatternStrip.Items.Add(Rename);
-                PatternStrip.Items.Add(Set_Palette);
 
                 PictureBoxWithInterpolationMode patternBox = new PictureBoxWithInterpolationMode()
                 {
@@ -2918,8 +2908,6 @@ namespace ACSE
                 // ToolStrip Item Events
                 Export.Click += new EventHandler((object sender, EventArgs e) => Pattern_Export_Click(sender, e, Array.IndexOf(Pattern_Boxes, patternBox)));
                 Import.Click += new EventHandler((object sender, EventArgs e) => Pattern_Import_Click(sender, e, Array.IndexOf(Pattern_Boxes, patternBox)));
-                Rename.Click += (object sender, EventArgs e) => Not_Implemented();
-                Set_Palette.Click += (object sender, EventArgs e) => Not_Implemented();
 
                 patternBox.MouseClick += delegate (object sender, MouseEventArgs e)
                 {
@@ -2929,6 +2917,7 @@ namespace ACSE
                         (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
                     patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
                     patternNameTextBox.Text = SelectedPatternObject.Name;
+                    paletteIndexLabel.Text = "Palette: " + (SelectedPatternObject.Palette + 1);
                 };
             }
 
@@ -2939,7 +2928,9 @@ namespace ACSE
         private void PaletteImageBox_Click(object sender, MouseEventArgs e)
         {
             if (SelectedPatternObject != null)
+            {
                 SelectedPaletteIndex = e.Y / (paletteSelectionPictureBox.Height / 15);
+            }
         }
 
 

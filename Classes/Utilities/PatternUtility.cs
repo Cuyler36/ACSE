@@ -134,7 +134,7 @@ namespace ACSE.Classes.Utilities
                 Buffer.BlockCopy(BitConverter.GetBytes(Palette[PaletteIndex]), 0, PaletteBitmapBuffer, i, 4);
             }
 
-            return ImageGeneration.DrawGrid2(CreateBitmap(PaletteBitmapBuffer, Width, Height), (int)Width, new Size((int)Width, (int)Height), null, false, false);
+            return ImageGeneration.DrawGrid2(CreateBitmap(PaletteBitmapBuffer, Width, Height), (int)Width, new Size((int)Width, (int)Height), null, false, false, true);
         }
 
         public static byte[] CondenseNonBlockPattern(byte[] Buffer)

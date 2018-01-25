@@ -221,6 +221,7 @@
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
             this.houseToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.paletteIndexLabel = new System.Windows.Forms.Label();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
@@ -263,6 +264,7 @@
             // 
             // patternsTab
             // 
+            patternsTab.Controls.Add(this.paletteIndexLabel);
             patternsTab.Controls.Add(this.patternNameTextBox);
             patternsTab.Controls.Add(this.palettePreviousButton);
             patternsTab.Controls.Add(this.paletteNextButton);
@@ -279,7 +281,7 @@
             // 
             // patternNameTextBox
             // 
-            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
             this.patternNameTextBox.MaxLength = 16;
             this.patternNameTextBox.Name = "patternNameTextBox";
@@ -2237,6 +2239,16 @@
             this.label43.TabIndex = 8;
             this.label43.Text = "Acre Height:";
             // 
+            // paletteIndexLabel
+            // 
+            this.paletteIndexLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.paletteIndexLabel.AutoSize = true;
+            this.paletteIndexLabel.Location = new System.Drawing.Point(120, 5);
+            this.paletteIndexLabel.Name = "paletteIndexLabel";
+            this.paletteIndexLabel.Size = new System.Drawing.Size(52, 13);
+            this.paletteIndexLabel.TabIndex = 20;
+            this.paletteIndexLabel.Text = "Palette: 0";
+            // 
             // NewMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2503,5 +2515,6 @@
         private System.Windows.Forms.Button palettePreviousButton;
         private System.Windows.Forms.Button paletteNextButton;
         private PlaceholderTextBox patternNameTextBox;
+        private System.Windows.Forms.Label paletteIndexLabel;
     }
 }

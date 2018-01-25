@@ -98,7 +98,7 @@ namespace ACSE
             return Map;
         }
 
-        public static Bitmap DrawGrid2(Image Img, int CellSize, Size ImageSize, Pen GridPen = null, bool Resize = true, bool DrawHorizontal = true)
+        public static Bitmap DrawGrid2(Image Img, int CellSize, Size ImageSize, Pen GridPen = null, bool Resize = true, bool DrawVertical = true, bool SkipFirstLine = false)
         {
             if (GridPen == null)
                 GridPen = Pens.Black;
@@ -111,13 +111,13 @@ namespace ACSE
                 if (Resize)
                     GridGraphics.DrawImage(Img, new Rectangle(0, 0, ImageSize.Width, ImageSize.Height), new RectangleF((float)-0.5, (float)-0.5, 32, 32), GraphicsUnit.Pixel);
 
-                if (DrawHorizontal)
+                if (DrawVertical)
                     for (int X = 0; X < GridBitmap.Width; X += CellSize)
                     {
                         GridGraphics.DrawLine(GridPen, X, 0, X, GridBitmap.Height);
                     }
 
-                for (int Y = 0; Y < GridBitmap.Height; Y += CellSize)
+                for (int Y = SkipFirstLine ? CellSize : 0; Y < GridBitmap.Height; Y += CellSize)
                 {
                     GridGraphics.DrawLine(GridPen, 0, Y, GridBitmap.Width, Y);
                 }
@@ -420,7 +420,6 @@ namespace ACSE
             string FacesFolder = NewMainForm.Assembly_Location + "\\Resources\\Images\\Faces";
             if (Directory.Exists(FacesFolder))
             {
-                // TODO: Wild World+
                 if (Save_Generation == SaveGeneration.N64 || Save_Generation == SaveGeneration.GCN)
                 {
                     FacesFolder += "\\Animal Crossing";
