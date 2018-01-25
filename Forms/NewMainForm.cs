@@ -3674,26 +3674,44 @@ namespace ACSE
                 DialogResult Opened = importPatternFile.ShowDialog();
                 if (Opened == DialogResult.OK)
                 {
-                    Image Original_Image = Image.FromFile(importPatternFile.FileName);
-                    if (Original_Image.Width != 64 || Original_Image.Height != 104 || new FileInfo(importPatternFile.FileName).Length > 0x1400)
-                        MessageBox.Show("The image you tried to import is incompatible. Please ensure the following:\n\nImage Width is 64 pixels\nImage Hight is 104 pixels\nImage file size is equal to or less than 5,120 bytes");
-                    else
+                    Image Original_Image = null;
+                    try
                     {
-                        //Image passed validation checks, so import it
-                        byte[] Image_Data_Buffer = new byte[0x1400];
-                        using (FileStream File = new FileStream(importPatternFile.FileName, FileMode.Open, FileAccess.Read))
+                        Original_Image = Image.FromFile(importPatternFile.FileName);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Unable to import the image! The file may be corrupt or opened in another program. Please try again.",
+                            "TPC Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        if (Original_Image != null)
                         {
-                            File.Read(Image_Data_Buffer, 0, 0x1400);
+                            if (Original_Image.Width != 64 || Original_Image.Height != 104 || new FileInfo(importPatternFile.FileName).Length > 0x1400)
+                                MessageBox.Show("The image you tried to import is incompatible. Please ensure the following:\n\nImage Width is 64 pixels\nImage Hight is 104 pixels\n" +
+                                    "Image file size is equal to or less than 5,120 bytes", "TPC Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            else
+                            {
+                                //Image passed validation checks, so import it
+                                byte[] Image_Data_Buffer = new byte[0x1400];
+                                using (FileStream File = new FileStream(importPatternFile.FileName, FileMode.Open, FileAccess.Read))
+                                {
+                                    File.Read(Image_Data_Buffer, 0, 0x1400);
+                                }
+                                //Scan for the actual end of image (0xFF 0xD9) and trim excess
+                                byte[] Trimmed_TPC_Buffer = ImageGeneration.GetTPCTrimmedBytes(Image_Data_Buffer);
+                                Selected_Player.Data.TownPassCardData = Trimmed_TPC_Buffer;
+                                //Draw the new image
+                                var Old_Image = TPC_Picture.Image;
+                                TPC_Picture.Image = ImageGeneration.GetTPCImage(Trimmed_TPC_Buffer);
+                                Selected_Player.Data.TownPassCardImage = TPC_Picture.Image;
+                                if (Old_Image != null)
+                                    Old_Image.Dispose();
+                            }
+
+                            Original_Image.Dispose();
                         }
-                        //Scan for the actual end of image (0xFF 0xD9) and trim excess
-                        byte[] Trimmed_TPC_Buffer = ImageGeneration.GetTPCTrimmedBytes(Image_Data_Buffer);
-                        Selected_Player.Data.TownPassCardData = Trimmed_TPC_Buffer;
-                        //Draw the new image
-                        var Old_Image = TPC_Picture.Image;
-                        TPC_Picture.Image = ImageGeneration.GetTPCImage(Trimmed_TPC_Buffer);
-                        Selected_Player.Data.TownPassCardImage = TPC_Picture.Image;
-                        if (Old_Image != null)
-                            Old_Image.Dispose();
                     }
                 }
             }
