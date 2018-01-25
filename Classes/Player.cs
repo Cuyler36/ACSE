@@ -658,7 +658,7 @@ namespace ACSE
             "Male #1 - Brown Eyes w/ Lashes",
             "Male #2 - Black Eyes w/ Brows",
             "Male #3 - Blue Eyes w/ Eyelids",
-            "Male #4 - Blue Eyes w/ Small Pupils & Brows",
+            "Male #4 - Green Eyes w/ Small Pupils & Brows",
             "Male #5 - Brown Eyes",
             "Male #6 - Arched Black Eyes",
             "Male #7 - Blue Eyes w/ Rosey Cheeks",

@@ -425,6 +425,10 @@ namespace ACSE
                 {
                     FacesFolder += "\\Animal Crossing";
                 }
+                else if (Save_Generation == SaveGeneration.NDS || Save_Generation == SaveGeneration.Wii)
+                {
+                    FacesFolder += "\\Wild World";
+                }
                 else if (Save_Generation == SaveGeneration.N3DS)
                 {
                     FacesFolder += "\\New Leaf\\" + (Gender == 1 ? "Female" : "Male");

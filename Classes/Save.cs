@@ -845,6 +845,7 @@ namespace ACSE
         public string Save_ID;
         public bool Is_Big_Endian = true;
         public bool ChangesMade = false;
+        public bool SuccessfullyLoaded = true;
         private FileStream Save_File;
         private BinaryReader Save_Reader;
         private BinaryWriter Save_Writer;
@@ -858,12 +859,11 @@ namespace ACSE
                     Save_Reader.Close();
                     Save_File.Close();
                 }
-                bool Failed_to_Load = false;
-                try { Save_File = new FileStream(File_Path, FileMode.Open); } catch { Failed_to_Load = true; }
-                if (Save_File == null || Failed_to_Load || !Save_File.CanWrite)
+                try { Save_File = new FileStream(File_Path, FileMode.Open); } catch { SuccessfullyLoaded = false; }
+                if (Save_File == null || !SuccessfullyLoaded || !Save_File.CanWrite)
                 {
                     MessageBox.Show(string.Format("Error: File {0} is being used by another process. Please close any process using it before editing!",
-                        Path.GetFileName(File_Path)), "File Opening Error");
+                        Path.GetFileName(File_Path)), "File Opening Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     try { Save_File.Close(); } catch { };
                     return;
                 }

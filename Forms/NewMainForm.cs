@@ -406,12 +406,17 @@ namespace ACSE
         private void SetupEditor(Save save)
         {
             Loading = true;
-            if (save.Save_Type == SaveType.Unknown)
+            if (save.SuccessfullyLoaded && save.Save_Type == SaveType.Unknown)
             {
                 MessageBox.Show(string.Format("The file [{0}] could not be identified as a valid Animal Crossing save file.\nPlease ensure you have a valid save file.",
                     save.Save_Name + save.Save_Extension), "Save File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            else if (!save.SuccessfullyLoaded)
+            {
+                return;
+            }
+
             Save_File = null; //Set to null so we can set the checkbox to false without having the method run
             townMapViewCheckbox.Checked = false;
             townMapViewCheckbox.Enabled = save.Game_System == SaveGeneration.N64 || save.Game_System == SaveGeneration.GCN;
