@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace ACSE
+namespace ACSE.Classes.Utilities
 {
-    public static class DateUtil
+    public static class DateUtility
     {
         //Might use for something
         public static uint Day_String_to_Number(string day)

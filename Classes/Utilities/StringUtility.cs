@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
-namespace ACSE
+namespace ACSE.Classes.Utilities
 {
-    public static class StringUtil
+    public static class StringUtility
     {
         public static readonly Dictionary<byte, string> AC_CharacterDictionary = new Dictionary<byte, string>()
         {
@@ -637,13 +636,13 @@ namespace ACSE
                 case SaveType.Doubutsu_no_Mori:
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
-                    Char_Dictionary = StringUtil.Doubutsu_no_Mori_e_Plus_Char_Map;
+                    Char_Dictionary = StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map;
                     break;
                 case SaveType.Animal_Crossing:
-                    Char_Dictionary = StringUtil.AC_CharacterDictionary;
+                    Char_Dictionary = StringUtility.AC_CharacterDictionary;
                     break;
                 case SaveType.Wild_World:
-                    Char_Dictionary = StringUtil.WW_CharacterDictionary;
+                    Char_Dictionary = StringUtility.WW_CharacterDictionary;
                     break;
                 default:
                     Char_Dictionary = null;
@@ -655,7 +654,7 @@ namespace ACSE
                     if (Char_Dictionary.ContainsKey(b))
                         String += Char_Dictionary[b];
                     else
-                        String += Encoding.UTF8.GetString(saveType == SaveType.Wild_World ? StringUtil.Fix_Wild_World_String(new byte[1] { b }) : new byte[1] { b });
+                        String += Encoding.UTF8.GetString(saveType == SaveType.Wild_World ? StringUtility.Fix_Wild_World_String(new byte[1] { b }) : new byte[1] { b });
             else if (saveType == SaveType.City_Folk)
                 for (int i = 0; i < stringBuffer.Length; i += 2)
                     String += Encoding.Unicode.GetString(stringBuffer.Skip(i).Take(2).Reverse().ToArray());
@@ -692,9 +691,9 @@ namespace ACSE
                 {
                     if (i >= String_Bytes.Length)
                         break;
-                    if (StringUtil.Doubutsu_no_Mori_e_Plus_Char_Map.ContainsValue(String[i].ToString()))
+                    if (StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map.ContainsValue(String[i].ToString()))
                     {
-                        String_Bytes[i] = StringUtil.Doubutsu_no_Mori_e_Plus_Char_Map.First(o => o.Value == String[i].ToString()).Key;
+                        String_Bytes[i] = StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map.First(o => o.Value == String[i].ToString()).Key;
                     }
                     else
                     {
@@ -712,7 +711,7 @@ namespace ACSE
             }
             else if (Save_Type == SaveType.Wild_World)
             {
-                byte[] String_Buffer = StringUtil.To_Wild_World_String(Encoding.UTF8.GetBytes(String));
+                byte[] String_Buffer = StringUtility.To_Wild_World_String(Encoding.UTF8.GetBytes(String));
                 if (maxSize > 0)
                     Array.Resize(ref String_Buffer, maxSize);
                 return String_Buffer;

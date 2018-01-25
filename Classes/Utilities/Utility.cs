@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
-namespace ACSE
+namespace ACSE.Classes.Utilities
 {
     public static class Utility
     {
