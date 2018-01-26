@@ -215,7 +215,7 @@ namespace ACSE
                     Layers = new Layer[Offsets.Layer_Count]
                 };
 
-                if (SaveData.Game_System == SaveGeneration.N64 || SaveData.Game_System == SaveGeneration.GCN) // TODO: Songs
+                if (SaveData.Game_System == SaveGeneration.N64 || SaveData.Game_System == SaveGeneration.GCN)
                 {
                     Room.Carpet = new Item((ushort)(0x2600 | SaveData.ReadByte(RoomOffset + Offsets.Room_Carpet)));
                     Room.Wallpaper = new Item((ushort)(0x2700 | SaveData.ReadByte(RoomOffset + Offsets.Room_Wallpaper)));
@@ -396,7 +396,7 @@ namespace ACSE
             //Fence = 6,
             //Pavement = 7,
             //Mailbox = 8,
-            Room_Start = 0x76,
+            Room_Start = 0x44, //0x76,
             Room_Count = 6,
             Room_Size = 0x302,
             Layer_Size = 0x150,
@@ -411,6 +411,11 @@ namespace ACSE
         public static string[] WW_Room_Names = new string[6]
         {
             "Entry Room", "Left Wing", "Right Wing", "Back Wing", "Basement", "Second Floor"
+        };
+
+        public static string[] NL_Room_Names = new string[6]
+        {
+            "Entry Room", "Second Floor", "Basement", "Right Wing", "Left Wing", "Back Wing"
         };
 
         public static string[] AC_Roof_Colors = new string[12]
@@ -459,9 +464,11 @@ namespace ACSE
                     return AC_Room_Names;
 
                 case SaveGeneration.NDS:
-                case SaveGeneration.N3DS:
                 default:
                     return WW_Room_Names;
+
+                case SaveGeneration.N3DS:
+                    return NL_Room_Names;
             }
         }
 

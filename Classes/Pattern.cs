@@ -348,10 +348,10 @@ namespace ACSE
 
             if (Decode)
             {
-                DecodedData = ACSE.Classes.Utilities.PatternUtility.DecodeC4(patternRawData);
+                DecodedData = PatternUtility.DecodeC4(patternRawData);
             }
 
-            Pattern_Bitmap = ACSE.Classes.Utilities.PatternUtility.C4PaletteMapToBitmap(DecodedData, Palette_Data[Palette], 32, 32);
+            Pattern_Bitmap = PatternUtility.C4PaletteMapToBitmap(DecodedData, Palette_Data[Palette], 32, 32);
         }
 
         public void GenerateWWPatternBitmap(byte[] Import_Data = null, bool Decode = true)
@@ -473,15 +473,15 @@ namespace ACSE
                 case SaveGeneration.GCN:
                 case SaveGeneration.Wii:
                     GeneratePatternBitmap(DecodedData, false);
-                    Write(ACSE.Classes.Utilities.PatternUtility.EncodeC4(DecodedData, 32, 32));
+                    Write(PatternUtility.EncodeC4(DecodedData, 32, 32));
                     break;
                 case SaveGeneration.NDS:
                     GenerateWWPatternBitmap(DecodedData, false);
-                    Write(ACSE.Classes.Utilities.PatternUtility.CondenseNonBlockPattern(DecodedData));
+                    Write(PatternUtility.CondenseNonBlockPattern(DecodedData));
                     break;
                 case SaveGeneration.N3DS:
                     GenerateNLPatternBitmap(DecodedData, false);
-                    Write(ACSE.Classes.Utilities.PatternUtility.CondenseNonBlockPattern(DecodedData));
+                    Write(PatternUtility.CondenseNonBlockPattern(DecodedData));
                     break;
             }
         }
@@ -506,7 +506,7 @@ namespace ACSE
                 {
                     ConvertedBuffer[i] = PatternData.ClosestColor(Bitmap_Buffer[i], PaletteData);
                 }
-                Pattern_Buffer = ACSE.Classes.Utilities.PatternUtility.EncodeC4(ConvertedBuffer);
+                Pattern_Buffer = PatternUtility.EncodeC4(ConvertedBuffer);
             }
 
             switch (Save_File.Game_System)

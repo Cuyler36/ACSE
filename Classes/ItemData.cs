@@ -630,6 +630,8 @@ namespace ACSE
                     return "Money";
                 else if (ID >= 0x209A && ID <= 0x209B)
                     return "Item";
+                else if (ID == 0x7FFC)
+                    return "Occupied";
                 else
                     return "Furniture"; //Just until I gather furniture offsets
             }
@@ -675,6 +677,8 @@ namespace ACSE
                     return "Item";
                 else if (ID >= 0x208C && ID <= 0x2095)
                     return "Shell";
+                else if (ID == 0x7FFC)
+                    return "Occupied";
                 else
                     return "Furniture";
             }
@@ -1060,6 +1064,11 @@ namespace ACSE
         {
             return !Equals(obj1, obj2);
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
     public class WorldItem : Item
@@ -1137,6 +1146,11 @@ namespace ACSE
         {
             return !Equals(obj1, obj2);
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
     public class Furniture : Item
@@ -1164,7 +1178,7 @@ namespace ACSE
         public Furniture(uint item) : base(item)
         {
             BaseItemID = ItemID;
-            Rotation = ((Flag2 >> 4) / 4) * 90;
+            Rotation = ((Flag1 >> 4) / 4) * 90;
         }
 
         public Furniture(ushort item, byte flag1, byte flag2) : base (item, flag1, flag2)
@@ -1172,7 +1186,7 @@ namespace ACSE
             if (NewMainForm.Save_File.Game_System == SaveGeneration.N3DS)
             {
                 BaseItemID = ItemID;
-                Rotation = ((Flag2 >> 4) / 4) * 90;
+                Rotation = ((Flag1 >> 4) / 4) * 90;
             }
             else
             {
@@ -1194,7 +1208,7 @@ namespace ACSE
             if (NewMainForm.Save_File.Game_System == SaveGeneration.N3DS)
             {
                 BaseItemID = ItemID;
-                Rotation = ((Flag2 >> 4) / 4) * 90;
+                Rotation = ((Flag1 >> 4) / 4) * 90;
             }
             else
             {
@@ -1231,6 +1245,11 @@ namespace ACSE
             }
 
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 

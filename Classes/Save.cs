@@ -344,7 +344,7 @@ namespace ACSE
             Grass_Wear = 0x59880,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
             Grass_Type = 0x53401,
-            House_Data = 0x5D97A,
+            House_Data = 0x5D8FA - 0x44,
             House_Data_Size = 0x1228,
             Island_Acre_Data = 0x6FE38,
             Island_World_Data = 0x6FE58,
@@ -654,7 +654,7 @@ namespace ACSE
             {
                 if (!Properties.Settings.Default.DebuggingEnabled && Line.Contains("//"))
                     MessageBox.Show("Now loading item type: " + Line.Replace("//", ""));
-                else if (Line.Contains("0x"))
+                else if (!Line.Contains("//") && Line.Contains("0x"))
                 {
                     string Item_ID_String = Line.Substring(0, 6), Item_Name = Line.Substring(7).Trim();
                     if (ushort.TryParse(Item_ID_String.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out ushort Item_ID))

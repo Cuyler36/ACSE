@@ -115,7 +115,7 @@ namespace ACSE.Classes.Utilities
             byte[] PatternBitmapBuffer = new byte[4 * Width * Height];
 
             for (int i = 0; i < DecodedC4ImageData.Length; i++)
-                Buffer.BlockCopy(BitConverter.GetBytes(Palette[DecodedC4ImageData[i] - 1]), 0, PatternBitmapBuffer, i * 4, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(Math.Max(0, Palette[DecodedC4ImageData[i] - 1])), 0, PatternBitmapBuffer, i * 4, 4);
             
             return CreateBitmap(PatternBitmapBuffer, Width, Height);
         }

@@ -1204,7 +1204,7 @@ namespace ACSE
                 }
                 SelectedPaletteIndex = Player.Data.Patterns[0].Palette;
                 patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Pattern_Boxes[0].Image, 16, new Size (513, 513));
-                paletteSelectionPictureBox.Image = ACSE.Classes.Utilities.PatternUtility.GeneratePalettePreview(Player.Data.Patterns[0].PaletteData,
+                paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(Player.Data.Patterns[0].PaletteData,
                     (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
                 SelectedPatternObject = Player.Data.Patterns[0];
                 paletteIndexLabel.Text = "Palette: " + (SelectedPatternObject.Palette + 1);
@@ -2852,7 +2852,7 @@ namespace ACSE
                     SelectedPatternObject.PaletteData = SelectedPatternObject.GetPaletteArray(Save_File.Game_System)[SelectedPatternObject.Palette];
                 SelectedPaletteIndex = SelectedPatternObject.Palette;
                 paletteIndexLabel.Text = "Palette: " + (SelectedPatternObject.Palette + 1);
-                paletteSelectionPictureBox.Image = ACSE.Classes.Utilities.PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData,
+                paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData,
                     (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
                 SelectedPatternObject.RedrawBitmap();
                 Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
@@ -2920,7 +2920,7 @@ namespace ACSE
                 {
                     SelectedPatternObject = Selected_Player.Data.Patterns[Array.IndexOf(Pattern_Boxes, patternBox)];
                     Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
-                    paletteSelectionPictureBox.Image = ACSE.Classes.Utilities.PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData,
+                    paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData,
                         (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
                     patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
                     patternNameTextBox.Text = SelectedPatternObject.Name;

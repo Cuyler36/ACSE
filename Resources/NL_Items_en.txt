@@ -4705,3 +4705,5 @@
 0x31AC, Modern House
 //Custom Pattern
 0x3094, Custom Pattern
+//Room Reserved Space
+0x7FFC, Multispace Furniture
