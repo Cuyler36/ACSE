@@ -68,7 +68,7 @@
         private Save SaveFile;
         private int Offset;
         public string Name;
-        public ushort Id; // This may be what tells the game which island acres to load for it.
+        public ushort Id;
         public NewPlayer Owner;
         public WorldItem[][] Items;
         public Cottage Cabana;

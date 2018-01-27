@@ -49,29 +49,7 @@ ACSE is a save editor for the Animal Crossing game series. It currently supports
 
 ![Pattern Editor](https://puu.sh/z9jw5/e27a5abb19.png)
 
-## Extracting Save Files
-
-### GameCube
-
-##### Dolphin Emulator
-On the main form, click Tools > "Memcard Manager (GC)".
-![Main Form](http://i.imgur.com/wH5OCQO.png)
-
-Then click on Animal Crossing, and click the "Export GCI" button.
-![Memcard Manager](http://i.imgur.com/t2GBonJ.png)
-
-##### Modded GameCube/Wii
-Refer to the article here: https://wiki.dolphin-emu.org/index.php?title=Ripping_Games#Retrieving_Game_Saves
-
-### Wii
-
-##### Dolphin Emulator
-On the main form, right click Animal Crossing: City Folk, and then click "Open Wii save folder".
-![Main Form](https://puu.sh/z9jzR/e39be403b6.png)
-You can now copy/edit your save file directly. The edited file must have the same name and be in the save folder.
-
-##### Modded Wii
-Refer to the article here: https://wiki.dolphin-emu.org/index.php?title=Ripping_Games#Retrieving_Game_Saves
+If you don't know how to get your save file, read the documentation here: https://github.com/Cuyler36/ACSE/wiki/Extracting-Save-Files
 
 ### GameCube Only Version (Very Outdated)
 If you don't want support for anything other than the NTSC-U/PAL version of Animal Crossing for GameCube, you can get the old version [here](https://github.com/Cuyler36/ACSE-OLD/releases/tag/0.4.5).
