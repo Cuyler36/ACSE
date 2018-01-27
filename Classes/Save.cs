@@ -5,8 +5,8 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Reflection;
 using System.Globalization;
+using ACSE.Classes.Utilities;
 
 namespace ACSE
 {
@@ -53,6 +53,7 @@ namespace ACSE
         public int Island_World_Size;
         public int Island_Buried_Data;
         public int Island_Buried_Size;
+        public int Island_House;
         public int Island_Buildings;
         public int House_Data;
         public int House_Data_Size;
@@ -175,6 +176,7 @@ namespace ACSE
             Buried_Data_Size = 0x3C0,
             Island_World_Data = 0x22554,
             Island_World_Size = 0x400,
+            Island_House = 0x22960,
             Island_Buried_Data = 0x23DC8,
             Island_Buried_Size = 0x40,
             Islander_Data = 0x23440,
@@ -190,6 +192,7 @@ namespace ACSE
             PWPs = -1,
             Island_Buildings = -1,
             Checksum = 0x12
+            // Lighthouse Event active: 0x2416F (byte != 0)
         };
 
         public static Offsets Doubutsu_no_Mori_e_Plus_Offsets = new Offsets
@@ -341,7 +344,7 @@ namespace ACSE
             Grass_Wear = 0x59880,
             Grass_Wear_Size = 0x3000, //Extra row of "Invisible" X Acres
             Grass_Type = 0x53401,
-            House_Data = 0x5D97A,
+            House_Data = 0x5D8FA - 0x44,
             House_Data_Size = 0x1228,
             Island_Acre_Data = 0x6FE38,
             Island_World_Data = 0x6FE58,
@@ -487,15 +490,19 @@ namespace ACSE
 
         public static byte[] ByteSwap(byte[] saveBuff)
         {
-            byte[] Corrected_Save = new byte[saveBuff.Length];
+            byte A = 0, B = 0, C = 0, D = 0;
             for (int i = 0; i < saveBuff.Length; i += 4)
             {
-                byte[] Temp = new byte[4];
-                Buffer.BlockCopy(saveBuff, i, Temp, 0, 4);
-                Array.Reverse(Temp);
-                Temp.CopyTo(Corrected_Save, i);
+                A = saveBuff[i];
+                B = saveBuff[i + 1];
+                C = saveBuff[i + 2];
+                D = saveBuff[i + 3];
+                saveBuff[i] = D;
+                saveBuff[i + 1] = C;
+                saveBuff[i + 2] = B;
+                saveBuff[i + 3] = A;
             }
-            return Corrected_Save;
+            return saveBuff;
         }
 
         public static SaveType GetSaveType(byte[] Save_Data)
@@ -647,7 +654,7 @@ namespace ACSE
             {
                 if (!Properties.Settings.Default.DebuggingEnabled && Line.Contains("//"))
                     MessageBox.Show("Now loading item type: " + Line.Replace("//", ""));
-                else if (Line.Contains("0x"))
+                else if (!Line.Contains("//") && Line.Contains("0x"))
                 {
                     string Item_ID_String = Line.Substring(0, 6), Item_Name = Line.Substring(7).Trim();
                     if (ushort.TryParse(Item_ID_String.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out ushort Item_ID))
@@ -838,6 +845,8 @@ namespace ACSE
         public string Save_Extension;
         public string Save_ID;
         public bool Is_Big_Endian = true;
+        public bool ChangesMade = false;
+        public bool SuccessfullyLoaded = true;
         private FileStream Save_File;
         private BinaryReader Save_Reader;
         private BinaryWriter Save_Writer;
@@ -851,19 +860,18 @@ namespace ACSE
                     Save_Reader.Close();
                     Save_File.Close();
                 }
-                bool Failed_to_Load = false;
-                try { Save_File = new FileStream(File_Path, FileMode.Open); } catch { Failed_to_Load = true; }
-                if (Save_File == null || Failed_to_Load || !Save_File.CanWrite)
+                try { Save_File = new FileStream(File_Path, FileMode.Open); } catch { SuccessfullyLoaded = false; }
+                if (Save_File == null || !SuccessfullyLoaded || !Save_File.CanWrite)
                 {
                     MessageBox.Show(string.Format("Error: File {0} is being used by another process. Please close any process using it before editing!",
-                        Path.GetFileName(File_Path)), "File Opening Error");
+                        Path.GetFileName(File_Path)), "File Opening Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     try { Save_File.Close(); } catch { };
                     return;
                 }
 
                 Save_Reader = new BinaryReader(Save_File);
 
-                Original_Save_Data = Save_Reader.ReadBytes((int)Save_File.Length);
+                Original_Save_Data = Save_File.Length == 0x20000 ? SaveDataManager.ByteSwap(Save_Reader.ReadBytes(0x20000)) : Save_Reader.ReadBytes((int)Save_File.Length); // Byteswap DnM
                 Working_Save_Data = new byte[Original_Save_Data.Length];
                 Buffer.BlockCopy(Original_Save_Data, 0, Working_Save_Data, 0, Original_Save_Data.Length);
 
@@ -877,17 +885,7 @@ namespace ACSE
                 Save_Data_Start_Offset = SaveDataManager.GetSaveDataOffset(Save_ID.ToLower(), Save_Extension.Replace(".", "").ToLower());
                 Save_Info = SaveDataManager.GetSaveInfo(Save_Type);
 
-                if (Save_Type == SaveType.Doubutsu_no_Mori)
-                {
-                    Original_Save_Data = SaveDataManager.ByteSwap(Original_Save_Data);
-                    Working_Save_Data = SaveDataManager.ByteSwap(Working_Save_Data);
-                    /*using (var Swapped_Save = new FileStream(Save_Path + "\\" + Save_Name + "_ByteSwapped" + Save_Extension, FileMode.Create))
-                    {
-                        Swapped_Save.Write(Original_Save_Data, 0, Original_Save_Data.Length);
-                    }*/
-                }
-
-                if (Save_Type == SaveType.Wild_World || Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
+                if (Save_Type == SaveType.Wild_World || Game_System == SaveGeneration.N3DS)
                     Is_Big_Endian = false;
 
                 Save_Reader.Close();
@@ -963,10 +961,12 @@ namespace ACSE
 
             Save_Writer.Close();
             Save_File.Close();
+            ChangesMade = false;
         }
 
         public void Write(int offset, dynamic data, bool reversed = false, int stringLength = 0)
         {
+            ChangesMade = true;
             Type Data_Type = data.GetType();
             NewMainForm.Debug_Manager.WriteLine(string.Format("Writing Data{2} of type {0} to offset {1}", Data_Type.Name, "0x" + offset.ToString("X"), //recasting a value shows it as original type?
                     Data_Type.IsArray ? "" : " with value 0x" + (data.ToString("X"))), DebugLevel.Debug);
@@ -1025,15 +1025,30 @@ namespace ACSE
         public byte[] ReadByteArray(int offset, int count, bool reversed = false)
         {
             byte[] Data = new byte[count];
-            Buffer.BlockCopy(Working_Save_Data, offset, Data, 0, count);
             if (reversed)
-                Array.Reverse(Data);
+            {
+                int idx = count - 1;
+                for (int i = 0; i < count; i++)
+                {
+                    Data[idx] = Working_Save_Data[offset + i];
+                }
+            }
+            else
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Data[i] = Working_Save_Data[offset + i];
+                }
+            }
             return Data;
         }
 
         public ushort ReadUInt16(int offset, bool reversed = false)
         {
-            return BitConverter.ToUInt16(ReadByteArray(offset, 2, reversed), 0);
+            ushort Value = BitConverter.ToUInt16(Working_Save_Data, offset);
+            if (reversed)
+                Value = Value.Reverse();
+            return Value;
         }
 
         public ushort[] ReadUInt16Array(int offset, int count, bool reversed = false)
@@ -1046,7 +1061,10 @@ namespace ACSE
 
         public uint ReadUInt32(int offset, bool reversed = false)
         {
-            return BitConverter.ToUInt32(ReadByteArray(offset, 4, reversed), 0);
+            uint Value = BitConverter.ToUInt32(Working_Save_Data, offset);
+            if (reversed)
+                Value = Value.Reverse();
+            return Value;
         }
 
         public uint[] ReadUInt32Array(int offset, int count, bool reversed = false)
@@ -1059,7 +1077,10 @@ namespace ACSE
 
         public ulong ReadUInt64(int offset, bool reversed = false)
         {
-            return BitConverter.ToUInt64(ReadByteArray(offset, 8, reversed), 0);
+            ulong Value = BitConverter.ToUInt64(Working_Save_Data, offset);
+            if (reversed)
+                Value = Value.Reverse();
+            return Value;
         }
 
         public string ReadString(int offset, int length)

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using ACSE.Classes.Utilities;
 
 namespace ACSE
 {
@@ -13,16 +10,19 @@ namespace ACSE
     /// GameCube Pattern Data Write-up
     /// Patterns consist of a 15-color palette.
     /// There are 16 palettes to select from, but you can only use one palette at a time.
-    /// To save space, the AC Devs used each nibble for a pixel on the pattern. FF = White, White | 1F = Red, White
-    /// Each Pattern is 32x32 pixels. So the total space in memory was halved by doing this (only 0x220 bytes)
-    /// Data is stored like this:
-    ///     Name: 0x10 bytes
-    ///     Palette: 0x1 bytes
-    ///     Alignment Bytes?: 0xF bytes
-    ///     Pattern Data: 0x200 bytes
+    /// To save space, the AC Devs chose to use the C4 image format. This format uses a palette map with each nibble equating to a pixel. FF = White, White | 1F = Red, White
+    /// The blocks are 4 bytes (8 pixels) wide by 8 bytes deep (so each block is 32 bytes [0x20 bytes])!
+    /// Each Pattern is 32x32 pixels.
+    /// Pattern Structure:
+    ///     [String] Name: 0x10 bytes
+    ///     [Byte] Palette: 0x1 bytes
+    ///     [Byte Array] Alignment Bytes?: 0xF bytes
+    ///     [Byte Array] Pattern Data: 0x200 bytes
     /// </summary>
     class PatternData
     {
+        #region Palettes
+
         public static uint[][] AC_Palette_Data = new uint[16][]
         {
             new uint[15]
@@ -268,6 +268,7 @@ namespace ACSE
             0xFFADFFAD, 0xFF73FF73, 0xFF63DF42, 0xFF00FF00, 0xFF21DF21, 0xFF52BA52, 0xFF00BA00, 0xFF008A00, 0xFF214521, 0xFF0000F9, 0xFF0000FA, 0xFF0000FB, 0xFF0000FC, 0xFF0000FD, 0xFF0000FE, 0xFF0000FF
         };
 
+        #endregion
 
         private static Color ColorFromUInt32(uint color)
         {
@@ -307,8 +308,9 @@ namespace ACSE
     {
         private Save Save_File;
         private int Offset = 0;
+        public int Index;
         public byte[] patternBitmapBuffer = new byte[4 * 32 * 32];
-        public byte[] rawPatternArray;
+        public byte[] DecodedData;
         public string Name;
         public string CreatorName;
         public string TownName;
@@ -317,148 +319,61 @@ namespace ACSE
         public Bitmap Pattern_Bitmap;
         public uint[] PaletteData;
 
-        public Pattern(int patternOffset, Save save = null)
+        public Pattern(int patternOffset, int index, Save save = null)
         {
             Offset = patternOffset;
             Save_File = save;
-            Read();
+            Read(index);
         }
 
-        //AC only
-        public void GeneratePatternBitmapFromImport(byte[] buffer)
+        public uint[][] GetPaletteArray(SaveGeneration Save_Generation)
         {
-            int pos = 0;
-            for (int i = 0; i < buffer.Length; i++)
+            switch (Save_Generation)
             {
-                byte RightPixel = (byte)(buffer[i] & 0x0F);
-                byte LeftPixel = (byte)((buffer[i] & 0xF0) >> 4);
-                Buffer.BlockCopy(BitConverter.GetBytes(PatternData.AC_Palette_Data[Palette][LeftPixel - 1]), 0, patternBitmapBuffer, pos * 4, 4);
-                Buffer.BlockCopy(BitConverter.GetBytes(PatternData.AC_Palette_Data[Palette][RightPixel - 1]), 0, patternBitmapBuffer, (pos + 1) * 4, 4);
-                pos += 2;
+                case SaveGeneration.GCN:
+                default:
+                    return PatternData.AC_Palette_Data;
+                case SaveGeneration.NDS:
+                    return PatternData.WW_Palette_Data;
+                case SaveGeneration.Wii:
+                    return PatternData.CF_Palette_Data;
             }
-            Pattern_Bitmap = new Bitmap(32, 32, PixelFormat.Format32bppArgb);
-            BitmapData bitmapData = Pattern_Bitmap.LockBits(new Rectangle(0, 0, 32, 32), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb); //Should probably switch to 24bit rgb since alpha channel isn't used
-            System.Runtime.InteropServices.Marshal.Copy(patternBitmapBuffer, 0, bitmapData.Scan0, patternBitmapBuffer.Length);
-            Pattern_Bitmap.UnlockBits(bitmapData);
-            rawPatternArray = buffer;
-        }
-
-        // AC / CF only
-        public byte[] ConvertImportAC_CF(byte[] Input)
-        {
-            int Section_Count = 4;
-            int Block_Count = 32;
-            int Width = 4; // Width = Blocks per row
-
-            List<byte[]> Blocks = new List<byte[]>();
-            int Total_Blocks = Input.Length / 4; // 4 bytes per block (4x1)
-            for (int i = 0; i < Total_Blocks; i++)
-            {
-                Blocks.Add(Input.Skip(i * 4).Take(4).ToArray());
-            }
-            List<byte[]> Sorted_Blocks = new List<byte[]>();
-            for (int i = 0; i < Blocks.Count; i++)
-            {
-                Sorted_Blocks.Add(new byte[0]);
-            }
-            for (int Block = 0; Block < Section_Count; Block++)
-            {
-                int Block_Offset = Block * Block_Count;
-                int Column = 0;
-                for (int i = 0; i < Block_Count; i++)
-                {
-                    if (i > 0 && i % 8 == 0)
-                    {
-                        Column++;
-                    }
-                    Sorted_Blocks[Block_Offset + i] = Blocks[Block_Offset + (i % 8) * Width + Column];
-                }
-            }
-
-            // Dump organized data into an array
-            byte[] Organized_Data = new byte[Input.Length];
-            
-            for (int i = 0; i < Sorted_Blocks.Count; i++)
-            {
-                if (i * 4 >= Input.Length)
-                    break;
-                Sorted_Blocks[i].CopyTo(Organized_Data, i * 4);
-            }
-
-            return Organized_Data;
-        }
-
-        public void AdjustPalette()
-        {
-            if (rawPatternArray == null)
-                GeneratePatternBitmap();
-            else
-                GeneratePatternBitmapFromImport(rawPatternArray);
         }
 
         // AC / CF
-        public void GeneratePatternBitmap(byte[] Import_Data = null)
+        public void GeneratePatternBitmap(byte[] Import_Data = null, bool Decode = true)
         {
             byte[] patternRawData = Import_Data ?? (Save_File.Save_Type == SaveType.City_Folk ? Save_File.ReadByteArray(Offset, 0x200) : Save_File.ReadByteArray(Offset + 0x20, 0x200));
             uint[][] Palette_Data = Save_File.Save_Type == SaveType.City_Folk ? PatternData.CF_Palette_Data : PatternData.AC_Palette_Data;
-            if (PatternData.AC_Palette_Data.Length >= Palette + 1)
+
+            if (Decode)
             {
-                byte[][] Block_Data = new byte[32][];
-                for (int block = 0; block < 32; block++)
-                {
-                    byte[] Block = new byte[16];
-                    Buffer.BlockCopy(patternRawData, block * 16, Block, 0, 16);
-                    Block_Data[block] = Block;
-                }
-                byte[][] Sorted_Block_Data = new byte[32][];
-                for (int Grouped_Block = 0; Grouped_Block < 4; Grouped_Block++)
-                {
-                    for (int Double_Block = 0; Double_Block < 4; Double_Block++)
-                    {
-                        for (int Block = 0; Block < 2; Block++)
-                        {
-                            Sorted_Block_Data[Grouped_Block * 8 + Double_Block + (Block % 2) * 4] = Block_Data[Grouped_Block * 8 + Double_Block * 2 + Block];
-                        }
-                    }
-                }
-                int pos = 0;
-                for (int i = 0; i < 8; i++)
-                {
-                    for (int y = 0; y < 4; y++)
-                    {
-                        for (int x = 0; x < 16; x++)
-                        {
-                            byte RightPixel = (byte)(Sorted_Block_Data[i * 4 + x / 4][x % 4 + y * 4] & 0x0F);
-                            byte LeftPixel = (byte)((Sorted_Block_Data[i * 4 + x / 4][x % 4 + y * 4] & 0xF0) >> 4);
-                            Buffer.BlockCopy(BitConverter.GetBytes(PatternData.AC_Palette_Data[Palette][Math.Max(0, LeftPixel - 1)]), 0, patternBitmapBuffer, pos * 4, 4);
-                            Buffer.BlockCopy(BitConverter.GetBytes(PatternData.AC_Palette_Data[Palette][Math.Max(0, RightPixel - 1)]), 0, patternBitmapBuffer, (pos + 1) * 4, 4);
-                            pos += 2;
-                        }
-                    }
-                }
-                Pattern_Bitmap = new Bitmap(32, 32, PixelFormat.Format32bppArgb);
-                BitmapData bitmapData = Pattern_Bitmap.LockBits(new Rectangle(0, 0, 32, 32), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-                System.Runtime.InteropServices.Marshal.Copy(patternBitmapBuffer, 0, bitmapData.Scan0, patternBitmapBuffer.Length);
-                Pattern_Bitmap.UnlockBits(bitmapData);
+                DecodedData = PatternUtility.DecodeC4(patternRawData);
             }
+
+            Pattern_Bitmap = PatternUtility.C4PaletteMapToBitmap(DecodedData, Palette_Data[Palette], 32, 32);
         }
 
-        public void GenerateWWPatternBitmap(byte[] Import_Data = null)
+        public void GenerateWWPatternBitmap(byte[] Import_Data = null, bool Decode = true)
         {
             byte[] Raw_Data = Import_Data ?? Save_File.ReadByteArray(Offset, 0x200);
-            byte[] Expanded_Data = new byte[0x400];
 
-            for (int i = 0; i < 0x200; i++)
+            if (Decode)
             {
-                Expanded_Data[i * 2] = (byte)(Raw_Data[i] & 0x0F);  //Left is Right
-                Expanded_Data[i * 2 + 1] = (byte)((Raw_Data[i] & 0xF0) >> 4); //Right is Left
+                DecodedData = new byte[0x400];
+
+                for (int i = 0; i < 0x200; i++)
+                {
+                    DecodedData[i * 2] = (byte)(Raw_Data[i] & 0x0F);  //Left is Right
+                    DecodedData[i * 2 + 1] = (byte)((Raw_Data[i] & 0xF0) >> 4); //Right is Left
+                }
             }
 
             uint[] Palette_Array = PatternData.WW_Palette_Data[Palette];
             
             for (int i = 0; i < 0x400; i++)
             {
-                int color_idx = Math.Max(0, Expanded_Data[i] - 1);
+                int color_idx = Math.Max(0, DecodedData[i] - 1);
                 Buffer.BlockCopy(BitConverter.GetBytes(Palette_Array[color_idx]), 0, patternBitmapBuffer, i * 4, 4);
             }
             Pattern_Bitmap = new Bitmap(32, 32, PixelFormat.Format32bppArgb);
@@ -468,11 +383,10 @@ namespace ACSE
         }
 
         //NL Patterns have a custom palette, created by the user by choosing 15 colors
-        public void GenerateNLPatternBitmap(byte[] Import_Data = null)
+        public void GenerateNLPatternBitmap(byte[] Import_Data = null, bool Decode = true)
         {
             //Add decoding of "Pro" patterns
             byte[] Raw_Data = Import_Data ?? Save_File.ReadByteArray(Offset + 0x6C, 0x200); //32x32 doubled up pixels
-            byte[] Expanded_Data = new byte[0x400]; //32x32 expanded pixel buffer
             byte[] Custom_Palette = Save_File.ReadByteArray(Offset + 0x58, 15); //New Leaf user selected palette data
             PaletteData = new uint[15];
 
@@ -480,16 +394,21 @@ namespace ACSE
             for (int i = 0; i < 15; i++)
                 PaletteData[i] = PatternData.NL_Palette_Data[Custom_Palette[i]];
 
-            //Expand data for working with
-            for (int i = 0; i < 0x200; i++)
+            if (Decode)
             {
-                Expanded_Data[i * 2] = (byte)(Raw_Data[i] & 0x0F);
-                Expanded_Data[i * 2 + 1] = (byte)((Raw_Data[i] >> 4) & 0x0F);
+                //Expand data for working with
+
+                DecodedData = new byte[0x400]; //32x32 expanded pixel buffer
+                for (int i = 0; i < 0x200; i++)
+                {
+                    DecodedData[i * 2] = (byte)(Raw_Data[i] & 0x0F);
+                    DecodedData[i * 2 + 1] = (byte)((Raw_Data[i] >> 4) & 0x0F);
+                }
             }
 
             //Convert palette color index to argb color
             for (int i = 0; i < 0x400; i++)
-                Buffer.BlockCopy(BitConverter.GetBytes(PaletteData[Expanded_Data[i]]), 0, patternBitmapBuffer, i * 4, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(PaletteData[DecodedData[i]]), 0, patternBitmapBuffer, i * 4, 4);
             
             //Create new bitmap
             Pattern_Bitmap = new Bitmap(32, 32, PixelFormat.Format32bppArgb);
@@ -498,8 +417,9 @@ namespace ACSE
             Pattern_Bitmap.UnlockBits(bitmapData);
         }
 
-        public void Read()
+        public void Read(int Index)
         {
+            this.Index = Index;
             if (Save_File.Save_Type == SaveType.Animal_Crossing)
             {
                 Name = new ACString(Save_File.ReadByteArray(Offset, 0x10), Save_File.Save_Type).Trim();
@@ -546,6 +466,26 @@ namespace ACSE
                 MessageBox.Show("Patterns: Unknown Save Type");
         }
 
+        public void RedrawBitmap()
+        {
+            switch (Save_File.Game_System)
+            {
+                case SaveGeneration.GCN:
+                case SaveGeneration.Wii:
+                    GeneratePatternBitmap(DecodedData, false);
+                    Write(PatternUtility.EncodeC4(DecodedData, 32, 32));
+                    break;
+                case SaveGeneration.NDS:
+                    GenerateWWPatternBitmap(DecodedData, false);
+                    Write(PatternUtility.CondenseNonBlockPattern(DecodedData));
+                    break;
+                case SaveGeneration.N3DS:
+                    GenerateNLPatternBitmap(DecodedData, false);
+                    Write(PatternUtility.CondenseNonBlockPattern(DecodedData));
+                    break;
+            }
+        }
+
         public void Import(uint[] Bitmap_Buffer)
         {
             // Convert to nibble map array of bytes
@@ -561,17 +501,16 @@ namespace ACSE
             }
             else
             {
-                for (int i = 0; i < Pattern_Buffer.Length; i++)
+                byte[] ConvertedBuffer = new byte[Bitmap_Buffer.Length];
+                for (int i = 0; i < ConvertedBuffer.Length; i++)
                 {
-                    int idx = i * 2;
-                    Pattern_Buffer[i] = (byte)((PatternData.ClosestColor(Bitmap_Buffer[idx], PaletteData) << 4) | PatternData.ClosestColor(Bitmap_Buffer[idx + 1], PaletteData));
+                    ConvertedBuffer[i] = PatternData.ClosestColor(Bitmap_Buffer[i], PaletteData);
                 }
-                Pattern_Buffer = ConvertImportAC_CF(Pattern_Buffer); // Convert it to the block format
+                Pattern_Buffer = PatternUtility.EncodeC4(ConvertedBuffer);
             }
 
             switch (Save_File.Game_System)
             {
-                case SaveGeneration.N64:
                 case SaveGeneration.GCN:
                 case SaveGeneration.Wii:
                     GeneratePatternBitmap(Pattern_Buffer);
@@ -589,18 +528,31 @@ namespace ACSE
 
         public void Write(byte[] New_Pattern_Data)
         {
-            // TODO: Write Pattern Name, Palette, and additional data
-            if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File.Game_System == SaveGeneration.GCN)
             {
+                int PatternNameSize = Save_File.Save_Type == SaveType.Animal_Crossing ? 0x10 : 0x0A;
+                Save_File.Write(Offset, ACString.GetBytes(Name, PatternNameSize));
+                Save_File.Write(Offset + PatternNameSize, Palette);
                 Save_File.Write(Offset + 0x20, New_Pattern_Data);
             }
-            else if (Save_File.Save_Type == SaveType.Wild_World || Save_File.Save_Type == SaveType.City_Folk)
+            else if (Save_File.Save_Type == SaveType.Wild_World)
             {
                 Save_File.Write(Offset, New_Pattern_Data);
+                // TODO: Town Name & Creator Name (Also for City Folk, New Leaf)
+                Save_File.Write(Offset + 0x216, ACString.GetBytes(Name, 0x10));
+                Save_File.Write(Offset + 0x226, (byte)(((Palette & 0x0F) << 4) | (Concept & 0x0F)));
+            }
+            else if (Save_File.Save_Type == SaveType.City_Folk)
+            {
+                Save_File.Write(Offset, New_Pattern_Data);
+                Save_File.Write(Offset + 0x84C, ACString.GetBytes(Name, 0x20));
+                Save_File.Write(Offset + 0x86F, Palette);
             }
             else if (Save_File.Game_System == SaveGeneration.N3DS)
             {
+                Save_File.Write(Offset, ACString.GetBytes(Name, 0x2A));
                 Save_File.Write(Offset + 0x6C, New_Pattern_Data);
+                // TODO: Write Palette (since it's customizable)
             }
         }
     }

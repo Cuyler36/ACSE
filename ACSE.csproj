@@ -7,8 +7,9 @@
     <OutputType>WinExe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>ACSE</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -20,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>ACSE</RootNamespace>
@@ -36,10 +39,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Debug\</OutputPath>
+    <NoWarn>IDE1006</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Release\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>ACSE_Logo_2.ico</ApplicationIcon>
@@ -82,7 +88,6 @@
     <Content Include="Resources\DBNM_Plus_Items_en.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Resources\Images\no_tpc.png" />
     <None Include="Resources\Images\Arrow.png" />
     <None Include="Resources\Images\Building.png" />
@@ -1741,6 +1746,54 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\Faces\New Leaf\Male\9.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\0.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\1.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\10.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\11.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\12.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\13.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\14.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\15.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\2.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\3.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\4.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\5.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\6.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\7.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\8.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Faces\Wild World\9.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\Hair Styles\New Leaf\0.png">
@@ -3623,12 +3676,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AcreData.cs" />
-    <Compile Include="Classes\DateUtil.cs" />
+    <Compile Include="Classes\AlertToggledEventArgs.cs" />
+    <Compile Include="Classes\Extensions\ControlExtensions.cs" />
+    <Compile Include="Classes\Extensions\ProgressBarExtension.cs" />
+    <Compile Include="Classes\Utilities\DateUtility.cs" />
     <Compile Include="Classes\DebugManager.cs" />
     <Compile Include="Classes\Encyclopedia.cs" />
     <Compile Include="Classes\Enums.cs" />
+    <Compile Include="Classes\Extensions\EndianExtensions.cs" />
     <Compile Include="Classes\Generation.cs" />
     <Compile Include="Classes\ImageGeneration.cs" />
+    <Compile Include="Classes\Island.cs" />
     <Compile Include="Classes\Message.cs" />
     <Compile Include="Classes\PlaceholderTextBox.cs">
       <SubType>Component</SubType>
@@ -3639,10 +3697,14 @@
     <Compile Include="Classes\Save.cs" />
     <Compile Include="Classes\SecretCode.cs" />
     <Compile Include="Classes\SimpleTownInfo.cs" />
-    <Compile Include="Classes\ToolStripPlaceholderTextBox.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Forms\ToggableAlertForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\Utility.cs" />
+    <Compile Include="Forms\ToggableAlertForm.Designer.cs">
+      <DependentUpon>ToggableAlertForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Utilities\PatternUtility.cs" />
+    <Compile Include="Classes\Utilities\Utility.cs" />
     <Compile Include="Classes\VillagerPlayerEntry.cs" />
     <Compile Include="Classes\Weather.cs" />
     <Compile Include="Forms\AboutBox2.cs">
@@ -3688,10 +3750,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Classes\StringUtil.cs" />
+    <Compile Include="Classes\Utilities\StringUtility.cs" />
     <Compile Include="Classes\VillagerData.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\ToggableAlertForm.resx">
+      <DependentUpon>ToggableAlertForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBox2.resx">
       <DependentUpon>AboutBox2.cs</DependentUpon>
     </EmbeddedResource>

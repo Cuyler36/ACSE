@@ -52,7 +52,8 @@ namespace ACSE
 
             if (Int_Checksum != Computed_Checksum)
             {
-                NewMainForm.Debug_Manager.WriteLine("Encrypted Int had an invalid Checksum!", DebugLevel.Error);
+                NewMainForm.Debug_Manager.WriteLine(string.Format("Encrypted Int had an invalid Checksum! Checksum: 0x{0} | Calculated Checksum: 0x{1}",
+                    Int_Checksum.ToString("X2"), Computed_Checksum.ToString("X2")), DebugLevel.Info);
                 Int_1 = 0;
                 Int_2 = 0;
                 Value = 0;
@@ -70,12 +71,14 @@ namespace ACSE
                 }
                 else
                 {
-                    NewMainForm.Debug_Manager.WriteLine("Invalid Shift Count was detected!", DebugLevel.Error);
+                    NewMainForm.Debug_Manager.WriteLine("Invalid Shift Count was detected!", DebugLevel.Info);
                     Value = (Int_A << Right_Shift_Count) - (Adjust_Value + 0x8F187432);
                     Valid = true; // Is this right?
                 }
             }
         }
+
+        public NL_Int32(ulong EncryptedData) : this((uint)(EncryptedData >> 32), (uint)(EncryptedData)) { }
 
         public NL_Int32(uint Unencrypted_Int)
         {

@@ -35,6 +35,12 @@
             this.debugLevelComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.scanForInt32Checkbox = new System.Windows.Forms.CheckBox();
+            this.townMapSizeTrackBar = new System.Windows.Forms.TrackBar();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.acreMapSizeTrackBar = new System.Windows.Forms.TrackBar();
+            ((System.ComponentModel.ISupportInitialize)(this.townMapSizeTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.acreMapSizeTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // imageSizeModeComboBox
@@ -99,7 +105,7 @@
             // 
             this.scanForInt32Checkbox.AutoSize = true;
             this.scanForInt32Checkbox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.scanForInt32Checkbox.Location = new System.Drawing.Point(5, 60);
+            this.scanForInt32Checkbox.Location = new System.Drawing.Point(5, 116);
             this.scanForInt32Checkbox.Name = "scanForInt32Checkbox";
             this.scanForInt32Checkbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.scanForInt32Checkbox.Size = new System.Drawing.Size(190, 17);
@@ -108,12 +114,60 @@
             this.scanForInt32Checkbox.UseVisualStyleBackColor = true;
             this.scanForInt32Checkbox.CheckedChanged += new System.EventHandler(this.scanForInt32Checkbox_CheckedChanged);
             // 
+            // townMapSizeTrackBar
+            // 
+            this.townMapSizeTrackBar.AutoSize = false;
+            this.townMapSizeTrackBar.LargeChange = 2;
+            this.townMapSizeTrackBar.Location = new System.Drawing.Point(125, 60);
+            this.townMapSizeTrackBar.Maximum = 8;
+            this.townMapSizeTrackBar.Name = "townMapSizeTrackBar";
+            this.townMapSizeTrackBar.Size = new System.Drawing.Size(104, 22);
+            this.townMapSizeTrackBar.TabIndex = 8;
+            this.townMapSizeTrackBar.TickFrequency = 2;
+            this.townMapSizeTrackBar.Value = 8;
+            this.townMapSizeTrackBar.Scroll += new System.EventHandler(this.townMapSizeTrackBar_Scroll);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(5, 63);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(114, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Town Tab Image Size:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(10, 91);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(109, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Acre Tab Image Size:";
+            // 
+            // acreMapSizeTrackBar
+            // 
+            this.acreMapSizeTrackBar.AutoSize = false;
+            this.acreMapSizeTrackBar.LargeChange = 2;
+            this.acreMapSizeTrackBar.Location = new System.Drawing.Point(125, 88);
+            this.acreMapSizeTrackBar.Maximum = 8;
+            this.acreMapSizeTrackBar.Name = "acreMapSizeTrackBar";
+            this.acreMapSizeTrackBar.Size = new System.Drawing.Size(104, 22);
+            this.acreMapSizeTrackBar.TabIndex = 10;
+            this.acreMapSizeTrackBar.TickFrequency = 2;
+            this.acreMapSizeTrackBar.Value = 8;
+            this.acreMapSizeTrackBar.Scroll += new System.EventHandler(this.acreMapSizeTrackBar_Scroll);
+            // 
             // SettingsMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(404, 167);
             this.ControlBox = false;
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.acreMapSizeTrackBar);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.townMapSizeTrackBar);
             this.Controls.Add(this.scanForInt32Checkbox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.debugLevelComboBox);
@@ -124,6 +178,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "SettingsMenuForm";
             this.Text = "ACSE Settings";
+            ((System.ComponentModel.ISupportInitialize)(this.townMapSizeTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.acreMapSizeTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -137,5 +193,9 @@
         private System.Windows.Forms.ComboBox debugLevelComboBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox scanForInt32Checkbox;
+        private System.Windows.Forms.TrackBar townMapSizeTrackBar;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TrackBar acreMapSizeTrackBar;
     }
 }

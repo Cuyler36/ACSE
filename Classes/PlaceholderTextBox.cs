@@ -60,11 +60,13 @@ namespace ACSE
 
         public PlaceholderTextBox()
         {
-            PlaceholderLabel = new Label();
-            PlaceholderLabel.Text = "Placeholder Text";
-            PlaceholderLabel.BackColor = Color.Transparent;
-            PlaceholderLabel.ForeColor = Color.Gray;
-            PlaceholderLabel.AutoSize = false;
+            PlaceholderLabel = new Label
+            {
+                Text = "Placeholder Text",
+                BackColor = Color.Transparent,
+                ForeColor = Color.Gray,
+                AutoSize = false
+            };
             PlaceholderLabel.MouseDown += LabelClicked;
 
             Controls.Add(PlaceholderLabel);

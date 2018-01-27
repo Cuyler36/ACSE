@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.IO;
+using ACSE.Classes.Utilities;
 
 namespace ACSE
 {
@@ -205,7 +199,7 @@ namespace ACSE
             Birthday = 0xAE2,
             BirthdaySize = 2,
             Reset = 0x10F4, //
-            ResetSize = 8,
+            ResetSize = 4,
             Savings = 0x11B4,
             Patterns = 0xC40,
             PatternCount = 8,
@@ -263,7 +257,7 @@ namespace ACSE
             Birthday = 0x10A6,
             BirthdaySize = 2,
             Reset = 0x10F4,
-            ResetSize = 8,
+            ResetSize = 4,
             Savings = 0x122C,
             Patterns = 0x1240,
             PatternCount = 8,
@@ -316,8 +310,10 @@ namespace ACSE
             HeldItem = 0x874,
             InventoryBackground = 0xFF0,
             Shirt = 0xFF6,
-            Reset = 0x10F4, //
-            ResetSize = 8,
+            Birthday = 0x1018,
+            BirthdaySize = 2,
+            Reset = 0x1064,
+            ResetSize = 4,
             Savings = 0x11B4,
             Patterns = 0x11C0,
             PatternCount = 8,
@@ -326,7 +322,6 @@ namespace ACSE
             TownPassCardImage = -1,
             HairType = -1,
             Bed = -1,
-            Birthday = -1,
             Catalog = -1, //Actually research
             Encyclopedia = -1,
             Dressers = -1,
@@ -664,7 +659,7 @@ namespace ACSE
             "Male #1 - Brown Eyes w/ Lashes",
             "Male #2 - Black Eyes w/ Brows",
             "Male #3 - Blue Eyes w/ Eyelids",
-            "Male #4 - Blue Eyes w/ Small Pupils & Brows",
+            "Male #4 - Green Eyes w/ Small Pupils & Brows",
             "Male #5 - Brown Eyes",
             "Male #6 - Arched Black Eyes",
             "Male #7 - Blue Eyes w/ Rosey Cheeks",
@@ -966,7 +961,7 @@ namespace ACSE
                 {
                     Data.Patterns = new Pattern[Offsets.PatternCount];
                     for (int i = 0; i < Data.Patterns.Length; i++)
-                        Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, save);
+                        Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, i, save);
                 }
 
                 // Get the Player's House

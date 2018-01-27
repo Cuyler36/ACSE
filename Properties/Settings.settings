@@ -9,10 +9,22 @@
       <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="DebugLevel" Type="ACSE.DebugLevel" Scope="User">
-      <Value Profile="(Default)">Info</Value>
+      <Value Profile="(Default)">Error</Value>
     </Setting>
     <Setting Name="OutputInt32s" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TownMapSize" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">256</Value>
+    </Setting>
+    <Setting Name="AcreMapSize" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">96</Value>
+    </Setting>
+    <Setting Name="ShowDumpAcreWarning" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ShowBetaAcreWarning" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

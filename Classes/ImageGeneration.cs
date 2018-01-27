@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Resources;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -88,8 +85,10 @@ namespace ACSE
             Bitmap_Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
             Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             int Num_Lines_X = Map.Width / Item_Size, Num_Lines_Y = Map.Height / Item_Size;
-            Pen Grid_Pen = new Pen(new SolidBrush(Color.FromArgb((int)Grid_Color)));
-            Grid_Pen.Width = Grid_Pixel_Size;
+            Pen Grid_Pen = new Pen(new SolidBrush(Color.FromArgb((int)Grid_Color)))
+            {
+                Width = Grid_Pixel_Size
+            };
             for (int Y = 1; Y < Num_Lines_Y; Y++)
                 Bitmap_Graphics.DrawLine(Grid_Pen, 0, Y * Item_Size - 1, Map.Width, Y * Item_Size - 1);
             for (int X = 1; X < Num_Lines_X; X++)
@@ -99,12 +98,42 @@ namespace ACSE
             return Map;
         }
 
+        public static Bitmap DrawGrid2(Image Img, int CellSize, Size ImageSize, Pen GridPen = null, bool Resize = true, bool DrawVertical = true, bool SkipFirstLine = false)
+        {
+            if (GridPen == null)
+                GridPen = Pens.Black;
+
+            Bitmap GridBitmap = Resize ? new Bitmap(ImageSize.Width, ImageSize.Height) : new Bitmap(Img);
+
+            using (Graphics GridGraphics = Graphics.FromImage(GridBitmap))
+            {
+                GridGraphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                if (Resize)
+                    GridGraphics.DrawImage(Img, new Rectangle(0, 0, ImageSize.Width, ImageSize.Height), new RectangleF((float)-0.5, (float)-0.5, 32, 32), GraphicsUnit.Pixel);
+
+                if (DrawVertical)
+                    for (int X = 0; X < GridBitmap.Width; X += CellSize)
+                    {
+                        GridGraphics.DrawLine(GridPen, X, 0, X, GridBitmap.Height);
+                    }
+
+                for (int Y = SkipFirstLine ? CellSize : 0; Y < GridBitmap.Height; Y += CellSize)
+                {
+                    GridGraphics.DrawLine(GridPen, 0, Y, GridBitmap.Width, Y);
+                }
+            }
+
+            return GridBitmap;
+        }
+
         public static Bitmap Draw_Acre_Highlight()
         {
             Bitmap Acre_Highlight = new Bitmap(64, 64);
             Graphics Bitmap_Graphics = Graphics.FromImage(Acre_Highlight);
-            Pen Border_Color = new Pen(Color.FromArgb(0x80, Color.Gold));
-            Border_Color.Width = 8;
+            Pen Border_Color = new Pen(Color.FromArgb(0x80, Color.Gold))
+            {
+                Width = 8
+            };
             Bitmap_Graphics.DrawRectangle(Border_Color, new Rectangle(0, 0, 64, 64));
             Bitmap_Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x80, Color.Yellow)), new Rectangle(4, 4, 56, 56));
             Bitmap_Graphics.Flush();
@@ -391,10 +420,13 @@ namespace ACSE
             string FacesFolder = NewMainForm.Assembly_Location + "\\Resources\\Images\\Faces";
             if (Directory.Exists(FacesFolder))
             {
-                // TODO: Wild World+
                 if (Save_Generation == SaveGeneration.N64 || Save_Generation == SaveGeneration.GCN)
                 {
                     FacesFolder += "\\Animal Crossing";
+                }
+                else if (Save_Generation == SaveGeneration.NDS || Save_Generation == SaveGeneration.Wii)
+                {
+                    FacesFolder += "\\Wild World";
                 }
                 else if (Save_Generation == SaveGeneration.N3DS)
                 {

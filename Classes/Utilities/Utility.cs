@@ -4,9 +4,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
 
-namespace ACSE
+namespace ACSE.Classes.Utilities
 {
     public static class Utility
     {
@@ -197,6 +196,7 @@ namespace ACSE
         {
             int Rows = Items.Length / ItemsPerRow;
             Stack<Point> LocationStack = new Stack<Point>();
+            int[] PreviousPoints = new int[Items.Length];
 
             int X = StartIndex % ItemsPerRow;
             int Y = StartIndex / ItemsPerRow;
@@ -208,19 +208,24 @@ namespace ACSE
                 Point p = LocationStack.Pop();
                 int Idx = p.X + p.Y * ItemsPerRow;
 
-                if (p.X < ItemsPerRow && p.X > 0 &&
-                        p.Y < Rows && p.Y > 0) // Make sure we stay within bounds
+                if (p.X < ItemsPerRow && p.X > -1 &&
+                        p.Y < Rows && p.Y > -1 && PreviousPoints[Idx] == 0) // Make sure we stay within bounds
                 {
                     Item i = Items[Idx];
-                    if (i == OriginalItem)
+                    if (i.Equals(OriginalItem))
                     {
                         Items[Idx] = new Item(NewItem);
-                        LocationStack.Push(new Point(p.X - 1, p.Y));
-                        LocationStack.Push(new Point(p.X + 1, p.Y));
-                        LocationStack.Push(new Point(p.X, p.Y - 1));
-                        LocationStack.Push(new Point(p.X, p.Y + 1));
+                        if (p.X - 1 > -1)
+                            LocationStack.Push(new Point(p.X - 1, p.Y));
+                        if (p.X + 1 < ItemsPerRow)
+                            LocationStack.Push(new Point(p.X + 1, p.Y));
+                        if (p.Y - 1 > -1)
+                            LocationStack.Push(new Point(p.X, p.Y - 1));
+                        if (p.Y + 1 < Rows)
+                            LocationStack.Push(new Point(p.X, p.Y + 1));
                     }
                 }
+                PreviousPoints[Idx] = 1;
             }
         }
 
@@ -228,7 +233,7 @@ namespace ACSE
         {
             int Rows = Items.Length / ItemsPerRow;
             Stack<Point> LocationStack = new Stack<Point>();
-            List<int> PreviousPoints = new List<int>();
+            int[] PreviousPoints = new int[Items.Length];
 
             int X = StartIndex % ItemsPerRow;
             int Y = StartIndex / ItemsPerRow;
@@ -240,21 +245,25 @@ namespace ACSE
                 Point p = LocationStack.Pop();
 
                 int Idx = p.X + p.Y * ItemsPerRow;
-                //PreviousPoints.Add(Idx); // TODO: FIX
 
-                if (p.X < ItemsPerRow && p.X > 0 &&
-                        p.Y < Rows && p.Y > 0) // Make sure we stay within bounds
+                if (p.X < ItemsPerRow && p.X > -1 &&
+                        p.Y < Rows && p.Y > -1 && PreviousPoints[Idx] == 0) // Make sure we stay within bounds
                 {
                     WorldItem i = Items[Idx];
                     if (i.Equals(OriginalItem))
                     {
-                        Items[Idx] = new WorldItem(NewItem);
-                        LocationStack.Push(new Point(p.X - 1, p.Y));
-                        LocationStack.Push(new Point(p.X + 1, p.Y));
-                        LocationStack.Push(new Point(p.X, p.Y - 1));
-                        LocationStack.Push(new Point(p.X, p.Y + 1));
+                        Items[Idx] = new WorldItem(NewItem.ItemID, NewItem.Flag1, NewItem.Flag2, i.Index);
+                        if (p.X - 1 > -1)
+                            LocationStack.Push(new Point(p.X - 1, p.Y));
+                        if (p.X + 1 < ItemsPerRow)
+                            LocationStack.Push(new Point(p.X + 1, p.Y));
+                        if (p.Y - 1 > -1)
+                            LocationStack.Push(new Point(p.X, p.Y - 1));
+                        if (p.Y + 1 < Rows)
+                            LocationStack.Push(new Point(p.X, p.Y + 1));
                     }
                 }
+                PreviousPoints[Idx] = 1;
             }
         }
 
@@ -262,7 +271,7 @@ namespace ACSE
         {
             int Rows = Items.Length / ItemsPerRow;
             Stack<Point> LocationStack = new Stack<Point>();
-            List<int> PreviousPoints = new List<int>();
+            int[] PreviousPoints = new int[Items.Length];
 
             int X = StartIndex % ItemsPerRow;
             int Y = StartIndex / ItemsPerRow;
@@ -274,21 +283,25 @@ namespace ACSE
                 Point p = LocationStack.Pop();
 
                 int Idx = p.X + p.Y * ItemsPerRow;
-                //PreviousPoints.Add(Idx); // TODO: FIX
 
-                if (p.X < ItemsPerRow && p.X > 0 &&
-                        p.Y < Rows && p.Y > 0) // Make sure we stay within bounds
+                if (p.X < ItemsPerRow && p.X > -1 &&
+                        p.Y < Rows && p.Y > -1 && PreviousPoints[Idx] == 0) // Make sure we stay within bounds
                 {
                     Furniture i = Items[Idx];
                     if (i.Equals(OriginalItem))
                     {
                         Items[Idx] = new Furniture(NewItem);
-                        LocationStack.Push(new Point(p.X - 1, p.Y));
-                        LocationStack.Push(new Point(p.X + 1, p.Y));
-                        LocationStack.Push(new Point(p.X, p.Y - 1));
-                        LocationStack.Push(new Point(p.X, p.Y + 1));
+                        if (p.X - 1 > -1)
+                            LocationStack.Push(new Point(p.X - 1, p.Y));
+                        if (p.X + 1 < ItemsPerRow)
+                            LocationStack.Push(new Point(p.X + 1, p.Y));
+                        if (p.Y - 1 > -1)
+                            LocationStack.Push(new Point(p.X, p.Y - 1));
+                        if (p.Y + 1 < Rows)
+                            LocationStack.Push(new Point(p.X, p.Y + 1));
                     }
                 }
+                PreviousPoints[Idx] = 1;
             }
         }
     }

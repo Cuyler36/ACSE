@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using ACSE.Classes.Utilities;
 
 namespace ACSE
 {
@@ -212,13 +207,15 @@ namespace ACSE
             for (int i = 0; i < Offsets.Room_Count; i++)
             {
                 int RoomOffset = Offset + Offsets.Room_Start + i * Offsets.Room_Size;
-                var Room = new Room();
-                Room.Index = i;
-                Room.Offset = RoomOffset;
-                Room.Name = RoomNames[i];
-                Room.Layers = new Layer[Offsets.Layer_Count];
+                var Room = new Room
+                {
+                    Index = i,
+                    Offset = RoomOffset,
+                    Name = RoomNames[i],
+                    Layers = new Layer[Offsets.Layer_Count]
+                };
 
-                if (SaveData.Game_System == SaveGeneration.N64 || SaveData.Game_System == SaveGeneration.GCN) // TODO: Songs
+                if (SaveData.Game_System == SaveGeneration.N64 || SaveData.Game_System == SaveGeneration.GCN)
                 {
                     Room.Carpet = new Item((ushort)(0x2600 | SaveData.ReadByte(RoomOffset + Offsets.Room_Carpet)));
                     Room.Wallpaper = new Item((ushort)(0x2700 | SaveData.ReadByte(RoomOffset + Offsets.Room_Wallpaper)));
@@ -227,11 +224,13 @@ namespace ACSE
                 for (int x = 0; x < Offsets.Layer_Count; x++)
                 {
                     int LayerOffset = RoomOffset + Offsets.Layer_Size * x;
-                    var Layer = new Layer();
-                    Layer.Offset = LayerOffset;
-                    Layer.Index = x;
-                    Layer.Items = new Furniture[ItemsPerLayer];
-                    Layer.Parent = Room;
+                    var Layer = new Layer
+                    {
+                        Offset = LayerOffset,
+                        Index = x,
+                        Items = new Furniture[ItemsPerLayer],
+                        Parent = Room
+                    };
 
                     // Load furniture for the layer
                     for (int f = 0; f < ItemsPerLayer; f++)
@@ -397,7 +396,7 @@ namespace ACSE
             //Fence = 6,
             //Pavement = 7,
             //Mailbox = 8,
-            Room_Start = 0x76,
+            Room_Start = 0x44, //0x76,
             Room_Count = 6,
             Room_Size = 0x302,
             Layer_Size = 0x150,
@@ -412,6 +411,11 @@ namespace ACSE
         public static string[] WW_Room_Names = new string[6]
         {
             "Entry Room", "Left Wing", "Right Wing", "Back Wing", "Basement", "Second Floor"
+        };
+
+        public static string[] NL_Room_Names = new string[6]
+        {
+            "Entry Room", "Second Floor", "Basement", "Right Wing", "Left Wing", "Back Wing"
         };
 
         public static string[] AC_Roof_Colors = new string[12]
@@ -460,9 +464,11 @@ namespace ACSE
                     return AC_Room_Names;
 
                 case SaveGeneration.NDS:
-                case SaveGeneration.N3DS:
                 default:
                     return WW_Room_Names;
+
+                case SaveGeneration.N3DS:
+                    return NL_Room_Names;
             }
         }
 

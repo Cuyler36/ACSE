@@ -12,7 +12,7 @@ namespace ACSE.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -49,7 +49,7 @@ namespace ACSE.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Info")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Error")]
         public global::ACSE.DebugLevel DebugLevel {
             get {
                 return ((global::ACSE.DebugLevel)(this["DebugLevel"]));
@@ -68,6 +68,54 @@ namespace ACSE.Properties {
             }
             set {
                 this["OutputInt32s"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        public ushort TownMapSize {
+            get {
+                return ((ushort)(this["TownMapSize"]));
+            }
+            set {
+                this["TownMapSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("96")]
+        public byte AcreMapSize {
+            get {
+                return ((byte)(this["AcreMapSize"]));
+            }
+            set {
+                this["AcreMapSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowDumpAcreWarning {
+            get {
+                return ((bool)(this["ShowDumpAcreWarning"]));
+            }
+            set {
+                this["ShowDumpAcreWarning"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowBetaAcreWarning {
+            get {
+                return ((bool)(this["ShowBetaAcreWarning"]));
+            }
+            set {
+                this["ShowBetaAcreWarning"] = value;
             }
         }
     }

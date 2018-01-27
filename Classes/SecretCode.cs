@@ -331,7 +331,7 @@ namespace ACSE
                 if (Changed_Font_Code == 0xFF)
                 {
                     System.Windows.Forms.MessageBox.Show(string.Format("An invalid character was detected in the password! The password cannot be decoded! The invalid character is {0}",
-                        StringUtil.AC_CharacterDictionary[Input[i]]));
+                        ACSE.Classes.Utilities.StringUtility.AC_CharacterDictionary[Input[i]]));
                     throw new IndexOutOfRangeException("An invalid character was detected in the password!");
                 }
                 Output[i] = Changed_Font_Code;
