@@ -1682,6 +1682,7 @@ namespace ACSE
                 NL_Island_Acre_Map = new PictureBoxWithInterpolationMode[16];
 
                 for (int Y = 0; Y < Current_Save_Info.Island_Acre_Count / Current_Save_Info.Island_X_Acre_Count; Y++)
+                {
                     for (int X = 0; X < Current_Save_Info.Island_X_Acre_Count; X++)
                     {
                         int Idx = Y * Current_Save_Info.Island_X_Acre_Count + X;
@@ -1745,6 +1746,14 @@ namespace ACSE
                             islandPanel.Controls.Add(NL_Island_Acre_Map[Idx]);
                         }
                     }
+                }
+
+                if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus && SelectedIsland != null)
+                {
+                    var IslandAcreIds = SelectedIsland.GetAcreIds();
+                    Island_Acre_Map[0].BackgroundImage = Get_Acre_Image(new Normal_Acre(IslandAcreIds[0], 0), IslandAcreIds[0].ToString("X4"));
+                    Island_Acre_Map[1].BackgroundImage = Get_Acre_Image(new Normal_Acre(IslandAcreIds[1], 0), IslandAcreIds[1].ToString("X4"));
+                }
             }
         }
 
@@ -4118,6 +4127,10 @@ namespace ACSE
             if (SelectedIsland != null)
             {
                 ReloadIslandItemPicture();
+
+                var IslandAcreIds = SelectedIsland.GetAcreIds();
+                Island_Acre_Map[0].BackgroundImage = Get_Acre_Image(new Normal_Acre(IslandAcreIds[0], 0), IslandAcreIds[0].ToString("X4"));
+                Island_Acre_Map[1].BackgroundImage = Get_Acre_Image(new Normal_Acre(IslandAcreIds[1], 0), IslandAcreIds[1].ToString("X4"));
 
                 // Reload Island House Pictureboxes
                 for (int i = 0; i < 4; i++)

@@ -7,19 +7,22 @@
     {
         #region Island Offsets
 
-        int PlayerName = 0x00;
+        int IslandName = 0x00;
         int TownName = 0x06;
-        int PlayerId = 0x0C;
+        int IslandId = 0x0C;
         int TownId = 0x0E;
         int WorldData = 0x10;
         int CottageData = 0x418;
         int FlagData = 0xD00;
         int IslanderData = 0xF20;
         int BuriedData = 0x15A0;
+        int IslandLeftAcreData = 0x15E0;
+        int IslandRightAcreData = 0x15E1;
 
         #endregion
         public class Cottage
         {
+
             public Room MainRoom;
 
             public Cottage(int Offset, Save SaveData)
@@ -55,17 +58,34 @@
                     MainRoom.Layers[x] = Layer;
                 }
             }
+
+            public void Write()
+            {
+                MainRoom.Write();
+            }
         }
 
+        private Save SaveFile;
+        private int Offset;
+        public string Name;
+        public ushort Id; // This may be what tells the game which island acres to load for it.
         public NewPlayer Owner;
         public WorldItem[][] Items;
         public Cottage Cabana;
         public NewVillager Islander;
-        Pattern FlagPattern;
+        public Pattern FlagPattern;
+        public byte[] BuriedDataArray;
+        public byte IslandLeftAcreIndex, IslandRightAcreIndex;
 
         public Island(int Offset, NewPlayer[] Players, Save SaveFile)
         {
-            ushort Identifier = SaveFile.ReadUInt16(Offset + PlayerId, true);
+            this.SaveFile = SaveFile;
+            this.Offset = Offset;
+
+            Name = new ACSE.Classes.Utilities.ACString(SaveFile.ReadByteArray(Offset + IslandName, 6), SaveFile.Save_Type).Trim();
+            Id = SaveFile.ReadUInt16(Offset + IslandId, true);
+
+            ushort Identifier = SaveFile.ReadUInt16(Offset - 0x2214, true);
             foreach (NewPlayer Player in Players)
             {
                 if (Player != null && Player.Data.Identifier == Identifier)
@@ -74,7 +94,7 @@
                 }
             }
 
-            var BuriedDataArray = SaveFile.ReadByteArray(Offset + BuriedData, 0x40, false);
+            BuriedDataArray = SaveFile.ReadByteArray(Offset + BuriedData, 0x40, false);
 
             Items = new WorldItem[2][];
             for (int Acre = 0; Acre < 2; Acre++)
@@ -90,8 +110,48 @@
             }
 
             Cabana = new Cottage(Offset + CottageData, SaveFile);
-            FlagPattern = null; // new Pattern(Offset + FlagData, 0, SaveFile);
+            FlagPattern = new Pattern(Offset + FlagData, 0, SaveFile);
             Islander = new NewVillager(Offset + IslanderData, 0, SaveFile);
+
+            IslandLeftAcreIndex = SaveFile.ReadByte(Offset + IslandLeftAcreData);
+            IslandRightAcreIndex = SaveFile.ReadByte(Offset + IslandRightAcreData);
+        }
+
+        private ushort IslandAcreIndexToIslandAcreId(byte Side, byte Index)
+        {
+            // Left side
+            if (Side == 0)
+            {
+                switch (Index)
+                {
+                    case 0:
+                        return 0x04A4;
+                    case 1:
+                        return 0x0598;
+                    case 2:
+                        return 0x05A0;
+                    case 3:
+                        return 0x05A8;
+                    default:
+                        return 0;
+                }
+            }
+            else
+            {
+                switch (Index)
+                {
+                    case 0:
+                        return 0x04A0;
+                    case 1:
+                        return 0x0594;
+                    case 2:
+                        return 0x059C;
+                    case 3:
+                        return 0x05A4;
+                    default:
+                        return 0;
+                }
+            }
         }
 
         private int GetBuriedDataLocation(WorldItem item, int acre, SaveType saveType)
@@ -128,6 +188,39 @@
                 else
                     item.Burried = false;
             }
+        }
+
+        public ushort[] GetAcreIds()
+        {
+            return new ushort[2] { IslandAcreIndexToIslandAcreId(0, IslandLeftAcreIndex), IslandAcreIndexToIslandAcreId(1, IslandRightAcreIndex) };
+        }
+
+        public void Write()
+        {
+            if (Owner != null)
+            {
+                SaveFile.Write(Offset + 0x00, ACSE.Classes.Utilities.ACString.GetBytes(Name, 6));
+                SaveFile.Write(Offset + 0x06, ACSE.Classes.Utilities.ACString.GetBytes(Owner.Data.TownName, 6));
+                SaveFile.Write(Offset + 0x0C, Id, true);
+                SaveFile.Write(Offset + 0x0E, TownId, true);
+            }
+
+            // Save World Items
+            for (int Acre = 0; Acre < 2; Acre++)
+            {
+                for (int Item = 0; Item < 0x100; Item++)
+                {
+                    SaveFile.Write(Offset + WorldData + Acre * 0x200 + Item * 2, Items[Acre][Item].ItemID, true);
+                }
+            }
+
+            // Save Cottage
+            Cabana.Write();
+
+            // TODO: Save Islander
+
+            // Save Buried Data
+            SaveFile.Write(Offset + BuriedData, BuriedDataArray);
         }
     }
 }
