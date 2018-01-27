@@ -49,6 +49,7 @@ ACSE is a save editor for the Animal Crossing game series. It currently supports
 
 ![Pattern Editor](https://puu.sh/z9jw5/e27a5abb19.png)
 
+### Extracting Save Files
 If you don't know how to get your save file, read the documentation here: https://github.com/Cuyler36/ACSE/wiki/Extracting-Save-Files
 
 ### GameCube Only Version (Very Outdated)
