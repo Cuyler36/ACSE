@@ -31,12 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TabPage patternsTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewMainForm));
-            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
+            this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
             this.paletteSelectionPictureBox = new System.Windows.Forms.PictureBox();
             this.patternEditorPanel = new System.Windows.Forms.Panel();
-            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternEditorPreviewPanel = new System.Windows.Forms.Panel();
             this.patternGroupTabControl = new System.Windows.Forms.TabControl();
             this.player1Tab = new System.Windows.Forms.TabPage();
@@ -221,12 +220,13 @@
             this.acreHeightTrackBar = new System.Windows.Forms.TrackBar();
             this.label43 = new System.Windows.Forms.Label();
             this.houseToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.paletteIndexLabel = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
+            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
             this.patternEditorPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.patternGroupTabControl.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -260,18 +260,19 @@
             this.grassPanel.SuspendLayout();
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // patternsTab
             // 
             patternsTab.Controls.Add(this.paletteIndexLabel);
-            patternsTab.Controls.Add(this.patternNameTextBox);
             patternsTab.Controls.Add(this.palettePreviousButton);
             patternsTab.Controls.Add(this.paletteNextButton);
             patternsTab.Controls.Add(this.paletteSelectionPictureBox);
             patternsTab.Controls.Add(this.patternEditorPanel);
             patternsTab.Controls.Add(this.patternEditorPreviewPanel);
             patternsTab.Controls.Add(this.patternGroupTabControl);
+            patternsTab.Controls.Add(this.patternNameTextBox);
             patternsTab.Location = new System.Drawing.Point(4, 22);
             patternsTab.Name = "patternsTab";
             patternsTab.Size = new System.Drawing.Size(931, 565);
@@ -279,17 +280,15 @@
             patternsTab.Text = "Patterns";
             patternsTab.UseVisualStyleBackColor = true;
             // 
-            // patternNameTextBox
+            // paletteIndexLabel
             // 
-            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
-            this.patternNameTextBox.MaxLength = 16;
-            this.patternNameTextBox.Name = "patternNameTextBox";
-            this.patternNameTextBox.PlaceholderText = "Pattern Name";
-            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
-            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.patternNameTextBox.TabIndex = 0;
-            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
+            this.paletteIndexLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.paletteIndexLabel.AutoSize = true;
+            this.paletteIndexLabel.Location = new System.Drawing.Point(120, 5);
+            this.paletteIndexLabel.Name = "paletteIndexLabel";
+            this.paletteIndexLabel.Size = new System.Drawing.Size(52, 13);
+            this.paletteIndexLabel.TabIndex = 20;
+            this.paletteIndexLabel.Text = "Palette: 0";
             // 
             // palettePreviousButton
             // 
@@ -332,23 +331,6 @@
             this.patternEditorPanel.Name = "patternEditorPanel";
             this.patternEditorPanel.Size = new System.Drawing.Size(513, 513);
             this.patternEditorPanel.TabIndex = 16;
-            // 
-            // patternEditorPictureBox
-            // 
-            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
-            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
-            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.patternEditorPictureBox.TabIndex = 0;
-            this.patternEditorPictureBox.TabStop = false;
-            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
-            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
-            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
-            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
-            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
             // 
             // patternEditorPreviewPanel
             // 
@@ -2239,21 +2221,49 @@
             this.label43.TabIndex = 8;
             this.label43.Text = "Acre Height:";
             // 
-            // paletteIndexLabel
+            // progressBar1
             // 
-            this.paletteIndexLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.paletteIndexLabel.AutoSize = true;
-            this.paletteIndexLabel.Location = new System.Drawing.Point(120, 5);
-            this.paletteIndexLabel.Name = "paletteIndexLabel";
-            this.paletteIndexLabel.Size = new System.Drawing.Size(52, 13);
-            this.paletteIndexLabel.TabIndex = 20;
-            this.paletteIndexLabel.Text = "Palette: 0";
+            this.progressBar1.Location = new System.Drawing.Point(12, 668);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.Step = 1;
+            this.progressBar1.TabIndex = 14;
+            // 
+            // patternNameTextBox
+            // 
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
+            this.patternNameTextBox.MaxLength = 16;
+            this.patternNameTextBox.Name = "patternNameTextBox";
+            this.patternNameTextBox.PlaceholderText = "Pattern Name";
+            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.patternNameTextBox.TabIndex = 0;
+            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
+            // 
+            // patternEditorPictureBox
+            // 
+            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
+            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
+            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.patternEditorPictureBox.TabIndex = 0;
+            this.patternEditorPictureBox.TabStop = false;
+            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
+            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
+            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
+            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
+            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
             // 
             // NewMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(963, 695);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.townInfoLabel);
             this.Controls.Add(this.label43);
             this.Controls.Add(this.acreHeightTrackBar);
@@ -2276,7 +2286,6 @@
             patternsTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).EndInit();
             this.patternEditorPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.patternGroupTabControl.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -2318,6 +2327,7 @@
             this.grassPanel.PerformLayout();
             this.pictureContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2516,5 +2526,6 @@
         private System.Windows.Forms.Button paletteNextButton;
         private PlaceholderTextBox patternNameTextBox;
         private System.Windows.Forms.Label paletteIndexLabel;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
