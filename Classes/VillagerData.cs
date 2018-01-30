@@ -520,80 +520,84 @@ namespace ACSE
 
         public void Write()
         {
-            // Set Villager TownID & Name
-            if (Offsets.Town_ID != -1)
+            if (Exists)
             {
-                Data.Town_ID = SaveData.ReadUInt16(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_ID, SaveData.Is_Big_Endian); // Might not be UInt16 in all games
-            }
-            if (Offsets.Town_Name != -1)
-            {
-                Data.Town_Name = SaveData.ReadString(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_Name,
-                    NewMainForm.Current_Save_Info.Save_Offsets.Town_NameSize);
-            }
-            //MessageBox.Show(string.Format("Writing Villager #{0} with data offset of 0x{1}", Index, Offset.ToString("X")));
-            Type VillagerOffsetData = typeof(VillagerOffsets);
-            Type VillagerDataType = typeof(VillagerDataStruct);
-            foreach (var Field in VillagerOffsetData.GetFields(BindingFlags.Public | BindingFlags.Instance))
-            {
-                if (Field.GetValue(Offsets) != null && !Field.Name.Contains("Count") && !Field.Name.Contains("Size"))
+                // Set Villager TownID & Name
+                if (Offsets.Town_ID != -1)
                 {
-                    if (VillagerDataType.GetField(Field.Name) != null)
+                    Data.Town_ID = SaveData.ReadUInt16(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_ID, SaveData.Is_Big_Endian); // Might not be UInt16 in all games
+                }
+                if (Offsets.Town_Name != -1)
+                {
+                    Data.Town_Name = SaveData.ReadString(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_Name,
+                        NewMainForm.Current_Save_Info.Save_Offsets.Town_NameSize);
+                }
+                //MessageBox.Show(string.Format("Writing Villager #{0} with data offset of 0x{1}", Index, Offset.ToString("X")));
+                Type VillagerOffsetData = typeof(VillagerOffsets);
+                Type VillagerDataType = typeof(VillagerDataStruct);
+                foreach (var Field in VillagerOffsetData.GetFields(BindingFlags.Public | BindingFlags.Instance))
+                {
+                    if (Field.GetValue(Offsets) != null && !Field.Name.Contains("Count") && !Field.Name.Contains("Size"))
                     {
-                        if (Field.FieldType == typeof(int) && (int)Field.GetValue(Offsets) != -1)
+                        if (VillagerDataType.GetField(Field.Name) != null)
                         {
-                            Type FieldType = VillagerDataType.GetField(Field.Name).FieldType;
-                            int DataOffset = Offset + (int)Field.GetValue(Offsets);
-                            //MessageBox.Show("Field Name: " + Field.Name + " | Data Offset: " + DataOffset.ToString("X"));
-                            if (Field.Name == "Villager_ID")
+                            if (Field.FieldType == typeof(int) && (int)Field.GetValue(Offsets) != -1)
                             {
-                                if (SaveData.Save_Type == SaveType.Wild_World)
+                                Type FieldType = VillagerDataType.GetField(Field.Name).FieldType;
+                                int DataOffset = Offset + (int)Field.GetValue(Offsets);
+                                //MessageBox.Show("Field Name: " + Field.Name + " | Data Offset: " + DataOffset.ToString("X"));
+                                if (Field.Name == "Villager_ID")
                                 {
-                                    SaveData.Write(DataOffset, Convert.ToByte(VillagerDataType.GetField(Field.Name).GetValue(Data)));
+                                    if (SaveData.Save_Type == SaveType.Wild_World)
+                                    {
+                                        SaveData.Write(DataOffset, Convert.ToByte(VillagerDataType.GetField(Field.Name).GetValue(Data)));
+                                    }
+                                    else //Might not encompass City Folk
+                                    {
+                                        SaveData.Write(DataOffset, (ushort)VillagerDataType.GetField(Field.Name).GetValue(Data), SaveData.Is_Big_Endian);
+                                    }
                                 }
-                                else //Might not encompass City Folk
+                                else if (FieldType == typeof(string) && SaveData.Game_System != SaveGeneration.N3DS) // Temp 3DS exclusion
+                                {
+                                    SaveData.Write(DataOffset, ACString.GetBytes((string)VillagerDataType.GetField(Field.Name).GetValue(Data),
+                                        (int)VillagerOffsetData.GetField(Field.Name + "Size").GetValue(Offsets)));
+                                }
+                                else if (FieldType == typeof(byte))
+                                {
+                                    SaveData.Write(DataOffset, (byte)VillagerDataType.GetField(Field.Name).GetValue(Data));
+                                }
+                                else if (FieldType == typeof(byte[]))
+                                {
+                                    SaveData.Write(DataOffset, (byte[])VillagerDataType.GetField(Field.Name).GetValue(Data));
+                                }
+                                else if (FieldType == typeof(ushort))
                                 {
                                     SaveData.Write(DataOffset, (ushort)VillagerDataType.GetField(Field.Name).GetValue(Data), SaveData.Is_Big_Endian);
                                 }
-                            }
-                            else if (FieldType == typeof(string) && SaveData.Game_System != SaveGeneration.N3DS) // Temp 3DS exclusion
-                            {
-                                SaveData.Write(DataOffset, ACString.GetBytes((string)VillagerDataType.GetField(Field.Name).GetValue(Data),
-                                    (int)VillagerOffsetData.GetField(Field.Name + "Size").GetValue(Offsets)));
-                            }
-                            else if (FieldType == typeof(byte))
-                            {
-                                SaveData.Write(DataOffset, (byte)VillagerDataType.GetField(Field.Name).GetValue(Data));
-                            }
-                            else if (FieldType == typeof(byte[]))
-                            {
-                                SaveData.Write(DataOffset, (byte[])VillagerDataType.GetField(Field.Name).GetValue(Data));
-                            }
-                            else if (FieldType == typeof(ushort))
-                            {
-                                SaveData.Write(DataOffset, (ushort)VillagerDataType.GetField(Field.Name).GetValue(Data), SaveData.Is_Big_Endian);
-                            }
-                            else if (FieldType == typeof(Item))
-                            {
-                                if (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo)
+                                else if (FieldType == typeof(Item))
                                 {
-                                    SaveData.Write(DataOffset, ItemData.EncodeItem((Item)VillagerDataType.GetField(Field.Name).GetValue(Data)), SaveData.Is_Big_Endian);
-                                }
-                                else
-                                {
-                                    SaveData.Write(DataOffset, ((Item)VillagerDataType.GetField(Field.Name).GetValue(Data)).ItemID, SaveData.Is_Big_Endian);
+                                    if (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo)
+                                    {
+                                        SaveData.Write(DataOffset, ItemData.EncodeItem((Item)VillagerDataType.GetField(Field.Name).GetValue(Data)), SaveData.Is_Big_Endian);
+                                    }
+                                    else
+                                    {
+                                        SaveData.Write(DataOffset, ((Item)VillagerDataType.GetField(Field.Name).GetValue(Data)).ItemID, SaveData.Is_Big_Endian);
+                                    }
                                 }
                             }
                         }
                     }
                 }
+
+                // Special case here, since Villager_Data_Start + 0xC is always the same as the villager's ID. This seems to dictate something about their speech. (Lower byte)
+                // TODO: Add check to see if the villager is an islander. If they are, use 0xFF instead.
+                if (SaveData.Save_Type == SaveType.Animal_Crossing)
+                {
+                    SaveData.Write(Offset + 0xC, (byte)Data.Villager_ID);
+                }
             }
-            // Special case here, since Villager_Data_Start + 0xC is always the same as the villager's ID. (Lower byte)
-            // TODO: Add check to see if the villager is an islander. If they are, use 0xFF instead.
-            if (SaveData.Save_Type == SaveType.Animal_Crossing)
-            {
-                SaveData.Write(Offset + 0xC, (byte)Data.Villager_ID);
-            }
-            // TODO: Add House Coordinate Saving/Updating (Also automatic placing/removing??) for the GC version
+            // TODO: Add House Coordinate Saving/Updating (Also automatic placing/removing??) for the GC/DS version
         }
     }
 }

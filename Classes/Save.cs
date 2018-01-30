@@ -827,7 +827,7 @@ namespace ACSE
 
         public static byte CondenseNibbles(byte Lower_Nibble, byte Upper_Nibble)
         {
-            return (byte)(((Upper_Nibble & 0x0F) >> 4) + Lower_Nibble & 0x0F);
+            return (byte)(((Upper_Nibble & 0x0F) << 4) + Lower_Nibble & 0x0F);
         }
     }
 

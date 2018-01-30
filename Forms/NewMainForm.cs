@@ -399,7 +399,8 @@ namespace ACSE
         private async Task SetupEditor(Save save)
         {
             progressBar1.Value = 0;
-            // TEST
+            loadingPanel.Visible = true;
+            loadingPanel.Enabled = true;
             Loading = true;
             if (save.SuccessfullyLoaded && save.Save_Type == SaveType.Unknown)
             {
@@ -473,7 +474,6 @@ namespace ACSE
 
             // Enable Controls
             playerName.Enabled = true;
-            playerTownName.Enabled = true;
             playerWallet.Enabled = true;
             playerDebt.Enabled = true;
             playerSavings.Enabled = true;
@@ -908,7 +908,6 @@ namespace ACSE
                 Utility.Scan_For_NL_Int32();
 
             // Set TextBox max values
-            playerTownName.MaxLength = Current_Save_Info.Save_Offsets.Town_NameSize;
             playerName.MaxLength = Current_Save_Info.Save_Offsets.Town_NameSize; // As far as I know, town name and player name are always the same size
 
             // Enable Tasks
@@ -962,6 +961,8 @@ namespace ACSE
 
             progressBar1.Value = 100;
             Loading = false;
+            loadingPanel.Enabled = false;
+            loadingPanel.Visible = false;
         }
 
         private void SetPlayersEnabled()
@@ -1032,7 +1033,6 @@ namespace ACSE
                 SetMainTabEnabled("islandTab", Current_Save_Type != SaveType.Doubutsu_no_Mori);
                 SetMainTabEnabled("patternsTab", Current_Save_Type != SaveType.Doubutsu_no_Mori);
                 SetMainTabEnabled("grassTab", false);
-                playerTownName.Enabled = true;
                 playerHairType.Enabled = false;
                 playerHairColor.Enabled = false;
                 playerEyeColor.Enabled = false;
@@ -1070,7 +1070,6 @@ namespace ACSE
                 SetMainTabEnabled("islandTab", false);
                 SetMainTabEnabled("grassTab", false);
                 SetMainTabEnabled("patternsTab", true);
-                playerTownName.Enabled = true;
                 playerHairType.Enabled = true;
                 playerHairColor.Enabled = true;
                 playerNookPoints.Enabled = true;
@@ -1105,7 +1104,6 @@ namespace ACSE
                 SetMainTabEnabled("islandTab", false);
                 SetMainTabEnabled("grassTab", true);
                 SetMainTabEnabled("patternsTab", true);
-                playerTownName.Enabled = true;
                 playerHairType.Enabled = true;
                 playerHairColor.Enabled = true;
                 playerNookPoints.Enabled = true;
@@ -1141,7 +1139,6 @@ namespace ACSE
                 SetMainTabEnabled("islandTab", true);
                 SetMainTabEnabled("grassTab", true);
                 SetMainTabEnabled("patternsTab", true);
-                playerTownName.Enabled = false;
                 playerHairType.Enabled = true;
                 playerHairColor.Enabled = true;
                 playerEyeColor.Enabled = true;
@@ -1216,8 +1213,6 @@ namespace ACSE
                 playerHairType.SelectedIndex = Player.Data.HairType;
             if (playerHairColor.Enabled && playerHairColor.Items.Count > 0)
                 playerHairColor.SelectedIndex = Player.Data.HairColor;
-            if (playerTownName.Enabled)
-                playerTownName.Text = Player.Data.TownName;
             if (playerNookPoints.Enabled)
                 playerNookPoints.Text = Player.Data.NookPoints.ToString();
             if (bedPicturebox.Enabled)
@@ -1283,10 +1278,31 @@ namespace ACSE
 
         private void TownName_Box_FocusLost(object sender, EventArgs e)
         {
-            if (Save_File != null && !string.IsNullOrEmpty(townNameBox.Text.Trim()))
+            if (Save_File != null && !Loading && !string.IsNullOrEmpty(townNameBox.Text.Trim()))
             {
                 Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Name, ACString.GetBytes(townNameBox.Text.Trim()));
                 townNameBox.Text = townNameBox.Text.Trim();
+                foreach (NewPlayer Player in Players)
+                    if (Player != null && Player.Exists)
+                    {
+                        Player.Data.TownName = townNameBox.Text;
+                        if (Player.House != null)
+                        {
+                            Player.House.Data.Town_Name = townNameBox.Text;
+                        }
+                    }
+
+                foreach (NewVillager Villager in Villagers)
+                    if (Villager != null && Villager.Exists)
+                        Villager.Data.Town_Name = townNameBox.Text;
+
+                // TODO: Island Town Name for DnM+/AC
+
+                if (Islands != null)
+                    foreach (Island Isle in Islands)
+                    {
+                        Isle.TownName = townNameBox.Text;
+                    }
             }
         }
 
@@ -2477,7 +2493,7 @@ namespace ACSE
         {
             (sender as Control).Capture = false;
             (sender as PictureBox).Image = Acre_Highlight_Image;
-            if (Override || e.X != Last_Acre_X || e.Y != Last_Acre_Y)
+            if (!Loading && (Override || e.X != Last_Acre_X || e.Y != Last_Acre_Y))
             {
                 acreToolTip.Hide(this);
                 acreToolTip.RemoveAll();
@@ -3426,7 +3442,7 @@ namespace ACSE
                 int Y = e.Y / TownMapCellSize;
                 int index = X + Y * 16;
                 int Acre = idx;
-                if (index > 255)
+                if (index > 255 || Town_Acres == null || Town_Acres[Acre] == null)
                     return;
                 // Set Info Label
                 townInfoLabel.Text = string.Format("X: {0} | Y: {1} | Index: {2}", X, Y, index);
@@ -3973,12 +3989,6 @@ namespace ACSE
                     playerNookPoints.Text = Selected_Player.Data.NookPoints.ToString();
                 }
             }
-        }
-
-        private void playerTownName_TextChanged(object sender, EventArgs e)
-        {
-            if (Save_File != null && playerTownName.Text.Length > 0)
-                Selected_Player.Data.TownName = playerTownName.Text;
         }
 
         private void playerShoeColor_SelectedIndexChanged(object sender, EventArgs e)
