@@ -684,7 +684,7 @@
             // 
             this.resettiCheckBox.AutoSize = true;
             this.resettiCheckBox.Enabled = false;
-            this.resettiCheckBox.Location = new System.Drawing.Point(367, 235);
+            this.resettiCheckBox.Location = new System.Drawing.Point(630, 36);
             this.resettiCheckBox.Name = "resettiCheckBox";
             this.resettiCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.resettiCheckBox.Size = new System.Drawing.Size(99, 17);
@@ -699,7 +699,7 @@
             this.birthdayDay.FormattingEnabled = true;
             this.birthdayDay.Items.AddRange(new object[] {
             "Not Set"});
-            this.birthdayDay.Location = new System.Drawing.Point(531, 207);
+            this.birthdayDay.Location = new System.Drawing.Point(794, 8);
             this.birthdayDay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.birthdayDay.Name = "birthdayDay";
             this.birthdayDay.Size = new System.Drawing.Size(43, 21);
@@ -709,7 +709,7 @@
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(399, 210);
+            this.label42.Location = new System.Drawing.Point(662, 11);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(48, 13);
             this.label42.TabIndex = 72;
@@ -733,7 +733,7 @@
             "November",
             "December",
             "Not Set"});
-            this.birthdayMonth.Location = new System.Drawing.Point(453, 207);
+            this.birthdayMonth.Location = new System.Drawing.Point(716, 8);
             this.birthdayMonth.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.birthdayMonth.Name = "birthdayMonth";
             this.birthdayMonth.Size = new System.Drawing.Size(72, 21);
@@ -2203,7 +2203,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.progressBar1.Location = new System.Drawing.Point(398, 389);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(166, 18);
@@ -2224,6 +2224,7 @@
             // 
             // label45
             // 
+            this.label45.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label45.AutoSize = true;
             this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label45.Location = new System.Drawing.Point(402, 317);
