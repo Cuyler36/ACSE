@@ -399,6 +399,7 @@ namespace ACSE
         private async Task SetupEditor(Save save)
         {
             progressBar1.Value = 0;
+            loadingPanel.BringToFront();
             loadingPanel.Visible = true;
             loadingPanel.Enabled = true;
             Loading = true;
@@ -963,6 +964,7 @@ namespace ACSE
             Loading = false;
             loadingPanel.Enabled = false;
             loadingPanel.Visible = false;
+            loadingPanel.SendToBack();
         }
 
         private void SetPlayersEnabled()

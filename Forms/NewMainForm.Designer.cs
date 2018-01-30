@@ -219,10 +219,10 @@
             this.label43 = new System.Windows.Forms.Label();
             this.houseToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
-            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
             this.loadingPanel = new System.Windows.Forms.Panel();
             this.label45 = new System.Windows.Forms.Label();
+            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
+            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
@@ -260,8 +260,8 @@
             this.grassPanel.SuspendLayout();
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.loadingPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // patternsTab
@@ -2204,11 +2204,33 @@
             // progressBar1
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.progressBar1.Location = new System.Drawing.Point(398, 365);
+            this.progressBar1.Location = new System.Drawing.Point(398, 389);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(166, 18);
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 14;
+            // 
+            // loadingPanel
+            // 
+            this.loadingPanel.Controls.Add(this.label45);
+            this.loadingPanel.Controls.Add(this.progressBar1);
+            this.loadingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loadingPanel.Enabled = false;
+            this.loadingPanel.Location = new System.Drawing.Point(0, 0);
+            this.loadingPanel.Name = "loadingPanel";
+            this.loadingPanel.Size = new System.Drawing.Size(963, 695);
+            this.loadingPanel.TabIndex = 15;
+            this.loadingPanel.Visible = false;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.Location = new System.Drawing.Point(402, 317);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(159, 37);
+            this.label45.TabIndex = 15;
+            this.label45.Text = "Loading...";
             // 
             // patternEditorPictureBox
             // 
@@ -2239,34 +2261,11 @@
             this.patternNameTextBox.TabIndex = 0;
             this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
-            // loadingPanel
-            // 
-            this.loadingPanel.Controls.Add(this.label45);
-            this.loadingPanel.Controls.Add(this.progressBar1);
-            this.loadingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loadingPanel.Enabled = false;
-            this.loadingPanel.Location = new System.Drawing.Point(0, 24);
-            this.loadingPanel.Name = "loadingPanel";
-            this.loadingPanel.Size = new System.Drawing.Size(963, 671);
-            this.loadingPanel.TabIndex = 15;
-            this.loadingPanel.Visible = false;
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label45.Location = new System.Drawing.Point(402, 317);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(159, 37);
-            this.label45.TabIndex = 15;
-            this.label45.Text = "Loading...";
-            // 
             // NewMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(963, 695);
-            this.Controls.Add(this.loadingPanel);
             this.Controls.Add(this.townInfoLabel);
             this.Controls.Add(this.label43);
             this.Controls.Add(this.acreHeightTrackBar);
@@ -2280,6 +2279,7 @@
             this.Controls.Add(this.selectedItem);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.loadingPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -2330,9 +2330,9 @@
             this.grassPanel.PerformLayout();
             this.pictureContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
