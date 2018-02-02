@@ -116,7 +116,6 @@
             this.playerSavingsText = new System.Windows.Forms.Label();
             this.playerDebtText = new System.Windows.Forms.Label();
             this.playerWalletText = new System.Windows.Forms.Label();
-            this.playerTownNameText = new System.Windows.Forms.Label();
             this.playerGender = new System.Windows.Forms.ComboBox();
             this.playerEyeColor = new System.Windows.Forms.ComboBox();
             this.playerHairColor = new System.Windows.Forms.ComboBox();
@@ -125,7 +124,6 @@
             this.playerSavings = new System.Windows.Forms.TextBox();
             this.playerDebt = new System.Windows.Forms.TextBox();
             this.playerWallet = new System.Windows.Forms.TextBox();
-            this.playerTownName = new System.Windows.Forms.TextBox();
             this.playerName = new System.Windows.Forms.TextBox();
             this.playerNameText = new System.Windows.Forms.Label();
             this.playerEditorSelect = new System.Windows.Forms.TabControl();
@@ -221,8 +219,10 @@
             this.label43 = new System.Windows.Forms.Label();
             this.houseToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
+            this.loadingPanel = new System.Windows.Forms.Panel();
+            this.label45 = new System.Windows.Forms.Label();
             this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
+            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
@@ -260,6 +260,7 @@
             this.grassPanel.SuspendLayout();
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
+            this.loadingPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -641,7 +642,6 @@
             this.playersTab.Controls.Add(this.playerSavingsText);
             this.playersTab.Controls.Add(this.playerDebtText);
             this.playersTab.Controls.Add(this.playerWalletText);
-            this.playersTab.Controls.Add(this.playerTownNameText);
             this.playersTab.Controls.Add(this.playerGender);
             this.playersTab.Controls.Add(this.playerEyeColor);
             this.playersTab.Controls.Add(this.playerHairColor);
@@ -650,7 +650,6 @@
             this.playersTab.Controls.Add(this.playerSavings);
             this.playersTab.Controls.Add(this.playerDebt);
             this.playersTab.Controls.Add(this.playerWallet);
-            this.playersTab.Controls.Add(this.playerTownName);
             this.playersTab.Controls.Add(this.playerName);
             this.playersTab.Controls.Add(this.playerNameText);
             this.playersTab.Controls.Add(this.playerEditorSelect);
@@ -685,7 +684,7 @@
             // 
             this.resettiCheckBox.AutoSize = true;
             this.resettiCheckBox.Enabled = false;
-            this.resettiCheckBox.Location = new System.Drawing.Point(367, 235);
+            this.resettiCheckBox.Location = new System.Drawing.Point(630, 36);
             this.resettiCheckBox.Name = "resettiCheckBox";
             this.resettiCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.resettiCheckBox.Size = new System.Drawing.Size(99, 17);
@@ -700,7 +699,7 @@
             this.birthdayDay.FormattingEnabled = true;
             this.birthdayDay.Items.AddRange(new object[] {
             "Not Set"});
-            this.birthdayDay.Location = new System.Drawing.Point(531, 207);
+            this.birthdayDay.Location = new System.Drawing.Point(794, 8);
             this.birthdayDay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.birthdayDay.Name = "birthdayDay";
             this.birthdayDay.Size = new System.Drawing.Size(43, 21);
@@ -710,7 +709,7 @@
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(399, 210);
+            this.label42.Location = new System.Drawing.Point(662, 11);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(48, 13);
             this.label42.TabIndex = 72;
@@ -734,7 +733,7 @@
             "November",
             "December",
             "Not Set"});
-            this.birthdayMonth.Location = new System.Drawing.Point(453, 207);
+            this.birthdayMonth.Location = new System.Drawing.Point(716, 8);
             this.birthdayMonth.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.birthdayMonth.Name = "birthdayMonth";
             this.birthdayMonth.Size = new System.Drawing.Size(72, 21);
@@ -744,7 +743,7 @@
             // playerIslandMedals
             // 
             this.playerIslandMedals.Enabled = false;
-            this.playerIslandMedals.Location = new System.Drawing.Point(251, 164);
+            this.playerIslandMedals.Location = new System.Drawing.Point(251, 138);
             this.playerIslandMedals.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerIslandMedals.Name = "playerIslandMedals";
             this.playerIslandMedals.Size = new System.Drawing.Size(121, 20);
@@ -754,7 +753,7 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(155, 193);
+            this.label40.Location = new System.Drawing.Point(155, 167);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(90, 13);
             this.label40.TabIndex = 69;
@@ -805,7 +804,7 @@
             // playerMeowCoupons
             // 
             this.playerMeowCoupons.Enabled = false;
-            this.playerMeowCoupons.Location = new System.Drawing.Point(251, 190);
+            this.playerMeowCoupons.Location = new System.Drawing.Point(251, 164);
             this.playerMeowCoupons.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerMeowCoupons.Name = "playerMeowCoupons";
             this.playerMeowCoupons.Size = new System.Drawing.Size(121, 20);
@@ -815,7 +814,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(170, 167);
+            this.label26.Location = new System.Drawing.Point(170, 141);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(75, 13);
             this.label26.TabIndex = 59;
@@ -1088,7 +1087,7 @@
             // playerNookPoints
             // 
             this.playerNookPoints.Enabled = false;
-            this.playerNookPoints.Location = new System.Drawing.Point(251, 138);
+            this.playerNookPoints.Location = new System.Drawing.Point(251, 112);
             this.playerNookPoints.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerNookPoints.Name = "playerNookPoints";
             this.playerNookPoints.Size = new System.Drawing.Size(121, 20);
@@ -1152,7 +1151,7 @@
             // playerShirtText
             // 
             this.playerShirtText.AutoSize = true;
-            this.playerShirtText.Location = new System.Drawing.Point(177, 141);
+            this.playerShirtText.Location = new System.Drawing.Point(177, 115);
             this.playerShirtText.Name = "playerShirtText";
             this.playerShirtText.Size = new System.Drawing.Size(68, 13);
             this.playerShirtText.TabIndex = 22;
@@ -1161,7 +1160,7 @@
             // playerSavingsText
             // 
             this.playerSavingsText.AutoSize = true;
-            this.playerSavingsText.Location = new System.Drawing.Point(197, 115);
+            this.playerSavingsText.Location = new System.Drawing.Point(197, 89);
             this.playerSavingsText.Name = "playerSavingsText";
             this.playerSavingsText.Size = new System.Drawing.Size(48, 13);
             this.playerSavingsText.TabIndex = 21;
@@ -1170,7 +1169,7 @@
             // playerDebtText
             // 
             this.playerDebtText.AutoSize = true;
-            this.playerDebtText.Location = new System.Drawing.Point(212, 89);
+            this.playerDebtText.Location = new System.Drawing.Point(212, 63);
             this.playerDebtText.Name = "playerDebtText";
             this.playerDebtText.Size = new System.Drawing.Size(33, 13);
             this.playerDebtText.TabIndex = 20;
@@ -1179,20 +1178,11 @@
             // playerWalletText
             // 
             this.playerWalletText.AutoSize = true;
-            this.playerWalletText.Location = new System.Drawing.Point(205, 63);
+            this.playerWalletText.Location = new System.Drawing.Point(205, 37);
             this.playerWalletText.Name = "playerWalletText";
             this.playerWalletText.Size = new System.Drawing.Size(40, 13);
             this.playerWalletText.TabIndex = 19;
             this.playerWalletText.Text = "Wallet:";
-            // 
-            // playerTownNameText
-            // 
-            this.playerTownNameText.AutoSize = true;
-            this.playerTownNameText.Location = new System.Drawing.Point(177, 37);
-            this.playerTownNameText.Name = "playerTownNameText";
-            this.playerTownNameText.Size = new System.Drawing.Size(68, 13);
-            this.playerTownNameText.TabIndex = 18;
-            this.playerTownNameText.Text = "Town Name:";
             // 
             // playerGender
             // 
@@ -1257,7 +1247,7 @@
             // playerSavings
             // 
             this.playerSavings.Enabled = false;
-            this.playerSavings.Location = new System.Drawing.Point(251, 112);
+            this.playerSavings.Location = new System.Drawing.Point(251, 86);
             this.playerSavings.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerSavings.Name = "playerSavings";
             this.playerSavings.Size = new System.Drawing.Size(121, 20);
@@ -1267,7 +1257,7 @@
             // playerDebt
             // 
             this.playerDebt.Enabled = false;
-            this.playerDebt.Location = new System.Drawing.Point(251, 86);
+            this.playerDebt.Location = new System.Drawing.Point(251, 60);
             this.playerDebt.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerDebt.Name = "playerDebt";
             this.playerDebt.Size = new System.Drawing.Size(121, 20);
@@ -1277,22 +1267,12 @@
             // playerWallet
             // 
             this.playerWallet.Enabled = false;
-            this.playerWallet.Location = new System.Drawing.Point(251, 60);
+            this.playerWallet.Location = new System.Drawing.Point(251, 34);
             this.playerWallet.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.playerWallet.Name = "playerWallet";
             this.playerWallet.Size = new System.Drawing.Size(121, 20);
             this.playerWallet.TabIndex = 6;
             this.playerWallet.LostFocus += new System.EventHandler(this.playerWallet_FocusLost);
-            // 
-            // playerTownName
-            // 
-            this.playerTownName.Enabled = false;
-            this.playerTownName.Location = new System.Drawing.Point(251, 34);
-            this.playerTownName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.playerTownName.Name = "playerTownName";
-            this.playerTownName.Size = new System.Drawing.Size(121, 20);
-            this.playerTownName.TabIndex = 5;
-            this.playerTownName.TextChanged += new System.EventHandler(this.playerTownName_TextChanged);
             // 
             // playerName
             // 
@@ -2223,23 +2203,35 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 668);
+            this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.progressBar1.Location = new System.Drawing.Point(398, 389);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.Size = new System.Drawing.Size(166, 18);
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 14;
             // 
-            // patternNameTextBox
+            // loadingPanel
             // 
-            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
-            this.patternNameTextBox.MaxLength = 16;
-            this.patternNameTextBox.Name = "patternNameTextBox";
-            this.patternNameTextBox.PlaceholderText = "Pattern Name";
-            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
-            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.patternNameTextBox.TabIndex = 0;
-            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
+            this.loadingPanel.Controls.Add(this.label45);
+            this.loadingPanel.Controls.Add(this.progressBar1);
+            this.loadingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loadingPanel.Enabled = false;
+            this.loadingPanel.Location = new System.Drawing.Point(0, 0);
+            this.loadingPanel.Name = "loadingPanel";
+            this.loadingPanel.Size = new System.Drawing.Size(963, 695);
+            this.loadingPanel.TabIndex = 15;
+            this.loadingPanel.Visible = false;
+            // 
+            // label45
+            // 
+            this.label45.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label45.AutoSize = true;
+            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.Location = new System.Drawing.Point(402, 317);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(159, 37);
+            this.label45.TabIndex = 15;
+            this.label45.Text = "Loading...";
             // 
             // patternEditorPictureBox
             // 
@@ -2258,12 +2250,23 @@
             this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
             this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
             // 
+            // patternNameTextBox
+            // 
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
+            this.patternNameTextBox.MaxLength = 16;
+            this.patternNameTextBox.Name = "patternNameTextBox";
+            this.patternNameTextBox.PlaceholderText = "Pattern Name";
+            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.patternNameTextBox.TabIndex = 0;
+            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
+            // 
             // NewMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(963, 695);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.townInfoLabel);
             this.Controls.Add(this.label43);
             this.Controls.Add(this.acreHeightTrackBar);
@@ -2277,6 +2280,7 @@
             this.Controls.Add(this.selectedItem);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.loadingPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -2327,6 +2331,8 @@
             this.grassPanel.PerformLayout();
             this.pictureContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
+            this.loadingPanel.ResumeLayout(false);
+            this.loadingPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2357,7 +2363,6 @@
         private System.Windows.Forms.Label playerSavingsText;
         private System.Windows.Forms.Label playerDebtText;
         private System.Windows.Forms.Label playerWalletText;
-        private System.Windows.Forms.Label playerTownNameText;
         private System.Windows.Forms.ComboBox playerGender;
         private System.Windows.Forms.ComboBox playerEyeColor;
         private System.Windows.Forms.ComboBox playerHairColor;
@@ -2366,7 +2371,6 @@
         private System.Windows.Forms.TextBox playerSavings;
         private System.Windows.Forms.TextBox playerDebt;
         private System.Windows.Forms.TextBox playerWallet;
-        private System.Windows.Forms.TextBox playerTownName;
         private System.Windows.Forms.TextBox playerName;
         private System.Windows.Forms.Label playerNameText;
         private System.Windows.Forms.Label label7;
@@ -2527,5 +2531,7 @@
         private PlaceholderTextBox patternNameTextBox;
         private System.Windows.Forms.Label paletteIndexLabel;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Panel loadingPanel;
+        private System.Windows.Forms.Label label45;
     }
 }

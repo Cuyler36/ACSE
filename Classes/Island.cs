@@ -8,9 +8,9 @@
         #region Island Offsets
 
         int IslandName = 0x00;
-        int TownName = 0x06;
+        int TownNameOffset = 0x06;
         int IslandId = 0x0C;
-        int TownId = 0x0E;
+        int TownIdOffset = 0x0E;
         int WorldData = 0x10;
         int CottageData = 0x418;
         int FlagData = 0xD00;
@@ -69,6 +69,8 @@
         private int Offset;
         public string Name;
         public ushort Id;
+        public string TownName;
+        public ushort TownId;
         public NewPlayer Owner;
         public WorldItem[][] Items;
         public Cottage Cabana;
@@ -84,6 +86,9 @@
 
             Name = new ACSE.Classes.Utilities.ACString(SaveFile.ReadByteArray(Offset + IslandName, 6), SaveFile.Save_Type).Trim();
             Id = SaveFile.ReadUInt16(Offset + IslandId, true);
+
+            TownName = new ACSE.Classes.Utilities.ACString(SaveFile.ReadByteArray(Offset + TownNameOffset, 6), SaveFile.Save_Type).Trim();
+            TownId = SaveFile.ReadUInt16(Offset + TownIdOffset, true);
 
             ushort Identifier = SaveFile.ReadUInt16(Offset - 0x2214, true);
             foreach (NewPlayer Player in Players)
@@ -200,7 +205,7 @@
             if (Owner != null)
             {
                 SaveFile.Write(Offset + 0x00, ACSE.Classes.Utilities.ACString.GetBytes(Name, 6));
-                SaveFile.Write(Offset + 0x06, ACSE.Classes.Utilities.ACString.GetBytes(Owner.Data.TownName, 6));
+                SaveFile.Write(Offset + 0x06, ACSE.Classes.Utilities.ACString.GetBytes(TownName, 6));
                 SaveFile.Write(Offset + 0x0C, Id, true);
                 SaveFile.Write(Offset + 0x0E, TownId, true);
             }
