@@ -97,7 +97,7 @@ namespace ACSE
     public struct VillagerDataStruct
     {
         public ushort Villager_ID;
-        public byte Villager_AI;
+        public byte Villager_AI; // In N64/GC, this is their "speech pattern" and not their "AI"
         public string Catchphrase;
         public string[] Nicknames;
         public byte Personality;
@@ -109,7 +109,7 @@ namespace ACSE
         public Item Carpet;
         public Item Wallpaper;
         public Item[] Furniture;
-        public byte[] House_Coordinates; //N64 - NDS
+        public byte[] House_Coordinates; //(In N64 & GCN, it's X-Acre, Y-Acre, X-Position, Y-Position)[X/Y Positions are the bottom center item (house item + 0x10)]
         public byte Status;
         //Player Entries?
     }

@@ -9,10 +9,25 @@ namespace ACSE
         private ushort townId;
         private ACDate date;
 
-        public string Contents { get { return contents; } set { contents = value; } }
-        public string TownName { get { return townName; } set { townName = value; } }
-        public ushort TownID { get { return townId; } set { townId = value; } }
-        public ACDate Date { get { return date; } set { date = value; } }
+        public string Contents { get => contents; set => contents = value; }
+        public string TownName { get => townName; set => townName = value; }
+        public ushort TownId { get => townId; set => townId = value; }
+        public ACDate Date { get => date; set => date = value; }
+
+        public Message()
+        {
+            contents = "";
+            townName = "";
+            townId = 0;
+        }
+
+        public Message(string Contents, string TownName, ushort TownId, ACDate Date)
+        {
+            this.Contents = Contents;
+            this.TownName = TownName;
+            this.TownId = TownId;
+            this.Date = Date;
+        }
     }
 
     public class Mail : Message
@@ -22,11 +37,23 @@ namespace ACSE
         private string receipiant;
         private ushort receipiantId;
 
+        public string Sender { get => sender; set => sender = value; }
+        public ushort SenderID { get => senderId; set => senderId = value; }
+        public string Receipiant { get => receipiant; set => receipiant = value; }
+        public ushort ReceipiantID { get => receipiantId; set => receipiantId = value; }
 
-        public string Sender { get { return sender; } set { sender = value; } }
-        public ushort SenderID { get { return senderId; } set { senderId = value; } }
-        public string Receipiant { get { return receipiant; } set { receipiant = value; } }
-        public ushort ReceipiantID { get { return receipiantId; } set { receipiantId = value; } }
+        public Mail() : base()
+        {
+            sender = "";
+            senderId = 0;
+            receipiant = "";
+            receipiantId = 0;
+        }
+
+        public Mail(int Offset, SaveType Save_Type)
+        {
+
+        }
     }
 
     public class MessageBoardPost : Message
@@ -34,7 +61,7 @@ namespace ACSE
         private string author;
         private ushort authorId;
 
-        public string Author { get { return author; } set { author = value; } }
-        public ushort AuthorID { get { return authorId; } set { authorId = value; } }
+        public string Author { get => author; set => author = value; }
+        public ushort AuthorID { get => authorId; set => authorId = value; }
     }
 }

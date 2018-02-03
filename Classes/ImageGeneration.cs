@@ -483,5 +483,39 @@ namespace ACSE
             }
             return HairImage;
         }
+
+        public static void DrawTownMapViewHouseImages(NewVillager[] Villagers, PictureBoxWithInterpolationMode[] PictureBoxes, Size PictureBoxSize)
+        {
+            int HouseImageSize = 16;
+            int PixelsPerItemSlotX = PictureBoxSize.Width / 16;
+            int PixelsPerItemSlotY = PictureBoxSize.Height / 16;
+
+            Console.WriteLine("X: " + PixelsPerItemSlotX + " | Y: " + PixelsPerItemSlotY);
+            var HouseImage = Properties.Resources.VillagerHouse;
+            foreach (NewVillager Villager in Villagers)
+            {
+                if (Villager.Exists)
+                {
+                    int Index = (Villager.Data.House_Coordinates[0]) + Villager.Data.House_Coordinates[1] * 7;
+                    var Position = new Point((Villager.Data.House_Coordinates[2] * PixelsPerItemSlotX) - HouseImageSize / 2, 
+                        (Villager.Data.House_Coordinates[3] * PixelsPerItemSlotY) - HouseImageSize / 2);
+
+                    Image CloneImage = null;
+                    if (PictureBoxes[Index].BackgroundImage != null)
+                        CloneImage = (Image)PictureBoxes[Index].BackgroundImage.Clone();
+                    else
+                        CloneImage = new Bitmap(PictureBoxes[Index].Size.Width, PictureBoxes[Index].Size.Height);
+
+                    using (Graphics g = Graphics.FromImage(CloneImage))
+                    {
+                        g.DrawImage(HouseImage, Position.X, Position.Y, 48, 48);
+                        g.Flush();
+                        PictureBoxes[Index].BackgroundImage = CloneImage;
+                    }
+                }
+            }
+
+            HouseImage.Dispose();
+        }
     }
 }

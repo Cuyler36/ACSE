@@ -1519,7 +1519,7 @@
             this.buildingsPanel.AutoScroll = true;
             this.buildingsPanel.Location = new System.Drawing.Point(730, 41);
             this.buildingsPanel.Name = "buildingsPanel";
-            this.buildingsPanel.Size = new System.Drawing.Size(198, 517);
+            this.buildingsPanel.Size = new System.Drawing.Size(198, 521);
             this.buildingsPanel.TabIndex = 2;
             // 
             // label1
@@ -1548,7 +1548,7 @@
             this.townPanel.AutoScroll = true;
             this.townPanel.Location = new System.Drawing.Point(6, 41);
             this.townPanel.Name = "townPanel";
-            this.townPanel.Size = new System.Drawing.Size(718, 517);
+            this.townPanel.Size = new System.Drawing.Size(718, 521);
             this.townPanel.TabIndex = 1;
             // 
             // buriedCheckbox

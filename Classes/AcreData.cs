@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Windows.Forms;
 using System.Drawing;
-using ACSE.Properties;
-using System.Resources;
 using System.Globalization;
-using System.Collections;
 
 namespace ACSE
 {
+    // TODO: Check if any references to the Image exist, and if not, dispose of them.
     class AcreData
     {
+        private static Dictionary<ushort, Image> LoadedImageDictionary = new Dictionary<ushort, Image>();
+        private static Dictionary<byte, Image> LoadedAnimalCrossingMapIcons = new Dictionary<byte, Image>();
+
         /*
          * Doubutsu no Mori - Doubutsu no Mori e+ Acre Info
          * 
@@ -31,49 +29,13 @@ namespace ACSE
             "Lower", "Middle", "Upper", "Uppermost" //"Uppermost" subject to change
         };
 
-        public static Dictionary<string, Image> GetAcreImageSet(SaveType Save_Type)
-        {
-            Dictionary<string, Image> Image_List = new Dictionary<string, Image>();
-            string Image_Dir = NewMainForm.Assembly_Location + "\\Resources\\Images\\";
-            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs its own set?
-                Image_Dir += "Acre_Images";
-            else if (Save_Type == SaveType.Wild_World)
-                Image_Dir += "WW_Acre_Images";
-            else if (Save_Type == SaveType.City_Folk)
-                Image_Dir += "CF_Acre_Images";
-            else if (Save_Type == SaveType.New_Leaf)
-                Image_Dir += "NL_Acre_Images";
-            else if (Save_Type == SaveType.Welcome_Amiibo)
-                Image_Dir += "WA_Acre_Images";
-
-            if (Directory.Exists(Image_Dir))
-            {
-                var Files = Directory.GetFiles(Image_Dir);
-                for (int i = 0; i < Files.Length; i++)
-                {
-                    var File = Files[i];
-                    var Extension = Path.GetExtension(File);
-                    if (Extension.Equals(".jpg") || Extension.Equals(".png"))
-                    {
-                        try
-                        {
-                            Image_List.Add((Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
-                                ? ushort.Parse(Path.GetFileNameWithoutExtension(File).Replace("acre_", "")).ToString("X4") : Path.GetFileNameWithoutExtension(File), Image.FromFile(File));
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(string.Format("An error occured while loading the acre images! File Index: {0} | File Name: {1}\nError:\n{2}", i, Path.GetFileName(File), ex.Message));
-                        }
-                    }
-                }
-            }
-            else
-                MessageBox.Show("Acre Images Folder doesn't exist!");
-            return Image_List;
-        }
-
         public static Image FetchAcreImage(SaveType Save_Type, ushort AcreId)
         {
+            if (LoadedImageDictionary.ContainsKey(AcreId))
+                return LoadedImageDictionary[AcreId];
+
+            Image Result = null;
+
             string Image_Dir = NewMainForm.Assembly_Location + "\\Resources\\Images\\";
             if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs its own set?
                 Image_Dir += "Acre_Images";
@@ -87,6 +49,7 @@ namespace ACSE
                 Image_Dir += "WA_Acre_Images";
             else
                 return null;
+
             if (Directory.Exists(Image_Dir))
             {
                 foreach (string File in Directory.GetFiles(Image_Dir))
@@ -96,62 +59,96 @@ namespace ACSE
                     {
                         if (Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
                         {
-                            if (ushort.TryParse(Path.GetFileNameWithoutExtension(File).Replace("acre_", ""), out ushort FileAcreId))
+                            if (ushort.TryParse(Path.GetFileNameWithoutExtension(File).Replace("acre_", ""), out ushort FileAcreId) && FileAcreId == AcreId)
                             {
-                                if (FileAcreId == AcreId)
-                                {
-                                    return Image.FromFile(File);
-                                }
+                                try { Result = Image.FromFile(File); } catch { }
                             }
                         }
                         else
                         {
-
+                            if (ushort.TryParse(Path.GetFileNameWithoutExtension(File), NumberStyles.HexNumber, null, out ushort FileAcreId) && FileAcreId == AcreId)
+                            {
+                                try { Result = Image.FromFile(File); } catch { }
+                            }
                         }
                     }
                 }
             }
-            return null;
-        }
 
-        public static Dictionary<byte, Image> Load_AC_Map_Icons()
-        {
-            string Icon_Directory = NewMainForm.Assembly_Location + "\\Resources\\Images\\AC_Map_Icons";
-            Dictionary<byte, Image> Icons = new Dictionary<byte, Image>();
-            if (Directory.Exists(Icon_Directory))
-            {
-                foreach (string Icon_File in Directory.GetFiles(Icon_Directory))
-                {
-                    var Extension = Path.GetExtension(Icon_File);
-                    if (Extension.Equals(".png") || Extension.Equals(".jpg"))
-                    {
-                        if (byte.TryParse(Path.GetFileNameWithoutExtension(Icon_File), out byte Index))
-                        {
-                            Icons.Add(Index, Image.FromFile(Icon_File));
-                        }
-                    }
-                }
-            }
-            return Icons;
+            if (Result != null)
+                LoadedImageDictionary.Add(AcreId, Result);
+
+            return Result;
         }
 
         public static Image FetchACMapIcon(byte Index)
         {
+            if (LoadedAnimalCrossingMapIcons.ContainsKey(Index))
+                return LoadedAnimalCrossingMapIcons[Index];
+
+            Image Result = null;
+
             string Icon_Directory = NewMainForm.Assembly_Location + "\\Resources\\Images\\AC_Map_Icons";
             if (Directory.Exists(Icon_Directory))
             {
                 foreach (string Icon_File in Directory.GetFiles(Icon_Directory))
                 {
-                    if (byte.TryParse(Path.GetFileNameWithoutExtension(Icon_File), out byte FileIndex))
+                    if (byte.TryParse(Path.GetFileNameWithoutExtension(Icon_File), out byte FileIndex) && FileIndex == Index)
                     {
-                        if (FileIndex == Index)
-                        {
-                            return Image.FromFile(Icon_File);
-                        }
+                        try { Result = Image.FromFile(Icon_File); } catch { }
                     }
                 }
             }
-            return null;
+
+            if (Result != null)
+                LoadedAnimalCrossingMapIcons.Add(Index, Result);
+
+            return Result;
+        }
+
+        public static void CheckReferencesAndDispose(Image ReferencedImage, PictureBoxWithInterpolationMode[] PictureBoxes, PictureBoxWithInterpolationMode SelectedAcreBox)
+        {
+            if (ReferencedImage != null)
+            {
+                if (SelectedAcreBox.Image == ReferencedImage)
+                    return;
+
+                foreach (PictureBoxWithInterpolationMode Box in PictureBoxes)
+                    if (Box.BackgroundImage == ReferencedImage)
+                        return;
+
+                foreach (KeyValuePair<ushort, Image> Pair in LoadedImageDictionary)
+                    if (Pair.Value == ReferencedImage)
+                    {
+                        LoadedImageDictionary.Remove(Pair.Key);
+                        break;
+                    }
+
+                foreach (KeyValuePair<byte, Image> Pair in LoadedAnimalCrossingMapIcons)
+                    if (Pair.Value == ReferencedImage)
+                    {
+                        LoadedAnimalCrossingMapIcons.Remove(Pair.Key);
+                        break;
+                    }
+
+                ReferencedImage.Dispose();
+            }
+        }
+
+        public static void DisposeLoadedImages()
+        {
+            foreach (Image i in LoadedImageDictionary.Values)
+            {
+                i.Dispose();
+            }
+
+            foreach (Image i in LoadedAnimalCrossingMapIcons.Values)
+            {
+                i.Dispose();
+            }
+
+            LoadedImageDictionary = new Dictionary<ushort, Image>();
+            LoadedAnimalCrossingMapIcons = new Dictionary<byte, Image>();
         }
 
         public static Dictionary<ushort, byte> Load_AC_Map_Index(SaveType saveType)
