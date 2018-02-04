@@ -2208,14 +2208,31 @@ namespace ACSE
         private void GenerateVillagerPanel(NewVillager Villager)
         {
             // TODO: Draw House Coordinate boxes for AC/WW, and also Furniture Boxes
-            Panel Container = new Panel { Size = new Size(700, 30), Location = new Point(0, 20 + Villager.Index * 30) };
-            Label Index = new Label { AutoSize = false, Size = new Size(45, 20), TextAlign = ContentAlignment.MiddleCenter,
+            Panel Container = new Panel { Size = new Size(700, 64), Location = new Point(0, 32 + Villager.Index * 66) };
+            Label Index = new Label { AutoSize = false, Size = new Size(45, 64), TextAlign = ContentAlignment.MiddleCenter,
                 Text = ((Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus) && Villager.Index == 15) ? "Islander" : (Villager.Index + 1).ToString() };
-            ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 30), Location = new Point(45, 0) };
+            ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 32), Location = new Point(45, 20) };
             Villager_Selection_Box.Items.AddRange(Villager_Names);
             Villager_Selection_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Villager.Data.Villager_ID);
-            ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 30), Location = new Point(175, 0), DropDownWidth = 120 };
+            ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 32), Location = new Point(175, 20), DropDownWidth = 120 };
             Personality_Selection_Box.Items.AddRange(Personality_Database);
+            OffsetablePictureBox VillagerPreviewBox = null;
+
+            // Villager Preview Image
+            if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+            {
+                VillagerPreviewBox = new OffsetablePictureBox
+                {
+                    Size = new Size(64, 64),
+                    Location = new Point(450, 0),
+                    Image = Properties.Resources.Villagers,
+                    Offset = (Villager.Data.Villager_ID < 0xE000 || Villager.Data.Villager_ID > 0xE0EB) ? new Point(64 * 6, 64 * 23)
+                        : new Point(64 * ((Villager.Data.Villager_ID & 0xFF) % 10), 64 * ((Villager.Data.Villager_ID & 0xFF) / 10))
+                };
+
+                Container.Controls.Add(VillagerPreviewBox);
+            }
+
             if (Save_File.Game_System == SaveGeneration.N3DS)
             {
                 Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 9 ? Villager.Data.Personality : 8;
@@ -2224,13 +2241,13 @@ namespace ACSE
             {
                 Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 7 ? Villager.Data.Personality : 6;
             }
-            TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 30), Location = new Point (265, 0), MaxLength = Villager.Offsets.CatchphraseSize, Text = Villager.Data.Catchphrase };
-            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 0), Checked = Villager.Data.Status == 1 };
-            PictureBox Shirt_Box = new PictureBox {BorderStyle = BorderStyle.FixedSingle, Size = new Size(16, 16), Location = new Point(415, 3), Image = Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type)};
+            TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 32), Location = new Point (265, 20), MaxLength = Villager.Offsets.CatchphraseSize, Text = Villager.Data.Catchphrase };
+            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 24), Checked = Villager.Data.Status == 1 };
+            PictureBox Shirt_Box = new PictureBox {BorderStyle = BorderStyle.FixedSingle, Size = new Size(16, 16), Location = new Point(415, 25), Image = Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type)};
             if (Save_File.Save_Type == SaveType.Wild_World || Save_File.Save_Type == SaveType.City_Folk || Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
             {
                 //TODO: Add wallpaper/floor/song boxes
-                PictureBox Furniture_Box = new PictureBox { BorderStyle = BorderStyle.FixedSingle, Size = new Size(16 * Villager.Data.Furniture.Length, 16), Location = new Point(441, 3) };
+                PictureBox Furniture_Box = new PictureBox { BorderStyle = BorderStyle.FixedSingle, Size = new Size(16 * Villager.Data.Furniture.Length, 16), Location = new Point(441, 25) };
                 Refresh_PictureBox_Image(Furniture_Box, Inventory.GetItemPic(16, Villager.Data.Furniture.Length, Villager.Data.Furniture, Save_File.Save_Type));
 
                 Furniture_Box.MouseMove += delegate (object sender, MouseEventArgs e)
@@ -2290,6 +2307,12 @@ namespace ACSE
                     if (Villager.Data.Villager_ID == 0 && Save_File.Game_System == SaveGeneration.GCN)
                     {
                         Villager.Data.House_Coordinates = new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF };
+                    }
+
+                    if ((Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN) && VillagerPreviewBox != null)
+                    {
+                        VillagerPreviewBox.Offset = (Villager.Data.Villager_ID < 0xE000 || Villager.Data.Villager_ID > 0xE0EB) ? new Point(64 * 6, 64 * 23)
+                            : new Point(64 * ((Villager.Data.Villager_ID & 0xFF) % 10), 64 * ((Villager.Data.Villager_ID & 0xFF) / 10));
                     }
                 }
             };

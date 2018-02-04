@@ -2493,6 +2493,7 @@
     <Content Include="Resources\Images\NL_Acre_Images\acre_99.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Images\Villagers.jpg" />
     <Content Include="Resources\Images\WA_Acre_Images\acre_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -3680,6 +3681,9 @@
     <Compile Include="Classes\AlertToggledEventArgs.cs" />
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
     <Compile Include="Classes\Extensions\ProgressBarExtension.cs" />
+    <Compile Include="Classes\OffsetablePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Classes\Utilities\DateUtility.cs" />
     <Compile Include="Classes\DebugManager.cs" />
     <Compile Include="Classes\Encyclopedia.cs" />

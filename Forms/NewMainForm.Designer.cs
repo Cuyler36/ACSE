@@ -34,7 +34,6 @@
             this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
-            this.paletteSelectionPictureBox = new System.Windows.Forms.PictureBox();
             this.patternEditorPanel = new System.Windows.Forms.Panel();
             this.patternEditorPreviewPanel = new System.Windows.Forms.Panel();
             this.patternGroupTabControl = new System.Windows.Forms.TabControl();
@@ -64,8 +63,6 @@
             this.getAllKKSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
-            this.hairPictureBox = new System.Windows.Forms.PictureBox();
-            this.facePreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.resettiCheckBox = new System.Windows.Forms.CheckBox();
             this.birthdayDay = new System.Windows.Forms.ComboBox();
             this.label42 = new System.Windows.Forms.Label();
@@ -73,38 +70,25 @@
             this.playerIslandMedals = new System.Windows.Forms.TextBox();
             this.label40 = new System.Windows.Forms.Label();
             this.islandBoxText = new System.Windows.Forms.Label();
-            this.islandPictureBox = new System.Windows.Forms.PictureBox();
             this.dresserText = new System.Windows.Forms.Label();
-            this.dresserAPictureBox = new System.Windows.Forms.PictureBox();
             this.playerMeowCoupons = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.playerWetsuit = new System.Windows.Forms.PictureBox();
             this.label24 = new System.Windows.Forms.Label();
-            this.bedPicturebox = new System.Windows.Forms.PictureBox();
             this.label18 = new System.Windows.Forms.Label();
             this.playerShoeColor = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.tanTrackbar = new System.Windows.Forms.TrackBar();
             this.label17 = new System.Windows.Forms.Label();
-            this.pocketsBackgroundPicturebox = new System.Windows.Forms.PictureBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.heldItemPicturebox = new System.Windows.Forms.PictureBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.inventoryPicturebox = new System.Windows.Forms.PictureBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.shoesPicturebox = new System.Windows.Forms.PictureBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.socksPicturebox = new System.Windows.Forms.PictureBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.pantsPicturebox = new System.Windows.Forms.PictureBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.shirtPicturebox = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.facePicturebox = new System.Windows.Forms.PictureBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.hatPicturebox = new System.Windows.Forms.PictureBox();
             this.playerNookPoints = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -221,32 +205,32 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.loadingPanel = new System.Windows.Forms.Panel();
             this.label45 = new System.Windows.Forms.Label();
+            this.hairPictureBox = new System.Windows.Forms.PictureBox();
+            this.facePreviewPictureBox = new System.Windows.Forms.PictureBox();
+            this.islandPictureBox = new System.Windows.Forms.PictureBox();
+            this.dresserAPictureBox = new System.Windows.Forms.PictureBox();
+            this.playerWetsuit = new System.Windows.Forms.PictureBox();
+            this.bedPicturebox = new System.Windows.Forms.PictureBox();
+            this.pocketsBackgroundPicturebox = new System.Windows.Forms.PictureBox();
+            this.heldItemPicturebox = new System.Windows.Forms.PictureBox();
+            this.inventoryPicturebox = new System.Windows.Forms.PictureBox();
+            this.shoesPicturebox = new System.Windows.Forms.PictureBox();
+            this.socksPicturebox = new System.Windows.Forms.PictureBox();
+            this.pantsPicturebox = new System.Windows.Forms.PictureBox();
+            this.shirtPicturebox = new System.Windows.Forms.PictureBox();
+            this.facePicturebox = new System.Windows.Forms.PictureBox();
+            this.hatPicturebox = new System.Windows.Forms.PictureBox();
+            this.paletteSelectionPictureBox = new System.Windows.Forms.PictureBox();
             this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternNameTextBox = new ACSE.PlaceholderTextBox();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
             this.patternEditorPanel.SuspendLayout();
             this.patternGroupTabControl.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.facePreviewPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.islandPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dresserAPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bedPicturebox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tanTrackbar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pocketsBackgroundPicturebox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.heldItemPicturebox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.inventoryPicturebox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shoesPicturebox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.socksPicturebox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pantsPicturebox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shirtPicturebox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.facePicturebox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hatPicturebox)).BeginInit();
             this.playerEditorSelect.SuspendLayout();
             this.acresTab.SuspendLayout();
             this.townTab.SuspendLayout();
@@ -261,6 +245,22 @@
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.facePreviewPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.islandPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dresserAPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bedPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pocketsBackgroundPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heldItemPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inventoryPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shoesPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.socksPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pantsPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shirtPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.facePicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hatPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -269,10 +269,10 @@
             patternsTab.Controls.Add(this.paletteIndexLabel);
             patternsTab.Controls.Add(this.palettePreviousButton);
             patternsTab.Controls.Add(this.paletteNextButton);
-            patternsTab.Controls.Add(this.paletteSelectionPictureBox);
             patternsTab.Controls.Add(this.patternEditorPanel);
             patternsTab.Controls.Add(this.patternEditorPreviewPanel);
             patternsTab.Controls.Add(this.patternGroupTabControl);
+            patternsTab.Controls.Add(this.paletteSelectionPictureBox);
             patternsTab.Controls.Add(this.patternNameTextBox);
             patternsTab.Location = new System.Drawing.Point(4, 22);
             patternsTab.Name = "patternsTab";
@@ -310,17 +310,6 @@
             this.paletteNextButton.TabIndex = 18;
             this.paletteNextButton.Text = ">";
             this.paletteNextButton.UseVisualStyleBackColor = true;
-            // 
-            // paletteSelectionPictureBox
-            // 
-            this.paletteSelectionPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.paletteSelectionPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.paletteSelectionPictureBox.Location = new System.Drawing.Point(130, 21);
-            this.paletteSelectionPictureBox.Name = "paletteSelectionPictureBox";
-            this.paletteSelectionPictureBox.Size = new System.Drawing.Size(32, 480);
-            this.paletteSelectionPictureBox.TabIndex = 17;
-            this.paletteSelectionPictureBox.TabStop = false;
-            this.paletteSelectionPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PaletteImageBox_Click);
             // 
             // patternEditorPanel
             // 
@@ -662,24 +651,6 @@
             this.playersTab.Text = "Players";
             this.playersTab.UseVisualStyleBackColor = true;
             // 
-            // hairPictureBox
-            // 
-            this.hairPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.hairPictureBox.Location = new System.Drawing.Point(580, 63);
-            this.hairPictureBox.Name = "hairPictureBox";
-            this.hairPictureBox.Size = new System.Drawing.Size(40, 40);
-            this.hairPictureBox.TabIndex = 76;
-            this.hairPictureBox.TabStop = false;
-            // 
-            // facePreviewPictureBox
-            // 
-            this.facePreviewPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.facePreviewPictureBox.Location = new System.Drawing.Point(580, 37);
-            this.facePreviewPictureBox.Name = "facePreviewPictureBox";
-            this.facePreviewPictureBox.Size = new System.Drawing.Size(40, 16);
-            this.facePreviewPictureBox.TabIndex = 75;
-            this.facePreviewPictureBox.TabStop = false;
-            // 
             // resettiCheckBox
             // 
             this.resettiCheckBox.AutoSize = true;
@@ -769,17 +740,6 @@
             this.islandBoxText.Text = "Island Box";
             this.islandBoxText.Visible = false;
             // 
-            // islandPictureBox
-            // 
-            this.islandPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.islandPictureBox.Enabled = false;
-            this.islandPictureBox.Location = new System.Drawing.Point(114, 340);
-            this.islandPictureBox.Name = "islandPictureBox";
-            this.islandPictureBox.Size = new System.Drawing.Size(82, 130);
-            this.islandPictureBox.TabIndex = 67;
-            this.islandPictureBox.TabStop = false;
-            this.islandPictureBox.Visible = false;
-            // 
             // dresserText
             // 
             this.dresserText.AutoSize = true;
@@ -789,17 +749,6 @@
             this.dresserText.TabIndex = 62;
             this.dresserText.Text = "Dressers";
             this.dresserText.Visible = false;
-            // 
-            // dresserAPictureBox
-            // 
-            this.dresserAPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dresserAPictureBox.Enabled = false;
-            this.dresserAPictureBox.Location = new System.Drawing.Point(202, 340);
-            this.dresserAPictureBox.Name = "dresserAPictureBox";
-            this.dresserAPictureBox.Size = new System.Drawing.Size(82, 194);
-            this.dresserAPictureBox.TabIndex = 61;
-            this.dresserAPictureBox.TabStop = false;
-            this.dresserAPictureBox.Visible = false;
             // 
             // playerMeowCoupons
             // 
@@ -829,16 +778,6 @@
             this.label27.TabIndex = 58;
             this.label27.Text = "Wetsuit";
             // 
-            // playerWetsuit
-            // 
-            this.playerWetsuit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.playerWetsuit.Location = new System.Drawing.Point(242, 249);
-            this.playerWetsuit.Name = "playerWetsuit";
-            this.playerWetsuit.Size = new System.Drawing.Size(16, 16);
-            this.playerWetsuit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.playerWetsuit.TabIndex = 57;
-            this.playerWetsuit.TabStop = false;
-            // 
             // label24
             // 
             this.label24.AutoSize = true;
@@ -847,16 +786,6 @@
             this.label24.Size = new System.Drawing.Size(26, 13);
             this.label24.TabIndex = 56;
             this.label24.Text = "Bed";
-            // 
-            // bedPicturebox
-            // 
-            this.bedPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bedPicturebox.Location = new System.Drawing.Point(71, 297);
-            this.bedPicturebox.Name = "bedPicturebox";
-            this.bedPicturebox.Size = new System.Drawing.Size(16, 16);
-            this.bedPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.bedPicturebox.TabIndex = 55;
-            this.bedPicturebox.TabStop = false;
             // 
             // label18
             // 
@@ -923,16 +852,6 @@
             this.label17.TabIndex = 49;
             this.label17.Text = "Pocket BG";
             // 
-            // pocketsBackgroundPicturebox
-            // 
-            this.pocketsBackgroundPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pocketsBackgroundPicturebox.Location = new System.Drawing.Point(116, 297);
-            this.pocketsBackgroundPicturebox.Name = "pocketsBackgroundPicturebox";
-            this.pocketsBackgroundPicturebox.Size = new System.Drawing.Size(16, 16);
-            this.pocketsBackgroundPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pocketsBackgroundPicturebox.TabIndex = 48;
-            this.pocketsBackgroundPicturebox.TabStop = false;
-            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -941,16 +860,6 @@
             this.label16.Size = new System.Drawing.Size(52, 13);
             this.label16.TabIndex = 47;
             this.label16.Text = "Held Item";
-            // 
-            // heldItemPicturebox
-            // 
-            this.heldItemPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.heldItemPicturebox.Location = new System.Drawing.Point(26, 297);
-            this.heldItemPicturebox.Name = "heldItemPicturebox";
-            this.heldItemPicturebox.Size = new System.Drawing.Size(16, 16);
-            this.heldItemPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.heldItemPicturebox.TabIndex = 46;
-            this.heldItemPicturebox.TabStop = false;
             // 
             // label15
             // 
@@ -961,15 +870,6 @@
             this.label15.TabIndex = 45;
             this.label15.Text = "Inventory";
             // 
-            // inventoryPicturebox
-            // 
-            this.inventoryPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inventoryPicturebox.Location = new System.Drawing.Point(26, 340);
-            this.inventoryPicturebox.Name = "inventoryPicturebox";
-            this.inventoryPicturebox.Size = new System.Drawing.Size(82, 50);
-            this.inventoryPicturebox.TabIndex = 44;
-            this.inventoryPicturebox.TabStop = false;
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -978,16 +878,6 @@
             this.label14.Size = new System.Drawing.Size(37, 13);
             this.label14.TabIndex = 43;
             this.label14.Text = "Shoes";
-            // 
-            // shoesPicturebox
-            // 
-            this.shoesPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.shoesPicturebox.Location = new System.Drawing.Point(206, 249);
-            this.shoesPicturebox.Name = "shoesPicturebox";
-            this.shoesPicturebox.Size = new System.Drawing.Size(16, 16);
-            this.shoesPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.shoesPicturebox.TabIndex = 42;
-            this.shoesPicturebox.TabStop = false;
             // 
             // label13
             // 
@@ -998,16 +888,6 @@
             this.label13.TabIndex = 41;
             this.label13.Text = "Socks";
             // 
-            // socksPicturebox
-            // 
-            this.socksPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.socksPicturebox.Location = new System.Drawing.Point(170, 249);
-            this.socksPicturebox.Name = "socksPicturebox";
-            this.socksPicturebox.Size = new System.Drawing.Size(16, 16);
-            this.socksPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.socksPicturebox.TabIndex = 40;
-            this.socksPicturebox.TabStop = false;
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -1016,16 +896,6 @@
             this.label12.Size = new System.Drawing.Size(34, 13);
             this.label12.TabIndex = 39;
             this.label12.Text = "Pants";
-            // 
-            // pantsPicturebox
-            // 
-            this.pantsPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pantsPicturebox.Location = new System.Drawing.Point(134, 249);
-            this.pantsPicturebox.Name = "pantsPicturebox";
-            this.pantsPicturebox.Size = new System.Drawing.Size(16, 16);
-            this.pantsPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pantsPicturebox.TabIndex = 38;
-            this.pantsPicturebox.TabStop = false;
             // 
             // label11
             // 
@@ -1036,16 +906,6 @@
             this.label11.TabIndex = 37;
             this.label11.Text = "Shirt";
             // 
-            // shirtPicturebox
-            // 
-            this.shirtPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.shirtPicturebox.Location = new System.Drawing.Point(98, 249);
-            this.shirtPicturebox.Name = "shirtPicturebox";
-            this.shirtPicturebox.Size = new System.Drawing.Size(16, 16);
-            this.shirtPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.shirtPicturebox.TabIndex = 36;
-            this.shirtPicturebox.TabStop = false;
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -1055,16 +915,6 @@
             this.label10.TabIndex = 35;
             this.label10.Text = "Face";
             // 
-            // facePicturebox
-            // 
-            this.facePicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.facePicturebox.Location = new System.Drawing.Point(62, 249);
-            this.facePicturebox.Name = "facePicturebox";
-            this.facePicturebox.Size = new System.Drawing.Size(16, 16);
-            this.facePicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.facePicturebox.TabIndex = 34;
-            this.facePicturebox.TabStop = false;
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -1073,16 +923,6 @@
             this.label9.Size = new System.Drawing.Size(24, 13);
             this.label9.TabIndex = 33;
             this.label9.Text = "Hat";
-            // 
-            // hatPicturebox
-            // 
-            this.hatPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.hatPicturebox.Location = new System.Drawing.Point(26, 249);
-            this.hatPicturebox.Name = "hatPicturebox";
-            this.hatPicturebox.Size = new System.Drawing.Size(16, 16);
-            this.hatPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.hatPicturebox.TabIndex = 32;
-            this.hatPicturebox.TabStop = false;
             // 
             // playerNookPoints
             // 
@@ -1665,6 +1505,9 @@
             // 
             // villagerPanel
             // 
+            this.villagerPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.villagerPanel.AutoScroll = true;
             this.villagerPanel.Controls.Add(this.label39);
             this.villagerPanel.Controls.Add(this.label36);
@@ -2233,6 +2076,166 @@
             this.label45.TabIndex = 15;
             this.label45.Text = "Loading...";
             // 
+            // hairPictureBox
+            // 
+            this.hairPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.hairPictureBox.Location = new System.Drawing.Point(580, 63);
+            this.hairPictureBox.Name = "hairPictureBox";
+            this.hairPictureBox.Size = new System.Drawing.Size(40, 40);
+            this.hairPictureBox.TabIndex = 76;
+            this.hairPictureBox.TabStop = false;
+            // 
+            // facePreviewPictureBox
+            // 
+            this.facePreviewPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.facePreviewPictureBox.Location = new System.Drawing.Point(580, 37);
+            this.facePreviewPictureBox.Name = "facePreviewPictureBox";
+            this.facePreviewPictureBox.Size = new System.Drawing.Size(40, 16);
+            this.facePreviewPictureBox.TabIndex = 75;
+            this.facePreviewPictureBox.TabStop = false;
+            // 
+            // islandPictureBox
+            // 
+            this.islandPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.islandPictureBox.Enabled = false;
+            this.islandPictureBox.Location = new System.Drawing.Point(114, 340);
+            this.islandPictureBox.Name = "islandPictureBox";
+            this.islandPictureBox.Size = new System.Drawing.Size(82, 130);
+            this.islandPictureBox.TabIndex = 67;
+            this.islandPictureBox.TabStop = false;
+            this.islandPictureBox.Visible = false;
+            // 
+            // dresserAPictureBox
+            // 
+            this.dresserAPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dresserAPictureBox.Enabled = false;
+            this.dresserAPictureBox.Location = new System.Drawing.Point(202, 340);
+            this.dresserAPictureBox.Name = "dresserAPictureBox";
+            this.dresserAPictureBox.Size = new System.Drawing.Size(82, 194);
+            this.dresserAPictureBox.TabIndex = 61;
+            this.dresserAPictureBox.TabStop = false;
+            this.dresserAPictureBox.Visible = false;
+            // 
+            // playerWetsuit
+            // 
+            this.playerWetsuit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.playerWetsuit.Location = new System.Drawing.Point(242, 249);
+            this.playerWetsuit.Name = "playerWetsuit";
+            this.playerWetsuit.Size = new System.Drawing.Size(16, 16);
+            this.playerWetsuit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.playerWetsuit.TabIndex = 57;
+            this.playerWetsuit.TabStop = false;
+            // 
+            // bedPicturebox
+            // 
+            this.bedPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bedPicturebox.Location = new System.Drawing.Point(71, 297);
+            this.bedPicturebox.Name = "bedPicturebox";
+            this.bedPicturebox.Size = new System.Drawing.Size(16, 16);
+            this.bedPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.bedPicturebox.TabIndex = 55;
+            this.bedPicturebox.TabStop = false;
+            // 
+            // pocketsBackgroundPicturebox
+            // 
+            this.pocketsBackgroundPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pocketsBackgroundPicturebox.Location = new System.Drawing.Point(116, 297);
+            this.pocketsBackgroundPicturebox.Name = "pocketsBackgroundPicturebox";
+            this.pocketsBackgroundPicturebox.Size = new System.Drawing.Size(16, 16);
+            this.pocketsBackgroundPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pocketsBackgroundPicturebox.TabIndex = 48;
+            this.pocketsBackgroundPicturebox.TabStop = false;
+            // 
+            // heldItemPicturebox
+            // 
+            this.heldItemPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.heldItemPicturebox.Location = new System.Drawing.Point(26, 297);
+            this.heldItemPicturebox.Name = "heldItemPicturebox";
+            this.heldItemPicturebox.Size = new System.Drawing.Size(16, 16);
+            this.heldItemPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.heldItemPicturebox.TabIndex = 46;
+            this.heldItemPicturebox.TabStop = false;
+            // 
+            // inventoryPicturebox
+            // 
+            this.inventoryPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inventoryPicturebox.Location = new System.Drawing.Point(26, 340);
+            this.inventoryPicturebox.Name = "inventoryPicturebox";
+            this.inventoryPicturebox.Size = new System.Drawing.Size(82, 50);
+            this.inventoryPicturebox.TabIndex = 44;
+            this.inventoryPicturebox.TabStop = false;
+            // 
+            // shoesPicturebox
+            // 
+            this.shoesPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.shoesPicturebox.Location = new System.Drawing.Point(206, 249);
+            this.shoesPicturebox.Name = "shoesPicturebox";
+            this.shoesPicturebox.Size = new System.Drawing.Size(16, 16);
+            this.shoesPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.shoesPicturebox.TabIndex = 42;
+            this.shoesPicturebox.TabStop = false;
+            // 
+            // socksPicturebox
+            // 
+            this.socksPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.socksPicturebox.Location = new System.Drawing.Point(170, 249);
+            this.socksPicturebox.Name = "socksPicturebox";
+            this.socksPicturebox.Size = new System.Drawing.Size(16, 16);
+            this.socksPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.socksPicturebox.TabIndex = 40;
+            this.socksPicturebox.TabStop = false;
+            // 
+            // pantsPicturebox
+            // 
+            this.pantsPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pantsPicturebox.Location = new System.Drawing.Point(134, 249);
+            this.pantsPicturebox.Name = "pantsPicturebox";
+            this.pantsPicturebox.Size = new System.Drawing.Size(16, 16);
+            this.pantsPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pantsPicturebox.TabIndex = 38;
+            this.pantsPicturebox.TabStop = false;
+            // 
+            // shirtPicturebox
+            // 
+            this.shirtPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.shirtPicturebox.Location = new System.Drawing.Point(98, 249);
+            this.shirtPicturebox.Name = "shirtPicturebox";
+            this.shirtPicturebox.Size = new System.Drawing.Size(16, 16);
+            this.shirtPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.shirtPicturebox.TabIndex = 36;
+            this.shirtPicturebox.TabStop = false;
+            // 
+            // facePicturebox
+            // 
+            this.facePicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.facePicturebox.Location = new System.Drawing.Point(62, 249);
+            this.facePicturebox.Name = "facePicturebox";
+            this.facePicturebox.Size = new System.Drawing.Size(16, 16);
+            this.facePicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.facePicturebox.TabIndex = 34;
+            this.facePicturebox.TabStop = false;
+            // 
+            // hatPicturebox
+            // 
+            this.hatPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.hatPicturebox.Location = new System.Drawing.Point(26, 249);
+            this.hatPicturebox.Name = "hatPicturebox";
+            this.hatPicturebox.Size = new System.Drawing.Size(16, 16);
+            this.hatPicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.hatPicturebox.TabIndex = 32;
+            this.hatPicturebox.TabStop = false;
+            // 
+            // paletteSelectionPictureBox
+            // 
+            this.paletteSelectionPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.paletteSelectionPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.paletteSelectionPictureBox.Location = new System.Drawing.Point(130, 21);
+            this.paletteSelectionPictureBox.Name = "paletteSelectionPictureBox";
+            this.paletteSelectionPictureBox.Size = new System.Drawing.Size(32, 480);
+            this.paletteSelectionPictureBox.TabIndex = 17;
+            this.paletteSelectionPictureBox.TabStop = false;
+            this.paletteSelectionPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PaletteImageBox_Click);
+            // 
             // patternEditorPictureBox
             // 
             this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -2288,7 +2291,6 @@
             this.Text = "ACSE";
             patternsTab.ResumeLayout(false);
             patternsTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).EndInit();
             this.patternEditorPanel.ResumeLayout(false);
             this.patternGroupTabControl.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
@@ -2296,22 +2298,7 @@
             this.tabControl1.ResumeLayout(false);
             this.playersTab.ResumeLayout(false);
             this.playersTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.facePreviewPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.islandPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dresserAPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bedPicturebox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tanTrackbar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pocketsBackgroundPicturebox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.heldItemPicturebox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.inventoryPicturebox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shoesPicturebox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.socksPicturebox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pantsPicturebox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shirtPicturebox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.facePicturebox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hatPicturebox)).EndInit();
             this.playerEditorSelect.ResumeLayout(false);
             this.acresTab.ResumeLayout(false);
             this.acresTab.PerformLayout();
@@ -2333,6 +2320,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.facePreviewPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.islandPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dresserAPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bedPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pocketsBackgroundPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heldItemPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inventoryPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shoesPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.socksPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pantsPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shirtPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.facePicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hatPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
