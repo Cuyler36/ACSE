@@ -559,6 +559,8 @@ namespace ACSE
             Savings = -1,
             ShoeColor = -1,
             ResetCount = -1,
+            // Welcome Amiibo Reset Flag is 0x570A & 0x02 == 1
+            // Statistics Menu Enable Flag (0x572F set to 0xC0 [binary: 1000 0000])
         };
 
         public static PlayerSaveInfo GetPlayerInfo(SaveType Save_Type)
@@ -962,6 +964,11 @@ namespace ACSE
                     Data.Patterns = new Pattern[Offsets.PatternCount];
                     for (int i = 0; i < Data.Patterns.Length; i++)
                         Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, i, save);
+                }
+
+                if (SaveData.Save_Type == SaveType.Welcome_Amiibo)
+                {
+                    Data.Reset = (SaveData.ReadByte(Offset + 0x570A) & 0x02) == 0x02;
                 }
 
                 // Get the Player's House

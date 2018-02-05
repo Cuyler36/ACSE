@@ -436,7 +436,7 @@ namespace ACSE
     {
         public VillagerOffsets Offsets;
         public VillagerDataStruct Data;
-        public VillagerPlayerEntry[] PlayerEntries;
+        public PlayerRelation[] PlayerEntries;
         public int Index;
         public int Offset;
         public string Name;
@@ -509,11 +509,11 @@ namespace ACSE
             return Name ?? "Unknown";
         }
 
-        public VillagerPlayerEntry GetPlayerEntry(NewPlayer Player)
+        public PlayerRelation GetPlayerEntry(NewPlayer Player)
         {
             if (PlayerEntries != null)
             {
-                return PlayerEntries.First(o => o.Player == Player);
+                return PlayerEntries.First(o => o.PlayerId == Player.Data.Identifier && o.PlayerName.Equals(Player.Data.Name));
             }
             return null;
         }

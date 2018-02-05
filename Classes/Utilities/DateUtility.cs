@@ -2,17 +2,6 @@
 
 namespace ACSE.Classes.Utilities
 {
-    public static class DateUtility
-    {
-        //Might use for something
-        public static uint Day_String_to_Number(string day)
-        {
-            if (Enum.IsDefined(typeof(DayOfWeek), day))
-                return Convert.ToUInt32((DayOfWeek)Enum.Parse(typeof(DayOfWeek), day, true));
-            return 0; //Guess we're going Sunday
-        }
-    }
-
     public class ACDate
     {
         public uint Second = 0;
@@ -21,7 +10,7 @@ namespace ACSE.Classes.Utilities
         public uint Day = 0;
         public uint Day_of_Week = 0;
         public uint Month = 0;
-        public uint Year = 2000; //Default
+        public uint Year = 0;
         public string Date_Time_String = "";
         public bool Is_PM = false;
         public bool Is_Birthday = false;
@@ -30,6 +19,7 @@ namespace ACSE.Classes.Utilities
         {
             switch (NewMainForm.Save_File.Save_Type)
             {
+                case SaveType.Doubutsu_no_Mori:
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                 case SaveType.Animal_Crossing:
@@ -74,16 +64,17 @@ namespace ACSE.Classes.Utilities
             }
             Is_PM = Hour >= 12;
             Date_Time_String = string.Format("{0}:{1}:{2} {3}, {4}/{5}/{6}", (Hour % 12) == 0 ? 12 : Hour % 12,
-                Minute.ToString("D2"), Second.ToString("D2"), Is_PM ? "PM" : "AM", Month, Day, Year); //Default date/time string
-            //System.Windows.Forms.MessageBox.Show(Format("(M)/(D)/(y)"));
+                Minute.ToString("D2"), Second.ToString("D2"), Is_PM ? "PM" : "AM", Month, Day, Year);
         }
 
-        public string Format(string formatString) //Need to redo this if there is a more efficient/cleaner way
+        public ACDate(int Offset, int Length, Save SaveFile) : this(SaveFile.ReadByteArray(Offset, Length)) { }
+
+        public string Format(string formatString)
         {
             formatString = formatString.Replace("(s)", Second.ToString("D2"));
             formatString = formatString.Replace("(m)", Minute.ToString("D2"));
             formatString = formatString.Replace("(h)", (Hour % 12) == 0 ? "12" : (Hour % 12).ToString());
-            formatString = formatString.Replace("(H)", Hour.ToString());
+            formatString = formatString.Replace("(H)", Hour.ToString("D2"));
             formatString = formatString.Replace("(d)", Day.ToString());
             formatString = formatString.Replace("(D)", Day.ToString("D2"));
             formatString = formatString.Replace("(w)", Day_of_Week.ToString());
@@ -119,5 +110,4 @@ namespace ACSE.Classes.Utilities
             }
         }
     }
-
 }

@@ -518,6 +518,7 @@ namespace ACSE
             setAllGrass.Enabled = true;
             reviveGrass.Enabled = true;
             removeGrass.Enabled = true;
+            censusMenuEnabled.Enabled = save.Save_Type == SaveType.Welcome_Amiibo;
 
             //Clear Acre Images
             if (Acre_Map != null)
@@ -1246,6 +1247,9 @@ namespace ACSE
 
             if (Player.Data.Tan <= tanTrackbar.Maximum)
                 tanTrackbar.Value = Player.Data.Tan + 1;
+
+            if (Save_File.Save_Type == SaveType.Welcome_Amiibo)
+                censusMenuEnabled.Checked = (Save_File.ReadByte(Player.Offset + 0x572F) & 0x40) == 0x40;
 
             if (Player.Data.Patterns != null)
             {
@@ -2211,10 +2215,10 @@ namespace ACSE
             Panel Container = new Panel { Size = new Size(700, 64), Location = new Point(0, 32 + Villager.Index * 66) };
             Label Index = new Label { AutoSize = false, Size = new Size(45, 64), TextAlign = ContentAlignment.MiddleCenter,
                 Text = ((Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus) && Villager.Index == 15) ? "Islander" : (Villager.Index + 1).ToString() };
-            ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 32), Location = new Point(45, 20), DropDownStyle = ComboBoxStyle.DropDownList };
+            ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 32), Location = new Point(45, 22), DropDownStyle = ComboBoxStyle.DropDownList };
             Villager_Selection_Box.Items.AddRange(Villager_Names);
             Villager_Selection_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Villager.Data.Villager_ID);
-            ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 32), Location = new Point(175, 20), DropDownWidth = 120 };
+            ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 32), Location = new Point(175, 22), DropDownWidth = 120 };
             Personality_Selection_Box.Items.AddRange(Personality_Database);
             OffsetablePictureBox VillagerPreviewBox = null;
 
@@ -2241,13 +2245,13 @@ namespace ACSE
             {
                 Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 7 ? Villager.Data.Personality : 6;
             }
-            TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 32), Location = new Point (265, 20), MaxLength = Villager.Offsets.CatchphraseSize, Text = Villager.Data.Catchphrase };
-            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 24), Checked = Villager.Data.Status == 1 };
-            PictureBox Shirt_Box = new PictureBox {BorderStyle = BorderStyle.FixedSingle, Size = new Size(16, 16), Location = new Point(415, 25), Image = Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type)};
+            TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 32), Location = new Point (265, 22), MaxLength = Villager.Offsets.CatchphraseSize, Text = Villager.Data.Catchphrase };
+            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 22), Checked = Villager.Data.Status == 1, Enabled = (Save_File.Game_System != SaveGeneration.N64 && Save_File.Game_System != SaveGeneration.GCN)};
+            PictureBox Shirt_Box = new PictureBox {BorderStyle = BorderStyle.FixedSingle, Size = new Size(16, 16), Location = new Point(415, 24), Image = Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type)};
             if (Save_File.Save_Type == SaveType.Wild_World || Save_File.Save_Type == SaveType.City_Folk || Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
             {
                 //TODO: Add wallpaper/floor/song boxes
-                PictureBox Furniture_Box = new PictureBox { BorderStyle = BorderStyle.FixedSingle, Size = new Size(16 * Villager.Data.Furniture.Length, 16), Location = new Point(441, 25) };
+                PictureBox Furniture_Box = new PictureBox { BorderStyle = BorderStyle.FixedSingle, Size = new Size(16 * Villager.Data.Furniture.Length, 16), Location = new Point(441, 24) };
                 Refresh_PictureBox_Image(Furniture_Box, Inventory.GetItemPic(16, Villager.Data.Furniture.Length, Villager.Data.Furniture, Save_File.Save_Type));
 
                 Furniture_Box.MouseMove += delegate (object sender, MouseEventArgs e)
@@ -2288,31 +2292,31 @@ namespace ACSE
                 };
                 Container.Controls.Add(Furniture_Box);
             }
-            if (Save_File.Save_Type == SaveType.Animal_Crossing)
-            {
-                /*byte[] Location = Utility.Find_Villager_House(Villager.Data.Villager_ID);
-                MessageBox.Show(string.Format("{0}, {1}, {2}, {3}",
-                    Location[0] == Villager.Data.House_Coordinates[0], Location[1] == Villager.Data.House_Coordinates[1],
-                    Location[2] == Villager.Data.House_Coordinates[2], Location[3] == Villager.Data.House_Coordinates[3]));*/
-            }
+            
             Villager_Selection_Box.SelectedIndexChanged += delegate (object sender, EventArgs e)
             {
                 int Villager_Idx = Array.IndexOf(Villager_Names, Villager_Selection_Box.Text);
                 if (Villager_Idx > -1)
                 {
                     Villager.Data.Villager_ID = Villager_Database.Keys.ElementAt(Villager_Idx);
-                    //Animal Crossing has a Villager "AI" byte. Normally its just the lower byte of the Villager ID, but it's always 0xFF for the Islander (setting a non-islander to it might cause problems).
+                    
                     if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                    {
                         Villager.Data.Villager_AI = (Villager.Index == 15) ? (byte)0xFF : (byte)(Villager.Data.Villager_ID & 0xFF);
-                    if (Villager.Data.Villager_ID == 0 && Save_File.Game_System == SaveGeneration.GCN)
-                    {
-                        Villager.Data.House_Coordinates = new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF };
-                    }
+                        if (Villager.Data.Villager_ID == 0)
+                        {
+                            Villager.Data.House_Coordinates = new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF }; // This will force a new construction of the villager's house
+                        }
+                        else
+                        {
+                            Villager.Data.House_Coordinates = Utility.Find_Villager_House(Villager.Data.Villager_ID);
+                        }
 
-                    if ((Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN) && VillagerPreviewBox != null)
-                    {
-                        VillagerPreviewBox.Offset = (Villager.Data.Villager_ID < 0xE000 || Villager.Data.Villager_ID > 0xE0EB) ? new Point(64 * 6, 64 * 23)
-                            : new Point(64 * ((Villager.Data.Villager_ID & 0xFF) % 10), 64 * ((Villager.Data.Villager_ID & 0xFF) / 10));
+                        if (VillagerPreviewBox != null)
+                        {
+                            VillagerPreviewBox.Offset = (Villager.Data.Villager_ID < 0xE000 || Villager.Data.Villager_ID > 0xE0EB) ? new Point(64 * 6, 64 * 23)
+                                : new Point(64 * ((Villager.Data.Villager_ID & 0xFF) % 10), 64 * ((Villager.Data.Villager_ID & 0xFF) / 10));
+                        }
                     }
                 }
             };
@@ -4129,9 +4133,24 @@ namespace ACSE
         //TODO: Implement for WW+
         private void resettiCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (Save_File != null && Selected_Player != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
+            if (!Loading && Save_File != null && Selected_Player != null
+                && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN || Save_File.Save_Type == SaveType.Welcome_Amiibo)) // Change once all are found
             {
-                Selected_Player.Data.Reset = resettiCheckBox.Checked;
+                if (Save_File.Save_Type == SaveType.Welcome_Amiibo)
+                {
+                    if (resettiCheckBox.Checked)
+                    {
+                        Save_File.Write(Selected_Player.Offset + 0x570A, (byte)(Save_File.ReadByte(Selected_Player.Offset + 0x570A) | 0x02));
+                    }
+                    else
+                    {
+                        Save_File.Write(Selected_Player.Offset + 0x570A, (byte)(Save_File.ReadByte(Selected_Player.Offset + 0x570A) & 0xFD));
+                    }
+                }
+                else
+                {
+                    Selected_Player.Data.Reset = resettiCheckBox.Checked;
+                }
             }
         }
 
@@ -4170,6 +4189,21 @@ namespace ACSE
         private void getAllKKSongsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SongLibrary.FillSongLibrary(Save_File, Selected_Player);
+        }
+
+        private void censusMenuEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Loading && Save_File != null && Save_File.Save_Type == SaveType.Welcome_Amiibo)
+            {
+                if (censusMenuEnabled.Checked)
+                {
+                    Save_File.Write(Selected_Player.Offset + 0x572F, (byte)(Save_File.ReadByte(Selected_Player.Offset + 0x572F) | 0x40));
+                }
+                else
+                {
+                    Save_File.Write(Selected_Player.Offset + 0x572F, (byte)(Save_File.ReadByte(Selected_Player.Offset + 0x572F) & 0xBF));
+                }
+            }
         }
 
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)

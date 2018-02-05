@@ -350,6 +350,7 @@ namespace ACSE
             Island_Acre_Data = 0x6FE38,
             Island_World_Data = 0x6FE58,
             Island_Buildings = 0x70E58,
+            // Enable Statistics Menu (Player 1) 0x57CF set to 0xC0 (binary 1000 0000)
             // ShopSize = 0x621F0, (two bytes in a row?)
             Town_ID = -1, //
             Weather = -1,
