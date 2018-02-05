@@ -2211,7 +2211,7 @@ namespace ACSE
             Panel Container = new Panel { Size = new Size(700, 64), Location = new Point(0, 32 + Villager.Index * 66) };
             Label Index = new Label { AutoSize = false, Size = new Size(45, 64), TextAlign = ContentAlignment.MiddleCenter,
                 Text = ((Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus) && Villager.Index == 15) ? "Islander" : (Villager.Index + 1).ToString() };
-            ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 32), Location = new Point(45, 20) };
+            ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 32), Location = new Point(45, 20), DropDownStyle = ComboBoxStyle.DropDownList };
             Villager_Selection_Box.Items.AddRange(Villager_Names);
             Villager_Selection_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Villager.Data.Villager_ID);
             ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 32), Location = new Point(175, 20), DropDownWidth = 120 };

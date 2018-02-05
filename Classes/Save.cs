@@ -171,6 +171,7 @@ namespace ACSE
             Acre_Data_Size = 0x8C,
             Town_Data = 0x137A8,
             Town_Data_Size = 0x3C00,
+            NativeFruit = 0x20688,
             Weather = 0x20F19,
             Buried_Data = 0x20F1C,
             Buried_Data_Size = 0x3C0,
@@ -512,7 +513,7 @@ namespace ACSE
             else if (Save_Data.Length == 0x72040 || Save_Data.Length == 0x72150)
             {
                 string Game_ID = Encoding.ASCII.GetString(Save_Data, Save_Data.Length == 0x72150 ? 0x110 : 0, 4);
-                if (Game_ID == "GAFE" || Game_ID == "GAFP") // GAFP is PAL.
+                if (Game_ID == "GAFE" || Game_ID == "GAFP" || Game_ID == "GAFU") // GAFP is PAL, GAFU is Australian.
                     return SaveType.Animal_Crossing;
                 else if (Game_ID == "GAFJ")
                     return SaveType.Doubutsu_no_Mori_Plus;
@@ -522,7 +523,7 @@ namespace ACSE
             else if (Save_Data.Length == 0x200000) // Nintendont RAW file length
             {
                 string Game_ID = Encoding.ASCII.GetString(Save_Data, 0x2000, 4);
-                if (Game_ID == "GAFE" || Game_ID == "GAFP")
+                if (Game_ID == "GAFE" || Game_ID == "GAFP" || Game_ID == "GAFU")
                     return SaveType.Animal_Crossing;
                 else if (Game_ID == "GAFJ")
                     return SaveType.Doubutsu_no_Mori_Plus;
