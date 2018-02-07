@@ -4134,9 +4134,20 @@ namespace ACSE
         private void resettiCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (!Loading && Save_File != null && Selected_Player != null
-                && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN || Save_File.Save_Type == SaveType.Welcome_Amiibo)) // Change once all are found
+                && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN || Save_File.Game_System == SaveGeneration.N3DS)) // Change once all are found
             {
-                if (Save_File.Save_Type == SaveType.Welcome_Amiibo)
+                if (Save_File.Save_Type == SaveType.New_Leaf)
+                {
+                    if (resettiCheckBox.Checked)
+                    {
+                        Save_File.Write(Selected_Player.Offset + 0x5702, (byte)(Save_File.ReadByte(Selected_Player.Offset + 0x5702) | 0x02));
+                    }
+                    else
+                    {
+                        Save_File.Write(Selected_Player.Offset + 0x5702, (byte)(Save_File.ReadByte(Selected_Player.Offset + 0x5702) & 0xFD));
+                    }
+                }
+                else if (Save_File.Save_Type == SaveType.Welcome_Amiibo)
                 {
                     if (resettiCheckBox.Checked)
                     {

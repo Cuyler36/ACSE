@@ -966,7 +966,11 @@ namespace ACSE
                         Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, i, save);
                 }
 
-                if (SaveData.Save_Type == SaveType.Welcome_Amiibo)
+                if (SaveData.Save_Type == SaveType.New_Leaf)
+                {
+                    Data.Reset = (SaveData.ReadByte(Offset + 0x5702) & 0x02) == 0x02;
+                }
+                else if (SaveData.Save_Type == SaveType.Welcome_Amiibo)
                 {
                     Data.Reset = (SaveData.ReadByte(Offset + 0x570A) & 0x02) == 0x02;
                 }

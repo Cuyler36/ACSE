@@ -50,7 +50,6 @@
             this.textBox1.Size = new System.Drawing.Size(179, 20);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "0000000000000000";
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // SecureValueForm
             // 
