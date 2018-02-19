@@ -35,6 +35,7 @@
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
             this.patternEditorPanel = new System.Windows.Forms.Panel();
+            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternEditorPreviewPanel = new System.Windows.Forms.Panel();
             this.patternGroupTabControl = new System.Windows.Forms.TabControl();
             this.player1Tab = new System.Windows.Forms.TabPage();
@@ -42,6 +43,7 @@
             this.player3Tab = new System.Windows.Forms.TabPage();
             this.player4Tab = new System.Windows.Forms.TabPage();
             this.paletteSelectionPictureBox = new System.Windows.Forms.PictureBox();
+            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +66,7 @@
             this.getAllKKSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
+            this.censusMenuEnabled = new System.Windows.Forms.CheckBox();
             this.hairPictureBox = new System.Windows.Forms.PictureBox();
             this.facePreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.resettiCheckBox = new System.Windows.Forms.CheckBox();
@@ -221,13 +224,11 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.loadingPanel = new System.Windows.Forms.Panel();
             this.label45 = new System.Windows.Forms.Label();
-            this.censusMenuEnabled = new System.Windows.Forms.CheckBox();
-            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
-            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             this.patternEditorPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.patternGroupTabControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -263,7 +264,6 @@
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // patternsTab
@@ -323,6 +323,23 @@
             this.patternEditorPanel.Name = "patternEditorPanel";
             this.patternEditorPanel.Size = new System.Drawing.Size(513, 513);
             this.patternEditorPanel.TabIndex = 16;
+            // 
+            // patternEditorPictureBox
+            // 
+            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
+            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
+            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.patternEditorPictureBox.TabIndex = 0;
+            this.patternEditorPictureBox.TabStop = false;
+            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
+            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
+            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
+            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
+            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
             // 
             // patternEditorPreviewPanel
             // 
@@ -400,6 +417,18 @@
             this.paletteSelectionPictureBox.TabIndex = 17;
             this.paletteSelectionPictureBox.TabStop = false;
             this.paletteSelectionPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PaletteImageBox_Click);
+            // 
+            // patternNameTextBox
+            // 
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
+            this.patternNameTextBox.MaxLength = 16;
+            this.patternNameTextBox.Name = "patternNameTextBox";
+            this.patternNameTextBox.PlaceholderText = "Pattern Name";
+            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.patternNameTextBox.TabIndex = 0;
+            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
             // menuStrip1
             // 
@@ -664,6 +693,20 @@
             this.playersTab.TabIndex = 0;
             this.playersTab.Text = "Players";
             this.playersTab.UseVisualStyleBackColor = true;
+            // 
+            // censusMenuEnabled
+            // 
+            this.censusMenuEnabled.AutoSize = true;
+            this.censusMenuEnabled.Enabled = false;
+            this.censusMenuEnabled.Location = new System.Drawing.Point(630, 59);
+            this.censusMenuEnabled.Name = "censusMenuEnabled";
+            this.censusMenuEnabled.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.censusMenuEnabled.Size = new System.Drawing.Size(136, 17);
+            this.censusMenuEnabled.TabIndex = 77;
+            this.censusMenuEnabled.Text = ":Census Menu Enabled";
+            this.infoTip.SetToolTip(this.censusMenuEnabled, "Toggles the removed Census Menu in your TPC Menu in Welcome Amiibo");
+            this.censusMenuEnabled.UseVisualStyleBackColor = true;
+            this.censusMenuEnabled.CheckedChanged += new System.EventHandler(this.censusMenuEnabled_CheckedChanged);
             // 
             // hairPictureBox
             // 
@@ -2164,6 +2207,11 @@
             this.playersToolTip.ReshowDelay = 0;
             this.playersToolTip.UseAnimation = false;
             // 
+            // openSaveFile
+            // 
+            this.openSaveFile.Filter = "All Supported Save Types|*.fla;*.gci;*.gcs;*.raw;*.duc:*.dss;*.dsv;*.sav;*.dat;*." +
+    "bin;|All Files (*.*)|*.*";
+            // 
             // importPatternFile
             // 
             this.importPatternFile.DefaultExt = "*.png";
@@ -2239,49 +2287,6 @@
             this.label45.TabIndex = 15;
             this.label45.Text = "Loading...";
             // 
-            // censusMenuEnabled
-            // 
-            this.censusMenuEnabled.AutoSize = true;
-            this.censusMenuEnabled.Enabled = false;
-            this.censusMenuEnabled.Location = new System.Drawing.Point(630, 59);
-            this.censusMenuEnabled.Name = "censusMenuEnabled";
-            this.censusMenuEnabled.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.censusMenuEnabled.Size = new System.Drawing.Size(136, 17);
-            this.censusMenuEnabled.TabIndex = 77;
-            this.censusMenuEnabled.Text = ":Census Menu Enabled";
-            this.infoTip.SetToolTip(this.censusMenuEnabled, "Toggles the removed Census Menu in your TPC Menu in Welcome Amiibo");
-            this.censusMenuEnabled.UseVisualStyleBackColor = true;
-            this.censusMenuEnabled.CheckedChanged += new System.EventHandler(this.censusMenuEnabled_CheckedChanged);
-            // 
-            // patternEditorPictureBox
-            // 
-            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
-            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
-            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.patternEditorPictureBox.TabIndex = 0;
-            this.patternEditorPictureBox.TabStop = false;
-            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
-            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
-            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
-            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
-            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
-            // 
-            // patternNameTextBox
-            // 
-            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
-            this.patternNameTextBox.MaxLength = 16;
-            this.patternNameTextBox.Name = "patternNameTextBox";
-            this.patternNameTextBox.PlaceholderText = "Pattern Name";
-            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
-            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.patternNameTextBox.TabIndex = 0;
-            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
-            // 
             // NewMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2309,6 +2314,7 @@
             patternsTab.ResumeLayout(false);
             patternsTab.PerformLayout();
             this.patternEditorPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.patternGroupTabControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -2353,7 +2359,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -373,6 +373,22 @@ namespace ACSE
             // 0x26 bytes in = house upgrade process byte? & with 0xE0? (In AC, it's 0x2A & 0x2B)
         };
 
+        public static HouseOffsets Wild_World_Offsets = new HouseOffsets
+        {
+            Room_Count = 5,
+            Room_Size = 0x450,
+            Room_Start = 0,
+            Layer_Count = 2,
+            Layer_Size = 0x200,
+            Room_Carpet = 0x448,
+            Room_Wallpaper = 0x44A,
+            // Room_Song = 0x44C,
+            Owning_Player_Name = -1,
+            Town_Name = -1,
+            Owning_Player_ID = -1,
+            Town_ID = -1
+        };
+
         public static HouseOffsets City_Folk_Offsets = new HouseOffsets
         {
             Room_Start = 0x8AC,
@@ -408,9 +424,9 @@ namespace ACSE
             "First Floor", "Second Floor", "Basement"
         };
 
-        public static string[] WW_Room_Names = new string[6]
+        public static string[] WW_Room_Names = new string[5]
         {
-            "Entry Room", "Left Wing", "Right Wing", "Back Wing", "Basement", "Second Floor"
+            "Entry Room", "Back Wing", "Right Wing", "Left Wing", "Second Floor"
         };
 
         public static string[] NL_Room_Names = new string[6]
@@ -431,6 +447,8 @@ namespace ACSE
                     return Animal_Crossing_House_Offsets;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return Doubutsu_no_Mori_e_Plus_Offsets;
+                case SaveType.Wild_World:
+                    return Wild_World_Offsets;
                 case SaveType.New_Leaf:
                 case SaveType.Welcome_Amiibo:
                     return New_Leaf_Offsets;
@@ -503,6 +521,8 @@ namespace ACSE
                     return (NewMainForm.Save_File.Working_Save_Data[Offset + 0x2A] >> 5) & 7;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return (NewMainForm.Save_File.Working_Save_Data[Offset + 0x26] >> 5) & 7;
+                case SaveType.Wild_World:
+                    return NewMainForm.Save_File.ReadByte(0xFAF8) & 7; // Not sure about this
                 default:
                     return 0;
             }

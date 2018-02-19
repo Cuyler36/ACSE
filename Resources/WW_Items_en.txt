@@ -2225,6 +2225,616 @@
 0x3D6C, Baseball Shirt
 0x3D70, Leather Jerkin
 0x3D74, Frock Coat
+0x3D78, Space Suit
+0x3D7C, Caveman Tunic
+0x3D80, Moldy Shirt
+0x3D84, Custom Shirt #1
+0x3D88, Custom Shirt #2
+0x3D8C, Custom Shirt #3
+0x3D90, Custom Shirt #4
+0x3D94, Custom Shirt #5
+0x3D98, Custom Shirt #6
+0x3D9C, Custom Shirt #7
+0x3DA0, Custom Shirt #8
+0x3E24, Gelato Umbrella
+0x3E28, Bat Umbrella
+0x3E2C, Lacy Parasol
+0x3E30, Leaf Umbrella
+0x3E34, Paper Parasol
+0x3E38, Ribbon Umbrella
+0x3E3C, Red Umbrella
+0x3E40, Blue Umbrella
+0x3E44, Yellow Umbrella
+0x3E48, Green Umbrella
+0x3E4C, Candy Umbrella
+0x3E50, Melon Umbrella
+0x3E54, Mint Umbrella
+0x3E58, Picnic Umbrella
+0x3E5C, Lemon Umbrella
+0x3E60, Toad Parasol
+0x3E64, Eggy Parasol
+0x3E68, Blue Dot Parasol
+0x3E6C, Daisy Umbrella
+0x3E70, Paw Umbrella
+0x3E74, Petal Parasol
+0x3E78, Busted Umbrella
+0x3E7C, Sunny Parasol
+0x3E80, Beach Umbrella
+0x3E84, Elegant Umbrella
+0x3E88, Modern Umbrella
+0x3E8C, Leopard Umbrella
+0x3E90, Zebra Umbrella
+0x3E94, Forest Umbrella
+0x3E98, Flame Umbrella
+0x3E9C, Camo Umbrella
+0x3EA0, Spider Umbrella
+0x3EA4, Custom Umbrella #1
+0x3EA8, Custom Umbrella #2
+0x3EAC, Custom Umbrella #3
+0x3EB0, Custom Umbrella #4
+0x3EB4, Custom Umbrella #5
+0x3EB8, Custom Umbrella #6
+0x3EBC, Custom Umbrella #7
+0x3EC0, Custom Umbrella #8
+0x3F24, Custom Easel #1
+0x3F28, Custom Easel #2
+0x3F2C, Custom Easel #3
+0x3F30, Custom Easel #4
+0x3F34, Custom Easel #5
+0x3F38, Custom Easel #6
+0x3F3C, Custom Easel #7
+0x3F40, Custom Easel #8
+0x4124, Blue Frames
+0x4128, Red Glasses
+0x412C, Yellow Glasses
+0x4130, Blue Glasses
+0x4134, Purple Glasses
+0x4138, Green Glasses
+0x413C, Brown Glasses
+0x4140, Pink Glasses
+0x4144, Thick Glasses
+0x4148, Silver Frames
+0x414C, Rimmed Glasses
+0x4150, Funky Glasses
+0x4154, Pilot Shades
+0x4158, Sporty Shades
+0x415C, Huge Shades
+0x4160, Triangle Shades
+0x4164, Tiny Shades
+0x4168, 3-D Glasses
+0x416C, Masquerade Mask
+0x4170, Hero's Mask
+0x4174, Goggles
+0x4178, Snorkel Mask
+0x417C, Eye Mask
+0x4180, HMD
+0x4184, Monocle
+0x4188, Doctor's Mirror
+0x418C, Eye Patch
+0x4190, Post-Op Patch
+0x4194, Gas Mask
+0x4198, Hockey Mask
+0x419C, Red Nose
+0x41A0, Stache & Glasses
+0x41A4, Mario Mustache
+0x41A8, Curly Mustache
+0x41AC, Mini-Mustache
+0x41B0, King's Beard
+0x41B4, Mask
+0x41B8, Pacifier
+0x41BC, Mini-Mustache
+0x42A4, Common Butterfly
+0x42A8, Yellow Butterfly
+0x42AC, Tiger Butterfly
+0x42B0, Peacock
+0x42B4, Monarch
+0x42B8, Emperor
+0x42BC, Agrias Butterfly
+0x42C0, Birdwing
+0x42C4, Moth
+0x42C8, Oak Silk Moth
+0x42CC, Honeybee
+0x42D0, Hornet
+0x42D4, Long Locust
+0x42D8, Migratory Locust
+0x42DC, Mantis
+0x42E0, Orchid Mantis
+0x42E4, Brown Cicada
+0x42E8, Robust Cicada
+0x42EC, Walker Cicada
+0x42F0, Evening Cicada
+0x42F4, Lanternfly
+0x42F8, Red Dragonfly
+0x42FC, Darner Dragonfly
+0x4300, Banded Dragonfly
+0x4304, Ant
+0x4308, Pond Skater
+0x430C, Snail
+0x4310, Cricket
+0x4314, Bell Cricket
+0x4318, Grasshopper
+0x431C, Mole Cricket
+0x4320, Walkingstick
+0x4324, Ladybug
+0x4328, Fruit Beetle
+0x432C, Shining Beetle
+0x4330, Dung Beetle
+0x4334, Goliath Beetle
+0x4338, Firefly
+0x433C, Jewel Beetle
+0x4340, Longhorn Beetle
+0x4344, Saw Stag Beetle
+0x4348, Stag Beetle
+0x434C, Giant Beetle
+0x4350, King Stag Beetle
+0x4354, Dynastid Beetle
+0x4358, Atlas Beetle
+0x435C, Elephant Beetle
+0x4360, Hercules Beetle
+0x4364, Flea
+0x4368, Pillbug
+0x436C, Mosquito
+0x4370, Fly
+0x4374, Cockroach
+0x4378, Spider
+0x437C, Tarantula
+0x4380, Scorpion
+0x4384, Bitterling
+0x4388, Pale Chub
+0x438C, Crucian Carp
+0x4390, Dace
+0x4394, Barbel Steed
+0x4398, Carp
+0x439C, Koi
+0x43A0, Goldfish
+0x43A4, Popeyed Goldfish
+0x43A8, Killifish
+0x43AC, Crawfish
+0x43B0, Frog
+0x43B4, Freshwater Goby
+0x43B8, Loach
+0x43BC, Catfish
+0x43C0, Eel
+0x43C4, Giant Snakehead
+0x43C8, Bluegill
+0x43CC, Yellow Perch
+0x43D0, Black Bass
+0x43D4, Pond Smelt
+0x43D8, Sweetfish
+0x43DC, Cherry Salmon
+0x43E0, Char
+0x43E4, Rainbow Trout
+0x43E8, Stringfish
+0x43EC, Salmon
+0x43F0, King Salmon
+0x43F4, Guppy
+0x43F8, Angelfish
+0x43FC, Piranha
+0x4400, Arowana
+0x4404, Dorado
+0x4408, Gar
+0x440C, Arapaima
+0x4410, Sea Butterfly
+0x4414, Jellyfish
+0x4418, Seahorse
+0x441C, Clownfish
+0x4420, Zebra Turkeyfish
+0x4424, Balloon Fish
+0x4428, Horse Mackerel
+0x442C, Barred Knifejaw
+0x4430, Sea Bass
+0x4434, Red Snapper
+0x4438, Dab
+0x443C, Olive Flounder
+0x4440, Squid
+0x4444, Octopus
+0x4448, Football Fish
+0x444C, Tuna
+0x4450, Blue Marlin
+0x4454, Ocean Sunfish
+0x4458, Hammerhead Shark
+0x445C, Shark
+0x4460, Coelacanth
+0x4464, Red Tulips
+0x4468, White Tulips
+0x446C, Yellow Tulips
+0x4470, Pink Tulips
+0x4474, Purple Tulips
+0x4478, Black Tulips
+0x447C, White Pansies
+0x4480, Yellow Pansies
+0x4484, Red Pansies
+0x4488, Purple Pansies
+0x448C, Orange Pansies
+0x4490, Blue Pansies
+0x4494, White Cosmos
+0x4498, Red Cosmos
+0x449C, Yellow Cosmos
+0x44A0, Pink Cosmos
+0x44A4, Orange Cosmos
+0x44A8, Black Cosmos
+0x44AC, Red Roses
+0x44B0, White Roses
+0x44B4, Yellow Roses
+0x44B8, Pink Roses
+0x44BC, Orange Roses
+0x44C0, Purple Roses
+0x44C4, Black Roses
+0x44C8, Blue Roses
+0x44CC, Jacob's Ladder
+0x44D0, Garbage
+0x44D4, Gold Roses
+0x44D8, Dandelions
+0x44DC, Dandelion Puffs
+0x44E0, Garbage
+0x44E4, Lucky Clovers
+0x44E8, Spoiled Turnips
+0x44EC, Conch
+0x44F0, White Scallop
+0x44F4, Coral
+0x44F8, Venus Comb
+0x44FC, Scallop
+0x4500, Shell
+0x4504, Porceletta
+0x4508, Sand Dollar
+0x450C, Amber
+0x4510, Ammonite
+0x4514, Dino Droppings
+0x4518, Dinosaur Egg
+0x451C, Fern Fossil
+0x4520, Dinosaur Track
+0x4524, Archaeopteryx
+0x4528, Peking Man
+0x452C, Shark Tooth
+0x4530, Trilobite
+0x4534, T-Rex Skull
+0x4538, T-Rex Torso
+0x453C, T-Rex Tail
+0x4540, Tricera Skull
+0x4544, Tricera Torso
+0x4548, Tricera Tail
+0x454C, Mammoth Skull
+0x4550, Mammoth Torso
+0x4554, Ankylo Skull
+0x4558, Ankylo Torso
+0x455C, Ankylo Tail
+0x4560, Apato Skull
+0x4564, Apato Torso
+0x4568, Apato Tail
+0x456C, Dimetrodon Skull
+0x4570, Dimetrodon Torso
+0x4574, Dimetrodon Tail
+0x4578, Iguanodon Skull
+0x457C, Iguanodon Torso
+0x4580, Iguanodon Tail
+0x4584, Sabertooth Skull
+0x4588, Sabertooth Torso
+0x458C, Pachy Skull
+0x4590, Pachy Torso
+0x4594, Pachy Tail
+0x4598, Parasaur Skull
+0x459C, Parasaur Torso
+0x45A0, Parasaur Tail
+0x45A4, Seismo Skull
+0x45A8, Seismo Chest
+0x45AC, Seismo Hip
+0x45B0, Seismo Tail
+0x45B4, Plesio Skull
+0x45B8, Plesio Neck
+0x45BC, Plesio Torso
+0x45C0, Stego Skull
+0x45C4, Stego Torso
+0x45C8, Stego Tail
+0x45CC, Ptera Skull
+0x45D0, Ptera Body
+0x45D4, Ptera Left Wing
+0x45D8, Ptera Right Wing
+0x45DC, Mega Clankoid
+0x45E0, Clankoid
+0x45E4, Mini Clankoid
+0x45E8, Tall Clankoid
+0x45EC, Squat Dingloid
+0x45F0, Mega Dingloid
+0x45F4, Dingloid
+0x45F8, Mini Dingloid
+0x45FC, Wee Dingloid
+0x4600, Tall Dingloid
+0x4604, Mega Percoloid
+0x4608, Tall Percoloid
+0x460C, Mega Oombloid
+0x4610, Oombloid
+0x4614, Mini Oombloid
+0x4618, Tall Oombloid
+0x461C, Rhythmoid
+0x4620, Mini Rhythmoid
+0x4624, Mega Puffoid
+0x4628, Mini Puffoid
+0x462C, Tall Puffoid
+0x4630, Mega Lullaboid
+0x4634, Lullaboid
+0x4638, Mini Lullaboid
+0x463C, Tall Lullaboid
+0x4640, Mega Sproid
+0x4644, Sproid
+0x4648, Mini Sproid
+0x464C, Tall Sproid
+0x4650, Mega Bowtoid
+0x4654, Bowtoid
+0x4658, Mini Bowtoid
+0x465C, Tall Bowtoid
+0x4660, Mega Tootoid
+0x4664, Tootoid
+0x4668, Mini Tootoid
+0x466C, Mega Plinkoid
+0x4670, Plinkoid
+0x4674, Mini Plinkoid
+0x4678, Mega Dekkoid
+0x467C, Dekkoid
+0x4680, Mini Dekkoid
+0x4684, Mega Buzzoid
+0x4688, Buzzoid
+0x468C, Mini Buzzoid
+0x4690, Tall Buzzoid
+0x4694, Mega Drilloid
+0x4698, Drilloid
+0x469C, Mini Drilloid
+0x46A0, Mega Echoid
+0x46A4, Mini Echoid
+0x46A8, Tall Echoid
+0x46AC, Mega Lamentoid
+0x46B0, Lamentoid
+0x46B4, Mini Lamentoid
+0x46B8, Tall Lamentoid
+0x46BC, Mega Strumboid
+0x46C0, Strumboid
+0x46C4, Mini Strumboid
+0x46C8, Tall Strumboid
+0x46CC, Mega Croakoid
+0x46D0, Croakoid
+0x46D4, Mini Croakoid
+0x46D8, Tall Croakoid
+0x46DC, Mega Fizzoid
+0x46E0, Mini Fizzoid
+0x46E4, Mega Squelchoid
+0x46E8, Squelchoid
+0x46EC, Mini Squelchoid
+0x46F0, Mega Howloid
+0x46F4, Howloid
+0x46F8, Mini Howloid
+0x46FC, Mega Nebuloid
+0x4700, Squat Nebuloid
+0x4704, Nebuloid
+0x4708, Mini Nebuloid
+0x470C, Tall Nebuloid
+0x4710, Slim Nebuloid
+0x4714, Mega Gongoid
+0x4718, Gongoid
+0x471C, Mini Gongoid
+0x4720, Tall Gongoid
+0x4724, Mega Poltergoid
+0x4728, Poltergoid
+0x472C, Mini Poltergoid
+0x4730, Tall Poltergoid
+0x4734, Metatoid
+0x4738, Mini Metatoid
+0x473C, Mega Bovoid
+0x4740, Tall Bovoid
+0x4744, Mega Oboid
+0x4748, Oboid
+0x474C, Tall Oboid
+0x4750, Mega Dinkoid
+0x4754, Mini Dinkoid
+0x4758, Mega Harmonoid
+0x475C, Harmonoid
+0x4760, Mini Harmonoid
+0x4764, Tall Harmonoid
+0x4768, Tall Droploid
+0x476C, Mega Sputnoid
+0x4770, Sputnoid
+0x4774, Mini Sputnoid
+0x4778, Tall Sputnoid
+0x477C, Mega Alloid
+0x4780, Mini Alloid
+0x4784, Tall Alloid
+0x4788, Mega Timpanoid
+0x478C, Timpanoid
+0x4790, Mini Timpanoid
+0x4794, Tall Timpanoid
+0x4798, Gargloid
+0x479C, Mini Gargloid
+0x47A0, Tall Gargloid
+0x47A4, Warbloid
+0x47A8, Mini Warbloid
+0x47AC, Tall Warbloid
+0x47B0, Mega Freakoid
+0x47B4, Mini Freakoid
+0x47B8, Mega Quazoid
+0x47BC, Quazoid
+0x47C0, Mini Quazoid
+0x47C4, Tall Quazoid
+0x47C8, Slim Quazoid
+0x47CC, Mega Rustoid
+0x47D0, Rustoid
+0x47D4, Mini Rustoid
+0x47D8, Cyrano's Pic
+0x47DC, Antonio's Pic
+0x47E0, Pango's Pic
+0x47E4, Anabelle's Pic
+0x47E8, Teddy's Pic
+0x47EC, Pinky's Pic
+0x47F0, Curt's Pic
+0x47F4, Chow's Pic
+0x47F8, Jay's Pic
+0x47FC, Robin's Pic
+0x4800, Anchovy's Pic
+0x4804, Twiggy's Pic
+0x4808, Jitters's Pic
+0x480C, Angus's Pic
+0x4810, Rodeo's Pic
+0x4814, Bob's Pic
+0x4818, Mitzi's Pic
+0x481C, Rosie's Pic
+0x4820, Olivia's Pic
+0x4824, Kiki's Pic
+0x4828, Tangy's Pic
+0x482C, Punchy's Pic
+0x4830, Purrl's Pic
+0x4834, Moe's Pic
+0x4838, Kabuki's Pic
+0x483C, Kid Cat's Pic
+0x4840, Monique's Pic
+0x4844, Tabby's Pic
+0x4848, Bluebear's Pic
+0x484C, Maple's Pic
+0x4850, Poncho's Pic
+0x4854, Pudge's Pic
+0x4858, Kody's Pic
+0x485C, Stitches's Pic
+0x4860, Goose's Pic
+0x4864, Benedict's Pic
+0x4868, Egbert's Pic
+0x486C, Patty's Pic
+0x4870, Tipper's Pic
+0x4874, Alfonso's Pic
+0x4878, Alli's Pic
+0x487C, Goldie's Pic
+0x4880, Butch's Pic
+0x4884, Lucky's Pic
+0x4888, Biskit's Pic
+0x488C, Bones's Pic
+0x4890, Portia's Pic
+0x4894, Walker's Pic
+0x4898, Daisy's Pic
+0x489C, Bill's Pic
+0x48A0, Joey's Pic
+0x48A4, Pate's Pic
+0x48A8, Maelle's Pic
+0x48AC, Deena's Pic
+0x48B0, Pompom's Pic
+0x48B4, Mallary's Pic
+0x48B8, Freckles's Pic
+0x48BC, Derwin's Pic
+0x48C0, Drake's Pic
+0x48C4, Opal's Pic
+0x48C8, Dizzy's Pic
+0x48CC, Big Top's Pic
+0x48D0, Eloise's Pic
+0x48D4, Margie's Pic
+0x48D8, Lily's Pic
+0x48DC, Ribbot's Pic
+0x48E0, Frobert's Pic
+0x48E4, Camofrog's Pic
+0x48E8, Drift's Pic
+0x48EC, Wart Jr.'S Pic
+0x48F0, Puddles's Pic
+0x48F4, Jeremiah's Pic
+0x48F8, Chevre's Pic
+0x48FC, Nan's Pic
+0x4900, Cesar's Pic
+0x4904, Peewee's Pic
+0x4908, Boone's Pic
+0x490C, Rocco's Pic
+0x4910, Buck's Pic
+0x4914, Victoria's Pic
+0x4918, Savannah's Pic
+0x491C, Elmer's Pic
+0x4920, Roscoe's Pic
+0x4924, Yuka's Pic
+0x4928, Alice's Pic
+0x492C, Melba's Pic
+0x4930, Kitt's Pic
+0x4934, Mathilda's Pic
+0x4938, Bud's Pic
+0x493C, Elvis's Pic
+0x4940, Dora's Pic
+0x4944, Limberg's Pic
+0x4948, Bella's Pic
+0x494C, Bree's Pic
+0x4950, Samson's Pic
+0x4954, Rod's Pic
+0x4958, Octavian's Pic
+0x495C, Marina's Pic
+0x4960, Queenie's Pic
+0x4964, Gladys's Pic
+0x4968, Apollo's Pic
+0x496C, Amelia's Pic
+0x4970, Pierce's Pic
+0x4974, Aurora's Pic
+0x4978, Roald's Pic
+0x497C, Cube's Pic
+0x4980, Hopper's Pic
+0x4984, Friga's Pic
+0x4988, Gwen's Pic
+0x498C, Curly's Pic
+0x4990, Truffles's Pic
+0x4994, Rasher's Pic
+0x4998, Hugh's Pic
+0x499C, Lucy's Pic
+0x49A0, Bunnie's Pic
+0x49A4, Dotty's Pic
+0x49A8, Coco's Pic
+0x49AC, Snake's Pic
+0x49B0, Gaston's Pic
+0x49B4, Gabi's Pic
+0x49B8, Pippy's Pic
+0x49BC, Tiffany's Pic
+0x49C0, Genji's Pic
+0x49C4, Ruby's Pic
+0x49C8, Tank's Pic
+0x49CC, Rhonda's Pic
+0x49D0, Vesta's Pic
+0x49D4, Baabara's Pic
+0x49D8, Peanut's Pic
+0x49DC, Blaire's Pic
+0x49E0, Filbert's Pic
+0x49E4, Pecan's Pic
+0x49E8, Nibbles's Pic
+0x49EC, Agent S's Pic
+0x49F0, Caroline's Pic
+0x49F4, Sally's Pic
+0x49F8, Static's Pic
+0x49FC, Mint's Pic
+0x4A00, Rolf's Pic
+0x4A04, Rowan's Pic
+0x4A08, Chief's Pic
+0x4A0C, Lobo's Pic
+0x4A10, Wolfgang's Pic
+0x4A14, Whitney's Pic
+0x4A18, Champ's Pic
+0x4A1C, Nana's Pic
+0x4A20, Simon's Pic
+0x4A24, Tammi's Pic
+0x4A28, Monty's Pic
+0x4A2C, Elise's Pic
+0x4A30, Tom Nook's Pic
+0x4A34, K.K.'S Pic
+0x4A38, Pascal's Pic
+0x4A3C, K And K's Pic
+0x4A40, Pelly's Pic
+0x4A44, Phyllis's Pic
+0x4A48, 2 Cardboard Boxes
+0x4A4C, 4 Cardboard Boxes
+0x4A50, 5 Cardboard Boxes
+0x4A54, Display Platform
+0x4A58, Invisible Chair #1
+0x4A5C, Invisible Chair #2
+0x4A60, Big Rug #1
+0x4A64, Big Rug #2
+0x4B68, Brick Block
+0x4B6C, Coin
+0x4B70, Flagpole
+0x4B74, Fire Flower
+0x4B78, Super Mushroom
+0x4B7C, Green Pipe
+0x4B80, ? Block
+0x4B84, Koopa Shell
+0x4B88, Starman
+0x4B8C, Cannon
+0x4B90, 1-Up Mushroom
+0x4B94, Fire Bar
+0x4B98, Pikmin
+0x4B9C, Blue Falcon
+0x4BA0, Garbage
 //Buildings
 0x5000, Town Hall
 0x5001, Neighbor House #1

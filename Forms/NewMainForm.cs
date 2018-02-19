@@ -95,7 +95,7 @@ namespace ACSE
         #endregion
         #endregion
 
-        public NewMainForm(Save save = null)
+        public NewMainForm()
         {
             InitializeComponent();
 
@@ -227,9 +227,6 @@ namespace ACSE
             // Palette Change Buttons
             paletteNextButton.MouseClick += new MouseEventHandler((object sender, MouseEventArgs e) => ChangePatternPalette(1));
             palettePreviousButton.MouseClick += new MouseEventHandler((object sender, MouseEventArgs e) => ChangePatternPalette(-1));
-
-            if (save != null)
-                SetupEditor(save);
         }
 
         #region Settings Changing Functions
@@ -513,7 +510,7 @@ namespace ACSE
             nativeFruitBox.Enabled = true;
             houseSizeComboBox.Enabled = true;
             roofColorComboBox.Enabled = true;
-            houseOwnerComboBox.Enabled = true;
+            houseOwnerComboBox.Enabled = save.Game_System != SaveGeneration.NDS;
             grassLevelBox.Enabled = true;
             setAllGrass.Enabled = true;
             reviveGrass.Enabled = true;
@@ -545,10 +542,6 @@ namespace ACSE
             // Clear House ComboBoxes Box
             roofColorComboBox.Items.Clear();
             houseSizeComboBox.Items.Clear();
-            houseOwnerComboBox.Items.Clear();
-
-            // Add "No One" Option to House Owner ComboBox
-            houseOwnerComboBox.Items.Add("No One");
 
             // Add Roof Color Items
             roofColorComboBox.Items.AddRange(HouseInfo.GetRoofColors(save.Save_Type));
@@ -897,11 +890,16 @@ namespace ACSE
             }
 
             // Set House Owner ComboBox List
-            for (int i = 0; i < 4; i++)
+            houseOwnerComboBox.Items.Clear();
+            if (save.Game_System != SaveGeneration.NDS)
             {
-                if (Players[i] != null && Players[i].Exists)
+                houseOwnerComboBox.Items.Add("No One");
+                for (int i = 0; i < 4; i++)
                 {
-                    houseOwnerComboBox.Items.Add(Players[i].Data.Name);
+                    if (Players[i] != null && Players[i].Exists)
+                    {
+                        houseOwnerComboBox.Items.Add(Players[i].Data.Name);
+                    }
                 }
             }
 
@@ -1864,7 +1862,7 @@ namespace ACSE
                     basementCheckBox.Checked = HouseInfo.HasBasement(Selected_House.Offset, Save_File.Save_Type);
                 }
 
-                if (Selected_House != null)
+                if (houseOwnerComboBox.Enabled && Selected_House != null)
                 {
                     if (Selected_House.Owner != null)
                     {
@@ -2024,7 +2022,7 @@ namespace ACSE
                     basementCheckBox.Checked = HouseInfo.HasBasement(SelectedHouse.Offset, Save_File.Save_Type);
                 }
 
-                if (SelectedHouse != null)
+                if (houseOwnerComboBox.Enabled && SelectedHouse != null)
                 {
                     if (SelectedHouse.Owner != null)
                     {

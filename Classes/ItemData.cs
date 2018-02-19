@@ -526,8 +526,8 @@ namespace ACSE
                 else if ((ID >= 0x3000 && ID <= 0x45D8) || (ID >= 0x47D8 && ID <= 0x4BA0))
                     return "Furniture";
                 else if (ID >= 0x45DC && ID <= 0x47D4)
-                    return "Gyroid";
-                else if (ID >= 0x5000 && ID <= 0x5021)
+                    return "Gyroids";
+                else if ((ID >= 0x5000 && ID <= 0x5021) || ID == 0xF030 || ID == 0xF031) // F030-1 = Multispace furniture item
                     return "Building";
                 else
                     return "Unknown";
