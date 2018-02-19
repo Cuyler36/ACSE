@@ -727,6 +727,14 @@
 0x12A5, Space Suit
 0x12A6, Caveman Tunic
 0x12A7, Moldy Shirt
+0x12A8, Custom Shirt #1
+0x12A9, Custom Shirt #2
+0x12AA, Custom Shirt #3
+0x12AB, Custom Shirt #4
+0x12AC, Custom Shirt #5
+0x12AD, Custom Shirt #6
+0x12AE, Custom Shirt #7
+0x12AF, Custom Shirt #8
 //Insects
 0x12B0, Common Butterfly
 0x12B1, Yellow Butterfly
@@ -1089,6 +1097,15 @@
 0x1417, Pink Cosmos
 0x1418, Orange Cosmos
 0x1419, Black Cosmos
+//Custom Hats
+0x1429, Custom Hat #1
+0x142A, Custom Hat #2
+0x142B, Custom Hat #3
+0x142C, Custom Hat #4
+0x142D, Custom Hat #5
+0x142E, Custom Hat #6
+0x142F, Custom Hat #7
+0x1430, Custom Hat #8
 //Glasses/Masks
 0x1431, Blue Frames
 0x1432, Red Glasses

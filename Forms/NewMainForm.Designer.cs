@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TabPage patternsTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewMainForm));
+            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
             this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
@@ -43,7 +44,6 @@
             this.player3Tab = new System.Windows.Forms.TabPage();
             this.player4Tab = new System.Windows.Forms.TabPage();
             this.paletteSelectionPictureBox = new System.Windows.Forms.PictureBox();
-            this.patternNameTextBox = new ACSE.PlaceholderTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -268,6 +268,7 @@
             // 
             // patternsTab
             // 
+            patternsTab.Controls.Add(this.patternNameTextBox);
             patternsTab.Controls.Add(this.paletteIndexLabel);
             patternsTab.Controls.Add(this.palettePreviousButton);
             patternsTab.Controls.Add(this.paletteNextButton);
@@ -275,13 +276,24 @@
             patternsTab.Controls.Add(this.patternEditorPreviewPanel);
             patternsTab.Controls.Add(this.patternGroupTabControl);
             patternsTab.Controls.Add(this.paletteSelectionPictureBox);
-            patternsTab.Controls.Add(this.patternNameTextBox);
             patternsTab.Location = new System.Drawing.Point(4, 22);
             patternsTab.Name = "patternsTab";
             patternsTab.Size = new System.Drawing.Size(931, 565);
             patternsTab.TabIndex = 8;
             patternsTab.Text = "Patterns";
             patternsTab.UseVisualStyleBackColor = true;
+            // 
+            // patternNameTextBox
+            // 
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
+            this.patternNameTextBox.MaxLength = 16;
+            this.patternNameTextBox.Name = "patternNameTextBox";
+            this.patternNameTextBox.PlaceholderText = "Pattern Name";
+            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.patternNameTextBox.TabIndex = 0;
+            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
             // paletteIndexLabel
             // 
@@ -417,18 +429,6 @@
             this.paletteSelectionPictureBox.TabIndex = 17;
             this.paletteSelectionPictureBox.TabStop = false;
             this.paletteSelectionPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PaletteImageBox_Click);
-            // 
-            // patternNameTextBox
-            // 
-            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
-            this.patternNameTextBox.MaxLength = 16;
-            this.patternNameTextBox.Name = "patternNameTextBox";
-            this.patternNameTextBox.PlaceholderText = "Pattern Name";
-            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
-            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.patternNameTextBox.TabIndex = 0;
-            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
             // menuStrip1
             // 
@@ -2152,6 +2152,7 @@
             this.selectedItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.selectedItem.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.selectedItem.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.selectedItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectedItem.Enabled = false;
             this.selectedItem.FormattingEnabled = true;
             this.selectedItem.Location = new System.Drawing.Point(12, 637);
@@ -2209,7 +2210,7 @@
             // 
             // openSaveFile
             // 
-            this.openSaveFile.Filter = "All Supported Save Types|*.fla;*.gci;*.gcs;*.raw;*.duc:*.dss;*.dsv;*.sav;*.dat;*." +
+            this.openSaveFile.Filter = "All Supported Save Types|*.fla;*.gci;*.gcs;*.raw;*.duc;*.dss;*.dsv;*.sav;*.dat;*." +
     "bin;|All Files (*.*)|*.*";
             // 
             // importPatternFile

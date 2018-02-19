@@ -489,7 +489,7 @@ namespace ACSE
                     return "Watered Flower";
                 //0x00A6??
                 else if (ID >= 0xA7 && ID <= 0xC6)
-                    return "Signboard";
+                    return "Pattern";
                 //Buried Red Turnips: 0xD4 - 0xE1
                 else if ((ID >= 0xE3 && ID <= 0xE7) || (ID >= 0xED && ID <= 0xFB))
                     return "Rock";
@@ -502,7 +502,7 @@ namespace ACSE
                     return "Wall/Floor";
                 else if (ID >= 0x1144 && ID <= 0x1187) //Carpet
                     return "Wall/Floor";
-                else if (ID >= 0x11A8 && ID <= 0x12A7)
+                else if (ID >= 0x11A8 && ID <= 0x12AF)
                     return "Clothes"; //Shirts
                 else if (ID >= 0x12B0 && ID <= 0x131F)
                     return "Catchable";

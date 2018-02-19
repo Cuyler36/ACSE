@@ -511,6 +511,8 @@ namespace ACSE
             houseSizeComboBox.Enabled = true;
             roofColorComboBox.Enabled = true;
             houseOwnerComboBox.Enabled = save.Game_System != SaveGeneration.NDS;
+            houseTabSelect.Visible = save.Game_System != SaveGeneration.NDS;
+            houseTabSelect.Enabled = save.Game_System != SaveGeneration.NDS;
             grassLevelBox.Enabled = true;
             setAllGrass.Enabled = true;
             reviveGrass.Enabled = true;
@@ -962,6 +964,9 @@ namespace ACSE
                     Refresh_PictureBox_Image(Island_House_Boxes[y], ImageGeneration.Draw_Furniture_Arrows((Bitmap)Inventory.GetItemPic(16, 16, L.Items, save.Save_Type), L.Items));
                 }
             }
+
+            // Set Default Item to "Empty"
+            SetCurrentItem(new Item());
 
             progressBar1.Value = 100;
             Loading = false;
@@ -3596,7 +3601,7 @@ namespace ACSE
 
                 // Save Houses
                 foreach (House House in Houses)
-                    if (House != null && Save_File.Game_System == SaveGeneration.GCN) // TODO: Finish WW+ House editing
+                    if (House != null && (Save_File.Game_System == SaveGeneration.GCN || Save_File.Game_System == SaveGeneration.NDS)) // TODO: Finish WW+ House editing
                         House.Write();
 
                 //Save Acre & Town Data

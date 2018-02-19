@@ -586,9 +586,10 @@ namespace ACSE
 
         public static House[] LoadHouses(Save SaveFile)
         {
-            Houses = new House[4];
+            int HouseCount = SaveFile.Game_System == SaveGeneration.NDS ? 1 : 4;
+            Houses = new House[HouseCount];
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < HouseCount; i++)
             {
                 Houses[i] = new House(i, SaveFile.Save_Data_Start_Offset + SaveFile.Save_Info.Save_Offsets.House_Data + i * SaveFile.Save_Info.Save_Offsets.House_Data_Size);
             }
