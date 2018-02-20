@@ -440,6 +440,8 @@ namespace ACSE
             HairColor = 0x840C,
             ShoeColor = 0x8416,
             Tan = 0x8418,
+            Reset = 0x8670, // Just the second bit
+            ResetSize = 1, // Actually just the second bit in the value
             TownPassCardImage = -1,
             Dressers = -1, //Research
             DressersCount = 0,
@@ -459,7 +461,6 @@ namespace ACSE
             Gender = -1, //Research
             InventoryBackground = -1,
             Messages = -1,
-            Reset = -1,
             Wetsuit = -1,
             NL_Debt = -1,
             NL_Savings = -1,
@@ -966,7 +967,11 @@ namespace ACSE
                         Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, i, save);
                 }
 
-                if (SaveData.Save_Type == SaveType.New_Leaf)
+                if (SaveData.Save_Type == SaveType.City_Folk)
+                {
+                    Data.Reset = (SaveData.ReadByte(Offset + 0x8670) & 0x02) == 0x02;
+                }
+                else if (SaveData.Save_Type == SaveType.New_Leaf)
                 {
                     Data.Reset = (SaveData.ReadByte(Offset + 0x5702) & 0x02) == 0x02;
                 }

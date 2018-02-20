@@ -4148,10 +4148,20 @@ namespace ACSE
         //TODO: Implement for WW+
         private void resettiCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (!Loading && Save_File != null && Selected_Player != null
-                && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN || Save_File.Game_System == SaveGeneration.N3DS)) // Change once all are found
+            if (!Loading && Save_File != null && Selected_Player != null) // Change once all are found
             {
-                if (Save_File.Save_Type == SaveType.New_Leaf)
+                if (Save_File.Save_Type == SaveType.City_Folk)
+                {
+                    if (resettiCheckBox.Checked)
+                    {
+                        Save_File.Write(Selected_Player.Offset + 0x8670, (byte)(Save_File.ReadByte(Selected_Player.Offset + 0x8670) | 0x02));
+                    }
+                    else
+                    {
+                        Save_File.Write(Selected_Player.Offset + 0x8670, (byte)(Save_File.ReadByte(Selected_Player.Offset + 0x8670) & 0xFD));
+                    }
+                }
+                else if (Save_File.Save_Type == SaveType.New_Leaf)
                 {
                     if (resettiCheckBox.Checked)
                     {
