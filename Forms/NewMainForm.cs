@@ -413,10 +413,20 @@ namespace ACSE
             {
                 MessageBox.Show(string.Format("The file [{0}] could not be identified as a valid Animal Crossing save file.\nPlease ensure you have a valid save file.",
                     save.Save_Name + save.Save_Extension), "Save File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                loadingPanel.SendToBack();
+                loadingPanel.Visible = false;
+                loadingPanel.Enabled = false;
+                Loading = false;
+                progressBar1.Value = 0;
                 return;
             }
             else if (!save.SuccessfullyLoaded)
             {
+                loadingPanel.SendToBack();
+                loadingPanel.Visible = false;
+                loadingPanel.Enabled = false;
+                Loading = false;
+                progressBar1.Value = 0;
                 return;
             }
 
