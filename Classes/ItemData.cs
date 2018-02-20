@@ -585,7 +585,7 @@ namespace ACSE
                     return "Item";
                 else if ((ID >= 0x9000 && ID <= 0x9014) || (ID >= 0x9168 && ID <= 0x9178))
                     return "Fruit";
-                else if (ID == 0xD000 || ID == 0x7003)
+                else if (ID == 0xD000 || ID == 0x7003 || ID == 0xF030)
                     return "Building";
                 else
                     return "Unknown";

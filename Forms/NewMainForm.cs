@@ -477,11 +477,6 @@ namespace ACSE
                 progressBar1.Value = 7;
             }
 
-            if (save.Game_System == SaveGeneration.N64 || save.Game_System == SaveGeneration.GCN)
-            {
-                basementCheckBox.Enabled = true;
-            }
-
             // Enable Controls
             playerName.Enabled = true;
             playerWallet.Enabled = true;
@@ -513,6 +508,7 @@ namespace ACSE
             houseOwnerComboBox.Enabled = save.Game_System != SaveGeneration.NDS;
             houseTabSelect.Visible = save.Game_System != SaveGeneration.NDS;
             houseTabSelect.Enabled = save.Game_System != SaveGeneration.NDS;
+            basementCheckBox.Enabled = save.Game_System == SaveGeneration.N64 || save.Game_System == SaveGeneration.GCN;
             grassLevelBox.Enabled = true;
             setAllGrass.Enabled = true;
             reviveGrass.Enabled = true;
@@ -1920,6 +1916,8 @@ namespace ACSE
 
                         if (Selected_House != null)
                         {
+                            int RoomIdx = x;
+                            int LayerIdx = y;
                             var Current_Layer = Selected_House.Data.Rooms[x].Layers[y];
                             var LayerFurnitureMap = ImageGeneration.Draw_Furniture_Arrows((Bitmap)Inventory.GetItemPic(16, 16, Selected_House.Data.Rooms[x].Layers[y].Items, Save_File.Save_Type),
                                 Selected_House.Data.Rooms[x].Layers[y].Items);
@@ -1931,6 +1929,7 @@ namespace ACSE
                                 {
                                     int Item_Index = (e.X / 16) + (e.Y / 16) * ((sender as PictureBox).Width / 16);
 
+                                    Current_Layer = Selected_House.Data.Rooms[RoomIdx].Layers[LayerIdx];
                                     if (Item_Index < Current_Layer.Items.Length)
                                     {
                                         if (Clicking_House > 0)
@@ -3601,7 +3600,7 @@ namespace ACSE
 
                 // Save Houses
                 foreach (House House in Houses)
-                    if (House != null && (Save_File.Game_System == SaveGeneration.GCN || Save_File.Game_System == SaveGeneration.NDS)) // TODO: Finish WW+ House editing
+                    if (House != null && (Save_File.Game_System == SaveGeneration.GCN || Save_File.Game_System == SaveGeneration.NDS || Save_File.Game_System == SaveGeneration.Wii)) // TODO: Finish WW+ House editing
                         House.Write();
 
                 //Save Acre & Town Data

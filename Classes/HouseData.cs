@@ -220,6 +220,11 @@ namespace ACSE
                     Room.Carpet = new Item((ushort)(0x2600 | SaveData.ReadByte(RoomOffset + Offsets.Room_Carpet)));
                     Room.Wallpaper = new Item((ushort)(0x2700 | SaveData.ReadByte(RoomOffset + Offsets.Room_Wallpaper)));
                 }
+                else
+                {
+                    Room.Carpet = new Item(SaveData.ReadUInt16(RoomOffset + Offsets.Room_Carpet, SaveData.Is_Big_Endian));
+                    Room.Wallpaper = new Item(SaveData.ReadUInt16(RoomOffset + Offsets.Room_Wallpaper, SaveData.Is_Big_Endian));
+                }
 
                 for (int x = 0; x < Offsets.Layer_Count; x++)
                 {
@@ -391,13 +396,21 @@ namespace ACSE
 
         public static HouseOffsets City_Folk_Offsets = new HouseOffsets
         {
+            // 0 - 0x870 = Flag Pattern
+            Town_ID = 0x880,
+            Town_Name = 0x882,
+            Town_NameSize = 16,
+            Owning_Player_ID = 0x896,
+            Owning_Player_Name = 0x898,
+            Owning_Player_NameSize = 16,
             Room_Start = 0x8AC,
             Room_Count = 3,
             Room_Size = 0x458,
             Layer_Size = 0x200, //16 * 16 DWORDs
             Layer_Count = 2,
+            Room_Wallpaper = 0x44E,
+            Room_Carpet = 0x450,
             House_Upgrade_Size = 0x15B4, //Also at 0x15B5
-
         };
 
         public static HouseOffsets New_Leaf_Offsets = new HouseOffsets //HouseData is duplicated starting at 0x9 (0x0 - 0x8)
@@ -449,6 +462,8 @@ namespace ACSE
                     return Doubutsu_no_Mori_e_Plus_Offsets;
                 case SaveType.Wild_World:
                     return Wild_World_Offsets;
+                case SaveType.City_Folk:
+                    return City_Folk_Offsets;
                 case SaveType.New_Leaf:
                 case SaveType.Welcome_Amiibo:
                     return New_Leaf_Offsets;
@@ -498,7 +513,7 @@ namespace ACSE
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Animal_Crossing:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
-                    HouseOffsets Current_Offsets = GetHouseOffsets(Save_Type);
+                case SaveType.City_Folk:
                     for (int i = 0; i < 4; i++)
                     {
                         if (Houses[i].Owner == null && Houses[i].Data.Owning_Player_ID == Player.Data.Identifier && Houses[i].Data.Town_ID == Player.Data.TownIdentifier)

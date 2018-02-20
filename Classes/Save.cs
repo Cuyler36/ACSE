@@ -269,6 +269,7 @@ namespace ACSE
             Buildings_Count = 0x33, //Not sure
             Acre_Data = 0x68414, //Don't forget about the additional acres before?
             Acre_Data_Size = 0x62,
+            Town_ID = 0x640E6,
             Town_Name = 0x640E8,
             Town_NameSize = 16,
             Town_Data = 0x68476,
@@ -290,7 +291,6 @@ namespace ACSE
             Villager_Data = -1, //finish this sometime
             Island_Acre_Data = -1,
             Island_Buildings = -1,
-            Town_ID = -1, //
             Weather = -1,
         };
 

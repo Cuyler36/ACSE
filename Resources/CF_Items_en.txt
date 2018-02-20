@@ -2818,5 +2818,7 @@
 0xC834, Not Used (Invisible Chair)
 0xC838, Not Used (Invisible Chair)
 0xC83C, Not Used (Invisible Chair)
+//Misc
+0xF030, Multispace Furniture Space
 //Empty
 0xFFF1, Empty
