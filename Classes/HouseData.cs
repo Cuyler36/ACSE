@@ -336,6 +336,44 @@ namespace ACSE
     {
         private static  House[] Houses;
 
+        public static HouseOffsets Doubutsu_no_Mori_House_Offsets = new HouseOffsets
+        {
+            Owning_Player_Name = 0,
+            Owning_Player_NameSize = 6,
+            Town_Name = 6,
+            Town_NameSize = 6,
+            Owning_Player_ID = 0xC,
+            Town_ID = 0xE,
+            Room_Start = 0x38,
+            Room_Size = 0x440,
+            Room_Count = 1,
+            Layer_Size = 0x220,
+            Layer_Count = 2,
+            Room_Carpet = -0x24, // Relative to the start of the house object
+            Room_Wallpaper = -0x23,
+            Bed = -1,
+            Roof_Color = -1,
+        };
+
+        public static HouseOffsets Doubutsu_no_Mori_Plus_Offsets = new HouseOffsets
+        {
+            Owning_Player_Name = 0,
+            Owning_Player_NameSize = 6,
+            Town_Name = 6,
+            Town_NameSize = 6,
+            Owning_Player_ID = 0xC,
+            Town_ID = 0xE,
+            Room_Start = 0x30,
+            Room_Size = 0x8A8,
+            Room_Count = 3,
+            Layer_Size = 0x228,
+            Layer_Count = 4,
+            Room_Carpet = 0x8A0,
+            Room_Wallpaper = 0x8A1,
+            Roof_Color = 0x28,
+            Bed = -1,
+        };
+
         public static HouseOffsets Animal_Crossing_House_Offsets = new HouseOffsets
         {
             // House Upgrade date: 0x26 (byte) 0x27 (byte) 0x28 (ushort) | Day, Month, Year
@@ -354,6 +392,7 @@ namespace ACSE
             Layer_Size = 0x228,
             Room_Carpet = 0x8A0,
             Room_Wallpaper = 0x8A1,
+            Bed = -1,
         };
 
         public static HouseOffsets Doubutsu_no_Mori_e_Plus_Offsets = new HouseOffsets
@@ -374,6 +413,7 @@ namespace ACSE
             Layer_Size = 0x228,
             Room_Carpet = 0x8A0,
             Room_Wallpaper = 0x8A1,
+            Bed = -1,
             // 0x20 & 0x10 >> 4 == 1 is basement purchased
             // 0x26 bytes in = house upgrade process byte? & with 0xE0? (In AC, it's 0x2A & 0x2B)
         };
@@ -391,7 +431,9 @@ namespace ACSE
             Owning_Player_Name = -1,
             Town_Name = -1,
             Owning_Player_ID = -1,
-            Town_ID = -1
+            Town_ID = -1,
+            Bed = -1,
+            Roof_Color = -1 // 
         };
 
         public static HouseOffsets City_Folk_Offsets = new HouseOffsets
@@ -411,6 +453,7 @@ namespace ACSE
             Room_Wallpaper = 0x44E,
             Room_Carpet = 0x450,
             House_Upgrade_Size = 0x15B4, //Also at 0x15B5
+            Roof_Color = -1 //
         };
 
         public static HouseOffsets New_Leaf_Offsets = new HouseOffsets //HouseData is duplicated starting at 0x9 (0x0 - 0x8)
@@ -429,7 +472,14 @@ namespace ACSE
             Room_Count = 6,
             Room_Size = 0x302,
             Layer_Size = 0x150,
-            Layer_Count = 2
+            Layer_Count = 2,
+            Bed = -1,
+            Roof_Color = -1
+        };
+
+        public static string[] DnM_House_Names = new string[1]
+        {
+            "Main Room"
         };
 
         public static string[] AC_Room_Names = new string[3]
@@ -456,6 +506,10 @@ namespace ACSE
         {
             switch (Save_Type)
             {
+                case SaveType.Doubutsu_no_Mori:
+                    return Doubutsu_no_Mori_House_Offsets;
+                case SaveType.Doubutsu_no_Mori_Plus:
+                    return Doubutsu_no_Mori_Plus_Offsets;
                 case SaveType.Animal_Crossing:
                     return Animal_Crossing_House_Offsets;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
@@ -492,6 +546,8 @@ namespace ACSE
             switch (Generation)
             {
                 case SaveGeneration.N64:
+                    return DnM_House_Names;
+
                 case SaveGeneration.GCN:
                 case SaveGeneration.Wii:
                     return AC_Room_Names;

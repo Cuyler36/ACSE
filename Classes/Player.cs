@@ -198,7 +198,7 @@ namespace ACSE
             Shirt = 0xAC8,
             Birthday = 0xAE2,
             BirthdaySize = 2,
-            Reset = 0x10F4, //
+            Reset = -1, //
             ResetSize = 4,
             Savings = 0x11B4,
             Patterns = 0xC40,

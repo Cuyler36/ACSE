@@ -899,7 +899,7 @@ namespace ACSE
                 return Found.Value;
             else
             {
-                ushort BaseID = (ushort)(itemID - (itemID % 4));
+                ushort BaseID = (ushort)(itemID & 0xFFFC);
                 var FoundBase = ItemDatabase.Where(o => o.Key == BaseID).Select(o => new { o.Key, o.Value }).FirstOrDefault();
                 if (FoundBase != null)
                     return FoundBase.Value;
@@ -1167,7 +1167,7 @@ namespace ACSE
             }
             else
             {
-                BaseItemID = (ushort)(ItemID - (ItemID % 4));
+                BaseItemID = (ushort)(ItemID & 0xFFFC);
                 if (ItemData.GetItemType(itemId, NewMainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(itemId, NewMainForm.Save_File.Save_Type).Equals("Gyroids"))
                 {
                     Rotation = (ItemID % 4) * 90;
@@ -1190,7 +1190,7 @@ namespace ACSE
             }
             else
             {
-                BaseItemID = (ushort)(ItemID - (ItemID % 4));
+                BaseItemID = (ushort)(ItemID & 0xFFFC);
                 if (ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type).Equals("Gyroids"))
                 {
                     Rotation = (ItemID % 4) * 90;
@@ -1212,7 +1212,7 @@ namespace ACSE
             }
             else
             {
-                BaseItemID = (ushort)(ItemID - (ItemID % 4));
+                BaseItemID = (ushort)(ItemID & 0xFFFC);
                 if (ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type).Equals("Gyroids"))
                 {
                     Rotation = (ItemID % 4) * 90;

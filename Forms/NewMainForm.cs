@@ -508,7 +508,7 @@ namespace ACSE
             houseOwnerComboBox.Enabled = save.Game_System != SaveGeneration.NDS;
             houseTabSelect.Visible = save.Game_System != SaveGeneration.NDS;
             houseTabSelect.Enabled = save.Game_System != SaveGeneration.NDS;
-            basementCheckBox.Enabled = save.Game_System == SaveGeneration.N64 || save.Game_System == SaveGeneration.GCN;
+            basementCheckBox.Enabled = save.Game_System == SaveGeneration.GCN;
             grassLevelBox.Enabled = true;
             setAllGrass.Enabled = true;
             reviveGrass.Enabled = true;
@@ -1023,9 +1023,11 @@ namespace ACSE
             itemFlag2.Text = "00";
 
             //Load all tabs so alignment is kept
+            SetMainTabEnabled("housesTab", false);
             SetMainTabEnabled("islandTab", false);
             SetMainTabEnabled("grassTab", false);
             SetMainTabEnabled("patternsTab", false);
+            SetMainTabEnabled("housesTab", true);
             SetMainTabEnabled("islandTab", true);
             SetMainTabEnabled("grassTab", true);
             SetMainTabEnabled("patternsTab", true);
@@ -1145,6 +1147,7 @@ namespace ACSE
                 SetMainTabEnabled("islandTab", true);
                 SetMainTabEnabled("grassTab", true);
                 SetMainTabEnabled("patternsTab", true);
+                SetMainTabEnabled("housesTab", false); // TEMP! Remove this once I get around to implementing 3DS house editing
                 playerHairType.Enabled = true;
                 playerHairColor.Enabled = true;
                 playerEyeColor.Enabled = true;
@@ -3600,7 +3603,7 @@ namespace ACSE
 
                 // Save Houses
                 foreach (House House in Houses)
-                    if (House != null && (Save_File.Game_System == SaveGeneration.GCN || Save_File.Game_System == SaveGeneration.NDS || Save_File.Game_System == SaveGeneration.Wii)) // TODO: Finish WW+ House editing
+                    if (House != null && Save_File.Game_System != SaveGeneration.N3DS) // TODO: Finish 3DS House editing
                         House.Write();
 
                 //Save Acre & Town Data

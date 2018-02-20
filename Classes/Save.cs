@@ -119,6 +119,8 @@ namespace ACSE
             Town_Name = 0x2F60,
             Town_NameSize = 6,
             Town_ID = 0x2F68,
+            House_Data = 0x3588,
+            House_Data_Size = 0xB48,
             Acre_Data = 0x9EA8,
             Acre_Data_Size = 0x70,
             Villager_Data = 0x9F18,
@@ -138,6 +140,8 @@ namespace ACSE
             Player_Size = 0x1E00,
             Town_Name = 0x7820,
             Town_ID = 0x7828,
+            House_Data = 0x7E48,
+            House_Data_Size = 0x2128,
             Island_Acre_Data = 0x13F60,
             Island_World_Data = 0x1B450,
             Island_World_Size = 0x400,
@@ -492,6 +496,7 @@ namespace ACSE
 
         public static byte[] ByteSwap(byte[] saveBuff)
         {
+            byte[] swappedBuffer = new byte[saveBuff.Length];
             byte A = 0, B = 0, C = 0, D = 0;
             for (int i = 0; i < saveBuff.Length; i += 4)
             {
@@ -499,12 +504,12 @@ namespace ACSE
                 B = saveBuff[i + 1];
                 C = saveBuff[i + 2];
                 D = saveBuff[i + 3];
-                saveBuff[i] = D;
-                saveBuff[i + 1] = C;
-                saveBuff[i + 2] = B;
-                saveBuff[i + 3] = A;
+                swappedBuffer[i] = D;
+                swappedBuffer[i + 1] = C;
+                swappedBuffer[i + 2] = B;
+                swappedBuffer[i + 3] = A;
             }
-            return saveBuff;
+            return swappedBuffer;
         }
 
         public static SaveType GetSaveType(byte[] Save_Data)
@@ -968,6 +973,10 @@ namespace ACSE
 
         public void Write(int offset, dynamic data, bool reversed = false, int stringLength = 0)
         {
+            if (offset == 0xBEF0)
+            {
+                Console.WriteLine();
+            }
             ChangesMade = true;
             Type Data_Type = data.GetType();
             NewMainForm.Debug_Manager.WriteLine(string.Format("Writing Data{2} of type {0} to offset {1}", Data_Type.Name, "0x" + offset.ToString("X"), //recasting a value shows it as original type?
