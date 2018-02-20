@@ -141,8 +141,8 @@ namespace ACSE
             Shirt = 0xA78,
             Birthday = -1,
             BirthdaySize = 2,
-            Reset = -1, //
-            ResetSize = 8,
+            Reset = 0xAE0,
+            ResetSize = 4,
             Savings = -1, // Does DnM have savings?
             Patterns = -1, // No Patterns in DnM
             PatternCount = 8,
@@ -198,7 +198,7 @@ namespace ACSE
             Shirt = 0xAC8,
             Birthday = 0xAE2,
             BirthdaySize = 2,
-            Reset = -1, //
+            Reset = 0xB2C,
             ResetSize = 4,
             Savings = 0x11B4,
             Patterns = 0xC40,
