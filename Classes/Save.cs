@@ -234,6 +234,7 @@ namespace ACSE
         public static Offsets Wild_World_Offsets = new Offsets
         {
             Save_Size = 0x15FE0,
+            Town_ID = 0x0002,
             Town_Name = 0x0004,
             Town_NameSize = 8,
             Player_Start = 0x000C,
@@ -259,7 +260,6 @@ namespace ACSE
             PWPs = -1,
             Island_Acre_Data = -1,
             Island_Buildings = -1,
-            Town_ID = -1, //
             Weather = -1,
             Checksum = 0x15FDC
         };

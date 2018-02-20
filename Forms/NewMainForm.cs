@@ -4145,10 +4145,9 @@ namespace ACSE
             }
         }
 
-        //TODO: Implement for WW+
         private void resettiCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (!Loading && Save_File != null && Selected_Player != null) // Change once all are found
+            if (!Loading && Save_File != null && Selected_Player != null)
             {
                 if (Save_File.Save_Type == SaveType.City_Folk)
                 {

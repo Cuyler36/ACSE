@@ -38,16 +38,186 @@
 0x0023, Weed #3
 0x0024, Weed #4
 //Trees
-0x0025, Tree Size 1 (Sapling)
-0x0026, Tree Size 2
-0x0027, Tree Size 3
-0x0028, Tree Size 4 (Bush)
-0x0029, Tree Size 5
-0x002A, Tree Size 6 (Fully Grown) 
-0x002B, Stump Size 1 (small)
-0x002C, Stump Size 2
-0x002D, Stump Size 3
-0x002E, Stump Size 4 (Big)
+0x0025, Sapling
+0x0026, Small Tree
+0x0027, Medium Tree
+0x0028, Large Tree
+0x0029, Tree
+0x002A, Fully Grown Tree
+0x002B, Small Stump
+0x002C, Medium Stump
+0x002D, Large Stump
+0x002E, Fully Grown Stump
+0x002F, Peach Sapling
+0x0030, Small Peach Tree
+0x0031, Medium Peach Tree
+0x0032, Large Peach Sapling
+0x0033, Peach Tree - [Fruit]
+0x0034, Peach Tree - [No Fruit] #1
+0x0035, Peach Tree - [No Fruit] #2
+0x0036, Peach Tree - [No Fruit] #3
+0x0037, Apple Sapling
+0x0038, Small Apple Tree
+0x0039, Medium Apple Tree
+0x003A, Large Apple Sapling
+0x003B, Apple Tree - [Fruit]
+0x003C, Apple Tree - [No Fruit] #1
+0x003D, Apple Tree - [No Fruit] #2
+0x003E, Apple Tree - [No Fruit] #3
+0x003F, Orange Sapling
+0x0040, Small Orange Tree
+0x0041, Medium Orange Tree
+0x0042, Large Orange Sapling
+0x0043, Orange Tree - [Fruit]
+0x0044, Orange Tree - [No Fruit] #1
+0x0045, Orange Tree - [No Fruit] #2
+0x0046, Orange Tree - [No Fruit] #3
+0x0047, Pear Sapling
+0x0048, Small Pear Tree
+0x0049, Medium Pear Tree
+0x004A, Large Pear Sapling
+0x004B, Pear Tree - [Fruit]
+0x004C, Pear Tree - [No Fruit] #1
+0x004D, Pear Tree - [No Fruit] #2
+0x004E, Pear Tree - [No Fruit] #3
+0x004F, Cherry Sapling
+0x0050, Small Cherry Tree
+0x0051, Medium Cherry Tree
+0x0052, Large Cherry Sapling
+0x0053, Cherry Tree - [Fruit]
+0x0054, Cherry Tree - [No Fruit] #1
+0x0055, Cherry Tree - [No Fruit] #2
+0x0056, Cherry Tree - [No Fruit] #3
+0x0057, Money Tree Sapling
+0x0058, Small Money Tree
+0x0059, Medium Money Tree
+0x005A, Large Money Sapling
+0x005B, Money Tree - [Money]
+0x005C, Cedar Sapling
+0x005D, Small Cedar Tree
+0x005E, Medium Cedar Tree
+0x005F, Large Cedar Tree
+0x0060, Cedar Tree
+0x0061, Fully Grown Cedar Tree
+0x0062, Small Cedar Stump
+0x0063, Medium Cedar Stump
+0x0064, Large Cedar Stump
+0x0065, Fully Grown Cedar Stump
+//Special Trees
+0x0066, Tree - [Furniture]
+0x0067, Tree - [Bees]
+0x0068, Tree - [Bells]
+0x0069, Tree - [Acorn]
+0x006A, Cedar Tree - [Furniture]
+0x006B, Cedar Tree - [Bees]
+0x006C, Cedar Tree - [Bells]
+0x006D, Cedar Tree - [Festive Lights]
+//Parched Flowers
+0x006E, Red Tulips - [Parched]
+0x006F, White Tulips - [Parched]
+0x0070, Yellow Tulips - [Parched]
+0x0071, Pink Tulips - [Parched]
+0x0072, Purple Tulips - [Parched]
+0x0073, Black Tulips - [Parched]
+0x0074, White Pansies - [Parched]
+0x0075, Yellow Pansies - [Parched]
+0x0076, Red Pansies - [Parched]
+0x0077, Purple Pansies - [Parched]
+0x0078, Orange Pansies - [Parched]
+0x0079, Blue Pansies - [Parched]
+0x007A, White Cosmos - [Parched]
+0x007B, Red Cosmos - [Parched]
+0x007C, Yellow Cosmos - [Parched]
+0x007D, Pink Cosmos - [Parched]
+0x007E, Orange Cosmos - [Parched]
+0x007F, Black Cosmos - [Parched]
+0x0080, Red Roses - [Parched]
+0x0081, White Roses - [Parched]
+0x0082, Yellow Roses - [Parched]
+0x0083, Pink Roses - [Parched]
+0x0084, Orange Roses - [Parched]
+0x0085, Purple Roses - [Parched]
+0x0086, Black Roses - [Parched]
+0x0087, Blue Roses - [Parched]
+0x0088, Jacob's Ladder - [Parched]
+0x0089, Rafflesia - [Parched]
+//Watered Flowers
+0x008A, Red Tulips - [Watered]
+0x008B, White Tulips - [Watered]
+0x008C, Yellow Tulips - [Watered]
+0x008D, Pink Tulips - [Watered]
+0x008E, Purple Tulips - [Watered]
+0x008F, Black Tulips - [Watered]
+0x0090, White Pansies - [Watered]
+0x0091, Yellow Pansies - [Watered]
+0x0092, Red Pansies - [Watered]
+0x0093, Purple Pansies - [Watered]
+0x0094, Orange Pansies - [Watered]
+0x0095, Blue Pansies - [Watered]
+0x0096, White Cosmos - [Watered]
+0x0097, Red Cosmos - [Watered]
+0x0098, Yellow Cosmos - [Watered]
+0x0099, Pink Cosmos - [Watered]
+0x009A, Orange Cosmos - [Watered]
+0x009B, Black Cosmos - [Watered]
+0x009C, Red Roses - [Watered]
+0x009D, White Roses - [Watered]
+0x009E, Yellow Roses - [Watered]
+0x009F, Pink Roses - [Watered]
+0x00A0, Orange Roses - [Watered]
+0x00A1, Purple Roses - [Watered]
+0x00A2, Black Roses - [Watered]
+0x00A3, Blue Roses - [Watered]
+0x00A4, Jacob's Ladder - [Watered]
+0x00A5, Rafflesia - [Watered]
+//Fake Buried Spot #1
+0x00A6, Fake Buried Spot #1
+//Patterns
+0x00A7, Pattern #1 - Player #1
+0x00A8, Pattern #2 - Player #1
+0x00A9, Pattern #3 - Player #1
+0x00AA, Pattern #4 - Player #1
+0x00AB, Pattern #5 - Player #1
+0x00AC, Pattern #6 - Player #1
+0x00AD, Pattern #7 - Player #1
+0x00AE, Pattern #8 - Player #1
+0x00AF, Pattern #1 - Player #2
+0x00B0, Pattern #2 - Player #2
+0x00B1, Pattern #3 - Player #2
+0x00B2, Pattern #4 - Player #2
+0x00B3, Pattern #5 - Player #2
+0x00B4, Pattern #6 - Player #2
+0x00B5, Pattern #7 - Player #2
+0x00B6, Pattern #8 - Player #2
+0x00B7, Pattern #1 - Player #3
+0x00B8, Pattern #2 - Player #3
+0x00B9, Pattern #3 - Player #3
+0x00BA, Pattern #4 - Player #3
+0x00BB, Pattern #5 - Player #3
+0x00BC, Pattern #6 - Player #3
+0x00BD, Pattern #7 - Player #3
+0x00BE, Pattern #8 - Player #3
+0x00BF, Pattern #1 - Player #4
+0x00C0, Pattern #2 - Player #4
+0x00C1, Pattern #3 - Player #4
+0x00C2, Pattern #4 - Player #4
+0x00C3, Pattern #5 - Player #4
+0x00C4, Pattern #6 - Player #4
+0x00C5, Pattern #7 - Player #4
+0x00C6, Pattern #8 - Player #4
+//Palm Trees
+0x00C7, Palm Sapling
+0x00C8, Small Palm Tree
+0x00C9, Medium Palm Tree
+0x00CA, Large Palm Sapling
+0x00CB, Palm Tree [Fruit]
+0x00CC, Palm Tree [No Fruit] #1
+0x00CD, Palm Tree [No Fruit] #2
+0x00CE, Palm Tree [No Fruit] #3
+0x00CF, Small Palm Stump
+0x00D0, Medium Palm Stump
+0x00D1, Large Palm Stump
+0x00D2, Fully Grown Palm Stump
 //Rocks
 0x00E3, Rock #1
 0x00E4, Rock #2
@@ -75,6 +245,13 @@
 0x00F9, Rock #3C
 0x00FA, Rock #4C
 0x00FB, Rock #5C
+//Fake Buried Spot #2
+0x00FE, Fake Buried Spot #2
+//Special Stumps
+0x00FF, Special Small Stump
+0x0100, Special Medium Stump
+0x0101, Special Large Stump
+0x0102, Special Stump
 //Stationary
 0x1000, Butterfly Paper (1)
 0x1001, Butterfly Paper (2)
@@ -1362,6 +1539,8 @@
 0x155A, Dall's Top
 0x155B, Porceletta
 0x155C, Sand Dollar
+//Lost Item
+0x155D, Lost Item
 //Items
 0x155E, Medicine
 0x155F, Carpet Package
@@ -2882,9 +3061,12 @@
 0x501C, Bulletin Board
 0x501D, Invisible Mailbox
 0x501E, New Year's Countdown Sign
-0x501F, 0x501F?
 0x5020, Gulliver's Ship
 0x5021, Gracie's Car
+//Snowmen
+0xB001, Snowman #1
+0xB002, Snowman #2
+0xB003, Snowman #3
 //Occupied Space
 0xF030, Occupied/Reserved Space
 //Empty
