@@ -1695,7 +1695,7 @@ namespace ACSE
                         BackgroundImage = Acre_Image,
                         SizeMode = PictureBoxSizeMode.StretchImage,
                         BackgroundImageLayout = ImageLayout.Stretch,
-                        InterpolationMode = InterpolationMode.HighQualityBicubic,
+                        InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode,
                         UseInternalInterpolationSetting = false,
                     };
                     
