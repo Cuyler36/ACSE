@@ -535,7 +535,7 @@ namespace ACSE
             {
                 if (ID == 0xFFF1)
                     return "Empty";
-                else if ((ID >= 0xB710 && ID <= 0xCE50) || (ID >= 0x93F0 && ID <= 0x9414))
+                else if ((ID >= 0xB710 && ID <= 0xCE50) || (ID >= 0x93F0 && ID <= 0x9414) || (ID >= 0x9CC0 && ID < 0x9EC0))
                     return "Furniture";
                 else if (ID >= 0xA518 && ID <= 0xAA7C)
                     return "Clothes";
