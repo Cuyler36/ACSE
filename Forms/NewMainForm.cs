@@ -258,15 +258,15 @@ namespace ACSE
             {
                 PlaceholderText = "Replaced ID",
                 Size = new Size(replaceToolStripMenuItem.Size.Width, 18),
-                MaxLength = 4
+                PlaceholderTextColor = Color.Gray
             };
 
             ReplacingItemBox = new PlaceholderTextBox
             {
                 PlaceholderText = "Replacing ID",
-                Size = new Size(replaceToolStripMenuItem.Size.Width, 18)
+                Size = new Size(replaceToolStripMenuItem.Size.Width, 18),
+                PlaceholderTextColor = Color.Gray
             };
-            ReplaceItemBox.MaxLength = 4;
 
             var ReplaceToolStripHost = new ToolStripControlHost(ReplaceItemBox);
             var ReplacingToolStripHost = new ToolStripControlHost(ReplacingItemBox);
@@ -292,6 +292,7 @@ namespace ACSE
                 TextBox.Text = Text.Remove(Text.Length - 1, 1);
                 TextBox.SelectionStart = TextBox.Text.Length;
             }
+            TextBox.MaxLength = TextBox.IsPlaceholderActive ? short.MaxValue : 4;
         }
 
         #endregion
@@ -383,9 +384,11 @@ namespace ACSE
                     CurrentItem = New_Item;
                 }
 
-                selectedItem.SelectedValue = CurrentItem.ItemID;
+                selectedItem.SelectedValue = New_Item.ItemID;
                 itemFlag1.Text = New_Item.Flag1.ToString("X2");
                 itemFlag2.Text = New_Item.Flag2.ToString("X2");
+                if (!itemIdTextBox.Focused)
+                    itemIdTextBox.Text = New_Item.ItemID.ToString("X4");
             }
         }
 
@@ -508,6 +511,7 @@ namespace ACSE
             getAllKKSongsToolStripMenuItem.Enabled = true;
             acreCustomIdBox.Enabled = true;
             selectedItem.Enabled = true;
+            itemIdTextBox.Enabled = true;
             townNameBox.Enabled = true;
             buriedCheckbox.Enabled = true;
             grassTypeBox.Enabled = true;
@@ -1467,9 +1471,26 @@ namespace ACSE
             {
                 if (ushort.TryParse(selectedItem.SelectedValue.ToString(), out ushort Item_ID))
                 {
-                    selectedItemText.Text = string.Format("Selected Item: [0x{0}]", Item_ID.ToString("X4"));
+                    //selectedItemText.Text = string.Format("Selected Item: [0x{0}]", Item_ID.ToString("X4"));
                     SetCurrentItem(new Item(Item_ID, byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text)));
                 }
+            }
+        }
+
+        private void CurrentItemId_TextChanged(object sender, EventArgs e)
+        {
+            ReplaceVerifyHex(itemIdTextBox);
+            if (ushort.TryParse(itemIdTextBox.Text, NumberStyles.HexNumber, null, out ushort itemId))
+            {
+                SetCurrentItem(new Item(itemId, byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text)));
+            }
+        }
+
+        private void CurrentItemId_LostFocus(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(itemIdTextBox.Text))
+            {
+                itemIdTextBox.Text = CurrentItem.ItemID.ToString("X4");
             }
         }
 

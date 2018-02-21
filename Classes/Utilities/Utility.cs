@@ -100,7 +100,7 @@ namespace ACSE.Classes.Utilities
                                     Acre.Acre_Items[o] = new WorldItem(0, o);
                                 }
                             }
-                            else if (ItemData.GetItemType(Item.ItemID) == "Tree")
+                            else if (ItemData.GetItemType(Item.ItemID, NewMainForm.Save_File.Save_Type) == "Tree")
                             {
                                 Tree_Count++;
                             }
@@ -113,7 +113,7 @@ namespace ACSE.Classes.Utilities
                                 {
                                     for (int x = 0; x < 256; x++)
                                     {
-                                        if (ItemData.GetItemType(Acre.Acre_Items[x].ItemID) == "Tree")
+                                        if (ItemData.GetItemType(Acre.Acre_Items[x].ItemID, NewMainForm.Save_File.Save_Type) == "Tree")
                                         {
                                             Acre.Acre_Items[x] = new WorldItem(0, x);
                                             break;
