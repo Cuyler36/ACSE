@@ -982,12 +982,27 @@ namespace ACSE
 
                 // Get the Player's House
                 House = HouseInfo.GetHouse(this, save.Save_Type);
+                if (House != null)
+                {
+                    if (House.Data.Bed != null)
+                    {
+                        Data.Bed = House.Data.Bed;
+                    }
+                }
+
                 Console.WriteLine(string.Format("Player {0}'s house = {1}", Index, House));
             }
         }
 
         public void Write()
         {
+            // Set City Folk Bed first
+            if (SaveData.Game_System == SaveGeneration.Wii && House != null && Data.Bed != null)
+            {
+                House.Data.Bed = Data.Bed;
+                Data.Bed = null;
+            }
+
             Type PlayerSaveInfoType = typeof(PlayerSaveInfo);
             Type PlayerDataType = typeof(PlayerData);
             foreach (var Field in PlayerSaveInfoType.GetFields(BindingFlags.Public | BindingFlags.Instance))

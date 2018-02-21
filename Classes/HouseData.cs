@@ -453,6 +453,7 @@ namespace ACSE
             Room_Wallpaper = 0x44E,
             Room_Carpet = 0x450,
             House_Upgrade_Size = 0x15B4, //Also at 0x15B5
+            Bed = 0x15B8,
             Roof_Color = -1 //
         };
 
