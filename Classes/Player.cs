@@ -538,8 +538,8 @@ namespace ACSE
             Tan = 8,
             Hat = 0xA,
             FaceItem = 0xE,
-            Wetsuit = 0x12,
-            Shirt = 0x16,
+            Wetsuit = 0x16, // Check this
+            Shirt = 0x12,
             Pants = 0x1A,
             Socks = 0x1E,
             Shoes = 0x22,

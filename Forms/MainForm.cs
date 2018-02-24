@@ -84,6 +84,7 @@ namespace ACSE
         private PlaceholderTextBox ReplaceItemBox;
         private PlaceholderTextBox ReplacingItemBox;
         private ItemEditor inventoryEditor;
+        private SingleItemEditor shirtEditor;
         private ItemEditor dresserEditor;
         private ItemEditor islandBoxEditor;
         private bool Loading = false;
@@ -166,7 +167,6 @@ namespace ACSE
 
             //Player Item PictureBox Event Hookups
             BindPlayerItemBoxEvents(heldItemPicturebox);
-            BindPlayerItemBoxEvents(shirtPicturebox);
             BindPlayerItemBoxEvents(hatPicturebox);
             BindPlayerItemBoxEvents(facePicturebox);
             BindPlayerItemBoxEvents(pocketsBackgroundPicturebox);
@@ -992,6 +992,24 @@ namespace ACSE
             if (inventoryEditor != null && !inventoryEditor.IsDisposed)
                 inventoryEditor.Dispose();
 
+            if (shirtEditor == null)
+            {
+                shirtEditor = new SingleItemEditor(this, Selected_Player.Data.Shirt, 16)
+                {
+                    Location = new Point(98, 249)
+                };
+
+                shirtEditor.ItemChanged += delegate (object sender, ItemChangedEventArgs e)
+                {
+                    if (Selected_Player != null && !Loading)
+                    {
+                        Selected_Player.Data.Shirt = e.NewItem;
+                    }
+                };
+
+                playersTab.Controls.Add(shirtEditor);
+            }
+
             inventoryEditor = new ItemEditor(this, Selected_Player.Data.Pockets.Items, save.Game_System == SaveGeneration.N3DS ? 4 : 5, 16)
             {
                 Location = new Point(26, 340)
@@ -1254,7 +1272,6 @@ namespace ACSE
             }
             playerName.Text = Player.Data.Name;
             playerGender.SelectedIndex = Player.Data.Gender == 0 ? 0 : 1;
-            Refresh_PictureBox_Image(shirtPicturebox, Inventory.GetItemPic(16, Player.Data.Shirt, Save_File.Save_Type));
             Refresh_PictureBox_Image(heldItemPicturebox, Inventory.GetItemPic(16, Player.Data.HeldItem, Save_File.Save_Type));
 
             //Birthday
@@ -1341,6 +1358,12 @@ namespace ACSE
             if (inventoryEditor != null && !inventoryEditor.IsDisposed)
             {
                 inventoryEditor.Items = Player.Data.Pockets.Items;
+            }
+
+            // Refresh Shirt
+            if (shirtEditor != null)
+            {
+                shirtEditor.Item = Player.Data.Shirt;
             }
 
             // Refresh Dressers
@@ -2781,8 +2804,6 @@ namespace ACSE
                 Last_Y = e.Y;
                 if (Box == heldItemPicturebox)
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.HeldItem.Name, Selected_Player.Data.HeldItem.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
-                else if (Box == shirtPicturebox)
-                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Shirt.Name, Selected_Player.Data.Shirt.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 else if (Box == hatPicturebox && hatPicturebox.Enabled)
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Hat.Name, Selected_Player.Data.Hat.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 else if (Box == facePicturebox && facePicturebox.Enabled)
@@ -2815,21 +2836,7 @@ namespace ACSE
             if (Save_File == null)
                 return;
             PictureBox ItemBox = sender as PictureBox;
-            if (ItemBox == shirtPicturebox)
-            {
-                if (e.Button == MouseButtons.Right)
-                {
-                    //selectedItem.SelectedValue = Selected_Player.Data.Shirt.ItemID;
-                    SetCurrentItem(Selected_Player.Data.Shirt);
-                }
-                else if (e.Button == MouseButtons.Left)
-                {
-                    Save_File.ChangesMade = true;
-                    Selected_Player.Data.Shirt = new Item(GetCurrentItem());
-                    shirtPicturebox.Image = Inventory.GetItemPic(16, Selected_Player.Data.Shirt, Save_File.Save_Type);
-                }
-            }
-            else if (ItemBox == heldItemPicturebox)
+            if (ItemBox == heldItemPicturebox)
             {
                 if (e.Button == MouseButtons.Right)
                 {

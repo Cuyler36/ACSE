@@ -3681,6 +3681,7 @@
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
     <Compile Include="Classes\Extensions\ProgressBarExtension.cs" />
     <Compile Include="Classes\ItemChange.cs" />
+    <Compile Include="Classes\ItemChangedEventArgs.cs" />
     <Compile Include="Controls\OffsetablePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -3707,6 +3708,12 @@
     <Compile Include="Classes\SimpleTownInfo.cs" />
     <Compile Include="Controls\ItemEditor.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SingleItemEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SingleItemEditor.Designer.cs">
+      <DependentUpon>SingleItemEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ToggableAlertForm.cs">
       <SubType>Form</SubType>
