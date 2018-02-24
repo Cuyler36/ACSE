@@ -1006,7 +1006,6 @@ namespace ACSE
                     Location = new Point(202, 340)
                 };
 
-                dresserAPictureBox.Visible = false;
                 playersTab.Controls.Add(dresserEditor);
             }
         }
@@ -1105,8 +1104,6 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
-                dresserAPictureBox.Visible = false;
-                dresserAPictureBox.Enabled = false;
                 islandPictureBox.Visible = false;
                 islandPictureBox.Enabled = false;
                 dresserText.Visible = false;
@@ -1139,8 +1136,6 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
-                dresserAPictureBox.Visible = true;
-                dresserAPictureBox.Enabled = true;
                 islandPictureBox.Visible = false;
                 islandPictureBox.Enabled = false;
                 dresserText.Visible = true;
@@ -1174,8 +1169,6 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
-                dresserAPictureBox.Visible = true;
-                dresserAPictureBox.Enabled = true;
                 islandPictureBox.Visible = false;
                 islandPictureBox.Enabled = false;
                 dresserText.Visible = true;
@@ -1207,8 +1200,6 @@ namespace ACSE
                 itemFlag1.Enabled = true;
                 itemFlag2.Enabled = true;
                 playerMeowCoupons.Enabled = Current_Save_Type == SaveType.Welcome_Amiibo;
-                dresserAPictureBox.Visible = true;
-                dresserAPictureBox.Enabled = true;
                 islandPictureBox.Visible = true;
                 islandPictureBox.Enabled = true;
                 dresserText.Visible = true;

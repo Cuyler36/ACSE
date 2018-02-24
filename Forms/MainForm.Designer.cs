@@ -31,10 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TabPage patternsTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
             this.patternEditorPanel = new System.Windows.Forms.Panel();
+            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternEditorPreviewPanel = new System.Windows.Forms.Panel();
             this.patternGroupTabControl = new System.Windows.Forms.TabControl();
             this.player1Tab = new System.Windows.Forms.TabPage();
@@ -76,7 +78,6 @@
             this.islandBoxText = new System.Windows.Forms.Label();
             this.islandPictureBox = new System.Windows.Forms.PictureBox();
             this.dresserText = new System.Windows.Forms.Label();
-            this.dresserAPictureBox = new System.Windows.Forms.PictureBox();
             this.playerMeowCoupons = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -223,13 +224,12 @@
             this.loadingPanel = new System.Windows.Forms.Panel();
             this.label45 = new System.Windows.Forms.Label();
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
-            this.label46 = new System.Windows.Forms.Label();
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
-            this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
-            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
+            this.label46 = new System.Windows.Forms.Label();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             this.patternEditorPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.patternGroupTabControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -238,7 +238,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.facePreviewPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.islandPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dresserAPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bedPicturebox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tanTrackbar)).BeginInit();
@@ -265,7 +264,6 @@
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // patternsTab
@@ -284,6 +282,18 @@
             patternsTab.TabIndex = 8;
             patternsTab.Text = "Patterns";
             patternsTab.UseVisualStyleBackColor = true;
+            // 
+            // patternNameTextBox
+            // 
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
+            this.patternNameTextBox.MaxLength = 16;
+            this.patternNameTextBox.Name = "patternNameTextBox";
+            this.patternNameTextBox.PlaceholderText = "Pattern Name";
+            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.patternNameTextBox.TabIndex = 0;
+            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
             // paletteIndexLabel
             // 
@@ -325,6 +335,23 @@
             this.patternEditorPanel.Name = "patternEditorPanel";
             this.patternEditorPanel.Size = new System.Drawing.Size(513, 513);
             this.patternEditorPanel.TabIndex = 16;
+            // 
+            // patternEditorPictureBox
+            // 
+            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
+            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
+            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.patternEditorPictureBox.TabIndex = 0;
+            this.patternEditorPictureBox.TabStop = false;
+            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
+            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
+            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
+            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
+            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
             // 
             // patternEditorPreviewPanel
             // 
@@ -606,7 +633,6 @@
             this.playersTab.Controls.Add(this.islandBoxText);
             this.playersTab.Controls.Add(this.islandPictureBox);
             this.playersTab.Controls.Add(this.dresserText);
-            this.playersTab.Controls.Add(this.dresserAPictureBox);
             this.playersTab.Controls.Add(this.playerMeowCoupons);
             this.playersTab.Controls.Add(this.label26);
             this.playersTab.Controls.Add(this.label27);
@@ -808,17 +834,6 @@
             this.dresserText.TabIndex = 62;
             this.dresserText.Text = "Dressers";
             this.dresserText.Visible = false;
-            // 
-            // dresserAPictureBox
-            // 
-            this.dresserAPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dresserAPictureBox.Enabled = false;
-            this.dresserAPictureBox.Location = new System.Drawing.Point(202, 340);
-            this.dresserAPictureBox.Name = "dresserAPictureBox";
-            this.dresserAPictureBox.Size = new System.Drawing.Size(82, 194);
-            this.dresserAPictureBox.TabIndex = 61;
-            this.dresserAPictureBox.TabStop = false;
-            this.dresserAPictureBox.Visible = false;
             // 
             // playerMeowCoupons
             // 
@@ -2261,16 +2276,6 @@
             this.label45.TabIndex = 15;
             this.label45.Text = "Loading...";
             // 
-            // label46
-            // 
-            this.label46.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(116, 623);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(18, 13);
-            this.label46.TabIndex = 79;
-            this.label46.Text = "0x";
-            // 
             // itemIdTextBox
             // 
             this.itemIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -2286,34 +2291,15 @@
             this.itemIdTextBox.TextChanged += new System.EventHandler(this.CurrentItemId_TextChanged);
             this.itemIdTextBox.Leave += new System.EventHandler(this.CurrentItemId_LostFocus);
             // 
-            // patternNameTextBox
+            // label46
             // 
-            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
-            this.patternNameTextBox.MaxLength = 16;
-            this.patternNameTextBox.Name = "patternNameTextBox";
-            this.patternNameTextBox.PlaceholderText = "Pattern Name";
-            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
-            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.patternNameTextBox.TabIndex = 0;
-            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
-            // 
-            // patternEditorPictureBox
-            // 
-            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
-            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
-            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.patternEditorPictureBox.TabIndex = 0;
-            this.patternEditorPictureBox.TabStop = false;
-            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
-            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
-            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
-            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
-            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
+            this.label46.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(116, 623);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(18, 13);
+            this.label46.TabIndex = 79;
+            this.label46.Text = "0x";
             // 
             // MainForm
             // 
@@ -2344,6 +2330,7 @@
             patternsTab.ResumeLayout(false);
             patternsTab.PerformLayout();
             this.patternEditorPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.patternGroupTabControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -2354,7 +2341,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.facePreviewPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.islandPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dresserAPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bedPicturebox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tanTrackbar)).EndInit();
@@ -2388,7 +2374,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2507,7 +2492,6 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label islandBoxText;
         private System.Windows.Forms.PictureBox islandPictureBox;
-        private System.Windows.Forms.PictureBox dresserAPictureBox;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label33;
