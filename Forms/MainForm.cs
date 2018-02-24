@@ -83,6 +83,7 @@ namespace ACSE
         private PictureBoxWithInterpolationMode NL_Grass_Overlay;
         private PlaceholderTextBox ReplaceItemBox;
         private PlaceholderTextBox ReplacingItemBox;
+        private ItemEditor inventoryEditor;
         private ItemEditor dresserEditor;
         private ItemEditor islandBoxEditor;
         private bool Loading = false;
@@ -164,7 +165,6 @@ namespace ACSE
             };
 
             //Player Item PictureBox Event Hookups
-            BindPlayerItemBoxEvents(inventoryPicturebox);
             BindPlayerItemBoxEvents(heldItemPicturebox);
             BindPlayerItemBoxEvents(shirtPicturebox);
             BindPlayerItemBoxEvents(hatPicturebox);
@@ -642,7 +642,6 @@ namespace ACSE
             playerShoeColor.Text = "";
             if (save.Save_Type == SaveType.Wild_World)
             {
-                inventoryPicturebox.Size = new Size(5 * 16 + 2, 3 * 16 + 2);
                 foreach (string Face_Name in PlayerInfo.WW_Faces)
                     playerFace.Items.Add(Face_Name);
                 foreach (string Hair_Color in PlayerInfo.WW_Hair_Colors)
@@ -653,7 +652,6 @@ namespace ACSE
             }
             else if (save.Save_Type == SaveType.City_Folk)
             {
-                inventoryPicturebox.Size = new Size(5 * 16 + 2, 3 * 16 + 2);
                 foreach (string Face_Name in PlayerInfo.WW_Faces)   //Same order as WW
                     playerFace.Items.Add(Face_Name);
                 foreach (string Hair_Color in PlayerInfo.WW_Hair_Colors)
@@ -666,7 +664,6 @@ namespace ACSE
             }
             else if (save.Game_System == SaveGeneration.N3DS)
             {
-                inventoryPicturebox.Size = new Size(4 * 16 + 2, 4 * 16 + 2);
                 Grass_Wear = save.ReadByteArray(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Wear, Current_Save_Info.Save_Offsets.Grass_Wear_Size);
                 foreach (string Hair_Style in PlayerInfo.NL_Hair_Styles)
                     playerHairType.Items.Add(Hair_Style);
@@ -680,7 +677,6 @@ namespace ACSE
             {
                 foreach (string Face_Name in PlayerInfo.AC_Faces)
                     playerFace.Items.Add(Face_Name);
-                inventoryPicturebox.Size = new Size(5 * 16 + 2, 3 * 16 + 2);
             }
 
             progressBar1.Value = 20;
@@ -993,6 +989,16 @@ namespace ACSE
             if (islandBoxEditor != null && !islandBoxEditor.IsDisposed)
                 islandBoxEditor.Dispose();
 
+            if (inventoryEditor != null && !inventoryEditor.IsDisposed)
+                inventoryEditor.Dispose();
+
+            inventoryEditor = new ItemEditor(this, Selected_Player.Data.Pockets.Items, save.Game_System == SaveGeneration.N3DS ? 4 : 5, 16)
+            {
+                Location = new Point(26, 340)
+            };
+
+            playersTab.Controls.Add(inventoryEditor);
+
             if (Save_File.Game_System != SaveGeneration.N64 && Save_File.Game_System != SaveGeneration.GCN)
             {
                 int ItemsPerRow = 9;
@@ -1247,7 +1253,6 @@ namespace ACSE
                 playerSavings.Text = Player.Data.Savings.ToString();
             }
             playerName.Text = Player.Data.Name;
-            Refresh_PictureBox_Image(inventoryPicturebox, Inventory.GetItemPic(16, inventoryPicturebox.Width / 16, Player.Data.Pockets.Items, Save_File.Save_Type));
             playerGender.SelectedIndex = Player.Data.Gender == 0 ? 0 : 1;
             Refresh_PictureBox_Image(shirtPicturebox, Inventory.GetItemPic(16, Player.Data.Shirt, Save_File.Save_Type));
             Refresh_PictureBox_Image(heldItemPicturebox, Inventory.GetItemPic(16, Player.Data.HeldItem, Save_File.Save_Type));
@@ -1331,6 +1336,12 @@ namespace ACSE
 
             // Set Face Image
             Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Game_System, Player.Data.FaceType, Selected_Player.Data.Gender));
+
+            // Refresh Inventory
+            if (inventoryEditor != null && !inventoryEditor.IsDisposed)
+            {
+                inventoryEditor.Items = Player.Data.Pockets.Items;
+            }
 
             // Refresh Dressers
             if (dresserEditor != null && !dresserEditor.IsDisposed && Player.Data.IslandBox != null)
@@ -2768,15 +2779,7 @@ namespace ACSE
                 PictureBox Box = sender as PictureBox;
                 Last_X = e.X;
                 Last_Y = e.Y;
-                if (Box == inventoryPicturebox)
-                {
-                    int Item_Index = (e.X / 16) + (e.Y / 16) * (Box.Width / 16);
-                    if (Item_Index >= Selected_Player.Data.Pockets.Items.Length)
-                        return;
-                    Item Hovered_Item = Selected_Player.Data.Pockets.Items[Item_Index];
-                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Hovered_Item.Name, Hovered_Item.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
-                }
-                else if (Box == heldItemPicturebox)
+                if (Box == heldItemPicturebox)
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.HeldItem.Name, Selected_Player.Data.HeldItem.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 else if (Box == shirtPicturebox)
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Shirt.Name, Selected_Player.Data.Shirt.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
@@ -2812,32 +2815,7 @@ namespace ACSE
             if (Save_File == null)
                 return;
             PictureBox ItemBox = sender as PictureBox;
-            if (ItemBox == inventoryPicturebox)
-            {
-                int Item_Index = (e.X / 16) + (e.Y / 16) * (ItemBox.Width / 16);
-
-                // Make sure Item_Index is in bounds
-                if (Item_Index > Selected_Player.Data.Pockets.Items.Length - 1)
-                    return;
-
-                if (e.Button == MouseButtons.Right)
-                {
-                    //selectedItem.SelectedValue = Selected_Player.Data.Pockets.Items[Item_Index].ItemID;
-                    SetCurrentItem(Selected_Player.Data.Pockets.Items[Item_Index]);
-                }
-                else if (e.Button == MouseButtons.Left)
-                {
-                    Save_File.ChangesMade = true;
-                    Selected_Player.Data.Pockets.Items[Item_Index] = new Item(GetCurrentItem());
-                    inventoryPicturebox.Image = Inventory.GetItemPic(16, inventoryPicturebox.Size.Width / 16, Selected_Player.Data.Pockets.Items, Save_File.Save_Type);
-                }
-                else if (e.Button == MouseButtons.Middle)
-                {
-                    Utility.FloodFillItemArray(ref Selected_Player.Data.Pockets.Items, inventoryPicturebox.Size.Width / 16, Item_Index, Selected_Player.Data.Pockets.Items[Item_Index], new Item(GetCurrentItem()));
-                    Refresh_PictureBox_Image(inventoryPicturebox, Inventory.GetItemPic(16, inventoryPicturebox.Size.Width / 16, Selected_Player.Data.Pockets.Items, Save_File.Save_Type));
-                }
-            }
-            else if (ItemBox == shirtPicturebox)
+            if (ItemBox == shirtPicturebox)
             {
                 if (e.Button == MouseButtons.Right)
                 {
