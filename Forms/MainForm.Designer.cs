@@ -76,7 +76,6 @@
             this.playerIslandMedals = new System.Windows.Forms.TextBox();
             this.label40 = new System.Windows.Forms.Label();
             this.islandBoxText = new System.Windows.Forms.Label();
-            this.islandPictureBox = new System.Windows.Forms.PictureBox();
             this.dresserText = new System.Windows.Forms.Label();
             this.playerMeowCoupons = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
@@ -237,7 +236,6 @@
             this.playersTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.facePreviewPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.islandPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bedPicturebox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tanTrackbar)).BeginInit();
@@ -631,7 +629,6 @@
             this.playersTab.Controls.Add(this.playerIslandMedals);
             this.playersTab.Controls.Add(this.label40);
             this.playersTab.Controls.Add(this.islandBoxText);
-            this.playersTab.Controls.Add(this.islandPictureBox);
             this.playersTab.Controls.Add(this.dresserText);
             this.playersTab.Controls.Add(this.playerMeowCoupons);
             this.playersTab.Controls.Add(this.label26);
@@ -813,17 +810,6 @@
             this.islandBoxText.TabIndex = 68;
             this.islandBoxText.Text = "Island Box";
             this.islandBoxText.Visible = false;
-            // 
-            // islandPictureBox
-            // 
-            this.islandPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.islandPictureBox.Enabled = false;
-            this.islandPictureBox.Location = new System.Drawing.Point(114, 340);
-            this.islandPictureBox.Name = "islandPictureBox";
-            this.islandPictureBox.Size = new System.Drawing.Size(82, 130);
-            this.islandPictureBox.TabIndex = 67;
-            this.islandPictureBox.TabStop = false;
-            this.islandPictureBox.Visible = false;
             // 
             // dresserText
             // 
@@ -2340,7 +2326,6 @@
             this.playersTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.facePreviewPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.islandPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bedPicturebox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tanTrackbar)).EndInit();
@@ -2491,7 +2476,6 @@
         private System.Windows.Forms.TextBox playerMeowCoupons;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label islandBoxText;
-        private System.Windows.Forms.PictureBox islandPictureBox;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label33;

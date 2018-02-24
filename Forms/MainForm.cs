@@ -84,6 +84,7 @@ namespace ACSE
         private PlaceholderTextBox ReplaceItemBox;
         private PlaceholderTextBox ReplacingItemBox;
         private ItemEditor dresserEditor;
+        private ItemEditor islandBoxEditor;
         private bool Loading = false;
 
         #region MapSizeVariables
@@ -468,7 +469,7 @@ namespace ACSE
             selectedItem.ValueMember = "Key";
 
             progressBar1.Value = 5;
-            
+
             Current_Save_Info = SaveDataManager.GetSaveInfo(Save_File.Save_Type);
             if (save.Save_Type == SaveType.Wild_World)
             {
@@ -484,9 +485,9 @@ namespace ACSE
             {
                 await Task.Run(() =>
                 {
-                UInt16_Filed_Acre_Data = SaveDataManager.GetFiledAcreDataUInt16(Save_File.Save_Type);
-                Filed_Acre_Data = null;
-                Acre_Info = null;
+                    UInt16_Filed_Acre_Data = SaveDataManager.GetFiledAcreDataUInt16(Save_File.Save_Type);
+                    Filed_Acre_Data = null;
+                    Acre_Info = null;
                 });
                 progressBar1.Value = 7;
             }
@@ -794,17 +795,17 @@ namespace ACSE
                 else if (save.Game_System == SaveGeneration.N3DS)
                 {
                     UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(Save_File.Save_Type);
-                    
-                    //Load Past Villagers for NL/WA
-                    Past_Villagers = new SimpleVillager[16];
+
+                //Load Past Villagers for NL/WA
+                Past_Villagers = new SimpleVillager[16];
                     for (int i = 0; i < 16; i++)
                     {
                         ushort Villager_ID = save.ReadUInt16(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Past_Villagers + i * 2);
                         Past_Villagers[i] = Villager_Database.Values.FirstOrDefault(o => o.Villager_ID == Villager_ID);
                     }
 
-                    //UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.New_Leaf);
-                    Buildings = ItemData.GetBuildings(save);
+                //UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.New_Leaf);
+                Buildings = ItemData.GetBuildings(save);
                     Island_Buildings = ItemData.GetBuildings(save, true);
                     int x = 0;
                     ushort[] Acre_Data = save.ReadUInt16Array(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Acre_Data, Current_Save_Info.Acre_Count, false);
@@ -863,7 +864,7 @@ namespace ACSE
             SetupIslandHouseBoxes();
 
             if (Buildings != null)
-               SetupBuildingList();
+                SetupBuildingList();
 
             //Load Villagers
             if (Save_File.Save_Type != SaveType.City_Folk)
@@ -989,6 +990,9 @@ namespace ACSE
             if (dresserEditor != null && !dresserEditor.IsDisposed)
                 dresserEditor.Dispose();
 
+            if (islandBoxEditor != null && !islandBoxEditor.IsDisposed)
+                islandBoxEditor.Dispose();
+
             if (Save_File.Game_System != SaveGeneration.N64 && Save_File.Game_System != SaveGeneration.GCN)
             {
                 int ItemsPerRow = 9;
@@ -1008,6 +1012,16 @@ namespace ACSE
 
                 playersTab.Controls.Add(dresserEditor);
             }
+
+            if (Save_File.Game_System == SaveGeneration.N3DS)
+            {
+                islandBoxEditor = new ItemEditor(this, Selected_Player.Data.IslandBox, 5, 16)
+                {
+                    Location = new Point(114, 340)
+                };
+
+                playersTab.Controls.Add(islandBoxEditor);
+            }
         }
 
         private void SetPlayersEnabled()
@@ -1018,8 +1032,16 @@ namespace ACSE
                 {
                     if (Players[i].Exists && playerEditorSelect.TabPages.IndexOf(Player_Tabs[i]) < 0)
                     {
-                        playerEditorSelect.TabPages.Insert(i, Player_Tabs[i]);
-                        patternGroupTabControl.TabPages.Insert(i, PlayerPattern_Tabs[i]);
+                        if (i >= playerEditorSelect.TabCount)
+                        {
+                            playerEditorSelect.TabPages.Add(Player_Tabs[i]);
+                            patternGroupTabControl.TabPages.Add(PlayerPattern_Tabs[i]);
+                        }
+                        else
+                        {
+                            playerEditorSelect.TabPages.Insert(i, Player_Tabs[i]);
+                            patternGroupTabControl.TabPages.Insert(i, PlayerPattern_Tabs[i]);
+                        }
                     }
                     else if (!Players[i].Exists && playerEditorSelect.TabPages.IndexOf(Player_Tabs[i]) > -1)
                     {
@@ -1104,8 +1126,6 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
-                islandPictureBox.Visible = false;
-                islandPictureBox.Enabled = false;
                 dresserText.Visible = false;
                 islandBoxText.Visible = false;
                 tanTrackbar.Maximum = 9;
@@ -1136,8 +1156,6 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
-                islandPictureBox.Visible = false;
-                islandPictureBox.Enabled = false;
                 dresserText.Visible = true;
                 islandBoxText.Visible = false;
                 tanTrackbar.Maximum = 4;
@@ -1169,8 +1187,6 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
-                islandPictureBox.Visible = false;
-                islandPictureBox.Enabled = false;
                 dresserText.Visible = true;
                 islandBoxText.Visible = false;
                 tanTrackbar.Maximum = 8;
@@ -1200,8 +1216,6 @@ namespace ACSE
                 itemFlag1.Enabled = true;
                 itemFlag2.Enabled = true;
                 playerMeowCoupons.Enabled = Current_Save_Type == SaveType.Welcome_Amiibo;
-                islandPictureBox.Visible = true;
-                islandPictureBox.Enabled = true;
                 dresserText.Visible = true;
                 islandBoxText.Visible = true;
                 tanTrackbar.Maximum = 16;
@@ -1319,9 +1333,15 @@ namespace ACSE
             Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Game_System, Player.Data.FaceType, Selected_Player.Data.Gender));
 
             // Refresh Dressers
-            if (dresserEditor != null)
+            if (dresserEditor != null && !dresserEditor.IsDisposed && Player.Data.IslandBox != null)
             {
                 dresserEditor.Items = Player.Data.Dressers;
+            }
+
+            // Refresh Island Box
+            if (islandBoxEditor != null && !islandBoxEditor.IsDisposed && Player.Data.IslandBox != null)
+            {
+                islandBoxEditor.Items = Player.Data.IslandBox;
             }
         }
 

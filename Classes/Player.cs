@@ -70,6 +70,8 @@ namespace ACSE
         public int NL_Debt;
         public int MeowCoupons;
         public int Island_Medals;
+        public int IslandBox;
+        public int IslandBoxCount;
     }
 
     [Serializable]
@@ -94,6 +96,7 @@ namespace ACSE
         public Item Bed;
         public Item Wetsuit; //NL only
         public Item[] Dressers;
+        public Item[] IslandBox; // NL only
         //public Mail[] Letters;
         public Pattern[] Patterns;
         public byte[] Emotions; //Add Emotions class?
@@ -175,6 +178,7 @@ namespace ACSE
             MeowCoupons = -1,
             Island_Medals = -1,
             ResetCount = -1,
+            IslandBox = -1,
         };
 
         public static PlayerSaveInfo Doubutsu_no_Mori_Plus = new PlayerSaveInfo
@@ -232,6 +236,7 @@ namespace ACSE
             MeowCoupons = -1,
             Island_Medals = -1,
             ResetCount = -1,
+            IslandBox = -1,
         };
 
         public static PlayerSaveInfo Animal_Crossing = new PlayerSaveInfo
@@ -289,6 +294,7 @@ namespace ACSE
             NL_Wallet = -1,
             MeowCoupons = -1,
             Island_Medals = -1,
+            IslandBox = -1,
         };
 
         public static PlayerSaveInfo Doubutsu_no_Mori_e_Plus = new PlayerSaveInfo
@@ -346,6 +352,7 @@ namespace ACSE
             MeowCoupons = -1,
             Island_Medals = -1,
             ResetCount = -1,
+            IslandBox = -1,
         };
 
         public static PlayerSaveInfo Wild_World = new PlayerSaveInfo
@@ -410,6 +417,7 @@ namespace ACSE
             MeowCoupons = -1,
             Island_Medals = -1,
             ResetCount = -1,
+            IslandBox = -1,
         };
 
         public static PlayerSaveInfo City_Folk = new PlayerSaveInfo
@@ -468,6 +476,7 @@ namespace ACSE
             MeowCoupons = -1,
             Island_Medals = -1,
             ResetCount = -1,
+            IslandBox = -1,
         };
 
         public static PlayerSaveInfo New_Leaf = new PlayerSaveInfo
@@ -505,6 +514,8 @@ namespace ACSE
             Island_Medals = 0x6B7C,
             Pockets = 0x6BB0,
             NL_Wallet = 0x6E38,
+            IslandBox = 0x6E40,
+            IslandBoxCount = 40,
             PocketsCount = 16,
             Dressers = 0x8E18,
             DressersCount = 180,
@@ -554,6 +565,8 @@ namespace ACSE
             NL_Debt = 0x6B94,
             Island_Medals = 0x6B9C,
             NL_Wallet = 0x6F08,
+            IslandBox = 0x6F10,
+            IslandBoxCount = 40,
             MeowCoupons = 0x8D1C,
             Dressers = 0x92F0,
             DressersCount = 180,
@@ -1133,6 +1146,7 @@ namespace ACSE
                             }
                             else if (FieldType == typeof(Item[]))
                             {
+                                Item[] ItemArray = (Item[])PlayerDataType.GetField(Field.Name).GetValue(Data);
                                 if (Field.Name.Equals("Dressers"))
                                 {
                                     if (SaveData.Game_System == SaveGeneration.NDS)
@@ -1141,12 +1155,12 @@ namespace ACSE
                                         DataOffset = 0x1F3038 + 0x140 * Index;
                                 }
 
-                                for (int i = 0; i < Data.Dressers.Length; i++)
+                                for (int i = 0; i < ItemArray.Length; i++)
                                 {
                                     if (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo)
-                                        SaveData.Write(DataOffset + i * 4, Data.Dressers[i].ToUInt32());
+                                        SaveData.Write(DataOffset + i * 4, ItemArray[i].ToUInt32());
                                     else
-                                        SaveData.Write(DataOffset + i * 2, Data.Dressers[i].ItemID, SaveData.Is_Big_Endian);
+                                        SaveData.Write(DataOffset + i * 2, ItemArray[i].ItemID, SaveData.Is_Big_Endian);
                                 }
                             }
                             else if (FieldType == typeof(NL_Int32))
