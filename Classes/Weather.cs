@@ -42,7 +42,7 @@ namespace ACSE
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
-                    return (byte)((NewMainForm.Save_File.ReadByte(NewMainForm.Save_File.Save_Data_Start_Offset + NewMainForm.Save_File.Save_Info.Save_Offsets.Weather) & 0x0F) | (Index << 4));
+                    return (byte)((MainForm.Save_File.ReadByte(MainForm.Save_File.Save_Data_Start_Offset + MainForm.Save_File.Save_Info.Save_Offsets.Weather) & 0x0F) | (Index << 4));
                 default:
                     return Index;
             }

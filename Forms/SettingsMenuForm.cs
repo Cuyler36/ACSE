@@ -6,10 +6,10 @@ namespace ACSE
 {
     public partial class SettingsMenuForm : Form
     {
-        NewMainForm MainFormReference;
+        MainForm MainFormReference;
         private bool Loaded = false;
 
-        public SettingsMenuForm(NewMainForm Reference)
+        public SettingsMenuForm(MainForm Reference)
         {
             MainFormReference = Reference;
             InitializeComponent();
@@ -39,11 +39,11 @@ namespace ACSE
                 Properties.Settings.Default.DebugLevel = (DebugLevel)Math.Max(0, debugLevelComboBox.SelectedIndex);
                 if (Properties.Settings.Default.DebugLevel == DebugLevel.None)
                 {
-                    NewMainForm.Debug_Manager.CloseDebugLogWriter();
+                    MainForm.Debug_Manager.CloseDebugLogWriter();
                 }
                 else
                 {
-                    NewMainForm.Debug_Manager.InitiateDebugLogWriter();
+                    MainForm.Debug_Manager.InitiateDebugLogWriter();
                 }
             }
         }

@@ -196,7 +196,7 @@ namespace ACSE
             Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             for (int i = 0; i < Furniture.Length; i++)
             {
-                string ItemType = ItemData.GetItemType(Furniture[i].ItemID, NewMainForm.Save_File.Save_Type);
+                string ItemType = ItemData.GetItemType(Furniture[i].ItemID, MainForm.Save_File.Save_Type);
                 if (Furniture[i].Name != "Empty" && (ItemType.Equals("Furniture") || ItemType.Equals("Gyroids")))
                 {
                     Image Arrow = Properties.Resources.Arrow;
@@ -238,7 +238,7 @@ namespace ACSE
 
         public static Bitmap Draw_Grass_Wear(byte[] Grass_Buffer)
         {
-            if (NewMainForm.Save_File.Save_Type == SaveType.City_Folk)
+            if (MainForm.Save_File.Save_Type == SaveType.City_Folk)
             {
                 Bitmap Grass_Bitmap = new Bitmap(64, 64, PixelFormat.Format32bppArgb);
                 Graphics Bitmap_Graphics = Graphics.FromImage(Grass_Bitmap);
@@ -350,7 +350,7 @@ namespace ACSE
                     return Image.FromStream(new MemoryStream(TPC_Bytes.Take(i).ToArray()));
                 }
             }
-            NewMainForm.Debug_Manager.WriteLine("Unable to find JPEG End-of-File marker. No TPC?", DebugLevel.Error);
+            MainForm.Debug_Manager.WriteLine("Unable to find JPEG End-of-File marker. No TPC?", DebugLevel.Error);
             return Properties.Resources.no_tpc;
         }
 
@@ -408,7 +408,7 @@ namespace ACSE
             }
             catch
             {
-                NewMainForm.Debug_Manager.WriteLine("Unable to import pattern!", DebugLevel.Error);
+                MainForm.Debug_Manager.WriteLine("Unable to import pattern!", DebugLevel.Error);
                 MessageBox.Show("Pattern Import Error: Failed to import the image!");
                 return null;
             }
@@ -417,7 +417,7 @@ namespace ACSE
         public static Image GetFaceImage(SaveGeneration Save_Generation, int Index, byte Gender)
         {
             Image FaceImage = null;
-            string FacesFolder = NewMainForm.Assembly_Location + "\\Resources\\Images\\Faces";
+            string FacesFolder = MainForm.Assembly_Location + "\\Resources\\Images\\Faces";
             if (Directory.Exists(FacesFolder))
             {
                 if (Save_Generation == SaveGeneration.N64 || Save_Generation == SaveGeneration.GCN)
@@ -444,7 +444,7 @@ namespace ACSE
                         }
                         catch
                         {
-                            NewMainForm.Debug_Manager.WriteLine(string.Format("Could not open face file: {0}", FaceImageFile), DebugLevel.Error);
+                            MainForm.Debug_Manager.WriteLine(string.Format("Could not open face file: {0}", FaceImageFile), DebugLevel.Error);
                         }
                     }
                 }
@@ -455,7 +455,7 @@ namespace ACSE
         public static Bitmap GetHairImage(SaveGeneration Save_Generation, int Index, int ColorIndex)
         {
             Bitmap HairImage = null;
-            string HairFolder = NewMainForm.Assembly_Location + "\\Resources\\Images\\Hair Styles";
+            string HairFolder = MainForm.Assembly_Location + "\\Resources\\Images\\Hair Styles";
             if (Directory.Exists(HairFolder))
             {
                 // TODO: Wild World, City Folk
@@ -476,7 +476,7 @@ namespace ACSE
                         }
                         catch
                         {
-                            NewMainForm.Debug_Manager.WriteLine(string.Format("Could not open hair file: {0}", HairImageFile), DebugLevel.Error);
+                            MainForm.Debug_Manager.WriteLine(string.Format("Could not open hair file: {0}", HairImageFile), DebugLevel.Error);
                         }
                     }
                 }

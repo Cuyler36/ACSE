@@ -316,7 +316,7 @@ namespace ACSE
         {
             Dictionary<ushort, SimpleVillager> Database = new Dictionary<ushort, SimpleVillager>();
             StreamReader Contents = null;
-            string Database_Filename = NewMainForm.Assembly_Location + "\\Resources\\{0}_Villagers_" + Language + ".txt";
+            string Database_Filename = MainForm.Assembly_Location + "\\Resources\\{0}_Villagers_" + Language + ".txt";
             switch (Save_Type)
             {
                 case SaveType.Doubutsu_no_Mori: // TODO: Needs its own database (no islanders or punchy)
@@ -525,12 +525,12 @@ namespace ACSE
                 // Set Villager TownID & Name
                 if (Offsets.Town_ID != -1)
                 {
-                    Data.Town_ID = SaveData.ReadUInt16(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_ID, SaveData.Is_Big_Endian); // Might not be UInt16 in all games
+                    Data.Town_ID = SaveData.ReadUInt16(SaveData.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Town_ID, SaveData.Is_Big_Endian); // Might not be UInt16 in all games
                 }
                 if (Offsets.Town_Name != -1)
                 {
-                    Data.Town_Name = SaveData.ReadString(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_Name,
-                        NewMainForm.Current_Save_Info.Save_Offsets.Town_NameSize);
+                    Data.Town_Name = SaveData.ReadString(SaveData.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Town_Name,
+                        MainForm.Current_Save_Info.Save_Offsets.Town_NameSize);
                 }
                 //MessageBox.Show(string.Format("Writing Villager #{0} with data offset of 0x{1}", Index, Offset.ToString("X")));
                 Type VillagerOffsetData = typeof(VillagerOffsets);

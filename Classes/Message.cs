@@ -30,7 +30,33 @@ namespace ACSE
         }
     }
 
-    public class Mail : Message
+    public class AnimalMail : Message
+    {
+        private bool read;
+        private string header;
+        private string footer;
+        private Item stationaryType;
+
+        public bool Read { get => read; set => read = value; }
+        public string Header { get => header; set => header = value; }
+        public string Footer { get => footer; set => footer = value; }
+        public Item StationaryType { get => stationaryType; set => stationaryType = value; }
+
+        public AnimalMail() : base()
+        {
+            read = false;
+            header = "";
+            footer = "";
+            stationaryType = new Item();
+        }
+
+        public AnimalMail(int Offset, SaveType Save_Type)
+        {
+
+        }
+    }
+
+    public class Mail : AnimalMail
     {
         private string sender;
         private ushort senderId;
@@ -48,11 +74,6 @@ namespace ACSE
             senderId = 0;
             receipiant = "";
             receipiantId = 0;
-        }
-
-        public Mail(int Offset, SaveType Save_Type)
-        {
-
         }
     }
 

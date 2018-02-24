@@ -3680,7 +3680,8 @@
     <Compile Include="Classes\AlertToggledEventArgs.cs" />
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
     <Compile Include="Classes\Extensions\ProgressBarExtension.cs" />
-    <Compile Include="Classes\OffsetablePictureBox.cs">
+    <Compile Include="Classes\ItemChange.cs" />
+    <Compile Include="Controls\OffsetablePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Utilities\DateUtility.cs" />
@@ -3692,7 +3693,7 @@
     <Compile Include="Classes\ImageGeneration.cs" />
     <Compile Include="Classes\Island.cs" />
     <Compile Include="Classes\Message.cs" />
-    <Compile Include="Classes\PlaceholderTextBox.cs">
+    <Compile Include="Controls\PlaceholderTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Shop.cs" />
@@ -3701,6 +3702,9 @@
     <Compile Include="Classes\Save.cs" />
     <Compile Include="Classes\SecretCode.cs" />
     <Compile Include="Classes\SimpleTownInfo.cs" />
+    <Compile Include="Controls\ItemEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Forms\ToggableAlertForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -3722,11 +3726,11 @@
     <Compile Include="Classes\HouseData.cs" />
     <Compile Include="Classes\Inventory.cs" />
     <Compile Include="Classes\ItemData.cs" />
-    <Compile Include="Forms\NewMainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\NewMainForm.Designer.cs">
-      <DependentUpon>NewMainForm.cs</DependentUpon>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Pattern.cs" />
     <Compile Include="Classes\Player.cs" />
@@ -3764,8 +3768,8 @@
     <EmbeddedResource Include="Forms\AboutBox2.resx">
       <DependentUpon>AboutBox2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\NewMainForm.resx">
-      <DependentUpon>NewMainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SecureValueForm.resx">

@@ -36,7 +36,7 @@ namespace ACSE
 
             Image Result = null;
 
-            string Image_Dir = NewMainForm.Assembly_Location + "\\Resources\\Images\\";
+            string Image_Dir = MainForm.Assembly_Location + "\\Resources\\Images\\";
             if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs its own set?
                 Image_Dir += "Acre_Images";
             else if (Save_Type == SaveType.Wild_World)
@@ -88,7 +88,7 @@ namespace ACSE
 
             Image Result = null;
 
-            string Icon_Directory = NewMainForm.Assembly_Location + "\\Resources\\Images\\AC_Map_Icons";
+            string Icon_Directory = MainForm.Assembly_Location + "\\Resources\\Images\\AC_Map_Icons";
             if (Directory.Exists(Icon_Directory))
             {
                 foreach (string Icon_File in Directory.GetFiles(Icon_Directory))
@@ -153,7 +153,7 @@ namespace ACSE
 
         public static Dictionary<ushort, byte> Load_AC_Map_Index(SaveType saveType)
         {
-            string Index_File = NewMainForm.Assembly_Location;
+            string Index_File = MainForm.Assembly_Location;
             switch (saveType)
             {
                 case SaveType.Doubutsu_no_Mori:

@@ -93,7 +93,7 @@ namespace ACSE
         public Item InventoryBackground;
         public Item Bed;
         public Item Wetsuit; //NL only
-        public Item[] Dessers;
+        public Item[] Dressers;
         //public Mail[] Letters;
         public Pattern[] Patterns;
         public byte[] Emotions; //Add Emotions class?
@@ -393,8 +393,8 @@ namespace ACSE
             FaceType = -1,
             TownPassCardImage = -1,
             Debt = -1,
-            Dressers = -1, //Research
-            DressersCount = 0,
+            Dressers = 0,
+            DressersCount = 90,
             DressersSize = 0,
             RegisterDate = -1,
             ShoeColor = -1,
@@ -443,8 +443,8 @@ namespace ACSE
             Reset = 0x8670, // Just the second bit
             ResetSize = 1, // Actually just the second bit in the value
             TownPassCardImage = -1,
-            Dressers = -1, //Research
-            DressersCount = 0,
+            Dressers = 0, // 0x1F3038
+            DressersCount = 160,
             DressersSize = 0,
             RegisterDate = -1,
             Shoes = -1,
@@ -506,6 +506,8 @@ namespace ACSE
             Pockets = 0x6BB0,
             NL_Wallet = 0x6E38,
             PocketsCount = 16,
+            Dressers = 0x8E18,
+            DressersCount = 180,
             NookPoints = -1,
             Debt = -1,
             Bells = -1,
@@ -553,6 +555,8 @@ namespace ACSE
             Island_Medals = 0x6B9C,
             NL_Wallet = 0x6F08,
             MeowCoupons = 0x8D1C,
+            Dressers = 0x92F0,
+            DressersCount = 180,
             NookPoints = -1,
             Debt = -1,
             Bells = -1,
@@ -922,6 +926,26 @@ namespace ACSE
                                         Current_Field.SetValue(BoxedData, new Item(SaveData.ReadUInt32(DataOffset, false)));
                                     else
                                         Current_Field.SetValue(BoxedData, new Item(SaveData.ReadUInt16(DataOffset, SaveData.Is_Big_Endian)));
+                                else if (FieldType == typeof(Item[]))
+                                {
+                                    if (Field.Name.Equals("Dressers"))
+                                    {
+                                        if (SaveData.Game_System == SaveGeneration.NDS)
+                                            DataOffset = 0x15430 + 0xB4 * Index; // Terrible hack
+                                        else if (SaveData.Game_System == SaveGeneration.Wii)
+                                            DataOffset = 0x1F3038 + 0x140 * Index;
+                                    }
+
+                                    Item[] ItemArray = new Item[(int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets)];
+                                    for (int i = 0; i < ItemArray.Length; i++)
+                                    {
+                                        if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
+                                            ItemArray[i] = new Item(SaveData.ReadUInt32(DataOffset + i * 4, false));
+                                        else
+                                            ItemArray[i] =  new Item(SaveData.ReadUInt16(DataOffset + i * 2, SaveData.Is_Big_Endian));
+                                    }
+                                    Current_Field.SetValue(BoxedData, ItemArray);
+                                }
                                 else if (FieldType == typeof(NL_Int32))
                                 {
                                     uint[] Int_Data = SaveData.ReadUInt32Array(DataOffset, 2);
@@ -1107,6 +1131,24 @@ namespace ACSE
                                     SaveData.Write(DataOffset, Item.ItemID, SaveData.Is_Big_Endian);
                                 }
                             }
+                            else if (FieldType == typeof(Item[]))
+                            {
+                                if (Field.Name.Equals("Dressers"))
+                                {
+                                    if (SaveData.Game_System == SaveGeneration.NDS)
+                                        DataOffset = 0x15430 + 0xB4 * Index; // Terrible hack
+                                    else if (SaveData.Game_System == SaveGeneration.Wii)
+                                        DataOffset = 0x1F3038 + 0x140 * Index;
+                                }
+
+                                for (int i = 0; i < Data.Dressers.Length; i++)
+                                {
+                                    if (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo)
+                                        SaveData.Write(DataOffset + i * 4, Data.Dressers[i].ToUInt32());
+                                    else
+                                        SaveData.Write(DataOffset + i * 2, Data.Dressers[i].ItemID, SaveData.Is_Big_Endian);
+                                }
+                            }
                             else if (FieldType == typeof(NL_Int32))
                             {
                                 if (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo)
@@ -1118,7 +1160,10 @@ namespace ACSE
                             }
                             else if (FieldType == typeof(ACDate) && SaveData.Game_System == SaveGeneration.GCN)
                             {
-                                SaveData.Write(DataOffset, ((ACDate)PlayerDataType.GetField(Field.Name).GetValue(Data)).ToBytes());
+                                if (Field.Name.Equals("Birthday"))
+                                {
+                                    SaveData.Write(DataOffset, ((ACDate)PlayerDataType.GetField(Field.Name).GetValue(Data)).ToMonthDayDateData());
+                                }
                             }
                         }
                     }

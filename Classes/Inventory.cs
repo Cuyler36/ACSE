@@ -28,9 +28,10 @@ namespace ACSE
             }
         }
 
-        public static Image GetItemPic(int itemsize, int itemsPerRow, Item[] items, SaveType Save_Type = SaveType.Animal_Crossing)
+        public static Image GetItemPic(int itemsize, int itemsPerRow, Item[] items, SaveType Save_Type, int width = -1, int height = -1)
         {
-            int width = itemsize * itemsPerRow, height = itemsize * items.Length / itemsPerRow;
+            width = width == -1 ? itemsize * itemsPerRow : width;
+            height = height == -1 ? itemsize * items.Length / itemsPerRow : height;
             height = height < 1 ? width : height;
             byte[] bmpData = new byte[4 * ((width) * (height))];
             for (int i = 0; i < items.Length; i++)
@@ -52,10 +53,22 @@ namespace ACSE
                 }
             }
 
-            for (int i = 0; i < (width * height); i++)
-                if ((i / itemsize > 0 && i % (itemsize * itemsPerRow) > 0 && i % (itemsize) == 0) || (i / (itemsize * itemsPerRow) > 0 && (i / (itemsize * itemsPerRow)) % (itemsize) == 0))
-                    Buffer.BlockCopy(BitConverter.GetBytes(0x41000000), 0, bmpData,
-                        ((i / (itemsize * itemsPerRow)) * width * 4) + ((i % (itemsize * itemsPerRow)) * 4), 4);
+            // Don't draw a border if there's only one item
+            if (items.Length > 1)
+            {
+                byte[] borderColorData = BitConverter.GetBytes(0x41000000);
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        if (x == 0 || y == 0 || x == width - 1 || y == height - 1 || x % itemsize == 0 || y % itemsize == 0)
+                        {
+                            Buffer.BlockCopy(borderColorData, 0, bmpData,
+                                (y * width * 4 + x * 4), 4);
+                        }
+                    }
+                }
+            }
 
             Bitmap b = new Bitmap(width, height, PixelFormat.Format32bppArgb);
             BitmapData bData = b.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
@@ -64,7 +77,12 @@ namespace ACSE
             return b;
         }
 
-        public static Image GetItemPic(int itemsize, Item item, SaveType Save_Type = SaveType.Animal_Crossing)
+        public static Image GetItemPic(int itemsize, int itemsPerRow, Item[] items, SaveType Save_Type, Size pictureBoxSize)
+        {
+            return GetItemPic(itemsize, itemsPerRow, items, Save_Type, pictureBoxSize.Width, pictureBoxSize.Height);
+        }
+
+        public static Image GetItemPic(int itemsize, Item item, SaveType Save_Type)
         {
             int width = 16;
             int height = 16;
@@ -73,11 +91,6 @@ namespace ACSE
 
             for (int i = 0; i < 1024; i+=4)
                 itemColor.CopyTo(bmpData, i);
-
-            for (int i = 0; i < (width * height); i++)
-                if ((i / itemsize > 0 && i % 16 > 0 && i % 16 == 0) || (i / 16 > 0 && (i / 16) % 16 == 0))
-                    Buffer.BlockCopy(BitConverter.GetBytes(0x41000000), 0, bmpData,
-                        ((i / 16) * width * 4) + ((i % 16) * 4), 4);
 
             Bitmap b = new Bitmap(width, height, PixelFormat.Format32bppArgb);
             BitmapData bData = b.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);

@@ -16,7 +16,7 @@ using ACSE.Classes.Utilities;
 
 namespace ACSE
 {
-    public partial class NewMainForm : Form
+    public partial class MainForm : Form
     {
         #region Variables
         public static readonly string Assembly_Location = Directory.GetCurrentDirectory();
@@ -83,6 +83,7 @@ namespace ACSE
         private PictureBoxWithInterpolationMode NL_Grass_Overlay;
         private PlaceholderTextBox ReplaceItemBox;
         private PlaceholderTextBox ReplacingItemBox;
+        private ItemEditor dresserEditor;
         private bool Loading = false;
 
         #region MapSizeVariables
@@ -95,10 +96,10 @@ namespace ACSE
         #endregion
         #endregion
 
-        public NewMainForm()
+        public MainForm()
         {
             InitializeComponent();
-
+            
             // Clamp Map Sizes
             if (TownMapCellSize < 8)
             {
@@ -368,7 +369,7 @@ namespace ACSE
             Bindee.MouseLeave += new EventHandler(Hide_Tip);
         }
 
-        private void SetCurrentItem(Item New_Item)
+        public void SetCurrentItem(Item New_Item)
         {
             if (New_Item != null)
             {
@@ -392,7 +393,7 @@ namespace ACSE
             }
         }
 
-        private Item GetCurrentItem()
+        public Item GetCurrentItem()
         {
             return CurrentItem == null ? new Item() : new Item(CurrentItem);
         }
@@ -983,6 +984,31 @@ namespace ACSE
             loadingPanel.Enabled = false;
             loadingPanel.Visible = false;
             loadingPanel.SendToBack();
+
+            // Create Item Editor Controls
+            if (dresserEditor != null && !dresserEditor.IsDisposed)
+                dresserEditor.Dispose();
+
+            if (Save_File.Game_System != SaveGeneration.N64 && Save_File.Game_System != SaveGeneration.GCN)
+            {
+                int ItemsPerRow = 9;
+                if (Save_File.Game_System == SaveGeneration.Wii)
+                {
+                    ItemsPerRow = 16;
+                }
+                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                {
+                    ItemsPerRow = 18;
+                }
+
+                dresserEditor = new ItemEditor(this, Selected_Player.Data.Dressers, ItemsPerRow, 16)
+                {
+                    Location = new Point(202, 340)
+                };
+
+                dresserAPictureBox.Visible = false;
+                playersTab.Controls.Add(dresserEditor);
+            }
         }
 
         private void SetPlayersEnabled()
@@ -1300,6 +1326,12 @@ namespace ACSE
 
             // Set Face Image
             Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Game_System, Player.Data.FaceType, Selected_Player.Data.Gender));
+
+            // Refresh Dressers
+            if (dresserEditor != null)
+            {
+                dresserEditor.Items = Player.Data.Dressers;
+            }
         }
 
         private void TownName_Box_FocusLost(object sender, EventArgs e)

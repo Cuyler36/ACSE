@@ -4,6 +4,13 @@ namespace ACSE.Classes.Utilities
 {
     public class ACDate
     {
+        static string[] Months = new string[12]
+        {
+            "January", "February", "March", "April",
+            "May", "June", "July", "August",
+            "September", "October", "November", "December"
+        };
+
         public uint Second = 0;
         public uint Minute = 0;
         public uint Hour = 0;
@@ -13,11 +20,10 @@ namespace ACSE.Classes.Utilities
         public uint Year = 0;
         public string Date_Time_String = "";
         public bool Is_PM = false;
-        public bool Is_Birthday = false;
 
         public ACDate(byte[] dateData)
         {
-            switch (NewMainForm.Save_File.Save_Type)
+            switch (MainForm.Save_File.Save_Type)
             {
                 case SaveType.Doubutsu_no_Mori:
                 case SaveType.Doubutsu_no_Mori_Plus:
@@ -43,7 +49,6 @@ namespace ACSE.Classes.Utilities
                     {
                         Month = dateData[0];
                         Day = dateData[1];
-                        Is_Birthday = true;
                     }
                     break;
                 case SaveType.New_Leaf:
@@ -52,7 +57,6 @@ namespace ACSE.Classes.Utilities
                     {
                         Day = dateData[1];
                         Month = dateData[0];
-                        Is_Birthday = true; // ??
                     }
                     else if (dateData.Length == 4)
                     {
@@ -79,7 +83,7 @@ namespace ACSE.Classes.Utilities
             formatString = formatString.Replace("(D)", Day.ToString("D2"));
             formatString = formatString.Replace("(w)", Day_of_Week.ToString());
             formatString = formatString.Replace("(W)", Enum.GetName(typeof(DayOfWeek), Day_of_Week));
-            formatString = formatString.Replace("(mo)", Month.ToString());
+            formatString = formatString.Replace("(mo)", Months[Month]);
             formatString = formatString.Replace("(M)", Month.ToString("D2"));
             formatString = formatString.Replace("(y)", Year.ToString());
             formatString = formatString.Replace("(Y)", Year.ToString().Substring(2, 2));
@@ -88,25 +92,55 @@ namespace ACSE.Classes.Utilities
             return formatString;
         }
 
-        public byte[] ToBytes()
+        public byte[] ToFullDateData()
         {
-            if (!Is_Birthday)
+            switch (MainForm.Save_File.Game_System)
             {
-                return new byte[8]
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                    return new byte[8]
                     {
-                    (byte)Second,
-                    (byte)Minute,
-                    (byte)Hour,
-                    (byte)Day,
-                    (byte)Day_of_Week,
-                    (byte)Month,
-                    (byte)((Year & 0xFF00) >> 8),
-                    (byte)(Year & 0x00FF)
+                        (byte)Second,
+                        (byte)Minute,
+                        (byte)Hour,
+                        (byte)Day,
+                        (byte)Day_of_Week,
+                        (byte)Month,
+                        (byte)((Year & 0xFF00) >> 8),
+                        (byte)(Year & 0x00FF)
                     };
+                default:
+                    return new byte[0]; // TODO: Wild World+ Date Research
             }
-            else
+        }
+
+        public byte[] ToYearMonthDayDateData()
+        {
+            switch (MainForm.Save_File.Game_System)
             {
-                return new byte[2] { (byte)Month, (byte)Day };
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                    return new byte[4]
+                    {
+                        (byte)((Year & 0xFF00) >> 8),
+                        (byte)(Year & 0x00FF),
+                        (byte)Month,
+                        (byte)Day
+                    };
+                default:
+                    return new byte[0];
+            }
+        }
+
+        public byte[] ToMonthDayDateData()
+        {
+            switch (MainForm.Save_File.Game_System)
+            {
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                    return new byte[2] { (byte)Month, (byte)Day };
+                default:
+                    return new byte[0];
             }
         }
     }

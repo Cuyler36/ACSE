@@ -94,7 +94,7 @@ namespace ACSE
 
         public string Get_Log_File_Path()
         {
-            return NewMainForm.Assembly_Location + string.Format("\\{0}.txt", Log_File_Name);
+            return MainForm.Assembly_Location + string.Format("\\{0}.txt", Log_File_Name);
         }
 
         public void WriteLine(string Contents, DebugLevel Level = DebugLevel.Info)
@@ -107,8 +107,8 @@ namespace ACSE
                     DeleteLogFile(Get_Log_File_Path());
                     InitiateDebugLogWriter();
                 }
-                Log_Writer.WriteLine(string.Format("[{0}] - ({1}) - {2} => {3}", Level, NewMainForm.Save_File != null
-                    ? NewMainForm.Save_File.Save_Type.ToString().Replace("_", " ") : "No Save", DateTime.Now, Contents));
+                Log_Writer.WriteLine(string.Format("[{0}] - ({1}) - {2} => {3}", Level, MainForm.Save_File != null
+                    ? MainForm.Save_File.Save_Type.ToString().Replace("_", " ") : "No Save", DateTime.Now, Contents));
                 Log_Writer.Flush();
             }
         }

@@ -60,7 +60,7 @@ namespace ACSE
         {
             if (Items != null && Index > -1)
             {
-                var SaveFile = NewMainForm.Save_File;
+                var SaveFile = MainForm.Save_File;
                 if (SaveFile.Game_System == SaveGeneration.N3DS)
                 {
                     for (int i = 0; i < Items.Length; i++)
@@ -97,7 +97,7 @@ namespace ACSE
 
         public void Write()
         {
-            var SaveFile = NewMainForm.Save_File;
+            var SaveFile = MainForm.Save_File;
 
             foreach (Layer l in Layers)
             {
@@ -130,20 +130,20 @@ namespace ACSE
             this.Index = Index;
             this.Offset = Offset;
 
-            int HouseSize = HouseInfo.GetHouseSize(Offset, NewMainForm.Save_File.Save_Type);
+            int HouseSize = HouseInfo.GetHouseSize(Offset, MainForm.Save_File.Save_Type);
             bool Basement = false;
             //Console.WriteLine("House Index: " + Index);
             //Console.WriteLine("House Offset: 0x" + Offset.ToString("X"));
             //Console.WriteLine("House Size: " + HouseSize.ToString());
-            if (NewMainForm.Save_File.Game_System == SaveGeneration.N64 || NewMainForm.Save_File.Game_System == SaveGeneration.GCN)
+            if (MainForm.Save_File.Game_System == SaveGeneration.N64 || MainForm.Save_File.Game_System == SaveGeneration.GCN)
             {
-                Basement = HouseInfo.HasBasement(Offset, NewMainForm.Save_File.Save_Type);
+                Basement = HouseInfo.HasBasement(Offset, MainForm.Save_File.Save_Type);
                 //Console.WriteLine("Basement: " + Basement.ToString());
             }
 
             // Load House Data
-            var Offsets = HouseInfo.GetHouseOffsets(NewMainForm.Save_File.Save_Type);
-            var SaveData = NewMainForm.Save_File;
+            var Offsets = HouseInfo.GetHouseOffsets(MainForm.Save_File.Save_Type);
+            var SaveData = MainForm.Save_File;
             Type PlayerDataType = typeof(HouseData);
             Type PlayerSaveInfoType = typeof(HouseOffsets);
             object BoxedData = new HouseData();
@@ -199,7 +199,7 @@ namespace ACSE
             Data = (HouseData)BoxedData;
 
             // Load Rooms/Layers
-            int ItemDataSize = NewMainForm.Save_File.Game_System == SaveGeneration.N3DS ? 4 : 2;
+            int ItemDataSize = MainForm.Save_File.Game_System == SaveGeneration.N3DS ? 4 : 2;
             int ItemsPerLayer = 256; //Offsets.Layer_Size / ItemDataSize;
             Data.Rooms = new Room[Offsets.Room_Count];
             var RoomNames = HouseInfo.GetRoomNames(SaveData.Game_System);
@@ -259,18 +259,18 @@ namespace ACSE
 
         public void Write()
         {
-            var SaveData = NewMainForm.Save_File;
+            var SaveData = MainForm.Save_File;
             var Offsets = HouseInfo.GetHouseOffsets(SaveData.Save_Type);
 
             // Set House TownID & Name
             if (Offsets.Owning_Player_Name != -1 && Owner != null && Offsets.Town_ID != -1)
             {
-                Data.Town_ID = SaveData.ReadUInt16(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_ID, SaveData.Is_Big_Endian); // Might not be UInt16 in all games
+                Data.Town_ID = SaveData.ReadUInt16(SaveData.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Town_ID, SaveData.Is_Big_Endian); // Might not be UInt16 in all games
             }
             if (Offsets.Owning_Player_Name != -1 && Owner != null && Offsets.Town_Name != -1)
             {
-                Data.Town_Name = SaveData.ReadString(SaveData.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Town_Name,
-                    NewMainForm.Current_Save_Info.Save_Offsets.Town_NameSize);
+                Data.Town_Name = SaveData.ReadString(SaveData.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Town_Name,
+                    MainForm.Current_Save_Info.Save_Offsets.Town_NameSize);
             }
             if (Offsets.Owning_Player_Name != -1 && Owner != null)
             {
@@ -590,11 +590,11 @@ namespace ACSE
             switch (Save_Type)
             {
                 case SaveType.Animal_Crossing: // NOTE: N64 & GameCube titles don't include Basement in the size
-                    return (NewMainForm.Save_File.Working_Save_Data[Offset + 0x2A] >> 5) & 7;
+                    return (MainForm.Save_File.Working_Save_Data[Offset + 0x2A] >> 5) & 7;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
-                    return (NewMainForm.Save_File.Working_Save_Data[Offset + 0x26] >> 5) & 7;
+                    return (MainForm.Save_File.Working_Save_Data[Offset + 0x26] >> 5) & 7;
                 case SaveType.Wild_World:
-                    return NewMainForm.Save_File.ReadByte(0xFAF8) & 7; // Not sure about this
+                    return MainForm.Save_File.ReadByte(0xFAF8) & 7; // Not sure about this
                 default:
                     return 0;
             }
@@ -605,7 +605,7 @@ namespace ACSE
             switch (Save_Type)
             {
                 case SaveType.Doubutsu_no_Mori_e_Plus:
-                    return (NewMainForm.Save_File.Working_Save_Data[Offset + 0x26] >> 2) & 7;
+                    return (MainForm.Save_File.Working_Save_Data[Offset + 0x26] >> 2) & 7;
                 default:
                     return 0;
             }
@@ -613,7 +613,7 @@ namespace ACSE
 
         public static int GetRoomSize(int Offset) // NL/WA only
         {
-            return Math.Min(8, NewMainForm.Save_File.ReadByte(Offset - 0x44) * 2);
+            return Math.Min(8, MainForm.Save_File.ReadByte(Offset - 0x44) * 2);
         }
 
         public static bool HasBasement(int Offset, SaveType Save_Type)
@@ -621,9 +621,9 @@ namespace ACSE
             switch (Save_Type)
             {
                 case SaveType.Animal_Crossing:
-                    return (NewMainForm.Save_File.Working_Save_Data[Offset + 0x24] & 0x10) == 0x10;
+                    return (MainForm.Save_File.Working_Save_Data[Offset + 0x24] & 0x10) == 0x10;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
-                    return (NewMainForm.Save_File.Working_Save_Data[Offset + 0x20] & 0x10) == 0x10;
+                    return (MainForm.Save_File.Working_Save_Data[Offset + 0x20] & 0x10) == 0x10;
                 default:
                     return false;
             }
@@ -631,7 +631,7 @@ namespace ACSE
 
         public static void SetHasBasement(bool Enabled, House SelectedHouse)
         {
-            var SaveFile = NewMainForm.Save_File;
+            var SaveFile = MainForm.Save_File;
             if (SaveFile.Game_System == SaveGeneration.N64 || SaveFile.Game_System == SaveGeneration.GCN)
             {
                 int BasementFlagOffset = SelectedHouse.Offset;

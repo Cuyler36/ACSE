@@ -632,7 +632,7 @@ namespace ACSE
         public static Dictionary<ushort, string> GetItemInfo(SaveType Save_Type, string Language = "en")
         {
             StreamReader Contents = null;
-            string Item_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
+            string Item_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
             if (Save_Type == SaveType.Wild_World)
                 Item_DB_Location += "WW_Items_" + Language + ".txt";
             else if (Save_Type == SaveType.Doubutsu_no_Mori)
@@ -652,7 +652,7 @@ namespace ACSE
             try { Contents = File.OpenText(Item_DB_Location); }
             catch (Exception e)
             {
-                NewMainForm.Debug_Manager.WriteLine(string.Format("An error occured opening item database file:\n\"{0}\"\nError Info:\n{1}", Item_DB_Location, e.Message), DebugLevel.Error);
+                MainForm.Debug_Manager.WriteLine(string.Format("An error occured opening item database file:\n\"{0}\"\nError Info:\n{1}", Item_DB_Location, e.Message), DebugLevel.Error);
                 return null;
             }
             Dictionary<ushort, string> Item_Dictionary = new Dictionary<ushort, string>();
@@ -667,7 +667,7 @@ namespace ACSE
                     if (ushort.TryParse(Item_ID_String.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out ushort Item_ID))
                         Item_Dictionary.Add(Item_ID, Item_Name);
                     else
-                        NewMainForm.Debug_Manager.WriteLine("Unable to add item: " + Item_ID_String + " | " + Item_Name, DebugLevel.Error);
+                        MainForm.Debug_Manager.WriteLine("Unable to add item: " + Item_ID_String + " | " + Item_Name, DebugLevel.Error);
                 }
             }
             return Item_Dictionary;
@@ -676,13 +676,13 @@ namespace ACSE
         public static Dictionary<byte, string> GetAcreInfo(SaveType Save_Type, string Language = "en")
         {
             StreamReader Contents = null;
-            string Acre_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
+            string Acre_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
             if (Save_Type == SaveType.Wild_World)
                 Acre_DB_Location += "WW_Acres_" + Language + ".txt";
             try { Contents = File.OpenText(Acre_DB_Location); }
             catch (Exception e)
             {
-                NewMainForm.Debug_Manager.WriteLine(string.Format("An error occured opening acre database file:\n\"{0}\"\nError Info:\n{1}", Acre_DB_Location, e.Message), DebugLevel.Error);
+                MainForm.Debug_Manager.WriteLine(string.Format("An error occured opening acre database file:\n\"{0}\"\nError Info:\n{1}", Acre_DB_Location, e.Message), DebugLevel.Error);
                 return null;
             }
             Dictionary<byte, string> Acre_Dictionary = new Dictionary<byte, string>();
@@ -697,7 +697,7 @@ namespace ACSE
                     if (byte.TryParse(Acre_ID_String.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out byte Acre_ID))
                         Acre_Dictionary.Add(Acre_ID, Acre_Name);
                     else
-                        NewMainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
+                        MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
                 }
             }
             return Acre_Dictionary;
@@ -706,7 +706,7 @@ namespace ACSE
         public static Dictionary<ushort, string> GetAcreInfoUInt16(SaveType Save_Type, string Language = "en")
         {
             StreamReader Contents = null;
-            string Acre_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
+            string Acre_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
             if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs to have a custom list, since the docks/islands don't exist
                 Acre_DB_Location += "AC_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
@@ -718,7 +718,7 @@ namespace ACSE
             try { Contents = File.OpenText(Acre_DB_Location); }
             catch (Exception e)
             {
-                NewMainForm.Debug_Manager.WriteLine(string.Format("An error occured opening acre database file:\n\"{0}\"\nError Info:\n{1}", Acre_DB_Location, e.Message), DebugLevel.Error);
+                MainForm.Debug_Manager.WriteLine(string.Format("An error occured opening acre database file:\n\"{0}\"\nError Info:\n{1}", Acre_DB_Location, e.Message), DebugLevel.Error);
                 return null;
             }
             Dictionary<ushort, string> Acre_Dictionary = new Dictionary<ushort, string>();
@@ -733,7 +733,7 @@ namespace ACSE
                     if (ushort.TryParse(Acre_ID_String.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out ushort Acre_ID))
                         Acre_Dictionary.Add(Acre_ID, Acre_Name);
                     else
-                        NewMainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
+                        MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
                 }
             }
             return Acre_Dictionary;
@@ -743,13 +743,13 @@ namespace ACSE
         public static Dictionary<string, List<byte>> GetFiledAcreData(SaveType Save_Type, string Language = "en")
         {
             StreamReader Contents = null;
-            string Acre_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
+            string Acre_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
             if (Save_Type == SaveType.Wild_World)
                 Acre_DB_Location += "WW_Acres_" + Language + ".txt";
             try { Contents = File.OpenText(Acre_DB_Location); }
             catch (Exception e)
             {
-                NewMainForm.Debug_Manager.WriteLine(string.Format("An error occured opening acre database file:\n\"{0}\"\nError Info:\n{1}", Acre_DB_Location, e.Message), DebugLevel.Error);
+                MainForm.Debug_Manager.WriteLine(string.Format("An error occured opening acre database file:\n\"{0}\"\nError Info:\n{1}", Acre_DB_Location, e.Message), DebugLevel.Error);
                 return null;
             }
             Dictionary<string, List<byte>> Filed_List = new Dictionary<string, List<byte>>();
@@ -774,7 +774,7 @@ namespace ACSE
                     if (byte.TryParse(Acre_ID_String.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out byte Acre_ID))
                         Filed_List[Current_Acre_Type].Add(Acre_ID);
                     else
-                        NewMainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
+                        MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
                 }
             }
             return Filed_List;
@@ -783,7 +783,7 @@ namespace ACSE
         public static Dictionary<string, Dictionary<ushort, string>> GetFiledAcreDataUInt16(SaveType Save_Type, string Language = "en")
         {
             StreamReader Contents = null;
-            string Acre_DB_Location = NewMainForm.Assembly_Location + "\\Resources\\";
+            string Acre_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
             if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // DnM needs custom database
                 Acre_DB_Location += "AC_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
@@ -795,7 +795,7 @@ namespace ACSE
             try { Contents = File.OpenText(Acre_DB_Location); }
             catch (Exception e)
             {
-                NewMainForm.Debug_Manager.WriteLine(string.Format("An error occured opening acre database file:\n\"{0}\"\nError Info:\n{1}", Acre_DB_Location, e.Message), DebugLevel.Error);
+                MainForm.Debug_Manager.WriteLine(string.Format("An error occured opening acre database file:\n\"{0}\"\nError Info:\n{1}", Acre_DB_Location, e.Message), DebugLevel.Error);
                 return null;
             }
             Dictionary<string, Dictionary<ushort, string>> Filed_List = new Dictionary<string, Dictionary<ushort, string>>();
@@ -820,7 +820,7 @@ namespace ACSE
                     if (ushort.TryParse(Acre_ID_String.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out ushort Acre_ID))
                         Filed_List[Current_Acre_Type].Add(Acre_ID, Line.Substring(7));
                     else
-                        NewMainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
+                        MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
                 }
             }
             return Filed_List;
@@ -973,13 +973,9 @@ namespace ACSE
 
         public void Write(int offset, dynamic data, bool reversed = false, int stringLength = 0)
         {
-            if (offset == 0xBEF0)
-            {
-                Console.WriteLine();
-            }
             ChangesMade = true;
             Type Data_Type = data.GetType();
-            NewMainForm.Debug_Manager.WriteLine(string.Format("Writing Data{2} of type {0} to offset {1}", Data_Type.Name, "0x" + offset.ToString("X"), //recasting a value shows it as original type?
+            MainForm.Debug_Manager.WriteLine(string.Format("Writing Data{2} of type {0} to offset {1}", Data_Type.Name, "0x" + offset.ToString("X"), //recasting a value shows it as original type?
                     Data_Type.IsArray ? "" : " with value 0x" + (data.ToString("X"))), DebugLevel.Debug);
             if (!Data_Type.IsArray)
             {

@@ -91,7 +91,7 @@
         public FurnitureShop(SaveGeneration Generation)
         {
             Item[] Items = null;
-            var SaveFile = NewMainForm.Save_File;
+            var SaveFile = MainForm.Save_File;
 
             Size = GetSize(Generation);
 
@@ -119,7 +119,7 @@
 
         public byte GetSize(SaveGeneration Generation)
         {
-            var SaveFile = NewMainForm.Save_File;
+            var SaveFile = MainForm.Save_File;
             var ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.Save_Type);
             if (ShopOffsets != null)
             {
@@ -139,7 +139,7 @@
 
         public void SetSize(byte Size)
         {
-            var SaveFile = NewMainForm.Save_File;
+            var SaveFile = MainForm.Save_File;
             var ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.Save_Type);
             if (ShopOffsets != null)
             {

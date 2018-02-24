@@ -733,7 +733,7 @@ namespace ACSE.Classes.Utilities
             }
             else
             {
-                NewMainForm.Debug_Manager.WriteLine(string.Format("StringUtil was passed an unknown SaveType enum. Received Type: {0}", Save_Type.ToString()), DebugLevel.Error);
+                MainForm.Debug_Manager.WriteLine(string.Format("StringUtil was passed an unknown SaveType enum. Received Type: {0}", Save_Type.ToString()), DebugLevel.Error);
                 return null;
             }
         }

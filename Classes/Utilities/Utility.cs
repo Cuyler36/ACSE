@@ -11,13 +11,13 @@ namespace ACSE.Classes.Utilities
     {
         public static void Scan_For_NL_Int32()
         {
-            if (NewMainForm.Save_File != null && (NewMainForm.Save_File.Save_Type == SaveType.New_Leaf || NewMainForm.Save_File.Save_Type == SaveType.Welcome_Amiibo))
+            if (MainForm.Save_File != null && (MainForm.Save_File.Save_Type == SaveType.New_Leaf || MainForm.Save_File.Save_Type == SaveType.Welcome_Amiibo))
             {
-                using (StreamWriter Int32_Stream = File.CreateText(NewMainForm.Assembly_Location + "\\" +
-                    (NewMainForm.Save_File.Save_Type == SaveType.Welcome_Amiibo ? "WA_" : "") + "NL_Int32_Database.txt"))
-                    for (int i = 0; i < NewMainForm.Save_File.Working_Save_Data.Length - 4; i += 4)
+                using (StreamWriter Int32_Stream = File.CreateText(MainForm.Assembly_Location + "\\" +
+                    (MainForm.Save_File.Save_Type == SaveType.Welcome_Amiibo ? "WA_" : "") + "NL_Int32_Database.txt"))
+                    for (int i = 0; i < MainForm.Save_File.Working_Save_Data.Length - 4; i += 4)
                     {
-                        NL_Int32 Possible_NL_Int32 = new NL_Int32(NewMainForm.Save_File.ReadUInt32(i), NewMainForm.Save_File.ReadUInt32(i + 4));
+                        NL_Int32 Possible_NL_Int32 = new NL_Int32(MainForm.Save_File.ReadUInt32(i), MainForm.Save_File.ReadUInt32(i + 4));
                         if (Possible_NL_Int32.Valid)
                             Int32_Stream.WriteLine(string.Format("Found Valid NL_Int32 at offset 0x{0} | Value: {1}", i.ToString("X"), Possible_NL_Int32.Value));
                     }
@@ -59,10 +59,10 @@ namespace ACSE.Classes.Utilities
 
         public static byte[] Find_Villager_House(ushort Villager_ID) // TODO: Apply to WW
         {
-            if (NewMainForm.Save_File != null)
+            if (MainForm.Save_File != null)
             {
                 ushort Villager_House_ID = (ushort)(0x5000 + (Villager_ID & 0xFF));
-                foreach (Normal_Acre Acre in NewMainForm.Town_Acres)
+                foreach (Normal_Acre Acre in MainForm.Town_Acres)
                 {
                     WorldItem Villager_House = Acre.Acre_Items.FirstOrDefault(o => o.ItemID == Villager_House_ID);
                     if (Villager_House != null)
@@ -81,7 +81,7 @@ namespace ACSE.Classes.Utilities
             for (int i = 0; i < Acre_Results.Length; i++)
             {
                 Normal_Acre Acre = Acres[i];
-                switch (NewMainForm.Save_File.Game_System)
+                switch (MainForm.Save_File.Game_System)
                 {
                     case SaveGeneration.N64:
                     case SaveGeneration.GCN:
@@ -100,7 +100,7 @@ namespace ACSE.Classes.Utilities
                                     Acre.Acre_Items[o] = new WorldItem(0, o);
                                 }
                             }
-                            else if (ItemData.GetItemType(Item.ItemID, NewMainForm.Save_File.Save_Type) == "Tree")
+                            else if (ItemData.GetItemType(Item.ItemID, MainForm.Save_File.Save_Type) == "Tree")
                             {
                                 Tree_Count++;
                             }
@@ -113,7 +113,7 @@ namespace ACSE.Classes.Utilities
                                 {
                                     for (int x = 0; x < 256; x++)
                                     {
-                                        if (ItemData.GetItemType(Acre.Acre_Items[x].ItemID, NewMainForm.Save_File.Save_Type) == "Tree")
+                                        if (ItemData.GetItemType(Acre.Acre_Items[x].ItemID, MainForm.Save_File.Save_Type) == "Tree")
                                         {
                                             Acre.Acre_Items[x] = new WorldItem(0, x);
                                             break;
@@ -157,7 +157,7 @@ namespace ACSE.Classes.Utilities
         {
             if (Start_Index > -1 && Start_Index < 256)
             {
-                if (NewMainForm.Save_File.Game_System == SaveGeneration.GCN)
+                if (MainForm.Save_File.Game_System == SaveGeneration.GCN)
                 {
                     for (int y = 0; y < Structure_Info.Count; y++)
                     {

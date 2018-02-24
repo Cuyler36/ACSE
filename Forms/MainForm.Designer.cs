@@ -1,6 +1,6 @@
 ﻿namespace ACSE
 {
-    partial class NewMainForm
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TabPage patternsTab;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewMainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
@@ -2315,7 +2315,7 @@
             this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
             this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
             // 
-            // NewMainForm
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -2339,7 +2339,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "NewMainForm";
+            this.Name = "MainForm";
             this.Text = "ACSE";
             patternsTab.ResumeLayout(false);
             patternsTab.PerformLayout();

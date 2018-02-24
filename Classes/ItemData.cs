@@ -761,7 +761,7 @@ namespace ACSE
 
         public static string GetItemFlag1Type(Item Item, byte ItemFlag)
         {
-            string ItemType = GetItemType(Item.ItemID, NewMainForm.Save_File.Save_Type);
+            string ItemType = GetItemType(Item.ItemID, MainForm.Save_File.Save_Type);
             if (ItemType == "Fruit")
             {
                 switch (ItemFlag)
@@ -973,14 +973,14 @@ namespace ACSE
                 if (Island_Buildings == false)
                     for (int i = 0; i < 58; i++)
                     {
-                        int DataOffset = save.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Buildings + i * 4;
+                        int DataOffset = save.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Buildings + i * 4;
                         Buildings.Add(new Building(save.ReadByte(DataOffset), save.ReadByte(DataOffset + 2), save.ReadByte(DataOffset + 3), save.Save_Type));
                         //Technically, Building IDs are shorts, but since they only use the lower byte, we'll just ignore that
                     }
                 else
                     for (int i = 0; i < 2; i++)
                     {
-                        int DataOffset = save.Save_Data_Start_Offset + NewMainForm.Current_Save_Info.Save_Offsets.Island_Buildings + i * 4;
+                        int DataOffset = save.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Island_Buildings + i * 4;
                         Buildings.Add(new Building(save.ReadByte(DataOffset), save.ReadByte(DataOffset + 2), save.ReadByte(DataOffset + 3), save.Save_Type));
                     }
             }
@@ -997,7 +997,7 @@ namespace ACSE
 
         public Item()
         {
-            SaveType saveType = NewMainForm.Save_File == null ? SaveType.Animal_Crossing : NewMainForm.Save_File.Save_Type;
+            SaveType saveType = MainForm.Save_File == null ? SaveType.Animal_Crossing : MainForm.Save_File.Save_Type;
             if (saveType == SaveType.Wild_World || saveType == SaveType.City_Folk)
                 ItemID = 0xFFF1;
             else if (saveType == SaveType.New_Leaf || saveType == SaveType.Welcome_Amiibo)
@@ -1160,7 +1160,7 @@ namespace ACSE
 
         public Furniture(ushort itemId) : base(itemId)
         {
-            if (NewMainForm.Save_File.Game_System == SaveGeneration.N3DS)
+            if (MainForm.Save_File.Game_System == SaveGeneration.N3DS)
             {
                 BaseItemID = itemId;
                 Rotation = 0;
@@ -1168,7 +1168,7 @@ namespace ACSE
             else
             {
                 BaseItemID = (ushort)(ItemID & 0xFFFC);
-                if (ItemData.GetItemType(itemId, NewMainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(itemId, NewMainForm.Save_File.Save_Type).Equals("Gyroids"))
+                if (ItemData.GetItemType(itemId, MainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(itemId, MainForm.Save_File.Save_Type).Equals("Gyroids"))
                 {
                     Rotation = (ItemID % 4) * 90;
                 }
@@ -1183,7 +1183,7 @@ namespace ACSE
 
         public Furniture(ushort item, byte flag1, byte flag2) : base (item, flag1, flag2)
         {
-            if (NewMainForm.Save_File.Game_System == SaveGeneration.N3DS)
+            if (MainForm.Save_File.Game_System == SaveGeneration.N3DS)
             {
                 BaseItemID = ItemID;
                 Rotation = ((Flag1 >> 4) / 4) * 90;
@@ -1191,7 +1191,7 @@ namespace ACSE
             else
             {
                 BaseItemID = (ushort)(ItemID & 0xFFFC);
-                if (ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type).Equals("Gyroids"))
+                if (ItemData.GetItemType(ItemID, MainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(ItemID, MainForm.Save_File.Save_Type).Equals("Gyroids"))
                 {
                     Rotation = (ItemID % 4) * 90;
                 }
@@ -1205,7 +1205,7 @@ namespace ACSE
             Flag1 = item.Flag1;
             Flag2 = item.Flag2;
 
-            if (NewMainForm.Save_File.Game_System == SaveGeneration.N3DS)
+            if (MainForm.Save_File.Game_System == SaveGeneration.N3DS)
             {
                 BaseItemID = ItemID;
                 Rotation = ((Flag1 >> 4) / 4) * 90;
@@ -1213,7 +1213,7 @@ namespace ACSE
             else
             {
                 BaseItemID = (ushort)(ItemID & 0xFFFC);
-                if (ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(ItemID, NewMainForm.Save_File.Save_Type).Equals("Gyroids"))
+                if (ItemData.GetItemType(ItemID, MainForm.Save_File.Save_Type) == "Furniture" || ItemData.GetItemType(ItemID, MainForm.Save_File.Save_Type).Equals("Gyroids"))
                 {
                     Rotation = (ItemID % 4) * 90;
                 }
@@ -1234,7 +1234,7 @@ namespace ACSE
             if (obj is Furniture)
             {
                 var ComparingItem = obj as Furniture;
-                if (NewMainForm.Save_File.Game_System == SaveGeneration.N3DS)
+                if (MainForm.Save_File.Game_System == SaveGeneration.N3DS)
                     return (ComparingItem.ItemID == ItemID && ComparingItem.Flag1 == Flag1 && ComparingItem.Flag2 == Flag2);
                 else
                     return ComparingItem.BaseItemID == BaseItemID;
