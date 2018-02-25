@@ -538,7 +538,7 @@ namespace ACSE
             Tan = 8,
             Hat = 0xA,
             FaceItem = 0xE,
-            Wetsuit = 0x16, // Check this
+            Wetsuit = 0x16, // The shirt & wetsuit seem to switch postiions depending on if you're wearing both or not..
             Shirt = 0x12,
             Pants = 0x1A,
             Socks = 0x1E,

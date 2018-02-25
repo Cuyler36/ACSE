@@ -22,6 +22,22 @@ namespace ACSE
         public readonly Stack<ItemChange> RedoStack = new Stack<ItemChange>();
         public bool Modified { get; protected set; } = false;
 
+        private bool disabled = false;
+        public bool Disabled
+        {
+            get => disabled;
+            set
+            {
+                disabled = value;
+
+                var Img = EditorPictureBox.Image;
+                EditorPictureBox.Image = Properties.Resources.X;
+
+                if (Img != null)
+                    Img.Dispose();
+            }
+        }
+
         private int itemCellSize = 8;
         public int ItemCellSize
         {
@@ -29,7 +45,7 @@ namespace ACSE
             set
             {
                 itemCellSize = value;
-                if (EditorPictureBox != null)
+                if (!disabled && EditorPictureBox != null)
                 {
                     SetItemPicture();
                 }
@@ -46,7 +62,9 @@ namespace ACSE
                 item = value;
 
                 OnItemChanged(PreviousItem, value);
-                SetItemPicture();
+
+                if (!disabled)
+                    SetItemPicture();
             }
         }
 
@@ -77,6 +95,7 @@ namespace ACSE
 
             EditorPictureBox = new PictureBox
             {
+                SizeMode = PictureBoxSizeMode.StretchImage,
                 Dock = DockStyle.Fill
             };
 
@@ -109,7 +128,7 @@ namespace ACSE
 
         protected virtual void OnEditorMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.X != LastX || e.Y != LastY)
+            if (!disabled && (e.X != LastX || e.Y != LastY))
             {
                 // Update Last Hover Position
                 LastX = e.X;
@@ -126,30 +145,33 @@ namespace ACSE
 
         protected virtual void OnEditorMouseDown(object sender, MouseEventArgs e)
         {
-            IsMouseDown = true;
-            if (e.Button == MouseButtons.Left)
+            if (!disabled)
             {
-                Item NewItem = MainFormReference.GetCurrentItem();
-                Item PreviousItem = item;
-
-                if (PreviousItem != NewItem)
+                IsMouseDown = true;
+                if (e.Button == MouseButtons.Left)
                 {
+                    Item NewItem = MainFormReference.GetCurrentItem();
+                    Item PreviousItem = item;
 
-                    // Save Old Item
-                    PushNewItemChange(PreviousItem, 0, UndoStack);
+                    if (PreviousItem != NewItem)
+                    {
 
-                    // Set New Item
-                    Item = NewItem;
+                        // Save Old Item
+                        PushNewItemChange(PreviousItem, 0, UndoStack);
 
-                    // Update ToolTip
-                    ItemToolTip.Show(string.Format("{0} - [0x{1}]", NewItem.Name, NewItem.ItemID.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
+                        // Set New Item
+                        Item = NewItem;
 
-                    Modified = true;
+                        // Update ToolTip
+                        ItemToolTip.Show(string.Format("{0} - [0x{1}]", NewItem.Name, NewItem.ItemID.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
+
+                        Modified = true;
+                    }
                 }
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                MainFormReference.SetCurrentItem(item);
+                else if (e.Button == MouseButtons.Right)
+                {
+                    MainFormReference.SetCurrentItem(item);
+                }
             }
         }
 
