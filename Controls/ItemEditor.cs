@@ -11,6 +11,11 @@ namespace ACSE
     /// </summary>
     public partial class ItemEditor : UserControl
     {
+        /// <summary>
+        /// This event fires when an item is set or changed. PreviousItem will be null if it is the first time setting the item.
+        /// </summary>
+        public event EventHandler<IndexedItemChangedEventArgs> ItemChanged;
+
         public readonly PictureBox EditorPictureBox;
         public readonly ToolTip ItemToolTip;
         public readonly Stack<ItemChange> UndoStack = new Stack<ItemChange>();
@@ -102,6 +107,11 @@ namespace ACSE
             EditorPictureBox.MouseUp += (sender, e) => IsMouseDown = false;
         }
 
+        protected virtual void OnItemChanged(Item PreviousItem, Item NewItem, int Index)
+        {
+            ItemChanged?.Invoke(this, new IndexedItemChangedEventArgs { PreviousItem = PreviousItem, NewItem = NewItem, Index = Index });
+        }
+
         protected virtual void PushNewItemChange(Item OldItem, int ItemIndex, Stack<ItemChange> Stack)
         {
             Stack.Push(new ItemChange { Item = OldItem, Index = ItemIndex });
@@ -113,12 +123,12 @@ namespace ACSE
             Y = e.Y / itemCellSize;
             Index = Y * itemsPerRow + X;
 
-            return Index < items.Length;
+            return Index > -1 && Index < items.Length;
         }
 
         protected virtual void OnEditorMouseMove(object sender, MouseEventArgs e)
         {
-            if (GetXYPosition(e, out int X, out int Y, out int Index) && (e.X != LastX || e.Y != LastY))
+            if (items != null && GetXYPosition(e, out int X, out int Y, out int Index) && (e.X != LastX || e.Y != LastY))
             {
                 // Update Last Hover Position
                 LastX = e.X;
@@ -147,7 +157,6 @@ namespace ACSE
 
                     if (SelectedItem != NewItem)
                     {
-                        
                         // Save Old Item
                         PushNewItemChange(SelectedItem, Index, UndoStack);
 
@@ -163,6 +172,9 @@ namespace ACSE
 
                         // Update ToolTip
                         ItemToolTip.Show(string.Format("{0} - [0x{1}]", NewItem.Name, NewItem.ItemID.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
+
+                        // Fire ItemChanged Event
+                        OnItemChanged(SelectedItem, NewItem, Index);
 
                         Modified = true;
                     }
@@ -181,8 +193,10 @@ namespace ACSE
                 // Get Previous Change
                 ItemChange PreviousItemChange = UndoStack.Pop();
 
+                Item SelectedItem = items[PreviousItemChange.Index];
+
                 // Set Redo Change
-                PushNewItemChange(items[PreviousItemChange.Index], PreviousItemChange.Index, RedoStack);
+                PushNewItemChange(SelectedItem, PreviousItemChange.Index, RedoStack);
 
                 // Undo
                 items[PreviousItemChange.Index] = PreviousItemChange.Item;
@@ -191,6 +205,8 @@ namespace ACSE
 
                 if (Img != null)
                     Img.Dispose();
+
+                OnItemChanged(SelectedItem, Items[PreviousItemChange.Index], PreviousItemChange.Index);
             }
         }
 
@@ -201,8 +217,10 @@ namespace ACSE
                 // Get Previous Change
                 ItemChange PreviousItemChange = RedoStack.Pop();
 
+                Item SelectedItem = items[PreviousItemChange.Index];
+
                 // Set Undo Change
-                PushNewItemChange(items[PreviousItemChange.Index], PreviousItemChange.Index, UndoStack);
+                PushNewItemChange(SelectedItem, PreviousItemChange.Index, UndoStack);
 
                 // Redo
                 items[PreviousItemChange.Index] = PreviousItemChange.Item;
@@ -211,6 +229,8 @@ namespace ACSE
 
                 if (Img != null)
                     Img.Dispose();
+
+                OnItemChanged(SelectedItem, Items[PreviousItemChange.Index], PreviousItemChange.Index);
             }
         }
 
