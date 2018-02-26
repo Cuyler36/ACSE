@@ -1,5 +1,5 @@
 # ACSE - Animal Crossing Save Editor
-![ACSE](https://github.com/Cuyler36/ACSE/blob/master/Resources/ACSE_Logo_2.png)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ACSE is a save editor for the Animal Crossing game series. It currently supports the following titles:
 * Dōbutsu no Mori (N64)
