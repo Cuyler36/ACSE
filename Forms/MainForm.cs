@@ -2414,7 +2414,7 @@ namespace ACSE
                     Villager.Data.Villager_ID = Villager_Database.Keys.ElementAt(Villager_Idx);
                     Villager.Exists = (Villager.Data.Villager_ID != 0 && Villager.Data.Villager_ID != 0xFFFF);
 
-                    if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                    if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN) // TODO: Wild World
                     {
                         Villager.Data.Villager_AI = (Villager.Index == 15) ? (byte)0xFF : (byte)(Villager.Data.Villager_ID & 0xFF);
                         if (Villager.Data.Villager_ID == 0)
