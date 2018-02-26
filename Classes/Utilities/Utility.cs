@@ -74,6 +74,22 @@ namespace ACSE.Classes.Utilities
             return new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF };
         }
 
+        public static NewVillager GetVillagerFromHouse(ushort HouseId, NewVillager[] Villagers)
+        {
+            ushort VillagerId = (ushort)(0xE000 | (HouseId & 0x00FF));
+            
+            foreach (NewVillager Villager in Villagers)
+            {
+                if (Villager.Data.Villager_ID == VillagerId)
+                {
+                    return Villager;
+                }
+            }
+
+            return null;
+        }
+
+
         public static bool[] Check_Perfect_Town_Requirements(Normal_Acre[] Acres, bool Make_Perfect = false)
         {
             bool[] Acre_Results = new bool[Acres.Length];

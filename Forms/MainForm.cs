@@ -2412,7 +2412,8 @@ namespace ACSE
                 if (Villager_Idx > -1)
                 {
                     Villager.Data.Villager_ID = Villager_Database.Keys.ElementAt(Villager_Idx);
-                    
+                    Villager.Exists = (Villager.Data.Villager_ID != 0 && Villager.Data.Villager_ID != 0xFFFF);
+
                     if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                     {
                         Villager.Data.Villager_AI = (Villager.Index == 15) ? (byte)0xFF : (byte)(Villager.Data.Villager_ID & 0xFF);
@@ -3430,7 +3431,19 @@ namespace ACSE
                         }
                         else
                             Town_Acres[Acre].Acre_Items[index] = new WorldItem(CurrentItem.ItemID, index);
+
+                        // Update Villager House Coordinates if a valid villager exists for the selected house
+                        if ((Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN) && 
+                            CurrentItem.ItemID >= 0x5000 && CurrentItem.ItemID <= 0x50FF) // TODO: WW Support
+                        {
+                            NewVillager Villager = Utility.GetVillagerFromHouse(CurrentItem.ItemID, Villagers);
+                            if (Villager != null)
+                            {
+                                Villager.Data.House_Coordinates = Utility.Find_Villager_House(Villager.Data.Villager_ID);
+                            }
+                        }
                     }
+
                     if (buriedCheckbox.Checked)
                     {
                         if (Save_File.Game_System == SaveGeneration.N3DS)
