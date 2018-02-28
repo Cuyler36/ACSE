@@ -120,7 +120,7 @@ namespace ACSE.Classes.Utilities
             return CreateBitmap(PatternBitmapBuffer, Width, Height);
         }
 
-        public static Bitmap GeneratePalettePreview(uint[] Palette, uint Width = 32, uint Height = 480)
+        public static Bitmap GeneratePalettePreview(uint[] Palette, int SelectedColor = -1, uint Width = 32, uint Height = 480)
         {
             byte[] PaletteBitmapBuffer = new byte[Width * Height * 4];
             int PaletteColorDataLength = (int)(Width * (Height / 15) * 4); // There are 15 colors in a Palette.
@@ -134,7 +134,15 @@ namespace ACSE.Classes.Utilities
                 Buffer.BlockCopy(BitConverter.GetBytes(Palette[PaletteIndex]), 0, PaletteBitmapBuffer, i, 4);
             }
 
-            return ImageGeneration.DrawGrid2(CreateBitmap(PaletteBitmapBuffer, Width, Height), (int)Width, new Size((int)Width, (int)Height), null, false, false, true);
+            Bitmap Preview = CreateBitmap(PaletteBitmapBuffer, Width, Height);
+
+            // Draw Highlight over selected color
+            if (SelectedColor > -1)
+            {
+                ImageGeneration.DrawPaletteHighlight(ref Preview, SelectedColor);
+            }
+
+            return ImageGeneration.DrawGrid2(Preview, (int)Width, new Size((int)Width, (int)Height), null, false, false, true);
         }
 
         public static byte[] CondenseNonBlockPattern(byte[] Buffer)
