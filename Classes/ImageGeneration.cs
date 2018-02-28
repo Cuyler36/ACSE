@@ -142,23 +142,6 @@ namespace ACSE
             return Acre_Highlight;
         }
 
-        public static void DrawPaletteHighlight(ref Bitmap Palette, int ColorIndex)
-        {
-            using (var g = Graphics.FromImage(Palette))
-            {
-                using (var p = new Pen(Color.FromArgb(0x80, Color.Red)))
-                {
-                    p.Width = 2;
-                    using (var s = new SolidBrush(Color.FromArgb(0x80, Color.Yellow)))
-                    {
-                        g.DrawRectangle(p, new Rectangle(0, 32 * ColorIndex + 2, 30, 30));
-                        g.FillRectangle(s, new Rectangle(1, 32 * ColorIndex + 2, 28, 28));
-                        g.Flush();
-                    }
-                }
-            }
-        }
-
         public static Bitmap Draw_Building(Bitmap Acre_Map, Building Building_to_Draw, int ItemSize,  bool Use_Text = false)
         {
             RectangleF RectF = new RectangleF(Building_to_Draw.X_Pos * ItemSize, Building_to_Draw.Y_Pos * ItemSize, ItemSize, ItemSize);

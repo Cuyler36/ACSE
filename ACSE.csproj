@@ -2493,6 +2493,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\Images\Villagers.jpg" />
+    <None Include="Resources\Images\PaletteArrow.png" />
     <Content Include="Resources\Images\WA_Acre_Images\acre_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

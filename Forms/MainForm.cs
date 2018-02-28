@@ -3132,6 +3132,9 @@ namespace ACSE
                 SelectedPaletteIndex = e.Y / (paletteSelectionPictureBox.Height / 15);
                 paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData, SelectedPaletteIndex,
                         (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
+
+                // Set Color Selected Arrow
+                paletteColorSelectedPictureBox.Location = new Point(114, 21 + SelectedPaletteIndex * 32);
             }
         }
 

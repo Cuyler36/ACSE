@@ -103,6 +103,16 @@ namespace ACSE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PaletteArrow {
+            get {
+                object obj = ResourceManager.GetObject("PaletteArrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap VillagerHouse {
             get {
                 object obj = ResourceManager.GetObject("VillagerHouse", resourceCulture);

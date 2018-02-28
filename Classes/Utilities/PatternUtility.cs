@@ -135,13 +135,6 @@ namespace ACSE.Classes.Utilities
             }
 
             Bitmap Preview = CreateBitmap(PaletteBitmapBuffer, Width, Height);
-
-            // Draw Highlight over selected color
-            if (SelectedColor > -1)
-            {
-                ImageGeneration.DrawPaletteHighlight(ref Preview, SelectedColor);
-            }
-
             return ImageGeneration.DrawGrid2(Preview, (int)Width, new Size((int)Width, (int)Height), null, false, false, true);
         }
 

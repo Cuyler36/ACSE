@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TabPage patternsTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.paletteColorSelectedPictureBox = new System.Windows.Forms.PictureBox();
             this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
@@ -225,6 +226,7 @@
             this.label46 = new System.Windows.Forms.Label();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
             this.patternEditorPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.patternGroupTabControl.SuspendLayout();
@@ -262,6 +264,7 @@
             // 
             // patternsTab
             // 
+            patternsTab.Controls.Add(this.paletteColorSelectedPictureBox);
             patternsTab.Controls.Add(this.patternNameTextBox);
             patternsTab.Controls.Add(this.paletteIndexLabel);
             patternsTab.Controls.Add(this.palettePreviousButton);
@@ -276,6 +279,16 @@
             patternsTab.TabIndex = 8;
             patternsTab.Text = "Patterns";
             patternsTab.UseVisualStyleBackColor = true;
+            // 
+            // paletteColorSelectedPictureBox
+            // 
+            this.paletteColorSelectedPictureBox.Image = global::ACSE.Properties.Resources.PaletteArrow;
+            this.paletteColorSelectedPictureBox.Location = new System.Drawing.Point(114, 21);
+            this.paletteColorSelectedPictureBox.Name = "paletteColorSelectedPictureBox";
+            this.paletteColorSelectedPictureBox.Size = new System.Drawing.Size(16, 32);
+            this.paletteColorSelectedPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.paletteColorSelectedPictureBox.TabIndex = 21;
+            this.paletteColorSelectedPictureBox.TabStop = false;
             // 
             // patternNameTextBox
             // 
@@ -2290,6 +2303,7 @@
             this.Text = "ACSE";
             patternsTab.ResumeLayout(false);
             patternsTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).EndInit();
             this.patternEditorPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.patternGroupTabControl.ResumeLayout(false);
@@ -2531,5 +2545,6 @@
         private System.Windows.Forms.ToolTip infoTip;
         private System.Windows.Forms.PlaceholderTextBox itemIdTextBox;
         private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.PictureBox paletteColorSelectedPictureBox;
     }
 }
