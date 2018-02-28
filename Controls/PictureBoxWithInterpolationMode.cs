@@ -15,7 +15,7 @@ namespace ACSE
         {
             if (paintEventArgs != null)
             {
-                if (UseInternalInterpolationSetting && InterpolationMode == null)
+                if (UseInternalInterpolationSetting || InterpolationMode == null)
                     paintEventArgs.Graphics.InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode;
                 else
                     paintEventArgs.Graphics.InterpolationMode = InterpolationMode.Value;
@@ -25,7 +25,7 @@ namespace ACSE
 
         protected override void OnPaintBackground(PaintEventArgs paintEventArgs)
         {
-            if (UseInternalInterpolationSetting && InterpolationMode == null)
+            if (UseInternalInterpolationSetting || InterpolationMode == null)
                 paintEventArgs.Graphics.InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode;
             else
                 paintEventArgs.Graphics.InterpolationMode = InterpolationMode.Value;
