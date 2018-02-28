@@ -275,7 +275,7 @@ namespace ACSE
             return Color.FromArgb(0xFF, (byte)(color >> 16), (byte)(color >> 8), (byte)(color));
         }
 
-        public static byte ClosestColor(uint color, uint[] paletteData)
+        public static byte ClosestColorHSV(uint color, uint[] paletteData)
         {
             uint closestColor = paletteData[0];
             double diff = double.MaxValue;
@@ -301,6 +301,37 @@ namespace ACSE
             }
 
             return (byte)(Array.IndexOf(paletteData, closestColor) + 1);
+        }
+
+        public static byte ClosestColorRGB(uint Color, uint[] PaletteData)
+        {
+            double Distance = double.MaxValue;
+            byte ClosestPaletteIndex = 0;
+            double R = Color & 0xFF;
+            double G = (Color >> 8) & 0xFF;
+            double B = (Color >> 16) & 0xFF;
+
+            for (int i = 0; i < PaletteData.Length; i++)
+            {
+                uint PaletteColor = PaletteData[i];
+                double pR = PaletteColor & 0xFF;
+                double pG = (PaletteColor >> 8) & 0xFF;
+                double pB = (PaletteColor >> 16) & 0xFF;
+
+                double ThisDistance = Math.Sqrt(Math.Pow(pR - R, 2) + Math.Pow(pG - G, 2) + Math.Pow(pB - B, 2));
+                if (ThisDistance == 0)
+                {
+                    // Perfect match
+                    return (byte)(i + 1);
+                }
+                else if (ThisDistance < Distance)
+                {
+                    Distance = ThisDistance;
+                    ClosestPaletteIndex = (byte)(i + 1);
+                }
+            }
+
+            return ClosestPaletteIndex;
         }
     }
 
@@ -496,7 +527,7 @@ namespace ACSE
                 for (int i = 0; i < Pattern_Buffer.Length; i++)
                 {
                     int idx = i * 2;
-                    Pattern_Buffer[i] = (byte)((PatternData.ClosestColor(Bitmap_Buffer[idx + 1], PaletteData) << 4) | PatternData.ClosestColor(Bitmap_Buffer[idx], PaletteData)); // these are reversed
+                    Pattern_Buffer[i] = (byte)((PatternData.ClosestColorRGB(Bitmap_Buffer[idx + 1], PaletteData) << 4) | PatternData.ClosestColorRGB(Bitmap_Buffer[idx], PaletteData)); // these are reversed
                 }
             }
             else
@@ -504,7 +535,7 @@ namespace ACSE
                 byte[] ConvertedBuffer = new byte[Bitmap_Buffer.Length];
                 for (int i = 0; i < ConvertedBuffer.Length; i++)
                 {
-                    ConvertedBuffer[i] = PatternData.ClosestColor(Bitmap_Buffer[i], PaletteData);
+                    ConvertedBuffer[i] = PatternData.ClosestColorRGB(Bitmap_Buffer[i], PaletteData);
                 }
                 Pattern_Buffer = PatternUtility.EncodeC4(ConvertedBuffer);
             }

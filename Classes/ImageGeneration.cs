@@ -364,6 +364,7 @@ namespace ACSE
                     Image Img = Image.FromFile(PNG_Location);
                     Img.Save(Stream, ImageFormat.Bmp);
                     Bitmap_Buffer = Stream.ToArray();
+                    Img.Dispose();
                 }
 
                 int DataSize = Bitmap_Buffer[0x1C] / 8;

@@ -3016,11 +3016,13 @@ namespace ACSE
                         if (Pixel_Data != null)
                         {
                             Selected_Player.Data.Patterns[Idx].Import(Pixel_Data);
+                            Selected_Player.Data.Patterns[Idx].Name = Path.GetFileNameWithoutExtension(importPatternFile.FileName);
                             Refresh_PictureBox_Image(Pattern_Boxes[Idx], Selected_Player.Data.Patterns[Idx].Pattern_Bitmap, false, false);
 
                             if (SelectedPatternObject.Index == Idx)
                             {
                                 Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
+                                patternNameTextBox.Text = SelectedPatternObject.Name;
                                 patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
                             }
                         }
