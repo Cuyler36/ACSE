@@ -3159,7 +3159,8 @@ namespace ACSE
                         (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
 
                 // Set Color Selected Arrow
-                paletteColorSelectedPictureBox.Location = new Point(114, 21 + SelectedPaletteIndex * 32);
+                paletteColorSelectedPictureBox.Location = new Point(paletteSelectionPictureBox.Location.X - 16,
+                    paletteSelectionPictureBox.Location.Y + SelectedPaletteIndex * 32);
             }
         }
 

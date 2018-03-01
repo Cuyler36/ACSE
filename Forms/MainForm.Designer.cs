@@ -62,6 +62,8 @@
             this.makeFruitsPerfectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importTownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportTownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fillEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getAllKKSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,6 +134,8 @@
             this.player3 = new System.Windows.Forms.TabPage();
             this.player4 = new System.Windows.Forms.TabPage();
             this.acresTab = new System.Windows.Forms.TabPage();
+            this.exportAcresButton = new System.Windows.Forms.Button();
+            this.importAcresButton = new System.Windows.Forms.Button();
             this.townMapViewCheckbox = new System.Windows.Forms.CheckBox();
             this.acreCustomIdBox = new System.Windows.Forms.TextBox();
             this.label44 = new System.Windows.Forms.Label();
@@ -224,10 +228,6 @@
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.label46 = new System.Windows.Forms.Label();
-            this.importAcresButton = new System.Windows.Forms.Button();
-            this.exportAcresButton = new System.Windows.Forms.Button();
-            this.importTownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportTownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -286,6 +286,7 @@
             // 
             // paletteColorSelectedPictureBox
             // 
+            this.paletteColorSelectedPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.paletteColorSelectedPictureBox.Image = global::ACSE.Properties.Resources.PaletteArrow;
             this.paletteColorSelectedPictureBox.Location = new System.Drawing.Point(114, 21);
             this.paletteColorSelectedPictureBox.Name = "paletteColorSelectedPictureBox";
@@ -583,9 +584,25 @@
             // replaceToolStripMenuItem
             // 
             this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
-            this.replaceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.replaceToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.replaceToolStripMenuItem.Text = "Replace";
             this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
+            // 
+            // importTownToolStripMenuItem
+            // 
+            this.importTownToolStripMenuItem.Enabled = false;
+            this.importTownToolStripMenuItem.Name = "importTownToolStripMenuItem";
+            this.importTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.importTownToolStripMenuItem.Text = "Import Town";
+            this.importTownToolStripMenuItem.Click += new System.EventHandler(this.importTownToolStripMenuItem_Click);
+            // 
+            // exportTownToolStripMenuItem
+            // 
+            this.exportTownToolStripMenuItem.Enabled = false;
+            this.exportTownToolStripMenuItem.Name = "exportTownToolStripMenuItem";
+            this.exportTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.exportTownToolStripMenuItem.Text = "Export Town";
+            this.exportTownToolStripMenuItem.Click += new System.EventHandler(this.exportTownToolStripMenuItem_Click);
             // 
             // extrasToolStripMenuItem
             // 
@@ -1380,6 +1397,28 @@
             this.acresTab.TabIndex = 1;
             this.acresTab.Text = "Acres";
             this.acresTab.UseVisualStyleBackColor = true;
+            // 
+            // exportAcresButton
+            // 
+            this.exportAcresButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.exportAcresButton.Location = new System.Drawing.Point(841, 535);
+            this.exportAcresButton.Name = "exportAcresButton";
+            this.exportAcresButton.Size = new System.Drawing.Size(84, 23);
+            this.exportAcresButton.TabIndex = 6;
+            this.exportAcresButton.Text = "Export Acres";
+            this.exportAcresButton.UseVisualStyleBackColor = true;
+            this.exportAcresButton.Click += new System.EventHandler(this.ExportAcres);
+            // 
+            // importAcresButton
+            // 
+            this.importAcresButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.importAcresButton.Location = new System.Drawing.Point(745, 535);
+            this.importAcresButton.Name = "importAcresButton";
+            this.importAcresButton.Size = new System.Drawing.Size(84, 23);
+            this.importAcresButton.TabIndex = 5;
+            this.importAcresButton.Text = "Import Acres";
+            this.importAcresButton.UseVisualStyleBackColor = true;
+            this.importAcresButton.Click += new System.EventHandler(this.ImportAcres);
             // 
             // townMapViewCheckbox
             // 
@@ -2282,44 +2321,6 @@
             this.label46.Size = new System.Drawing.Size(18, 13);
             this.label46.TabIndex = 79;
             this.label46.Text = "0x";
-            // 
-            // importAcresButton
-            // 
-            this.importAcresButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.importAcresButton.Location = new System.Drawing.Point(745, 535);
-            this.importAcresButton.Name = "importAcresButton";
-            this.importAcresButton.Size = new System.Drawing.Size(84, 23);
-            this.importAcresButton.TabIndex = 5;
-            this.importAcresButton.Text = "Import Acres";
-            this.importAcresButton.UseVisualStyleBackColor = true;
-            this.importAcresButton.Click += new System.EventHandler(this.ImportAcres);
-            // 
-            // exportAcresButton
-            // 
-            this.exportAcresButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.exportAcresButton.Location = new System.Drawing.Point(841, 535);
-            this.exportAcresButton.Name = "exportAcresButton";
-            this.exportAcresButton.Size = new System.Drawing.Size(84, 23);
-            this.exportAcresButton.TabIndex = 6;
-            this.exportAcresButton.Text = "Export Acres";
-            this.exportAcresButton.UseVisualStyleBackColor = true;
-            this.exportAcresButton.Click += new System.EventHandler(this.ExportAcres);
-            // 
-            // importTownToolStripMenuItem
-            // 
-            this.importTownToolStripMenuItem.Enabled = false;
-            this.importTownToolStripMenuItem.Name = "importTownToolStripMenuItem";
-            this.importTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.importTownToolStripMenuItem.Text = "Import Town";
-            this.importTownToolStripMenuItem.Click += new System.EventHandler(this.importTownToolStripMenuItem_Click);
-            // 
-            // exportTownToolStripMenuItem
-            // 
-            this.exportTownToolStripMenuItem.Enabled = false;
-            this.exportTownToolStripMenuItem.Name = "exportTownToolStripMenuItem";
-            this.exportTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.exportTownToolStripMenuItem.Text = "Export Town";
-            this.exportTownToolStripMenuItem.Click += new System.EventHandler(this.exportTownToolStripMenuItem_Click);
             // 
             // MainForm
             // 
