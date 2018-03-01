@@ -930,6 +930,8 @@ namespace ACSE
             waterFlowersToolStripMenuItem.Enabled = Save_File.Game_System != SaveGeneration.GCN && Save_File.Game_System != SaveGeneration.N64;
             makeFruitsPerfectToolStripMenuItem.Enabled = Save_File.Game_System == SaveGeneration.N3DS;
             replaceItemsToolStripMenuItem.Enabled = true;
+            importTownToolStripMenuItem.Enabled = true;
+            exportTownToolStripMenuItem.Enabled = true;
 
             // Set Grass Type
             if (Current_Save_Info.Save_Offsets.Grass_Type != -1)
@@ -4336,6 +4338,23 @@ namespace ACSE
                 {
                     Save_File.Write(Selected_Player.Offset + 0x572F, (byte)(Save_File.ReadByte(Selected_Player.Offset + 0x572F) & 0xBF));
                 }
+            }
+        }
+
+        private void importTownToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading)
+            {
+                Utility.ImportTown(ref Town_Acres, Save_File.Game_System);
+                SetupMapPictureBoxes();
+            }
+        }
+
+        private void exportTownToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading)
+            {
+                Utility.ExportTown(Town_Acres, Save_File.Game_System, Save_File.Save_Name);
             }
         }
 

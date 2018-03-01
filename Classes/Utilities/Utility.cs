@@ -343,7 +343,7 @@ namespace ACSE.Classes.Utilities
                                 Writer.Write(new byte[3] { 0, 0, 0 }); // Padding
                                 for (int i = 0; i < Acres.Length; i++)
                                 {
-                                    Stream.Write(BitConverter.GetBytes(Acres[i].AcreID), 0, 2);
+                                    Writer.Write(BitConverter.GetBytes(Acres[i].AcreID));
                                 }
 
                                 Writer.Flush();
@@ -382,6 +382,112 @@ namespace ACSE.Classes.Utilities
                                     {
                                         Acres[i].AcreID = Reader.ReadUInt16();
                                         Acres[i].BaseAcreID = (ushort)(Acres[i].AcreID & 0xFFFC);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        System.Windows.Forms.MessageBox.Show("Acre importation failed!", "Acre Import Error", System.Windows.Forms.MessageBoxButtons.OK,
+                            System.Windows.Forms.MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        public static void ExportTown(Normal_Acre[] Acres, SaveGeneration Save_Generation, string SaveFileName)
+        {
+            using (var saveDialog = new System.Windows.Forms.SaveFileDialog())
+            {
+                saveDialog.Filter = "ACSE Town Save (*.ats)|*.ats";
+                saveDialog.FileName = SaveFileName + " Town Data.ats";
+
+                if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    try
+                    {
+                        using (var Stream = new FileStream(saveDialog.FileName, FileMode.Create))
+                        {
+                            using (var Writer = new BinaryWriter(Stream))
+                            {
+                                Writer.Write(new byte[] { 0x41, 0x54, 0x53 }); // "ATS" Identifier
+                                Writer.Write((byte)Acres.Length); // Total Acre Count
+                                Writer.Write((byte)Save_Generation); // Save Generation
+                                Writer.Write(new byte[3] { 0, 0, 0 }); // Padding
+
+                                if (Save_Generation == SaveGeneration.N3DS)
+                                {
+                                    for (int i = 0; i < Acres.Length; i++)
+                                    {
+                                        for (int x = 0; x < Acres[i].Acre_Items.Length; x++)
+                                        {
+                                            Writer.Write(BitConverter.GetBytes(Acres[i].Acre_Items[x].ToUInt32()));
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < Acres.Length; i++)
+                                    {
+                                        for (int x = 0; x < Acres[i].Acre_Items.Length; x++)
+                                        {
+                                            Writer.Write(BitConverter.GetBytes(Acres[i].Acre_Items[x].ItemID));
+                                        }
+                                    }
+                                }
+
+                                Writer.Flush();
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        System.Windows.Forms.MessageBox.Show("Town exportation failed!", "Town Export Error", System.Windows.Forms.MessageBoxButtons.OK,
+                            System.Windows.Forms.MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        public static void ImportTown(ref Normal_Acre[] Acres, SaveGeneration Save_Generation)
+        {
+            using (var openDialog = new System.Windows.Forms.OpenFileDialog())
+            {
+                openDialog.Filter = "ACSE Town Save (*.ats)|*.ats";
+                openDialog.FileName = "";
+
+                if (openDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    try
+                    {
+                        using (var Stream = new FileStream(openDialog.FileName, FileMode.Open))
+                        {
+                            using (var Reader = new BinaryReader(Stream))
+                            {
+                                if (System.Text.Encoding.ASCII.GetString(Reader.ReadBytes(3)).Equals("ATS") && Reader.ReadByte() == Acres.Length
+                                    && (SaveGeneration)Reader.ReadByte() == Save_Generation)
+                                {
+                                    Reader.BaseStream.Seek(8, SeekOrigin.Begin);
+                                    if (Save_Generation == SaveGeneration.N3DS)
+                                    {
+                                        for (int i = 0; i < Acres.Length; i++)
+                                        {
+                                            for (int x = 0; x < Acres[i].Acre_Items.Length; x++)
+                                            {
+                                                Acres[i].Acre_Items[x] = new WorldItem(Reader.ReadUInt32(), Acres[i].Acre_Items[x].Index);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        for (int i = 0; i < Acres.Length; i++)
+                                        {
+                                            for (int x = 0; x < Acres[i].Acre_Items.Length; x++)
+                                            {
+                                                Acres[i].Acre_Items[x] = new WorldItem(Reader.ReadUInt16(), Acres[i].Acre_Items[x].Index);
+                                            }
+                                        }
                                     }
                                 }
                             }

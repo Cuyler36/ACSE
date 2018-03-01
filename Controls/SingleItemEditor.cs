@@ -74,7 +74,7 @@ namespace ACSE
 
             if (Item != null)
             {
-                Size = new Size(itemCellSize + 2, itemCellSize + 2);
+                Size = new Size(itemCellSize, itemCellSize);
                 EditorPictureBox.Image = Inventory.GetItemPic(itemCellSize, item, MainForm.Save_File.Save_Type);
             }
 

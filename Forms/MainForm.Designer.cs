@@ -226,6 +226,8 @@
             this.label46 = new System.Windows.Forms.Label();
             this.importAcresButton = new System.Windows.Forms.Button();
             this.exportAcresButton = new System.Windows.Forms.Button();
+            this.importTownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportTownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -530,7 +532,9 @@
             this.removeAllItemsToolStripMenuItem,
             this.waterFlowersToolStripMenuItem,
             this.makeFruitsPerfectToolStripMenuItem,
-            this.replaceItemsToolStripMenuItem});
+            this.replaceItemsToolStripMenuItem,
+            this.importTownToolStripMenuItem,
+            this.exportTownToolStripMenuItem});
             this.tasksToolStripMenuItem.Name = "tasksToolStripMenuItem";
             this.tasksToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.tasksToolStripMenuItem.Text = "Tasks";
@@ -579,7 +583,7 @@
             // replaceToolStripMenuItem
             // 
             this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
-            this.replaceToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.replaceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.replaceToolStripMenuItem.Text = "Replace";
             this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
             // 
@@ -2301,6 +2305,22 @@
             this.exportAcresButton.UseVisualStyleBackColor = true;
             this.exportAcresButton.Click += new System.EventHandler(this.ExportAcres);
             // 
+            // importTownToolStripMenuItem
+            // 
+            this.importTownToolStripMenuItem.Enabled = false;
+            this.importTownToolStripMenuItem.Name = "importTownToolStripMenuItem";
+            this.importTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.importTownToolStripMenuItem.Text = "Import Town";
+            this.importTownToolStripMenuItem.Click += new System.EventHandler(this.importTownToolStripMenuItem_Click);
+            // 
+            // exportTownToolStripMenuItem
+            // 
+            this.exportTownToolStripMenuItem.Enabled = false;
+            this.exportTownToolStripMenuItem.Name = "exportTownToolStripMenuItem";
+            this.exportTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.exportTownToolStripMenuItem.Text = "Export Town";
+            this.exportTownToolStripMenuItem.Click += new System.EventHandler(this.exportTownToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2574,5 +2594,7 @@
         private System.Windows.Forms.PictureBox paletteColorSelectedPictureBox;
         private System.Windows.Forms.Button exportAcresButton;
         private System.Windows.Forms.Button importAcresButton;
+        private System.Windows.Forms.ToolStripMenuItem importTownToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportTownToolStripMenuItem;
     }
 }
