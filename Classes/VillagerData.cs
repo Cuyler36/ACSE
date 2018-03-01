@@ -280,17 +280,17 @@ namespace ACSE
 
         public static string[] AC_Personalities = new string[7]
         {
-            "Normal (Female)", "Peppy (Female)", "Lazy (Male)", "Jock (Male)", "Cranky (Male)", "Snooty (Female)", "Not Set"
+            "Normal ♀", "Peppy ♀", "Lazy ♂", "Jock ♂", "Cranky ♂", "Snooty ♀", "Not Set"
         };
 
         public static string[] WW_Personalities = new string[7]
         {
-            "Lazy (Male)", "Jock (Male)", "Cranky (Male)", "Normal (Female)", "Peppy (Female)", "Snooty (Female)", "Not Set"
+            "Lazy ♂", "Jock ♂", "Cranky ♂", "Normal ♀", "Peppy ♀", "Snooty ♀", "Not Set"
         };
 
         public static string[] NL_Personalities = new string[9]
         {
-            "Lazy (Male)", "Jock (Male)", "Cranky (Male)", "Smug (Male)", "Normal (Female)", "Peppy (Female)", "Snooty (Female)", "Caring (Uchi) (Female)", "Not Set"
+            "Lazy ♂", "Jock ♂", "Cranky ♂", "Smug ♂", "Normal ♀", "Peppy ♀", "Snooty ♀", "Uchi ♀", "Not Set"
         };
 
         public static string[] GetPersonalities(SaveType Save_Type)

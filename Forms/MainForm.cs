@@ -3677,6 +3677,13 @@ namespace ACSE
                     foreach (NewVillager Villager in Villagers)
                         if (Villager != null)
                             Villager.Write();
+                    
+                    // Update Villager Count in N64/GCN (Possibly others too?)
+                    if (Save_File.Save_Type == SaveType.Animal_Crossing) // TODO: Others
+                    {
+                        int VillagerCount = Villagers.Count(v => v.Exists && v.Index < 15);
+                        Save_File.Write(Save_File.Save_Data_Start_Offset + 0x18, (byte)VillagerCount);
+                    }
                 }
 
                 // Save Houses
