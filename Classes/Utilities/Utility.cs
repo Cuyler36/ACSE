@@ -320,5 +320,80 @@ namespace ACSE.Classes.Utilities
                 PreviousPoints[Idx] = 1;
             }
         }
+
+        // Export/Import Methods
+        public static void ExportAcres(Normal_Acre[] Acres, SaveGeneration Save_Generation, string SaveFileName)
+        {
+            using (var saveDialog = new System.Windows.Forms.SaveFileDialog())
+            {
+                saveDialog.Filter = "ACSE Acre Save (*.aas)|*.aas";
+                saveDialog.FileName = SaveFileName + " Acre Data.aas";
+
+                if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    try
+                    {
+                        using (var Stream = new FileStream(saveDialog.FileName, FileMode.Create))
+                        {
+                            using (var Writer = new BinaryWriter(Stream))
+                            {
+                                Writer.Write(new byte[] { 0x41, 0x41, 0x53 }); // "AAS" Identifier
+                                Writer.Write((byte)Acres.Length); // Total Acre Count
+                                Writer.Write((byte)Save_Generation); // Save Generation
+                                Writer.Write(new byte[3] { 0, 0, 0 }); // Padding
+                                for (int i = 0; i < Acres.Length; i++)
+                                {
+                                    Stream.Write(BitConverter.GetBytes(Acres[i].AcreID), 0, 2);
+                                }
+
+                                Writer.Flush();
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        System.Windows.Forms.MessageBox.Show("Acre exportation failed!", "Acre Export Error", System.Windows.Forms.MessageBoxButtons.OK,
+                            System.Windows.Forms.MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        public static void ImportAcres(ref Normal_Acre[] Acres, SaveGeneration Save_Generation)
+        {
+            using (var openDialog = new System.Windows.Forms.OpenFileDialog())
+            {
+                openDialog.Filter = "ACSE Acre Save (*.aas)|*.aas";
+                openDialog.FileName = "";
+
+                if (openDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    try
+                    {
+                        using (var Stream = new FileStream(openDialog.FileName, FileMode.Open))
+                        {
+                            using (var Reader = new BinaryReader(Stream))
+                            {
+                                if (System.Text.Encoding.ASCII.GetString(Reader.ReadBytes(3)).Equals("AAS") && Reader.ReadByte() == Acres.Length
+                                    && (SaveGeneration)Reader.ReadByte() == Save_Generation)
+                                {
+                                    Reader.BaseStream.Seek(8, SeekOrigin.Begin);
+                                    for (int i = 0; i < Acres.Length; i++)
+                                    {
+                                        Acres[i].AcreID = Reader.ReadUInt16();
+                                        Acres[i].BaseAcreID = (ushort)(Acres[i].AcreID & 0xFFFC);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        System.Windows.Forms.MessageBox.Show("Acre importation failed!", "Acre Import Error", System.Windows.Forms.MessageBoxButtons.OK,
+                            System.Windows.Forms.MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
     }
 }

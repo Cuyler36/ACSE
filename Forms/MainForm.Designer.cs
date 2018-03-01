@@ -224,6 +224,8 @@
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.label46 = new System.Windows.Forms.Label();
+            this.importAcresButton = new System.Windows.Forms.Button();
+            this.exportAcresButton = new System.Windows.Forms.Button();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -1359,6 +1361,8 @@
             // 
             // acresTab
             // 
+            this.acresTab.Controls.Add(this.exportAcresButton);
+            this.acresTab.Controls.Add(this.importAcresButton);
             this.acresTab.Controls.Add(this.townMapViewCheckbox);
             this.acresTab.Controls.Add(this.acreCustomIdBox);
             this.acresTab.Controls.Add(this.label44);
@@ -1378,7 +1382,7 @@
             this.townMapViewCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.townMapViewCheckbox.AutoSize = true;
             this.townMapViewCheckbox.Enabled = false;
-            this.townMapViewCheckbox.Location = new System.Drawing.Point(745, 518);
+            this.townMapViewCheckbox.Location = new System.Drawing.Point(745, 489);
             this.townMapViewCheckbox.Name = "townMapViewCheckbox";
             this.townMapViewCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.townMapViewCheckbox.Size = new System.Drawing.Size(106, 17);
@@ -1391,7 +1395,7 @@
             // 
             this.acreCustomIdBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.acreCustomIdBox.Enabled = false;
-            this.acreCustomIdBox.Location = new System.Drawing.Point(835, 538);
+            this.acreCustomIdBox.Location = new System.Drawing.Point(835, 509);
             this.acreCustomIdBox.Name = "acreCustomIdBox";
             this.acreCustomIdBox.Size = new System.Drawing.Size(90, 20);
             this.acreCustomIdBox.TabIndex = 3;
@@ -1400,7 +1404,7 @@
             // 
             this.label44.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(745, 541);
+            this.label44.Location = new System.Drawing.Point(745, 512);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(84, 13);
             this.label44.TabIndex = 2;
@@ -1412,7 +1416,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.acreTreeView.Location = new System.Drawing.Point(745, 7);
             this.acreTreeView.Name = "acreTreeView";
-            this.acreTreeView.Size = new System.Drawing.Size(180, 505);
+            this.acreTreeView.Size = new System.Drawing.Size(180, 476);
             this.acreTreeView.TabIndex = 1;
             // 
             // acrePanel
@@ -2275,6 +2279,28 @@
             this.label46.TabIndex = 79;
             this.label46.Text = "0x";
             // 
+            // importAcresButton
+            // 
+            this.importAcresButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.importAcresButton.Location = new System.Drawing.Point(745, 535);
+            this.importAcresButton.Name = "importAcresButton";
+            this.importAcresButton.Size = new System.Drawing.Size(84, 23);
+            this.importAcresButton.TabIndex = 5;
+            this.importAcresButton.Text = "Import Acres";
+            this.importAcresButton.UseVisualStyleBackColor = true;
+            this.importAcresButton.Click += new System.EventHandler(this.ImportAcres);
+            // 
+            // exportAcresButton
+            // 
+            this.exportAcresButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.exportAcresButton.Location = new System.Drawing.Point(841, 535);
+            this.exportAcresButton.Name = "exportAcresButton";
+            this.exportAcresButton.Size = new System.Drawing.Size(84, 23);
+            this.exportAcresButton.TabIndex = 6;
+            this.exportAcresButton.Text = "Export Acres";
+            this.exportAcresButton.UseVisualStyleBackColor = true;
+            this.exportAcresButton.Click += new System.EventHandler(this.ExportAcres);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2546,5 +2572,7 @@
         private System.Windows.Forms.PlaceholderTextBox itemIdTextBox;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.PictureBox paletteColorSelectedPictureBox;
+        private System.Windows.Forms.Button exportAcresButton;
+        private System.Windows.Forms.Button importAcresButton;
     }
 }

@@ -2331,7 +2331,7 @@ namespace ACSE
             ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 32), Location = new Point(45, 22), DropDownStyle = ComboBoxStyle.DropDownList };
             Villager_Selection_Box.Items.AddRange(Villager_Names);
             Villager_Selection_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Villager.Data.Villager_ID);
-            ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 32), Location = new Point(175, 22), DropDownWidth = 120 };
+            ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 32), Location = new Point(175, 22), DropDownStyle = ComboBoxStyle.DropDownList };
             Personality_Selection_Box.Items.AddRange(Personality_Database);
             OffsetablePictureBox VillagerPreviewBox = null;
 
@@ -2702,11 +2702,14 @@ namespace ACSE
 
                     int Acre_X = Acre_Index % (Island ? Current_Save_Info.Island_X_Acre_Count : Current_Save_Info.X_Acre_Count);
                     int Acre_Y = Acre_Index / (Island ? Current_Save_Info.Island_X_Acre_Count : Current_Save_Info.X_Acre_Count);
+
                     if (!Island && Grass_Map != null && Grass_Map.Length == Acre_Map.Length)
                         Grass_Map[Acre_Index].BackgroundImage = Acre_Box.BackgroundImage;
+
                     if (!Island && Acre_Y >= Current_Save_Info.Town_Y_Acre_Start && Acre_X > 0 && Acre_X < Current_Save_Info.X_Acre_Count - 1)
                     {
                         int Town_Acre = (Acre_Y - Current_Save_Info.Town_Y_Acre_Start) * (Current_Save_Info.X_Acre_Count - 2) + (Acre_X - 1);
+
                         if (Town_Acre < Current_Save_Info.Town_Acre_Count)
                         {
                             Normal_Acre Current_Town_Acre = Town_Acres[Town_Acre];
@@ -2714,8 +2717,10 @@ namespace ACSE
                                 Town_Acre, Current_Town_Acre.Acre_Items, Buried_Buffer, Save_File.Save_Type);
                             Town_Acre_Map[Town_Acre].BackgroundImage = Acre_Box.BackgroundImage;
                         }
+
                         if (Grass_Map != null && Grass_Map.Length == Town_Acre_Map.Length)
                             Grass_Map[Town_Acre].BackgroundImage = ImageGeneration.MakeGrayscale((Bitmap)Acre_Box.BackgroundImage);
+
                         else if (NL_Grass_Overlay != null)
                         {
                             NL_Grass_Overlay.BackgroundImage.Dispose();
@@ -2728,6 +2733,7 @@ namespace ACSE
                         Island_Acre_Map[Acre_Index].BackgroundImage = selectedAcrePicturebox.Image;
                         AcreData.CheckReferencesAndDispose(OldImage, Island_Acre_Map, selectedAcrePicturebox);
                     }
+
                     Acre_Editor_Mouse_Move(sender, e, Island, true);
                 }
                 else if (e.Button == MouseButtons.Right)
@@ -2774,6 +2780,24 @@ namespace ACSE
                         }
                     }
                 }
+            }
+        }
+
+        private void ImportAcres(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading)
+            {
+                Utility.ImportAcres(ref Acres, Save_File.Game_System);
+                SetupMapPictureBoxes();
+                // TODO: Refresh Island PictureBoxes for DnM+/AC
+            }
+        }
+
+        private void ExportAcres(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading)
+            {
+                Utility.ExportAcres(Acres, Save_File.Game_System, Save_File.Save_Name);
             }
         }
 
@@ -3098,7 +3122,6 @@ namespace ACSE
                     BorderStyle = BorderStyle.FixedSingle,
                     Location = new Point((i % 2) * 72, 3 + (i / 2) * 72),
                     ContextMenuStrip = PatternStrip,
-                    UseInternalInterpolationSetting = true,
                 };
                 patternBox.MouseMove += new MouseEventHandler(Pattern_Move);
                 patternBox.MouseLeave += new EventHandler(Hide_Pat_Tip);

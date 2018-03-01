@@ -10,7 +10,7 @@ using ACSE.Classes.Utilities;
 
 namespace ACSE
 {
-    public enum SaveType
+    public enum SaveType : byte
     {
         Unknown,
         Doubutsu_no_Mori,
@@ -23,7 +23,7 @@ namespace ACSE
         Welcome_Amiibo
     }
 
-    public enum SaveGeneration
+    public enum SaveGeneration : byte
     {
         Unknown,
         N64,
