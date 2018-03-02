@@ -92,21 +92,21 @@ namespace ACSE
 
         public static string[][] Wild_World_Encyclopedia_Name = new string[15][]
         {
-            new string[8] { "", "common butterfly", "yellow butterfly", "tiger butterfly", "peacock", "monarch", "emperor", "agrias butterfly" },
-            new string[8] { "birdwing", "moth", "oak silk moth", "honeybee", "bee", "long locust", "migratory locust", "mantis" },
-            new string[8] { "orchid mantis", "brown cicada", "robust cicada", "walker cicada", "evening cicada", "lantern fly", "red dragonfly", "darner dragonfly" },
-            new string[8] { "banded dragonfly", "ant", "pondskater", "snail", "cricket", "bell cricket", "grasshopper", "mole cricket" },
-            new string[8] { "walkingstick", "ladybug", "fruit beetle", "scarab beetle", "dung beetle", "goliath beetle", "firefly", "jewel beetle" },
-            new string[8] { "longhorn beetle", "saw stag beetle", "stag beetle", "giant beetle", "rainbow stag", "dynastid beetle", "atlas beetle", "elephant beetle" },
-            new string[8] { "hercules beetle", "flea", "pill bug", "mosquito", "fly", "cockroach", "spider", "tarantula" },
-            new string[8] { "scorpion", "bitterling", "pale chub", "crucian carp", "dace", "barbel steed", "carp", "koi" },
-            new string[8] { "goldfish", "popeyed goldfish", "killifish", "crawfish", "frog", "freshwater goby", "loach", "catfish" },
-            new string[8] { "eel", "giant snakehead", "bluegill", "yellow perch", "black bass", "pond smelt", "sweetfish", "cherry salmon" },
-            new string[8] { "char", "rainbow trout", "stringfish", "salmon", "king salmon", "guppy", "angelfish", "piranha" },
-            new string[8] { "arowana", "dorado", "gar", "arapaima", "sea butterfly", "jellyfish", "seahorse", "clowfish" },
-            new string[8] { "zebra turkeyfish", "puffer fish", "horse mackerel", "barred knifejaw", "sea bass", "red snapper", "dab", "olive flounder" },
-            new string[8] { "squid", "octopus", "football fish", "tuna", "blue marlin", "ocean sunfish", "hammerhead shark", "shark" },
-            new string[8] { "coelacanth", "", "", "", "", "", "", "" },
+            new string[8] { "", "Common Butterfly", "Yellow Butterfly", "Tiger Butterfly", "Peacock", "Monarch", "Emperor", "Agrias Butterfly" },
+            new string[8] { "Birdwing", "Moth", "Oak Silk Moth", "Honeybee", "Bee", "Long Locust", "Migratory Locust", "Mantis" },
+            new string[8] { "Orchid Mantis", "Brown Cicada", "Robust Cicada", "Walker Cicada", "Evening Cicada", "Lantern Fly", "Red Dragonfly", "Darner Dragonfly" },
+            new string[8] { "Banded Dragonfly", "Ant", "Pondskater", "Snail", "Cricket", "Bell Cricket", "Grasshopper", "Mole Cricket" },
+            new string[8] { "Walkingstick", "Ladybug", "Fruit Beetle", "Scarab Beetle", "Dung Beetle", "Goliath Beetle", "Firefly", "Jewel Beetle" },
+            new string[8] { "Longhorn Beetle", "Saw Stag Beetle", "Stag Beetle", "Giant Beetle", "Rainbow Stag", "Dynastid Beetle", "Atlas Beetle", "Elephant Beetle" },
+            new string[8] { "Hercules Beetle", "Flea", "Pill Bug", "Mosquito", "Fly", "Cockroach", "Spider", "Tarantula" },
+            new string[8] { "Scorpion", "Bitterling", "Pale Chub", "Crucian Carp", "Dace", "Barbel Steed", "Carp", "Koi" },
+            new string[8] { "Goldfish", "Popeyed Goldfish", "Killifish", "Crawfish", "Frog", "Freshwater Goby", "Loach", "Catfish" },
+            new string[8] { "Eel", "Giant Snakehead", "Bluegill", "Yellow Perch", "Black Bass", "Pond Smelt", "Sweetfish", "Cherry Salmon" },
+            new string[8] { "Char", "Rainbow Trout", "stringfish", "Salmon", "King Salmon", "Guppy", "Angelfish", "Piranha" },
+            new string[8] { "Arowana", "Dorado", "Gar", "Arapaima", "Sea Butterfly", "Jellyfish", "Seahorse", "Clowfish" },
+            new string[8] { "Zebra Turkeyfish", "Puffer Fish", "Horse Mackerel", "Barred Knifejaw", "Sea Bass", "Red Snapper", "Dab", "Olive Flounder" },
+            new string[8] { "Squid", "Octopus", "Football Fish", "Tuna", "Blue Marlin", "Ocean Sunfish", "Hammerhead Shark", "Shark" },
+            new string[8] { "Coelacanth", "", "", "", "", "", "", "" },
         };
 
         public static Dictionary<int, byte> New_Leaf_Encyclopedia_Bit_Map = new Dictionary<int, byte>
