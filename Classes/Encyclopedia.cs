@@ -90,9 +90,28 @@ namespace ACSE
             { 0x1BEB, 0x01 }
         };
 
+        public static string[][] Wild_World_Encyclopedia_Name = new string[15][]
+        {
+            new string[8] { "", "Common Butterfly", "Yellow Butterfly", "Tiger Butterfly", "Peacock", "Monarch", "Emperor", "Agrias Butterfly" },
+            new string[8] { "Birdwing", "Moth", "Oak Silk Moth", "Honeybee", "Bee", "Long Locust", "Migratory Locust", "Mantis" },
+            new string[8] { "Orchid Mantis", "Brown Cicada", "Robust Cicada", "Walker Cicada", "Evening Cicada", "Lantern Fly", "Red Dragonfly", "Darner Dragonfly" },
+            new string[8] { "Banded Dragonfly", "Ant", "Pondskater", "Snail", "Cricket", "Bell Cricket", "Grasshopper", "Mole Cricket" },
+            new string[8] { "Walkingstick", "Ladybug", "Fruit Beetle", "Scarab Beetle", "Dung Beetle", "Goliath Beetle", "Firefly", "Jewel Beetle" },
+            new string[8] { "Longhorn Beetle", "Saw Stag Beetle", "Stag Beetle", "Giant Beetle", "Rainbow Stag", "Dynastid Beetle", "Atlas Beetle", "Elephant Beetle" },
+            new string[8] { "Hercules Beetle", "Flea", "Pill Bug", "Mosquito", "Fly", "Cockroach", "Spider", "Tarantula" },
+            new string[8] { "Scorpion", "Bitterling", "Pale Chub", "Crucian Carp", "Dace", "Barbel Steed", "Carp", "Koi" },
+            new string[8] { "Goldfish", "Popeyed Goldfish", "Killifish", "Crawfish", "Frog", "Freshwater Goby", "Loach", "Catfish" },
+            new string[8] { "Eel", "Giant Snakehead", "Bluegill", "Yellow Perch", "Black Bass", "Pond Smelt", "Sweetfish", "Cherry Salmon" },
+            new string[8] { "Char", "Rainbow Trout", "stringfish", "Salmon", "King Salmon", "Guppy", "Angelfish", "Piranha" },
+            new string[8] { "Arowana", "Dorado", "Gar", "Arapaima", "Sea Butterfly", "Jellyfish", "Seahorse", "Clowfish" },
+            new string[8] { "Zebra Turkeyfish", "Puffer Fish", "Horse Mackerel", "Barred Knifejaw", "Sea Bass", "Red Snapper", "Dab", "Olive Flounder" },
+            new string[8] { "Squid", "Octopus", "Football Fish", "Tuna", "Blue Marlin", "Ocean Sunfish", "Hammerhead Shark", "Shark" },
+            new string[8] { "Coelacanth", "", "", "", "", "", "", "" },
+        };
+
         public static Dictionary<int, byte> New_Leaf_Encyclopedia_Bit_Map = new Dictionary<int, byte>
         {
-            { 0x6C50, 0xC0 }, // Insect -- can be equal to FF even if C0 unlock everything in this byte
+            { 0x6C50, 0xC0 }, // Insect 
             { 0x6C51, 0xFF },
             { 0x6C52, 0xFF },
             { 0x6C53, 0xFF },
@@ -153,7 +172,7 @@ namespace ACSE
 
         public static Dictionary<int, byte> Welcome_Amiibo_Encyclopedia_Bit_Map = new Dictionary<int, byte>
         {
-            { 0x6C71, 0xC0 }, // Insect -- can be equal to FF even if C0 unlock everything in this byte
+            { 0x6C71, 0xC0 }, // Insect 
             { 0x6C72, 0xFF },
             { 0x6C73, 0xFF },
             { 0x6C74, 0xFF },
