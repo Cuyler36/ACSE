@@ -18,6 +18,19 @@ namespace ACSE
             { 0x268B, 0xFF },
         };
 
+        public static Dictionary<int, byte> Wild_World_SongLibrary_Bit_Map = new Dictionary<int, byte>
+        {
+            { 0xFAE0, 0xFF },
+            { 0xFAE1, 0xFF },
+            { 0xFAE2, 0xFF },
+            { 0xFAE3, 0xFF },
+            { 0xFAE4, 0xFF },
+            { 0xFAE5, 0xFF },
+            { 0xFAE6, 0xFF },
+            { 0xFAE7, 0xFF },
+            { 0xFAE8, 0x3F },
+        };
+
         public static Dictionary<int, byte> New_Leaf_SongLibrary_Bit_Map = new Dictionary<int, byte>
         {
             { 0x8C54, 0xFF },
@@ -61,6 +74,19 @@ namespace ACSE
             new string[8] { "Soulful K.K.", "K.K. Soul", "K.K. Crusin'", "K.K. Love Song", "K.K. D & B", "K.K. Technopop", "DJ K.K.", "Only Me" }
         };
 
+        public static string[][] Wild_World_SongLibrary_Names = new string[9][]
+        {
+            new string[8] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Etude", "K.K. Lullaby" },
+            new string[8] { "K.K. Aria", "K.K. Samba", "K.K. Bossa", "K.K. Calypso", "K.K. Salsa", "K.K. Mambo", "K.K. Reggae", "K.K. Ska" },
+            new string[8] { "K.K. Tango", "K.K. Faire", "Aloha K.K.", "Lucky K.K.", "K.K. Condor", "K.K. Steppe", "Imperial K.K.", "K.K. Casbah" },
+            new string[8] { "K.K. Safari", "K.K. Folk", "K.K. Rock", "Rockin' K.K.", "K.K. Ragtime", "K.K. Gumbo", "The K. Funk", "K.K. Blues" },
+            new string[8] { "Soulful K.K.", "K.K. Soul", "K.K. Cruisin'", "K.K. Love Song", "K.K. D & B", "K.K. Technopop", "DJ K.K.", "Only Me" },
+            new string[8] { "K.K. Country", "Surfin' K.K.", "K.K. Ballad", "Comrade K.K.", "K.K. Lament", "Go K.K. Rider!", "K.K. Dirge", "K.K. Western" },
+            new string[8] { "Mr. K.K.", "Café K.K.", "K.K. Parade", "Señor K.K.", "K.K. Song", "I Love You", "Two Days Ago", "My Place" },
+            new string[8] { "Forest Life", "To the Edge", "Pondering", "K.K. Dixie", "K.K. Marathon", "King K.K.", "Mountain Song", "Marine Song 2001" },
+            new string[8] { "Neapolitan", "Steep Hill", "K.K. Rockabilly", "Agent K.K.", "K.K. Rally", "K.K. Metal", "", "" }
+        };
+
         public static string[][] New_Leaf_SongLibrary_Names = new string[12][]
         {
             new string[8] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Étude", "K.K. Lullaby" },
@@ -83,6 +109,8 @@ namespace ACSE
             {
                 case SaveType.Animal_Crossing:
                     return Animal_Crossing_SongLibrary_Bit_Map;
+                case SaveType.Wild_World:
+                    return Wild_World_SongLibrary_Bit_Map;
                 case SaveType.New_Leaf:
                     return New_Leaf_SongLibrary_Bit_Map;
                 case SaveType.Welcome_Amiibo:
