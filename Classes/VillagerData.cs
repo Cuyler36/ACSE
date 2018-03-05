@@ -436,7 +436,7 @@ namespace ACSE
     {
         public VillagerOffsets Offsets;
         public VillagerDataStruct Data;
-        public PlayerRelation[] PlayerEntries;
+        public PlayerRelation[] PlayerRelations;
         public int Index;
         public int Offset;
         public string Name;
@@ -502,6 +502,16 @@ namespace ACSE
                         }
                     }
             Data = (VillagerDataStruct)BoxedData;
+
+            // Create Player Relations;
+            if (save.Save_Type == SaveType.Animal_Crossing)
+            {
+                PlayerRelations = new ACPlayerRelation[7];
+                for (int i = 0; i < 7; i++)
+                {
+                    PlayerRelations[i] = new ACPlayerRelation(save, this, Offset + 0x10 + i * 0x138);
+                }
+            }
         }
 
         public override string ToString()
@@ -509,11 +519,11 @@ namespace ACSE
             return Name ?? "Unknown";
         }
 
-        public PlayerRelation GetPlayerEntry(NewPlayer Player)
+        public PlayerRelation GetPlayerRelation(NewPlayer Player)
         {
-            if (PlayerEntries != null)
+            if (PlayerRelations != null)
             {
-                return PlayerEntries.First(o => o.PlayerId == Player.Data.Identifier && o.PlayerName.Equals(Player.Data.Name));
+                return PlayerRelations.First(o => o.PlayerId == Player.Data.Identifier && o.PlayerName.Equals(Player.Data.Name));
             }
             return null;
         }
@@ -586,6 +596,18 @@ namespace ACSE
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+
+                // Write PlayerRelations
+                if (PlayerRelations != null)
+                {
+                    foreach (PlayerRelation Relation in PlayerRelations)
+                    {
+                        if (Relation.Exists)
+                        {
+                            Relation.Write();
                         }
                     }
                 }

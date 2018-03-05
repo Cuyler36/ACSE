@@ -153,8 +153,8 @@ namespace ACSE
             };
             Controls.Add(selectedAcrePicturebox);
 
-            //Town Name TextBox LostFocus
-            townNameBox.LostFocus += TownName_Box_FocusLost;
+            //Town Name TextBox TextChanged
+            townNameBox.TextChanged += TownName_Box_TextChanged;
 
             //Grass Type ComboBox SelectedIndexChanged
             grassTypeBox.SelectedIndexChanged += delegate (object sender, EventArgs e)
@@ -871,6 +871,7 @@ namespace ACSE
                 {
                     Villagers = new NewVillager[Current_Save_Info.Villager_Count];
                     for (int i = 0; i < Villagers.Length; i++)
+                    {
                         if (Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus)
                         {
                             if (i < 15)
@@ -886,6 +887,21 @@ namespace ACSE
                         {
                             Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
                         }
+                    }
+
+                    foreach (NewVillager Villager in Villagers)
+                    {
+                        if (Villager.PlayerRelations != null)
+                        {
+                            foreach (PlayerRelation Relation in Villager.PlayerRelations)
+                            {
+                                if (Relation.Exists)
+                                {
+                                    Relation.Player = Players.FirstOrDefault(p => p.Data.Identifier.Equals(Relation.PlayerId) && p.Data.Name.Equals(Relation.PlayerName));
+                                }
+                            }
+                        }
+                    }
                 });
                 for (int i = villagerPanel.Controls.Count - 1; i > -1; i--)
                     if (villagerPanel.Controls[i] is Panel)
@@ -1383,13 +1399,15 @@ namespace ACSE
             }
         }
 
-        private void TownName_Box_FocusLost(object sender, EventArgs e)
+        private void TownName_Box_TextChanged(object sender, EventArgs e)
         {
             if (Save_File != null && !Loading && !string.IsNullOrEmpty(townNameBox.Text.Trim()))
             {
-                Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Name, ACString.GetBytes(townNameBox.Text.Trim()));
+                Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Name, ACString.GetBytes(townNameBox.Text.Trim(),
+                    townNameBox.MaxLength));
                 townNameBox.Text = townNameBox.Text.Trim();
                 foreach (NewPlayer Player in Players)
+                {
                     if (Player != null && Player.Exists)
                     {
                         Player.Data.TownName = townNameBox.Text;
@@ -1398,18 +1416,45 @@ namespace ACSE
                             Player.House.Data.Town_Name = townNameBox.Text;
                         }
                     }
+                }
 
                 foreach (NewVillager Villager in Villagers)
+                {
                     if (Villager != null && Villager.Exists)
+                    {
+                        var VillagerTownName = Villager.Data.Town_Name;
                         Villager.Data.Town_Name = townNameBox.Text;
+                        
+                        if (Villager.PlayerRelations != null)
+                        {
+                            foreach (PlayerRelation Relation in Villager.PlayerRelations)
+                            {
+                                if (Relation.Exists)
+                                {
+                                    if (Relation.PlayerTownName.Equals(VillagerTownName) && Relation.PlayerTownId == Villager.Data.Town_ID)
+                                    {
+                                        Relation.PlayerTownName = townNameBox.Text;
+                                    }
+
+                                    if (Relation.MetTownName.Equals(VillagerTownName) && Relation.MetTownId == Villager.Data.Town_ID)
+                                    {
+                                        Relation.MetTownName = townNameBox.Text;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
                 // TODO: Island Town Name for DnM+/AC
 
                 if (Islands != null)
+                {
                     foreach (Island Isle in Islands)
                     {
                         Isle.TownName = townNameBox.Text;
                     }
+                }
             }
         }
 
@@ -4028,8 +4073,25 @@ namespace ACSE
 
         private void playerName_TextChanged(object sender, EventArgs e)
         {
-            if (Save_File != null && playerName.Text.Length > 0)
+            if (Save_File != null && !Loading && playerName.Text.Length > 0)
+            {
+                foreach (NewVillager Villager in Villagers)
+                {
+                    if (Villager.PlayerRelations != null)
+                    {
+                        foreach (PlayerRelation Relation in Villager.PlayerRelations)
+                        {
+                            if (Relation.Exists && (Relation.Player == Selected_Player ||
+                                (Relation.PlayerId == Selected_Player.Data.Identifier && Relation.PlayerName.Equals(Selected_Player.Data.Name))))
+                            {
+                                Relation.PlayerName = playerName.Text;
+                            }
+                        }
+                    }
+                }
+
                 Selected_Player.Data.Name = playerName.Text;
+            }
         }
 
         private void secureValueToolStripMenuItem_Click(object sender, EventArgs e)
