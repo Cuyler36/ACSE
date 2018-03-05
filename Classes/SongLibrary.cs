@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ACSE
 {
@@ -122,19 +119,64 @@ namespace ACSE
             }
         }
 
+        /// <summary>
+        /// Clears a Player's Song Library.
+        /// </summary>
+        /// <param name="Save_File">Current Save File</param>
+        /// <param name="Player">Current Player whose Song Library will be cleared</param>
+        public static void ClearSongLibrary(Save Save_File, NewPlayer Player)
+        {
+            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
+            if (Current_Bit_Map != null)
+            {
+                if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                {
+                    if (Player.House != null)
+                    {
+                        foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+                        {
+                            Save_File.Write(Player.House.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.House.Offset + Bit_Value.Key) & ~Bit_Value.Value));
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+                    {
+                        Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) & ~Bit_Value.Value));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fills a Player's Song Library.
+        /// </summary>
+        /// <param name="Save_File">Current Save File</param>
+        /// <param name="Player">Current Player whose Song Library will be filled</param>
         public static void FillSongLibrary(Save Save_File, NewPlayer Player)
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
             if (Current_Bit_Map != null)
+            {
                 if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
                 {
                     if (Player.House != null)
+                    {
                         foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+                        {
                             Save_File.Write(Player.House.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.House.Offset + Bit_Value.Key) | Bit_Value.Value));
+                        }
+                    }
                 }
                 else
+                {
                     foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+                    {
                         Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));
+                    }
+                }
+            }
         }
     }
 }

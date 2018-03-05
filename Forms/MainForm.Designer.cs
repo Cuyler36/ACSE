@@ -225,10 +225,11 @@
             this.label45 = new System.Windows.Forms.Label();
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
             this.label46 = new System.Windows.Forms.Label();
+            this.clearEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
-            this.clearEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearSongLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -581,7 +582,8 @@
             this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fillEncyclopediaToolStripMenuItem,
             this.getAllKKSongsToolStripMenuItem,
-            this.clearEncyclopediaToolStripMenuItem});
+            this.clearEncyclopediaToolStripMenuItem,
+            this.clearSongLibraryToolStripMenuItem});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
             this.extrasToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.extrasToolStripMenuItem.Text = "Extras";
@@ -2280,6 +2282,14 @@
             this.label46.TabIndex = 79;
             this.label46.Text = "0x";
             // 
+            // clearEncyclopediaToolStripMenuItem
+            // 
+            this.clearEncyclopediaToolStripMenuItem.Enabled = false;
+            this.clearEncyclopediaToolStripMenuItem.Name = "clearEncyclopediaToolStripMenuItem";
+            this.clearEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.clearEncyclopediaToolStripMenuItem.Text = "Clear Encyclopedia";
+            this.clearEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.clearEncyclopediaToolStripMenuItem_Click);
+            // 
             // itemIdTextBox
             // 
             this.itemIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -2324,13 +2334,13 @@
             this.patternNameTextBox.TabIndex = 0;
             this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
-            // clearEncyclopediaToolStripMenuItem
+            // clearSongLibraryToolStripMenuItem
             // 
-            this.clearEncyclopediaToolStripMenuItem.Enabled = false;
-            this.clearEncyclopediaToolStripMenuItem.Name = "clearEncyclopediaToolStripMenuItem";
-            this.clearEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.clearEncyclopediaToolStripMenuItem.Text = "Clear Encyclopedia";
-            this.clearEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.clearEncyclopediaToolStripMenuItem_Click);
+            this.clearSongLibraryToolStripMenuItem.Enabled = false;
+            this.clearSongLibraryToolStripMenuItem.Name = "clearSongLibraryToolStripMenuItem";
+            this.clearSongLibraryToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.clearSongLibraryToolStripMenuItem.Text = "Clear Song Library";
+            this.clearSongLibraryToolStripMenuItem.Click += new System.EventHandler(this.clearSongLibraryToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -2608,5 +2618,6 @@
         private System.Windows.Forms.ToolStripMenuItem importTownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportTownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearEncyclopediaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearSongLibraryToolStripMenuItem;
     }
 }
