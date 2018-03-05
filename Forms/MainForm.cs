@@ -510,6 +510,7 @@ namespace ACSE
             removeAllItemsToolStripMenuItem.Enabled = true;
             replaceItemsToolStripMenuItem.Enabled = true;
             fillEncyclopediaToolStripMenuItem.Enabled = true;
+            clearEncyclopediaToolStripMenuItem.Enabled = true;
             getAllKKSongsToolStripMenuItem.Enabled = true;
             acreCustomIdBox.Enabled = true;
             selectedItem.Enabled = true;
@@ -4356,6 +4357,14 @@ namespace ACSE
             if (Save_File != null && !Loading)
             {
                 Utility.ExportTown(Town_Acres, Save_File.Game_System, Save_File.Save_Name);
+            }
+        }
+
+        private void clearEncyclopediaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                Encyclopedia.ClearEncylopedia(Save_File, Selected_Player);
             }
         }
 

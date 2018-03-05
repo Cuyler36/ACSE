@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ACSE
 {
@@ -90,7 +87,7 @@ namespace ACSE
             { 0x1BEB, 0x01 }
         };
 
-        public static string[][] Wild_World_Encyclopedia_Name = new string[15][]
+        public static string[][] Wild_World_Encyclopedia_Names = new string[15][]
         {
             new string[8] { "", "Common Butterfly", "Yellow Butterfly", "Tiger Butterfly", "Peacock", "Monarch", "Emperor", "Agrias Butterfly" },
             new string[8] { "Birdwing", "Moth", "Oak Silk Moth", "Honeybee", "Bee", "Long Locust", "Migratory Locust", "Mantis" },
@@ -107,6 +104,48 @@ namespace ACSE
             new string[8] { "Zebra Turkeyfish", "Puffer Fish", "Horse Mackerel", "Barred Knifejaw", "Sea Bass", "Red Snapper", "Dab", "Olive Flounder" },
             new string[8] { "Squid", "Octopus", "Football Fish", "Tuna", "Blue Marlin", "Ocean Sunfish", "Hammerhead Shark", "Shark" },
             new string[8] { "Coelacanth", "", "", "", "", "", "", "" },
+        };
+
+        public static Dictionary<int, byte> City_Folk_Encyclopedia_Bit_Map = new Dictionary<int, byte>
+        {
+            { 0x8465, 0xFF },
+            { 0x8466, 0xFF },
+            { 0x8467, 0xFF },
+            { 0x8468, 0xFF },
+            { 0x8469, 0xFF },
+            { 0x846A, 0xFF },
+            { 0x846B, 0xFF },
+            { 0x846C, 0xFF },
+            { 0x8471, 0xF0 },
+            { 0x8472, 0xFF },
+            { 0x8473, 0xFF },
+            { 0x8474, 0xFF },
+            { 0x8475, 0xFF },
+            { 0x8476, 0xFF },
+            { 0x8477, 0xFF },
+            { 0x8478, 0xFF },
+            { 0x8479, 0x0F },
+        };
+
+        public static string[][] City_Folk_Encyclopedia_Names = new string[][]
+        {
+            new string[8] { "Common Butterfly", "Yellow Butterfly", "Tiger Butterfly", "Peacock", "Monarch", "Emperor", "Agrias Butterfly", "Raja Brooke" },
+            new string[8] { "Birdwing", "Moth", "Oak Silk Moth", "Honeybee", "Bee", "Long Locust", "Migratory Locust", "Mantis" },
+            new string[8] { "Orchid Mantis", "Brown Cicada", "Robust Cicada", "Walker Cicada", "Evening Cicada", "Lantern Fly", "Red Dragonfly", "Darner Dragonfly" },
+            new string[8] { "Banded Dragonfly", "Giant Petaltail", "Ant", "Pondskater", "Diving Beetle", "Snail", "Cricket", "Bell Cricket" },
+            new string[8] { "Grasshopper", "Mole Cricket", "Walking Leaf", "Walkingstick", "Bagworm", "Ladybug", "Violin Beetle", "Longhorn Beetle" },
+            new string[8] { "Dung Beetle", "Firefly", "Fruit Beetle", "Scarab Beetle", "Jewel Beetle", "Miyama Stag", "Saw Stag Beetle", "Giant Beetle" },
+            new string[8] { "Rainbow Stag", "Cyclommatus", "Golden Stag", "Dynastid Beetle", "Atlas Beetle", "Elephant Beetle", "Hercules Beetle", "Goliath Beetle" },
+            new string[8] { "Flea", "Pill Bug", "Mosquito", "Fly", "Centipede", "Spider", "Tarantula", "Scorpion" },
+            new string[8] { "", "", "", "", "Bitterling", "Pale Chub", "Crucian Carp", "Dace" },
+            new string[8] { "Barbel Steed", "Carp", "Koi", "Goldfish", "Popeyed Goldfish", "Killifish", "Crawfish", "Frog" },
+            new string[8] { "Freshwater Goby", "Loach", "Catfish", "Eel", "Giant Snakehead", "Bluegill", "Yellow Perch", "Black Bass" },
+            new string[8] { "Pike", "Pond Smelt", "Sweetfish", "Cherry Salmon", "Char", "Rainbow Trout", "Stringfish", "Salmon" },
+            new string[8] { "King Salmon", "Guppy", "Angelfish", "Neon Tetra", "Piranha", "Arowana", "Dorado", "Gar" },
+            new string[8] { "Arapaima", "Sea Butterfly", "Jellyfish", "Sea Horse", "Clownfish", "Suregonfish", "Butterflyfish", "Napoleonfish" },
+            new string[8] { "Zebra Turkeyfish", "Puffer Fish", "Horse Mackerel", "Barred Knifejaw", "Sea Bass", "Red Snapper", "Dab", "Olive Flounder" },
+            new string[8] { "Squid", "Octopus", "Lobster", "Moray Eel", "Football Fish", "Tuna", "Blue Marlin", "Ray" },
+            new string[8] { "Ocean Sunfish", "Hammerhead Shark", "Shark", "Coelacanth", "", "", "", "" },
         };
 
         public static Dictionary<int, byte> New_Leaf_Encyclopedia_Bit_Map = new Dictionary<int, byte>
@@ -239,6 +278,8 @@ namespace ACSE
                     return Doubutsu_no_Mori_e_Plus_Encyclopedia_Bit_Map;
                 case SaveType.Wild_World:
                     return Wild_World_Encyclopedia_Bit_Map;
+                case SaveType.City_Folk:
+                    return City_Folk_Encyclopedia_Bit_Map;
                 case SaveType.New_Leaf:
                     return New_Leaf_Encyclopedia_Bit_Map;
                 case SaveType.Welcome_Amiibo:
@@ -250,6 +291,24 @@ namespace ACSE
             }
         }
 
+        /// <summary>
+        /// Clears a Player's encyclopedia.
+        /// </summary>
+        /// <param name="Save_File">Current Save File</param>
+        /// <param name="Player">Player whose encyclopedia will be cleared</param>
+        public static void ClearEncylopedia(Save Save_File, NewPlayer Player)
+        {
+            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
+            if (Current_Bit_Map != null)
+                foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
+                    Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) & ~Bit_Value.Value));
+        }
+
+        /// <summary>
+        /// Fills a Player's encyclopedia.
+        /// </summary>
+        /// <param name="Save_File">Current Save File</param>
+        /// <param name="Player">Player whose encyclopedia will be filled</param>
         public static void FillEncyclopedia(Save Save_File, NewPlayer Player)
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
