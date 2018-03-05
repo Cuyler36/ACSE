@@ -33,6 +33,15 @@ namespace ACSE
         N3DS //Nintendo 3DS (not New 3DS)
     }
 
+    public enum Region : byte
+    {
+        Unknown,
+        Japan,
+        NTSC,
+        PAL,
+        Australia
+    }
+
     public struct Offsets
     {
         public int Save_Size;
@@ -578,6 +587,62 @@ namespace ACSE
                     return "Unknown";
             }
         }
+
+        public static string GetGameTitle(SaveType Save_Type, Region Region = Region.NTSC)
+        {
+            switch (Region)
+            {
+                case Region.Japan:
+                    switch (Save_Type)
+                    {
+                        case SaveType.Doubutsu_no_Mori:
+                            return "どうぶつの森";
+                        case SaveType.Doubutsu_no_Mori_Plus:
+                            return "どうぶつの森+";
+                        case SaveType.Animal_Crossing:
+                            return "Animal Crossing";
+                        case SaveType.Doubutsu_no_Mori_e_Plus:
+                            return "どうぶつの森e+";
+                        case SaveType.Wild_World:
+                            return "おいでよどうぶつの森";
+                        case SaveType.City_Folk:
+                            return "街へ行こうよどうぶつの森";
+                        case SaveType.New_Leaf:
+                            return "とびだせ どうぶつの森 ";
+                        case SaveType.Welcome_Amiibo:
+                            return "とびだせ どうぶつの森 amiibo+";
+                        case SaveType.Unknown:
+                        default:
+                            return "不明な保存タイプ";
+                    }
+
+                case Region.NTSC:
+                default:
+                    switch (Save_Type)
+                    {
+                        case SaveType.Doubutsu_no_Mori:
+                            return "Dōbutsu no Mori";
+                        case SaveType.Doubutsu_no_Mori_Plus:
+                            return "Dōbutsu no Mori+";
+                        case SaveType.Animal_Crossing:
+                            return "Animal Crossing";
+                        case SaveType.Doubutsu_no_Mori_e_Plus:
+                            return "Dōbutsu no Mori e+";
+                        case SaveType.Wild_World:
+                            return "Wild World";
+                        case SaveType.City_Folk:
+                            return "City Folk";
+                        case SaveType.New_Leaf:
+                            return "New Leaf";
+                        case SaveType.Welcome_Amiibo:
+                            return "Welcome Amiibo";
+                        case SaveType.Unknown:
+                        default:
+                            return "Unknown Save Type";
+                    }
+            }
+        }
+
         // This method is useful for grouping games by the console they were released on (since they're normally expansions/revisions)
         public static SaveGeneration GetGameSystem(SaveType Save_Type)
         {

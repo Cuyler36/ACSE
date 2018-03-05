@@ -1107,7 +1107,7 @@ namespace ACSE
 
         private void SetEnabledControls(SaveType Current_Save_Type)
         {
-            Text = string.Format("ACSE - {1} - [{0}]", Current_Save_Type.ToString().Replace("_", " ").Replace(" Plus", "+"), Save_File.Save_Name);
+            Text = string.Format("ACSE - {1} - [{0}]", SaveDataManager.GetGameTitle(Current_Save_Type), Save_File.Save_Name);
             itemFlag1.Text = "00";
             itemFlag2.Text = "00";
 
@@ -3929,8 +3929,8 @@ namespace ACSE
                     Save_File.Save_Path = Path.GetDirectoryName(saveSaveFile.FileName) + Path.DirectorySeparatorChar;
                     Save_File.Save_Name = Path.GetFileNameWithoutExtension(saveSaveFile.FileName);
                     Save_File.Save_Extension = Path.GetExtension(saveSaveFile.FileName);
-                    saveToolStripMenuItem_Click(sender, e); //Realllly dislike this but it's so much easier than rewriting code
-                    Text = string.Format("ACSE - {1} - [{0}]", Save_File.Save_Type.ToString().Replace("_", " "), Save_File.Save_Name);
+                    saveToolStripMenuItem_Click(sender, e);
+                    Text = string.Format("ACSE - {1} - [{0}]", SaveDataManager.GetGameTitle(Save_File.Save_Type), Save_File.Save_Name);
                 }
             }
         }

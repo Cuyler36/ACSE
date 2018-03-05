@@ -3724,7 +3724,7 @@
     </Compile>
     <Compile Include="Classes\Utilities\PatternUtility.cs" />
     <Compile Include="Classes\Utilities\Utility.cs" />
-    <Compile Include="Classes\VillagerPlayerEntry.cs" />
+    <Compile Include="Classes\PlayerRelation.cs" />
     <Compile Include="Classes\Weather.cs" />
     <Compile Include="Forms\AboutBox2.cs">
       <SubType>Form</SubType>
