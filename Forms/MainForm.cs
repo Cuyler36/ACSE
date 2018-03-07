@@ -513,6 +513,8 @@ namespace ACSE
             clearEncyclopediaToolStripMenuItem.Enabled = true;
             getAllKKSongsToolStripMenuItem.Enabled = true;
             clearSongLibraryToolStripMenuItem.Enabled = true;
+            fillMuseumToolStripMenuItem.Enabled = true;
+            clearMuseumToolStripMenuItem.Enabled = true;
             acreCustomIdBox.Enabled = true;
             selectedItem.Enabled = true;
             itemIdTextBox.Enabled = true;
@@ -4436,6 +4438,22 @@ namespace ACSE
             if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
             {
                 SongLibrary.ClearSongLibrary(Save_File, Selected_Player);
+            }
+        }
+
+        private void fillMuseumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                Museum.FillMuseum(Save_File, Selected_Player);
+            }
+        }
+
+        private void clearMuseumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading)
+            {
+                Museum.ClearMuseum(Save_File);
             }
         }
 

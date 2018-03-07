@@ -3683,6 +3683,7 @@
     <Compile Include="Classes\Extensions\ProgressBarExtension.cs" />
     <Compile Include="Classes\ItemChange.cs" />
     <Compile Include="Classes\ItemChangedEventArgs.cs" />
+    <Compile Include="Classes\Museum.cs" />
     <Compile Include="Controls\OffsetablePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -65,6 +65,8 @@
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fillEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getAllKKSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearSongLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
             this.censusMenuEnabled = new System.Windows.Forms.CheckBox();
@@ -182,6 +184,10 @@
             this.housePanel = new System.Windows.Forms.Panel();
             this.houseSizeComboBox = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
+            this.shopTab = new System.Windows.Forms.TabPage();
+            this.shopTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
             this.islandTab = new System.Windows.Forms.TabPage();
             this.islandSelectionTab = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
@@ -225,15 +231,11 @@
             this.label45 = new System.Windows.Forms.Label();
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
             this.label46 = new System.Windows.Forms.Label();
-            this.clearEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearSongLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fillMuseumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearMuseumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
-            this.shopTab = new System.Windows.Forms.TabPage();
-            this.shopTabControl = new System.Windows.Forms.TabControl();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -262,6 +264,8 @@
             this.villagerPanel.SuspendLayout();
             this.housesTab.SuspendLayout();
             this.houseTabSelect.SuspendLayout();
+            this.shopTab.SuspendLayout();
+            this.shopTabControl.SuspendLayout();
             this.islandTab.SuspendLayout();
             this.islandSelectionTab.SuspendLayout();
             this.grassTab.SuspendLayout();
@@ -270,8 +274,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
-            this.shopTab.SuspendLayout();
-            this.shopTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // patternsTab
@@ -588,8 +590,10 @@
             this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fillEncyclopediaToolStripMenuItem,
             this.getAllKKSongsToolStripMenuItem,
+            this.fillMuseumToolStripMenuItem,
             this.clearEncyclopediaToolStripMenuItem,
-            this.clearSongLibraryToolStripMenuItem});
+            this.clearSongLibraryToolStripMenuItem,
+            this.clearMuseumToolStripMenuItem});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
             this.extrasToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.extrasToolStripMenuItem.Text = "Extras";
@@ -598,7 +602,7 @@
             // 
             this.fillEncyclopediaToolStripMenuItem.Enabled = false;
             this.fillEncyclopediaToolStripMenuItem.Name = "fillEncyclopediaToolStripMenuItem";
-            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fillEncyclopediaToolStripMenuItem.Text = "Fill Encyclopedia";
             this.fillEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.fillEncyclopediaToolStripMenuItem_Click);
             // 
@@ -606,9 +610,25 @@
             // 
             this.getAllKKSongsToolStripMenuItem.Enabled = false;
             this.getAllKKSongsToolStripMenuItem.Name = "getAllKKSongsToolStripMenuItem";
-            this.getAllKKSongsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.getAllKKSongsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.getAllKKSongsToolStripMenuItem.Text = "Fill Song Library";
             this.getAllKKSongsToolStripMenuItem.Click += new System.EventHandler(this.getAllKKSongsToolStripMenuItem_Click);
+            // 
+            // clearEncyclopediaToolStripMenuItem
+            // 
+            this.clearEncyclopediaToolStripMenuItem.Enabled = false;
+            this.clearEncyclopediaToolStripMenuItem.Name = "clearEncyclopediaToolStripMenuItem";
+            this.clearEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearEncyclopediaToolStripMenuItem.Text = "Clear Encyclopedia";
+            this.clearEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.clearEncyclopediaToolStripMenuItem_Click);
+            // 
+            // clearSongLibraryToolStripMenuItem
+            // 
+            this.clearSongLibraryToolStripMenuItem.Enabled = false;
+            this.clearSongLibraryToolStripMenuItem.Name = "clearSongLibraryToolStripMenuItem";
+            this.clearSongLibraryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearSongLibraryToolStripMenuItem.Text = "Clear Song Library";
+            this.clearSongLibraryToolStripMenuItem.Click += new System.EventHandler(this.clearSongLibraryToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -1922,6 +1942,49 @@
             this.label28.TabIndex = 0;
             this.label28.Text = "House Size:";
             // 
+            // shopTab
+            // 
+            this.shopTab.Controls.Add(this.shopTabControl);
+            this.shopTab.Location = new System.Drawing.Point(4, 22);
+            this.shopTab.Name = "shopTab";
+            this.shopTab.Size = new System.Drawing.Size(931, 565);
+            this.shopTab.TabIndex = 9;
+            this.shopTab.Text = "Shops";
+            this.shopTab.UseVisualStyleBackColor = true;
+            // 
+            // shopTabControl
+            // 
+            this.shopTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.shopTabControl.Controls.Add(this.tabPage9);
+            this.shopTabControl.Controls.Add(this.tabPage10);
+            this.shopTabControl.Location = new System.Drawing.Point(3, 3);
+            this.shopTabControl.Name = "shopTabControl";
+            this.shopTabControl.SelectedIndex = 0;
+            this.shopTabControl.Size = new System.Drawing.Size(925, 559);
+            this.shopTabControl.TabIndex = 0;
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(917, 533);
+            this.tabPage9.TabIndex = 0;
+            this.tabPage9.Text = "Nook\'s";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage10.Size = new System.Drawing.Size(917, 533);
+            this.tabPage10.TabIndex = 1;
+            this.tabPage10.Text = "Able Sisters";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            // 
             // islandTab
             // 
             this.islandTab.Controls.Add(this.islandSelectionTab);
@@ -2289,21 +2352,21 @@
             this.label46.TabIndex = 79;
             this.label46.Text = "0x";
             // 
-            // clearEncyclopediaToolStripMenuItem
+            // fillMuseumToolStripMenuItem
             // 
-            this.clearEncyclopediaToolStripMenuItem.Enabled = false;
-            this.clearEncyclopediaToolStripMenuItem.Name = "clearEncyclopediaToolStripMenuItem";
-            this.clearEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.clearEncyclopediaToolStripMenuItem.Text = "Clear Encyclopedia";
-            this.clearEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.clearEncyclopediaToolStripMenuItem_Click);
+            this.fillMuseumToolStripMenuItem.Enabled = false;
+            this.fillMuseumToolStripMenuItem.Name = "fillMuseumToolStripMenuItem";
+            this.fillMuseumToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fillMuseumToolStripMenuItem.Text = "Fill Museum";
+            this.fillMuseumToolStripMenuItem.Click += new System.EventHandler(this.fillMuseumToolStripMenuItem_Click);
             // 
-            // clearSongLibraryToolStripMenuItem
+            // clearMuseumToolStripMenuItem
             // 
-            this.clearSongLibraryToolStripMenuItem.Enabled = false;
-            this.clearSongLibraryToolStripMenuItem.Name = "clearSongLibraryToolStripMenuItem";
-            this.clearSongLibraryToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.clearSongLibraryToolStripMenuItem.Text = "Clear Song Library";
-            this.clearSongLibraryToolStripMenuItem.Click += new System.EventHandler(this.clearSongLibraryToolStripMenuItem_Click);
+            this.clearMuseumToolStripMenuItem.Enabled = false;
+            this.clearMuseumToolStripMenuItem.Name = "clearMuseumToolStripMenuItem";
+            this.clearMuseumToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearMuseumToolStripMenuItem.Text = "Clear Museum";
+            this.clearMuseumToolStripMenuItem.Click += new System.EventHandler(this.clearMuseumToolStripMenuItem_Click);
             // 
             // itemIdTextBox
             // 
@@ -2348,49 +2411,6 @@
             this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
             this.patternNameTextBox.TabIndex = 0;
             this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
-            // 
-            // shopTab
-            // 
-            this.shopTab.Controls.Add(this.shopTabControl);
-            this.shopTab.Location = new System.Drawing.Point(4, 22);
-            this.shopTab.Name = "shopTab";
-            this.shopTab.Size = new System.Drawing.Size(931, 565);
-            this.shopTab.TabIndex = 9;
-            this.shopTab.Text = "Shops";
-            this.shopTab.UseVisualStyleBackColor = true;
-            // 
-            // shopTabControl
-            // 
-            this.shopTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.shopTabControl.Controls.Add(this.tabPage9);
-            this.shopTabControl.Controls.Add(this.tabPage10);
-            this.shopTabControl.Location = new System.Drawing.Point(3, 3);
-            this.shopTabControl.Name = "shopTabControl";
-            this.shopTabControl.SelectedIndex = 0;
-            this.shopTabControl.Size = new System.Drawing.Size(925, 559);
-            this.shopTabControl.TabIndex = 0;
-            // 
-            // tabPage9
-            // 
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(917, 533);
-            this.tabPage9.TabIndex = 0;
-            this.tabPage9.Text = "Nook\'s";
-            this.tabPage9.UseVisualStyleBackColor = true;
-            // 
-            // tabPage10
-            // 
-            this.tabPage10.Location = new System.Drawing.Point(4, 22);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(917, 533);
-            this.tabPage10.TabIndex = 1;
-            this.tabPage10.Text = "Able Sisters";
-            this.tabPage10.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -2453,6 +2473,8 @@
             this.housesTab.ResumeLayout(false);
             this.housesTab.PerformLayout();
             this.houseTabSelect.ResumeLayout(false);
+            this.shopTab.ResumeLayout(false);
+            this.shopTabControl.ResumeLayout(false);
             this.islandTab.ResumeLayout(false);
             this.islandSelectionTab.ResumeLayout(false);
             this.grassTab.ResumeLayout(false);
@@ -2463,8 +2485,6 @@
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
-            this.shopTab.ResumeLayout(false);
-            this.shopTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2675,5 +2695,7 @@
         private System.Windows.Forms.TabControl shopTabControl;
         private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.ToolStripMenuItem fillMuseumToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearMuseumToolStripMenuItem;
     }
 }
