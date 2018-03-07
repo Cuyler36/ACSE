@@ -21,6 +21,22 @@ namespace ACSE.Classes.Utilities
         public string Date_Time_String = "";
         public bool Is_PM = false;
 
+        public ACDate()
+        {
+            var Now = DateTime.Now;
+            Second = (uint)Now.Second;
+            Minute = (uint)Now.Minute;
+            Hour = (uint)Now.Hour;
+            Day = (uint)Now.Day;
+            Day_of_Week = (uint)Now.DayOfWeek;
+            Month = (uint)Now.Month;
+            Year = (uint)Now.Year;
+            Is_PM = Hour >= 12;
+
+            Date_Time_String = string.Format("{0}:{1}:{2} {3}, {4}/{5}/{6}", (Hour % 12) == 0 ? 12 : Hour % 12,
+                Minute.ToString("D2"), Second.ToString("D2"), Is_PM ? "PM" : "AM", Month, Day, Year);
+        }
+
         public ACDate(byte[] dateData)
         {
             switch (MainForm.Save_File.Save_Type)
@@ -37,11 +53,11 @@ namespace ACSE.Classes.Utilities
                         Day = dateData[3];
                         Day_of_Week = dateData[4];
                         Month = dateData[5];
-                        Year = BitConverter.ToUInt16(new byte[] { dateData[7], dateData[6] }, 0);
+                        Year = (ushort)((dateData[6] << 8) | dateData[7]);
                     }
                     else if (dateData.Length == 0x4)
                     {
-                        Year = BitConverter.ToUInt16(new byte[] { dateData[1], dateData[0] }, 0);
+                        Year = (ushort)((dateData[0] << 8) | dateData[1]);
                         Month = dateData[2];
                         Day = dateData[3];
                     }
@@ -67,6 +83,7 @@ namespace ACSE.Classes.Utilities
                     break;
             }
             Is_PM = Hour >= 12;
+
             Date_Time_String = string.Format("{0}:{1}:{2} {3}, {4}/{5}/{6}", (Hour % 12) == 0 ? 12 : Hour % 12,
                 Minute.ToString("D2"), Second.ToString("D2"), Is_PM ? "PM" : "AM", Month, Day, Year);
         }
@@ -127,6 +144,14 @@ namespace ACSE.Classes.Utilities
                         (byte)Month,
                         (byte)Day
                     };
+                case SaveGeneration.N3DS:
+                    return new byte[4]
+                    {
+                        (byte)(Year & 0x00FF),
+                        (byte)((Year >> 8) & 0x00FF),
+                        (byte)Month,
+                        (byte)Day
+                    };
                 default:
                     return new byte[0];
             }
@@ -138,6 +163,7 @@ namespace ACSE.Classes.Utilities
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
+                case SaveGeneration.N3DS:
                     return new byte[2] { (byte)Month, (byte)Day };
                 default:
                     return new byte[0];

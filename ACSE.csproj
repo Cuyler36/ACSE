@@ -3726,11 +3726,11 @@
     <Compile Include="Classes\Utilities\Utility.cs" />
     <Compile Include="Classes\PlayerRelation.cs" />
     <Compile Include="Classes\Weather.cs" />
-    <Compile Include="Forms\AboutBox2.cs">
+    <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AboutBox2.Designer.cs">
-      <DependentUpon>AboutBox2.cs</DependentUpon>
+    <Compile Include="Forms\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Checksum.cs" />
     <Compile Include="Classes\DataConverter.cs" />
@@ -3776,8 +3776,8 @@
     <EmbeddedResource Include="Forms\ToggableAlertForm.resx">
       <DependentUpon>ToggableAlertForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AboutBox2.resx">
-      <DependentUpon>AboutBox2.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

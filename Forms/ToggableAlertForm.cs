@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ACSE.Classes
+namespace ACSE
 {
     public partial class ToggableAlertForm : Form
     {

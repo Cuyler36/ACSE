@@ -1,4 +1,4 @@
-﻿namespace ACSE.Classes
+﻿namespace ACSE
 {
     partial class ToggableAlertForm
     {

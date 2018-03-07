@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ACSE.Classes
+namespace ACSE
 {
     public class AlertToggledEventArgs : EventArgs
     {

@@ -1,32 +1,32 @@
 ﻿namespace ACSE
 {
+    public class ShopOffsets
+    {
+        public int FurnitureShop = -1;
+        public int FurnitureShopUpgrade = -1;
+        public int TailorShop = -1;
+        public int BlackMarket = -1;
+        public int LostAndFound = -1;
+        public int RecycleShop = -1;
+        public int AccessoriesShop = -1;
+        public int GardenShop = -1;
+        public int GardenShopUpgrade = -1;
+        public int ShoeShop = -1;
+        public int MuseumShop = -1;
+        public int HomeCustomizationShop = -1;
+        public int GiraffeShop = -1;
+        public int ClubShop = -1;
+        public int IslandShop = -1;
+
+        public int FurnitureShopSize = 0;
+        public int GardenShopSize = 0;
+        public int TailorShopSize = 0;
+        public int BlackMarketSize = 0;
+        public int LostAndFoundSize = 0;
+    }
+
     public static class ShopInfo
     {
-        public class ShopOffsets
-        {
-            public int FurnitureShop = -1;
-            public int FurnitureShopUpgrade = -1;
-            public int TailorShop = -1;
-            public int BlackMarket = -1;
-            public int LostAndFound = -1;
-            public int RecycleShop = -1;
-            public int AccessoriesShop = -1;
-            public int GardenShop = -1;
-            public int GardenShopUpgrade = -1;
-            public int ShoeShop = -1;
-            public int MuseumShop = -1;
-            public int HomeCustomizationShop = -1;
-            public int GiraffeShop = -1;
-            public int ClubShop = -1;
-            public int IslandShop = -1;
-
-            public int FurnitureShopSize = 0;
-            public int GardenShopSize = 0;
-            public int TailorShopSize = 0;
-            public int BlackMarketSize = 0;
-            public int LostAndFoundSize = 0;
-        }
-
         private static ShopOffsets AnimalCrossing_ShopOffsets = new ShopOffsets
         {
             FurnitureShopUpgrade = 0x20466
@@ -78,28 +78,42 @@
         }
     }
 
-    public class Shop
+    public abstract class Shop
     {
         public Item[] Stock;
         public string Name;
+
+        protected Save SaveFile;
+        protected int Offset;
+        protected ShopOffsets ShopOffsets;
+
+        public Shop(Save saveFile, int offset)
+        {
+            SaveFile = saveFile;
+            Offset = offset;
+            ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.Save_Type);
+        }
+
+        public abstract void Write();
     }
 
     public class FurnitureShop : Shop
     {
+        public uint PurchaseSum;
         public byte Size;
 
-        public FurnitureShop(SaveGeneration Generation)
+        public FurnitureShop(Save saveFile, int offset) : base(saveFile, offset)
         {
             Item[] Items = null;
-            var SaveFile = MainForm.Save_File;
 
-            Size = GetSize(Generation);
+            Size = GetSize(saveFile.Game_System);
+            Name = ShopInfo.GetShopName(saveFile.Game_System, Size);
+            int ItemCount = 0;
 
-            switch (Generation)
+            switch (saveFile.Game_System)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
-                    int ItemCount = 0;
                     if (Size == 0)
                         ItemCount = 0;
                     else if (Size == 1)
@@ -110,8 +124,20 @@
                         ItemCount = 35;
                     break;
                 case SaveGeneration.N3DS:
-                    
                     break;
+            }
+
+            Items = new Item[ItemCount];
+            for (int i = 0; i < ItemCount; i++)
+            {
+                if (SaveFile.Game_System == SaveGeneration.N3DS)
+                {
+                    Items[i] = new Item(SaveFile.ReadUInt32(Offset + ShopOffsets.FurnitureShop + i * 4));
+                }
+                else
+                {
+                    Items[i] = new Item(SaveFile.ReadUInt16(Offset + ShopOffsets.FurnitureShop + i * 2));
+                }
             }
 
             Stock = Items;
@@ -155,6 +181,26 @@
                         break;
                 }
             }
+        }
+
+        public override void Write()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+
+    public class TailorShop : Shop
+    {
+        public Pattern[] DisplayedPatterns;
+
+        public TailorShop(Save saveFile, int offset) : base(saveFile, offset)
+        {
+
+        }
+
+        public override void Write()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
