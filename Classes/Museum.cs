@@ -55,5 +55,33 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Clears the Museum's donations.
+        /// </summary>
+        /// <param name="saveFile">Current Save File</param>
+        public void ClearMuseum(Save saveFile)
+        {
+            int MuseumDataOffset = GetBaseOffset(saveFile.Save_Type);
+            if (MuseumDataOffset != -1)
+            {
+                int MuseumDataSize = GetMuseumFieldSize(saveFile.Save_Type);
+                for (int i = MuseumDataOffset; i < MuseumDataOffset + MuseumDataSize; i++)
+                {
+                    saveFile.Write(i, (byte)0);
+                }
+
+                // Clear Date/Time for donation to current system time
+                if (saveFile.Game_System == SaveGeneration.N3DS)
+                {
+                    byte[] ClearedDate = new byte[4];
+                    int DonationDateOffset = saveFile.Save_Type == SaveType.New_Leaf ? 0x65948 : 0x6AEB8;
+                    for (int i = DonationDateOffset; i < DonationDateOffset + 0x448; i++)
+                    {
+                        saveFile.Write(i, ClearedDate);
+                    }
+                }
+            }
+        }
     }
 }
