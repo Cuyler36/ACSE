@@ -6,10 +6,13 @@
         {
             switch (saveType)
             {
+                case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Animal_Crossing:
                     return 0x3F;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return 0x47;
+                case SaveType.Wild_World:
+                    return 0x5E; // Check this. I calculated 0x5C, but AnimalMap says it's 0x5E.
                 case SaveType.New_Leaf:
                 case SaveType.Welcome_Amiibo:
                     return 0x112;
@@ -22,10 +25,14 @@
         {
             switch (saveType)
             {
+                case SaveType.Doubutsu_no_Mori_Plus:
+                    return 0x1A298; // Verify this.
                 case SaveType.Animal_Crossing:
                     return 0x213A8;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return 0x22FB0;
+                case SaveType.Wild_World:
+                    return 0x15D50;
                 case SaveType.New_Leaf:
                     return 0x658E0;
                 case SaveType.Welcome_Amiibo:
