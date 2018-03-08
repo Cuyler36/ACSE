@@ -44,9 +44,9 @@
                 case SaveType.City_Folk:
                     return 0x7352A;
                 case SaveType.New_Leaf:
-                    return 0x658E0;
+                    return 0x65860;
                 case SaveType.Welcome_Amiibo:
-                    return 0x6B300;
+                    return 0x6B280;
                 default:
                     return -1;
             }
@@ -63,7 +63,8 @@
             if (MuseumDataOffset != -1)
             {
                 int MuseumDataSize = GetMuseumFieldSize(saveFile.Save_Type);
-                byte PlayerDonationIndex = (byte)(((player.Index + 1) << 4) | (byte)(player.Index + 1));
+                byte PlayerDonationIndex = saveFile.Save_Generation == SaveGeneration.N3DS ? 
+                    (byte)(player.Index + 1) : (byte)(((player.Index + 1) << 4) | (byte)(player.Index + 1));
 
                 for (int i = MuseumDataOffset; i < MuseumDataOffset + MuseumDataSize; i++)
                 {
@@ -74,7 +75,7 @@
                 if (saveFile.Save_Generation == SaveGeneration.N3DS)
                 {
                     byte[] NowDate = new Classes.Utilities.ACDate().ToYearMonthDayDateData();
-                    int DonationDateOffset = saveFile.Save_Data_Start_Offset + (saveFile.Save_Type == SaveType.New_Leaf ? 0x65948 : 0x6AEB8);
+                    int DonationDateOffset = saveFile.Save_Data_Start_Offset + (saveFile.Save_Type == SaveType.New_Leaf ? 0x658C8 : 0x6AE38);
                     for (int i = DonationDateOffset; i < DonationDateOffset + 0x448; i += 4)
                     {
                         saveFile.Write(i, NowDate);
