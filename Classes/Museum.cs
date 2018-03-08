@@ -13,6 +13,8 @@
                     return 0x47;
                 case SaveType.Wild_World:
                     return 0x5F;
+                case SaveType.City_Folk:
+                    return 0x6C;
                 case SaveType.New_Leaf:
                 case SaveType.Welcome_Amiibo:
                     return 0x112;
@@ -20,6 +22,12 @@
                     return 0;
             }
         }
+
+        // City Folk Breakdown:
+        //  First 30 bytes: Fossils (60);
+        //  Next 32 bytes: Fish (64);
+        //  Next 32 bytes: Insects (64);
+        //  Last 14 bytes: Paintings (22) (First 3 bytes aren't used?);
 
         private static int GetBaseOffset(SaveType saveType)
         {
@@ -33,6 +41,8 @@
                     return 0x22FB0;
                 case SaveType.Wild_World:
                     return 0x15D50;
+                case SaveType.City_Folk:
+                    return 0x7352A;
                 case SaveType.New_Leaf:
                     return 0x658E0;
                 case SaveType.Welcome_Amiibo:
