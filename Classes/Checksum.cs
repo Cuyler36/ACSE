@@ -107,7 +107,7 @@ namespace ACSE
             0x2D02EF8D
         };
 
-        public static uint GetCRC32(byte[] pBuf, uint initial = 0xFFFFFFFF)
+        public static uint Calculate_CRC32(byte[] pBuf, uint initial = 0xFFFFFFFF)
         {
             uint c = initial;
             int i, n = pBuf.Length;

@@ -984,14 +984,14 @@ namespace ACSE
                 for (int i = 0; i < 4; i++)
                 {
                     int Player_Data_Offset = Save_Data_Start_Offset + i * 0x86C0 + 0x1140;
-                    uint Player_CRC32 = CRC32.GetCRC32(Working_Save_Data.Skip(Player_Data_Offset + 4).Take(0x759C).ToArray());
+                    uint Player_CRC32 = CRC32.Calculate_CRC32(Working_Save_Data.Skip(Player_Data_Offset + 4).Take(0x759C).ToArray());
                     Write(Player_Data_Offset, Player_CRC32, true);
                 }
-                Write(Save_Data_Start_Offset + 0x5EC60, CRC32.GetCRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x5EC64).Take(0x1497C).ToArray()), true);
-                Write(Save_Data_Start_Offset + 0x5EB04, CRC32.GetCRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x5EB08).Take(0x152).ToArray(), 0x12141018), true);
-                Write(Save_Data_Start_Offset + 0x73600, CRC32.GetCRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x73604).Take(0x19BD1C).ToArray()), true);
-                Write(Save_Data_Start_Offset, CRC32.GetCRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 4).Take(0x1C).ToArray()), true);
-                Write(Save_Data_Start_Offset + 0x20, CRC32.GetCRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x24).Take(0x111C).ToArray()), true);
+                Write(Save_Data_Start_Offset + 0x5EC60, CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x5EC64).Take(0x1497C).ToArray()), true);
+                Write(Save_Data_Start_Offset + 0x5EB04, CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x5EB08).Take(0x152).ToArray(), 0x12141018), true);
+                Write(Save_Data_Start_Offset + 0x73600, CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x73604).Take(0x19BD1C).ToArray()), true);
+                Write(Save_Data_Start_Offset, CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 4).Take(0x1C).ToArray()), true);
+                Write(Save_Data_Start_Offset + 0x20, CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x24).Take(0x111C).ToArray()), true);
             }
             else if (Save_Type == SaveType.New_Leaf)
             {
@@ -1002,7 +1002,6 @@ namespace ACSE
                     Write(DataOffset, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(DataOffset + 4).Take(0x6B64).ToArray()));
                     int DataOffset2 = Save_Data_Start_Offset + 0x20 + 0x6B68 + i * 0x9F10;
                     Write(DataOffset2, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(DataOffset2 + 4).Take(0x33A4).ToArray()));
-                    
                 }
                 Write(Save_Data_Start_Offset + 0x27C60, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x27C60 + 4).Take(0x218B0).ToArray()));
                 Write(Save_Data_Start_Offset + 0x49520, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x49520 + 4).Take(0x44B8).ToArray()));
