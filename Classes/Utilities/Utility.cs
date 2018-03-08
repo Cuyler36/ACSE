@@ -97,7 +97,7 @@ namespace ACSE.Classes.Utilities
             for (int i = 0; i < Acre_Results.Length; i++)
             {
                 Normal_Acre Acre = Acres[i];
-                switch (MainForm.Save_File.Game_System)
+                switch (MainForm.Save_File.Save_Generation)
                 {
                     case SaveGeneration.N64:
                     case SaveGeneration.GCN:
@@ -173,7 +173,7 @@ namespace ACSE.Classes.Utilities
         {
             if (Start_Index > -1 && Start_Index < 256)
             {
-                if (MainForm.Save_File.Game_System == SaveGeneration.GCN)
+                if (MainForm.Save_File.Save_Generation == SaveGeneration.GCN)
                 {
                     for (int y = 0; y < Structure_Info.Count; y++)
                     {

@@ -61,7 +61,7 @@ namespace ACSE
             if (Items != null && Index > -1)
             {
                 var SaveFile = MainForm.Save_File;
-                if (SaveFile.Game_System == SaveGeneration.N3DS)
+                if (SaveFile.Save_Generation == SaveGeneration.N3DS)
                 {
                     for (int i = 0; i < Items.Length; i++)
                     {
@@ -107,11 +107,11 @@ namespace ACSE
             var Offsets = HouseInfo.GetHouseOffsets(SaveFile.Save_Type);
 
             if (Offsets.Room_Carpet != -1)
-                if (SaveFile.Game_System == SaveGeneration.N64 || SaveFile.Game_System == SaveGeneration.GCN) // TODO: Non-Original titles
+                if (SaveFile.Save_Generation == SaveGeneration.N64 || SaveFile.Save_Generation == SaveGeneration.GCN) // TODO: Non-Original titles
                     SaveFile.Write(Offset + Offsets.Room_Carpet, (byte)(Carpet.ItemID));
 
             if (Offsets.Room_Wallpaper != -1)
-                if (SaveFile.Game_System == SaveGeneration.N64 || SaveFile.Game_System == SaveGeneration.GCN) // TODO: Non-Original titles
+                if (SaveFile.Save_Generation == SaveGeneration.N64 || SaveFile.Save_Generation == SaveGeneration.GCN) // TODO: Non-Original titles
                     SaveFile.Write(Offset + Offsets.Room_Wallpaper, (byte)(Wallpaper.ItemID));
 
             // TODO: Room_Song
@@ -135,7 +135,7 @@ namespace ACSE
             //Console.WriteLine("House Index: " + Index);
             //Console.WriteLine("House Offset: 0x" + Offset.ToString("X"));
             //Console.WriteLine("House Size: " + HouseSize.ToString());
-            if (MainForm.Save_File.Game_System == SaveGeneration.N64 || MainForm.Save_File.Game_System == SaveGeneration.GCN)
+            if (MainForm.Save_File.Save_Generation == SaveGeneration.N64 || MainForm.Save_File.Save_Generation == SaveGeneration.GCN)
             {
                 Basement = HouseInfo.HasBasement(Offset, MainForm.Save_File.Save_Type);
                 //Console.WriteLine("Basement: " + Basement.ToString());
@@ -199,10 +199,10 @@ namespace ACSE
             Data = (HouseData)BoxedData;
 
             // Load Rooms/Layers
-            int ItemDataSize = MainForm.Save_File.Game_System == SaveGeneration.N3DS ? 4 : 2;
+            int ItemDataSize = MainForm.Save_File.Save_Generation == SaveGeneration.N3DS ? 4 : 2;
             int ItemsPerLayer = 256; //Offsets.Layer_Size / ItemDataSize;
             Data.Rooms = new Room[Offsets.Room_Count];
-            var RoomNames = HouseInfo.GetRoomNames(SaveData.Game_System);
+            var RoomNames = HouseInfo.GetRoomNames(SaveData.Save_Generation);
 
             for (int i = 0; i < Offsets.Room_Count; i++)
             {
@@ -215,7 +215,7 @@ namespace ACSE
                     Layers = new Layer[Offsets.Layer_Count]
                 };
 
-                if (SaveData.Game_System == SaveGeneration.N64 || SaveData.Game_System == SaveGeneration.GCN)
+                if (SaveData.Save_Generation == SaveGeneration.N64 || SaveData.Save_Generation == SaveGeneration.GCN)
                 {
                     Room.Carpet = new Item((ushort)(0x2600 | SaveData.ReadByte(RoomOffset + Offsets.Room_Carpet)));
                     Room.Wallpaper = new Item((ushort)(0x2700 | SaveData.ReadByte(RoomOffset + Offsets.Room_Wallpaper)));
@@ -313,7 +313,7 @@ namespace ACSE
                             }
                             else if (FieldType == typeof(Item))
                             {
-                                if (SaveData.Game_System == SaveGeneration.N3DS)
+                                if (SaveData.Save_Generation == SaveGeneration.N3DS)
                                 {
                                     SaveData.Write(DataOffset, ItemData.EncodeItem((Item)HouseDataType.GetField(Field.Name).GetValue(Data)), SaveData.Is_Big_Endian);
                                 }
@@ -632,7 +632,7 @@ namespace ACSE
         public static void SetHasBasement(bool Enabled, House SelectedHouse)
         {
             var SaveFile = MainForm.Save_File;
-            if (SaveFile.Game_System == SaveGeneration.N64 || SaveFile.Game_System == SaveGeneration.GCN)
+            if (SaveFile.Save_Generation == SaveGeneration.N64 || SaveFile.Save_Generation == SaveGeneration.GCN)
             {
                 int BasementFlagOffset = SelectedHouse.Offset;
                 switch (SaveFile.Save_Type)
@@ -658,7 +658,7 @@ namespace ACSE
 
         public static House[] LoadHouses(Save SaveFile)
         {
-            int HouseCount = SaveFile.Game_System == SaveGeneration.NDS ? 1 : 4;
+            int HouseCount = SaveFile.Save_Generation == SaveGeneration.NDS ? 1 : 4;
             Houses = new House[HouseCount];
 
             for (int i = 0; i < HouseCount; i++)

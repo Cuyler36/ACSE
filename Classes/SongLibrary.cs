@@ -129,7 +129,7 @@ namespace ACSE
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
             if (Current_Bit_Map != null)
             {
-                if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
                 {
                     if (Player.House != null)
                     {
@@ -159,7 +159,7 @@ namespace ACSE
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
             if (Current_Bit_Map != null)
             {
-                if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
                 {
                     if (Player.House != null)
                     {

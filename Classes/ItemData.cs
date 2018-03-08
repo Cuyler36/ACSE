@@ -1160,7 +1160,7 @@ namespace ACSE
 
         public Furniture(ushort itemId) : base(itemId)
         {
-            if (MainForm.Save_File.Game_System == SaveGeneration.N3DS)
+            if (MainForm.Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 BaseItemID = itemId;
                 Rotation = 0;
@@ -1183,7 +1183,7 @@ namespace ACSE
 
         public Furniture(ushort item, byte flag1, byte flag2) : base (item, flag1, flag2)
         {
-            if (MainForm.Save_File.Game_System == SaveGeneration.N3DS)
+            if (MainForm.Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 BaseItemID = ItemID;
                 Rotation = ((Flag1 >> 4) / 4) * 90;
@@ -1205,7 +1205,7 @@ namespace ACSE
             Flag1 = item.Flag1;
             Flag2 = item.Flag2;
 
-            if (MainForm.Save_File.Game_System == SaveGeneration.N3DS)
+            if (MainForm.Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 BaseItemID = ItemID;
                 Rotation = ((Flag1 >> 4) / 4) * 90;
@@ -1234,7 +1234,7 @@ namespace ACSE
             if (obj is Furniture)
             {
                 var ComparingItem = obj as Furniture;
-                if (MainForm.Save_File.Game_System == SaveGeneration.N3DS)
+                if (MainForm.Save_File.Save_Generation == SaveGeneration.N3DS)
                     return (ComparingItem.ItemID == ItemID && ComparingItem.Flag1 == Flag1 && ComparingItem.Flag2 == Flag2);
                 else
                     return ComparingItem.BaseItemID == BaseItemID;

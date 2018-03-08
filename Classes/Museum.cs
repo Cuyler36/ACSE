@@ -61,7 +61,7 @@
                 }
 
                 // Set Date/Time for donation to current system time
-                if (saveFile.Game_System == SaveGeneration.N3DS)
+                if (saveFile.Save_Generation == SaveGeneration.N3DS)
                 {
                     byte[] NowDate = new Classes.Utilities.ACDate().ToYearMonthDayDateData();
                     int DonationDateOffset = saveFile.Save_Data_Start_Offset + (saveFile.Save_Type == SaveType.New_Leaf ? 0x65948 : 0x6AEB8);
@@ -89,7 +89,7 @@
                 }
 
                 // Clear Date/Time for donation to current system time
-                if (saveFile.Game_System == SaveGeneration.N3DS)
+                if (saveFile.Save_Generation == SaveGeneration.N3DS)
                 {
                     byte[] ClearedDate = new byte[4];
                     int DonationDateOffset = saveFile.Save_Data_Start_Offset + (saveFile.Save_Type == SaveType.New_Leaf ? 0x65948 : 0x6AEB8);

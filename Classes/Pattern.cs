@@ -499,7 +499,7 @@ namespace ACSE
 
         public void RedrawBitmap()
         {
-            switch (Save_File.Game_System)
+            switch (Save_File.Save_Generation)
             {
                 case SaveGeneration.GCN:
                 case SaveGeneration.Wii:
@@ -522,7 +522,7 @@ namespace ACSE
             // Convert to nibble map array of bytes
             byte[] Pattern_Buffer = new byte[Bitmap_Buffer.Length / 2];
 
-            if (Save_File.Game_System == SaveGeneration.NDS || Save_File.Game_System == SaveGeneration.N3DS)
+            if (Save_File.Save_Generation == SaveGeneration.NDS || Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 for (int i = 0; i < Pattern_Buffer.Length; i++)
                 {
@@ -540,7 +540,7 @@ namespace ACSE
                 Pattern_Buffer = PatternUtility.EncodeC4(ConvertedBuffer);
             }
 
-            switch (Save_File.Game_System)
+            switch (Save_File.Save_Generation)
             {
                 case SaveGeneration.GCN:
                 case SaveGeneration.Wii:
@@ -559,7 +559,7 @@ namespace ACSE
 
         public void Write(byte[] New_Pattern_Data)
         {
-            if (Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File.Save_Generation == SaveGeneration.GCN)
             {
                 int PatternNameSize = Save_File.Save_Type == SaveType.Animal_Crossing ? 0x10 : 0x0A;
                 Save_File.Write(Offset, ACString.GetBytes(Name, PatternNameSize));
@@ -579,7 +579,7 @@ namespace ACSE
                 Save_File.Write(Offset + 0x84C, ACString.GetBytes(Name, 0x20));
                 Save_File.Write(Offset + 0x86F, Palette);
             }
-            else if (Save_File.Game_System == SaveGeneration.N3DS)
+            else if (Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 Save_File.Write(Offset, ACString.GetBytes(Name, 0x2A));
                 Save_File.Write(Offset + 0x6C, New_Pattern_Data);

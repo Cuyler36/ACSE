@@ -106,11 +106,11 @@
         {
             Item[] Items = null;
 
-            Size = GetSize(saveFile.Game_System);
-            Name = ShopInfo.GetShopName(saveFile.Game_System, Size);
+            Size = GetSize(saveFile.Save_Generation);
+            Name = ShopInfo.GetShopName(saveFile.Save_Generation, Size);
             int ItemCount = 0;
 
-            switch (saveFile.Game_System)
+            switch (saveFile.Save_Generation)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
@@ -130,7 +130,7 @@
             Items = new Item[ItemCount];
             for (int i = 0; i < ItemCount; i++)
             {
-                if (SaveFile.Game_System == SaveGeneration.N3DS)
+                if (SaveFile.Save_Generation == SaveGeneration.N3DS)
                 {
                     Items[i] = new Item(SaveFile.ReadUInt32(Offset + ShopOffsets.FurnitureShop + i * 4));
                 }
@@ -169,7 +169,7 @@
             var ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.Save_Type);
             if (ShopOffsets != null)
             {
-                switch (SaveFile.Game_System)
+                switch (SaveFile.Save_Generation)
                 {
                     case SaveGeneration.N64:
                     case SaveGeneration.GCN:

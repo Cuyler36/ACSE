@@ -111,7 +111,7 @@ namespace ACSE.Classes.Utilities
 
         public byte[] ToFullDateData()
         {
-            switch (MainForm.Save_File.Game_System)
+            switch (MainForm.Save_File.Save_Generation)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
@@ -133,7 +133,7 @@ namespace ACSE.Classes.Utilities
 
         public byte[] ToYearMonthDayDateData()
         {
-            switch (MainForm.Save_File.Game_System)
+            switch (MainForm.Save_File.Save_Generation)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
@@ -159,7 +159,7 @@ namespace ACSE.Classes.Utilities
 
         public byte[] ToMonthDayDateData()
         {
-            switch (MainForm.Save_File.Game_System)
+            switch (MainForm.Save_File.Save_Generation)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:

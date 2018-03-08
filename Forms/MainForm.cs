@@ -374,7 +374,7 @@ namespace ACSE
         {
             if (New_Item != null)
             {
-                if (New_Item is Furniture && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
+                if (New_Item is Furniture && (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN))
                 {
                     CurrentItem = new Item(New_Item)
                     {
@@ -437,8 +437,8 @@ namespace ACSE
 
             Save_File = null; //Set to null so we can set the checkbox to false without having the method run
             townMapViewCheckbox.Checked = false;
-            townMapViewCheckbox.Enabled = save.Game_System == SaveGeneration.N64 || save.Game_System == SaveGeneration.GCN;
-            acreHeightTrackBar.Enabled = save.Game_System == SaveGeneration.N64 || save.Game_System == SaveGeneration.GCN;
+            townMapViewCheckbox.Enabled = save.Save_Generation == SaveGeneration.N64 || save.Save_Generation == SaveGeneration.GCN;
+            acreHeightTrackBar.Enabled = save.Save_Generation == SaveGeneration.N64 || save.Save_Generation == SaveGeneration.GCN;
             Save_File = save;
             Debug_Manager.WriteLine("Save File Loaded");
             Acre_Height_Modifier = 0;
@@ -505,7 +505,7 @@ namespace ACSE
             resettiCheckBox.Enabled = true;
             saveAsToolStripMenuItem.Enabled = true;
             saveToolStripMenuItem.Enabled = true;
-            secureValueToolStripMenuItem.Enabled = save.Game_System == SaveGeneration.N3DS;
+            secureValueToolStripMenuItem.Enabled = save.Save_Generation == SaveGeneration.N3DS;
             clearWeedsToolStripMenuItem.Enabled = true;
             removeAllItemsToolStripMenuItem.Enabled = true;
             replaceItemsToolStripMenuItem.Enabled = true;
@@ -525,10 +525,10 @@ namespace ACSE
             nativeFruitBox.Enabled = true;
             houseSizeComboBox.Enabled = true;
             roofColorComboBox.Enabled = true;
-            houseOwnerComboBox.Enabled = save.Game_System != SaveGeneration.NDS;
-            houseTabSelect.Visible = save.Game_System != SaveGeneration.NDS;
-            houseTabSelect.Enabled = save.Game_System != SaveGeneration.NDS;
-            basementCheckBox.Enabled = save.Game_System == SaveGeneration.GCN;
+            houseOwnerComboBox.Enabled = save.Save_Generation != SaveGeneration.NDS;
+            houseTabSelect.Visible = save.Save_Generation != SaveGeneration.NDS;
+            houseTabSelect.Enabled = save.Save_Generation != SaveGeneration.NDS;
+            basementCheckBox.Enabled = save.Save_Generation == SaveGeneration.GCN;
             grassLevelBox.Enabled = true;
             setAllGrass.Enabled = true;
             reviveGrass.Enabled = true;
@@ -666,7 +666,7 @@ namespace ACSE
                     playerHairType.Items.Add(Hair_Style);
                 Grass_Wear = save.ReadByteArray(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Wear, Current_Save_Info.Save_Offsets.Grass_Wear_Size);
             }
-            else if (save.Game_System == SaveGeneration.N3DS)
+            else if (save.Save_Generation == SaveGeneration.N3DS)
             {
                 Grass_Wear = save.ReadByteArray(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Wear, Current_Save_Info.Save_Offsets.Grass_Wear_Size);
                 foreach (string Hair_Style in PlayerInfo.NL_Hair_Styles)
@@ -677,7 +677,7 @@ namespace ACSE
                     playerEyeColor.Items.Add(Eye_Color);
                 Secure_NAND_Value_Form.Set_Secure_NAND_Value(Save_File.ReadUInt64(0));
             }
-            else if (save.Save_Type == SaveType.Doubutsu_no_Mori || save.Game_System == SaveGeneration.GCN)
+            else if (save.Save_Type == SaveType.Doubutsu_no_Mori || save.Save_Generation == SaveGeneration.GCN)
             {
                 foreach (string Face_Name in PlayerInfo.AC_Faces)
                     playerFace.Items.Add(Face_Name);
@@ -750,7 +750,7 @@ namespace ACSE
                         Acres[i] = new Normal_Acre(Acre_Data[i], i);
                     }
                 }
-                else if (save.Game_System == SaveGeneration.GCN || save.Game_System == SaveGeneration.N64)
+                else if (save.Save_Generation == SaveGeneration.GCN || save.Save_Generation == SaveGeneration.N64)
                 {
                     UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.Animal_Crossing);
                     int x = 0;
@@ -792,7 +792,7 @@ namespace ACSE
                         Acres[i] = new Normal_Acre(Acre_Data[i], i);
                     }
                 }
-                else if (save.Game_System == SaveGeneration.N3DS)
+                else if (save.Save_Generation == SaveGeneration.N3DS)
                 {
                     UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(Save_File.Save_Type);
 
@@ -825,7 +825,7 @@ namespace ACSE
                 }
             });
 
-            if (Save_File.Game_System == SaveGeneration.N3DS)
+            if (Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 foreach (var Enum in Enum.GetValues(typeof(New_Leaf_Grass_Type)))
                     grassTypeBox.Items.Add(Enum);
@@ -837,12 +837,12 @@ namespace ACSE
                     playerFace.SelectedIndex = Selected_Player.Data.FaceType;
                 }
             }
-            else if (Save_File.Game_System == SaveGeneration.NDS)
+            else if (Save_File.Save_Generation == SaveGeneration.NDS)
             {
                 foreach (var Enum in Enum.GetValues(typeof(Wild_World_Grass_Type)))
                     grassTypeBox.Items.Add(Enum);
             }
-            else if (Save_File.Game_System == SaveGeneration.Wii)
+            else if (Save_File.Save_Generation == SaveGeneration.Wii)
             {
                 foreach (var Enum in Enum.GetValues(typeof(City_Folk_Grass_Type)))
                     grassTypeBox.Items.Add(Enum);
@@ -913,7 +913,7 @@ namespace ACSE
                 foreach (NewVillager v in Villagers)
                     GenerateVillagerPanel(v);
 
-                if (Save_File.Game_System == SaveGeneration.N3DS)
+                if (Save_File.Save_Generation == SaveGeneration.N3DS)
                     GeneratePastVillagersPanel();
 
                 progressBar1.Value = 90;
@@ -921,7 +921,7 @@ namespace ACSE
 
             // Set House Owner ComboBox List
             houseOwnerComboBox.Items.Clear();
-            if (save.Game_System != SaveGeneration.NDS)
+            if (save.Save_Generation != SaveGeneration.NDS)
             {
                 houseOwnerComboBox.Items.Add("No One");
                 for (int i = 0; i < 4; i++)
@@ -938,7 +938,7 @@ namespace ACSE
             if (roofColorComboBox.Enabled && Selected_House != null)
                 roofColorComboBox.SelectedIndex = Math.Min(roofColorComboBox.Items.Count - 1, Selected_House.Data.Roof_Color);
 
-            if (Properties.Settings.Default.OutputInt32s && Save_File.Game_System == SaveGeneration.N3DS)
+            if (Properties.Settings.Default.OutputInt32s && Save_File.Save_Generation == SaveGeneration.N3DS)
                 Utility.Scan_For_NL_Int32();
 
             // Set TextBox max values
@@ -947,8 +947,8 @@ namespace ACSE
             // Enable Tasks
             clearWeedsToolStripMenuItem.Enabled = true;
             removeAllItemsToolStripMenuItem.Enabled = true;
-            waterFlowersToolStripMenuItem.Enabled = Save_File.Game_System != SaveGeneration.GCN && Save_File.Game_System != SaveGeneration.N64;
-            makeFruitsPerfectToolStripMenuItem.Enabled = Save_File.Game_System == SaveGeneration.N3DS;
+            waterFlowersToolStripMenuItem.Enabled = Save_File.Save_Generation != SaveGeneration.GCN && Save_File.Save_Generation != SaveGeneration.N64;
+            makeFruitsPerfectToolStripMenuItem.Enabled = Save_File.Save_Generation == SaveGeneration.N3DS;
             replaceItemsToolStripMenuItem.Enabled = true;
             importTownToolStripMenuItem.Enabled = true;
             exportTownToolStripMenuItem.Enabled = true;
@@ -957,18 +957,18 @@ namespace ACSE
             if (Current_Save_Info.Save_Offsets.Grass_Type != -1)
             {
                 byte Grass_Type = Save_File.ReadByte(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Type);
-                grassTypeBox.SelectedIndex = (Save_File.Game_System == SaveGeneration.NDS ? Utility.GetWildWorldGrassBaseType(Grass_Type) : (Grass_Type < 3 ? Grass_Type : 0));
+                grassTypeBox.SelectedIndex = (Save_File.Save_Generation == SaveGeneration.NDS ? Utility.GetWildWorldGrassBaseType(Grass_Type) : (Grass_Type < 3 ? Grass_Type : 0));
             }
 
             // Set Native Fruit Types
-            SetPossibleNativeFruits(save.Game_System);
+            SetPossibleNativeFruits(save.Save_Generation);
 
             // Set Weather Info
             weatherComboBox.Enabled = true;
             weatherComboBox.Items.Clear();
-            weatherComboBox.Items.AddRange(Weather.GetWeatherTypesForGame(save.Game_System));
+            weatherComboBox.Items.AddRange(Weather.GetWeatherTypesForGame(save.Save_Generation));
             if (Current_Save_Info.Save_Offsets.Weather != -1)
-                weatherComboBox.SelectedIndex = Weather.GetWeatherIndex(save.ReadByte(Current_Save_Info.Save_Offsets.Weather), save.Game_System);
+                weatherComboBox.SelectedIndex = Weather.GetWeatherIndex(save.ReadByte(Current_Save_Info.Save_Offsets.Weather), save.Save_Generation);
 
             // Load islands if DnM+/AC
             IslandRoom = null;
@@ -1032,21 +1032,21 @@ namespace ACSE
                 playersTab.Controls.Add(shirtEditor);
             }
 
-            inventoryEditor = new ItemEditor(this, Selected_Player.Data.Pockets.Items, save.Game_System == SaveGeneration.N3DS ? 4 : 5, 16)
+            inventoryEditor = new ItemEditor(this, Selected_Player.Data.Pockets.Items, save.Save_Generation == SaveGeneration.N3DS ? 4 : 5, 16)
             {
                 Location = new Point(26, 340)
             };
 
             playersTab.Controls.Add(inventoryEditor);
 
-            if (Save_File.Game_System != SaveGeneration.N64 && Save_File.Game_System != SaveGeneration.GCN)
+            if (Save_File.Save_Generation != SaveGeneration.N64 && Save_File.Save_Generation != SaveGeneration.GCN)
             {
                 int ItemsPerRow = 9;
-                if (Save_File.Game_System == SaveGeneration.Wii)
+                if (Save_File.Save_Generation == SaveGeneration.Wii)
                 {
                     ItemsPerRow = 16;
                 }
-                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                else if (Save_File.Save_Generation == SaveGeneration.N3DS)
                 {
                     ItemsPerRow = 18;
                 }
@@ -1059,7 +1059,7 @@ namespace ACSE
                 playersTab.Controls.Add(dresserEditor);
             }
 
-            if (Save_File.Game_System == SaveGeneration.N3DS)
+            if (Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 islandBoxEditor = new ItemEditor(this, Selected_Player.Data.IslandBox, 5, 16)
                 {
@@ -1362,7 +1362,7 @@ namespace ACSE
 
             resettiCheckBox.Checked = Player.Data.Reset;
 
-            if (Save_File.Game_System == SaveGeneration.N3DS)
+            if (Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 Refresh_PictureBox_Image(TPC_Picture, Player.Data.TownPassCardImage, false, false);
                 playerWallet.Text = Player.Data.NL_Wallet.Value.ToString();
@@ -1374,7 +1374,7 @@ namespace ACSE
             }
 
             // Set Face Image
-            Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Game_System, Player.Data.FaceType, Selected_Player.Data.Gender));
+            Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Save_Generation, Player.Data.FaceType, Selected_Player.Data.Gender));
 
             // Refresh Inventory
             if (inventoryEditor != null && !inventoryEditor.IsDisposed)
@@ -1479,7 +1479,7 @@ namespace ACSE
             if (Save_File != null && Selected_Player != null && playerFace.SelectedIndex > -1)
             {
                 Selected_Player.Data.FaceType = (byte)playerFace.SelectedIndex;
-                Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Game_System, Selected_Player.Data.FaceType, Selected_Player.Data.Gender));
+                Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Save_Generation, Selected_Player.Data.FaceType, Selected_Player.Data.Gender));
             }
         }
 
@@ -1488,8 +1488,8 @@ namespace ACSE
             if (Save_File != null && Selected_Player != null && playerHairType.SelectedIndex > -1)
             {
                 Selected_Player.Data.HairType = (byte)playerHairType.SelectedIndex;
-                if (Save_File.Game_System == SaveGeneration.NDS || Save_File.Game_System == SaveGeneration.Wii || Save_File.Game_System == SaveGeneration.N3DS)
-                    Refresh_PictureBox_Image(hairPictureBox, ImageGeneration.GetHairImage(Save_File.Game_System, Selected_Player.Data.HairType, Selected_Player.Data.HairColor));
+                if (Save_File.Save_Generation == SaveGeneration.NDS || Save_File.Save_Generation == SaveGeneration.Wii || Save_File.Save_Generation == SaveGeneration.N3DS)
+                    Refresh_PictureBox_Image(hairPictureBox, ImageGeneration.GetHairImage(Save_File.Save_Generation, Selected_Player.Data.HairType, Selected_Player.Data.HairColor));
             }
         }
 
@@ -1498,8 +1498,8 @@ namespace ACSE
             if (Save_File != null && Selected_Player != null && playerHairColor.SelectedIndex > -1)
             {
                 Selected_Player.Data.HairColor = (byte)playerHairColor.SelectedIndex;
-                if (Save_File.Game_System == SaveGeneration.NDS || Save_File.Game_System == SaveGeneration.Wii || Save_File.Game_System == SaveGeneration.N3DS)
-                    Refresh_PictureBox_Image(hairPictureBox, ImageGeneration.GetHairImage(Save_File.Game_System, Selected_Player.Data.HairType, Selected_Player.Data.HairColor));
+                if (Save_File.Save_Generation == SaveGeneration.NDS || Save_File.Save_Generation == SaveGeneration.Wii || Save_File.Save_Generation == SaveGeneration.N3DS)
+                    Refresh_PictureBox_Image(hairPictureBox, ImageGeneration.GetHairImage(Save_File.Save_Generation, Selected_Player.Data.HairType, Selected_Player.Data.HairColor));
             }
         }
 
@@ -1625,7 +1625,7 @@ namespace ACSE
         private void Set_Selected_Acre(ushort AcreID)
         {
             Selected_Acre_ID = AcreID;
-            if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
             {
                 acreHeightTrackBar.Value = Selected_Acre_ID % 4;
                 Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
@@ -1647,7 +1647,7 @@ namespace ACSE
             else if (UInt16_Acre_Info != null)
                 acreDesc.Text = UInt16_Acre_Info.ContainsKey(Selected_Acre_ID) ? UInt16_Acre_Info[Selected_Acre_ID] : "No Acre Description";
 
-            if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
             {
                 if (Is_Ocean(AcreID))
                 {
@@ -1698,7 +1698,7 @@ namespace ACSE
                 else if (UInt16_Filed_Acre_Data != null)
                     acreDesc.Text = Node.Text;
 
-                if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
                 {
                     if (Is_Ocean(Selected_Acre_ID))
                     {
@@ -1709,7 +1709,7 @@ namespace ACSE
                 }
 
                 // Warnings for N64/GameCube titles
-                if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
                 {
                     if (Properties.Settings.Default.ShowBetaAcreWarning && (Node.Parent.Text.Equals("Beta Acres") || Node.Parent.Text.Equals("Misc. Acres")))
                     {
@@ -1739,14 +1739,14 @@ namespace ACSE
 
         private bool Is_Ocean(ushort ID)
         {
-            return ((Save_File.Game_System == SaveGeneration.GCN || Save_File.Save_Type == SaveType.Doubutsu_no_Mori)
+            return ((Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Type == SaveType.Doubutsu_no_Mori)
                 && (ID >= 0x03DC && ID <= 0x03EC) || ID == 0x49C || (ID >= 0x04A8 && ID <= 0x058C) || (ID >= 0x05B4 && ID <= 0x05B8));
         }
 
         private Image Get_Acre_Image(Normal_Acre CurrentAcre, ushort ID)
         {
             Image Acre_Image = null;
-            if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori || Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori || Save_File.Save_Generation == SaveGeneration.GCN)
             {
                 ID -= (ushort)(ID % 4);
                 if (Is_Ocean(ID))
@@ -1760,7 +1760,7 @@ namespace ACSE
                         Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, 0xFFFF);
                 }
             }
-            else if (Save_File.Save_Type == SaveType.City_Folk || Save_File.Game_System == SaveGeneration.N3DS)
+            else if (Save_File.Save_Type == SaveType.City_Folk || Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, ID);
                 if (Acre_Image == null)
@@ -1832,7 +1832,7 @@ namespace ACSE
                     string Acre_ID_Str = "";
                     if (Save_File.Save_Type == SaveType.Wild_World)
                         Acre_ID_Str = CurrentAcre.AcreID.ToString("X2");
-                    else if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                    else if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
                         Acre_ID_Str = (CurrentAcre.AcreID - (CurrentAcre.AcreID % 4)).ToString("X4");
 
                     Image Acre_Image = Get_Acre_Image(CurrentAcre, CurrentAcre.AcreID);
@@ -1901,7 +1901,7 @@ namespace ACSE
                         }
                     }
                 }
-            if (Save_File.Game_System == SaveGeneration.N3DS)
+            if (Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 if (NL_Grass_Overlay == null)
                 {
@@ -1937,7 +1937,7 @@ namespace ACSE
                         ushort Acre_ID = Save_File.ReadUInt16(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Island_Acre_Data + Idx * 2, Save_File.Is_Big_Endian);
                         WorldItem[] Acre_Items = new WorldItem[256];
                         for (int i = 0; i < 256; i++)
-                            if (Save_File.Game_System == SaveGeneration.GCN)
+                            if (Save_File.Save_Generation == SaveGeneration.GCN)
                                 Acre_Items[i] = new WorldItem(Save_File.ReadUInt16(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Island_World_Data + Idx * 512 + i * 2, true), i);
                             else if ((Idx > 4 && Idx < 7) || (Idx > 8 && Idx < 11)) //Other acres are water acres
                             {
@@ -1945,9 +1945,9 @@ namespace ACSE
                                 Acre_Items[i] = new WorldItem(Save_File.ReadUInt32(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Island_World_Data + World_Idx * 1024 + i * 4), i);
                             }
                         Island_Acres[Idx] = new Normal_Acre(Acre_ID, Idx, Acre_Items, Island_Buried_Buffer); //Add buried item data for Animal Crossing
-                        string Acre_ID_Str = Save_File.Game_System == SaveGeneration.GCN ? (Acre_ID - (Acre_ID % 4)).ToString("X4") : Island_Acres[Idx].AcreID.ToString("X2");
+                        string Acre_ID_Str = Save_File.Save_Generation == SaveGeneration.GCN ? (Acre_ID - (Acre_ID % 4)).ToString("X4") : Island_Acres[Idx].AcreID.ToString("X2");
 
-                        if (Save_File.Game_System == SaveGeneration.GCN || ((Idx > 4 && Idx < 7) || (Idx > 8 && Idx < 11)))
+                        if (Save_File.Save_Generation == SaveGeneration.GCN || ((Idx > 4 && Idx < 7) || (Idx > 8 && Idx < 11)))
                         {
                             Island_Acre_Map[Idx] = new PictureBoxWithInterpolationMode
                             {
@@ -1971,11 +1971,11 @@ namespace ACSE
                             Island_Acre_Map[Idx].MouseLeave += new EventHandler(Hide_Town_Tip);
                             Island_Acre_Map[Idx].MouseDown += new MouseEventHandler((object sender, MouseEventArgs e) => Town_Mouse_Down(sender, e, true));
                             Island_Acre_Map[Idx].MouseUp += new MouseEventHandler(Town_Mouse_Up);
-                            Island_Acre_Map[Idx].Location = (Save_File.Game_System == SaveGeneration.GCN)
+                            Island_Acre_Map[Idx].Location = (Save_File.Save_Generation == SaveGeneration.GCN)
                                 ? new Point(X * TownMapTotalSize, Y * TownMapTotalSize) : new Point(((X - 1) % 4) * TownMapTotalSize, (Y - 1) * TownMapTotalSize);
                             islandPanel.Controls.Add(Island_Acre_Map[Idx]);
                         }
-                        if (Save_File.Game_System == SaveGeneration.N3DS)
+                        if (Save_File.Save_Generation == SaveGeneration.N3DS)
                         {
                             NL_Island_Acre_Map[Idx] = new PictureBoxWithInterpolationMode
                             {
@@ -2018,9 +2018,9 @@ namespace ACSE
                 housePanel.Controls.Clear();
 
                 var HouseOffsets = HouseInfo.GetHouseOffsets(Save_File.Save_Type);
-                var RoomNames = HouseInfo.GetRoomNames(Save_File.Game_System);
+                var RoomNames = HouseInfo.GetRoomNames(Save_File.Save_Generation);
 
-                if (Selected_House != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
+                if (Selected_House != null && (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN))
                 {
                     basementCheckBox.Checked = HouseInfo.HasBasement(Selected_House.Offset, Save_File.Save_Type);
                 }
@@ -2166,7 +2166,7 @@ namespace ACSE
 
         private void BasementCheckBoxCheckChanged(object sender, EventArgs e)
         {
-            if (!Loading && Save_File != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
+            if (!Loading && Save_File != null && (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN))
                 HouseInfo.SetHasBasement(basementCheckBox.Checked, Selected_House);
         }
 
@@ -2183,7 +2183,7 @@ namespace ACSE
         {
             if (SelectedHouse != null)
             {
-                if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
                 {
                     basementCheckBox.Checked = HouseInfo.HasBasement(SelectedHouse.Offset, Save_File.Save_Type);
                 }
@@ -2245,7 +2245,7 @@ namespace ACSE
                     c.Dispose();
             }
 
-            if (Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File.Save_Generation == SaveGeneration.GCN)
             {
                 Island_House_Boxes = new PictureBoxWithInterpolationMode[4]; // Static size of four since the island house is only in DnM+, AC, and DnMe+
 
@@ -2387,7 +2387,7 @@ namespace ACSE
             OffsetablePictureBox VillagerPreviewBox = null;
 
             // Villager Preview Image
-            if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+            if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
             {
                 VillagerPreviewBox = new OffsetablePictureBox
                 {
@@ -2401,7 +2401,7 @@ namespace ACSE
                 Container.Controls.Add(VillagerPreviewBox);
             }
 
-            if (Save_File.Game_System == SaveGeneration.N3DS)
+            if (Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 9 ? Villager.Data.Personality : 8;
             }
@@ -2410,7 +2410,7 @@ namespace ACSE
                 Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 7 ? Villager.Data.Personality : 6;
             }
             TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 32), Location = new Point (265, 22), MaxLength = Villager.Offsets.CatchphraseSize, Text = Villager.Data.Catchphrase };
-            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 22), Checked = Villager.Data.Status == 1, Enabled = (Save_File.Game_System != SaveGeneration.N64 && Save_File.Game_System != SaveGeneration.GCN)};
+            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 22), Checked = Villager.Data.Status == 1, Enabled = (Save_File.Save_Generation != SaveGeneration.N64 && Save_File.Save_Generation != SaveGeneration.GCN)};
             PictureBox Shirt_Box = new PictureBox {BorderStyle = BorderStyle.FixedSingle, Size = new Size(16, 16), Location = new Point(415, 24), Image = Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type)};
             if (Save_File.Save_Type == SaveType.Wild_World || Save_File.Save_Type == SaveType.City_Folk || Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
             {
@@ -2465,7 +2465,7 @@ namespace ACSE
                     Villager.Data.Villager_ID = Villager_Database.Keys.ElementAt(Villager_Idx);
                     Villager.Exists = (Villager.Data.Villager_ID != 0 && Villager.Data.Villager_ID != 0xFFFF);
 
-                    if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN) // TODO: Wild World
+                    if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN) // TODO: Wild World
                     {
                         Villager.Data.Villager_AI = (Villager.Index == 15) ? (byte)0xFF : (byte)(Villager.Data.Villager_ID & 0xFF);
                         if (Villager.Data.Villager_ID == 0)
@@ -2588,9 +2588,9 @@ namespace ACSE
             // Draw Buried X
             ImageGeneration.Draw_Buried_Icons(acreBitmap, items, TownMapCellSize);
             // Draw Buildings (if needed)
-            if (Save_File.Game_System == SaveGeneration.Wii || Save_File.Game_System == SaveGeneration.N3DS)
+            if (Save_File.Save_Generation == SaveGeneration.Wii || Save_File.Save_Generation == SaveGeneration.N3DS)
             {
-                return Island_Acre ? ((Save_File.Game_System == SaveGeneration.N3DS)
+                return Island_Acre ? ((Save_File.Save_Generation == SaveGeneration.N3DS)
                     ? ImageGeneration.Draw_Buildings(acreBitmap, Island_Buildings, Acre - 5, TownMapCellSize) : acreBitmap)
                     : ImageGeneration.Draw_Buildings(acreBitmap, Buildings, Acre, TownMapCellSize);
             }
@@ -2709,7 +2709,7 @@ namespace ACSE
                     acreToolTip.Show(string.Format("{0}0x{1}", Acre_Info.ContainsKey((byte)Hovered_Acre.AcreID) ? Acre_Info[(byte)Hovered_Acre.AcreID] + " - " : "",
                         Hovered_Acre.AcreID.ToString("X2")), sender as Control, e.X + 15, e.Y + 10);
                 else if (UInt16_Acre_Info != null)
-                    if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori || Save_File.Game_System == SaveGeneration.GCN)
+                    if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori || Save_File.Save_Generation == SaveGeneration.GCN)
                     {
                         acreToolTip.Show(string.Format("{0}[{2}] - 0x{1}", UInt16_Acre_Info.ContainsKey(Hovered_Acre.BaseAcreID) ? UInt16_Acre_Info[Hovered_Acre.BaseAcreID] + " "
                             : (Is_Ocean(Hovered_Acre.AcreID) ? "Ocean " : ""),
@@ -2794,8 +2794,8 @@ namespace ACSE
                     AcreData.CheckReferencesAndDispose(OldImage, Island ? Island_Acre_Map : Acre_Map, selectedAcrePicturebox);
 
                     Selected_Acre_ID = Island ? Island_Acres[Acre_Index].AcreID : Acres[Acre_Index].AcreID;
-                    string Acre_Str = Save_File.Game_System == SaveGeneration.NDS ? Selected_Acre_ID.ToString("X2") : Selected_Acre_ID.ToString("X4");
-                    if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                    string Acre_Str = Save_File.Save_Generation == SaveGeneration.NDS ? Selected_Acre_ID.ToString("X2") : Selected_Acre_ID.ToString("X4");
+                    if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
                     {
                         acreHeightTrackBar.Value = Selected_Acre_ID % 4;
                         Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
@@ -2803,14 +2803,14 @@ namespace ACSE
                     }
                     if (Save_File.Save_Type == SaveType.Wild_World)
                         acreID.Text = "Acre ID: 0x" + Selected_Acre_ID.ToString("X2");
-                    else if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN)
+                    else if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
                         acreID.Text = "Acre ID: 0x" + (Selected_Acre_ID + Acre_Height_Modifier).ToString("X4");
                     else
                         acreID.Text = "Acre ID: 0x" + Selected_Acre_ID.ToString("X4");
                     if (Acre_Info != null)
                         acreDesc.Text = Acre_Info.ContainsKey((byte)Selected_Acre_ID) ? Acre_Info[(byte)Selected_Acre_ID] : "No Description";
                     else if (UInt16_Acre_Info != null)
-                        if ((Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN) && UInt16_Acre_Info.ContainsKey((ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)))
+                        if ((Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN) && UInt16_Acre_Info.ContainsKey((ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)))
                             acreDesc.Text = UInt16_Acre_Info[(ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)];
                         else if (UInt16_Acre_Info.ContainsKey(Selected_Acre_ID))
                             acreDesc.Text = UInt16_Acre_Info[Selected_Acre_ID];
@@ -2838,7 +2838,7 @@ namespace ACSE
         {
             if (Save_File != null && !Loading)
             {
-                Utility.ImportAcres(ref Acres, Save_File.Game_System);
+                Utility.ImportAcres(ref Acres, Save_File.Save_Generation);
                 SetupMapPictureBoxes();
                 // TODO: Refresh Island PictureBoxes for DnM+/AC
             }
@@ -2848,7 +2848,7 @@ namespace ACSE
         {
             if (Save_File != null && !Loading)
             {
-                Utility.ExportAcres(Acres, Save_File.Game_System, Save_File.Save_Name);
+                Utility.ExportAcres(Acres, Save_File.Save_Generation, Save_File.Save_Name);
             }
         }
 
@@ -3108,7 +3108,7 @@ namespace ACSE
 
         private void ChangePatternPalette(int Additive)
         {
-            if (SelectedPatternObject != null && Save_File != null && Save_File.Game_System != SaveGeneration.N3DS) // TODO: Allow New Leaf / Welcome Amiibo to change their color palette somehow
+            if (SelectedPatternObject != null && Save_File != null && Save_File.Save_Generation != SaveGeneration.N3DS) // TODO: Allow New Leaf / Welcome Amiibo to change their color palette somehow
             {
                 if (SelectedPatternObject.Palette + Additive < 0)
                     SelectedPatternObject.Palette = 15;
@@ -3117,8 +3117,8 @@ namespace ACSE
                 else
                     SelectedPatternObject.Palette += (byte)Additive;
 
-                if (Save_File.Game_System != SaveGeneration.N3DS)
-                    SelectedPatternObject.PaletteData = SelectedPatternObject.GetPaletteArray(Save_File.Game_System)[SelectedPatternObject.Palette];
+                if (Save_File.Save_Generation != SaveGeneration.N3DS)
+                    SelectedPatternObject.PaletteData = SelectedPatternObject.GetPaletteArray(Save_File.Save_Generation)[SelectedPatternObject.Palette];
                 paletteIndexLabel.Text = "Palette: " + (SelectedPatternObject.Palette + 1);
                 paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData, SelectedPaletteIndex,
                     (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
@@ -3133,8 +3133,8 @@ namespace ACSE
         //Add ContextMenuStrips for importing/exporting patterns & renaming/setting palette
         private void SetupPatternBoxes()
         {
-            paletteNextButton.Visible = Save_File.Game_System != SaveGeneration.N3DS;
-            palettePreviousButton.Visible = Save_File.Game_System != SaveGeneration.N3DS;
+            paletteNextButton.Visible = Save_File.Save_Generation != SaveGeneration.N3DS;
+            palettePreviousButton.Visible = Save_File.Save_Generation != SaveGeneration.N3DS;
 
             for (int i = patternEditorPreviewPanel.Controls.Count - 1; i > -1; i--)
                 if (patternEditorPreviewPanel.Controls[i] is PictureBoxWithInterpolationMode)
@@ -3227,7 +3227,7 @@ namespace ACSE
                 if (LastPatternPixel != PixelPosition && PixelPosition > -1 && PixelPosition < SelectedPatternObject.DecodedData.Length && CellX < 32)
                 {
                     LastPatternPixel = PixelPosition;
-                    SelectedPatternObject.DecodedData[PixelPosition] = Save_File.Game_System == SaveGeneration.N3DS ? (byte)SelectedPaletteIndex : (byte)(SelectedPaletteIndex + 1);
+                    SelectedPatternObject.DecodedData[PixelPosition] = Save_File.Save_Generation == SaveGeneration.N3DS ? (byte)SelectedPaletteIndex : (byte)(SelectedPaletteIndex + 1);
                     SelectedPatternObject.RedrawBitmap();
                     Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
                     Pattern_Boxes[SelectedPatternObject.Index].Image = Selected_Pattern;
@@ -3372,7 +3372,7 @@ namespace ACSE
                 };
                 Building_Panel.Suspend();
 
-                if (Save_File.Game_System == SaveGeneration.N3DS)
+                if (Save_File.Save_Generation == SaveGeneration.N3DS)
                 {
                     ComboBox Building_List_Box = new ComboBox
                     {
@@ -3514,7 +3514,7 @@ namespace ACSE
                             Town_Acres[Acre].Acre_Items[index] = new WorldItem(CurrentItem.ItemID, index);
 
                         // Update Villager House Coordinates if a valid villager exists for the selected house
-                        if ((Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN) && 
+                        if ((Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN) && 
                             CurrentItem.ItemID >= 0x5000 && CurrentItem.ItemID <= 0x50FF) // TODO: WW Support
                         {
                             NewVillager Villager = Utility.GetVillagerFromHouse(CurrentItem.ItemID, Villagers);
@@ -3527,7 +3527,7 @@ namespace ACSE
 
                     if (buriedCheckbox.Checked)
                     {
-                        if (Save_File.Game_System == SaveGeneration.N3DS)
+                        if (Save_File.Save_Generation == SaveGeneration.N3DS)
                         {
                             if (Island)
                             {
@@ -3763,12 +3763,12 @@ namespace ACSE
 
                 // Save Houses
                 foreach (House House in Houses)
-                    if (House != null && Save_File.Game_System != SaveGeneration.N3DS) // TODO: Finish 3DS House editing
+                    if (House != null && Save_File.Save_Generation != SaveGeneration.N3DS) // TODO: Finish 3DS House editing
                         House.Write();
 
                 //Save Acre & Town Data
                 for (int i = 0; i < Acres.Length; i++)
-                    if (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN || Save_File.Save_Type == SaveType.City_Folk)
+                    if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Type == SaveType.City_Folk)
                     {
                         Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Acre_Data + i * 2, Acres[i].AcreID, true);
                     }
@@ -3776,7 +3776,7 @@ namespace ACSE
                     {
                         Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Acre_Data + i, Convert.ToByte(Acres[i].AcreID), Save_File.Is_Big_Endian);
                     }
-                    else if (Save_File.Game_System == SaveGeneration.N3DS)
+                    else if (Save_File.Save_Generation == SaveGeneration.N3DS)
                     {
                         Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Acre_Data + i * 2, Acres[i].AcreID, false);
                     }
@@ -3784,7 +3784,7 @@ namespace ACSE
                 {
                     for (int i = 0; i < Town_Acres.Length; i++)
                         for (int x = 0; x < 256; x++)
-                            if (Save_File.Game_System == SaveGeneration.N3DS)
+                            if (Save_File.Save_Generation == SaveGeneration.N3DS)
                             {
                                 Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Data + i * 1024 + x * 4,
                                     ItemData.EncodeItem(Town_Acres[i].Acre_Items[x]));
@@ -3793,7 +3793,7 @@ namespace ACSE
                                 Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Data + i * 512 + x * 2, Town_Acres[i].Acre_Items[x].ItemID,
                                     Save_File.Is_Big_Endian);
                 }
-                if (Save_File.Game_System != SaveGeneration.N3DS && Current_Save_Info.Save_Offsets.Buried_Data != 0)
+                if (Save_File.Save_Generation != SaveGeneration.N3DS && Current_Save_Info.Save_Offsets.Buried_Data != 0)
                     Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Buried_Data, Buried_Buffer);
                 if (Current_Save_Info.Save_Offsets.Grass_Wear > 0)
                     Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Wear, Grass_Wear);
@@ -3833,7 +3833,7 @@ namespace ACSE
                             }
                         }
                     }
-                    else if (Save_File.Game_System == SaveGeneration.N3DS)
+                    else if (Save_File.Save_Generation == SaveGeneration.N3DS)
                     {
                         for (int i = 0; i < Buildings.Length; i++)
                         {
@@ -3929,7 +3929,7 @@ namespace ACSE
                 if (Save_File.Save_Type == SaveType.City_Folk)
                     for (int i = 0; i < Grass_Map.Length; i++)
                         Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
-                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                else if (Save_File.Save_Generation == SaveGeneration.N3DS)
                     NL_Grass_Overlay.Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear);
             }
         }
@@ -3943,7 +3943,7 @@ namespace ACSE
                 if (Save_File.Save_Type == SaveType.City_Folk)
                     for (int i = 0; i < Grass_Map.Length; i++)
                         Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
-                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                else if (Save_File.Save_Generation == SaveGeneration.N3DS)
                     NL_Grass_Overlay.Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear);
             }
         }
@@ -3958,7 +3958,7 @@ namespace ACSE
                 if (Save_File.Save_Type == SaveType.City_Folk)
                     for (int i = 0; i < Grass_Map.Length; i++)
                         Grass_Map[i].Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear.Skip(i * 256).Take(256).ToArray());
-                else if (Save_File.Game_System == SaveGeneration.N3DS)
+                else if (Save_File.Save_Generation == SaveGeneration.N3DS)
                     NL_Grass_Overlay.Image = ImageGeneration.Draw_Grass_Wear(Grass_Wear);
             }
         }
@@ -4098,7 +4098,7 @@ namespace ACSE
 
         private void secureValueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Save_File != null && Save_File.Game_System == SaveGeneration.N3DS)
+            if (Save_File != null && Save_File.Save_Generation == SaveGeneration.N3DS)
                 Secure_NAND_Value_Form.Show();
         }
 
@@ -4260,7 +4260,7 @@ namespace ACSE
 
         private void acreHeightTrackBar_Scroll(object sender, EventArgs e)
         {
-            if (Save_File != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
+            if (Save_File != null && (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN))
             {
                 Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
                 acreID.Text = "Acre ID: 0x" + (Selected_Acre_ID + Acre_Height_Modifier).ToString("X4");
@@ -4269,7 +4269,7 @@ namespace ACSE
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (Save_File != null && (Save_File.Game_System == SaveGeneration.N64 || Save_File.Game_System == SaveGeneration.GCN))
+            if (Save_File != null && (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN))
             {
                 if (AC_Map_Icon_Index == null)
                 {
@@ -4412,7 +4412,7 @@ namespace ACSE
         {
             if (Save_File != null && !Loading)
             {
-                Utility.ImportTown(ref Town_Acres, Save_File.Game_System);
+                Utility.ImportTown(ref Town_Acres, Save_File.Save_Generation);
                 SetupMapPictureBoxes();
             }
         }
@@ -4421,7 +4421,7 @@ namespace ACSE
         {
             if (Save_File != null && !Loading)
             {
-                Utility.ExportTown(Town_Acres, Save_File.Game_System, Save_File.Save_Name);
+                Utility.ExportTown(Town_Acres, Save_File.Save_Generation, Save_File.Save_Name);
             }
         }
 

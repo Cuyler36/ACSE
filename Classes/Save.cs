@@ -644,7 +644,7 @@ namespace ACSE
         }
 
         // This method is useful for grouping games by the console they were released on (since they're normally expansions/revisions)
-        public static SaveGeneration GetGameSystem(SaveType Save_Type)
+        public static SaveGeneration GetSaveGeneration(SaveType Save_Type)
         {
             if (Save_Type == SaveType.Doubutsu_no_Mori)
             {
@@ -906,7 +906,7 @@ namespace ACSE
     public class Save
     {
         public SaveType Save_Type;
-        public SaveGeneration Game_System;
+        public SaveGeneration Save_Generation;
         public Save_Info Save_Info;
         public byte[] Original_Save_Data;
         public byte[] Working_Save_Data;
@@ -948,7 +948,7 @@ namespace ACSE
                 Buffer.BlockCopy(Original_Save_Data, 0, Working_Save_Data, 0, Original_Save_Data.Length);
 
                 Save_Type = SaveDataManager.GetSaveType(Original_Save_Data);
-                Game_System = SaveDataManager.GetGameSystem(Save_Type);
+                Save_Generation = SaveDataManager.GetSaveGeneration(Save_Type);
                 Full_Save_Path = File_Path;
                 Save_Name = Path.GetFileNameWithoutExtension(File_Path);
                 Save_Path = Path.GetDirectoryName(File_Path) + Path.DirectorySeparatorChar;
@@ -957,7 +957,7 @@ namespace ACSE
                 Save_Data_Start_Offset = SaveDataManager.GetSaveDataOffset(Save_ID.ToLower(), Save_Extension.Replace(".", "").ToLower());
                 Save_Info = SaveDataManager.GetSaveInfo(Save_Type);
 
-                if (Save_Type == SaveType.Wild_World || Game_System == SaveGeneration.N3DS)
+                if (Save_Type == SaveType.Wild_World || Save_Generation == SaveGeneration.N3DS)
                     Is_Big_Endian = false;
 
                 Save_Reader.Close();
@@ -972,7 +972,7 @@ namespace ACSE
             string Full_Save_Name = Save_Path + Path.DirectorySeparatorChar + Save_Name + Save_Extension;
             Save_File = new FileStream(Full_Save_Name, FileMode.OpenOrCreate);
             Save_Writer = new BinaryWriter(Save_File);
-            if (Game_System == SaveGeneration.N64 || Game_System == SaveGeneration.GCN || Game_System == SaveGeneration.NDS)
+            if (Save_Generation == SaveGeneration.N64 || Save_Generation == SaveGeneration.GCN || Save_Generation == SaveGeneration.NDS)
             {
                 Write(Save_Data_Start_Offset + Save_Info.Save_Offsets.Checksum, Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(Save_Info.Save_Offsets.Save_Size).ToArray(),
                     Save_Info.Save_Offsets.Checksum, !Is_Big_Endian), Is_Big_Endian);

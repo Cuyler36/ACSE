@@ -908,7 +908,7 @@ namespace ACSE
                                     Current_Field.SetValue(BoxedData,
                                         ImageGeneration.GetTPCImage((byte[])PlayerDataType.GetField("TownPassCardData").GetValue(BoxedData)));
                                 }
-                                else if (Field.Name == "Reset" && save.Game_System == SaveGeneration.GCN)
+                                else if (Field.Name == "Reset" && save.Save_Generation == SaveGeneration.GCN)
                                 {
                                     Current_Field.SetValue(BoxedData, SaveData.ReadUInt32(DataOffset, SaveData.Is_Big_Endian) != 0);
                                 }
@@ -943,9 +943,9 @@ namespace ACSE
                                 {
                                     if (Field.Name.Equals("Dressers"))
                                     {
-                                        if (SaveData.Game_System == SaveGeneration.NDS)
+                                        if (SaveData.Save_Generation == SaveGeneration.NDS)
                                             DataOffset = 0x15430 + 0xB4 * Index; // Terrible hack
-                                        else if (SaveData.Game_System == SaveGeneration.Wii)
+                                        else if (SaveData.Save_Generation == SaveGeneration.Wii)
                                             DataOffset = 0x1F3038 + 0x140 * Index;
                                     }
 
@@ -1034,7 +1034,7 @@ namespace ACSE
         public void Write()
         {
             // Set City Folk Bed first
-            if (SaveData.Game_System == SaveGeneration.Wii && House != null && Data.Bed != null)
+            if (SaveData.Save_Generation == SaveGeneration.Wii && House != null && Data.Bed != null)
             {
                 House.Data.Bed = Data.Bed;
                 Data.Bed = null;
@@ -1057,7 +1057,7 @@ namespace ACSE
                             {
                                 SaveData.Write(DataOffset, Data.TownPassCardData);
                             }
-                            else if (Field.Name == "Reset" && SaveData.Game_System == SaveGeneration.GCN)
+                            else if (Field.Name == "Reset" && SaveData.Save_Generation == SaveGeneration.GCN)
                             {
                                 SaveData.Write(DataOffset, Data.Reset ? (uint)0x250C : (uint)0 ,SaveData.Is_Big_Endian);
                             }
@@ -1135,7 +1135,7 @@ namespace ACSE
                             else if (FieldType == typeof(Item))
                             {
                                 Item Item = (Item)PlayerDataType.GetField(Field.Name).GetValue(Data);
-                                if (SaveData.Game_System == SaveGeneration.N3DS)
+                                if (SaveData.Save_Generation == SaveGeneration.N3DS)
                                 {
                                     SaveData.Write(DataOffset, Item.ToUInt32());
                                 }
@@ -1149,9 +1149,9 @@ namespace ACSE
                                 Item[] ItemArray = (Item[])PlayerDataType.GetField(Field.Name).GetValue(Data);
                                 if (Field.Name.Equals("Dressers"))
                                 {
-                                    if (SaveData.Game_System == SaveGeneration.NDS)
+                                    if (SaveData.Save_Generation == SaveGeneration.NDS)
                                         DataOffset = 0x15430 + 0xB4 * Index; // Terrible hack
-                                    else if (SaveData.Game_System == SaveGeneration.Wii)
+                                    else if (SaveData.Save_Generation == SaveGeneration.Wii)
                                         DataOffset = 0x1F3038 + 0x140 * Index;
                                 }
 
@@ -1172,7 +1172,7 @@ namespace ACSE
                                     SaveData.Write(DataOffset + 4, Encrypted_Int.Int_2);
                                 }
                             }
-                            else if (FieldType == typeof(ACDate) && SaveData.Game_System == SaveGeneration.GCN)
+                            else if (FieldType == typeof(ACDate) && SaveData.Save_Generation == SaveGeneration.GCN)
                             {
                                 if (Field.Name.Equals("Birthday"))
                                 {
