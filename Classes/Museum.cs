@@ -65,7 +65,7 @@
                 {
                     byte[] NowDate = new Classes.Utilities.ACDate().ToYearMonthDayDateData();
                     int DonationDateOffset = saveFile.Save_Data_Start_Offset + (saveFile.Save_Type == SaveType.New_Leaf ? 0x65948 : 0x6AEB8);
-                    for (int i = DonationDateOffset; i < DonationDateOffset + 0x448; i++)
+                    for (int i = DonationDateOffset; i < DonationDateOffset + 0x448; i += 4)
                     {
                         saveFile.Write(i, NowDate);
                     }
@@ -93,7 +93,7 @@
                 {
                     byte[] ClearedDate = new byte[4];
                     int DonationDateOffset = saveFile.Save_Data_Start_Offset + (saveFile.Save_Type == SaveType.New_Leaf ? 0x65948 : 0x6AEB8);
-                    for (int i = DonationDateOffset; i < DonationDateOffset + 0x448; i++)
+                    for (int i = DonationDateOffset; i < DonationDateOffset + 0x448; i += 4)
                     {
                         saveFile.Write(i, ClearedDate);
                     }
