@@ -3680,10 +3680,15 @@
     <Compile Include="Classes\AcreData.cs" />
     <Compile Include="Classes\AlertToggledEventArgs.cs" />
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
-    <Compile Include="Classes\Extensions\ProgressBarExtension.cs" />
     <Compile Include="Classes\ItemChange.cs" />
     <Compile Include="Classes\ItemChangedEventArgs.cs" />
     <Compile Include="Classes\Museum.cs" />
+    <Compile Include="Classes\Saves\GCNSave.cs" />
+    <Compile Include="Classes\Saves\N3DSSave.cs" />
+    <Compile Include="Classes\Saves\N64Save.cs" />
+    <Compile Include="Classes\Saves\NDSSave.cs" />
+    <Compile Include="Classes\Saves\SaveBase.cs" />
+    <Compile Include="Classes\Saves\WiiSave.cs" />
     <Compile Include="Controls\OffsetablePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>

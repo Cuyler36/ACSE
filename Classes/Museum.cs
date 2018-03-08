@@ -12,7 +12,7 @@
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return 0x47;
                 case SaveType.Wild_World:
-                    return 0x5E; // Check this. I calculated 0x5C, but AnimalMap says it's 0x5E.
+                    return 0x5F;
                 case SaveType.New_Leaf:
                 case SaveType.Welcome_Amiibo:
                     return 0x112;
