@@ -123,7 +123,7 @@ namespace ACSE
         public int Index;
         public int Offset;
         public HouseData Data;
-        public NewPlayer Owner;
+        public Player Owner;
 
         public House(int Index, int Offset)
         {
@@ -562,7 +562,7 @@ namespace ACSE
             }
         }
 
-        public static House GetHouse(NewPlayer Player, SaveType Save_Type)
+        public static House GetHouse(Player Player, SaveType Save_Type)
         {
             switch (Save_Type)
             {

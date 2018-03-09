@@ -124,7 +124,7 @@ namespace ACSE
         /// </summary>
         /// <param name="Save_File">Current Save File</param>
         /// <param name="Player">Current Player whose Song Library will be cleared</param>
-        public static void ClearSongLibrary(Save Save_File, NewPlayer Player)
+        public static void ClearSongLibrary(Save Save_File, Player Player)
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
             if (Current_Bit_Map != null)
@@ -154,7 +154,7 @@ namespace ACSE
         /// </summary>
         /// <param name="Save_File">Current Save File</param>
         /// <param name="Player">Current Player whose Song Library will be filled</param>
-        public static void FillSongLibrary(Save Save_File, NewPlayer Player)
+        public static void FillSongLibrary(Save Save_File, Player Player)
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
             if (Current_Bit_Map != null)

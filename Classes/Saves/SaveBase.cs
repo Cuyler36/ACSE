@@ -20,7 +20,7 @@ namespace ACSE.Classes.Saves
         public SaveGeneration Generation;
         public Region Region;
 
-        public NewPlayer[] Players;
+        public Player[] Players;
         public WorldAcre[] Acres;
         public WorldAcre[] TownAcres;
         public NewVillager[] Villagers;

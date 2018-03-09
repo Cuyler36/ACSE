@@ -24,7 +24,7 @@ namespace ACSE
         TabPage[] Main_Tabs;
         TabPage[] Player_Tabs = new TabPage[4];
         TabPage[] PlayerPattern_Tabs = new TabPage[4];
-        NewPlayer[] Players = new NewPlayer[4];
+        Player[] Players = new Player[4];
         House[] Houses;
         NewVillager[] Villagers;
         PictureBoxWithInterpolationMode[] Acre_Map;
@@ -48,7 +48,7 @@ namespace ACSE
         public static Save Save_File;
         public static Save_Info Current_Save_Info;
         List<KeyValuePair<ushort, string>> Item_List;
-        NewPlayer Selected_Player;
+        Player Selected_Player;
         House Selected_House;
         Dictionary<byte, string> Acre_Info; //Name Database
         Dictionary<string, List<byte>> Filed_Acre_Data; //Grouped info for Acre Editor TreeView
@@ -688,7 +688,7 @@ namespace ACSE
             await Task.Run(() =>
             {
                 for (int i = 0; i < 4; i++)
-                    Players[i] = new NewPlayer(Save_File.Save_Data_Start_Offset
+                    Players[i] = new Player(Save_File.Save_Data_Start_Offset
                         + Current_Save_Info.Save_Offsets.Player_Start + i * Current_Save_Info.Save_Offsets.Player_Size, i, Save_File);
                 Selected_Player = Players.FirstOrDefault(o => o.Exists);
             });
@@ -1282,7 +1282,7 @@ namespace ACSE
             }
         }
 
-        private void Reload_Player(NewPlayer Player)
+        private void Reload_Player(Player Player)
         {
             //TODO: Hook up face swap on gender change for New Leaf
             if (Save_File.Save_Type != SaveType.New_Leaf && Save_File.Save_Type != SaveType.Welcome_Amiibo)
@@ -1408,7 +1408,7 @@ namespace ACSE
                 Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Name, ACString.GetBytes(townNameBox.Text.Trim(),
                     townNameBox.MaxLength));
                 townNameBox.Text = townNameBox.Text.Trim();
-                foreach (NewPlayer Player in Players)
+                foreach (Player Player in Players)
                 {
                     if (Player != null && Player.Exists)
                     {
@@ -3742,7 +3742,7 @@ namespace ACSE
             if (Save_File != null)
             {
                 //Save Players
-                foreach (NewPlayer Player in Players)
+                foreach (Player Player in Players)
                     if (Player != null && Player.Exists)
                         Player.Write();
 

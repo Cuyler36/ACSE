@@ -57,7 +57,7 @@
         /// </summary>
         /// <param name="saveFile">Current Save File</param>
         /// <param name="player">The Player who it will show as the donor</param>
-        public static void FillMuseum(Save saveFile, NewPlayer player)
+        public static void FillMuseum(Save saveFile, Player player)
         {
             int MuseumDataOffset = saveFile.Save_Data_Start_Offset + GetBaseOffset(saveFile.Save_Type);
             if (MuseumDataOffset != -1)

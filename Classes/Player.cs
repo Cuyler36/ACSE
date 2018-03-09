@@ -870,7 +870,7 @@ namespace ACSE
         };
     }
 
-    public class NewPlayer
+    public class Player
     {
         public PlayerSaveInfo Offsets;
         public PlayerData Data;
@@ -880,7 +880,7 @@ namespace ACSE
         public bool Exists = false;
         private Save SaveData;
 
-        public NewPlayer(int offset, int idx, Save save)
+        public Player(int offset, int idx, Save save)
         {
             SaveData = save;
             Index = idx;

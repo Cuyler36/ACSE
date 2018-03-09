@@ -296,7 +296,7 @@ namespace ACSE
         /// </summary>
         /// <param name="Save_File">Current Save File</param>
         /// <param name="Player">Player whose encyclopedia will be cleared</param>
-        public static void ClearEncylopedia(Save Save_File, NewPlayer Player)
+        public static void ClearEncylopedia(Save Save_File, Player Player)
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
             if (Current_Bit_Map != null)
@@ -309,7 +309,7 @@ namespace ACSE
         /// </summary>
         /// <param name="Save_File">Current Save File</param>
         /// <param name="Player">Player whose encyclopedia will be filled</param>
-        public static void FillEncyclopedia(Save Save_File, NewPlayer Player)
+        public static void FillEncyclopedia(Save Save_File, Player Player)
         {
             Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
             if (Current_Bit_Map != null)

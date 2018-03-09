@@ -71,7 +71,7 @@
         public ushort Id;
         public string TownName;
         public ushort TownId;
-        public NewPlayer Owner;
+        public Player Owner;
         public WorldItem[][] Items;
         public Cottage Cabana;
         public NewVillager Islander;
@@ -79,7 +79,7 @@
         public byte[] BuriedDataArray;
         public byte IslandLeftAcreIndex, IslandRightAcreIndex;
 
-        public Island(int Offset, NewPlayer[] Players, Save SaveFile)
+        public Island(int Offset, Player[] Players, Save SaveFile)
         {
             this.SaveFile = SaveFile;
             this.Offset = Offset;
@@ -91,7 +91,7 @@
             TownId = SaveFile.ReadUInt16(Offset + TownIdOffset, true);
 
             ushort Identifier = SaveFile.ReadUInt16(Offset - 0x2214, true);
-            foreach (NewPlayer Player in Players)
+            foreach (Player Player in Players)
             {
                 if (Player != null && Player.Data.Identifier == Identifier)
                 {

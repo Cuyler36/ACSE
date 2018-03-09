@@ -9,7 +9,7 @@ namespace ACSE
         public int Offset { get; protected set; }
         public Save SaveFile { get; protected set; }
         public NewVillager Villager { get; protected set; }
-        public NewPlayer Player;
+        public Player Player;
         public string PlayerName;
         public string PlayerTownName;
         public ushort PlayerId;

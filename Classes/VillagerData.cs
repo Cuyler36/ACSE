@@ -519,7 +519,7 @@ namespace ACSE
             return Name ?? "Unknown";
         }
 
-        public PlayerRelation GetPlayerRelation(NewPlayer Player)
+        public PlayerRelation GetPlayerRelation(Player Player)
         {
             if (PlayerRelations != null)
             {
