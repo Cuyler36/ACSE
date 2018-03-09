@@ -74,11 +74,11 @@ namespace ACSE.Classes.Utilities
             return new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF };
         }
 
-        public static NewVillager GetVillagerFromHouse(ushort HouseId, NewVillager[] Villagers)
+        public static Villager GetVillagerFromHouse(ushort HouseId, Villager[] Villagers)
         {
             ushort VillagerId = (ushort)(0xE000 | (HouseId & 0x00FF));
             
-            foreach (NewVillager Villager in Villagers)
+            foreach (Villager Villager in Villagers)
             {
                 if (Villager.Data.Villager_ID == VillagerId)
                 {

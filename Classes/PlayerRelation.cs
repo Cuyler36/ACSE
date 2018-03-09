@@ -8,7 +8,7 @@ namespace ACSE
 
         public int Offset { get; protected set; }
         public Save SaveFile { get; protected set; }
-        public NewVillager Villager { get; protected set; }
+        public Villager Villager { get; protected set; }
         public Player Player;
         public string PlayerName;
         public string PlayerTownName;
@@ -33,7 +33,7 @@ namespace ACSE
         public byte[] Unknown2;
         public byte[] Unknown3;
 
-        public ACPlayerRelation(Save SaveFile, NewVillager Villager, int DataOffset)
+        public ACPlayerRelation(Save SaveFile, Villager Villager, int DataOffset)
         {
             this.SaveFile = SaveFile;
             this.Villager = Villager;

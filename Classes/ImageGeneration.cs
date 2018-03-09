@@ -486,7 +486,7 @@ namespace ACSE
             return HairImage;
         }
 
-        public static void DrawTownMapViewHouseImages(NewVillager[] Villagers, PictureBoxWithInterpolationMode[] PictureBoxes, Size PictureBoxSize)
+        public static void DrawTownMapViewHouseImages(Villager[] Villagers, PictureBoxWithInterpolationMode[] PictureBoxes, Size PictureBoxSize)
         {
             int HouseImageSize = 16;
             int PixelsPerItemSlotX = PictureBoxSize.Width / 16;
@@ -494,7 +494,7 @@ namespace ACSE
 
             Console.WriteLine("X: " + PixelsPerItemSlotX + " | Y: " + PixelsPerItemSlotY);
             var HouseImage = Properties.Resources.VillagerHouse;
-            foreach (NewVillager Villager in Villagers)
+            foreach (Villager Villager in Villagers)
             {
                 if (Villager.Exists)
                 {

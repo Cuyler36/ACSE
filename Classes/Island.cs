@@ -74,7 +74,7 @@
         public Player Owner;
         public WorldItem[][] Items;
         public Cottage Cabana;
-        public NewVillager Islander;
+        public Villager Islander;
         public Pattern FlagPattern;
         public byte[] BuriedDataArray;
         public byte IslandLeftAcreIndex, IslandRightAcreIndex;
@@ -116,7 +116,7 @@
 
             Cabana = new Cottage(Offset + CottageData, SaveFile);
             FlagPattern = new Pattern(Offset + FlagData, 0, SaveFile);
-            Islander = new NewVillager(Offset + IslanderData, 0, SaveFile);
+            Islander = new Villager(Offset + IslanderData, 0, SaveFile);
 
             IslandLeftAcreIndex = SaveFile.ReadByte(Offset + IslandLeftAcreData);
             IslandRightAcreIndex = SaveFile.ReadByte(Offset + IslandRightAcreData);

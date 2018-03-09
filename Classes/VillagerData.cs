@@ -432,7 +432,7 @@ namespace ACSE
         }
     }
 
-    public class NewVillager
+    public class Villager
     {
         public VillagerOffsets Offsets;
         public VillagerDataStruct Data;
@@ -443,7 +443,7 @@ namespace ACSE
         public bool Exists = false;
         private Save SaveData;
 
-        public NewVillager(int offset, int idx, Save save)
+        public Villager(int offset, int idx, Save save)
         {
             SaveData = save;
             Index = idx;

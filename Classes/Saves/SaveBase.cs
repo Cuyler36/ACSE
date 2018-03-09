@@ -23,7 +23,7 @@ namespace ACSE.Classes.Saves
         public Player[] Players;
         public WorldAcre[] Acres;
         public WorldAcre[] TownAcres;
-        public NewVillager[] Villagers;
+        public Villager[] Villagers;
 
         public string FileName;
         public string FileExtension;

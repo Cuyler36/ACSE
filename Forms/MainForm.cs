@@ -26,7 +26,7 @@ namespace ACSE
         TabPage[] PlayerPattern_Tabs = new TabPage[4];
         Player[] Players = new Player[4];
         House[] Houses;
-        NewVillager[] Villagers;
+        Villager[] Villagers;
         PictureBoxWithInterpolationMode[] Acre_Map;
         PictureBoxWithInterpolationMode[] Town_Acre_Map;
         PictureBoxWithInterpolationMode[] Island_Acre_Map;
@@ -871,27 +871,27 @@ namespace ACSE
             {
                 await Task.Run(() =>
                 {
-                    Villagers = new NewVillager[Current_Save_Info.Villager_Count];
+                    Villagers = new Villager[Current_Save_Info.Villager_Count];
                     for (int i = 0; i < Villagers.Length; i++)
                     {
                         if (Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus)
                         {
                             if (i < 15)
                             {
-                                Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
+                                Villagers[i] = new Villager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
                             }
                             else
                             {
-                                Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Islander_Data, i, save);
+                                Villagers[i] = new Villager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Islander_Data, i, save);
                             }
                         }
                         else
                         {
-                            Villagers[i] = new NewVillager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
+                            Villagers[i] = new Villager(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Villager_Data + Current_Save_Info.Save_Offsets.Villager_Size * i, i, save);
                         }
                     }
 
-                    foreach (NewVillager Villager in Villagers)
+                    foreach (Villager Villager in Villagers)
                     {
                         if (Villager.PlayerRelations != null)
                         {
@@ -910,7 +910,7 @@ namespace ACSE
                     {
                         villagerPanel.Controls[i].Dispose();
                     }
-                foreach (NewVillager v in Villagers)
+                foreach (Villager v in Villagers)
                     GenerateVillagerPanel(v);
 
                 if (Save_File.Save_Generation == SaveGeneration.N3DS)
@@ -1420,7 +1420,7 @@ namespace ACSE
                     }
                 }
 
-                foreach (NewVillager Villager in Villagers)
+                foreach (Villager Villager in Villagers)
                 {
                     if (Villager != null && Villager.Exists)
                     {
@@ -2373,7 +2373,7 @@ namespace ACSE
 
         #region Villagers
         private int Villager_X = -1, Villager_Y = -1;
-        private void GenerateVillagerPanel(NewVillager Villager)
+        private void GenerateVillagerPanel(Villager Villager)
         {
             // TODO: Draw House Coordinate boxes for AC/WW, and also Furniture Boxes
             Panel Container = new Panel { Size = new Size(700, 64), Location = new Point(0, 32 + Villager.Index * 66) };
@@ -3517,7 +3517,7 @@ namespace ACSE
                         if ((Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN) && 
                             CurrentItem.ItemID >= 0x5000 && CurrentItem.ItemID <= 0x50FF) // TODO: WW Support
                         {
-                            NewVillager Villager = Utility.GetVillagerFromHouse(CurrentItem.ItemID, Villagers);
+                            Villager Villager = Utility.GetVillagerFromHouse(CurrentItem.ItemID, Villagers);
                             if (Villager != null)
                             {
                                 Villager.Data.House_Coordinates = Utility.Find_Villager_House(Villager.Data.Villager_ID);
@@ -3749,7 +3749,7 @@ namespace ACSE
                 //Save Villagers
                 if (Villagers != null)
                 {
-                    foreach (NewVillager Villager in Villagers)
+                    foreach (Villager Villager in Villagers)
                         if (Villager != null)
                             Villager.Write();
                     
@@ -4077,7 +4077,7 @@ namespace ACSE
         {
             if (Save_File != null && !Loading && playerName.Text.Length > 0)
             {
-                foreach (NewVillager Villager in Villagers)
+                foreach (Villager Villager in Villagers)
                 {
                     if (Villager.PlayerRelations != null)
                     {
