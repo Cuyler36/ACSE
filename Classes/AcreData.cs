@@ -218,11 +218,11 @@ namespace ACSE
         }
     }
 
-    public class Normal_Acre : Acre
+    public class WorldAcre : Acre
     {
         public WorldItem[] Acre_Items = new WorldItem[16 * 16];
 
-        public Normal_Acre(ushort acreId, int position, ushort[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, uint[] nl_items = null, int townPosition = -1) : base(acreId, position)
+        public WorldAcre(ushort acreId, int position, ushort[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, uint[] nl_items = null, int townPosition = -1) : base(acreId, position)
         {
             if (items != null)
                 for (int i = 0; i < 256; i++)
@@ -241,12 +241,12 @@ namespace ACSE
             }
         }
 
-        public Normal_Acre(ushort acreId, int position) : base(acreId, position) { }
+        public WorldAcre(ushort acreId, int position) : base(acreId, position) { }
 
-        public Normal_Acre(ushort acreId, int position, uint[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.Animal_Crossing)
+        public WorldAcre(ushort acreId, int position, uint[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.Animal_Crossing)
             : this(acreId, position, null, null, saveType, items) { }
 
-        public Normal_Acre(ushort acreId, int position, WorldItem[] items, byte[] buriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, int townPosition = -1) : base(acreId, position)
+        public WorldAcre(ushort acreId, int position, WorldItem[] items, byte[] buriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, int townPosition = -1) : base(acreId, position)
         {
             Acre_Items = items;
             if (buriedItemData != null && townPosition > -1)

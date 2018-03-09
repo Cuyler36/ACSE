@@ -62,7 +62,7 @@ namespace ACSE.Classes.Utilities
             if (MainForm.Save_File != null)
             {
                 ushort Villager_House_ID = (ushort)(0x5000 + (Villager_ID & 0xFF));
-                foreach (Normal_Acre Acre in MainForm.Town_Acres)
+                foreach (WorldAcre Acre in MainForm.Town_Acres)
                 {
                     WorldItem Villager_House = Acre.Acre_Items.FirstOrDefault(o => o.ItemID == Villager_House_ID);
                     if (Villager_House != null)
@@ -90,13 +90,13 @@ namespace ACSE.Classes.Utilities
         }
 
 
-        public static bool[] Check_Perfect_Town_Requirements(Normal_Acre[] Acres, bool Make_Perfect = false)
+        public static bool[] Check_Perfect_Town_Requirements(WorldAcre[] Acres, bool Make_Perfect = false)
         {
             bool[] Acre_Results = new bool[Acres.Length];
             int Points = 0;
             for (int i = 0; i < Acre_Results.Length; i++)
             {
-                Normal_Acre Acre = Acres[i];
+                WorldAcre Acre = Acres[i];
                 switch (MainForm.Save_File.Save_Generation)
                 {
                     case SaveGeneration.N64:
@@ -169,7 +169,7 @@ namespace ACSE.Classes.Utilities
             return Acre_Results;
         }
 
-        public static void Place_Structure(Normal_Acre Acre, int Start_Index, List<ushort[]> Structure_Info)
+        public static void Place_Structure(WorldAcre Acre, int Start_Index, List<ushort[]> Structure_Info)
         {
             if (Start_Index > -1 && Start_Index < 256)
             {
@@ -322,7 +322,7 @@ namespace ACSE.Classes.Utilities
         }
 
         // Export/Import Methods
-        public static void ExportAcres(Normal_Acre[] Acres, SaveGeneration Save_Generation, string SaveFileName)
+        public static void ExportAcres(WorldAcre[] Acres, SaveGeneration Save_Generation, string SaveFileName)
         {
             using (var saveDialog = new System.Windows.Forms.SaveFileDialog())
             {
@@ -359,7 +359,7 @@ namespace ACSE.Classes.Utilities
             }
         }
 
-        public static void ImportAcres(ref Normal_Acre[] Acres, SaveGeneration Save_Generation)
+        public static void ImportAcres(ref WorldAcre[] Acres, SaveGeneration Save_Generation)
         {
             using (var openDialog = new System.Windows.Forms.OpenFileDialog())
             {
@@ -396,7 +396,7 @@ namespace ACSE.Classes.Utilities
             }
         }
 
-        public static void ExportTown(Normal_Acre[] Acres, SaveGeneration Save_Generation, string SaveFileName)
+        public static void ExportTown(WorldAcre[] Acres, SaveGeneration Save_Generation, string SaveFileName)
         {
             using (var saveDialog = new System.Windows.Forms.SaveFileDialog())
             {
@@ -450,7 +450,7 @@ namespace ACSE.Classes.Utilities
             }
         }
 
-        public static void ImportTown(ref Normal_Acre[] Acres, SaveGeneration Save_Generation)
+        public static void ImportTown(ref WorldAcre[] Acres, SaveGeneration Save_Generation)
         {
             using (var openDialog = new System.Windows.Forms.OpenFileDialog())
             {

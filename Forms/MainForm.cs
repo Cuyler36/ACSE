@@ -40,9 +40,9 @@ namespace ACSE
         int SelectedPaletteIndex = 0;
         Pattern SelectedPatternObject;
         Panel[] Building_List_Panels;
-        Normal_Acre[] Acres;
-        public static Normal_Acre[] Town_Acres;
-        public static Normal_Acre[] Island_Acres;
+        WorldAcre[] Acres;
+        public static WorldAcre[] Town_Acres;
+        public static WorldAcre[] Island_Acres;
         Building[] Buildings;
         Building[] Island_Buildings;
         public static Save Save_File;
@@ -728,8 +728,8 @@ namespace ACSE
             //Load Town Info
             await Task.Run(() =>
             {
-                Acres = new Normal_Acre[Current_Save_Info.Acre_Count];
-                Town_Acres = new Normal_Acre[Current_Save_Info.Town_Acre_Count];
+                Acres = new WorldAcre[Current_Save_Info.Acre_Count];
+                Town_Acres = new WorldAcre[Current_Save_Info.Town_Acre_Count];
 
                 if (save.Save_Type == SaveType.Wild_World)
                 {
@@ -744,10 +744,10 @@ namespace ACSE
                         {
                             Items_Buff = save.ReadUInt16Array(save.Save_Data_Start_Offset +
                                 Current_Save_Info.Save_Offsets.Town_Data + x * 512, 256, false);
-                            Town_Acres[x] = new Normal_Acre(Acre_Data[i], x, Items_Buff, Buried_Buffer, SaveType.Wild_World);
+                            Town_Acres[x] = new WorldAcre(Acre_Data[i], x, Items_Buff, Buried_Buffer, SaveType.Wild_World);
                             x++;
                         }
-                        Acres[i] = new Normal_Acre(Acre_Data[i], i);
+                        Acres[i] = new WorldAcre(Acre_Data[i], i);
                     }
                 }
                 else if (save.Save_Generation == SaveGeneration.GCN || save.Save_Generation == SaveGeneration.N64)
@@ -765,10 +765,10 @@ namespace ACSE
                         {
                             Items_Buff = save.ReadUInt16Array(save.Save_Data_Start_Offset +
                                 Current_Save_Info.Save_Offsets.Town_Data + x * 512, 256, true);
-                            Town_Acres[x] = new Normal_Acre(Acre_Data[i], i, Items_Buff, Buried_Buffer, SaveType.Animal_Crossing, null, x);
+                            Town_Acres[x] = new WorldAcre(Acre_Data[i], i, Items_Buff, Buried_Buffer, SaveType.Animal_Crossing, null, x);
                             x++;
                         }
-                        Acres[i] = new Normal_Acre(Acre_Data[i], i);
+                        Acres[i] = new WorldAcre(Acre_Data[i], i);
                     }
                 }
                 else if (save.Save_Type == SaveType.City_Folk)
@@ -786,10 +786,10 @@ namespace ACSE
                         {
                             Items_Buff = save.ReadUInt16Array(save.Save_Data_Start_Offset +
                                 Current_Save_Info.Save_Offsets.Town_Data + x * 512, 256, true);
-                            Town_Acres[x] = new Normal_Acre(Acre_Data[i], x, Items_Buff, Buried_Buffer, SaveType.City_Folk);
+                            Town_Acres[x] = new WorldAcre(Acre_Data[i], x, Items_Buff, Buried_Buffer, SaveType.City_Folk);
                             x++;
                         }
-                        Acres[i] = new Normal_Acre(Acre_Data[i], i);
+                        Acres[i] = new WorldAcre(Acre_Data[i], i);
                     }
                 }
                 else if (save.Save_Generation == SaveGeneration.N3DS)
@@ -817,10 +817,10 @@ namespace ACSE
                         {
                             Items_Buff = save.ReadUInt32Array(save.Save_Data_Start_Offset +
                                 Current_Save_Info.Save_Offsets.Town_Data + x * 1024, 256, false);
-                            Town_Acres[x] = new Normal_Acre(Acre_Data[i], x, Items_Buff, Buried_Buffer, SaveType.New_Leaf);
+                            Town_Acres[x] = new WorldAcre(Acre_Data[i], x, Items_Buff, Buried_Buffer, SaveType.New_Leaf);
                             x++;
                         }
-                        Acres[i] = new Normal_Acre(Acre_Data[i], i);
+                        Acres[i] = new WorldAcre(Acre_Data[i], i);
                     }
                 }
             });
@@ -1743,7 +1743,7 @@ namespace ACSE
                 && (ID >= 0x03DC && ID <= 0x03EC) || ID == 0x49C || (ID >= 0x04A8 && ID <= 0x058C) || (ID >= 0x05B4 && ID <= 0x05B8));
         }
 
-        private Image Get_Acre_Image(Normal_Acre CurrentAcre, ushort ID)
+        private Image Get_Acre_Image(WorldAcre CurrentAcre, ushort ID)
         {
             Image Acre_Image = null;
             if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori || Save_File.Save_Generation == SaveGeneration.GCN)
@@ -1828,7 +1828,7 @@ namespace ACSE
                 for (int x = 0; x < Current_Save_Info.X_Acre_Count; x++)
                 {
                     int Acre = y * Current_Save_Info.X_Acre_Count + x;
-                    Normal_Acre CurrentAcre = Acres[Acre];
+                    WorldAcre CurrentAcre = Acres[Acre];
                     string Acre_ID_Str = "";
                     if (Save_File.Save_Type == SaveType.Wild_World)
                         Acre_ID_Str = CurrentAcre.AcreID.ToString("X2");
@@ -1925,7 +1925,7 @@ namespace ACSE
             }
             if (Current_Save_Info.Contains_Island)
             {
-                Island_Acres = new Normal_Acre[Current_Save_Info.Island_Acre_Count];
+                Island_Acres = new WorldAcre[Current_Save_Info.Island_Acre_Count];
                 Island_Acre_Map = new PictureBoxWithInterpolationMode[Island_Acres.Length];
                 NL_Island_Acre_Map = new PictureBoxWithInterpolationMode[16];
 
@@ -1944,7 +1944,7 @@ namespace ACSE
                                 int World_Idx = (Y - 1) * 2 + ((X - 1) % 4);
                                 Acre_Items[i] = new WorldItem(Save_File.ReadUInt32(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Island_World_Data + World_Idx * 1024 + i * 4), i);
                             }
-                        Island_Acres[Idx] = new Normal_Acre(Acre_ID, Idx, Acre_Items, Island_Buried_Buffer); //Add buried item data for Animal Crossing
+                        Island_Acres[Idx] = new WorldAcre(Acre_ID, Idx, Acre_Items, Island_Buried_Buffer); //Add buried item data for Animal Crossing
                         string Acre_ID_Str = Save_File.Save_Generation == SaveGeneration.GCN ? (Acre_ID - (Acre_ID % 4)).ToString("X4") : Island_Acres[Idx].AcreID.ToString("X2");
 
                         if (Save_File.Save_Generation == SaveGeneration.GCN || ((Idx > 4 && Idx < 7) || (Idx > 8 && Idx < 11)))
@@ -1999,8 +1999,8 @@ namespace ACSE
                 if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus && SelectedIsland != null)
                 {
                     var IslandAcreIds = SelectedIsland.GetAcreIds();
-                    Island_Acre_Map[0].BackgroundImage = Get_Acre_Image(new Normal_Acre(IslandAcreIds[0], 0), IslandAcreIds[0]);
-                    Island_Acre_Map[1].BackgroundImage = Get_Acre_Image(new Normal_Acre(IslandAcreIds[1], 0), IslandAcreIds[1]);
+                    Island_Acre_Map[0].BackgroundImage = Get_Acre_Image(new WorldAcre(IslandAcreIds[0], 0), IslandAcreIds[0]);
+                    Island_Acre_Map[1].BackgroundImage = Get_Acre_Image(new WorldAcre(IslandAcreIds[1], 0), IslandAcreIds[1]);
                 }
             }
         }
@@ -2743,9 +2743,9 @@ namespace ACSE
                     Save_File.ChangesMade = true;
                     string Acre_ID_String = Selected_Acre_ID.ToString("X");
                     if (Island)
-                        Island_Acres[Acre_Index] = new Normal_Acre((ushort)(Selected_Acre_ID + Acre_Height_Modifier), Acre_Index);
+                        Island_Acres[Acre_Index] = new WorldAcre((ushort)(Selected_Acre_ID + Acre_Height_Modifier), Acre_Index);
                     else
-                        Acres[Acre_Index] = new Normal_Acre((ushort)(Selected_Acre_ID + Acre_Height_Modifier), Acre_Index);
+                        Acres[Acre_Index] = new WorldAcre((ushort)(Selected_Acre_ID + Acre_Height_Modifier), Acre_Index);
 
                     var OldImage = Acre_Box.BackgroundImage;
                     Acre_Box.BackgroundImage = selectedAcrePicturebox.Image;
@@ -2763,8 +2763,8 @@ namespace ACSE
 
                         if (Town_Acre < Current_Save_Info.Town_Acre_Count)
                         {
-                            Normal_Acre Current_Town_Acre = Town_Acres[Town_Acre];
-                            Town_Acres[Town_Acre] = new Normal_Acre((ushort)(Selected_Acre_ID + Acre_Height_Modifier),
+                            WorldAcre Current_Town_Acre = Town_Acres[Town_Acre];
+                            Town_Acres[Town_Acre] = new WorldAcre((ushort)(Selected_Acre_ID + Acre_Height_Modifier),
                                 Town_Acre, Current_Town_Acre.Acre_Items, Buried_Buffer, Save_File.Save_Type);
                             Town_Acre_Map[Town_Acre].BackgroundImage = Acre_Box.BackgroundImage;
                         }
@@ -3889,7 +3889,7 @@ namespace ACSE
             {
                 int idx = Array.IndexOf(Town_Acre_Map, Box);
                 int Acre_Idx = idx;
-                Normal_Acre Acre = Town_Acres[Acre_Idx];
+                WorldAcre Acre = Town_Acres[Acre_Idx];
                 if (Acre.Acre_Items != null)
                 {
                     for (int i = 0; i < 256; i++)
@@ -4057,7 +4057,7 @@ namespace ACSE
                 {
                     int idx = Array.IndexOf(Town_Acre_Map, Box);
                     int Acre_Idx = idx;
-                    Normal_Acre Acre = Town_Acres[Acre_Idx];
+                    WorldAcre Acre = Town_Acres[Acre_Idx];
                     if (Acre.Acre_Items != null)
                     {
                         if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
@@ -4468,7 +4468,7 @@ namespace ACSE
                 for (int i = 0; i < Town_Acres.Length; i++)
                 {
                     bool Changed = false;
-                    Normal_Acre Acre = Town_Acres[i];
+                    WorldAcre Acre = Town_Acres[i];
                     if (Acre.Acre_Items != null)
                     {
                         foreach (WorldItem Item in Acre.Acre_Items)
@@ -4504,7 +4504,7 @@ namespace ACSE
             {
                 int idx = Array.IndexOf(Town_Acre_Map, Box);
                 int Acre_Idx = idx;
-                Normal_Acre Acre = Town_Acres[Acre_Idx];
+                WorldAcre Acre = Town_Acres[Acre_Idx];
                 if (Acre.Acre_Items != null)
                 {
                     if (Save_File.Save_Type == SaveType.Wild_World)
@@ -4556,8 +4556,8 @@ namespace ACSE
                 ReloadIslandItemPicture();
 
                 var IslandAcreIds = SelectedIsland.GetAcreIds();
-                Island_Acre_Map[0].BackgroundImage = Get_Acre_Image(new Normal_Acre(IslandAcreIds[0], 0), IslandAcreIds[0]);
-                Island_Acre_Map[1].BackgroundImage = Get_Acre_Image(new Normal_Acre(IslandAcreIds[1], 0), IslandAcreIds[1]);
+                Island_Acre_Map[0].BackgroundImage = Get_Acre_Image(new WorldAcre(IslandAcreIds[0], 0), IslandAcreIds[0]);
+                Island_Acre_Map[1].BackgroundImage = Get_Acre_Image(new WorldAcre(IslandAcreIds[1], 0), IslandAcreIds[1]);
 
                 // Reload Island House Pictureboxes
                 for (int i = 0; i < 4; i++)

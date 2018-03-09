@@ -21,8 +21,8 @@ namespace ACSE.Classes.Saves
         public Region Region;
 
         public NewPlayer[] Players;
-        public Normal_Acre[] Acres;
-        public Normal_Acre[] TownAcres;
+        public WorldAcre[] Acres;
+        public WorldAcre[] TownAcres;
         public NewVillager[] Villagers;
 
         public string FileName;
