@@ -142,4 +142,7 @@
   <data name="PaletteArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\PaletteArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Villager_Crop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\Villager Crop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

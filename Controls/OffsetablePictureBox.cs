@@ -17,7 +17,7 @@ namespace ACSE
         public Point Offset
         {
             get => pictureBox.Location;
-            set => pictureBox.Location = new Point(-value.X, -value.Y);
+            set => pictureBox.Location = value.Negate();
         }
 
         public Image Image
@@ -43,6 +43,7 @@ namespace ACSE
                 InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode
             };
 
+            pictureBox.Paint += pictureBox_Paint;
             Controls.Add(pictureBox);
         }
 
@@ -50,7 +51,7 @@ namespace ACSE
         {
             if (ImageMaskingType == MaskingType.Circular)
             {
-                //pictureBox.Image = ImageGeneration.CropToCircle(pictureBox.Image, new Point(-Offset.X + Size.Width / 2, -Offset.Y + Size.Height / 2), 32, BackColor);
+                e.Graphics.DrawImage(Properties.Resources.Villager_Crop, pictureBox.Location.Negate());
             }
         }
     }
