@@ -513,8 +513,8 @@ namespace ACSE
             clearEncyclopediaToolStripMenuItem.Enabled = true;
             getAllKKSongsToolStripMenuItem.Enabled = true;
             clearSongLibraryToolStripMenuItem.Enabled = true;
-            fillMuseumToolStripMenuItem.Enabled = true;
-            clearMuseumToolStripMenuItem.Enabled = true;
+            fillMuseumToolStripMenuItem.Enabled = save.Save_Generation != SaveGeneration.N64;
+            clearMuseumToolStripMenuItem.Enabled = save.Save_Generation != SaveGeneration.N64;
             acreCustomIdBox.Enabled = true;
             selectedItem.Enabled = true;
             itemIdTextBox.Enabled = true;
