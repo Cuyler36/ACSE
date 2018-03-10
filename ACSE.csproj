@@ -3680,6 +3680,7 @@
   <ItemGroup>
     <Compile Include="Classes\AcreData.cs" />
     <Compile Include="Classes\AlertToggledEventArgs.cs" />
+    <Compile Include="Classes\Catalog.cs" />
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
     <Compile Include="Classes\Extensions\PointExtension.cs" />
     <Compile Include="Classes\ItemChange.cs" />

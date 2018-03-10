@@ -515,6 +515,8 @@ namespace ACSE
             clearSongLibraryToolStripMenuItem.Enabled = true;
             fillMuseumToolStripMenuItem.Enabled = save.Save_Generation != SaveGeneration.N64;
             clearMuseumToolStripMenuItem.Enabled = save.Save_Generation != SaveGeneration.N64;
+            fillCatalogToolStripMenuItem.Enabled = true;
+            clearCatalogToolStripMenuItem.Enabled = true;
             acreCustomIdBox.Enabled = true;
             selectedItem.Enabled = true;
             itemIdTextBox.Enabled = true;
@@ -4454,6 +4456,22 @@ namespace ACSE
             if (Save_File != null && !Loading)
             {
                 Museum.ClearMuseum(Save_File);
+            }
+        }
+
+        private void fillCatalogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                Catalog.FillCatalog(Save_File, Selected_Player);
+            }
+        }
+
+        private void clearCatalogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                Catalog.ClearCatalog(Save_File, Selected_Player);
             }
         }
 

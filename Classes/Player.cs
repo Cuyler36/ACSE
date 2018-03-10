@@ -271,7 +271,7 @@ namespace ACSE
             TownPassCardImage = -1,
             HairType = -1,
             Bed = -1,
-            Catalog = -1, //Actually research
+            Catalog = -1, // 0x1108
             Encyclopedia = -1,
             Dressers = -1,
             Emotions = -1,
