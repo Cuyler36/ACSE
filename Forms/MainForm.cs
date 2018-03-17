@@ -3687,8 +3687,11 @@ namespace ACSE
                 int Acre = idx;
                 if (index > 255 || Town_Acres == null || Town_Acres[Acre] == null)
                     return;
+
                 // Set Info Label
                 townInfoLabel.Text = string.Format("X: {0} | Y: {1} | Index: {2}", X, Y, index);
+                townInfoLabel.Refresh();
+
                 WorldItem Item = null;
                 if (Island)
                 {

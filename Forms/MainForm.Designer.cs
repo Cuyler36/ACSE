@@ -1520,6 +1520,7 @@
             // 
             // townTab
             // 
+            this.townTab.Controls.Add(this.townInfoLabel);
             this.townTab.Controls.Add(this.buildingsLabel);
             this.townTab.Controls.Add(this.buildingsPanel);
             this.townTab.Controls.Add(this.townPanel);
@@ -1568,7 +1569,7 @@
             // 
             this.buriedCheckbox.AutoSize = true;
             this.buriedCheckbox.Enabled = false;
-            this.buriedCheckbox.Location = new System.Drawing.Point(8, 13);
+            this.buriedCheckbox.Location = new System.Drawing.Point(6, 18);
             this.buriedCheckbox.Name = "buriedCheckbox";
             this.buriedCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.buriedCheckbox.Size = new System.Drawing.Size(56, 17);
@@ -2098,13 +2099,13 @@
             // 
             // townInfoLabel
             // 
-            this.townInfoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.townInfoLabel.AutoSize = true;
-            this.townInfoLabel.Location = new System.Drawing.Point(238, 647);
+            this.townInfoLabel.Location = new System.Drawing.Point(68, 19);
             this.townInfoLabel.Name = "townInfoLabel";
             this.townInfoLabel.Size = new System.Drawing.Size(99, 13);
             this.townInfoLabel.TabIndex = 13;
             this.townInfoLabel.Text = "X: 0 | Y: 0 | Index: 0";
+            this.townInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // acreID
             // 
@@ -2504,7 +2505,6 @@
             this.ClientSize = new System.Drawing.Size(963, 695);
             this.Controls.Add(this.itemIdTextBox);
             this.Controls.Add(this.label46);
-            this.Controls.Add(this.townInfoLabel);
             this.Controls.Add(this.label43);
             this.Controls.Add(this.acreHeightTrackBar);
             this.Controls.Add(this.acreDesc);
