@@ -536,7 +536,7 @@ namespace ACSE
             itemIdTextBox.Enabled = true;
             townNameBox.Enabled = true;
             buriedCheckbox.Enabled = true;
-            grassTypeBox.Enabled = true;
+            grassTypeBox.Enabled = save.Save_Generation != SaveGeneration.N64;
             weatherComboBox.Enabled = true;
             nativeFruitBox.Enabled = true;
             stationTypeComboBox.Enabled = TrainStation.HasModifiableTrainStation(save.Save_Generation);

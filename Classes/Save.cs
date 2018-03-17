@@ -138,11 +138,11 @@ namespace ACSE
             Town_Data = 0x62A8,
             Town_Data_Size = 0x3C00,
             Train_Station_Type = 0xF438, // Confirm
+            Weather = 0xF439, // Confirm
             Buried_Data = 0xF43C,
             Buried_Data_Size = 0x3C0,
             Checksum = 0x12,
             Grass_Type = -1, // Find
-            Weather = -1 // Find
         };
 
         public static Offsets Doubutsu_no_Mori_Plus_Offsets = new Offsets
@@ -170,7 +170,7 @@ namespace ACSE
             Weather = 0x19E09, // Confirm
             Buried_Data = 0x19E0C,
             Buried_Data_Size = 0x3C0,
-            Grass_Type = -1,
+            Grass_Type = 0x1CCA4, // Confirm
             Town_NameSize = 6,
             Checksum = 0x12,
         };
@@ -236,12 +236,12 @@ namespace ACSE
             // Shop Size 0x223A8 (appears to be the upper nibble of the byte 0 = 0, 4 = 1, 8 = 2, C = 3)
             // Shop Spend count = 0x223AC (uint)
             // Shop Visitor Spend count = 0x223C0 (uint)
+            NativeFruit = 0x2259C,
             Train_Station_Type = 0x22B18,
             Weather = 0x22B19,
             Buried_Data = 0x22B1C,
             Buried_Data_Size = 0x3C0,
             Grass_Type = 0x24484,
-            NativeFruit = 0x2259C,
             // Shop update in progress byte (0x2E004 (Has to be 1B))
             Town_NameSize = 6,
             Checksum = 0x12,
