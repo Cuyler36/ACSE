@@ -1568,8 +1568,9 @@
             // 
             this.buriedCheckbox.AutoSize = true;
             this.buriedCheckbox.Enabled = false;
-            this.buriedCheckbox.Location = new System.Drawing.Point(175, 13);
+            this.buriedCheckbox.Location = new System.Drawing.Point(8, 13);
             this.buriedCheckbox.Name = "buriedCheckbox";
+            this.buriedCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.buriedCheckbox.Size = new System.Drawing.Size(56, 17);
             this.buriedCheckbox.TabIndex = 8;
             this.buriedCheckbox.Text = "Buried";
