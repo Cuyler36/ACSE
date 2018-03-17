@@ -217,6 +217,20 @@ namespace ACSE
                 }
             };
 
+            // Train Station Type Changed
+            stationTypeComboBox.SelectedIndexChanged += delegate (object sender, EventArgs e)
+            {
+                if (!Loading)
+                {
+                    if (stationTypeComboBox.SelectedIndex > -1)
+                    {
+                        Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Train_Station_Type,
+                            (byte)stationTypeComboBox.SelectedIndex);
+                        SetTrainStationImage();
+                    }
+                }
+            };
+
             basementCheckBox.CheckedChanged += BasementCheckBoxCheckChanged;
             houseTabSelect.Selected += House_Tab_Index_Changed;
 
@@ -525,6 +539,7 @@ namespace ACSE
             grassTypeBox.Enabled = true;
             weatherComboBox.Enabled = true;
             nativeFruitBox.Enabled = true;
+            stationTypeComboBox.Enabled = TrainStation.HasModifiableTrainStation(save.Save_Generation);
             houseSizeComboBox.Enabled = true;
             roofColorComboBox.Enabled = true;
             houseOwnerComboBox.Enabled = save.Save_Generation != SaveGeneration.NDS;
@@ -536,6 +551,8 @@ namespace ACSE
             reviveGrass.Enabled = true;
             removeGrass.Enabled = true;
             censusMenuEnabled.Enabled = save.Save_Type == SaveType.Welcome_Amiibo;
+
+            SetTrainStationImage();
 
             //Clear Acre Images
             if (Acre_Map != null)
@@ -1281,6 +1298,23 @@ namespace ACSE
                     Box.Image = New_Image;
                 if (Dispose && Old_Image != null)
                     Old_Image.Dispose();
+            }
+        }
+
+        private void SetTrainStationImage()
+        {
+            if (stationPictureBox.Image != null)
+            {
+                var Img = stationPictureBox.Image;
+                stationPictureBox.Image = null;
+                Img.Dispose();
+            }
+
+            if (stationTypeComboBox.Enabled)
+            {
+                byte StationType = Save_File.ReadByte(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Train_Station_Type);
+                stationTypeComboBox.SelectedIndex = StationType;
+                stationPictureBox.Image = TrainStation.GetStationImage(StationType);
             }
         }
 

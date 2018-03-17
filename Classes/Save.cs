@@ -76,6 +76,7 @@ namespace ACSE
         public int Grass_Wear;
         public int Grass_Wear_Size;
         public int Grass_Type;
+        public int Train_Station_Type;
         public int Weather;
         public int NativeFruit;
         public int PWPs; //NL only
@@ -136,10 +137,12 @@ namespace ACSE
             Villager_Size = 0x528,
             Town_Data = 0x62A8,
             Town_Data_Size = 0x3C00,
-            Buried_Data = 0xF43C, // Might be F43A
+            Train_Station_Type = 0xF438, // Confirm
+            Buried_Data = 0xF43C,
             Buried_Data_Size = 0x3C0,
             Checksum = 0x12,
-            Grass_Type = -1 // Find
+            Grass_Type = -1, // Find
+            Weather = -1 // Find
         };
 
         public static Offsets Doubutsu_no_Mori_Plus_Offsets = new Offsets
@@ -163,7 +166,9 @@ namespace ACSE
             Acre_Data_Size = 0x8C,
             Villager_Data = 0x13F78,
             Villager_Size = 0x5C8,
-            Buried_Data = 0x19E0C, // Probably off a little
+            Train_Station_Type = 0x19E08, // Confirm
+            Weather = 0x19E09, // Confirm
+            Buried_Data = 0x19E0C,
             Buried_Data_Size = 0x3C0,
             Grass_Type = -1,
             Town_NameSize = 6,
@@ -185,6 +190,7 @@ namespace ACSE
             Town_Data = 0x137A8,
             Town_Data_Size = 0x3C00,
             NativeFruit = 0x20688,
+            Train_Station_Type = 0x20F18,
             Weather = 0x20F19,
             Buried_Data = 0x20F1C,
             Buried_Data_Size = 0x3C0,
@@ -230,6 +236,7 @@ namespace ACSE
             // Shop Size 0x223A8 (appears to be the upper nibble of the byte 0 = 0, 4 = 1, 8 = 2, C = 3)
             // Shop Spend count = 0x223AC (uint)
             // Shop Visitor Spend count = 0x223C0 (uint)
+            Train_Station_Type = 0x22B18,
             Weather = 0x22B19,
             Buried_Data = 0x22B1C,
             Buried_Data_Size = 0x3C0,
@@ -270,6 +277,7 @@ namespace ACSE
             Island_Acre_Data = -1,
             Island_Buildings = -1,
             Weather = -1,
+            Train_Station_Type = -1,
             Checksum = 0x15FDC
         };
 
@@ -304,6 +312,7 @@ namespace ACSE
             Villager_Data = -1, //finish this sometime
             Island_Acre_Data = -1,
             Island_Buildings = -1,
+            Train_Station_Type = -1,
             Weather = -1,
         };
 
@@ -335,6 +344,7 @@ namespace ACSE
             Island_Buildings = 0x6B428,
             Town_ID = -1, //
             Weather = -1,
+            Train_Station_Type = -1
         };
 
         public static Offsets Welcome_Amiibo_Offsets = new Offsets
@@ -367,6 +377,7 @@ namespace ACSE
             // ShopSize = 0x621F0, (two bytes in a row?)
             Town_ID = -1, //
             Weather = -1,
+            Train_Station_Type = -1
         };
 
         public static Save_Info Doubutsu_no_Mori = new Save_Info
