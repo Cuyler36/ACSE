@@ -102,7 +102,10 @@ namespace ACSE
         public MainForm()
         {
             InitializeComponent();
-            
+
+            // GENERATION TEST \\
+            //Generation.Generate(SaveType.Animal_Crossing);
+
             // Clamp Map Sizes
             if (TownMapCellSize < 8)
             {

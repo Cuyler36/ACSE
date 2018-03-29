@@ -18,8 +18,10 @@
         int BuriedData = 0x15A0;
         int IslandLeftAcreData = 0x15E0;
         int IslandRightAcreData = 0x15E1;
+        int IslandInfoFlag = 0x15FB;
 
         #endregion
+
         public class Cottage
         {
 
@@ -78,6 +80,7 @@
         public Pattern FlagPattern;
         public byte[] BuriedDataArray;
         public byte IslandLeftAcreIndex, IslandRightAcreIndex;
+        public bool Purchased;
 
         public Island(int Offset, Player[] Players, Save SaveFile)
         {
@@ -179,6 +182,9 @@
             if (burriedDataOffset > -1 && burriedDataOffset < burriedItemData.Length)
                 item.Burried = DataConverter.ToBit(burriedItemData[burriedDataOffset], item.Location.X % 8) == 1;
         }
+
+        // TODO: Make a toggle to enable/disable the island.
+        private bool IsPurchased() => (SaveFile.ReadByte(Offset + IslandInfoFlag) & 0x80) == 0x80;
 
         public void SetBuriedInMemory(WorldItem item, int acre, byte[] burriedItemData, bool buried, SaveType saveType)
         {

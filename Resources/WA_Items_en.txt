@@ -5284,5 +5284,8 @@
 0x34CD, Modern House
 //Presents
 0x4DE7, Wrapping Paper
+//Special Furniture Items (Welcome Amiibo Update)
+0x3726, Magic Lamp
+0x372A, Ikada Trophy
 //Room Reserved Space
 0x7FFC, Multispace Furniture

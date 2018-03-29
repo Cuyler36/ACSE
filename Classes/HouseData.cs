@@ -404,6 +404,7 @@ namespace ACSE
             Town_NameSize = 6,
             Owning_Player_ID = 0xC,
             Town_ID = 0xE,
+            // 0x20 = Basement
             House_Upgrade_Size = 0x26, // Island is included in house upgrade size (size of 4)
             Roof_Color = 0x28, // 0x29 = Roof color on next house upgrade?
             Room_Start = 0x30,
