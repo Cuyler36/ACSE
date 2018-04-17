@@ -527,14 +527,8 @@ namespace ACSE
             clearWeedsToolStripMenuItem.Enabled = true;
             removeAllItemsToolStripMenuItem.Enabled = true;
             replaceItemsToolStripMenuItem.Enabled = true;
-            fillEncyclopediaToolStripMenuItem.Enabled = true;
-            clearEncyclopediaToolStripMenuItem.Enabled = true;
-            getAllKKSongsToolStripMenuItem.Enabled = true;
-            clearSongLibraryToolStripMenuItem.Enabled = true;
             fillMuseumToolStripMenuItem.Enabled = save.Save_Generation != SaveGeneration.N64;
             clearMuseumToolStripMenuItem.Enabled = save.Save_Generation != SaveGeneration.N64;
-            fillCatalogToolStripMenuItem.Enabled = true;
-            clearCatalogToolStripMenuItem.Enabled = true;
             unlockAllPublicWorkProjectsToolStripMenuItem.Enabled = save.Save_Generation == SaveGeneration.N3DS;
             acreCustomIdBox.Enabled = true;
             selectedItem.Enabled = true;
@@ -556,6 +550,14 @@ namespace ACSE
             reviveGrass.Enabled = true;
             removeGrass.Enabled = true;
             censusMenuEnabled.Enabled = save.Save_Type == SaveType.Welcome_Amiibo;
+            fillCatalogButton.Enabled = true;
+            clearCatalogButton.Enabled = true;
+            fillEncyclopediaButton.Enabled = true;
+            clearEncylopediaButton.Enabled = true;
+            fillSongLibraryButton.Enabled = true;
+            clearSongLibraryButton.Enabled = true;
+            fillEmotionsButton.Enabled = Save_File.Save_Generation != SaveGeneration.N64 && Save_File.Save_Generation != SaveGeneration.GCN;
+            clearEmotionsButton.Enabled = fillEmotionsButton.Enabled;
 
             SetTrainStationImage();
 
@@ -4427,16 +4429,6 @@ namespace ACSE
             waterFlowersButton_Click(sender, e);
         }
 
-        private void fillEncyclopediaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Encyclopedia.FillEncyclopedia(Save_File, Selected_Player);
-        }
-
-        private void getAllKKSongsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SongLibrary.FillSongLibrary(Save_File, Selected_Player);
-        }
-
         private void censusMenuEnabled_CheckedChanged(object sender, EventArgs e)
         {
             if (!Loading && Save_File != null && Save_File.Save_Type == SaveType.Welcome_Amiibo)
@@ -4469,22 +4461,6 @@ namespace ACSE
             }
         }
 
-        private void clearEncyclopediaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
-            {
-                Encyclopedia.ClearEncylopedia(Save_File, Selected_Player);
-            }
-        }
-
-        private void clearSongLibraryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
-            {
-                SongLibrary.ClearSongLibrary(Save_File, Selected_Player);
-            }
-        }
-
         private void fillMuseumToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
@@ -4498,22 +4474,6 @@ namespace ACSE
             if (Save_File != null && !Loading)
             {
                 Museum.ClearMuseum(Save_File);
-            }
-        }
-
-        private void fillCatalogToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
-            {
-                Catalog.FillCatalog(Save_File, Selected_Player);
-            }
-        }
-
-        private void clearCatalogToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
-            {
-                Catalog.ClearCatalog(Save_File, Selected_Player);
             }
         }
 
@@ -4535,6 +4495,78 @@ namespace ACSE
             {
                 ImageGeneration.DumpTownAcreBitmap(Current_Save_Info.X_Acre_Count, Current_Save_Info.Acre_Count / Current_Save_Info.X_Acre_Count,
                     ref Acre_Map);
+            }
+        }
+
+        private void fillCatalogButton_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                Catalog.FillCatalog(Save_File, Selected_Player);
+            }
+        }
+
+        private void fillEmotionsButton_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                if(Emotion.FillEmotions(Save_File, Selected_Player))
+                {
+                    MessageBox.Show(string.Format("Emotions filled for {0}!", Selected_Player.Data.Name), "Info", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void fillEncyclopediaButton_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                Encyclopedia.FillEncyclopedia(Save_File, Selected_Player);
+            }
+        }
+
+        private void clearEncylopediaButton_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                Encyclopedia.ClearEncylopedia(Save_File, Selected_Player);
+            }
+        }
+
+        private void clearSongLibraryButton_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                SongLibrary.ClearSongLibrary(Save_File, Selected_Player);
+            }
+        }
+
+        private void fillSongLibraryButton_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                SongLibrary.FillSongLibrary(Save_File, Selected_Player);
+            }
+        }
+
+        private void clearEmotionsButton_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                if (Emotion.ClearEmotions(Save_File, Selected_Player))
+                {
+                    MessageBox.Show(string.Format("Emotions cleared for {0}!", Selected_Player.Data.Name), "Info", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void clearCatalogButton_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                Catalog.ClearCatalog(Save_File, Selected_Player);
             }
         }
 

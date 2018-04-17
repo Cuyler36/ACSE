@@ -49,6 +49,8 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveTownMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secureValueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,16 +65,20 @@
             this.importTownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportTownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fillCatalogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fillEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.getAllKKSongsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fillMuseumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearCatalogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearEncyclopediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearSongLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unlockAllPublicWorkProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearMuseumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.clearEmotionsButton = new System.Windows.Forms.Button();
+            this.fillEmotionsButton = new System.Windows.Forms.Button();
+            this.clearEncylopediaButton = new System.Windows.Forms.Button();
+            this.fillEncyclopediaButton = new System.Windows.Forms.Button();
+            this.clearSongLibraryButton = new System.Windows.Forms.Button();
+            this.fillSongLibraryButton = new System.Windows.Forms.Button();
+            this.clearCatalogButton = new System.Windows.Forms.Button();
+            this.fillCatalogButton = new System.Windows.Forms.Button();
             this.censusMenuEnabled = new System.Windows.Forms.CheckBox();
             this.hairPictureBox = new System.Windows.Forms.PictureBox();
             this.facePreviewPictureBox = new System.Windows.Forms.PictureBox();
@@ -239,12 +245,9 @@
             this.label45 = new System.Windows.Forms.Label();
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
             this.label46 = new System.Windows.Forms.Label();
-            this.unlockAllPublicWorkProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
-            this.saveTownMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -254,6 +257,7 @@
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.playersTab.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.facePreviewPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).BeginInit();
@@ -464,7 +468,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -472,7 +476,7 @@
             // 
             this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -480,19 +484,32 @@
             // 
             this.saveAsToolStripMenuItem.Enabled = false;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(154, 6);
+            // 
+            // saveTownMapToolStripMenuItem
+            // 
+            this.saveTownMapToolStripMenuItem.Enabled = false;
+            this.saveTownMapToolStripMenuItem.Name = "saveTownMapToolStripMenuItem";
+            this.saveTownMapToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.saveTownMapToolStripMenuItem.Text = "Save Town Map";
+            this.saveTownMapToolStripMenuItem.Click += new System.EventHandler(this.saveTownMapToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(154, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -601,42 +618,12 @@
             // extrasToolStripMenuItem
             // 
             this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fillCatalogToolStripMenuItem,
-            this.fillEncyclopediaToolStripMenuItem,
-            this.getAllKKSongsToolStripMenuItem,
             this.fillMuseumToolStripMenuItem,
             this.unlockAllPublicWorkProjectsToolStripMenuItem,
-            this.clearCatalogToolStripMenuItem,
-            this.clearEncyclopediaToolStripMenuItem,
-            this.clearSongLibraryToolStripMenuItem,
             this.clearMuseumToolStripMenuItem});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
             this.extrasToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.extrasToolStripMenuItem.Text = "Extras";
-            // 
-            // fillCatalogToolStripMenuItem
-            // 
-            this.fillCatalogToolStripMenuItem.Enabled = false;
-            this.fillCatalogToolStripMenuItem.Name = "fillCatalogToolStripMenuItem";
-            this.fillCatalogToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
-            this.fillCatalogToolStripMenuItem.Text = "Fill Catalog";
-            this.fillCatalogToolStripMenuItem.Click += new System.EventHandler(this.fillCatalogToolStripMenuItem_Click);
-            // 
-            // fillEncyclopediaToolStripMenuItem
-            // 
-            this.fillEncyclopediaToolStripMenuItem.Enabled = false;
-            this.fillEncyclopediaToolStripMenuItem.Name = "fillEncyclopediaToolStripMenuItem";
-            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
-            this.fillEncyclopediaToolStripMenuItem.Text = "Fill Encyclopedia";
-            this.fillEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.fillEncyclopediaToolStripMenuItem_Click);
-            // 
-            // getAllKKSongsToolStripMenuItem
-            // 
-            this.getAllKKSongsToolStripMenuItem.Enabled = false;
-            this.getAllKKSongsToolStripMenuItem.Name = "getAllKKSongsToolStripMenuItem";
-            this.getAllKKSongsToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
-            this.getAllKKSongsToolStripMenuItem.Text = "Fill Song Library";
-            this.getAllKKSongsToolStripMenuItem.Click += new System.EventHandler(this.getAllKKSongsToolStripMenuItem_Click);
             // 
             // fillMuseumToolStripMenuItem
             // 
@@ -646,29 +633,13 @@
             this.fillMuseumToolStripMenuItem.Text = "Fill Museum";
             this.fillMuseumToolStripMenuItem.Click += new System.EventHandler(this.fillMuseumToolStripMenuItem_Click);
             // 
-            // clearCatalogToolStripMenuItem
+            // unlockAllPublicWorkProjectsToolStripMenuItem
             // 
-            this.clearCatalogToolStripMenuItem.Enabled = false;
-            this.clearCatalogToolStripMenuItem.Name = "clearCatalogToolStripMenuItem";
-            this.clearCatalogToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
-            this.clearCatalogToolStripMenuItem.Text = "Clear Catalog";
-            this.clearCatalogToolStripMenuItem.Click += new System.EventHandler(this.clearCatalogToolStripMenuItem_Click);
-            // 
-            // clearEncyclopediaToolStripMenuItem
-            // 
-            this.clearEncyclopediaToolStripMenuItem.Enabled = false;
-            this.clearEncyclopediaToolStripMenuItem.Name = "clearEncyclopediaToolStripMenuItem";
-            this.clearEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
-            this.clearEncyclopediaToolStripMenuItem.Text = "Clear Encyclopedia";
-            this.clearEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.clearEncyclopediaToolStripMenuItem_Click);
-            // 
-            // clearSongLibraryToolStripMenuItem
-            // 
-            this.clearSongLibraryToolStripMenuItem.Enabled = false;
-            this.clearSongLibraryToolStripMenuItem.Name = "clearSongLibraryToolStripMenuItem";
-            this.clearSongLibraryToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
-            this.clearSongLibraryToolStripMenuItem.Text = "Clear Song Library";
-            this.clearSongLibraryToolStripMenuItem.Click += new System.EventHandler(this.clearSongLibraryToolStripMenuItem_Click);
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Enabled = false;
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Name = "unlockAllPublicWorkProjectsToolStripMenuItem";
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Text = "Unlock All Public Work Projects";
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Click += new System.EventHandler(this.unlockAllPublicWorkProjectsToolStripMenuItem_Click);
             // 
             // clearMuseumToolStripMenuItem
             // 
@@ -702,6 +673,7 @@
             // 
             // playersTab
             // 
+            this.playersTab.Controls.Add(this.groupBox1);
             this.playersTab.Controls.Add(this.censusMenuEnabled);
             this.playersTab.Controls.Add(this.hairPictureBox);
             this.playersTab.Controls.Add(this.facePreviewPictureBox);
@@ -770,6 +742,112 @@
             this.playersTab.TabIndex = 0;
             this.playersTab.Text = "Players";
             this.playersTab.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.clearEmotionsButton);
+            this.groupBox1.Controls.Add(this.fillEmotionsButton);
+            this.groupBox1.Controls.Add(this.clearEncylopediaButton);
+            this.groupBox1.Controls.Add(this.fillEncyclopediaButton);
+            this.groupBox1.Controls.Add(this.clearSongLibraryButton);
+            this.groupBox1.Controls.Add(this.fillSongLibraryButton);
+            this.groupBox1.Controls.Add(this.clearCatalogButton);
+            this.groupBox1.Controls.Add(this.fillCatalogButton);
+            this.groupBox1.Location = new System.Drawing.Point(685, 422);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(240, 135);
+            this.groupBox1.TabIndex = 78;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Player Extras";
+            // 
+            // clearEmotionsButton
+            // 
+            this.clearEmotionsButton.Enabled = false;
+            this.clearEmotionsButton.Location = new System.Drawing.Point(124, 106);
+            this.clearEmotionsButton.Name = "clearEmotionsButton";
+            this.clearEmotionsButton.Size = new System.Drawing.Size(110, 23);
+            this.clearEmotionsButton.TabIndex = 7;
+            this.clearEmotionsButton.Text = "Clear Emotions";
+            this.clearEmotionsButton.UseVisualStyleBackColor = true;
+            this.clearEmotionsButton.Click += new System.EventHandler(this.clearEmotionsButton_Click);
+            // 
+            // fillEmotionsButton
+            // 
+            this.fillEmotionsButton.Enabled = false;
+            this.fillEmotionsButton.Location = new System.Drawing.Point(6, 106);
+            this.fillEmotionsButton.Name = "fillEmotionsButton";
+            this.fillEmotionsButton.Size = new System.Drawing.Size(110, 23);
+            this.fillEmotionsButton.TabIndex = 6;
+            this.fillEmotionsButton.Text = "Fill Emotions";
+            this.fillEmotionsButton.UseVisualStyleBackColor = true;
+            this.fillEmotionsButton.Click += new System.EventHandler(this.fillEmotionsButton_Click);
+            // 
+            // clearEncylopediaButton
+            // 
+            this.clearEncylopediaButton.Enabled = false;
+            this.clearEncylopediaButton.Location = new System.Drawing.Point(124, 77);
+            this.clearEncylopediaButton.Name = "clearEncylopediaButton";
+            this.clearEncylopediaButton.Size = new System.Drawing.Size(110, 23);
+            this.clearEncylopediaButton.TabIndex = 5;
+            this.clearEncylopediaButton.Text = "Clear Encyclopedia";
+            this.clearEncylopediaButton.UseVisualStyleBackColor = true;
+            this.clearEncylopediaButton.Click += new System.EventHandler(this.clearEncylopediaButton_Click);
+            // 
+            // fillEncyclopediaButton
+            // 
+            this.fillEncyclopediaButton.Enabled = false;
+            this.fillEncyclopediaButton.Location = new System.Drawing.Point(6, 77);
+            this.fillEncyclopediaButton.Name = "fillEncyclopediaButton";
+            this.fillEncyclopediaButton.Size = new System.Drawing.Size(110, 23);
+            this.fillEncyclopediaButton.TabIndex = 4;
+            this.fillEncyclopediaButton.Text = "Fill Encyclopedia";
+            this.fillEncyclopediaButton.UseVisualStyleBackColor = true;
+            this.fillEncyclopediaButton.Click += new System.EventHandler(this.fillEncyclopediaButton_Click);
+            // 
+            // clearSongLibraryButton
+            // 
+            this.clearSongLibraryButton.Enabled = false;
+            this.clearSongLibraryButton.Location = new System.Drawing.Point(124, 48);
+            this.clearSongLibraryButton.Name = "clearSongLibraryButton";
+            this.clearSongLibraryButton.Size = new System.Drawing.Size(110, 23);
+            this.clearSongLibraryButton.TabIndex = 3;
+            this.clearSongLibraryButton.Text = "Clear Song Library";
+            this.clearSongLibraryButton.UseVisualStyleBackColor = true;
+            this.clearSongLibraryButton.Click += new System.EventHandler(this.clearSongLibraryButton_Click);
+            // 
+            // fillSongLibraryButton
+            // 
+            this.fillSongLibraryButton.Enabled = false;
+            this.fillSongLibraryButton.Location = new System.Drawing.Point(6, 48);
+            this.fillSongLibraryButton.Name = "fillSongLibraryButton";
+            this.fillSongLibraryButton.Size = new System.Drawing.Size(110, 23);
+            this.fillSongLibraryButton.TabIndex = 2;
+            this.fillSongLibraryButton.Text = "Fill Song Library";
+            this.fillSongLibraryButton.UseVisualStyleBackColor = true;
+            this.fillSongLibraryButton.Click += new System.EventHandler(this.fillSongLibraryButton_Click);
+            // 
+            // clearCatalogButton
+            // 
+            this.clearCatalogButton.Enabled = false;
+            this.clearCatalogButton.Location = new System.Drawing.Point(124, 19);
+            this.clearCatalogButton.Name = "clearCatalogButton";
+            this.clearCatalogButton.Size = new System.Drawing.Size(110, 23);
+            this.clearCatalogButton.TabIndex = 1;
+            this.clearCatalogButton.Text = "Clear Catalog";
+            this.clearCatalogButton.UseVisualStyleBackColor = true;
+            this.clearCatalogButton.Click += new System.EventHandler(this.clearCatalogButton_Click);
+            // 
+            // fillCatalogButton
+            // 
+            this.fillCatalogButton.Enabled = false;
+            this.fillCatalogButton.Location = new System.Drawing.Point(6, 19);
+            this.fillCatalogButton.Name = "fillCatalogButton";
+            this.fillCatalogButton.Size = new System.Drawing.Size(110, 23);
+            this.fillCatalogButton.TabIndex = 0;
+            this.fillCatalogButton.Text = "Fill Catalog";
+            this.fillCatalogButton.UseVisualStyleBackColor = true;
+            this.fillCatalogButton.Click += new System.EventHandler(this.fillCatalogButton_Click);
             // 
             // censusMenuEnabled
             // 
@@ -2460,14 +2538,6 @@
             this.label46.TabIndex = 79;
             this.label46.Text = "0x";
             // 
-            // unlockAllPublicWorkProjectsToolStripMenuItem
-            // 
-            this.unlockAllPublicWorkProjectsToolStripMenuItem.Enabled = false;
-            this.unlockAllPublicWorkProjectsToolStripMenuItem.Name = "unlockAllPublicWorkProjectsToolStripMenuItem";
-            this.unlockAllPublicWorkProjectsToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
-            this.unlockAllPublicWorkProjectsToolStripMenuItem.Text = "Unlock All Public Work Projects";
-            this.unlockAllPublicWorkProjectsToolStripMenuItem.Click += new System.EventHandler(this.unlockAllPublicWorkProjectsToolStripMenuItem_Click);
-            // 
             // itemIdTextBox
             // 
             this.itemIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -2512,19 +2582,6 @@
             this.patternNameTextBox.TabIndex = 0;
             this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
-            // saveTownMapToolStripMenuItem
-            // 
-            this.saveTownMapToolStripMenuItem.Enabled = false;
-            this.saveTownMapToolStripMenuItem.Name = "saveTownMapToolStripMenuItem";
-            this.saveTownMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveTownMapToolStripMenuItem.Text = "Save Town Map";
-            this.saveTownMapToolStripMenuItem.Click += new System.EventHandler(this.saveTownMapToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2561,6 +2618,7 @@
             this.tabControl1.ResumeLayout(false);
             this.playersTab.ResumeLayout(false);
             this.playersTab.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.hairPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.facePreviewPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerWetsuit)).EndInit();
@@ -2746,8 +2804,6 @@
         private System.Windows.Forms.ToolStripMenuItem replaceItemsToolStripMenuItem;
         private System.Windows.Forms.Label townInfoLabel;
         private System.Windows.Forms.ToolStripMenuItem extrasToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fillEncyclopediaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem getAllKKSongsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
         private System.Windows.Forms.Panel housePanel;
@@ -2796,16 +2852,12 @@
         private System.Windows.Forms.Button importAcresButton;
         private System.Windows.Forms.ToolStripMenuItem importTownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportTownToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearEncyclopediaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearSongLibraryToolStripMenuItem;
         private System.Windows.Forms.TabPage shopTab;
         private System.Windows.Forms.TabControl shopTabControl;
         private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.TabPage tabPage10;
         private System.Windows.Forms.ToolStripMenuItem fillMuseumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearMuseumToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fillCatalogToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearCatalogToolStripMenuItem;
         private System.Windows.Forms.TabPage townMisc;
         private System.Windows.Forms.ComboBox nativeFruitBox;
         private System.Windows.Forms.Label label41;
@@ -2821,5 +2873,14 @@
         private System.Windows.Forms.ToolStripMenuItem unlockAllPublicWorkProjectsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveTownMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button clearEmotionsButton;
+        private System.Windows.Forms.Button fillEmotionsButton;
+        private System.Windows.Forms.Button clearEncylopediaButton;
+        private System.Windows.Forms.Button fillEncyclopediaButton;
+        private System.Windows.Forms.Button clearSongLibraryButton;
+        private System.Windows.Forms.Button fillSongLibraryButton;
+        private System.Windows.Forms.Button clearCatalogButton;
+        private System.Windows.Forms.Button fillCatalogButton;
     }
 }
