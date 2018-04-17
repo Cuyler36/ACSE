@@ -522,6 +522,7 @@ namespace ACSE
             resettiCheckBox.Enabled = true;
             saveAsToolStripMenuItem.Enabled = true;
             saveToolStripMenuItem.Enabled = true;
+            saveTownMapToolStripMenuItem.Enabled = true;
             secureValueToolStripMenuItem.Enabled = save.Save_Generation == SaveGeneration.N3DS;
             clearWeedsToolStripMenuItem.Enabled = true;
             removeAllItemsToolStripMenuItem.Enabled = true;
@@ -534,6 +535,7 @@ namespace ACSE
             clearMuseumToolStripMenuItem.Enabled = save.Save_Generation != SaveGeneration.N64;
             fillCatalogToolStripMenuItem.Enabled = true;
             clearCatalogToolStripMenuItem.Enabled = true;
+            unlockAllPublicWorkProjectsToolStripMenuItem.Enabled = save.Save_Generation == SaveGeneration.N3DS;
             acreCustomIdBox.Enabled = true;
             selectedItem.Enabled = true;
             itemIdTextBox.Enabled = true;
@@ -4512,6 +4514,27 @@ namespace ACSE
             if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
             {
                 Catalog.ClearCatalog(Save_File, Selected_Player);
+            }
+        }
+
+        private void unlockAllPublicWorkProjectsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Save_File.Save_Generation == SaveGeneration.N3DS)
+            {
+                int PWPUnlockedOffset = Save_File.Save_Data_Start_Offset + (Save_File.Save_Type == SaveType.New_Leaf ? 0x4D9C8 : 0x502A8);
+                for (int i = 0; i < 20; i++)
+                {
+                    Save_File.Write(PWPUnlockedOffset + i, (byte)0xFF);
+                }
+            }
+        }
+
+        private void saveTownMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading)
+            {
+                ImageGeneration.DumpTownAcreBitmap(Current_Save_Info.X_Acre_Count, Current_Save_Info.Acre_Count / Current_Save_Info.X_Acre_Count,
+                    ref Acre_Map);
             }
         }
 

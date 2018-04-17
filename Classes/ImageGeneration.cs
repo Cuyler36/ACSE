@@ -487,6 +487,46 @@ namespace ACSE
             return HairImage;
         }
 
+        public static void DumpTownAcreBitmap(int AcreCountX, int AcreCountY, ref PictureBoxWithInterpolationMode[] PictureBoxes)
+        {
+            Bitmap TownAcrePreview = new Bitmap(AcreCountX * PictureBoxes[0].BackgroundImage.Width, AcreCountY * PictureBoxes[0].BackgroundImage.Height);
+
+            using (Graphics g = Graphics.FromImage(TownAcrePreview))
+            {
+                for (int y = 0; y < AcreCountY; y++)
+                {
+                    for (int x = 0; x < AcreCountX; x++)
+                    {
+                        int LocationX = x * PictureBoxes[0].BackgroundImage.Width;
+                        int LocationY = y * PictureBoxes[0].BackgroundImage.Height;
+
+                        (PictureBoxes[y * AcreCountX + x].BackgroundImage as Bitmap).SetResolution(96, 96);
+
+                        g.DrawImage(PictureBoxes[y * AcreCountX + x].BackgroundImage, LocationX, LocationY);
+                    }
+                }
+            }
+
+            using (var SaveDialog = new SaveFileDialog())
+            {
+                SaveDialog.Filter = "Portable Network Graphic|*.png";
+                SaveDialog.FileName = "";
+
+                if (SaveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        TownAcrePreview.Save(SaveDialog.FileName, ImageFormat.Png);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("An error occured while saving your town acre preview!", "Acre Preview Image Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
         public static void DrawTownMapViewHouseImages(Villager[] Villagers, PictureBoxWithInterpolationMode[] PictureBoxes, Size PictureBoxSize)
         {
             int HouseImageSize = 16;

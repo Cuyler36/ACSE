@@ -63,22 +63,22 @@ namespace ACSE
             { 0x24, new ushort[] {0x00C8, 0x01E4} },
             { 0x25, new ushort[] {0x00FC} },
             { 0x26, new ushort[] {0x00F8, 0x0414} },
-            { 0x27, new ushort[] {0x0094, 0x0098, 0x0274, 0x0278, 0x027C, 0x0280, 0x0284, 0x0288, 0x028C, 0x0290} },
-            { 0x28, new ushort[] {0x00D8, 0x0170, 0x0174, 0x0220} },
-            { 0x29, new ushort[] {0x00DC, 0x01BC, 0x01DC, 0x0224} },
-            { 0x2A, new ushort[] {0x00E0, 0x01C0, 0x01E0, 0x0228} },
-            { 0x2B, new ushort[] {0x00E4, 0x0178, 0x022C} },
-            { 0x2C, new ushort[] {0x00E8, 0x017C, 0x0230} },
-            { 0x2D, new ushort[] {0x00EC, 0x01D0, 0x0234} },
-            { 0x2E, new ushort[] {0x00F0, 0x0180, 0x0184} },
-            { 0x2F, new ushort[] {0x0100, 0x024C, 0x0268} },
-            { 0x30, new ushort[] {0x0104, 0x0250, 0x026C} },
-            { 0x31, new ushort[] {0x0108, 0x0258, 0x0270} },
-            { 0x32, new ushort[] {0x010C, 0x0254} },
-            { 0x33, new ushort[] {0x0060, 0x025C} },
-            { 0x34, new ushort[] {0x0110, 0x0260} },
-            { 0x35, new ushort[] {0x0114, 0x0264} },
-            { 0x36, new ushort[] {0x0088, 0x011C, 0x018C, 0x0320} },
+            { 0x27, new ushort[] {0x0094, 0x0098, 0x0274, 0x0278, 0x027C, 0x0280, 0x0284, 0x0288, 0x028C, 0x0290} }, // Grass acres
+            { 0x28, new ushort[] {0x00D8, 0x0170, 0x0174, 0x0220} }, // River south
+            { 0x29, new ushort[] {0x00DC, 0x01BC, 0x01DC, 0x0224} }, // River east
+            { 0x2A, new ushort[] {0x00E0, 0x01C0, 0x01E0, 0x0228} }, // River west
+            { 0x2B, new ushort[] {0x00E4, 0x0178, 0x022C} }, // River south > east
+            { 0x2C, new ushort[] {0x00E8, 0x017C, 0x0230} }, // River east > south
+            { 0x2D, new ushort[] {0x00EC, 0x01D0, 0x0234} }, // River south > west
+            { 0x2E, new ushort[] {0x00F0, 0x0180, 0x0184} }, // River west > south
+            { 0x2F, new ushort[] {0x0100, 0x024C, 0x0268} }, // River south w/ bridge
+            { 0x30, new ushort[] {0x0104, 0x0250, 0x026C} }, // River east w/ brdige
+            { 0x31, new ushort[] {0x0108, 0x0258, 0x0270} }, // River west w/ bridge
+            { 0x32, new ushort[] {0x010C, 0x0254} }, // River south > east w/ bridge
+            { 0x33, new ushort[] {0x0060, 0x025C} }, // River east > south w/ bridge
+            { 0x34, new ushort[] {0x0110, 0x0260} }, // River south > west w/ bridge
+            { 0x35, new ushort[] {0x0114, 0x0264} }, // River west > south w/ bridge
+            { 0x36, new ushort[] {0x0088, 0x011C, 0x018C, 0x0320} }, // Ramp south
             { 0x37, new ushort[] {0x0120, 0x0188, 0x0410} },
             { 0x38, new ushort[] {0x0124} },
             { 0x39, new ushort[] {0x0128, 0x0190} },
@@ -135,6 +135,12 @@ namespace ACSE
             return AcreY * 7 + AcreX;
         }
 
+        private static void D1toD2(int Index, out int X, out int Y)
+        {
+            X = Index % 7;
+            Y = Index / 7;
+        }
+
         private static int GetXYCoordinateForBlockType(byte[] Data, int BlockType, out int X, out int Y)
         {
             int Index = -1;
@@ -183,9 +189,38 @@ namespace ACSE
             }
         }
 
+        private static int SearchForRiverStart(ref byte[] Data)
+        {
+            for (int i = 0; i < Data.Length; i++)
+            {
+                if (Data[i] == 0x0D)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         private static void TraceRiver(ref byte[] Data)
         {
+            int TrainTrackRiverAcre = SearchForRiverStart(ref Data);
+            if (TrainTrackRiverAcre > -1)
+            {
+                D1toD2(TrainTrackRiverAcre, out int TrainTrackRiverXAcre, out int TrainTrackRiverYAcre);
+                int CurrentYAcre = TrainTrackRiverYAcre;
+                int CurrentXAcre = TrainTrackRiverXAcre;
 
+                while (CurrentYAcre < 7)
+                {
+                    bool Turn = new Random().Next(0, 2) == 1;
+                    if (Turn)
+                    {
+                        bool TurnSuccessful = false;
+                        
+                    }
+                }
+            }
         }
 
         private static void SetUniqueRailBlock(ref byte[] Data)

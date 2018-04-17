@@ -58,6 +58,7 @@ namespace ACSE
 
     public class Mail : AnimalMail
     {
+        // Mail in Welcome Amiibo is 0x280 bytes long per (starts with Player Id then Player Name)
         private string sender;
         private ushort senderId;
         private string receipiant;

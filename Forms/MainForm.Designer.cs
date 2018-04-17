@@ -146,10 +146,23 @@
             this.acreTreeView = new System.Windows.Forms.TreeView();
             this.acrePanel = new System.Windows.Forms.Panel();
             this.townTab = new System.Windows.Forms.TabPage();
+            this.townInfoLabel = new System.Windows.Forms.Label();
             this.buildingsLabel = new System.Windows.Forms.Label();
             this.buildingsPanel = new System.Windows.Forms.Panel();
             this.townPanel = new System.Windows.Forms.Panel();
             this.buriedCheckbox = new System.Windows.Forms.CheckBox();
+            this.townMisc = new System.Windows.Forms.TabPage();
+            this.stationTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.stationPictureBox = new System.Windows.Forms.PictureBox();
+            this.nativeFruitBox = new System.Windows.Forms.ComboBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.weatherComboBox = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.grassLabel = new System.Windows.Forms.Label();
+            this.grassTypeBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.townNameBox = new System.Windows.Forms.TextBox();
             this.villagerTab = new System.Windows.Forms.TabPage();
             this.caravan2ComboBox = new System.Windows.Forms.ComboBox();
             this.label38 = new System.Windows.Forms.Label();
@@ -198,7 +211,6 @@
             this.grassLevelBox = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.setAllGrass = new System.Windows.Forms.Button();
-            this.townInfoLabel = new System.Windows.Forms.Label();
             this.acreID = new System.Windows.Forms.Label();
             this.acreDesc = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
@@ -227,21 +239,12 @@
             this.label45 = new System.Windows.Forms.Label();
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
             this.label46 = new System.Windows.Forms.Label();
-            this.townMisc = new System.Windows.Forms.TabPage();
-            this.nativeFruitBox = new System.Windows.Forms.ComboBox();
-            this.label41 = new System.Windows.Forms.Label();
-            this.weatherComboBox = new System.Windows.Forms.ComboBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.grassLabel = new System.Windows.Forms.Label();
-            this.grassTypeBox = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.townNameBox = new System.Windows.Forms.TextBox();
-            this.stationPictureBox = new System.Windows.Forms.PictureBox();
-            this.stationTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.label47 = new System.Windows.Forms.Label();
+            this.unlockAllPublicWorkProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
+            this.saveTownMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -266,6 +269,8 @@
             this.playerEditorSelect.SuspendLayout();
             this.acresTab.SuspendLayout();
             this.townTab.SuspendLayout();
+            this.townMisc.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.stationPictureBox)).BeginInit();
             this.villagerTab.SuspendLayout();
             this.villagerPanel.SuspendLayout();
             this.housesTab.SuspendLayout();
@@ -279,8 +284,6 @@
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
-            this.townMisc.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.stationPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -451,6 +454,8 @@
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator1,
+            this.saveTownMapToolStripMenuItem,
+            this.toolStripSeparator2,
             this.aboutToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -459,7 +464,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -467,7 +472,7 @@
             // 
             this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -475,19 +480,19 @@
             // 
             this.saveAsToolStripMenuItem.Enabled = false;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(111, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -600,6 +605,7 @@
             this.fillEncyclopediaToolStripMenuItem,
             this.getAllKKSongsToolStripMenuItem,
             this.fillMuseumToolStripMenuItem,
+            this.unlockAllPublicWorkProjectsToolStripMenuItem,
             this.clearCatalogToolStripMenuItem,
             this.clearEncyclopediaToolStripMenuItem,
             this.clearSongLibraryToolStripMenuItem,
@@ -612,7 +618,7 @@
             // 
             this.fillCatalogToolStripMenuItem.Enabled = false;
             this.fillCatalogToolStripMenuItem.Name = "fillCatalogToolStripMenuItem";
-            this.fillCatalogToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.fillCatalogToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.fillCatalogToolStripMenuItem.Text = "Fill Catalog";
             this.fillCatalogToolStripMenuItem.Click += new System.EventHandler(this.fillCatalogToolStripMenuItem_Click);
             // 
@@ -620,7 +626,7 @@
             // 
             this.fillEncyclopediaToolStripMenuItem.Enabled = false;
             this.fillEncyclopediaToolStripMenuItem.Name = "fillEncyclopediaToolStripMenuItem";
-            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.fillEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.fillEncyclopediaToolStripMenuItem.Text = "Fill Encyclopedia";
             this.fillEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.fillEncyclopediaToolStripMenuItem_Click);
             // 
@@ -628,7 +634,7 @@
             // 
             this.getAllKKSongsToolStripMenuItem.Enabled = false;
             this.getAllKKSongsToolStripMenuItem.Name = "getAllKKSongsToolStripMenuItem";
-            this.getAllKKSongsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.getAllKKSongsToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.getAllKKSongsToolStripMenuItem.Text = "Fill Song Library";
             this.getAllKKSongsToolStripMenuItem.Click += new System.EventHandler(this.getAllKKSongsToolStripMenuItem_Click);
             // 
@@ -636,7 +642,7 @@
             // 
             this.fillMuseumToolStripMenuItem.Enabled = false;
             this.fillMuseumToolStripMenuItem.Name = "fillMuseumToolStripMenuItem";
-            this.fillMuseumToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.fillMuseumToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.fillMuseumToolStripMenuItem.Text = "Fill Museum";
             this.fillMuseumToolStripMenuItem.Click += new System.EventHandler(this.fillMuseumToolStripMenuItem_Click);
             // 
@@ -644,7 +650,7 @@
             // 
             this.clearCatalogToolStripMenuItem.Enabled = false;
             this.clearCatalogToolStripMenuItem.Name = "clearCatalogToolStripMenuItem";
-            this.clearCatalogToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.clearCatalogToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.clearCatalogToolStripMenuItem.Text = "Clear Catalog";
             this.clearCatalogToolStripMenuItem.Click += new System.EventHandler(this.clearCatalogToolStripMenuItem_Click);
             // 
@@ -652,7 +658,7 @@
             // 
             this.clearEncyclopediaToolStripMenuItem.Enabled = false;
             this.clearEncyclopediaToolStripMenuItem.Name = "clearEncyclopediaToolStripMenuItem";
-            this.clearEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.clearEncyclopediaToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.clearEncyclopediaToolStripMenuItem.Text = "Clear Encyclopedia";
             this.clearEncyclopediaToolStripMenuItem.Click += new System.EventHandler(this.clearEncyclopediaToolStripMenuItem_Click);
             // 
@@ -660,7 +666,7 @@
             // 
             this.clearSongLibraryToolStripMenuItem.Enabled = false;
             this.clearSongLibraryToolStripMenuItem.Name = "clearSongLibraryToolStripMenuItem";
-            this.clearSongLibraryToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.clearSongLibraryToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.clearSongLibraryToolStripMenuItem.Text = "Clear Song Library";
             this.clearSongLibraryToolStripMenuItem.Click += new System.EventHandler(this.clearSongLibraryToolStripMenuItem_Click);
             // 
@@ -668,7 +674,7 @@
             // 
             this.clearMuseumToolStripMenuItem.Enabled = false;
             this.clearMuseumToolStripMenuItem.Name = "clearMuseumToolStripMenuItem";
-            this.clearMuseumToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.clearMuseumToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.clearMuseumToolStripMenuItem.Text = "Clear Museum";
             this.clearMuseumToolStripMenuItem.Click += new System.EventHandler(this.clearMuseumToolStripMenuItem_Click);
             // 
@@ -1533,6 +1539,16 @@
             this.townTab.Text = "Town Map";
             this.townTab.UseVisualStyleBackColor = true;
             // 
+            // townInfoLabel
+            // 
+            this.townInfoLabel.AutoSize = true;
+            this.townInfoLabel.Location = new System.Drawing.Point(68, 19);
+            this.townInfoLabel.Name = "townInfoLabel";
+            this.townInfoLabel.Size = new System.Drawing.Size(99, 13);
+            this.townInfoLabel.TabIndex = 13;
+            this.townInfoLabel.Text = "X: 0 | Y: 0 | Index: 0";
+            this.townInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // buildingsLabel
             // 
             this.buildingsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1576,6 +1592,150 @@
             this.buriedCheckbox.TabIndex = 8;
             this.buriedCheckbox.Text = "Buried";
             this.buriedCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // townMisc
+            // 
+            this.townMisc.Controls.Add(this.stationTypeComboBox);
+            this.townMisc.Controls.Add(this.label47);
+            this.townMisc.Controls.Add(this.stationPictureBox);
+            this.townMisc.Controls.Add(this.nativeFruitBox);
+            this.townMisc.Controls.Add(this.label41);
+            this.townMisc.Controls.Add(this.weatherComboBox);
+            this.townMisc.Controls.Add(this.label31);
+            this.townMisc.Controls.Add(this.grassLabel);
+            this.townMisc.Controls.Add(this.grassTypeBox);
+            this.townMisc.Controls.Add(this.label1);
+            this.townMisc.Controls.Add(this.townNameBox);
+            this.townMisc.Location = new System.Drawing.Point(4, 22);
+            this.townMisc.Name = "townMisc";
+            this.townMisc.Padding = new System.Windows.Forms.Padding(3);
+            this.townMisc.Size = new System.Drawing.Size(931, 565);
+            this.townMisc.TabIndex = 10;
+            this.townMisc.Text = "Town Misc.";
+            this.townMisc.UseVisualStyleBackColor = true;
+            // 
+            // stationTypeComboBox
+            // 
+            this.stationTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.stationTypeComboBox.Enabled = false;
+            this.stationTypeComboBox.FormattingEnabled = true;
+            this.stationTypeComboBox.Items.AddRange(new object[] {
+            "Wooden Station #1",
+            "Wooden Station #2",
+            "Wooden Station #3",
+            "Wooden Station #4",
+            "Wooden Station #5",
+            "Metal Station #1",
+            "Metal Station #2",
+            "Metal Station #3",
+            "Metal Station #4",
+            "Metal Station #5",
+            "Brick Station #1",
+            "Brick Station #2",
+            "Brick Station #3",
+            "Brick Station #4",
+            "Brick Station #5"});
+            this.stationTypeComboBox.Location = new System.Drawing.Point(254, 10);
+            this.stationTypeComboBox.Name = "stationTypeComboBox";
+            this.stationTypeComboBox.Size = new System.Drawing.Size(130, 21);
+            this.stationTypeComboBox.TabIndex = 30;
+            this.townToolTip.SetToolTip(this.stationTypeComboBox, "Sets the town\'s train station type.");
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(178, 13);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(70, 13);
+            this.label47.TabIndex = 29;
+            this.label47.Text = "Station Type:";
+            // 
+            // stationPictureBox
+            // 
+            this.stationPictureBox.Location = new System.Drawing.Point(390, 5);
+            this.stationPictureBox.Name = "stationPictureBox";
+            this.stationPictureBox.Size = new System.Drawing.Size(32, 32);
+            this.stationPictureBox.TabIndex = 28;
+            this.stationPictureBox.TabStop = false;
+            // 
+            // nativeFruitBox
+            // 
+            this.nativeFruitBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.nativeFruitBox.Enabled = false;
+            this.nativeFruitBox.FormattingEnabled = true;
+            this.nativeFruitBox.Location = new System.Drawing.Point(80, 90);
+            this.nativeFruitBox.Name = "nativeFruitBox";
+            this.nativeFruitBox.Size = new System.Drawing.Size(92, 21);
+            this.nativeFruitBox.TabIndex = 27;
+            this.townToolTip.SetToolTip(this.nativeFruitBox, "Sets the weather. Note that this will only work if you set it the same in-game da" +
+        "y as you dumped it.");
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(10, 93);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(64, 13);
+            this.label41.TabIndex = 26;
+            this.label41.Text = "Native Fruit:";
+            // 
+            // weatherComboBox
+            // 
+            this.weatherComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.weatherComboBox.Enabled = false;
+            this.weatherComboBox.FormattingEnabled = true;
+            this.weatherComboBox.Location = new System.Drawing.Point(80, 63);
+            this.weatherComboBox.Name = "weatherComboBox";
+            this.weatherComboBox.Size = new System.Drawing.Size(92, 21);
+            this.weatherComboBox.TabIndex = 25;
+            this.townToolTip.SetToolTip(this.weatherComboBox, "Sets the weather. Note that this will only work if you set it the same in-game da" +
+        "y as you dumped it.");
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(23, 66);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(51, 13);
+            this.label31.TabIndex = 24;
+            this.label31.Text = "Weather:";
+            // 
+            // grassLabel
+            // 
+            this.grassLabel.AutoSize = true;
+            this.grassLabel.Location = new System.Drawing.Point(10, 39);
+            this.grassLabel.Name = "grassLabel";
+            this.grassLabel.Size = new System.Drawing.Size(64, 13);
+            this.grassLabel.TabIndex = 23;
+            this.grassLabel.Text = "Grass Type:";
+            // 
+            // grassTypeBox
+            // 
+            this.grassTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.grassTypeBox.Enabled = false;
+            this.grassTypeBox.FormattingEnabled = true;
+            this.grassTypeBox.Location = new System.Drawing.Point(80, 36);
+            this.grassTypeBox.Name = "grassTypeBox";
+            this.grassTypeBox.Size = new System.Drawing.Size(92, 21);
+            this.grassTypeBox.TabIndex = 22;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 13);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "Town Name:";
+            // 
+            // townNameBox
+            // 
+            this.townNameBox.Enabled = false;
+            this.townNameBox.Location = new System.Drawing.Point(80, 10);
+            this.townNameBox.MaxLength = 8;
+            this.townNameBox.Name = "townNameBox";
+            this.townNameBox.Size = new System.Drawing.Size(92, 20);
+            this.townNameBox.TabIndex = 20;
             // 
             // villagerTab
             // 
@@ -2097,16 +2257,6 @@
             this.setAllGrass.UseVisualStyleBackColor = true;
             this.setAllGrass.Click += new System.EventHandler(this.setAllGrass_Click);
             // 
-            // townInfoLabel
-            // 
-            this.townInfoLabel.AutoSize = true;
-            this.townInfoLabel.Location = new System.Drawing.Point(68, 19);
-            this.townInfoLabel.Name = "townInfoLabel";
-            this.townInfoLabel.Size = new System.Drawing.Size(99, 13);
-            this.townInfoLabel.TabIndex = 13;
-            this.townInfoLabel.Text = "X: 0 | Y: 0 | Index: 0";
-            this.townInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // acreID
             // 
             this.acreID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -2310,149 +2460,13 @@
             this.label46.TabIndex = 79;
             this.label46.Text = "0x";
             // 
-            // townMisc
+            // unlockAllPublicWorkProjectsToolStripMenuItem
             // 
-            this.townMisc.Controls.Add(this.stationTypeComboBox);
-            this.townMisc.Controls.Add(this.label47);
-            this.townMisc.Controls.Add(this.stationPictureBox);
-            this.townMisc.Controls.Add(this.nativeFruitBox);
-            this.townMisc.Controls.Add(this.label41);
-            this.townMisc.Controls.Add(this.weatherComboBox);
-            this.townMisc.Controls.Add(this.label31);
-            this.townMisc.Controls.Add(this.grassLabel);
-            this.townMisc.Controls.Add(this.grassTypeBox);
-            this.townMisc.Controls.Add(this.label1);
-            this.townMisc.Controls.Add(this.townNameBox);
-            this.townMisc.Location = new System.Drawing.Point(4, 22);
-            this.townMisc.Name = "townMisc";
-            this.townMisc.Padding = new System.Windows.Forms.Padding(3);
-            this.townMisc.Size = new System.Drawing.Size(931, 565);
-            this.townMisc.TabIndex = 10;
-            this.townMisc.Text = "Town Misc.";
-            this.townMisc.UseVisualStyleBackColor = true;
-            // 
-            // nativeFruitBox
-            // 
-            this.nativeFruitBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.nativeFruitBox.Enabled = false;
-            this.nativeFruitBox.FormattingEnabled = true;
-            this.nativeFruitBox.Location = new System.Drawing.Point(80, 90);
-            this.nativeFruitBox.Name = "nativeFruitBox";
-            this.nativeFruitBox.Size = new System.Drawing.Size(92, 21);
-            this.nativeFruitBox.TabIndex = 27;
-            this.townToolTip.SetToolTip(this.nativeFruitBox, "Sets the weather. Note that this will only work if you set it the same in-game da" +
-        "y as you dumped it.");
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(10, 93);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(64, 13);
-            this.label41.TabIndex = 26;
-            this.label41.Text = "Native Fruit:";
-            // 
-            // weatherComboBox
-            // 
-            this.weatherComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.weatherComboBox.Enabled = false;
-            this.weatherComboBox.FormattingEnabled = true;
-            this.weatherComboBox.Location = new System.Drawing.Point(80, 63);
-            this.weatherComboBox.Name = "weatherComboBox";
-            this.weatherComboBox.Size = new System.Drawing.Size(92, 21);
-            this.weatherComboBox.TabIndex = 25;
-            this.townToolTip.SetToolTip(this.weatherComboBox, "Sets the weather. Note that this will only work if you set it the same in-game da" +
-        "y as you dumped it.");
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(23, 66);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(51, 13);
-            this.label31.TabIndex = 24;
-            this.label31.Text = "Weather:";
-            // 
-            // grassLabel
-            // 
-            this.grassLabel.AutoSize = true;
-            this.grassLabel.Location = new System.Drawing.Point(10, 39);
-            this.grassLabel.Name = "grassLabel";
-            this.grassLabel.Size = new System.Drawing.Size(64, 13);
-            this.grassLabel.TabIndex = 23;
-            this.grassLabel.Text = "Grass Type:";
-            // 
-            // grassTypeBox
-            // 
-            this.grassTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.grassTypeBox.Enabled = false;
-            this.grassTypeBox.FormattingEnabled = true;
-            this.grassTypeBox.Location = new System.Drawing.Point(80, 36);
-            this.grassTypeBox.Name = "grassTypeBox";
-            this.grassTypeBox.Size = new System.Drawing.Size(92, 21);
-            this.grassTypeBox.TabIndex = 22;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 13);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "Town Name:";
-            // 
-            // townNameBox
-            // 
-            this.townNameBox.Enabled = false;
-            this.townNameBox.Location = new System.Drawing.Point(80, 10);
-            this.townNameBox.MaxLength = 8;
-            this.townNameBox.Name = "townNameBox";
-            this.townNameBox.Size = new System.Drawing.Size(92, 20);
-            this.townNameBox.TabIndex = 20;
-            // 
-            // stationPictureBox
-            // 
-            this.stationPictureBox.Location = new System.Drawing.Point(390, 5);
-            this.stationPictureBox.Name = "stationPictureBox";
-            this.stationPictureBox.Size = new System.Drawing.Size(32, 32);
-            this.stationPictureBox.TabIndex = 28;
-            this.stationPictureBox.TabStop = false;
-            // 
-            // stationTypeComboBox
-            // 
-            this.stationTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.stationTypeComboBox.Enabled = false;
-            this.stationTypeComboBox.FormattingEnabled = true;
-            this.stationTypeComboBox.Items.AddRange(new object[] {
-            "Wooden Station #1",
-            "Wooden Station #2",
-            "Wooden Station #3",
-            "Wooden Station #4",
-            "Wooden Station #5",
-            "Metal Station #1",
-            "Metal Station #2",
-            "Metal Station #3",
-            "Metal Station #4",
-            "Metal Station #5",
-            "Brick Station #1",
-            "Brick Station #2",
-            "Brick Station #3",
-            "Brick Station #4",
-            "Brick Station #5"});
-            this.stationTypeComboBox.Location = new System.Drawing.Point(254, 10);
-            this.stationTypeComboBox.Name = "stationTypeComboBox";
-            this.stationTypeComboBox.Size = new System.Drawing.Size(130, 21);
-            this.stationTypeComboBox.TabIndex = 30;
-            this.townToolTip.SetToolTip(this.stationTypeComboBox, "Sets the town\'s train station type.");
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(178, 13);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(70, 13);
-            this.label47.TabIndex = 29;
-            this.label47.Text = "Station Type:";
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Enabled = false;
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Name = "unlockAllPublicWorkProjectsToolStripMenuItem";
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Text = "Unlock All Public Work Projects";
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Click += new System.EventHandler(this.unlockAllPublicWorkProjectsToolStripMenuItem_Click);
             // 
             // itemIdTextBox
             // 
@@ -2497,6 +2511,19 @@
             this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
             this.patternNameTextBox.TabIndex = 0;
             this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
+            // 
+            // saveTownMapToolStripMenuItem
+            // 
+            this.saveTownMapToolStripMenuItem.Enabled = false;
+            this.saveTownMapToolStripMenuItem.Name = "saveTownMapToolStripMenuItem";
+            this.saveTownMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveTownMapToolStripMenuItem.Text = "Save Town Map";
+            this.saveTownMapToolStripMenuItem.Click += new System.EventHandler(this.saveTownMapToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // MainForm
             // 
@@ -2551,6 +2578,9 @@
             this.acresTab.PerformLayout();
             this.townTab.ResumeLayout(false);
             this.townTab.PerformLayout();
+            this.townMisc.ResumeLayout(false);
+            this.townMisc.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.stationPictureBox)).EndInit();
             this.villagerTab.ResumeLayout(false);
             this.villagerTab.PerformLayout();
             this.villagerPanel.ResumeLayout(false);
@@ -2569,9 +2599,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
-            this.townMisc.ResumeLayout(false);
-            this.townMisc.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.stationPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2791,5 +2818,8 @@
         private System.Windows.Forms.ComboBox stationTypeComboBox;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.PictureBox stationPictureBox;
+        private System.Windows.Forms.ToolStripMenuItem unlockAllPublicWorkProjectsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveTownMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
