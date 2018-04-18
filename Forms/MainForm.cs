@@ -1094,6 +1094,45 @@ namespace ACSE
 
                 playersTab.Controls.Add(islandBoxEditor);
             }
+
+            // Badges (for New Leaf)
+            if (badgeGroupBox.Controls.Count > 0)
+            {
+                ClearBadges();
+            }
+
+            if (Save_File.Save_Generation == SaveGeneration.N3DS)
+            {
+                AddBadges();
+            }
+        }
+
+        private void AddBadges()
+        {
+            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            {
+                int Badge11ValueOffset = Save_File.Save_Type == SaveType.New_Leaf ? 0x6B84 : 0x6BA4;
+                int BadgeValueOffset = 0x55DC; // These are the same for each version.
+                int BadgeLevelOffset = 0x569C; // These are also the same.
+
+                for (int i = 0; i < 24; i++)
+                {
+                    var BadgeControl = new BadgeControl(Save_File, i, Selected_Player.Offset + BadgeLevelOffset + i,
+                        Selected_Player.Offset + (i == 11 ? Badge11ValueOffset : BadgeValueOffset + i * 8));
+                    badgeGroupBox.Controls.Add(BadgeControl);
+                    BadgeControl.Location = new Point(10 + (i % 6) * 30, 16 + (i / 6) * 30);
+                }
+            }
+        }
+
+        private void ClearBadges()
+        {
+            // Dispose to clear memory
+            foreach (Control c in badgeGroupBox.Controls)
+            {
+                c.Dispose();
+            }
+            badgeGroupBox.Controls.Clear();
         }
 
         private void SetPlayersEnabled()
@@ -1441,6 +1480,13 @@ namespace ACSE
             if (islandBoxEditor != null && !islandBoxEditor.IsDisposed && Player.Data.IslandBox != null)
             {
                 islandBoxEditor.Items = Player.Data.IslandBox;
+            }
+
+            // Refresh Badges (New Leaf)
+            if (Save_File.Save_Generation == SaveGeneration.N3DS)
+            {
+                ClearBadges();
+                AddBadges();
             }
         }
 

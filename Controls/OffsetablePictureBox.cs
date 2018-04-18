@@ -12,7 +12,7 @@ namespace ACSE
 
     class OffsetablePictureBox : Panel
     {
-        private PictureBoxWithInterpolationMode pictureBox;
+        protected PictureBoxWithInterpolationMode pictureBox;
 
         public Point Offset
         {

@@ -63,6 +63,26 @@ namespace ACSE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Animal_Crossing_NL_Badges_28x28 {
+            get {
+                object obj = ResourceManager.GetObject("Animal_Crossing_NL_Badges_28x28", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Animal_Crossing_NL_NoBadge_28x28 {
+            get {
+                object obj = ResourceManager.GetObject("Animal_Crossing_NL_NoBadge_28x28", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Arrow {
             get {
                 object obj = ResourceManager.GetObject("Arrow", resourceCulture);

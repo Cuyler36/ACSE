@@ -76,6 +76,8 @@
     <Content Include="Resources\AC_Villagers_en.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Animal_Crossing_NL_Badges_28x28.png" />
+    <None Include="Resources\Animal_Crossing_NL_NoBadge_28x28.png" />
     <Content Include="Resources\CF_Acres_en.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -3739,6 +3741,9 @@
     <Compile Include="Classes\Saves\SaveBase.cs" />
     <Compile Include="Classes\Saves\WiiSave.cs" />
     <Compile Include="Classes\TrainStation.cs" />
+    <Compile Include="Controls\BadgeControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\OffsetablePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
