@@ -249,6 +249,7 @@
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
+            this.unlockHHDItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             this.patternEditorPanel.SuspendLayout();
@@ -534,7 +535,7 @@
             // 
             this.clearWeedsToolStripMenuItem.Enabled = false;
             this.clearWeedsToolStripMenuItem.Name = "clearWeedsToolStripMenuItem";
-            this.clearWeedsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.clearWeedsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clearWeedsToolStripMenuItem.Text = "Clear Weeds";
             this.clearWeedsToolStripMenuItem.Click += new System.EventHandler(this.clearWeedsToolStripMenuItem_Click);
             // 
@@ -542,7 +543,7 @@
             // 
             this.removeAllItemsToolStripMenuItem.Enabled = false;
             this.removeAllItemsToolStripMenuItem.Name = "removeAllItemsToolStripMenuItem";
-            this.removeAllItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.removeAllItemsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.removeAllItemsToolStripMenuItem.Text = "Remove All Items";
             this.removeAllItemsToolStripMenuItem.Click += new System.EventHandler(this.removeAllItemsToolStripMenuItem_Click);
             // 
@@ -550,7 +551,7 @@
             // 
             this.waterFlowersToolStripMenuItem.Enabled = false;
             this.waterFlowersToolStripMenuItem.Name = "waterFlowersToolStripMenuItem";
-            this.waterFlowersToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.waterFlowersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.waterFlowersToolStripMenuItem.Text = "Water Flowers";
             this.waterFlowersToolStripMenuItem.Click += new System.EventHandler(this.waterFlowersToolStripMenuItem_Click);
             // 
@@ -558,7 +559,7 @@
             // 
             this.makeFruitsPerfectToolStripMenuItem.Enabled = false;
             this.makeFruitsPerfectToolStripMenuItem.Name = "makeFruitsPerfectToolStripMenuItem";
-            this.makeFruitsPerfectToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.makeFruitsPerfectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.makeFruitsPerfectToolStripMenuItem.Text = "Make Fruits Perfect";
             this.makeFruitsPerfectToolStripMenuItem.Click += new System.EventHandler(this.makeFruitsPerfectToolStripMenuItem_Click);
             // 
@@ -568,7 +569,7 @@
             this.replaceToolStripMenuItem});
             this.replaceItemsToolStripMenuItem.Enabled = false;
             this.replaceItemsToolStripMenuItem.Name = "replaceItemsToolStripMenuItem";
-            this.replaceItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.replaceItemsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.replaceItemsToolStripMenuItem.Text = "Replace Items";
             // 
             // replaceToolStripMenuItem
@@ -582,7 +583,7 @@
             // 
             this.importTownToolStripMenuItem.Enabled = false;
             this.importTownToolStripMenuItem.Name = "importTownToolStripMenuItem";
-            this.importTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.importTownToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importTownToolStripMenuItem.Text = "Import Town";
             this.importTownToolStripMenuItem.Click += new System.EventHandler(this.importTownToolStripMenuItem_Click);
             // 
@@ -590,7 +591,7 @@
             // 
             this.exportTownToolStripMenuItem.Enabled = false;
             this.exportTownToolStripMenuItem.Name = "exportTownToolStripMenuItem";
-            this.exportTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.exportTownToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportTownToolStripMenuItem.Text = "Export Town";
             this.exportTownToolStripMenuItem.Click += new System.EventHandler(this.exportTownToolStripMenuItem_Click);
             // 
@@ -598,8 +599,9 @@
             // 
             this.extrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fillMuseumToolStripMenuItem,
+            this.clearMuseumToolStripMenuItem,
             this.unlockAllPublicWorkProjectsToolStripMenuItem,
-            this.clearMuseumToolStripMenuItem});
+            this.unlockHHDItemsToolStripMenuItem});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
             this.extrasToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.extrasToolStripMenuItem.Text = "Extras";
@@ -2597,6 +2599,14 @@
             this.patternNameTextBox.TabIndex = 0;
             this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
+            // unlockHHDItemsToolStripMenuItem
+            // 
+            this.unlockHHDItemsToolStripMenuItem.Enabled = false;
+            this.unlockHHDItemsToolStripMenuItem.Name = "unlockHHDItemsToolStripMenuItem";
+            this.unlockHHDItemsToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
+            this.unlockHHDItemsToolStripMenuItem.Text = "Unlock HHD Items";
+            this.unlockHHDItemsToolStripMenuItem.Click += new System.EventHandler(this.unlockHHDItemsToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2898,5 +2908,6 @@
         private System.Windows.Forms.Button clearCatalogButton;
         private System.Windows.Forms.Button fillCatalogButton;
         private System.Windows.Forms.GroupBox badgeGroupBox;
+        private System.Windows.Forms.ToolStripMenuItem unlockHHDItemsToolStripMenuItem;
     }
 }

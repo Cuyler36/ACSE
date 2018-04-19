@@ -524,6 +524,7 @@ namespace ACSE
             saveToolStripMenuItem.Enabled = true;
             saveTownMapToolStripMenuItem.Enabled = true;
             secureValueToolStripMenuItem.Enabled = save.Save_Generation == SaveGeneration.N3DS;
+            unlockHHDItemsToolStripMenuItem.Enabled = save.Save_Type == SaveType.Welcome_Amiibo;
             clearWeedsToolStripMenuItem.Enabled = true;
             removeAllItemsToolStripMenuItem.Enabled = true;
             replaceItemsToolStripMenuItem.Enabled = true;
@@ -4622,6 +4623,16 @@ namespace ACSE
             if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
             {
                 Catalog.ClearCatalog(Save_File, Selected_Player);
+            }
+        }
+
+        private void unlockHHDItemsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Save_File.Save_Type == SaveType.Welcome_Amiibo)
+            {
+                int HHD_Offset = Save_File.Save_Data_Start_Offset + 0x6215C;
+                Save_File.Write(HHD_Offset, (byte)(Save_File.ReadByte(HHD_Offset) | 0x04));
+                MessageBox.Show("Happy Home Designer Conent is now unlocked!", "HHD Content", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
