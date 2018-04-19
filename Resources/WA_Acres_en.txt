@@ -19,9 +19,9 @@
 0x0010, Train Station #1
 0x0011, Train Station #2
 0x0012, Train Station (w/ Pond) #3
-0x00D2, Unused Building Acre #1
-0x00D3, Unused Building Acre #2
-0x00D4, Unused Building Acre #3
+0x00D4, Unused Building Acre #1
+0x00D5, Unused Building Acre #2
+0x00D6, Unused Building Acre #3
 //River Acres
 0x0013, River (East) #1
 0x0014, River (East) #2
@@ -188,27 +188,27 @@
 0x00AF, Top Ocean
 0x00B0, Top Right Ocean
 //Island Acres
-0x00B4, Island Acre (North) #1
-0x00B5, Island Acre (North) #2
-0x00B6, Island Acre (North) #3
-0x00B7, Island Acre Corner (North <> East) #1
-0x00B8, Island Acre Corner (North <> East) #2
-0x00B9, Island Acre Corner (North <> East) #3
-0x00BA, Island Acre (East) #1
-0x00BB, Island Acre (East) #2
-0x00BC, Island Acre (East) #3
-0x00BD, Island Acre Corner (East <> South) #1
-0x00BE, Island Acre Corner (East <> South) #2
-0x00BF, Island Acre Corner (East <> South) #3
-0x00C0, Island Acre (South) #1
-0x00C1, Island Acre (South) #2
-0x00C2, Island Acre (South) #3
-0x00C3, Island Acre Corner (South <> West) #1
-0x00C4, Island Acre Corner (South <> West) #2
-0x00C5, Island Acre Corner (South <> West) #3
-0x00C6, Island Acre (West) #1
-0x00C7, Island Acre (West) #2
-0x00C8, Island Acre (West) #3
-0x00C9, Island Acre Corner (West <> North) #1
-0x00CA, Island Acre Corner (West <> North) #2
-0x00CB, Island Acre Corner (West <> North) #3
+0x00B6, Island Acre (North) #1
+0x00B7, Island Acre (North) #2
+0x00B8, Island Acre (North) #3
+0x00B9, Island Acre Corner (North <> East) #1
+0x00BA, Island Acre Corner (North <> East) #2
+0x00BB, Island Acre Corner (North <> East) #3
+0x00BC, Island Acre (East) #1
+0x00BD, Island Acre (East) #2
+0x00BE, Island Acre (East) #3
+0x00BF, Island Acre Corner (East <> South) #1
+0x00C0, Island Acre Corner (East <> South) #2
+0x00C1, Island Acre Corner (East <> South) #3
+0x00C2, Island Acre (South) #1
+0x00C3, Island Acre (South) #2
+0x00C4, Island Acre (South) #3
+0x00C5, Island Acre Corner (South <> West) #1
+0x00C6, Island Acre Corner (South <> West) #2
+0x00C7, Island Acre Corner (South <> West) #3
+0x00C8, Island Acre (West) #1
+0x00C9, Island Acre (West) #2
+0x00CA, Island Acre (West) #3
+0x00CB, Island Acre Corner (West <> North) #1
+0x00CC, Island Acre Corner (West <> North) #2
+0x00CD, Island Acre Corner (West <> North) #3
