@@ -4632,7 +4632,7 @@ namespace ACSE
             {
                 int HHD_Offset = Save_File.Save_Data_Start_Offset + 0x6215C;
                 Save_File.Write(HHD_Offset, (byte)(Save_File.ReadByte(HHD_Offset) | 0x04));
-                MessageBox.Show("Happy Home Designer Conent is now unlocked!", "HHD Content", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Happy Home Designer Content is now unlocked!", "HHD Content", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
