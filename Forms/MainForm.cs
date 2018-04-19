@@ -2832,7 +2832,8 @@ namespace ACSE
                     Save_File.ChangesMade = true;
                     string Acre_ID_String = Selected_Acre_ID.ToString("X");
                     if (Island)
-                        Island_Acres[Acre_Index] = new WorldAcre((ushort)(Selected_Acre_ID + Acre_Height_Modifier), Acre_Index);
+                        Island_Acres[Acre_Index] = new WorldAcre((ushort)(Selected_Acre_ID + Acre_Height_Modifier), Acre_Index,
+                            Island_Acres[Acre_Index].Acre_Items);
                     else
                         Acres[Acre_Index] = new WorldAcre((ushort)(Selected_Acre_ID + Acre_Height_Modifier), Acre_Index);
 
@@ -2880,7 +2881,14 @@ namespace ACSE
                 {
                     var OldImage = selectedAcrePicturebox.Image;
                     selectedAcrePicturebox.Image = Acre_Box.BackgroundImage;
-                    AcreData.CheckReferencesAndDispose(OldImage, Island ? Island_Acre_Map : Acre_Map, selectedAcrePicturebox);
+                    if (Save_File.Save_Generation == SaveGeneration.N3DS)
+                    {
+                        AcreData.CheckReferencesAndDispose(OldImage, Island ? NL_Island_Acre_Map : Acre_Map, selectedAcrePicturebox);
+                    }
+                    else
+                    {
+                        AcreData.CheckReferencesAndDispose(OldImage, Island ? Island_Acre_Map : Acre_Map, selectedAcrePicturebox);
+                    }
 
                     Selected_Acre_ID = Island ? Island_Acres[Acre_Index].AcreID : Acres[Acre_Index].AcreID;
                     string Acre_Str = Save_File.Save_Generation == SaveGeneration.NDS ? Selected_Acre_ID.ToString("X2") : Selected_Acre_ID.ToString("X4");
@@ -3762,7 +3770,7 @@ namespace ACSE
                     Building B = Check_Building_is_Here(Acre, X, Y, Island);
                     if (B != null)
                         townToolTip.Show(string.Format("{0} - [0x{1} - Building]", B.Name, B.ID.ToString("X2")), sender as PictureBox, e.X + 15, e.Y + 10);
-                    else
+                    else if (Item != null)
                         townToolTip.Show(string.Format("{0}{1} - [0x{2}]", Item.Name,
                             Item.Burried ? " (Buried)" : (Item.Watered ? " (Watered)" : (Item.Flag1 == 1 ? " (Perfect Fruit)" : "")),
                             Item.ItemID.ToString("X4")), sender as PictureBox, e.X + 15, e.Y + 10);

@@ -19,6 +19,9 @@
 0x0010, Train Station #1
 0x0011, Train Station #2
 0x0012, Train Station (w/ Pond) #3
+0x00D2, Unused Building Acre #1
+0x00D3, Unused Building Acre #2
+0x00D4, Unused Building Acre #3
 //River Acres
 0x0013, River (East) #1
 0x0014, River (East) #2
@@ -53,4 +56,159 @@
 0x0031, River (West > South) #3
 0x0032, River (North) #2
 0x0033, River (South) #1
-//Lake and Waterfall Acres
+0x0070, River Outlet (South) #1
+0x0071, River Outlet (South) #2
+0x0072, River Outlet (South) #3
+0x0073, River Outlet (East) #1
+0x0074, River Outlet (East) #2
+0x0075, River Outlet (East) #3
+0x0076, River Outlet (West) #1
+0x0077, River Outlet (West) #2
+0x0078, River Outlet (West) #3
+0x0079, River Outlet (South) #4
+0x007A, River Outlet (South) #5
+0x007B, River Outlet (South) #6
+0x007C, River Outlet (East) #4
+0x007D, River Outlet (East) #5
+0x007E, River Outlet (East) #6
+0x007F, River Outlet (South) #7
+0x0080, River Outlet (South) #8
+0x0081, River Outlet (South) #9
+0x0082, River Outlet (West) #4
+0x0083, River Outlet (West) #5
+0x0084, River Outlet (West) #6
+//Lake Acres
+0x0034, Lake (East) #1
+0x0035, Lake (East) #2
+0x0036, Lake (East > North) #1
+0x0037, Lake (East > North) #2
+0x0038, Lake (East > South) #1
+0x0039, Lake (East > South) #2
+0x003A, Lake (North) #1
+0x003B, Lake (North > East) #1
+0x003C, Lake (North > East) #2
+0x003D, Lake (North > West) #1
+0x003E, Lake (North > West) #2
+0x003F, Lake (South > East) #1
+0x0040, Lake (South > East) #2
+0x0041, Lake (South > West) #1
+0x0042, Lake (South > West) #2
+0x0043, Lake (West) #1
+0x0044, Lake (West) #2
+0x0045, Lake (West > North) #1
+0x0046, Lake (West > North) #2
+0x0047, Lake (West > South) #1
+0x0048, Lake (West > South) #2
+0x0049, Lake (South) #1
+//Waterfall Acres
+0x004A, Waterfall (East) #1
+0x004B, Waterfall (East) #2
+0x004C, Waterfall (East) #3
+0x004D, Waterfall (West) #1
+0x004E, Waterfall (West) #2
+0x004F, Waterfall (West) #3
+//Beach Cliff Acres
+0x0050, Beach Cliff (South) #1
+0x0051, Beach Cliff (South) #2
+0x0052, Beach Cliff (South) #3
+0x0053, Beach Cliff (South) #4
+0x0054, Beach Cliff (South) #5
+0x0055, Beach Cliff (South) #6
+0x0056, Beach Cliff (South) #7
+0x0057, Beach Cliff (South) #8
+0x0058, Beach Cliff (South) #9
+0x0059, Beach Cliff (South) #10
+0x005A, Right Corner Beach Cliff #1
+0x005B, Right Corner Beach Cliff #2
+0x005C, Beach Cliff (East) #1
+0x005D, Beach Cliff (East) #2
+0x005E, Beach Cliff (East) #3
+0x005F, Beach Cliff (South) #11
+0x0060, Beach Cliff (South) #12
+0x0061, Beach Cliff (South) #13
+0x0062, Beach Cliff (South) #14
+0x0063, Beach Cliff (South) #15
+0x0064, Beach Cliff (South) #16
+0x0065, Left Corner Beach Cliff #1
+0x0066, Left Corner Beach Cliff #2
+0x0067, Beach Cliff (West) #1
+0x0068, Beach Cliff (West) #2
+0x0069, Beach Cliff (West) #3
+0x006A, Beach Cliff (East) #4
+0x006B, Beach Cliff (East) #5
+0x006C, Beach Cliff (East) #6
+0x006D, Beach Cliff (West) #4
+0x006E, Beach Cliff (West) #5
+0x006F, Beach Cliff (West) #6
+//Beach Ramp Acres
+0x0085, Beach Ramp (South) #1
+0x0086, Beach Ramp (South) #2
+0x0087, Beach Ramp (South) #3
+0x0088, Beach Ramp (East) #1
+0x0089, Beach Ramp (East) #2
+0x008A, Beach Ramp (East) #3
+0x008B, Beach Ramp (West) #1
+0x008C, Beach Ramp (West) #2
+0x008D, Beach Ramp (West) #3
+0x008E, Beach Ramp (South) #4
+0x008F, Beach Ramp (South) #5
+0x0090, Beach Ramp (South) #6
+0x0091, Beach Ramp (East) #4
+0x0092, Beach Ramp (East) #5
+0x0093, Beach Ramp (East) #6
+0x0094, Beach Ramp (South) #7
+0x0095, Beach Ramp (South) #8
+0x0096, Beach Ramp (South) #9
+0x0097, Beach Ramp (West) #4
+0x0098, Beach Ramp (West) #5
+0x0099, Beach Ramp (West) #6
+//Border Acres
+0x009A, East Border Cliff
+0x009B, Campground East Entrance
+0x009C, East Border Cliff w/ River
+0x009D, East Border Cliff w/ Ocean
+0x009E, Main Street #1
+0x009F, Main Street #2
+0x00A0, Main Street #3
+0x00A1, Main Street #4
+0x00A2, Main Street #5
+0x00A3, Main Street #6
+0x00A4, West Border Cliff
+0x00A5, Campground West Entrance
+0x00A6, West Border Cliff w/ River
+0x00A7, West Border Cliff w/ Ocean
+0x00A8, Border Ocean w/ Train Bridge
+//Ocean Acres
+0x00A9, Bottom Ocean
+0x00AA, Bottom Right Ocean
+0x00AB, Bottom Left Ocean
+0x00AC, Right Ocean
+0x00AD, Left Ocean
+0x00AE, Top Left Ocean
+0x00AF, Top Ocean
+0x00B0, Top Right Ocean
+//Island Acres
+0x00B4, Island Acre (North) #1
+0x00B5, Island Acre (North) #2
+0x00B6, Island Acre (North) #3
+0x00B7, Island Acre Corner (North <> East) #1
+0x00B8, Island Acre Corner (North <> East) #2
+0x00B9, Island Acre Corner (North <> East) #3
+0x00BA, Island Acre (East) #1
+0x00BB, Island Acre (East) #2
+0x00BC, Island Acre (East) #3
+0x00BD, Island Acre Corner (East <> South) #1
+0x00BE, Island Acre Corner (East <> South) #2
+0x00BF, Island Acre Corner (East <> South) #3
+0x00C0, Island Acre (South) #1
+0x00C1, Island Acre (South) #2
+0x00C2, Island Acre (South) #3
+0x00C3, Island Acre Corner (South <> West) #1
+0x00C4, Island Acre Corner (South <> West) #2
+0x00C5, Island Acre Corner (South <> West) #3
+0x00C6, Island Acre (West) #1
+0x00C7, Island Acre (West) #2
+0x00C8, Island Acre (West) #3
+0x00C9, Island Acre Corner (West <> North) #1
+0x00CA, Island Acre Corner (West <> North) #2
+0x00CB, Island Acre Corner (West <> North) #3

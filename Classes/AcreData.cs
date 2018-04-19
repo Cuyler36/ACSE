@@ -114,7 +114,7 @@ namespace ACSE
                     return;
 
                 foreach (PictureBoxWithInterpolationMode Box in PictureBoxes)
-                    if (Box.BackgroundImage == ReferencedImage)
+                    if (Box != null && Box.BackgroundImage == ReferencedImage)
                         return;
 
                 foreach (KeyValuePair<ushort, Image> Pair in LoadedImageDictionary)
