@@ -54,8 +54,8 @@
 0x002F, River (West > South) #1
 0x0030, River (West > South) #2
 0x0031, River (West > South) #3
-0x0032, River (North) #2
-0x0033, River (South) #1
+0x0032, River (South) #1
+0x0033, River (South) #2
 0x0070, River Outlet (South) #1
 0x0071, River Outlet (South) #2
 0x0072, River Outlet (South) #3
