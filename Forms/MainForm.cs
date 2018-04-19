@@ -858,6 +858,7 @@ namespace ACSE
 
                 if (Selected_Player != null)
                 {
+                    playerFace.Items.Clear();
                     foreach (string Face_Name in Selected_Player.Data.Gender == 0 ? PlayerInfo.NL_Male_Faces : PlayerInfo.NL_Female_Faces)
                         playerFace.Items.Add(Face_Name);
                     playerFace.SelectedIndex = Selected_Player.Data.FaceType;
