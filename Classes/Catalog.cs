@@ -25,6 +25,10 @@ namespace ACSE
             {
                 case SaveType.Animal_Crossing:
                     return 0x1108;
+                case SaveType.New_Leaf:
+                    return 0x6C70;
+                case SaveType.Welcome_Amiibo:
+                    return 0x6C90;
                 default:
                     return -1;
             }
@@ -36,6 +40,10 @@ namespace ACSE
             {
                 case SaveType.Animal_Crossing:
                     return 0xD4;
+                case SaveType.New_Leaf:
+                    return 0xE0;
+                case SaveType.Welcome_Amiibo:
+                    return 0x1A8;
                 default:
                     return 0;
             }

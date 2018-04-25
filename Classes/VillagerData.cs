@@ -514,6 +514,16 @@ namespace ACSE
             }
         }
 
+        public bool Boxed()
+        {
+            if (SaveData.Save_Generation == SaveGeneration.N3DS)
+            {
+                return (Data.Status & 1) == 1;
+            }
+
+            return false;
+        }
+
         public override string ToString()
         {
             return Name ?? "Unknown";

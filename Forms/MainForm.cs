@@ -2501,7 +2501,7 @@ namespace ACSE
                 Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 7 ? Villager.Data.Personality : 6;
             }
             TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 32), Location = new Point (265, 22), MaxLength = Villager.Offsets.CatchphraseSize, Text = Villager.Data.Catchphrase };
-            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 22), Checked = Villager.Data.Status == 1, Enabled = (Save_File.Save_Generation != SaveGeneration.N64 && Save_File.Save_Generation != SaveGeneration.GCN)};
+            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 22), Checked = Villager.Boxed(), Enabled = (Save_File.Save_Generation != SaveGeneration.N64 && Save_File.Save_Generation != SaveGeneration.GCN)};
             PictureBox Shirt_Box = new PictureBox {BorderStyle = BorderStyle.FixedSingle, Size = new Size(16, 16), Location = new Point(415, 24), Image = Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type)};
             if (Save_File.Save_Type == SaveType.Wild_World || Save_File.Save_Type == SaveType.City_Folk || Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
             {
@@ -2617,6 +2617,21 @@ namespace ACSE
                     Save_File.ChangesMade = true;
                     Villager.Data.Shirt = new Item(GetCurrentItem());
                     Refresh_PictureBox_Image(Shirt_Box, Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type));
+                }
+            };
+
+            Boxed.CheckedChanged += delegate (object sender, EventArgs e)
+            {
+                if (Save_File != null && !Loading && Save_File.Save_Generation == SaveGeneration.N3DS)
+                {
+                    if (Boxed.Checked)
+                    {
+                        Villager.Data.Status = (byte)(Villager.Data.Status | 1);
+                    }
+                    else
+                    {
+                        Villager.Data.Status = (byte)(Villager.Data.Status & 0xFE);
+                    }
                 }
             };
 
