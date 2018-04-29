@@ -999,7 +999,7 @@
 0x23E6, Inkopolis Wall
 0x23E7, Fruit-Panel Wall
 0x23E8, Fueki Wall
-0x23E9, Polka-Dot Wall
+0x23EA, Polka-Dot Wall
 //Carpets
 0x23EB, Exotic Rug
 0x23EC, Lovely Carpet
