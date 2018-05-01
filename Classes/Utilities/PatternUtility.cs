@@ -131,7 +131,8 @@ namespace ACSE.Classes.Utilities
                 if (i % PaletteColorDataLength == 0)
                     PaletteIndex++;
 
-                Buffer.BlockCopy(BitConverter.GetBytes(Palette[PaletteIndex]), 0, PaletteBitmapBuffer, i, 4);
+                if (PaletteIndex < Palette.Length && i < PaletteBitmapBuffer.Length)
+                    Buffer.BlockCopy(BitConverter.GetBytes(Palette[PaletteIndex]), 0, PaletteBitmapBuffer, i, 4);
             }
 
             Bitmap Preview = CreateBitmap(PaletteBitmapBuffer, Width, Height);
