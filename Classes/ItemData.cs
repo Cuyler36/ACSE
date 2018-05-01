@@ -10,10 +10,10 @@ namespace ACSE
 
         public static string[] CF_Building_Names = new string[]
         {
-            "Player House (A)",
-            "Player House (B)",
-            "Player House (C)",
-            "Player House (D)",
+            "Player House #1",
+            "Player House #2",
+            "Player House #3",
+            "Player House #4",
             "Unknown #1",
             "Unknown #2",
             "Unknown #3",
@@ -411,6 +411,12 @@ namespace ACSE
             {0xFC, "No Building"},
         };
 
+        public static int GetBuildingCount(Building[] Buildings, SaveType Save_Type)
+        {
+            int NoBuildingID = Save_Type == SaveType.New_Leaf ? 0xF8 : 0xFC;
+            return Buildings.Where(b => b.Exists && b.ID != NoBuildingID).Count();
+        }
+
         public static string GetItemType(ushort ID, SaveType Save_Type)
         {
             if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM, DnM+, and DnMe+ need their own cases
@@ -724,7 +730,7 @@ namespace ACSE
                 case "Gyroids":
                     return 0xC8D48324;
                 case "Fossil":
-                    return 0xC8868686;
+                    return 0xC8513D2F;
                 case "Tool":
                     return 0xC8818181;
                 case "Item":

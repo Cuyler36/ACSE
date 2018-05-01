@@ -1026,12 +1026,6 @@ namespace ACSE
             // Set Default Item to "Empty"
             SetCurrentItem(new Item());
 
-            progressBar1.Value = 100;
-            Loading = false;
-            loadingPanel.Enabled = false;
-            loadingPanel.Visible = false;
-            loadingPanel.SendToBack();
-
             // Create Item Editor Controls
             if (dresserEditor != null && !dresserEditor.IsDisposed)
                 dresserEditor.Dispose();
@@ -1107,11 +1101,17 @@ namespace ACSE
             {
                 AddBadges();
             }
+
+            progressBar1.Value = 100;
+            Loading = false;
+            loadingPanel.Enabled = false;
+            loadingPanel.Visible = false;
+            loadingPanel.SendToBack();
         }
 
         private void AddBadges()
         {
-            if (Save_File != null && !Loading && Selected_Player != null && Selected_Player.Exists)
+            if (Save_File != null && Selected_Player != null && Selected_Player.Exists)
             {
                 int Badge11ValueOffset = Save_File.Save_Type == SaveType.New_Leaf ? 0x6B84 : 0x6BA4;
                 int BadgeValueOffset = 0x55DC; // These are the same for each version.
@@ -3543,6 +3543,16 @@ namespace ACSE
             }
         }
 
+        private void UpdateBuildingCount()
+        {
+            if (Save_File != null && !Loading && Save_File.Save_Generation == SaveGeneration.N3DS)
+            {
+                byte Count = (byte)(ItemData.GetBuildingCount(Buildings, Save_File.Save_Type) + 0); // Sometimes is count + 1, sometimes is count - 1??
+                Console.WriteLine("Set building count to: " + Count);
+                Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Buildings - 4, Count);
+            }
+        }
+
         private void Handle_Town_Click(object sender, WorldItem Item, int Acre, int index, MouseEventArgs e, bool Island = false)
         {
             if (e.Button == MouseButtons.Left)
@@ -3704,7 +3714,9 @@ namespace ACSE
                     Selected_Building = Island ? Array.IndexOf(Island_Buildings, B) : Array.IndexOf(Buildings, B);
                     selectedItem.Enabled = false;
                     selectedItem.Text = B.Name;
-                    selectedItemText.Text = string.Format("Selected Building: [{0}]", B.Name);
+                    selectedItemText.Text = string.Format("Building: [{0}]", B.Name);
+                    itemIdTextBox.Visible = false;
+                    itemIdLabel.Visible = false;
                 }
                 else
                 {
@@ -3723,7 +3735,9 @@ namespace ACSE
                             itemFlag2.Text = Item.Flag2.ToString("X2");
                         }
                     }
-                    //selectedItemText.Text = string.Format("Selected Item: [0x{0}]", (GetCurrentItem()).ToString("X4"));
+                    itemIdTextBox.Visible = true;
+                    itemIdLabel.Visible = true;
+                    selectedItemText.Text = "Selected Item"; //string.Format("Selected Item: [0x{0}]", (GetCurrentItem()).ToString("X4"));
                 }
                 selectedItem.Refresh();
             }
@@ -3897,6 +3911,7 @@ namespace ACSE
                     {
                         Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Acre_Data + i * 2, Acres[i].AcreID, false);
                     }
+
                 if (Current_Save_Info.Save_Offsets.Town_Data != 0)
                 {
                     for (int i = 0; i < Town_Acres.Length; i++)
@@ -3910,10 +3925,13 @@ namespace ACSE
                                 Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Data + i * 512 + x * 2, Town_Acres[i].Acre_Items[x].ItemID,
                                     Save_File.Is_Big_Endian);
                 }
+
                 if (Save_File.Save_Generation != SaveGeneration.N3DS && Current_Save_Info.Save_Offsets.Buried_Data != 0)
                     Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Buried_Data, Buried_Buffer);
+
                 if (Current_Save_Info.Save_Offsets.Grass_Wear > 0)
                     Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Wear, Grass_Wear);
+
                 if (Current_Save_Info.Save_Offsets.Buildings > 0)
                 {
                     if (Save_File.Save_Type == SaveType.City_Folk)
@@ -3960,6 +3978,9 @@ namespace ACSE
                         }
                     }
                 }
+
+                // Update Building Count in New Leaf
+                UpdateBuildingCount();
 
                 // Save DnMe+ Islands
                 if (Islands != null)
