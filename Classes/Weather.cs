@@ -47,7 +47,8 @@
         {
             if (SaveFile.Save_Generation == SaveGeneration.N64 || SaveFile.Save_Generation == SaveGeneration.GCN)
             {
-                if (Index != 4 || System.Windows.Forms.MessageBox.Show("Setting the Weather to Fall Leaves will cause glitches, and will crash your game if you run."
+                if (SaveFile.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus || Index != 4
+                    || System.Windows.Forms.MessageBox.Show("Setting the Weather to Fall Leaves will cause glitches, and will crash your game if you run."
                     + "Are you sure you want to change the weather to it?", "Weather Warning", System.Windows.Forms.MessageBoxButtons.YesNo,
                     System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
