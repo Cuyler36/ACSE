@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TabPage patternsTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.paletteColorSelectedPictureBox = new System.Windows.Forms.PictureBox();
             this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
@@ -44,7 +45,6 @@
             this.player3Tab = new System.Windows.Forms.TabPage();
             this.player4Tab = new System.Windows.Forms.TabPage();
             this.paletteSelectionPictureBox = new System.Windows.Forms.PictureBox();
-            this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -311,6 +311,18 @@
             patternsTab.Text = "Patterns";
             patternsTab.UseVisualStyleBackColor = true;
             // 
+            // patternNameTextBox
+            // 
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
+            this.patternNameTextBox.MaxLength = 16;
+            this.patternNameTextBox.Name = "patternNameTextBox";
+            this.patternNameTextBox.PlaceholderText = "Pattern Name";
+            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.patternNameTextBox.TabIndex = 0;
+            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
+            // 
             // paletteColorSelectedPictureBox
             // 
             this.paletteColorSelectedPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -456,18 +468,6 @@
             this.paletteSelectionPictureBox.TabIndex = 17;
             this.paletteSelectionPictureBox.TabStop = false;
             this.paletteSelectionPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PaletteImageBox_Click);
-            // 
-            // patternNameTextBox
-            // 
-            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
-            this.patternNameTextBox.MaxLength = 16;
-            this.patternNameTextBox.Name = "patternNameTextBox";
-            this.patternNameTextBox.PlaceholderText = "Pattern Name";
-            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
-            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.patternNameTextBox.TabIndex = 0;
-            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
             // menuStrip1
             // 
@@ -1811,6 +1811,7 @@
             this.weatherComboBox.TabIndex = 25;
             this.townToolTip.SetToolTip(this.weatherComboBox, "Sets the weather. Note that this will only work if you set it the same in-game da" +
         "y as you dumped it.");
+            this.weatherComboBox.SelectedIndexChanged += new System.EventHandler(this.weatherComboBox_SelectedIndexChanged);
             // 
             // label31
             // 
@@ -2504,8 +2505,8 @@
             // 
             // openSaveFile
             // 
-            this.openSaveFile.Filter = "All Supported Save Types|*.fla;*.gci;*.gcs;*.raw;*.duc;*.dss;*.dsv;*.sav;*.dat;*." +
-    "bin;|All Files (*.*)|*.*";
+            this.openSaveFile.Filter = "All Supported Save Types|*.fla;*.gci;*.gcs;*.sta;*.raw;*.duc;*.dss;*.dsv;*.sav;*." +
+    "dat;*.bin;|All Files (*.*)|*.*";
             // 
             // importPatternFile
             // 

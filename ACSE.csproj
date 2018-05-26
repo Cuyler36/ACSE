@@ -93,7 +93,13 @@
     <None Include="Resources\Images\no_tpc.png" />
     <None Include="Resources\Images\Arrow.png" />
     <None Include="Resources\Images\Building.png" />
+    <Content Include="Resources\DnM_Items_en.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\DnM_Map_Icon_Index.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\DnM_Villagers_en.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\AC Save Editor Logo.ico" />

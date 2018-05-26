@@ -37,7 +37,7 @@ namespace ACSE
             Image Result = null;
 
             string Image_Dir = MainForm.Assembly_Location + "\\Resources\\Images\\";
-            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs its own set?
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus || Save_Type == SaveType.Animal_Forest) // TODO: DnM needs its own set?
                 Image_Dir += "Acre_Images";
             else if (Save_Type == SaveType.Wild_World)
                 Image_Dir += "WW_Acre_Images";
@@ -158,6 +158,7 @@ namespace ACSE
             {
                 case SaveType.Doubutsu_no_Mori:
                 case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.Animal_Forest:
                     Index_File += "\\Resources\\DnM_Map_Icon_Index.txt";
                     break;
                 case SaveType.Animal_Crossing:

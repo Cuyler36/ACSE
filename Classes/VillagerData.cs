@@ -301,6 +301,7 @@ namespace ACSE
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Animal_Crossing:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.Animal_Forest:
                     return AC_Personalities;
                 case SaveType.Wild_World:
                     return WW_Personalities;
@@ -319,7 +320,10 @@ namespace ACSE
             string Database_Filename = MainForm.Assembly_Location + "\\Resources\\{0}_Villagers_" + Language + ".txt";
             switch (Save_Type)
             {
-                case SaveType.Doubutsu_no_Mori: // TODO: Needs its own database (no islanders or punchy)
+                case SaveType.Doubutsu_no_Mori:
+                case SaveType.Animal_Forest:
+                    Database_Filename = string.Format(Database_Filename, "DnM");
+                    break;
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                 case SaveType.Animal_Crossing:
@@ -375,7 +379,7 @@ namespace ACSE
                     }
                 }
             }
-            else if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            else if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus || Save_Type == SaveType.Animal_Forest)
             {
                 while ((Line = Contents.ReadLine()) != null)
                 {
@@ -390,6 +394,13 @@ namespace ACSE
                     }
                 }
             }
+
+            if (Contents != null)
+            {
+                Contents.Close();
+                Contents.Dispose();
+            }
+
             return Database;
         }
 
@@ -405,6 +416,8 @@ namespace ACSE
                     return AC_Villager_Offsets;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return Doubtusu_no_Mori_e_Plus_Villager_Offsets;
+                case SaveType.Animal_Forest:
+                    return Doubutsu_no_Mori_Villager_Offsets; // TEMP
                 case SaveType.Wild_World:
                     return WW_Villager_Offsets;
                 case SaveType.New_Leaf:

@@ -516,6 +516,8 @@ namespace ACSE
                     return Animal_Crossing_House_Offsets;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return Doubutsu_no_Mori_e_Plus_Offsets;
+                case SaveType.Animal_Forest:
+                    return Doubutsu_no_Mori_House_Offsets; // TEMP
                 case SaveType.Wild_World:
                     return Wild_World_Offsets;
                 case SaveType.City_Folk:
@@ -536,6 +538,7 @@ namespace ACSE
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Animal_Crossing:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.Animal_Forest:
                     return AC_Roof_Colors;
 
                 default:
@@ -548,6 +551,7 @@ namespace ACSE
             switch (Generation)
             {
                 case SaveGeneration.N64:
+                case SaveGeneration.iQue:
                     return DnM_House_Names;
 
                 case SaveGeneration.GCN:
@@ -571,6 +575,7 @@ namespace ACSE
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Animal_Crossing:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.Animal_Forest:
                 case SaveType.City_Folk:
                     for (int i = 0; i < 4; i++)
                     {
@@ -633,7 +638,7 @@ namespace ACSE
         public static void SetHasBasement(bool Enabled, House SelectedHouse)
         {
             var SaveFile = MainForm.Save_File;
-            if (SaveFile.Save_Generation == SaveGeneration.N64 || SaveFile.Save_Generation == SaveGeneration.GCN)
+            if (SaveFile.Save_Generation == SaveGeneration.N64 || SaveFile.Save_Generation == SaveGeneration.GCN || SaveFile.Save_Generation == SaveGeneration.iQue)
             {
                 int BasementFlagOffset = SelectedHouse.Offset;
                 switch (SaveFile.Save_Type)

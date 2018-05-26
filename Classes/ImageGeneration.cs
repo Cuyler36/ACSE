@@ -423,7 +423,7 @@ namespace ACSE
             string FacesFolder = MainForm.Assembly_Location + "\\Resources\\Images\\Faces";
             if (Directory.Exists(FacesFolder))
             {
-                if (Save_Generation == SaveGeneration.N64 || Save_Generation == SaveGeneration.GCN)
+                if (Save_Generation == SaveGeneration.N64 || Save_Generation == SaveGeneration.GCN || Save_Generation == SaveGeneration.iQue)
                 {
                     FacesFolder += "\\Animal Crossing";
                 }

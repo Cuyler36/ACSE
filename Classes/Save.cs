@@ -14,9 +14,10 @@ namespace ACSE
     {
         Unknown,
         Doubutsu_no_Mori,
-        Doubutsu_no_Mori_Plus,  // Bought a copy. Will dump to check the save files.
+        Doubutsu_no_Mori_Plus,
         Animal_Crossing,
         Doubutsu_no_Mori_e_Plus,
+        Animal_Forest, // iQue version
         Wild_World,
         City_Folk,
         New_Leaf,
@@ -27,6 +28,7 @@ namespace ACSE
     {
         Unknown,
         N64,
+        iQue,
         GCN,
         NDS,
         Wii,
@@ -39,7 +41,8 @@ namespace ACSE
         Japan,
         NTSC,
         PAL,
-        Australia
+        Australia,
+        China
     }
 
     public struct Offsets
@@ -104,6 +107,7 @@ namespace ACSE
     public enum SaveFileDataOffset
     {
         nafjfla = 0,
+        nafjsta = 0, // iQue Animal Forest
         gafjgci = 0x2040, // Doubutsu_no_Mori_Plus
         gafegci = 0x26040,
         gafegcs = 0x26150,
@@ -245,6 +249,30 @@ namespace ACSE
             // Shop update in progress byte (0x2E004 (Has to be 1B))
             Town_NameSize = 6,
             Checksum = 0x12,
+        };
+
+        public static Offsets Animal_Forest_Offsets = new Offsets
+        {
+            Save_Size = 0x10000,
+            Player_Start = 0x20,
+            Player_Size = 0xBD0,
+            Town_Name = 0x2F60,
+            Town_NameSize = 6,
+            Town_ID = 0x2F68,
+            House_Data = 0x3588,
+            House_Data_Size = 0xB48,
+            Acre_Data = 0x9EA8,
+            Acre_Data_Size = 0x70,
+            Villager_Data = 0x9F18,
+            Villager_Size = 0x528,
+            Town_Data = 0x62A8,
+            Town_Data_Size = 0x3C00,
+            Train_Station_Type = 0xF438, // Confirm
+            Weather = -1, // Confirm
+            Buried_Data = 0xF43C,
+            Buried_Data_Size = 0x3C0,
+            Checksum = 0x12,
+            Grass_Type = -1, // Find
         };
 
         public static Offsets Wild_World_Offsets = new Offsets
@@ -447,6 +475,22 @@ namespace ACSE
             House_Rooms = new string[3] { "Main Floor", "Upper Floor", "Basement" } //Don't forget about island house
         };
 
+        public static Save_Info Animal_Forest = new Save_Info
+        {
+            Contains_Island = false,
+            Has_Islander = false,
+            Player_JPEG_Picture = false,
+            Pattern_Count = 0,
+            Save_Offsets = Animal_Forest_Offsets,
+            Acre_Count = 56,
+            X_Acre_Count = 7,
+            Town_Acre_Count = 30,
+            Town_Y_Acre_Start = 1,
+            Island_Acre_Count = 0,
+            Island_X_Acre_Count = 0,
+            Villager_Count = 15
+        };
+
         public static Save_Info Wild_World = new Save_Info
         {
             Contains_Island = false,
@@ -532,10 +576,10 @@ namespace ACSE
             return swappedBuffer;
         }
 
-        public static SaveType GetSaveType(byte[] Save_Data)
+        public static SaveType? GetSaveType(byte[] Save_Data)
         {
             if (Save_Data.Length == 0x20000)
-                return SaveType.Doubutsu_no_Mori;
+                return null; // Return null for this since we set it in the save constructor 
             else if (Save_Data.Length == 0x72040 || Save_Data.Length == 0x72150)
             {
                 string Game_ID = Encoding.ASCII.GetString(Save_Data, Save_Data.Length == 0x72150 ? 0x110 : 0, 4);
@@ -586,6 +630,8 @@ namespace ACSE
                     return "GAFJ";
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return "GAEJ";
+                case SaveType.Animal_Forest:
+                    return "NAFJ"; // internally still has NAFJ code
                 case SaveType.Wild_World: //Currently only supporting the English versions of WW+
                     return "ADME";
                 case SaveType.City_Folk:
@@ -614,6 +660,8 @@ namespace ACSE
                             return "Animal Crossing";
                         case SaveType.Doubutsu_no_Mori_e_Plus:
                             return "どうぶつの森e+";
+                        case SaveType.Animal_Forest:
+                            return "动物森林";
                         case SaveType.Wild_World:
                             return "おいでよどうぶつの森";
                         case SaveType.City_Folk:
@@ -639,6 +687,8 @@ namespace ACSE
                             return "Animal Crossing";
                         case SaveType.Doubutsu_no_Mori_e_Plus:
                             return "Dōbutsu no Mori e+";
+                        case SaveType.Animal_Forest:
+                            return "Animal Forest";
                         case SaveType.Wild_World:
                             return "Wild World";
                         case SaveType.City_Folk:
@@ -664,6 +714,10 @@ namespace ACSE
             else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
             {
                 return SaveGeneration.GCN;
+            }
+            else if (Save_Type == SaveType.Animal_Forest)
+            {
+                return SaveGeneration.iQue;
             }
             else if (Save_Type == SaveType.Wild_World)
             {
@@ -692,6 +746,8 @@ namespace ACSE
                     return Animal_Crossing;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return Doubutsu_no_Mori_e_Plus;
+                case SaveType.Animal_Forest:
+                    return Animal_Forest;
                 case SaveType.Wild_World:
                     return Wild_World;
                 case SaveType.City_Folk:
@@ -709,16 +765,16 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Item_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Wild_World)
-                Item_DB_Location += "WW_Items_" + Language + ".txt";
-            else if (Save_Type == SaveType.Doubutsu_no_Mori)
-                Item_DB_Location += "AC_Items_" + Language + ".txt"; // TODO: Determine DnM item list
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Forest)
+                Item_DB_Location += "DnM_Items_" + Language + ".txt";
             else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus)
                 Item_DB_Location += "DBNM_Plus_Items_" + Language + ".txt";
             else if (Save_Type == SaveType.Animal_Crossing)
                 Item_DB_Location += "AC_Items_" + Language + ".txt";
             else if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
                 Item_DB_Location += "DBNM_e_Plus_Items_" + Language + ".txt";
+            else if (Save_Type == SaveType.Wild_World)
+                Item_DB_Location += "WW_Items_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
                 Item_DB_Location += "CF_Items_" + Language + ".txt";
             else if (Save_Type == SaveType.New_Leaf)
@@ -746,6 +802,13 @@ namespace ACSE
                         MainForm.Debug_Manager.WriteLine("Unable to add item: " + Item_ID_String + " | " + Item_Name, DebugLevel.Error);
                 }
             }
+
+            if (Contents != null)
+            {
+                Contents.Close();
+                Contents.Dispose();
+            }
+
             return Item_Dictionary;
         }
 
@@ -776,6 +839,13 @@ namespace ACSE
                         MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
                 }
             }
+
+            if (Contents != null)
+            {
+                Contents.Close();
+                Contents.Dispose();
+            }
+
             return Acre_Dictionary;
         }
 
@@ -783,7 +853,7 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Acre_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs to have a custom list, since the docks/islands don't exist
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Forest || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs to have a custom list, since the docks/islands don't exist
                 Acre_DB_Location += "AC_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
                 Acre_DB_Location += "CF_Acres_" + Language + ".txt";
@@ -812,6 +882,13 @@ namespace ACSE
                         MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
                 }
             }
+
+            if (Contents != null)
+            {
+                Contents.Close();
+                Contents.Dispose();
+            }
+
             return Acre_Dictionary;
         }
 
@@ -853,6 +930,13 @@ namespace ACSE
                         MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
                 }
             }
+
+            if (Contents != null)
+            {
+                Contents.Close();
+                Contents.Dispose();
+            }
+
             return Filed_List;
         }
 
@@ -860,7 +944,7 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Acre_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // DnM needs custom database
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Forest || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // DnM needs custom database
                 Acre_DB_Location += "AC_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
                 Acre_DB_Location += "CF_Acres_" + Language + ".txt";
@@ -899,6 +983,13 @@ namespace ACSE
                         MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + Acre_ID_String + " | " + Acre_Name, DebugLevel.Error);
                 }
             }
+
+            if (Contents != null)
+            {
+                Contents.Close();
+                Contents.Dispose();
+            }
+
             return Filed_List;
         }
 
@@ -954,11 +1045,30 @@ namespace ACSE
 
                 Save_Reader = new BinaryReader(Save_File);
 
-                Original_Save_Data = Save_File.Length == 0x20000 ? SaveDataManager.ByteSwap(Save_Reader.ReadBytes(0x20000)) : Save_Reader.ReadBytes((int)Save_File.Length); // Byteswap DnM
+                if (Save_File.Length == 0x20000)
+                {
+                    byte[] Data = Save_Reader.ReadBytes(0x20000);
+                    if (Encoding.ASCII.GetString(Data, 4, 4) == "JFAN") // Check for DnM which is byteswapped
+                    {
+                        Original_Save_Data = SaveDataManager.ByteSwap(Data);
+                        Save_Type = SaveType.Doubutsu_no_Mori;
+                    }
+                    else
+                    {
+                        Original_Save_Data = Data;
+                        Save_Type = SaveType.Animal_Forest;
+                    }
+                }
+                else
+                {
+                    Original_Save_Data = Save_Reader.ReadBytes((int)Save_File.Length);
+                }
+
+                
                 Working_Save_Data = new byte[Original_Save_Data.Length];
                 Buffer.BlockCopy(Original_Save_Data, 0, Working_Save_Data, 0, Original_Save_Data.Length);
 
-                Save_Type = SaveDataManager.GetSaveType(Original_Save_Data);
+                Save_Type = SaveDataManager.GetSaveType(Original_Save_Data) ?? Save_Type;
                 Save_Generation = SaveDataManager.GetSaveGeneration(Save_Type);
                 Full_Save_Path = File_Path;
                 Save_Name = Path.GetFileNameWithoutExtension(File_Path);
@@ -989,6 +1099,9 @@ namespace ACSE
                     Save_Info.Save_Offsets.Checksum, !Is_Big_Endian), Is_Big_Endian);
                 Working_Save_Data.Skip(Save_Data_Start_Offset).Take(Save_Info.Save_Offsets.Save_Size).ToArray().CopyTo(Working_Save_Data,
                     Save_Data_Start_Offset + Save_Info.Save_Offsets.Save_Size); //Update second save copy
+
+                Console.WriteLine(string.Format("Save file checksum calculated is: 0x{0}", Checksum.Calculate(Working_Save_Data.Skip(Save_Data_Start_Offset).Take(Save_Info.Save_Offsets.Save_Size).ToArray(), Save_Info.Save_Offsets.Checksum,
+                    !Is_Big_Endian).ToString("X4")));
             }
             else if (Save_Type == SaveType.City_Folk)
             {

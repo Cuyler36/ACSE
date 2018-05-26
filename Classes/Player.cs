@@ -595,6 +595,8 @@ namespace ACSE
                     return Animal_Crossing;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return Doubutsu_no_Mori_e_Plus;
+                case SaveType.Animal_Forest:
+                    return Doubutsu_no_Mori; // TEMP
                 case SaveType.Wild_World:
                     return Wild_World;
                 case SaveType.City_Folk:
