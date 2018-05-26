@@ -3736,6 +3736,7 @@
     <Compile Include="Classes\Catalog.cs" />
     <Compile Include="Classes\Emotion.cs" />
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
+    <Compile Include="Classes\Extensions\LinqExtensions.cs" />
     <Compile Include="Classes\Extensions\PointExtension.cs" />
     <Compile Include="Classes\ItemChange.cs" />
     <Compile Include="Classes\ItemChangedEventArgs.cs" />

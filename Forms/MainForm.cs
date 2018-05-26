@@ -920,18 +920,25 @@ namespace ACSE
                         }
                     }
 
-                    foreach (Villager Villager in Villagers)
+                    try
                     {
-                        if (Villager.PlayerRelations != null)
+                        foreach (Villager Villager in Villagers)
                         {
-                            foreach (PlayerRelation Relation in Villager.PlayerRelations)
+                            if (Villager.Exists && Villager.PlayerRelations != null)
                             {
-                                if (Relation.Exists)
+                                foreach (PlayerRelation Relation in Villager.PlayerRelations)
                                 {
-                                    Relation.Player = Players.FirstOrDefault(p => p.Data.Identifier.Equals(Relation.PlayerId) && p.Data.Name.Equals(Relation.PlayerName));
+                                    if (Relation.Exists)
+                                    {
+                                        Relation.Player = Players.FirstOrNull(p => p.Data.Identifier.Equals(Relation.PlayerId) && p.Data.Name.Equals(Relation.PlayerName));
+                                    }
                                 }
                             }
                         }
+                    }
+                    catch (Exception exc)
+                    {
+                        Console.WriteLine(exc.Message);
                     }
                 });
                 for (int i = villagerPanel.Controls.Count - 1; i > -1; i--)
@@ -4678,7 +4685,11 @@ namespace ACSE
         {
             if (Save_File != null && !Loading && weatherComboBox.SelectedIndex > -1)
             {
-                Weather.UpdateWeather(Save_File, (byte)weatherComboBox.SelectedIndex);
+                if (!Weather.UpdateWeather(Save_File, (byte)weatherComboBox.SelectedIndex) && Save_File.Save_Generation == SaveGeneration.GCN)
+                {
+                    weatherComboBox.SelectedIndex = Weather.GetWeatherIndex(Save_File.ReadByte(Save_File.Save_Data_Start_Offset + Save_File.Save_Info.Save_Offsets.Weather),
+                        Save_File.Save_Generation);
+                }
             }
         }
 

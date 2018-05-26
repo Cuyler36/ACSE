@@ -43,12 +43,19 @@
             }
         }
 
-        public static void UpdateWeather(Save SaveFile, byte Index)
+        public static bool UpdateWeather(Save SaveFile, byte Index)
         {
             if (SaveFile.Save_Generation == SaveGeneration.N64 || SaveFile.Save_Generation == SaveGeneration.GCN)
             {
-                SaveFile.Write(SaveFile.Save_Data_Start_Offset + SaveFile.Save_Info.Save_Offsets.Weather, ToWeatherByte(Index, SaveFile.Save_Generation));
+                if (Index != 4 || System.Windows.Forms.MessageBox.Show("Setting the Weather to Fall Leaves will cause glitches, and will crash your game if you run."
+                    + "Are you sure you want to change the weather to it?", "Weather Warning", System.Windows.Forms.MessageBoxButtons.YesNo,
+                    System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    SaveFile.Write(SaveFile.Save_Data_Start_Offset + SaveFile.Save_Info.Save_Offsets.Weather, ToWeatherByte(Index, SaveFile.Save_Generation));
+                    return true;
+                }
             }
+            return false;
         }
     }
 }
