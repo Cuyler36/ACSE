@@ -1108,47 +1108,51 @@ namespace ACSE
                 for (int i = 0; i < 4; i++)
                 {
                     int Player_Data_Offset = Save_Data_Start_Offset + i * 0x86C0 + 0x1140;
-                    uint Player_CRC32 = CRC32.Calculate_CRC32(Working_Save_Data.Skip(Player_Data_Offset + 4).Take(0x759C).ToArray());
+                    uint Player_CRC32 = CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Player_Data_Offset + 4).Take(0x759C).ToArray());
                     Write(Player_Data_Offset, Player_CRC32, true);
                 }
-                Write(Save_Data_Start_Offset + 0x5EC60, CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x5EC64).Take(0x1497C).ToArray()), true);
-                Write(Save_Data_Start_Offset + 0x5EB04, CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x5EB08).Take(0x152).ToArray(), 0x12141018), true);
-                Write(Save_Data_Start_Offset + 0x73600, CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x73604).Take(0x19BD1C).ToArray()), true);
-                Write(Save_Data_Start_Offset, CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 4).Take(0x1C).ToArray()), true);
-                Write(Save_Data_Start_Offset + 0x20, CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x24).Take(0x111C).ToArray()), true);
+                Write(Save_Data_Start_Offset + 0x5EC60, CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x5EC64).Take(0x1497C).ToArray()), true);
+                Write(Save_Data_Start_Offset + 0x5EB04, CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x5EB08).Take(0x152).ToArray(), 0x12141018), true);
+                Write(Save_Data_Start_Offset + 0x73600, CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x73604).Take(0x19BD1C).ToArray()), true);
+                Write(Save_Data_Start_Offset, CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 4).Take(0x1C).ToArray()), true);
+                Write(Save_Data_Start_Offset + 0x20, CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x24).Take(0x111C).ToArray()), true);
             }
             else if (Save_Type == SaveType.New_Leaf)
             {
-                Write(Save_Data_Start_Offset, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 4).Take(0x1C).ToArray()));
+                Write(Save_Data_Start_Offset, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 4).Take(0x1C).ToArray()));
                 for (int i = 0; i < 4; i++)
                 {
                     int DataOffset = Save_Data_Start_Offset + 0x20 + i * 0x9F10;
-                    Write(DataOffset, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(DataOffset + 4).Take(0x6B64).ToArray()));
+                    Write(DataOffset, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(DataOffset + 4).Take(0x6B64).ToArray()));
                     int DataOffset2 = Save_Data_Start_Offset + 0x20 + 0x6B68 + i * 0x9F10;
-                    Write(DataOffset2, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(DataOffset2 + 4).Take(0x33A4).ToArray()));
+                    Write(DataOffset2, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(DataOffset2 + 4).Take(0x33A4).ToArray()));
                 }
-                Write(Save_Data_Start_Offset + 0x27C60, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x27C60 + 4).Take(0x218B0).ToArray()));
-                Write(Save_Data_Start_Offset + 0x49520, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x49520 + 4).Take(0x44B8).ToArray()));
-                Write(Save_Data_Start_Offset + 0x4D9DC, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x4D9DC + 4).Take(0x1E420).ToArray()));
-                Write(Save_Data_Start_Offset + 0x6BE00, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x6BE00 + 4).Take(0x20).ToArray()));
-                Write(Save_Data_Start_Offset + 0x6BE24, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x6BE24 + 4).Take(0x13AF8).ToArray()));
+                Write(Save_Data_Start_Offset + 0x27C60, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x27C60 + 4).Take(0x218B0).ToArray()));
+                Write(Save_Data_Start_Offset + 0x49520, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x49520 + 4).Take(0x44B8).ToArray()));
+                Write(Save_Data_Start_Offset + 0x4D9DC, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x4D9DC + 4).Take(0x1E420).ToArray()));
+                Write(Save_Data_Start_Offset + 0x6BE00, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x6BE00 + 4).Take(0x20).ToArray()));
+                Write(Save_Data_Start_Offset + 0x6BE24, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x6BE24 + 4).Take(0x13AF8).ToArray()));
             }
             else if (Save_Type == SaveType.Welcome_Amiibo)
             {
-                Write(Save_Data_Start_Offset, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 4).Take(0x1C).ToArray()));
+                Write(Save_Data_Start_Offset, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 4).Take(0x1C).ToArray()));
                 for (int i = 0; i < 4; i++)
                 {
                     int DataOffset = Save_Data_Start_Offset + 0x20 + i * 0xA480;
-                    Write(DataOffset, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(DataOffset + 4).Take(0x6B84).ToArray()));
+                    Write(DataOffset, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(DataOffset + 4).Take(0x6B84).ToArray()));
                     int DataOffset2 = Save_Data_Start_Offset + 0x20 + 0x6B88 + i * 0xA480;
-                    Write(DataOffset2, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(DataOffset2 + 4).Take(0x38F4).ToArray()));
+                    Write(DataOffset2, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(DataOffset2 + 4).Take(0x38F4).ToArray()));
                 }
-                Write(Save_Data_Start_Offset + 0x29220, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x29220 + 4).Take(0x22BC8).ToArray()));
-                Write(Save_Data_Start_Offset + 0x4BE00, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x4BE00 + 4).Take(0x44B8).ToArray()));
-                Write(Save_Data_Start_Offset + 0x533A4, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x533A4 + 4).Take(0x1E4D8).ToArray()));
-                Write(Save_Data_Start_Offset + 0x71880, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x71880 + 4).Take(0x20).ToArray()));
-                Write(Save_Data_Start_Offset + 0x718A4, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x718A4 + 4).Take(0xBE4).ToArray()));
-                Write(Save_Data_Start_Offset + 0x738D4, NL_CRC32.Calculate_CRC32(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x738D4 + 4).Take(0x16188).ToArray()));
+                Write(Save_Data_Start_Offset + 0x29220, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x29220 + 4).Take(0x22BC8).ToArray()));
+                Write(Save_Data_Start_Offset + 0x4BE00, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x4BE00 + 4).Take(0x44B8).ToArray()));
+                Write(Save_Data_Start_Offset + 0x533A4, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x533A4 + 4).Take(0x1E4D8).ToArray()));
+                Write(Save_Data_Start_Offset + 0x71880, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x71880 + 4).Take(0x20).ToArray()));
+                Write(Save_Data_Start_Offset + 0x718A4, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x718A4 + 4).Take(0xBE4).ToArray()));
+                Write(Save_Data_Start_Offset + 0x738D4, NL_CRC32.Calculate_CRC32Type1(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x738D4 + 4).Take(0x16188).ToArray()));
+
+                Write(Save_Data_Start_Offset + 0x502BC, NL_CRC32.Calculate_CRC32Type2(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x502BC + 4).Take(0x28F0).ToArray()));
+                Write(Save_Data_Start_Offset + 0x52BB0, NL_CRC32.Calculate_CRC32Type2(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x52BB0 + 4).Take(0x7F0).ToArray()));
+                Write(Save_Data_Start_Offset + 0x7248C, NL_CRC32.Calculate_CRC32Type2(Working_Save_Data.Skip(Save_Data_Start_Offset + 0x7248C + 4).Take(0x1444).ToArray()));
             }
             Save_Writer.Write(Save_Type == SaveType.Doubutsu_no_Mori ? SaveDataManager.ByteSwap(Working_Save_Data) : Working_Save_Data); //Doubutsu no Mori is dword byteswapped
             Save_Writer.Flush();
