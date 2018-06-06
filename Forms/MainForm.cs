@@ -4130,7 +4130,7 @@ namespace ACSE
         {
             if (Save_File != null)
             {
-                string Filter_String = string.Format("{0} Save File|*{1}|All Files (*.*)|*.*", Save_File.Save_Type.ToString().Replace("_", " "), Save_File.Save_Extension);
+                string Filter_String = string.Format("{0} Save File|*{1}|All Files (*.*)|*.*", SaveDataManager.GetGameTitle(Save_File.Save_Type), Save_File.Save_Extension);
                 saveSaveFile.FileName = Save_File.Save_Name + Save_File.Save_Extension;
                 saveSaveFile.Filter = Filter_String;
                 DialogResult Save_OK = saveSaveFile.ShowDialog();
