@@ -4001,17 +4001,9 @@ namespace ACSE
             }
         }
 
-        private async void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void OpenSave(string SaveFileLocation)
         {
-            if (Save_File != null)
-            {
-                openSaveFile.FileName = Save_File.Save_Name + Save_File.Save_Extension;
-            }
-            else
-            {
-                openSaveFile.FileName = "";
-            }
-            if (openSaveFile.ShowDialog() == DialogResult.OK)
+            if (File.Exists(SaveFileLocation))
             {
                 if (Save_File != null)
                 {
@@ -4025,7 +4017,27 @@ namespace ACSE
                         Save_File.Close(false);
                     }
                 }
-                await SetupEditor(new Save(openSaveFile.FileName));
+                await SetupEditor(new Save(SaveFileLocation));
+            }
+            else
+            {
+                MessageBox.Show("The save file doesn't exist! Nothing was changed.", "Save File Loading Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Save_File != null)
+            {
+                openSaveFile.FileName = Save_File.Save_Name + Save_File.Save_Extension;
+            }
+            else
+            {
+                openSaveFile.FileName = "";
+            }
+            if (openSaveFile.ShowDialog() == DialogResult.OK)
+            {
+                OpenSave(openSaveFile.FileName);
             }
         }
 
@@ -4697,106 +4709,34 @@ namespace ACSE
             }
         }
 
-        private async void eURToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void eURToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (Save_File != null)
-            {
-                if (Save_File.ChangesMade) // TODO: Changes aren't updated when placing items, etc. Must change that.
-                {
-                    DialogResult Result = MessageBox.Show("A save file is already being edited. Would you like to save your changes before opening another file?", "Save File", MessageBoxButtons.YesNo);
-                    if (Result == DialogResult.Yes)
-                    {
-                        Save_File.Flush();
-                    }
-                    // Add Save_File.Close(); ??
-                }
-            }
-            await SetupEditor(new Save(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00198f00\\data\\00000001\\garden_plus.dat"));
+            OpenSave(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00198f00\\data\\00000001\\garden_plus.dat");
         }
 
-        private async void uSAToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void uSAToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (Save_File != null)
-            {
-                if (Save_File.ChangesMade) // TODO: Changes aren't updated when placing items, etc. Must change that.
-                {
-                    DialogResult Result = MessageBox.Show("A save file is already being edited. Would you like to save your changes before opening another file?", "Save File", MessageBoxButtons.YesNo);
-                    if (Result == DialogResult.Yes)
-                    {
-                        Save_File.Flush();
-                    }
-                    // Add Save_File.Close(); ??
-                }
-            }
-            await SetupEditor(new Save(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00198e00\\data\\00000001\\garden_plus.dat"));
+            OpenSave(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00198e00\\data\\00000001\\garden_plus.dat");
         }
 
-        private async void jPNToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void jPNToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (Save_File != null)
-            {
-                if (Save_File.ChangesMade) // TODO: Changes aren't updated when placing items, etc. Must change that.
-                {
-                    DialogResult Result = MessageBox.Show("A save file is already being edited. Would you like to save your changes before opening another file?", "Save File", MessageBoxButtons.YesNo);
-                    if (Result == DialogResult.Yes)
-                    {
-                        Save_File.Flush();
-                    }
-                    // Add Save_File.Close(); ??
-                }
-            }
-            await SetupEditor(new Save(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00198d00\\data\\00000001\\garden_plus.dat"));
+            OpenSave(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00198d00\\data\\00000001\\garden_plus.dat");
         }
 
-        private async void eURToolStripMenuItem_Click(object sender, EventArgs e)
+        private void eURToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Save_File != null)
-            {
-                if (Save_File.ChangesMade) // TODO: Changes aren't updated when placing items, etc. Must change that.
-                {
-                    DialogResult Result = MessageBox.Show("A save file is already being edited. Would you like to save your changes before opening another file?", "Save File", MessageBoxButtons.YesNo);
-                    if (Result == DialogResult.Yes)
-                    {
-                        Save_File.Flush();
-                    }
-                    // Add Save_File.Close(); ??
-                }
-            }
-            await SetupEditor(new Save(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00086400\\data\\00000001\\garden.dat"));
+            OpenSave(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00086400\\data\\00000001\\garden.dat");
         }
 
-        private async void uSAToolStripMenuItem_Click(object sender, EventArgs e)
+        private void uSAToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Save_File != null)
-            {
-                if (Save_File.ChangesMade) // TODO: Changes aren't updated when placing items, etc. Must change that.
-                {
-                    DialogResult Result = MessageBox.Show("A save file is already being edited. Would you like to save your changes before opening another file?", "Save File", MessageBoxButtons.YesNo);
-                    if (Result == DialogResult.Yes)
-                    {
-                        Save_File.Flush();
-                    }
-                    // Add Save_File.Close(); ??
-                }
-            }
-            await SetupEditor(new Save(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00086300\\data\\00000001\\garden.dat"));
+            OpenSave(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00086300\\data\\00000001\\garden.dat");
         }
 
-        private async void jPNToolStripMenuItem_Click(object sender, EventArgs e)
+        private void jPNToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Save_File != null)
-            {
-                if (Save_File.ChangesMade) // TODO: Changes aren't updated when placing items, etc. Must change that.
-                {
-                    DialogResult Result = MessageBox.Show("A save file is already being edited. Would you like to save your changes before opening another file?", "Save File", MessageBoxButtons.YesNo);
-                    if (Result == DialogResult.Yes)
-                    {
-                        Save_File.Flush();
-                    }
-                    // Add Save_File.Close(); ??
-                }
-            }
-            await SetupEditor(new Save(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00086200\\data\\00000001\\garden.dat"));
+            OpenSave(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00086200\\data\\00000001\\garden.dat");
         }
 
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
