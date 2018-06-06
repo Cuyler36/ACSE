@@ -4040,6 +4040,7 @@ namespace ACSE
                 if (Acre.Acre_Items != null)
                 {
                     for (int i = 0; i < 256; i++)
+                    {
                         if (ItemData.GetItemType(Acre.Acre_Items[i].ItemID, Save_File.Save_Type) == "Weed")
                         {
                             if (Save_File.Save_Type == SaveType.Wild_World || Save_File.Save_Type == SaveType.City_Folk)
@@ -4050,9 +4051,12 @@ namespace ACSE
                                 Acre.Acre_Items[i] = new WorldItem(0, Acre.Acre_Items[i].Index);
                             Weeds_Cleared++;
                         }
-                    Box.Image = GenerateAcreItemsBitmap(Acre.Acre_Items, Acre_Idx);
+                    }
+                    Refresh_PictureBox_Image(Box, GenerateAcreItemsBitmap(Acre.Acre_Items, Acre_Idx));
                 }
             }
+            MessageBox.Show(string.Format("{0} weeds {1} removed!", Weeds_Cleared,
+                    Weeds_Cleared == 1 ? "was" : "were"), "Weeds Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
