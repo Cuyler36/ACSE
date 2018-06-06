@@ -484,14 +484,86 @@ namespace ACSE.Classes.Utilities
             { 0xFF, "ぽ" },
         };
 
-        public static readonly Dictionary<byte, string> WW_CharacterDictionary = new Dictionary<byte, string>()
+        public static readonly Dictionary<byte, string> WW_CharacterDictionary = new Dictionary<byte, string>() // TODO: some of the new characters are wrong. Look at them one-by-one in Wild World somehow.
         {
+            { 0x00, "\0" },
+            { 0x01, "A" },
+            { 0x02, "B" },
+            { 0x03, "C" },
+            { 0x04, "D" },
+            { 0x05, "E" },
+            { 0x06, "F" },
+            { 0x07, "G" },
+            { 0x08, "H" },
+            { 0x09, "I" },
+            { 0x0A, "J" },
+            { 0x0B, "K" },
+            { 0x0C, "L" },
+            { 0x0D, "M" },
+            { 0x0E, "N" },
+            { 0x0F, "O" },
+            { 0x10, "P" },
+            { 0x11, "Q" },
+            { 0x12, "R" },
+            { 0x13, "S" },
+            { 0x14, "T" },
+            { 0x15, "U" },
+            { 0x16, "V" },
+            { 0x17, "W" },
+            { 0x18, "X" },
+            { 0x19, "Y" },
+            { 0x1A, "Z" },
+            { 0x1B, "a" },
+            { 0x1C, "b" },
+            { 0x1D, "c" },
+            { 0x1E, "d" },
+            { 0x1F, "e" },
+            { 0x20, "f" },
+            { 0x21, "g" },
+            { 0x22, "h" },
+            { 0x23, "i" },
+            { 0x24, "j" },
+            { 0x25, "k" },
+            { 0x26, "l" },
+            { 0x27, "m" },
+            { 0x28, "n" },
+            { 0x29, "o" },
+            { 0x2A, "p" },
+            { 0x2B, "q" },
+            { 0x2C, "r" },
+            { 0x2D, "s" },
+            { 0x2E, "t" },
+            { 0x2F, "u" },
+            { 0x30, "v" },
+            { 0x31, "w" },
+            { 0x32, "x" },
+            { 0x33, "y" },
+            { 0x34, "z" },
+            { 0x35, "0" },
+            { 0x36, "1" },
+            { 0x37, "2" },
+            { 0x38, "3" },
+            { 0x39, "4" },
+            { 0x3A, "5" },
+            { 0x3B, "6" },
+            { 0x3C, "7" },
+            { 0x3D, "8" },
+            { 0x3E, "9" },
+            { 0x3F, "⨍" },
+            { 0x40, "s̊" },
             { 0x41, "Œ"},
+            { 0x42, "Ž" },
+            { 0x43, "š" },
             { 0x44, "œ"},
+            { 0x45, "ž" },
+            { 0x46, "Ÿ" },
             { 0x47, "À"},
             { 0x48, "Á"},
             { 0x49, "Â"},
+            { 0x4A, "Ã" },
             { 0x4B, "Ä"},
+            { 0x4C, "Å" },
+            { 0x4D, "Æ" },
             { 0x4E, "Ç"},
             { 0x4F, "È"},
             { 0x50, "É"},
@@ -501,20 +573,28 @@ namespace ACSE.Classes.Utilities
             { 0x54, "Í"},
             { 0x55, "Î"},
             { 0x56, "Ï"},
+            { 0x57, "Đ" },
             { 0x58, "Ñ"},
             { 0x59, "Ò"},
             { 0x5A, "Ó"},
             { 0x5B, "Ô"},
+            { 0x5C, "Õ" },
             { 0x5D, "Ö"},
+            { 0x5E, "Ø" },
             { 0x5F, "Ù"},
             { 0x60, "Ú"},
             { 0x61, "Û"},
             { 0x62, "Ü"},
+            { 0x63, "Ý" },
+            { 0x64, "Þ" },
             { 0x65, "ß"},
             { 0x66, "à"},
             { 0x67, "á"},
             { 0x68, "â"},
+            { 0x69, "ã" },
             { 0x6A, "ä"},
+            { 0x6B, "å" },
+            { 0x6C, "æ" },
             { 0x6D, "ç"},
             { 0x6E, "è"},
             { 0x6F, "é"},
@@ -524,27 +604,38 @@ namespace ACSE.Classes.Utilities
             { 0x73, "í"},
             { 0x74, "î"},
             { 0x75, "ï"},
+            { 0x76, "ð" },
             { 0x77, "ñ"},
             { 0x78, "ò"},
             { 0x79, "ó"},
             { 0x7A, "ô"},
+            { 0x7B, "õ" },
             { 0x7C, "ö"},
+            { 0x7D, "ø" },
             { 0x7E, "ù"},
             { 0x7F, "ú"},
             { 0x80, "û"},
             { 0x81, "ü"},
-            { 0x85, " "}, // "(space)"
-            { 0x86, " "}, //breaking space
+            { 0x82, "ý" },
+            { 0x83, "þ" },
+            { 0x84, "ÿ" },
+            { 0x85, " "},
+            { 0x86, "\n"},
             { 0x87, "!" },
-            //{ 0x87, "\n"},
+            { 0x88, "“" },
+            { 0x89, "#" },
+            { 0x8A, "$" },
+            { 0x8B, "%" },
             { 0x8C, "&" },
-            { 0x8D, "\"" }, // single quote
+            { 0x8D, "´" },
             { 0x8E, "(" },
             { 0x8F, ")" },
+            { 0x90, "*" },
             { 0x91, "+" },
             { 0x92, "," },
             { 0x93, "-" },
             { 0x94, "." },
+            { 0x95, "/" },
             { 0x96, ":" },
             { 0x97, ";" },
             { 0x98, "<" },
@@ -553,23 +644,69 @@ namespace ACSE.Classes.Utilities
             { 0x9B, "?" },
             { 0x9C, "@" },
             { 0x9D, "[" },
+            { 0x9E, "{" },
             { 0x9F, "]" },
+            { 0xA0, "|" },
             { 0xA1, "_" },
+            { 0xA2, "}" },
+            { 0xA3, "、" },
+            { 0xA4, "˷" },
+            { 0xA5, "…" },
             { 0xA6, "~" },
-            { 0xA7, "€"},
+            { 0xA7, "£" },
+            { 0xA8, "†" },
+            { 0xA9, "‡" },
+            { 0xAA, "^" },
+            { 0xAB, "‰" },
+            { 0xAC, "⟨" },
+            { 0xAD, "`" }, // Might be wrong
+            { 0xAE, "”" },
+            { 0xAF, "•" },
+            { 0xB0, "‒" },
             { 0xB1, "'" },
+            { 0xB2, "—" },
             { 0xB3, "\"" },
-            { 0xBB, "¡"}, //(i)??
-            { 0xBC, "¢"},
-            { 0xBD, "£"},
-            { 0xD1, "•"},
-            { 0xD9, "¿"},
-            { 0xDA, "×"},
-            { 0xDB, "÷"},
-            { 0xDC, "💧"},
-            { 0xDD, "★"},
-            { 0xDE, "❤"},
-            { 0xDF, "♪"},
+            { 0xB4, "™" },
+            { 0xB5, "⟩" },
+            { 0xB6, " " }, // O with ticks
+            { 0xB7, "˜" },
+            { 0xB8, "¥" },
+            { 0xB9, "╎" },
+            { 0xBA, "§" },
+            { 0xBB, "¡" },
+            { 0xBC, "¢" },
+            { 0xBD, "£" },
+            { 0xBE, "¨" },
+            { 0xBF, "©" },
+            { 0xC0, "ª" },
+            { 0xC1, "«" },
+            { 0xC2, "¬" },
+            { 0xC3, "–" },
+            { 0xC4, "®" },
+            { 0xC5, "°" },
+            { 0xC6, "±" },
+            { 0xC7, "²" },
+            { 0xC8, "³" },
+            { 0xC9, "‾" },
+            { 0xCA, "ˢ" },
+            { 0xCB, "µ" },
+            { 0xCC, "¶" },
+            { 0xCD, "→" }, // this is actually the cursor position symbol (> subscript)
+            { 0xCE, "¹" },
+            { 0xCF, "º" },
+            { 0xD0, "»" },
+            { 0xD1, "･" },
+            { 0xD2, "¼" },
+            { 0xD3, "½" }, // this is actually 2/4
+            { 0xD4, "¾" },
+            // D5+?
+            { 0xD9, "¿" },
+            { 0xDA, "×" },
+            { 0xDB, "÷" },
+            { 0xDC, "💧" },
+            { 0xDD, "★" },
+            { 0xDE, "❤" },
+            { 0xDF, "♪" },
         };
 
         public static int StringToMaxChars(string s)
@@ -583,40 +720,6 @@ namespace ACSE.Classes.Utilities
                 size += Encoding.UTF8.GetBytes(((string)(t.Current)).ToCharArray()).Length;
             }
             return size;
-        }
-
-        public static byte[] Fix_Wild_World_String(byte[] mangled_String_Bytes)
-        {
-            byte[] Fixed_String_Bytes = new byte[mangled_String_Bytes.Length];
-            for (int i = 0; i < mangled_String_Bytes.Length; i++)
-            {
-                byte Mangled_Char = mangled_String_Bytes[i];
-                if (Mangled_Char > 0 && Mangled_Char <= 0x1A)
-                    Fixed_String_Bytes[i] = (byte)(Mangled_Char + 0x40);
-                else if (Mangled_Char >= 0x1B && Mangled_Char <= 0x34)
-                    Fixed_String_Bytes[i] = (byte)(Mangled_Char + 0x46);
-                else if (Mangled_Char >= 0x35 && Mangled_Char <= 0x3E)
-                    Fixed_String_Bytes[i] = (byte)(Mangled_Char - 0x5); //Char - 0x35 + 0x30 (0)
-            }
-            return Fixed_String_Bytes;
-        }
-
-        public static byte[] To_Wild_World_String(byte[] string_Bytes)
-        {
-            byte[] WW_String_Bytes = new byte[string_Bytes.Length];
-            for (int i = 0; i < WW_String_Bytes.Length; i++)
-            {
-                byte Char = string_Bytes[i];
-                if (Char > 0x40 && Char <= 0x5A)
-                    WW_String_Bytes[i] = (byte)(Char - 0x40);
-                else if (Char >= 0x61 && Char <= 0x7A)
-                    WW_String_Bytes[i] = (byte)(Char - 0x46);
-                else if (Char >= 0x30 && Char <= 0x39)
-                    WW_String_Bytes[i] = (byte)(Char + 0x5);
-                else if (WW_CharacterDictionary.Values.Contains(Encoding.ASCII.GetString(new byte[1] { Char })))
-                    WW_String_Bytes[i] = WW_CharacterDictionary.First(x => x.Value == Encoding.ASCII.GetString(new byte[1] { Char })).Key;
-            }
-            return WW_String_Bytes;
         }
     }
 
@@ -648,16 +751,28 @@ namespace ACSE.Classes.Utilities
                     Char_Dictionary = null;
                     break;
             }
-            if ((saveType == SaveType.Doubutsu_no_Mori || saveType == SaveType.Doubutsu_no_Mori_Plus || saveType == SaveType.Animal_Crossing || saveType == SaveType.Doubutsu_no_Mori_e_Plus
-                || saveType == SaveType.Wild_World) && Char_Dictionary != null)
-                foreach (byte b in stringBuffer)
-                    if (Char_Dictionary.ContainsKey(b))
-                        String += Char_Dictionary[b];
+
+            if (Char_Dictionary != null)
+            {
+                for (int i = 0; i < stringBuffer.Length; i++)
+                {
+                    if (Char_Dictionary.ContainsKey(stringBuffer[i]))
+                    {
+                        String += Char_Dictionary[stringBuffer[i]];
+                    }
                     else
-                        String += Encoding.UTF8.GetString(saveType == SaveType.Wild_World ? StringUtility.Fix_Wild_World_String(new byte[1] { b }) : new byte[1] { b });
+                    {
+                        String += Encoding.ASCII.GetString(stringBuffer, i, 1);
+                    }
+                }
+            }
             else if (saveType == SaveType.City_Folk)
+            {
                 for (int i = 0; i < stringBuffer.Length; i += 2)
+                {
                     String += Encoding.Unicode.GetString(stringBuffer.Skip(i).Take(2).Reverse().ToArray());
+                }
+            }
             else if (saveType == SaveType.New_Leaf || saveType == SaveType.Welcome_Amiibo)
             {
                 String = Encoding.Unicode.GetString(stringBuffer);
@@ -711,9 +826,16 @@ namespace ACSE.Classes.Utilities
             }
             else if (Save_Type == SaveType.Wild_World)
             {
-                byte[] String_Buffer = StringUtility.To_Wild_World_String(Encoding.UTF8.GetBytes(String));
-                if (maxSize > 0)
-                    Array.Resize(ref String_Buffer, maxSize);
+                byte[] String_Buffer = new byte[maxSize > 0 ? maxSize : String.Length];
+                for (int i = 0; i < String_Buffer.Length; i++)
+                {
+                    string Char = String[i].ToString();
+                    if (StringUtility.WW_CharacterDictionary.ContainsValue(Char))
+                    {
+                        String_Buffer[i] = StringUtility.WW_CharacterDictionary.FirstOrDefault(o => o.Value.Equals(Char)).Key;
+                    }
+                }
+                
                 return String_Buffer;
             }
             else if (Save_Type == SaveType.City_Folk)
