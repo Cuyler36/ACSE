@@ -343,13 +343,15 @@ namespace ACSE
                 MessageBox.Show("The TPC Picture was an incorrect data size.");
                 return null;
             }
-            if (TPC_Bytes[TPC_Bytes.Length - 1] == 0xD9 && TPC_Bytes[TPC_Bytes.Length - 2] == 0xFF)
-                return Image.FromStream(new MemoryStream(TPC_Bytes));
+
             for (int i = TPC_Bytes.Length - 1; i > 0; i--)
             {
                 if (i > 0 && TPC_Bytes[i - 1] == 0xFF && TPC_Bytes[i] == 0xD9)
                 {
-                    return Image.FromStream(new MemoryStream(TPC_Bytes.Take(i).ToArray()));
+                    using (var ms = new MemoryStream(TPC_Bytes.Take(i).ToArray()))
+                    {
+                        return Image.FromStream(ms);
+                    }
                 }
             }
             MainForm.Debug_Manager.WriteLine("Unable to find JPEG End-of-File marker. No TPC?", DebugLevel.Error);
