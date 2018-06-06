@@ -4018,11 +4018,11 @@ namespace ACSE
                     if (Save_File.ChangesMade) // TODO: Changes aren't updated when placing items, etc. Must change that.
                     {
                         DialogResult Result = MessageBox.Show("A save file is already being edited. Would you like to save your changes before opening another file?", "Save File", MessageBoxButtons.YesNo);
-                        if (Result == DialogResult.Yes)
-                        {
-                            Save_File.Flush();
-                        }
-                        //Add Save_File.Close(); ??
+                        Save_File.Close(Result == DialogResult.Yes);
+                    }
+                    else
+                    {
+                        Save_File.Close(false);
                     }
                 }
                 await SetupEditor(new Save(openSaveFile.FileName));

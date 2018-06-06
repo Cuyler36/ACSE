@@ -1083,6 +1083,8 @@ namespace ACSE
 
                 Save_Reader.Close();
                 Save_File.Close();
+                Save_Reader.Dispose();
+                Save_File.Dispose();
             }
             else
                 MessageBox.Show("File doesn't exist!");
@@ -1156,7 +1158,32 @@ namespace ACSE
 
             Save_Writer.Close();
             Save_File.Close();
+            Save_Writer.Dispose();
+            Save_File.Dispose();
             ChangesMade = false;
+        }
+
+        public void Close(bool Save)
+        {
+            if (Save)
+            {
+                Flush();
+            }
+            
+            if (Save_Writer != null)
+            {
+                Save_Writer.Dispose();
+            }
+
+            if (Save_Reader != null)
+            {
+                Save_Reader.Dispose();
+            }
+
+            if (Save_File != null)
+            {
+                Save_File.Dispose();
+            }
         }
 
         public void Write(int offset, dynamic data, bool reversed = false, int stringLength = 0)
