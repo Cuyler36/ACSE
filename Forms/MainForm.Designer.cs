@@ -213,9 +213,6 @@
             this.houseSizeComboBox = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.shopTab = new System.Windows.Forms.TabPage();
-            this.shopTabControl = new System.Windows.Forms.TabControl();
-            this.nookShopTab = new System.Windows.Forms.TabPage();
-            this.ableSistersTab = new System.Windows.Forms.TabPage();
             this.islandTab = new System.Windows.Forms.TabPage();
             this.islandSelectionTab = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
@@ -291,8 +288,6 @@
             this.villagerPanel.SuspendLayout();
             this.housesTab.SuspendLayout();
             this.houseTabSelect.SuspendLayout();
-            this.shopTab.SuspendLayout();
-            this.shopTabControl.SuspendLayout();
             this.islandTab.SuspendLayout();
             this.islandSelectionTab.SuspendLayout();
             this.grassTab.SuspendLayout();
@@ -2273,46 +2268,12 @@
             // 
             // shopTab
             // 
-            this.shopTab.Controls.Add(this.shopTabControl);
             this.shopTab.Location = new System.Drawing.Point(4, 22);
             this.shopTab.Name = "shopTab";
             this.shopTab.Size = new System.Drawing.Size(931, 565);
             this.shopTab.TabIndex = 9;
             this.shopTab.Text = "Shops";
             this.shopTab.UseVisualStyleBackColor = true;
-            // 
-            // shopTabControl
-            // 
-            this.shopTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.shopTabControl.Controls.Add(this.nookShopTab);
-            this.shopTabControl.Controls.Add(this.ableSistersTab);
-            this.shopTabControl.Location = new System.Drawing.Point(3, 3);
-            this.shopTabControl.Name = "shopTabControl";
-            this.shopTabControl.SelectedIndex = 0;
-            this.shopTabControl.Size = new System.Drawing.Size(925, 559);
-            this.shopTabControl.TabIndex = 0;
-            // 
-            // nookShopTab
-            // 
-            this.nookShopTab.Location = new System.Drawing.Point(4, 22);
-            this.nookShopTab.Name = "nookShopTab";
-            this.nookShopTab.Padding = new System.Windows.Forms.Padding(3);
-            this.nookShopTab.Size = new System.Drawing.Size(917, 533);
-            this.nookShopTab.TabIndex = 0;
-            this.nookShopTab.Text = "Nook\'s";
-            this.nookShopTab.UseVisualStyleBackColor = true;
-            // 
-            // ableSistersTab
-            // 
-            this.ableSistersTab.Location = new System.Drawing.Point(4, 22);
-            this.ableSistersTab.Name = "ableSistersTab";
-            this.ableSistersTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ableSistersTab.Size = new System.Drawing.Size(917, 533);
-            this.ableSistersTab.TabIndex = 1;
-            this.ableSistersTab.Text = "Able Sisters";
-            this.ableSistersTab.UseVisualStyleBackColor = true;
             // 
             // islandTab
             // 
@@ -2754,8 +2715,6 @@
             this.housesTab.ResumeLayout(false);
             this.housesTab.PerformLayout();
             this.houseTabSelect.ResumeLayout(false);
-            this.shopTab.ResumeLayout(false);
-            this.shopTabControl.ResumeLayout(false);
             this.islandTab.ResumeLayout(false);
             this.islandSelectionTab.ResumeLayout(false);
             this.grassTab.ResumeLayout(false);
@@ -2960,9 +2919,6 @@
         private System.Windows.Forms.ToolStripMenuItem importTownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportTownToolStripMenuItem;
         private System.Windows.Forms.TabPage shopTab;
-        private System.Windows.Forms.TabControl shopTabControl;
-        private System.Windows.Forms.TabPage nookShopTab;
-        private System.Windows.Forms.TabPage ableSistersTab;
         private System.Windows.Forms.ToolStripMenuItem fillMuseumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearMuseumToolStripMenuItem;
         private System.Windows.Forms.TabPage townMisc;
