@@ -1700,7 +1700,7 @@ namespace ACSE
                 if (ushort.TryParse(selectedItem.SelectedValue.ToString(), out ushort Item_ID))
                 {
                     //selectedItemText.Text = string.Format("Selected Item: [0x{0}]", Item_ID.ToString("X4"));
-                    SetCurrentItem(new Item(Item_ID, byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text)));
+                    SetCurrentItem(new Item(Item_ID, byte.Parse(itemFlag1.Text, NumberStyles.HexNumber), byte.Parse(itemFlag2.Text, NumberStyles.HexNumber)));
                 }
             }
         }
