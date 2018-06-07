@@ -1000,7 +1000,7 @@ namespace ACSE
             SetPossibleNativeFruits(save.Save_Generation);
 
             // Set Weather Info
-            weatherComboBox.Enabled = true;
+            weatherComboBox.Enabled = save.Save_Generation == SaveGeneration.GCN;
             weatherComboBox.Items.Clear();
             weatherComboBox.Items.AddRange(Weather.GetWeatherTypesForGame(save.Save_Generation));
             if (Current_Save_Info.Save_Offsets.Weather != -1)
