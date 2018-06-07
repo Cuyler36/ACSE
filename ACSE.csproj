@@ -3778,6 +3778,9 @@
     <Compile Include="Controls\ItemEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\ShopEditorControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SingleItemEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
