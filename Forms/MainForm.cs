@@ -1710,7 +1710,7 @@ namespace ACSE
             ReplaceVerifyHex(itemIdTextBox);
             if (ushort.TryParse(itemIdTextBox.Text, NumberStyles.HexNumber, null, out ushort itemId))
             {
-                SetCurrentItem(new Item(itemId, byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text)));
+                SetCurrentItem(new Item(itemId, byte.Parse(itemFlag1.Text, NumberStyles.HexNumber), byte.Parse(itemFlag2.Text, NumberStyles.HexNumber)));
             }
         }
 
