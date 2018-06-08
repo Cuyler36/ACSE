@@ -725,12 +725,9 @@ namespace ACSE
                 {
                     Players[i] = new Player(Save_File.Save_Data_Start_Offset
                         + Current_Save_Info.Save_Offsets.Player_Start + i * Current_Save_Info.Save_Offsets.Player_Size, i, Save_File);
-
-                    if (Selected_Player == null && Players[i].Exists)
-                    {
-                        Selected_Player = Players[i];
-                    }
                 }
+
+                Selected_Player = Players.FirstOrNull(o => o.Exists);
             });
             progressBar1.Value = 40;
 
@@ -1112,6 +1109,7 @@ namespace ACSE
             }
 
             // Badges (for New Leaf)
+            badgeGroupBox.Visible = save.Save_Generation == SaveGeneration.N3DS;
             if (badgeGroupBox.Controls.Count > 0)
             {
                 ClearBadges();
