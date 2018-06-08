@@ -103,6 +103,11 @@ namespace ACSE
         {
             InitializeComponent();
 
+            // Setup Drag-n-Drop Connection
+            AllowDrop = true;
+            DragEnter += OnDragEnter;
+            DragDrop += OnDragDrop;
+
             // GENERATION TEST \\
             //Generation.Generate(SaveType.Animal_Crossing);
 
@@ -712,13 +717,20 @@ namespace ACSE
             }
 
             progressBar1.Value = 20;
+            Selected_Player = null;
 
             await Task.Run(() =>
             {
                 for (int i = 0; i < 4; i++)
+                {
                     Players[i] = new Player(Save_File.Save_Data_Start_Offset
                         + Current_Save_Info.Save_Offsets.Player_Start + i * Current_Save_Info.Save_Offsets.Player_Size, i, Save_File);
-                Selected_Player = Players.FirstOrDefault(o => o.Exists);
+
+                    if (Selected_Player == null && Players[i].Exists)
+                    {
+                        Selected_Player = Players[i];
+                    }
+                }
             });
             progressBar1.Value = 40;
 
@@ -1467,7 +1479,7 @@ namespace ACSE
             }
 
             // Set Face Image
-            Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Save_Generation, Player.Data.FaceType, Selected_Player.Data.Gender));
+            Refresh_PictureBox_Image(facePreviewPictureBox, ImageGeneration.GetFaceImage(Save_File.Save_Generation, Player.Data.FaceType, Player.Data.Gender));
 
             // Refresh Inventory
             if (inventoryEditor != null && !inventoryEditor.IsDisposed)
@@ -2981,14 +2993,17 @@ namespace ACSE
 
         private void Player_Tab_Index_Changed(object sender, TabControlEventArgs e)
         {
-            var SenderTab = sender as TabControl;
-            if (SenderTab.SelectedIndex < 0 || SenderTab.SelectedIndex > 3)
-                return;
-            Selected_Player = Players[SenderTab.SelectedIndex];
-            playerEditorSelect.SelectedIndex = SenderTab.SelectedIndex;
-            patternGroupTabControl.SelectedIndex = SenderTab.SelectedIndex;
-            if (Selected_Player != null && Selected_Player.Exists)
-                Reload_Player(Selected_Player);
+            if (!Loading)
+            {
+                var SenderTab = sender as TabControl;
+                if (SenderTab.SelectedIndex < 0 || SenderTab.SelectedIndex > 3)
+                    return;
+                Selected_Player = Players[SenderTab.SelectedIndex];
+                playerEditorSelect.SelectedIndex = SenderTab.SelectedIndex;
+                patternGroupTabControl.SelectedIndex = SenderTab.SelectedIndex;
+                if (Selected_Player != null && Selected_Player.Exists)
+                    Reload_Player(Selected_Player);
+            }
         }
 
         private int Last_X = 0, Last_Y = 0;
@@ -4038,6 +4053,23 @@ namespace ACSE
             if (openSaveFile.ShowDialog() == DialogResult.OK)
             {
                 OpenSave(openSaveFile.FileName);
+            }
+        }
+
+        private void OnDragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Link;
+            }
+        }
+
+        private void OnDragDrop(object sender, DragEventArgs e)
+        {
+            string[] Files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (Files[0] != null)
+            {
+                OpenSave(Files[0]);
             }
         }
 
