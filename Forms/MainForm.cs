@@ -4769,6 +4769,16 @@ namespace ACSE
             OpenSave(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00086200\\data\\00000001\\garden.dat");
         }
 
+        private void kORToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenSave(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00086500\\data\\00000001\\garden.dat");
+        }
+
+        private void kORToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            OpenSave(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00199000\\data\\00000001\\garden_plus.dat");
+        }
+
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Town_Acres != null && ushort.TryParse(ReplaceItemBox.Text, NumberStyles.HexNumber, null, out ushort ReplaceId)
