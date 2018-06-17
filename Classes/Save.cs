@@ -113,6 +113,8 @@ namespace ACSE
         gafegcs = 0x26150,
         gaferaw = 0x30000,
         gaejgci = 0x10040, // Doubutsu_no_Mori_e_Plus
+        gaejraw = 0x1A000,
+        gaeeraw = 0x1A000,
         admeduc = 0x1F4,
         admedss = 0x1F4,
         admedsv = 0,
@@ -597,7 +599,7 @@ namespace ACSE
                     return SaveType.Animal_Crossing;
                 else if (Game_ID == "GAFJ")
                     return SaveType.Doubutsu_no_Mori_Plus;
-                else if (Game_ID == "GAEJ")
+                else if (Game_ID == "GAEJ" || Game_ID == "GAEE")
                     return SaveType.Doubutsu_no_Mori_e_Plus;
             }
             else if (Save_Data.Length == 0x4007A || Save_Data.Length == 0x401F4 || Save_Data.Length == 0x40000)
