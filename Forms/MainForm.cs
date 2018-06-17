@@ -4017,22 +4017,27 @@ namespace ACSE
             }
         }
 
+        private void ConfirmSave(string ConfirmationString)
+        {
+            if (Save_File != null)
+            {
+                if (Save_File.ChangesMade) // TODO: Changes aren't updated when placing items, etc. Must change that.
+                {
+                    DialogResult Result = MessageBox.Show(ConfirmationString, "Save File", MessageBoxButtons.YesNo);
+                    Save_File.Close(Result == DialogResult.Yes);
+                }
+                else
+                {
+                    Save_File.Close(false);
+                }
+            }
+        }
+
         private async void OpenSave(string SaveFileLocation)
         {
             if (File.Exists(SaveFileLocation))
             {
-                if (Save_File != null)
-                {
-                    if (Save_File.ChangesMade) // TODO: Changes aren't updated when placing items, etc. Must change that.
-                    {
-                        DialogResult Result = MessageBox.Show("A save file is already being edited. Would you like to save your changes before opening another file?", "Save File", MessageBoxButtons.YesNo);
-                        Save_File.Close(Result == DialogResult.Yes);
-                    }
-                    else
-                    {
-                        Save_File.Close(false);
-                    }
-                }
+                ConfirmSave("A save file is already being edited. Would you like to save your changes before opening another file?");
                 await SetupEditor(new Save(SaveFileLocation));
             }
             else
@@ -4780,6 +4785,14 @@ namespace ACSE
         private void kORToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             OpenSave(Environment.GetEnvironmentVariable("appdata") + "\\Citra\\sdmc\\Nintendo 3DS\\00000000000000000000000000000000\\00000000000000000000000000000000\\title\\00040000\\00199000\\data\\00000001\\garden_plus.dat");
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Save_File != null && !Loading && Save_File.ChangesMade)
+            {
+                ConfirmSave("You've made changes to this save file. Would you like to save them before closing it?");
+            }
         }
 
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
