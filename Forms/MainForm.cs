@@ -3423,7 +3423,7 @@ namespace ACSE
             for (int i = 0; i < Town_Acres.Length; i++)
             {
                 for (int x = 0; x < 256; x++)
-                    if (ItemData.GetItemType(Town_Acres[i].Acre_Items[x].ItemID, Save_File.Save_Type) == "Empty" && Town_Acres[i].Acre_Items[x].Burried)
+                    if (ItemData.GetItemType(Town_Acres[i].Acre_Items[x].ItemID, Save_File.Save_Type) == "Empty" && Town_Acres[i].Acre_Items[x].Buried)
                     {
                         Town_Acres[i].SetBuriedInMemory(Town_Acres[i].Acre_Items[x], i, Buried_Buffer, false, Save_File.Save_Type);
                         Occurances++;
@@ -3637,12 +3637,12 @@ namespace ACSE
                         switch (NewItem.Flag1)
                         {
                             case 0x40:
-                                NewItem.Burried = false;
+                                NewItem.Buried = false;
                                 NewItem.Watered = true;
                                 break;
                             case 0x80:
                                 NewItem.Watered = false;
-                                NewItem.Burried = true;
+                                NewItem.Buried = true;
                                 break;
                         }
                         if (Island)
@@ -3683,7 +3683,7 @@ namespace ACSE
                                 if (Island_Acres[Acre].Acre_Items[index].ItemID != 0x7FFE)
                                 {
                                     Island_Acres[Acre].Acre_Items[index].Flag1 = 0x80;
-                                    Island_Acres[Acre].Acre_Items[index].Burried = true;
+                                    Island_Acres[Acre].Acre_Items[index].Buried = true;
                                 }
                             }
                             else
@@ -3691,7 +3691,7 @@ namespace ACSE
                                 if (Town_Acres[Acre].Acre_Items[index].ItemID != 0x7FFE)
                                 {
                                     Town_Acres[Acre].Acre_Items[index].Flag1 = 0x80;
-                                    Town_Acres[Acre].Acre_Items[index].Burried = true;
+                                    Town_Acres[Acre].Acre_Items[index].Buried = true;
                                 }
                             }
                         }
@@ -3753,7 +3753,7 @@ namespace ACSE
                         selectedItem.SelectedValue = Old_Selected_Item_ID;
                     else
                     {
-                        buriedCheckbox.Checked = Item.Burried || Item.Flag1 == 0x80;
+                        buriedCheckbox.Checked = Item.Buried || Item.Flag1 == 0x80;
                         if (itemFlag1.Enabled)
                         {
                             itemFlag1.Text = Item.Flag1.ToString("X2");
@@ -3828,11 +3828,11 @@ namespace ACSE
                         townToolTip.Show(string.Format("{0} - [0x{1} - Building]", B.Name, B.ID.ToString("X2")), sender as PictureBox, e.X + 15, e.Y + 10);
                     else if (Item != null)
                         townToolTip.Show(string.Format("{0}{1} - [0x{2}]", Item.Name,
-                            Item.Burried ? " (Buried)" : (Item.Watered ? " (Watered)" : (Item.Flag1 == 1 ? " (Perfect Fruit)" : "")),
+                            Item.Buried ? " (Buried)" : (Item.Watered ? " (Watered)" : (Item.Flag1 == 1 ? " (Perfect Fruit)" : "")),
                             Item.ItemID.ToString("X4")), sender as PictureBox, e.X + 15, e.Y + 10);
                 }
                 else
-                    townToolTip.Show(string.Format("{0}{1} - [0x{2}]", Item.Name, Item.Burried ? " (Buried)" : "", Item.ItemID.ToString("X4")), sender as PictureBox, e.X + 15, e.Y + 10);
+                    townToolTip.Show(string.Format("{0}{1} - [0x{2}]", Item.Name, Item.Buried ? " (Buried)" : "", Item.ItemID.ToString("X4")), sender as PictureBox, e.X + 15, e.Y + 10);
             }
         }
 
@@ -4816,9 +4816,9 @@ namespace ACSE
                                 Changed = true;
                                 Item.ItemID = ReplacingId;
                                 Item.Name = ReplacingName;
-                                if (Item.Burried && Unbury)
+                                if (Item.Buried && Unbury)
                                 {
-                                    Item.Burried = false;
+                                    Item.Buried = false;
                                     Item.Flag1 &= 0x7F;
                                 }
                             }

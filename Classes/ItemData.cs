@@ -1081,7 +1081,7 @@ namespace ACSE
     {
         public Point Location;
         public int Index = 0;
-        public bool Burried = false;
+        public bool Buried = false;
         public bool Watered = false;
 
         public WorldItem(ushort itemId, int position) : base(itemId)
@@ -1094,7 +1094,7 @@ namespace ACSE
         {
             Flag1 = flag1;
             Flag2 = flag2;
-            Burried = Flag1 == 0x80;
+            Buried = Flag1 == 0x80;
             Watered = Flag1 == 0x40;
             Location = new Point(position % 16, position / 16);
             Index = position;
@@ -1124,7 +1124,7 @@ namespace ACSE
             Flag1 = (byte)(itemId >> 24);
             Flag2 = (byte)(itemId >> 16);
             Name = ItemData.GetItemName(ItemID);
-            Burried = Flag1 == 0x80;
+            Buried = Flag1 == 0x80;
             Watered = Flag1 == 0x40;
         }
 

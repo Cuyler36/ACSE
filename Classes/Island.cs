@@ -180,7 +180,7 @@
         {
             int burriedDataOffset = GetBuriedDataLocation(item, acre, saveType);
             if (burriedDataOffset > -1 && burriedDataOffset < burriedItemData.Length)
-                item.Burried = DataConverter.ToBit(burriedItemData[burriedDataOffset], item.Location.X % 8) == 1;
+                item.Buried = DataConverter.ToBit(burriedItemData[burriedDataOffset], item.Location.X % 8) == 1;
         }
 
         // TODO: Make a toggle to enable/disable the island.
@@ -194,10 +194,10 @@
                 if (buriedLocation > -1)
                 {
                     DataConverter.SetBit(ref burriedItemData[buriedLocation], item.Location.X % 8, buried);
-                    item.Burried = DataConverter.ToBit(burriedItemData[buriedLocation], item.Location.X % 8) == 1;
+                    item.Buried = DataConverter.ToBit(burriedItemData[buriedLocation], item.Location.X % 8) == 1;
                 }
                 else
-                    item.Burried = false;
+                    item.Buried = false;
             }
         }
 

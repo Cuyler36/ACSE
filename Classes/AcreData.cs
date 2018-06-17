@@ -277,10 +277,10 @@ namespace ACSE
                 if (buriedLocation > -1)
                 {
                     DataConverter.SetBit(ref burriedItemData[buriedLocation], item.Location.X % 8, buried);
-                    item.Burried = DataConverter.ToBit(burriedItemData[buriedLocation], item.Location.X % 8) == 1;
+                    item.Buried = DataConverter.ToBit(burriedItemData[buriedLocation], item.Location.X % 8) == 1;
                 }
                 else
-                    item.Burried = false;
+                    item.Buried = false;
             }
         }
         //Correct decoding/setting of buried items. Fixes the hacky SaveType case for AC/CF. (Don't forget to implement this!)
@@ -293,11 +293,11 @@ namespace ACSE
                 {
                     byte[] Buried_Row_Bytes = BitConverter.GetBytes(buriedItemData[buriedLocation]);
                     DataConverter.SetBit(ref Buried_Row_Bytes[item.Location.X / 8], item.Location.X % 8, buried); //Should probably rewrite bit editing functions to take any data type
-                    item.Burried = DataConverter.ToBit(Buried_Row_Bytes[item.Location.X / 8], item.Location.X % 8) == 1;
+                    item.Buried = DataConverter.ToBit(Buried_Row_Bytes[item.Location.X / 8], item.Location.X % 8) == 1;
                     buriedItemData[buriedLocation] = BitConverter.ToUInt16(Buried_Row_Bytes, 0);
                 }
                 else
-                    item.Burried = false;
+                    item.Buried = false;
             }
         }
 
@@ -305,7 +305,7 @@ namespace ACSE
         {
             int burriedDataOffset = GetBuriedDataLocation(item, acre, saveType);
             if (burriedDataOffset > -1 && burriedDataOffset < burriedItemData.Length)
-                item.Burried = DataConverter.ToBit(burriedItemData[burriedDataOffset], item.Location.X % 8) == 1;
+                item.Buried = DataConverter.ToBit(burriedItemData[burriedDataOffset], item.Location.X % 8) == 1;
         }
     }
 }

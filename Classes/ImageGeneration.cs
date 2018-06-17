@@ -64,7 +64,7 @@ namespace ACSE
             for (int i = 0; i < Items.Length; i++)
             {
                 WorldItem Item = Items[i];
-                if (Item.Burried && !Item.Name.Equals("Empty"))
+                if (Item.Buried && !Item.Name.Equals("Empty"))
                 {
                     if (Use_Text)
                     {
