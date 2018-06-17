@@ -31,7 +31,6 @@
             this.imageSizeModeComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.doneButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.debugLevelComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.scanForInt32Checkbox = new System.Windows.Forms.CheckBox();
@@ -39,6 +38,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.acreMapSizeTrackBar = new System.Windows.Forms.TrackBar();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.townMapSizeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.acreMapSizeTrackBar)).BeginInit();
             this.SuspendLayout();
@@ -62,22 +62,13 @@
             // 
             // doneButton
             // 
-            this.doneButton.Location = new System.Drawing.Point(317, 132);
+            this.doneButton.Location = new System.Drawing.Point(269, 111);
             this.doneButton.Name = "doneButton";
             this.doneButton.Size = new System.Drawing.Size(75, 23);
             this.doneButton.TabIndex = 2;
             this.doneButton.Text = "Done";
             this.doneButton.UseVisualStyleBackColor = true;
             this.doneButton.Click += new System.EventHandler(this.doneButton_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(252, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(92, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "(Requires Restart)";
             // 
             // debugLevelComboBox
             // 
@@ -105,7 +96,7 @@
             // 
             this.scanForInt32Checkbox.AutoSize = true;
             this.scanForInt32Checkbox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.scanForInt32Checkbox.Location = new System.Drawing.Point(5, 116);
+            this.scanForInt32Checkbox.Location = new System.Drawing.Point(8, 116);
             this.scanForInt32Checkbox.Name = "scanForInt32Checkbox";
             this.scanForInt32Checkbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.scanForInt32Checkbox.Size = new System.Drawing.Size(190, 17);
@@ -158,11 +149,20 @@
             this.acreMapSizeTrackBar.Value = 8;
             this.acreMapSizeTrackBar.Scroll += new System.EventHandler(this.acreMapSizeTrackBar_Scroll);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(252, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(92, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "(Requires Restart)";
+            // 
             // SettingsMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(404, 167);
+            this.ClientSize = new System.Drawing.Size(358, 146);
             this.ControlBox = false;
             this.Controls.Add(this.label5);
             this.Controls.Add(this.acreMapSizeTrackBar);
@@ -189,7 +189,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox imageSizeModeComboBox;
         private System.Windows.Forms.Button doneButton;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox debugLevelComboBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox scanForInt32Checkbox;
@@ -197,5 +196,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TrackBar acreMapSizeTrackBar;
+        private System.Windows.Forms.Label label2;
     }
 }
