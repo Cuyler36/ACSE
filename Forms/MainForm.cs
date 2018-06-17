@@ -1380,8 +1380,11 @@ namespace ACSE
             if (stationTypeComboBox.Enabled)
             {
                 byte StationType = Save_File.ReadByte(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Train_Station_Type);
-                stationTypeComboBox.SelectedIndex = StationType;
-                stationPictureBox.Image = TrainStation.GetStationImage(StationType);
+                if (StationType < 15)
+                {
+                    stationTypeComboBox.SelectedIndex = StationType;
+                    stationPictureBox.Image = TrainStation.GetStationImage(StationType);
+                }
             }
         }
 
