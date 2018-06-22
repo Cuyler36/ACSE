@@ -4795,6 +4795,11 @@ namespace ACSE
             }
         }
 
+        private void generateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Town_Acres != null && ushort.TryParse(ReplaceItemBox.Text, NumberStyles.HexNumber, null, out ushort ReplaceId)

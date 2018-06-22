@@ -3787,6 +3787,12 @@
     <Compile Include="Controls\SingleItemEditor.Designer.cs">
       <DependentUpon>SingleItemEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CodeGeneratorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CodeGeneratorForm.Designer.cs">
+      <DependentUpon>CodeGeneratorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ToggableAlertForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -3844,6 +3850,9 @@
     <Compile Include="Classes\VillagerData.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\CodeGeneratorForm.resx">
+      <DependentUpon>CodeGeneratorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ToggableAlertForm.resx">
       <DependentUpon>ToggableAlertForm.cs</DependentUpon>
     </EmbeddedResource>

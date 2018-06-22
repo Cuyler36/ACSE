@@ -744,7 +744,7 @@ namespace ACSE
                 case "Raffle Ticket":
                     return 0xC81E90FF;
                 case "Tree":
-                    return 0xC800FF00;
+                    return 0xC88B4513; //0xC800FF00;
                 case "Weed":
                     return 0xC8008000;
                 case "Shell":
