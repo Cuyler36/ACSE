@@ -2522,7 +2522,8 @@ namespace ACSE
             {
                 Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 7 ? Villager.Data.Personality : 6;
             }
-            TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 32), Location = new Point (265, 22), MaxLength = Villager.Offsets.CatchphraseSize, Text = Villager.Data.Catchphrase };
+            int CatchphraseSize = Save_File.Save_Generation == SaveGeneration.N3DS ? 10 : Villager.Offsets.CatchphraseSize;
+            TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 32), Location = new Point (265, 22), MaxLength = CatchphraseSize, Text = Villager.Data.Catchphrase };
             CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 22), Checked = Villager.Boxed(), Enabled = (Save_File.Save_Generation != SaveGeneration.N64 && Save_File.Save_Generation != SaveGeneration.GCN && Save_File.Save_Generation != SaveGeneration.iQue)};
             PictureBox Shirt_Box = new PictureBox {BorderStyle = BorderStyle.FixedSingle, Size = new Size(16, 16), Location = new Point(415, 24), Image = Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type)};
             if (Save_File.Save_Type == SaveType.Wild_World || Save_File.Save_Type == SaveType.City_Folk || Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
@@ -3509,7 +3510,6 @@ namespace ACSE
                     Size = new Size(180, 22),
                     Location = new Point(0, i * 25)
                 };
-                Building_Panel.Suspend();
 
                 if (Save_File.Save_Generation == SaveGeneration.N3DS)
                 {
@@ -3522,7 +3522,6 @@ namespace ACSE
                     Building_Panel.Controls.Add(Building_List_Box);
                     Building_List_Box.SelectedIndex = Array.IndexOf(Building_DB, Buildings[i].ID);
                     Building_List_Box.SelectedIndexChanged += new EventHandler(Building_List_Index_Changed);
-                    Building_List_Box.Suspend();
                 }
                 else
                 {
@@ -3532,7 +3531,6 @@ namespace ACSE
                         Text = Buildings[i].Name,
                     };
                     Building_Panel.Controls.Add(Building_List_Label);
-                    Building_List_Label.Suspend();
                 }
                 TextBox X_Location = new TextBox
                 {
@@ -3553,19 +3551,9 @@ namespace ACSE
                 Building_Panel.Controls.Add(X_Location);
                 Building_Panel.Controls.Add(Y_Location);
                 Building_List_Panels[i] = Building_Panel;
-                Y_Location.Suspend();
-                X_Location.Suspend();
             }
 
             buildingsPanel.Controls.AddRange(Building_List_Panels);
-            for (int i = 0; i < buildingsPanel.Controls.Count; i++)
-            {
-                buildingsPanel.Controls[i].Resume();
-                foreach (Control c in buildingsPanel.Controls[i].Controls)
-                {
-                    c.Resume();
-                }
-            }
         }
 
         private void UpdateBuildingCount()

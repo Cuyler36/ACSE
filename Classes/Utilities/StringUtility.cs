@@ -768,10 +768,7 @@ namespace ACSE.Classes.Utilities
             }
             else if (saveType == SaveType.City_Folk)
             {
-                for (int i = 0; i < stringBuffer.Length; i += 2)
-                {
-                    String += Encoding.Unicode.GetString(stringBuffer.Skip(i).Take(2).Reverse().ToArray());
-                }
+                String = Encoding.BigEndianUnicode.GetString(stringBuffer);
             }
             else if (saveType == SaveType.New_Leaf || saveType == SaveType.Welcome_Amiibo)
             {

@@ -263,7 +263,7 @@ namespace ACSE
             Status = 0x24E4,
             Catchphrase = 0x24C6,
             CatchphraseSize = 0x16,
-            Town_Name = 0x24CE,
+            Town_Name = 0x24EE,
             Town_NameSize = 0x12,
             Town_ID = -1, // Research
             Shirt = 0x246E,
@@ -567,7 +567,6 @@ namespace ACSE
                 }
             }
 
-            //MessageBox.Show(string.Format("Writing Villager #{0} with data offset of 0x{1}", Index, Offset.ToString("X")));
             Type VillagerOffsetData = typeof(VillagerOffsets);
             Type VillagerDataType = typeof(VillagerDataStruct);
             foreach (var Field in VillagerOffsetData.GetFields(BindingFlags.Public | BindingFlags.Instance))
@@ -580,45 +579,41 @@ namespace ACSE
                         {
                             Type FieldType = VillagerDataType.GetField(Field.Name).FieldType;
                             int DataOffset = Offset + (int)Field.GetValue(Offsets);
-                            //MessageBox.Show("Field Name: " + Field.Name + " | Data Offset: " + DataOffset.ToString("X"));
+                            dynamic DataObject = VillagerDataType.GetField(Field.Name).GetValue(Data);
+                            
                             if (Field.Name == "Villager_ID")
                             {
                                 if (SaveData.Save_Type == SaveType.Wild_World)
                                 {
-                                    SaveData.Write(DataOffset, Convert.ToByte(VillagerDataType.GetField(Field.Name).GetValue(Data)));
+                                    SaveData.Write(DataOffset, Convert.ToByte(DataObject));
                                 }
                                 else //Might not encompass City Folk
                                 {
-                                    SaveData.Write(DataOffset, (ushort)VillagerDataType.GetField(Field.Name).GetValue(Data), SaveData.Is_Big_Endian);
+                                    SaveData.Write(DataOffset, DataObject, SaveData.Is_Big_Endian);
                                 }
                             }
-                            else if (FieldType == typeof(string) && SaveData.Save_Generation != SaveGeneration.N3DS) // Temp 3DS exclusion
+                            else if (FieldType == typeof(string)) // Temp 3DS exclusion
                             {
-                                SaveData.Write(DataOffset, ACString.GetBytes((string)VillagerDataType.GetField(Field.Name).GetValue(Data),
-                                    (int)VillagerOffsetData.GetField(Field.Name + "Size").GetValue(Offsets)));
-                            }
-                            else if (FieldType == typeof(byte))
-                            {
-                                SaveData.Write(DataOffset, (byte)VillagerDataType.GetField(Field.Name).GetValue(Data));
+                                SaveData.Write(DataOffset, ACString.GetBytes(DataObject, (int)VillagerOffsetData.GetField(Field.Name + "Size").GetValue(Offsets)));
                             }
                             else if (FieldType == typeof(byte[]))
                             {
-                                SaveData.Write(DataOffset, (byte[])VillagerDataType.GetField(Field.Name).GetValue(Data));
-                            }
-                            else if (FieldType == typeof(ushort))
-                            {
-                                SaveData.Write(DataOffset, (ushort)VillagerDataType.GetField(Field.Name).GetValue(Data), SaveData.Is_Big_Endian);
+                                SaveData.Write(DataOffset, DataObject, false);
                             }
                             else if (FieldType == typeof(Item))
                             {
-                                if (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo)
+                                if (SaveData.Save_Generation == SaveGeneration.N3DS)
                                 {
-                                    SaveData.Write(DataOffset, ItemData.EncodeItem((Item)VillagerDataType.GetField(Field.Name).GetValue(Data)), SaveData.Is_Big_Endian);
+                                    SaveData.Write(DataOffset, ItemData.EncodeItem((Item)DataObject), SaveData.Is_Big_Endian);
                                 }
                                 else
                                 {
-                                    SaveData.Write(DataOffset, ((Item)VillagerDataType.GetField(Field.Name).GetValue(Data)).ItemID, SaveData.Is_Big_Endian);
+                                    SaveData.Write(DataOffset, ((Item)DataObject).ItemID, SaveData.Is_Big_Endian);
                                 }
+                            }
+                            else if (!FieldType.IsClass) // Don't write classes. If we're here, the that means that we haven't handled saving the class.
+                            {
+                                SaveData.Write(DataOffset, DataObject, SaveData.Is_Big_Endian);
                             }
                         }
                     }
