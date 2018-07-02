@@ -27,7 +27,6 @@ ACSE is a save editor for the Animal Crossing game series. It currently supports
 	* Villagers
 	* Personalities
 	* Catchphrases
-	* Nicknames (Not Implemented)
 * Grass Editing
 * Pattern Editing
 
@@ -51,6 +50,3 @@ ACSE is a save editor for the Animal Crossing game series. It currently supports
 
 ### Extracting Save Files
 If you don't know how to get your save file, read the documentation here: https://github.com/Cuyler36/ACSE/wiki/Extracting-Save-Files
-
-### GameCube Only Version (Very Outdated)
-If you don't want support for anything other than the NTSC-U/PAL version of Animal Crossing for GameCube, you can get the old version [here](https://github.com/Cuyler36/ACSE-OLD/releases/tag/0.4.5).
