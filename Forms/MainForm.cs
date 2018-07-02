@@ -4841,11 +4841,19 @@ namespace ACSE
                     if (Save_File.Save_Type == SaveType.Wild_World)
                     {
                         for (int i = 0; i < 256; i++)
-                            if (ItemData.GetItemType(Acre.Acre_Items[i].ItemID, Save_File.Save_Type) == "Parched Flower")
+                        {
+                            string ItemType = ItemData.GetItemType(Acre.Acre_Items[i].ItemID, Save_File.Save_Type);
+                            if (ItemType == "Parched Flower")
                             {
                                 Acre.Acre_Items[i] = new WorldItem((ushort)(Acre.Acre_Items[i].ItemID + 0x1C), Acre.Acre_Items[i].Index);
                                 Flowers_Watered++;
                             }
+                            else if (ItemType == "Flower")
+                            {
+                                Acre.Acre_Items[i] = new WorldItem((ushort)(Acre.Acre_Items[i].ItemID + 0x8A), Acre.Acre_Items[i].Index);
+                                Flowers_Watered++;
+                            }
+                        }
                     }
                     else if (Save_File.Save_Type == SaveType.City_Folk)
                     {
@@ -4854,18 +4862,21 @@ namespace ACSE
                             if (ItemData.GetItemType(Acre.Acre_Items[i].ItemID, Save_File.Save_Type) == "Parched Flower")
                             {
                                 Acre.Acre_Items[i] = new WorldItem((ushort)(Acre.Acre_Items[i].ItemID - 0x20), Acre.Acre_Items[i].Index);
+                                Flowers_Watered++;
                             }
                         }
                     }
-                    else if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
+                    else if (Save_File.Save_Generation == SaveGeneration.N3DS)
                     {
                         for (int i = 0; i < 256; i++)
+                        {
                             if (ItemData.GetItemType(Acre.Acre_Items[i].ItemID, Save_File.Save_Type) == "Flower")
                             {
                                 Acre.Acre_Items[i].Flag1 = 0x40;
                                 Acre.Acre_Items[i].Watered = true;
                                 Flowers_Watered++;
                             }
+                        }
                     }
                     var Old_Image = Box.Image;
                     Box.Image = GenerateAcreItemsBitmap(Acre.Acre_Items, Acre_Idx);
@@ -4873,6 +4884,8 @@ namespace ACSE
                         Old_Image.Dispose();
                 }
             }
+
+            MessageBox.Show(string.Format("Watered {0} flowers!", Flowers_Watered), "Flowers Watered", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #region Doubutsu no Mori e+ Islands
