@@ -602,7 +602,7 @@ namespace ACSE
                 else if (Game_ID == "GAEJ" || Game_ID == "GAEE")
                     return SaveType.Doubutsu_no_Mori_e_Plus;
             }
-            else if (Save_Data.Length == 0x4007A || Save_Data.Length == 0x401F4 || Save_Data.Length == 0x40000)
+            else if (Encoding.ASCII.GetString(Save_Data, 0x1E40, 4) == "EMDA" || Save_Data.Length == 0x4007A || Save_Data.Length == 0x401F4 || Save_Data.Length == 0x40000)
                 return SaveType.Wild_World;
             else if (Save_Data.Length == 0x40F340 || Save_Data.Length == 0x47A0DA)
                 return SaveType.City_Folk;
