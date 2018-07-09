@@ -8,10 +8,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ACSE.Classes;
 using ACSE.Classes.Utilities;
 
 namespace ACSE
@@ -19,7 +17,7 @@ namespace ACSE
     public partial class MainForm : Form
     {
         #region Variables
-        public static readonly string Assembly_Location = Directory.GetCurrentDirectory();
+        public static readonly string Assembly_Location = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
         public static DebugManager Debug_Manager = new DebugManager();
         TabPage[] Main_Tabs;
         TabPage[] Player_Tabs = new TabPage[4];
