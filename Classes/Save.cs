@@ -127,6 +127,7 @@ namespace ACSE
 
     public static class SaveDataManager
     {
+        #region SaveOffsets
         public static Offsets Doubutsu_no_Mori_Offsets = new Offsets // Remember that these addresses are valid *after* byteswapping
         {
             Save_Size = 0x10000,
@@ -409,7 +410,9 @@ namespace ACSE
             Weather = -1,
             Train_Station_Type = -1
         };
+        #endregion
 
+        #region SaveInfo
         public static Save_Info Doubutsu_no_Mori = new Save_Info
         {
             Contains_Island = false,
@@ -559,6 +562,7 @@ namespace ACSE
             House_Rooms = new string[6] { "Main Floor", "Upper Floor", "Basement", "Left Wing", "Right Wing", "Back Wing" }
             //3 drawers with 60 items per
         };
+        #endregion
 
         public static byte[] ByteSwap(byte[] saveBuff)
         {
@@ -677,6 +681,32 @@ namespace ACSE
                             return "不明な保存タイプ";
                     }
 
+                case Region.PAL:
+                    switch (Save_Type)
+                    {
+                        case SaveType.Doubutsu_no_Mori:
+                            return "Dōbutsu no Mori";
+                        case SaveType.Doubutsu_no_Mori_Plus:
+                            return "Dōbutsu no Mori+";
+                        case SaveType.Animal_Crossing:
+                            return "Animal Crossing";
+                        case SaveType.Doubutsu_no_Mori_e_Plus:
+                            return "Dōbutsu no Mori e+";
+                        case SaveType.Animal_Forest:
+                            return "Animal Forest";
+                        case SaveType.Wild_World:
+                            return "Wild World";
+                        case SaveType.City_Folk:
+                            return "Let's Go to the City";
+                        case SaveType.New_Leaf:
+                            return "New Leaf";
+                        case SaveType.Welcome_Amiibo:
+                            return "Welcome Amiibo";
+                        case SaveType.Unknown:
+                        default:
+                            return "Unknown Save Type";
+                    }
+                
                 case Region.NTSC:
                 default:
                     switch (Save_Type)
