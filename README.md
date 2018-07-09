@@ -1,18 +1,20 @@
 # ACSE - Animal Crossing Save Editor
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-ACSE is a save editor for the Animal Crossing game series. It currently supports the following titles:
-## ![N64](https://i.imgur.com/nz2Rdc1.png) Nintendo 64
+### ACSE is a save editor for Animal Crossing main series games.
+
+## Supported Games
+### ![N64](https://i.imgur.com/nz2Rdc1.png) Nintendo 64
 * Dōbutsu no Mori
-## ![GCN](https://i.imgur.com/CzocU2O.png) Nintendo GameCube
+### ![GCN](https://i.imgur.com/CzocU2O.png) Nintendo GameCube
 * Dōbutsu no Mori+
 * Animal Crossing: Population Growing
 * Dōbutsu no Mori e+
-## ![DS](https://i.imgur.com/36cZPqr.png) Nintendo DS
+### ![DS](https://i.imgur.com/36cZPqr.png) Nintendo DS
 * Animal Crossing: Wild World
-## ![Wii](https://i.imgur.com/6o0ajrG.png) Nintendo Wii
+### ![Wii](https://i.imgur.com/6o0ajrG.png) Nintendo Wii
 * Animaml Crossing: City Folk
-## ![N3DS](https://i.imgur.com/en3u576.png) Nintendo 3DS
+### ![N3DS](https://i.imgur.com/en3u576.png) Nintendo 3DS
 * Animal Crossing: New Leaf
 * Animal Crossing: New Leaf - Welcome Amiibo
 
