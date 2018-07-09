@@ -1194,41 +1194,44 @@ namespace ACSE
 
         public void Write(int offset, dynamic data, bool reversed = false, int stringLength = 0)
         {
-            ChangesMade = true;
-            Type Data_Type = data.GetType();
-            MainForm.Debug_Manager.WriteLine(string.Format("Writing Data{2} of type {0} to offset {1}", Data_Type.Name, "0x" + offset.ToString("X"), //recasting a value shows it as original type?
-                    Data_Type.IsArray ? "" : " with value 0x" + (data.ToString("X"))), DebugLevel.Debug);
-            if (!Data_Type.IsArray)
+            if (data != null)
             {
-                if (Data_Type == typeof(byte))
-                    Working_Save_Data[offset] = (byte)data;
-                else if (Data_Type == typeof(string))
+                ChangesMade = true;
+                Type Data_Type = data.GetType();
+                MainForm.Debug_Manager.WriteLine(string.Format("Writing Data{2} of type {0} to offset {1}", Data_Type.Name, "0x" + offset.ToString("X"), //recasting a value shows it as original type?
+                        Data_Type.IsArray ? "" : " with value 0x" + (data.ToString("X"))), DebugLevel.Debug);
+                if (!Data_Type.IsArray)
                 {
-                    byte[] String_Byte_Buff = ACString.GetBytes((string)data, stringLength);
-                    Buffer.BlockCopy(String_Byte_Buff, 0, Working_Save_Data, offset, String_Byte_Buff.Length);
-                }
-                else
-                {
-                    byte[] Byte_Array = BitConverter.GetBytes(data);
-                    if (reversed)
-                        Array.Reverse(Byte_Array);
-                    Buffer.BlockCopy(Byte_Array, 0, Working_Save_Data, offset, Byte_Array.Length);
-                }
-            }
-            else
-            {
-                if (Data_Type == typeof(byte[]))
-                    for (int i = 0; i < data.Length; i++)
-                        Working_Save_Data[offset + i] = data[i];
-                else
-                {
-                    int Data_Size = Marshal.SizeOf(data[0]);
-                    for (int i = 0; i < data.Length; i++)
+                    if (Data_Type == typeof(byte))
+                        Working_Save_Data[offset] = (byte)data;
+                    else if (Data_Type == typeof(string))
                     {
-                        byte[] Byte_Array = BitConverter.GetBytes(data[i]);
+                        byte[] String_Byte_Buff = ACString.GetBytes((string)data, stringLength);
+                        Buffer.BlockCopy(String_Byte_Buff, 0, Working_Save_Data, offset, String_Byte_Buff.Length);
+                    }
+                    else
+                    {
+                        byte[] Byte_Array = BitConverter.GetBytes(data);
                         if (reversed)
                             Array.Reverse(Byte_Array);
-                        Byte_Array.CopyTo(Working_Save_Data, offset + i * Data_Size);
+                        Buffer.BlockCopy(Byte_Array, 0, Working_Save_Data, offset, Byte_Array.Length);
+                    }
+                }
+                else
+                {
+                    if (Data_Type == typeof(byte[]))
+                        for (int i = 0; i < data.Length; i++)
+                            Working_Save_Data[offset + i] = data[i];
+                    else
+                    {
+                        int Data_Size = Marshal.SizeOf(data[0]);
+                        for (int i = 0; i < data.Length; i++)
+                        {
+                            byte[] Byte_Array = BitConverter.GetBytes(data[i]);
+                            if (reversed)
+                                Array.Reverse(Byte_Array);
+                            Byte_Array.CopyTo(Working_Save_Data, offset + i * Data_Size);
+                        }
                     }
                 }
             }

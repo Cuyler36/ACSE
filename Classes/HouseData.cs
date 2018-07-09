@@ -24,7 +24,16 @@ namespace ACSE
         public int Room_Carpet;
         public int Bed; //CF Exclusive
         public int Roof_Color;
-        public int Customization_Start; //NL Exclusive
+        // NL Exclusives
+        public int Style;
+        public int DoorShape;
+        public int ExteriorType;
+        public int RoofType;
+        public int DoorType;
+        public int FenceType;
+        public int PavementType;
+        public int MailboxType;
+        // End NL Exclusives
         public int Mailbox;
         public int Mail_Size;
         public int Mail_Count;
@@ -461,15 +470,14 @@ namespace ACSE
         public static HouseOffsets New_Leaf_Offsets = new HouseOffsets //HouseData is duplicated starting at 0x9 (0x0 - 0x8)
         {
             House_Upgrade_Size = 0,
-            Customization_Start = 1,
-            //Style = 1,
-            //DoorShape = 2,
-            //Walls = 3,
-            //Roof = 4,
-            //Door = 5,
-            //Fence = 6,
-            //Pavement = 7,
-            //Mailbox = 8,
+            Style = 1,
+            DoorShape = 2,
+            ExteriorType = 3,
+            RoofType = 4,
+            DoorType = 5,
+            FenceType = 6,
+            PavementType = 7,
+            MailboxType = 8,
             Room_Start = 0x44, //0x76,
             Room_Count = 6,
             Room_Size = 0x302,
