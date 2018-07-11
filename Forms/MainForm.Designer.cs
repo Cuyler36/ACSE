@@ -77,6 +77,9 @@
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importTownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportTownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.codesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fillMuseumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearMuseumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -258,9 +261,11 @@
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.itemIdLabel = new System.Windows.Forms.Label();
-            this.codesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.decodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.earlyBirdCheckBox = new System.Windows.Forms.CheckBox();
+            this.nightOwlCheckBox = new System.Windows.Forms.CheckBox();
+            this.bellBoomCheckBox = new System.Windows.Forms.CheckBox();
+            this.keepTownBeautifulCheckBox = new System.Windows.Forms.CheckBox();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -300,6 +305,7 @@
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // patternsTab
@@ -684,7 +690,7 @@
             // 
             this.clearWeedsToolStripMenuItem.Enabled = false;
             this.clearWeedsToolStripMenuItem.Name = "clearWeedsToolStripMenuItem";
-            this.clearWeedsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearWeedsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.clearWeedsToolStripMenuItem.Text = "Clear Weeds";
             this.clearWeedsToolStripMenuItem.Click += new System.EventHandler(this.clearWeedsToolStripMenuItem_Click);
             // 
@@ -692,7 +698,7 @@
             // 
             this.removeAllItemsToolStripMenuItem.Enabled = false;
             this.removeAllItemsToolStripMenuItem.Name = "removeAllItemsToolStripMenuItem";
-            this.removeAllItemsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeAllItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.removeAllItemsToolStripMenuItem.Text = "Remove All Items";
             this.removeAllItemsToolStripMenuItem.Click += new System.EventHandler(this.removeAllItemsToolStripMenuItem_Click);
             // 
@@ -700,7 +706,7 @@
             // 
             this.waterFlowersToolStripMenuItem.Enabled = false;
             this.waterFlowersToolStripMenuItem.Name = "waterFlowersToolStripMenuItem";
-            this.waterFlowersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.waterFlowersToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.waterFlowersToolStripMenuItem.Text = "Water Flowers";
             this.waterFlowersToolStripMenuItem.Click += new System.EventHandler(this.waterFlowersToolStripMenuItem_Click);
             // 
@@ -708,7 +714,7 @@
             // 
             this.makeFruitsPerfectToolStripMenuItem.Enabled = false;
             this.makeFruitsPerfectToolStripMenuItem.Name = "makeFruitsPerfectToolStripMenuItem";
-            this.makeFruitsPerfectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.makeFruitsPerfectToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.makeFruitsPerfectToolStripMenuItem.Text = "Make Fruits Perfect";
             this.makeFruitsPerfectToolStripMenuItem.Click += new System.EventHandler(this.makeFruitsPerfectToolStripMenuItem_Click);
             // 
@@ -718,7 +724,7 @@
             this.replaceToolStripMenuItem});
             this.replaceItemsToolStripMenuItem.Enabled = false;
             this.replaceItemsToolStripMenuItem.Name = "replaceItemsToolStripMenuItem";
-            this.replaceItemsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.replaceItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.replaceItemsToolStripMenuItem.Text = "Replace Items";
             // 
             // replaceToolStripMenuItem
@@ -732,7 +738,7 @@
             // 
             this.importTownToolStripMenuItem.Enabled = false;
             this.importTownToolStripMenuItem.Name = "importTownToolStripMenuItem";
-            this.importTownToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.importTownToolStripMenuItem.Text = "Import Town";
             this.importTownToolStripMenuItem.Click += new System.EventHandler(this.importTownToolStripMenuItem_Click);
             // 
@@ -740,9 +746,31 @@
             // 
             this.exportTownToolStripMenuItem.Enabled = false;
             this.exportTownToolStripMenuItem.Name = "exportTownToolStripMenuItem";
-            this.exportTownToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.exportTownToolStripMenuItem.Text = "Export Town";
             this.exportTownToolStripMenuItem.Click += new System.EventHandler(this.exportTownToolStripMenuItem_Click);
+            // 
+            // codesToolStripMenuItem
+            // 
+            this.codesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.generateToolStripMenuItem,
+            this.decodeToolStripMenuItem});
+            this.codesToolStripMenuItem.Name = "codesToolStripMenuItem";
+            this.codesToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.codesToolStripMenuItem.Text = "Codes";
+            // 
+            // generateToolStripMenuItem
+            // 
+            this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
+            this.generateToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.generateToolStripMenuItem.Text = "Generate";
+            this.generateToolStripMenuItem.Click += new System.EventHandler(this.generateToolStripMenuItem_Click);
+            // 
+            // decodeToolStripMenuItem
+            // 
+            this.decodeToolStripMenuItem.Name = "decodeToolStripMenuItem";
+            this.decodeToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.decodeToolStripMenuItem.Text = "Decode";
             // 
             // extrasToolStripMenuItem
             // 
@@ -1822,6 +1850,7 @@
             // 
             // townMisc
             // 
+            this.townMisc.Controls.Add(this.groupBox2);
             this.townMisc.Controls.Add(this.stationTypeComboBox);
             this.townMisc.Controls.Add(this.label47);
             this.townMisc.Controls.Add(this.nativeFruitBox);
@@ -2672,27 +2701,63 @@
             this.itemIdLabel.TabIndex = 79;
             this.itemIdLabel.Text = "0x";
             // 
-            // codesToolStripMenuItem
+            // groupBox2
             // 
-            this.codesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.generateToolStripMenuItem,
-            this.decodeToolStripMenuItem});
-            this.codesToolStripMenuItem.Name = "codesToolStripMenuItem";
-            this.codesToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.codesToolStripMenuItem.Text = "Codes";
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.keepTownBeautifulCheckBox);
+            this.groupBox2.Controls.Add(this.bellBoomCheckBox);
+            this.groupBox2.Controls.Add(this.nightOwlCheckBox);
+            this.groupBox2.Controls.Add(this.earlyBirdCheckBox);
+            this.groupBox2.Location = new System.Drawing.Point(790, 451);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(135, 108);
+            this.groupBox2.TabIndex = 31;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Town Ordinances";
             // 
-            // generateToolStripMenuItem
+            // earlyBirdCheckBox
             // 
-            this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
-            this.generateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.generateToolStripMenuItem.Text = "Generate";
-            this.generateToolStripMenuItem.Click += new System.EventHandler(this.generateToolStripMenuItem_Click);
+            this.earlyBirdCheckBox.AutoSize = true;
+            this.earlyBirdCheckBox.Enabled = false;
+            this.earlyBirdCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.earlyBirdCheckBox.Name = "earlyBirdCheckBox";
+            this.earlyBirdCheckBox.Size = new System.Drawing.Size(70, 17);
+            this.earlyBirdCheckBox.TabIndex = 0;
+            this.earlyBirdCheckBox.Text = "Early Bird";
+            this.earlyBirdCheckBox.UseVisualStyleBackColor = true;
             // 
-            // decodeToolStripMenuItem
+            // nightOwlCheckBox
             // 
-            this.decodeToolStripMenuItem.Name = "decodeToolStripMenuItem";
-            this.decodeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.decodeToolStripMenuItem.Text = "Decode";
+            this.nightOwlCheckBox.AutoSize = true;
+            this.nightOwlCheckBox.Enabled = false;
+            this.nightOwlCheckBox.Location = new System.Drawing.Point(6, 42);
+            this.nightOwlCheckBox.Name = "nightOwlCheckBox";
+            this.nightOwlCheckBox.Size = new System.Drawing.Size(72, 17);
+            this.nightOwlCheckBox.TabIndex = 1;
+            this.nightOwlCheckBox.Text = "Night Owl";
+            this.nightOwlCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // bellBoomCheckBox
+            // 
+            this.bellBoomCheckBox.AutoSize = true;
+            this.bellBoomCheckBox.Enabled = false;
+            this.bellBoomCheckBox.Location = new System.Drawing.Point(6, 65);
+            this.bellBoomCheckBox.Name = "bellBoomCheckBox";
+            this.bellBoomCheckBox.Size = new System.Drawing.Size(73, 17);
+            this.bellBoomCheckBox.TabIndex = 2;
+            this.bellBoomCheckBox.Text = "Bell Boom";
+            this.bellBoomCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // keepTownBeautifulCheckBox
+            // 
+            this.keepTownBeautifulCheckBox.AutoSize = true;
+            this.keepTownBeautifulCheckBox.Enabled = false;
+            this.keepTownBeautifulCheckBox.Location = new System.Drawing.Point(6, 88);
+            this.keepTownBeautifulCheckBox.Name = "keepTownBeautifulCheckBox";
+            this.keepTownBeautifulCheckBox.Size = new System.Drawing.Size(125, 17);
+            this.keepTownBeautifulCheckBox.TabIndex = 3;
+            this.keepTownBeautifulCheckBox.Text = "Keep Town Beautiful";
+            this.keepTownBeautifulCheckBox.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -2769,6 +2834,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3006,5 +3073,10 @@
         private System.Windows.Forms.ToolStripMenuItem codesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem decodeToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox keepTownBeautifulCheckBox;
+        private System.Windows.Forms.CheckBox bellBoomCheckBox;
+        private System.Windows.Forms.CheckBox nightOwlCheckBox;
+        private System.Windows.Forms.CheckBox earlyBirdCheckBox;
     }
 }

@@ -1118,6 +1118,9 @@ namespace ACSE
                 AddBadges();
             }
 
+            // Town Ordinances for New Leaf
+            SetOrdinanceCheckBoxes();
+
             progressBar1.Value = 100;
             Loading = false;
             loadingPanel.Enabled = false;
@@ -1256,6 +1259,10 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
+                earlyBirdCheckBox.Enabled = false;
+                nightOwlCheckBox.Enabled = false;
+                bellBoomCheckBox.Enabled = false;
+                keepTownBeautifulCheckBox.Enabled = false;
                 dresserText.Visible = false;
                 islandBoxText.Visible = false;
                 tanTrackbar.Maximum = 9;
@@ -1286,6 +1293,10 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
+                earlyBirdCheckBox.Enabled = false;
+                nightOwlCheckBox.Enabled = false;
+                bellBoomCheckBox.Enabled = false;
+                keepTownBeautifulCheckBox.Enabled = false;
                 dresserText.Visible = true;
                 islandBoxText.Visible = false;
                 tanTrackbar.Maximum = 4;
@@ -1317,6 +1328,10 @@ namespace ACSE
                 playerMeowCoupons.Enabled = false;
                 itemFlag1.Enabled = false;
                 itemFlag2.Enabled = false;
+                earlyBirdCheckBox.Enabled = false;
+                nightOwlCheckBox.Enabled = false;
+                bellBoomCheckBox.Enabled = false;
+                keepTownBeautifulCheckBox.Enabled = false;
                 dresserText.Visible = true;
                 islandBoxText.Visible = false;
                 tanTrackbar.Maximum = 8;
@@ -1346,6 +1361,10 @@ namespace ACSE
                 itemFlag1.Enabled = true;
                 itemFlag2.Enabled = true;
                 playerMeowCoupons.Enabled = Current_Save_Type == SaveType.Welcome_Amiibo;
+                earlyBirdCheckBox.Enabled = true;
+                nightOwlCheckBox.Enabled = true;
+                bellBoomCheckBox.Enabled = true;
+                keepTownBeautifulCheckBox.Enabled = true;
                 dresserText.Visible = true;
                 islandBoxText.Visible = true;
                 tanTrackbar.Maximum = 16;
@@ -3993,6 +4012,9 @@ namespace ACSE
                 // Update Building Count in New Leaf
                 UpdateBuildingCount();
 
+                // Save Town Ordinances in New Leaf
+                UpdateNewLeafOrdinances();
+
                 // Save DnMe+ Islands
                 if (Islands != null)
                     foreach (Island Isle in Islands)
@@ -4884,6 +4906,89 @@ namespace ACSE
             }
 
             MessageBox.Show(string.Format("Watered {0} flowers!", Flowers_Watered), "Flowers Watered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void SetOrdinanceCheckBoxes()
+        {
+            if (Save_File != null && Save_File.Save_Generation == SaveGeneration.N3DS)
+            {
+                byte OrdinanceFlags = 0;
+                if (Save_File.Save_Type == SaveType.New_Leaf)
+                {
+                    OrdinanceFlags = Save_File.ReadByte(Save_File.Save_Data_Start_Offset + 0x5C74F);
+                }
+                else // Welcome Amiibo
+                {
+                    OrdinanceFlags = Save_File.ReadByte(Save_File.Save_Data_Start_Offset + 0x6214F);
+                }
+
+                earlyBirdCheckBox.Checked = (OrdinanceFlags & 0x02) == 0x02;
+                nightOwlCheckBox.Checked = (OrdinanceFlags & 0x04) == 0x04;
+                bellBoomCheckBox.Checked = (OrdinanceFlags & 0x08) == 0x08;
+                keepTownBeautifulCheckBox.Checked = (OrdinanceFlags & 0x10) == 0x10;
+            }
+        }
+
+        private void UpdateNewLeafOrdinances()
+        {
+            if (Save_File != null && !Loading && Save_File.Save_Generation == SaveGeneration.N3DS)
+            {
+                byte OrdinancesInEffect = 0;
+                byte OrdinancesEnabled = 0;
+                int Ordinances = 0;
+
+                if (earlyBirdCheckBox.Checked)
+                {
+                    OrdinancesInEffect |= 0x02;
+                    OrdinancesEnabled = 0;
+                    Ordinances++;
+                }
+
+                if (nightOwlCheckBox.Checked)
+                {
+                    OrdinancesInEffect |= 0x04;
+                    OrdinancesEnabled = 0x10;
+                    Ordinances++;
+                }
+
+                if (bellBoomCheckBox.Checked)
+                {
+                    OrdinancesInEffect |= 0x08;
+                    OrdinancesEnabled = 0x20;
+                    Ordinances++;
+                }
+
+                if (keepTownBeautifulCheckBox.Checked)
+                {
+                    OrdinancesInEffect |= 0x10;
+                    OrdinancesEnabled = 0x30;
+                    Ordinances++;
+                }
+
+                if (Ordinances == 0)
+                {
+                    OrdinancesEnabled = 0x40;
+                }
+                else if (Ordinances > 1)
+                {
+                    OrdinancesEnabled = 0x70; // Max of 0x70
+                }
+
+                if (Save_File.Save_Type == SaveType.New_Leaf)
+                {
+                    Save_File.Write(Save_File.Save_Data_Start_Offset + 0x5C74F,
+                        (byte)((Save_File.ReadByte(Save_File.Save_Data_Start_Offset + 0x5C74F) & (~0x1E)) | (OrdinancesInEffect & 0x1E)));
+                    Save_File.Write(Save_File.Save_Data_Start_Offset + 0x5C753, (byte)(OrdinancesEnabled |
+                        (Save_File.ReadByte(Save_File.Save_Data_Start_Offset + 0x5C753) & 0x0F)));
+                }
+                else // Welcome Amiibo
+                {
+                    Save_File.Write(Save_File.Save_Data_Start_Offset + 0x6214F,
+                        (byte)((Save_File.Save_Data_Start_Offset + 0x6214F & (~0x1E)) | (OrdinancesInEffect & 0x1E)));
+                    Save_File.Write(Save_File.Save_Data_Start_Offset + 0x62153, (byte)(OrdinancesEnabled |
+                        (Save_File.ReadByte(Save_File.Save_Data_Start_Offset + 0x62153) & 0x0F)));
+                }
+            }
         }
 
         #region Doubutsu no Mori e+ Islands

@@ -462,47 +462,49 @@ namespace ACSE
             Index = idx;
             Offset = offset;
             Offsets = VillagerInfo.GetVillagerInfo(save.Save_Type);
+
+            var StructType = typeof(VillagerDataStruct);
+            var OffsetType = typeof(VillagerOffsets);
+
             if (save.Save_Type == SaveType.Wild_World)
                 Exists = SaveData.ReadByte(offset + Offsets.Villager_ID) != 0 && SaveData.ReadByte(offset + Offsets.Villager_ID) != 0xFF;
             else
                 Exists = SaveData.ReadUInt16(offset + Offsets.Villager_ID, save.Is_Big_Endian) != 0 && SaveData.ReadUInt16(offset + Offsets.Villager_ID, save.Is_Big_Endian) != 0xFFFF;
             object BoxedData = new VillagerDataStruct();
-            foreach (var Field in typeof(VillagerOffsets).GetFields(BindingFlags.Public | BindingFlags.Instance))
+            foreach (var Field in OffsetType.GetFields(BindingFlags.Public | BindingFlags.Instance))
                 if (Field.GetValue(Offsets) != null && !Field.Name.Contains("Count") && !Field.Name.Contains("Size"))
-                    if (typeof(VillagerDataStruct).GetField(Field.Name) != null)
+                    if (StructType.GetField(Field.Name) != null)
                     {
                         if (Field.FieldType == typeof(int) && (int)Field.GetValue(Offsets) != -1)
                         {
-                            Type FieldType = typeof(VillagerDataStruct).GetField(Field.Name).FieldType;
+                            Type FieldType = StructType.GetField(Field.Name).FieldType;
                             int DataOffset = Offset + (int)Field.GetValue(Offsets);
 
                             if (Field.Name == "Villager_ID" && save.Save_Type == SaveType.Wild_World) //Villager IDs are only a byte in WW
-                                typeof(VillagerDataStruct).GetField(Field.Name).SetValue(BoxedData, SaveData.ReadByte(DataOffset));
+                                StructType.GetField(Field.Name).SetValue(BoxedData, SaveData.ReadByte(DataOffset));
                             else if (FieldType == typeof(byte))
-                                typeof(VillagerDataStruct).GetField(Field.Name).SetValue(BoxedData, SaveData.ReadByte(DataOffset));
-                            else if (FieldType == typeof(byte[]) && typeof(VillagerOffsets).GetField(Field.Name + "Count") != null)
-                                typeof(VillagerDataStruct).GetField(Field.Name).SetValue(BoxedData, SaveData.ReadByteArray(DataOffset,
-                                    (int)typeof(VillagerOffsets).GetField(Field.Name + "Count").GetValue(Offsets)));
+                                StructType.GetField(Field.Name).SetValue(BoxedData, SaveData.ReadByte(DataOffset));
+                            else if (FieldType == typeof(byte[]) && OffsetType.GetField(Field.Name + "Count") != null)
+                                StructType.GetField(Field.Name).SetValue(BoxedData, SaveData.ReadByteArray(DataOffset,
+                                    (int)OffsetType.GetField(Field.Name + "Count").GetValue(Offsets)));
                             else if (FieldType == typeof(ushort))
-                                typeof(VillagerDataStruct).GetField(Field.Name).SetValue(BoxedData, SaveData.ReadUInt16(DataOffset, SaveData.Is_Big_Endian));
+                                StructType.GetField(Field.Name).SetValue(BoxedData, SaveData.ReadUInt16(DataOffset, SaveData.Is_Big_Endian));
                             else if (FieldType == typeof(ushort[]))
-                                typeof(VillagerDataStruct).GetField(Field.Name).SetValue(BoxedData, SaveData.ReadUInt16Array(DataOffset,
-                                    (int)typeof(VillagerOffsets).GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian));
+                                StructType.GetField(Field.Name).SetValue(BoxedData, SaveData.ReadUInt16Array(DataOffset,
+                                    (int)OffsetType.GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian));
                             else if (FieldType == typeof(uint))
-                                typeof(VillagerDataStruct).GetField(Field.Name).SetValue(BoxedData, SaveData.ReadUInt32(DataOffset, SaveData.Is_Big_Endian));
+                                StructType.GetField(Field.Name).SetValue(BoxedData, SaveData.ReadUInt32(DataOffset, SaveData.Is_Big_Endian));
                             else if (FieldType == typeof(string))
-                                typeof(VillagerDataStruct).GetField(Field.Name).SetValue(BoxedData, new ACString(SaveData.ReadByteArray(DataOffset,
-                                    (int)typeof(VillagerOffsets).GetField(Field.Name + "Size").GetValue(Offsets)), SaveData.Save_Type).Trim());
-                            else if (FieldType == typeof(string[])) { }
-                            //Add logic
+                                StructType.GetField(Field.Name).SetValue(BoxedData, new ACString(SaveData.ReadByteArray(DataOffset,
+                                    (int)OffsetType.GetField(Field.Name + "Size").GetValue(Offsets)), SaveData.Save_Type).Trim());
                             else if (FieldType == typeof(Item))
-                                if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
-                                    typeof(VillagerDataStruct).GetField(Field.Name).SetValue(BoxedData, new Item(SaveData.ReadUInt32(DataOffset, false)));
+                                if (save.Save_Generation == SaveGeneration.N3DS)
+                                    StructType.GetField(Field.Name).SetValue(BoxedData, new Item(SaveData.ReadUInt32(DataOffset, false)));
                                 else
-                                    typeof(VillagerDataStruct).GetField(Field.Name).SetValue(BoxedData, new Item(SaveData.ReadUInt16(DataOffset, SaveData.Is_Big_Endian)));
+                                    StructType.GetField(Field.Name).SetValue(BoxedData, new Item(SaveData.ReadUInt16(DataOffset, SaveData.Is_Big_Endian)));
                             else if (FieldType == typeof(Item[]))
                             {
-                                Item[] Collection = new Item[(int)typeof(VillagerOffsets).GetField(Field.Name + "Count").GetValue(Offsets)];
+                                Item[] Collection = new Item[(int)OffsetType.GetField(Field.Name + "Count").GetValue(Offsets)];
                                 for (int i = 0; i < Collection.Length; i++)
                                 {
                                     if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
@@ -510,7 +512,7 @@ namespace ACSE
                                     else
                                         Collection[i] = new Item(SaveData.ReadUInt16(DataOffset + i * 2, SaveData.Is_Big_Endian));
                                 }
-                                typeof(VillagerDataStruct).GetField(Field.Name).SetValue(BoxedData, Collection);
+                                StructType.GetField(Field.Name).SetValue(BoxedData, Collection);
                             }
                         }
                     }
