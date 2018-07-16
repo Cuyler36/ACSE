@@ -550,6 +550,7 @@ namespace ACSE
             houseTabSelect.Visible = save.Save_Generation != SaveGeneration.NDS;
             houseTabSelect.Enabled = save.Save_Generation != SaveGeneration.NDS;
             basementCheckBox.Enabled = save.Save_Generation == SaveGeneration.GCN;
+            StatueCheckBox.Enabled = save.Save_Generation == SaveGeneration.GCN;
             grassLevelBox.Enabled = true;
             setAllGrass.Enabled = true;
             reviveGrass.Enabled = true;
@@ -2153,6 +2154,7 @@ namespace ACSE
                 if (Selected_House != null && (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue))
                 {
                     basementCheckBox.Checked = HouseInfo.HasBasement(Selected_House.Offset, Save_File.Save_Type);
+                    StatueCheckBox.Checked = HouseInfo.HasStatue(Selected_House.Offset, Save_File.Save_Type);
                 }
 
                 if (houseOwnerComboBox.Enabled && Selected_House != null)
@@ -2316,6 +2318,7 @@ namespace ACSE
                 if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue)
                 {
                     basementCheckBox.Checked = HouseInfo.HasBasement(SelectedHouse.Offset, Save_File.Save_Type);
+                    StatueCheckBox.Checked = HouseInfo.HasStatue(Selected_House.Offset, Save_File.Save_Type);
                 }
 
                 if (houseOwnerComboBox.Enabled && SelectedHouse != null)
@@ -4846,6 +4849,14 @@ namespace ACSE
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings_Menu.Show();
+        }
+
+        private void StatueCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Save_File != null && !Loading && Save_File.Save_Generation == SaveGeneration.GCN && Selected_House != null)
+            {
+                HouseInfo.SetStatueEnabled(Selected_House.Offset, Save_File.Save_Type, StatueCheckBox.Checked);
+            }
         }
 
         private void waterFlowersButton_Click(object sender, EventArgs e)

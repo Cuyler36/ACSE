@@ -614,6 +614,43 @@ namespace ACSE
             }
         }
 
+        public static bool HasStatue(int Offset, SaveType Save_Type)
+        {
+            switch (Save_Type)
+            {
+                case SaveType.Doubutsu_no_Mori_Plus:
+                    return ((MainForm.Save_File.ReadByte(Offset + 0x26) >> 2) & 7) == 4;
+                case SaveType.Animal_Crossing:
+                    return ((MainForm.Save_File.ReadByte(Offset + 0x2A) >> 2) & 7) == 4;
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    return ((MainForm.Save_File.ReadByte(Offset + 0x26) >> 2) & 7) == 5;
+                default:
+                    return false;
+            }
+        }
+
+        public static void SetStatueEnabled(int Offset, SaveType Save_Type, bool Enabled)
+        {
+            int WriteValue = 0;
+            switch (Save_Type)
+            {
+                case SaveType.Doubutsu_no_Mori_Plus:
+                    WriteValue = Enabled ? (4 << 2) : (5 << 2);
+                    MainForm.Save_File.Write(Offset + 0x26, (byte)((MainForm.Save_File.ReadByte(Offset + 0x26) & ~(7 << 2) | WriteValue)));
+                    break;
+                case SaveType.Animal_Crossing:
+                    WriteValue = Enabled ? (4 << 2) : (5 << 2);
+                    MainForm.Save_File.Write(Offset + 0x2A, (byte)((MainForm.Save_File.ReadByte(Offset + 0x2A) & ~(7 << 2) | WriteValue)));
+                    break;
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    WriteValue = Enabled ? (5 << 2) : (6 << 2);
+                    MainForm.Save_File.Write(Offset + 0x26, (byte)((MainForm.Save_File.ReadByte(Offset + 0x26) & ~(7 << 2) | WriteValue)));
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public static int GetHouseUpgradeSize(int Offset, SaveType Save_Type)
         {
             switch (Save_Type)

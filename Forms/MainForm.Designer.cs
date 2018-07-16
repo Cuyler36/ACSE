@@ -31,13 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TabPage patternsTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.paletteColorSelectedPictureBox = new System.Windows.Forms.PictureBox();
             this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
             this.patternEditorPanel = new System.Windows.Forms.Panel();
-            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternEditorPreviewPanel = new System.Windows.Forms.Panel();
             this.patternGroupTabControl = new System.Windows.Forms.TabControl();
             this.player1Tab = new System.Windows.Forms.TabPage();
@@ -176,6 +174,11 @@
             this.townPanel = new System.Windows.Forms.Panel();
             this.buriedCheckbox = new System.Windows.Forms.CheckBox();
             this.townMisc = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.keepTownBeautifulCheckBox = new System.Windows.Forms.CheckBox();
+            this.bellBoomCheckBox = new System.Windows.Forms.CheckBox();
+            this.nightOwlCheckBox = new System.Windows.Forms.CheckBox();
+            this.earlyBirdCheckBox = new System.Windows.Forms.CheckBox();
             this.stationTypeComboBox = new System.Windows.Forms.ComboBox();
             this.label47 = new System.Windows.Forms.Label();
             this.nativeFruitBox = new System.Windows.Forms.ComboBox();
@@ -259,18 +262,15 @@
             this.loadingPanel = new System.Windows.Forms.Panel();
             this.label45 = new System.Windows.Forms.Label();
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
-            this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.itemIdLabel = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.earlyBirdCheckBox = new System.Windows.Forms.CheckBox();
-            this.nightOwlCheckBox = new System.Windows.Forms.CheckBox();
-            this.bellBoomCheckBox = new System.Windows.Forms.CheckBox();
-            this.keepTownBeautifulCheckBox = new System.Windows.Forms.CheckBox();
+            this.StatueCheckBox = new System.Windows.Forms.CheckBox();
+            this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
+            this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
+            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
             this.patternEditorPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.patternGroupTabControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -293,6 +293,7 @@
             this.acresTab.SuspendLayout();
             this.townTab.SuspendLayout();
             this.townMisc.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stationPictureBox)).BeginInit();
             this.villagerTab.SuspendLayout();
             this.villagerPanel.SuspendLayout();
@@ -305,7 +306,7 @@
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // patternsTab
@@ -325,18 +326,6 @@
             patternsTab.TabIndex = 8;
             patternsTab.Text = "Patterns";
             patternsTab.UseVisualStyleBackColor = true;
-            // 
-            // patternNameTextBox
-            // 
-            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
-            this.patternNameTextBox.MaxLength = 16;
-            this.patternNameTextBox.Name = "patternNameTextBox";
-            this.patternNameTextBox.PlaceholderText = "Pattern Name";
-            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
-            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.patternNameTextBox.TabIndex = 0;
-            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
             // paletteColorSelectedPictureBox
             // 
@@ -389,23 +378,6 @@
             this.patternEditorPanel.Name = "patternEditorPanel";
             this.patternEditorPanel.Size = new System.Drawing.Size(513, 513);
             this.patternEditorPanel.TabIndex = 16;
-            // 
-            // patternEditorPictureBox
-            // 
-            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
-            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
-            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.patternEditorPictureBox.TabIndex = 0;
-            this.patternEditorPictureBox.TabStop = false;
-            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
-            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
-            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
-            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
-            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
             // 
             // patternEditorPreviewPanel
             // 
@@ -1870,6 +1842,64 @@
             this.townMisc.Text = "Town Misc.";
             this.townMisc.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.keepTownBeautifulCheckBox);
+            this.groupBox2.Controls.Add(this.bellBoomCheckBox);
+            this.groupBox2.Controls.Add(this.nightOwlCheckBox);
+            this.groupBox2.Controls.Add(this.earlyBirdCheckBox);
+            this.groupBox2.Location = new System.Drawing.Point(790, 451);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(135, 108);
+            this.groupBox2.TabIndex = 31;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Town Ordinances";
+            // 
+            // keepTownBeautifulCheckBox
+            // 
+            this.keepTownBeautifulCheckBox.AutoSize = true;
+            this.keepTownBeautifulCheckBox.Enabled = false;
+            this.keepTownBeautifulCheckBox.Location = new System.Drawing.Point(6, 88);
+            this.keepTownBeautifulCheckBox.Name = "keepTownBeautifulCheckBox";
+            this.keepTownBeautifulCheckBox.Size = new System.Drawing.Size(125, 17);
+            this.keepTownBeautifulCheckBox.TabIndex = 3;
+            this.keepTownBeautifulCheckBox.Text = "Keep Town Beautiful";
+            this.keepTownBeautifulCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // bellBoomCheckBox
+            // 
+            this.bellBoomCheckBox.AutoSize = true;
+            this.bellBoomCheckBox.Enabled = false;
+            this.bellBoomCheckBox.Location = new System.Drawing.Point(6, 65);
+            this.bellBoomCheckBox.Name = "bellBoomCheckBox";
+            this.bellBoomCheckBox.Size = new System.Drawing.Size(73, 17);
+            this.bellBoomCheckBox.TabIndex = 2;
+            this.bellBoomCheckBox.Text = "Bell Boom";
+            this.bellBoomCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // nightOwlCheckBox
+            // 
+            this.nightOwlCheckBox.AutoSize = true;
+            this.nightOwlCheckBox.Enabled = false;
+            this.nightOwlCheckBox.Location = new System.Drawing.Point(6, 42);
+            this.nightOwlCheckBox.Name = "nightOwlCheckBox";
+            this.nightOwlCheckBox.Size = new System.Drawing.Size(72, 17);
+            this.nightOwlCheckBox.TabIndex = 1;
+            this.nightOwlCheckBox.Text = "Night Owl";
+            this.nightOwlCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // earlyBirdCheckBox
+            // 
+            this.earlyBirdCheckBox.AutoSize = true;
+            this.earlyBirdCheckBox.Enabled = false;
+            this.earlyBirdCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.earlyBirdCheckBox.Name = "earlyBirdCheckBox";
+            this.earlyBirdCheckBox.Size = new System.Drawing.Size(70, 17);
+            this.earlyBirdCheckBox.TabIndex = 0;
+            this.earlyBirdCheckBox.Text = "Early Bird";
+            this.earlyBirdCheckBox.UseVisualStyleBackColor = true;
+            // 
             // stationTypeComboBox
             // 
             this.stationTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -2168,6 +2198,7 @@
             // 
             // housesTab
             // 
+            this.housesTab.Controls.Add(this.StatueCheckBox);
             this.housesTab.Controls.Add(this.houseOwnerComboBox);
             this.housesTab.Controls.Add(this.label30);
             this.housesTab.Controls.Add(this.houseTabSelect);
@@ -2676,6 +2707,31 @@
             this.label45.TabIndex = 15;
             this.label45.Text = "Loading...";
             // 
+            // itemIdLabel
+            // 
+            this.itemIdLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.itemIdLabel.AutoSize = true;
+            this.itemIdLabel.Location = new System.Drawing.Point(116, 623);
+            this.itemIdLabel.Name = "itemIdLabel";
+            this.itemIdLabel.Size = new System.Drawing.Size(18, 13);
+            this.itemIdLabel.TabIndex = 79;
+            this.itemIdLabel.Text = "0x";
+            // 
+            // StatueCheckBox
+            // 
+            this.StatueCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.StatueCheckBox.AutoSize = true;
+            this.StatueCheckBox.Enabled = false;
+            this.StatueCheckBox.Location = new System.Drawing.Point(682, 11);
+            this.StatueCheckBox.Name = "StatueCheckBox";
+            this.StatueCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.StatueCheckBox.Size = new System.Drawing.Size(125, 17);
+            this.StatueCheckBox.TabIndex = 9;
+            this.StatueCheckBox.Text = "Debt Statue Enabled";
+            this.houseToolTip.SetToolTip(this.StatueCheckBox, "Toggles whether the basement is enabled in the N64/GCN Titles");
+            this.StatueCheckBox.UseVisualStyleBackColor = true;
+            this.StatueCheckBox.CheckedChanged += new System.EventHandler(this.StatueCheckBox_CheckedChanged);
+            // 
             // itemIdTextBox
             // 
             this.itemIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -2691,73 +2747,34 @@
             this.itemIdTextBox.TextChanged += new System.EventHandler(this.CurrentItemId_TextChanged);
             this.itemIdTextBox.Leave += new System.EventHandler(this.CurrentItemId_LostFocus);
             // 
-            // itemIdLabel
+            // patternNameTextBox
             // 
-            this.itemIdLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.itemIdLabel.AutoSize = true;
-            this.itemIdLabel.Location = new System.Drawing.Point(116, 623);
-            this.itemIdLabel.Name = "itemIdLabel";
-            this.itemIdLabel.Size = new System.Drawing.Size(18, 13);
-            this.itemIdLabel.TabIndex = 79;
-            this.itemIdLabel.Text = "0x";
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
+            this.patternNameTextBox.MaxLength = 16;
+            this.patternNameTextBox.Name = "patternNameTextBox";
+            this.patternNameTextBox.PlaceholderText = "Pattern Name";
+            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.patternNameTextBox.TabIndex = 0;
+            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
-            // groupBox2
+            // patternEditorPictureBox
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.keepTownBeautifulCheckBox);
-            this.groupBox2.Controls.Add(this.bellBoomCheckBox);
-            this.groupBox2.Controls.Add(this.nightOwlCheckBox);
-            this.groupBox2.Controls.Add(this.earlyBirdCheckBox);
-            this.groupBox2.Location = new System.Drawing.Point(790, 451);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(135, 108);
-            this.groupBox2.TabIndex = 31;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Town Ordinances";
-            // 
-            // earlyBirdCheckBox
-            // 
-            this.earlyBirdCheckBox.AutoSize = true;
-            this.earlyBirdCheckBox.Enabled = false;
-            this.earlyBirdCheckBox.Location = new System.Drawing.Point(6, 19);
-            this.earlyBirdCheckBox.Name = "earlyBirdCheckBox";
-            this.earlyBirdCheckBox.Size = new System.Drawing.Size(70, 17);
-            this.earlyBirdCheckBox.TabIndex = 0;
-            this.earlyBirdCheckBox.Text = "Early Bird";
-            this.earlyBirdCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // nightOwlCheckBox
-            // 
-            this.nightOwlCheckBox.AutoSize = true;
-            this.nightOwlCheckBox.Enabled = false;
-            this.nightOwlCheckBox.Location = new System.Drawing.Point(6, 42);
-            this.nightOwlCheckBox.Name = "nightOwlCheckBox";
-            this.nightOwlCheckBox.Size = new System.Drawing.Size(72, 17);
-            this.nightOwlCheckBox.TabIndex = 1;
-            this.nightOwlCheckBox.Text = "Night Owl";
-            this.nightOwlCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // bellBoomCheckBox
-            // 
-            this.bellBoomCheckBox.AutoSize = true;
-            this.bellBoomCheckBox.Enabled = false;
-            this.bellBoomCheckBox.Location = new System.Drawing.Point(6, 65);
-            this.bellBoomCheckBox.Name = "bellBoomCheckBox";
-            this.bellBoomCheckBox.Size = new System.Drawing.Size(73, 17);
-            this.bellBoomCheckBox.TabIndex = 2;
-            this.bellBoomCheckBox.Text = "Bell Boom";
-            this.bellBoomCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // keepTownBeautifulCheckBox
-            // 
-            this.keepTownBeautifulCheckBox.AutoSize = true;
-            this.keepTownBeautifulCheckBox.Enabled = false;
-            this.keepTownBeautifulCheckBox.Location = new System.Drawing.Point(6, 88);
-            this.keepTownBeautifulCheckBox.Name = "keepTownBeautifulCheckBox";
-            this.keepTownBeautifulCheckBox.Size = new System.Drawing.Size(125, 17);
-            this.keepTownBeautifulCheckBox.TabIndex = 3;
-            this.keepTownBeautifulCheckBox.Text = "Keep Town Beautiful";
-            this.keepTownBeautifulCheckBox.UseVisualStyleBackColor = true;
+            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
+            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
+            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.patternEditorPictureBox.TabIndex = 0;
+            this.patternEditorPictureBox.TabStop = false;
+            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
+            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
+            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
+            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
+            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
             // 
             // MainForm
             // 
@@ -2789,7 +2806,6 @@
             patternsTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).EndInit();
             this.patternEditorPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.patternGroupTabControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -2817,6 +2833,8 @@
             this.townTab.PerformLayout();
             this.townMisc.ResumeLayout(false);
             this.townMisc.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stationPictureBox)).EndInit();
             this.villagerTab.ResumeLayout(false);
             this.villagerTab.PerformLayout();
@@ -2834,8 +2852,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3078,5 +3095,6 @@
         private System.Windows.Forms.CheckBox bellBoomCheckBox;
         private System.Windows.Forms.CheckBox nightOwlCheckBox;
         private System.Windows.Forms.CheckBox earlyBirdCheckBox;
+        private System.Windows.Forms.CheckBox StatueCheckBox;
     }
 }

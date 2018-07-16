@@ -309,6 +309,7 @@ namespace ACSE
             TownIdentifierSize = 2,
             Gender = 0x10, //
             FaceType = 0x11, //
+            // ResetCounter = 0x13
             Pockets = 0x64,
             PocketsCount = 15,
             Bells = 0x94,
