@@ -2728,7 +2728,8 @@
             this.StatueCheckBox.Size = new System.Drawing.Size(125, 17);
             this.StatueCheckBox.TabIndex = 9;
             this.StatueCheckBox.Text = "Debt Statue Enabled";
-            this.houseToolTip.SetToolTip(this.StatueCheckBox, "Toggles whether the basement is enabled in the N64/GCN Titles");
+            this.houseToolTip.SetToolTip(this.StatueCheckBox, "Toggles the Player Debt Statue Nook gives you after paying off the final debt. To" +
+        "ggling this checkbox will set your house size to the max.");
             this.StatueCheckBox.UseVisualStyleBackColor = true;
             this.StatueCheckBox.CheckedChanged += new System.EventHandler(this.StatueCheckBox_CheckedChanged);
             // 

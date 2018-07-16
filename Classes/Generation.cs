@@ -7,6 +7,8 @@ namespace ACSE
 {
     class Generation
     {
+        internal readonly static Random Rand = new Random();
+
         private static byte[] DefaultTownStructure = new byte[70]
         {
         //   00    01    02    03    04    05    06
@@ -159,6 +161,16 @@ namespace ACSE
             return Index;
         }
 
+        private static int GetRandomStepMode()
+        {
+            int RNG = Rand.Next(0, 64);
+            int Temp = 0xF ^ RNG;
+            int ShiftedValue = Temp >> 1;
+            Temp &= 0xF;
+            Temp = ShiftedValue - Temp;
+            return (Temp >> 31) & 1;
+        }
+
         private static ushort GetRandomTownAcreFromPool(byte AcreType)
         {
             if (TownAcrePool.ContainsKey(AcreType) && TownAcrePool[AcreType].Length > 0)
@@ -174,7 +186,6 @@ namespace ACSE
 
         private static void DecideRiverAlbuminCliff(ref byte[] Data)
         {
-            var Rand = new Random();
             bool Set = false;
             while (!Set)
             {
@@ -213,7 +224,7 @@ namespace ACSE
 
                 while (CurrentYAcre < 7)
                 {
-                    bool Turn = new Random().Next(0, 2) == 1;
+                    bool Turn = Rand.Next(0, 2) == 1;
                     if (Turn)
                     {
                         bool TurnSuccessful = false;
@@ -225,7 +236,6 @@ namespace ACSE
 
         private static void SetUniqueRailBlock(ref byte[] Data)
         {
-            var Rand = new Random();
             byte A = 0, B = 0;
             bool ASet = false, BSet = false;
 
