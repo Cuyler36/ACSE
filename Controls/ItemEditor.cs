@@ -21,6 +21,7 @@ namespace ACSE
         public readonly Stack<ItemChange> UndoStack = new Stack<ItemChange>();
         public readonly Stack<ItemChange> RedoStack = new Stack<ItemChange>();
         public bool Modified { get; protected set; } = false;
+        public string HoverText = "{0} - [0x{1}]";
 
         private int itemsPerRow;
         public int ItemsPerRow
@@ -137,7 +138,7 @@ namespace ACSE
                 Item HoveredItem = items[Index];
 
                 // Refresh ToolTip
-                ItemToolTip.Show(string.Format("{0} - [0x{1}]", HoveredItem.Name, HoveredItem.ItemID.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
+                ItemToolTip.Show(string.Format(HoverText, HoveredItem.Name, HoveredItem.ItemID.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
 
                 // Check for MouseDown
                 if (IsMouseDown)
