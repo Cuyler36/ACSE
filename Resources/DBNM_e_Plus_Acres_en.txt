@@ -1,0 +1,312 @@
+//Building Acres
+0x0118, Dump #1
+0x0294, Dump #2
+0x0298, Dump #3
+0x0154, Train Station #1
+0x02F0, Train Station #2
+0x02F4, Train Station #3
+0x034C, Police Station #1
+0x0350, Police Station #2
+0x0354, Police Station #3
+0x0358, Player Houses #1
+0x035C, Player Houses #2
+0x0360, Player Houses #3
+0x0364, Wishing Well #1
+0x0368, Wishing Well #2
+0x036C, Wishing Well #3
+0x0370, Post Office #1
+0x0380, Post Office #2
+0x0384, Post Office #3
+0x0374, Nook's Shop #1
+0x0378, Nook's Shop #2
+0x037C, Nook's Shop #3
+0x0480, Museum #1
+0x0484, Museum #2
+0x0488, Museum #3
+0x048C, Tailor's Shop #1
+0x0490, Tailor's Shop #2
+0x0494, Tailor's Shop #3
+//Border Acres
+0x0324, Upper Border Cliff
+0x0328, Upper Border Cliff (w/ River)
+0x032C, Left Border Cliff
+0x0330, Left Border Cliff Transition
+0x0334, Left Border Cliff (w/ Train Tunnel)
+0x0338, Right Border Cliff
+0x033C, Right Border Cliff Transition
+0x0340, Right Border Cliff (w/ Train Tunnel)
+0x0344, Left Border Corner Cliff
+0x0348, Right Border Corner Cliff
+0x03B4, Left Ocean Border Cliff
+0x03B8, Right Ocean Border Cliff
+//Grass Acres
+0x0094, Grass Acre #1
+0x0098, Grass Acre #2
+0x0274, Grass Acre #3
+0x0278, Grass Acre #4
+0x027C, Grass Acre #5
+0x0280, Grass Acre w/ Pond #6
+0x0284, Grass Acre #7
+0x0288, Grass Acre #8
+0x028C, Grass Acre #9
+0x0290, Grass Acre #10
+//River Acres
+0x0060, River w/ Islet (Stone Bridges) (East > South)
+0x006C, River w/ Waterfall (South) #1
+0x0070, River w/ Train Track Bridge #1
+0x0084, River w/ Waterfall (South) #2
+0x008C, River w/ Waterfall (South) #3
+0x0090, River w/ Waterfall (East) #1
+0x00A0, River w/ Cliff (East) #1
+0x00A4, River w/ Cliff (West) #1
+0x00B0, River w/ Cliff (South) #1
+0x00B8, River w/ Corner Cliff (South) #1
+0x00BC, River w/ Corner Cliff (East) #1
+0x00C4, River w/ Corner Cliff (East) #2
+0x00C8, River w/ Corner Cliff (South) #2
+0x00D0, River w/ Cliff (South) #2
+0x00D8, River (South) #1
+0x00DC, River (East) #1
+0x00E0, River (West) #1
+0x00E4, River (South > East) #1
+0x00E8, River (East > South) #1
+0x00EC, River (South > West) #1
+0x00F0, River (West > South) #1
+0x00F4, River w/ Waterfall (East) #2
+0x00F8, River w/ Waterfall (West) #1
+0x00FC, River w/ Waterfall (West) #2
+0x0100, River w/ Stone Bridge (South) #1
+0x0104, River w/ Islet (Stone Bridges) (East)
+0x0108, River w/ Stone Bridge (West) #1
+0x010C, River w/ Stone Bridge (South > East)
+0x0110, River w/ Stone Bridge (South > West)
+0x0114, River w/ Stone Bridge (West > South)
+0x0138, River w/ Corner Cliff (South) #3
+0x013C, River w/ Corner Cliff (West) #1
+0x0170, River (South) #2
+0x0174, River (South) #3
+0x0178, River (South > East) #2
+0x017C, River (East > South) #2
+0x0180, River (West > South) #2
+0x0184, River (West > South) #3
+0x0198, River w/ Cliff (South) #3
+0x019C, River w/ Cliff (South) #4
+0x01A8, River w/ Cliff (East) #2
+0x01AC, River w/ Cliff (West) #2
+0x01BC, River (East) #2
+0x01C0, River (West) #2
+0x01C4, River w/ Corner Cliff (South) #4
+0x01C8, River w/ Corner Cliff (East) #3
+0x01CC, River w/ Corner Cliff (South) #5
+0x01D0, River (South > West) #2
+0x01D4, River w/ Corner Cliff (East) #4
+0x01D8, River w/ Corner Cliff (West) #2
+0x01DC, River (East) #3
+0x01E0, River (West) #3
+0x01E4, River w/ Corner Cliff (West) #3
+0x01FC, River w/ Lake (South) #1
+0x0200, River w/ Waterfall (South) #4
+0x0204, River w/ Waterfall (South) #5
+0x0208, River w/ Cliff (East) #3
+0x020C, River w/ Cliff (West) #3
+0x0210, River w/ Waterfall (South) #6
+0x0214, River w/ Waterfall (South) #7
+0x0220, River (South) #4
+0x0224, River (East) #4
+0x0228, River (West) #4
+0x022C, River (South > East) #3
+0x0230, River (East > South) #2
+0x0234, River (South > West) #3
+0x0244, River w/ Waterfall (East) #3
+0x0248, River w/ Waterfall (East) #4
+0x024C, River w/ Wooden Bridge (South) #1
+0x0250, River w/ Wooden Bridge (East) #1
+0x0254, River w/ Wooden Bridge (South > East) #1
+0x0258, River w/ Wooden Bridge (West) #1
+0x025C, River w/ Wooden Bridge (East > South) #1
+0x0260, River w/ Islet (Wooden Bridge) (South > West)
+0x0264, River w/ Wooden Bridge (West > South) #1
+0x0268, River w/ Wooden Bridge (South) #2
+0x026C, River w/ Wooden Bridge (East) #2
+0x0270, River w/ Stone Bridge (West) #2
+0x02B8, River w/ Train Track Bridge #2
+0x02BC, River w/ Train Track Bridge #3
+0x02C0, River w/ Train Track Bridge #4
+0x02C4, River w/ Train Track Bridge #5
+0x02C8, River w/ Lake (East) #1
+0x02CC, River w/ Lake (West) #1
+0x02E8, River w/ Lake (South > West) #1
+0x02EC, River w/ Lake (West > South) #1
+0x02F8, River w/ Lake (South > East) #1
+0x02FC, River w/ Lake (East > South) #1
+0x0414, River w/ Waterfall (West) #3
+//Cliff & Ramp Acres
+0x0088, Ramp (South) #1
+0x009C, Cliff #1
+0x00A8, Corner Cliff #1
+0x00AC, Cliff #2
+0x00B4, Corner Cliff #2
+0x00C0, Corner Cliff #3
+0x00CC, Cliff #3
+0x00D4, Corner Cliff #4
+0x011C, Ramp (South) #2
+0x0120, Ramp (South) #3
+0x0124, Ramp (West) #1
+0x0128, Corner Ramp #1
+0x012C, Ramp (South) #4
+0x0130, Ramp (West) #2
+0x0134, Ramp (West) #3
+0x015C, Cliff #4
+0x0160, Cliff #5
+0x0164, Cliff #6
+0x0168, Cliff #7
+0x016C, Corner Cliff #5
+0x0188, Ramp (South) #5
+0x018C, Ramp (South) #6
+0x0190, Corner Ramp #2
+0x0194, Ramp (South) #7
+0x01A0, Cliff #8
+0x01A4, Cliff #9
+0x01B0, Corner Cliff #6
+0x01B4, Corner Cliff #7
+0x01B8, Cliff #10
+0x01E8, Corner Cliff #8
+0x01EC, Corner Cliff #9
+0x01F0, Cliff #11
+0x01F4, Corner Cliff #10
+0x0218, Cliff #12
+0x021C, Corner Cliff #11
+0x0320, Ramp (South) #8
+0x0410, Ramp (South) #9
+0x0418, Ramp (West) #4
+0x041C, Ramp (West) #5
+//Oceanfront Acres
+0x03A0, Oceanfront #1
+0x03A4, Oceanfront #2
+0x03B0, Oceanfront w/ River #1
+0x03C0, Oceanfront w/ River #2
+0x03C4, Oceanfront w/ River #3
+0x03C8, Oceanfront w/ River #4
+0x03CC, Oceanfront w/ River #5
+0x03D0, Oceanfront w/ River (Stone Bridge) #1
+0x03D4, Oceanfront w/ River (Wooden Bridge) #1
+0x03D8, Oceanfront w/ River (Stone Bridge) #2
+0x03F0, Oceanfront #3
+0x03F4, Oceanfront #4
+0x03F8, Oceanfront #5
+0x03FC, Oceanfront #6
+0x0400, Oceanfront #7
+0x0404, Oceanfront #8
+0x0408, Oceanfront #9
+0x040C, Oceanfront #10
+0x0498, Oceanfront w/ Dock #1
+0x05AC, Oceanfront w/ Dock #2
+0x05B0, Oceanfront w/ Dock #3
+//Island Acres
+0x04A0, Island (Right) #1
+0x04A4, Island (Left) #1
+0x0594, Island (Right) #2
+0x0598, Island (Left) #2
+0x059C, Island (Right) #3
+0x05A0, Island (Left) #3
+0x05A4, Island (Right) #4
+0x05A8, Island (Left) #4
+//Ocean Acres
+0x03DC, Ocean #1
+0x03E0, Ocean #2
+0x03E4, Ocean #3
+0x03E8, Ocean #4
+0x03EC, Ocean #5
+0x049C, Ocean #6
+0x04A8, Ocean #7
+0x04AC, Ocean #8
+0x04B0, Ocean #9
+0x04B4, Ocean #10
+0x04B8, Ocean #11
+0x04BC, Ocean #12
+0x04C0, Ocean #13
+0x04C4, Ocean #14
+0x04C8, Ocean #15
+0x04CC, Ocean #16
+0x04D0, Ocean #17
+0x04D4, Ocean #18
+0x04D8, Ocean #19
+0x04DC, Ocean #20
+0x04E0, Ocean #21
+0x04E4, Ocean #22
+0x04E8, Ocean #23
+0x04EC, Ocean #24
+0x04F0, Ocean #25
+0x04F4, Ocean #26
+0x04F8, Ocean #27
+0x04FC, Ocean #28
+0x0500, Ocean #29
+0x0504, Ocean #30
+0x0508, Ocean #31
+0x050C, Ocean #32
+0x0510, Ocean #33
+0x0514, Ocean #34
+0x0518, Ocean #35
+0x051C, Ocean #36
+0x0520, Ocean #37
+0x0524, Ocean #38
+0x0528, Ocean #39
+0x052C, Ocean #40
+0x0530, Ocean #41
+0x0534, Ocean #42
+0x0538, Ocean #43
+0x053C, Ocean #44
+0x0540, Ocean #45
+0x0544, Ocean #46
+0x0548, Ocean #47
+0x054C, Ocean #48
+0x0550, Ocean #49
+0x0554, Ocean #50
+0x0558, Ocean #51
+0x055C, Ocean #52
+0x0560, Ocean #53
+0x0564, Ocean #54
+0x0568, Ocean #55
+0x056C, Ocean #56
+0x0570, Ocean #57
+0x0574, Ocean #58
+0x0578, Ocean #59
+0x057C, Ocean #60
+0x0580, Ocean #61
+0x0584, Ocean #62
+0x0588, Ocean #63
+0x058C, Ocean #64
+0x05B4, Ocean #65
+0x05B8, Ocean #66
+//Beta Acres
+0x0074, Grass Beta Acre
+0x0078, Ramp Beta Acre
+0x007C, Lake Beta Acre
+0x0080, River Beta Acre
+0x039C, Slope Test Beta Acre
+//Misc. Acres
+0x0000, No Acre Data
+0x0020, Miniature Inside of House (Unused)
+0x0140, Inside of Redd's Tent
+0x0144, Inside of Post Office
+0x0148, Inside of Train Car #1
+0x014C, Inside of Train Car #2
+0x01F8, Inside of Police Station
+0x029C, Train Tracks w/ Pond #1
+0x02A0, Train Tracks w/ Pond #2
+0x02A4, Train Tracks #1
+0x02A8, Train Tracks #2
+0x02AC, Train Tracks #3
+0x02B0, Train Tracks #4
+0x02B4, Train Tracks #5
+0x0300, Inside of Katrina's Tent
+0x0304, Game Loading/Saving Area
+0x0390, Inside of Nookingtons
+0x0458, Inside of Museum Main Room
+0x045C, Inside of Museum Painting Room
+0x0460, Inside of Museum Fossil Room
+0x0468, Inside of Museum Fish Room
+0x047C, Inside of Tailor's
+0x0590, Inside of Lighthouse
+0x05BC, Inside of Camping Tent
+0x05C0, Inside of Reset Center

@@ -885,8 +885,12 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Acre_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Forest || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // TODO: DnM needs to have a custom list, since the docks/islands don't exist
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Forest || Save_Type == SaveType.Animal_Crossing) // TODO: DnM needs to have a custom list, since the docks/islands don't exist
                 Acre_DB_Location += "AC_Acres_" + Language + ".txt";
+            else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus)
+                Acre_DB_Location += "DBNM_Plus_Acres_" + Language + ".txt";
+            else if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+                Acre_DB_Location += "DBNM_e_Plus_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
                 Acre_DB_Location += "CF_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.New_Leaf)
@@ -976,8 +980,12 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Acre_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Forest || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus) // DnM needs custom database
+            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Forest || Save_Type == SaveType.Animal_Crossing) // TODO: DnM needs to have a custom list, since the docks/islands don't exist
                 Acre_DB_Location += "AC_Acres_" + Language + ".txt";
+            else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus)
+                Acre_DB_Location += "DBNM_Plus_Acres_" + Language + ".txt";
+            else if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+                Acre_DB_Location += "DBNM_e_Plus_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.City_Folk)
                 Acre_DB_Location += "CF_Acres_" + Language + ".txt";
             else if (Save_Type == SaveType.New_Leaf)

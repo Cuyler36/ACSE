@@ -84,8 +84,14 @@
     <Content Include="Resources\CF_Items_en.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\DBNM_e_Plus_Acres_en.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\DBNM_e_Plus_Items_en.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\DBNM_Plus_Acres_en.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\DBNM_Plus_Items_en.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
