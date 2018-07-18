@@ -935,10 +935,10 @@ namespace ACSE
                                 else if (FieldType == typeof(Inventory))
                                     if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
                                         Current_Field.SetValue(BoxedData, new Inventory(SaveData.ReadUInt32Array(DataOffset,
-                                            (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), false)));
+                                            (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), false), save, this));
                                     else
                                         Current_Field.SetValue(BoxedData, new Inventory(SaveData.ReadUInt16Array(DataOffset,
-                                            (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian)));
+                                            (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian), save, this));
                                 else if (FieldType == typeof(Item))
                                     if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
                                         Current_Field.SetValue(BoxedData, new Item(SaveData.ReadUInt32(DataOffset, false)));

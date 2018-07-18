@@ -15,17 +15,23 @@ namespace ACSE
 
         public Item[] Items;
 
-        public Inventory(ushort[] inventoryData)
+        public Inventory(ushort[] inventoryData, Save save, Player player)
         {
             Items = new Item[inventoryData.Length];
             for(int i = 0; i < inventoryData.Length; i++)
             {
                 Item item = new Item(inventoryData[i]);
+
+                if (save.Save_Generation == SaveGeneration.GCN)
+                {
+                    item.ItemFlag = GetItemFlag(save, player, i);
+                }
+
                 Items[i] = item;
             }
         }
 
-        public Inventory(uint[] inventoryData)
+        public Inventory(uint[] inventoryData, Save save, Player player)
         {
             Items = new Item[inventoryData.Length];
             for (int i = 0; i < inventoryData.Length; i++)

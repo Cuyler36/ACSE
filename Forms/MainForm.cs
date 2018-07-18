@@ -1072,7 +1072,8 @@ namespace ACSE
 
             inventoryEditor = new ItemEditor(this, Selected_Player.Data.Pockets.Items, save.Save_Generation == SaveGeneration.N3DS ? 4 : 5, 16)
             {
-                Location = new Point(26, 340)
+                Location = new Point(26, 340),
+                HoverText = "{0} ({2}) - [0x{1}]"
             };
 
             playersTab.Controls.Add(inventoryEditor);

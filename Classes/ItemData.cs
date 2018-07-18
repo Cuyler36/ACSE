@@ -996,6 +996,7 @@ namespace ACSE
 
     public class Item
     {
+        public Inventory.ACItemFlag ItemFlag;
         public ushort ItemID = 0;
         public byte Flag1 = 0;
         public byte Flag2 = 0;
