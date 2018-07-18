@@ -1,0 +1,12 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+build:
+  project: ACSE.sln
+  verbosity: minimal
+after_build:
+- cmd: 7z a -tzip "bin/Release/ACSE.zip" "bin/Release/*"
+artifacts:
+- path: bin/Release/ACSE.zip
+  name: build
