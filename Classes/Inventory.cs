@@ -6,6 +6,13 @@ namespace ACSE
 {
     public class Inventory
     {
+        public enum ACItemFlag
+        {
+            None = 0,
+            Present = 1,
+            Quest = 2
+        };
+
         public Item[] Items;
 
         public Inventory(ushort[] inventoryData)
@@ -105,6 +112,38 @@ namespace ACSE
             for (int i = 0; i < 15; i++)
                 ids[i] = Items[i].ItemID;
             return ids;
+        }
+
+        public static ACItemFlag GetItemFlag(Save SaveFile, Player Player, int InventoryIdx)
+        {
+            switch (SaveFile.Save_Type)
+            {
+                case SaveType.Animal_Crossing:
+                    return (ACItemFlag)(SaveFile.ReadUInt32(Player.Offset + 0x88, SaveFile.Is_Big_Endian) >> (InventoryIdx << 1) & 3);
+                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    return (ACItemFlag)(SaveFile.ReadUInt32(Player.Offset + 0x84, SaveFile.Is_Big_Endian) >> (InventoryIdx << 1) & 3);
+                default:
+                    return ACItemFlag.None;
+            }
+        }
+
+        public static void SetItemFlag(Save SaveFile, Player Player, ACItemFlag Flag, int InventoryIdx)
+        {
+            int FlagIdx = InventoryIdx << 1;
+            uint FlagValue = (uint)Flag & 3;
+            switch (SaveFile.Save_Type)
+            {
+                case SaveType.Animal_Crossing:
+                    SaveFile.Write(Player.Offset + 0x88, (SaveFile.ReadUInt32(Player.Offset + 0x88, SaveFile.Is_Big_Endian) & ~(3 << FlagIdx)) | (FlagValue << FlagIdx));
+                    break;
+                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    SaveFile.Write(Player.Offset + 0x84, (SaveFile.ReadUInt32(Player.Offset + 0x84, SaveFile.Is_Big_Endian) & ~(3 << FlagIdx)) | (FlagValue << FlagIdx));
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

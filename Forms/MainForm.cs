@@ -3039,24 +3039,42 @@ namespace ACSE
                 Last_X = e.X;
                 Last_Y = e.Y;
                 if (Box == heldItemPicturebox)
+                {
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.HeldItem.Name, Selected_Player.Data.HeldItem.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                }
                 else if (Box == hatPicturebox && hatPicturebox.Enabled)
+                {
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Hat.Name, Selected_Player.Data.Hat.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                }
                 else if (Box == facePicturebox && facePicturebox.Enabled)
+                {
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.FaceItem.Name, Selected_Player.Data.FaceItem.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                }
                 else if (Box == pantsPicturebox && pantsPicturebox.Enabled)
+                {
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Pants.Name, Selected_Player.Data.Pants.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                }
                 else if (Box == socksPicturebox && socksPicturebox.Enabled)
+                {
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Socks.Name, Selected_Player.Data.Socks.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                }
                 else if (Box == shoesPicturebox && shoesPicturebox.Enabled)
+                {
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Shoes.Name, Selected_Player.Data.Shoes.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                }
                 else if (Box == pocketsBackgroundPicturebox && pocketsBackgroundPicturebox.Enabled)
+                {
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.InventoryBackground.Name,
                         Selected_Player.Data.InventoryBackground.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                }
                 else if (Box == bedPicturebox && bedPicturebox.Enabled)
+                {
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Bed.Name, Selected_Player.Data.Bed.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                }
                 else if (Box == playerWetsuit && playerWetsuit.Enabled)
+                {
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Wetsuit.Name, Selected_Player.Data.Wetsuit.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                }
             }
         }
 
