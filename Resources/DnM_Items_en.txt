@@ -1648,13 +1648,13 @@
 0x250A, Watch
 0x250B, Handkerchief
 0x250C, Glasses
-0x250D, Money1000Bell (First Payment you give Nook?)
+0x250D, Money1000Bell
 0x250E, Empty Can
 0x250F, Boot
 0x2510, Old Tire
 0x2511, Fossil
 0x2512, Pitfall
-0x2513, Corrupt (Pitfall)
+0x2513, Fortune Slip
 0x2514, Lion's Paw
 0x2515, Wentletrap
 0x2516, Venus Comb
@@ -1663,8 +1663,8 @@
 0x2519, White Scallop
 0x251A, Conch
 0x251B, Coral
-0x251C, Present (Drop to Open)(Chess Table)
-0x251D, Corrupt (Present) (Map Sprite)
+0x251C, Present (Random Item)
+0x251D, Map Sprite
 0x2600, Plush Carpet
 0x2601, Classic Carpet
 0x2602, Checkered Tile

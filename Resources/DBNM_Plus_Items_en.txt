@@ -2043,7 +2043,7 @@
 0x2510, Old Tire
 0x2511, Fossil
 0x2512, Pitfall
-0x2513, Corrupt (Pitfall)
+0x2513, Fortune Slip
 0x2514, Lion's Paw
 0x2515, Wentletrap
 0x2516, Venus Comb
@@ -2052,13 +2052,13 @@
 0x2519, White Scallop
 0x251A, Conch
 0x251B, Coral
-0x251C, Present (Drop to Open)(Chess Table)
-0x251D, Corrupt (Present) (Map Sprite)
-0x251E, Signboard (Not Placeable)
-0x251F, Present (Drop to Open)(Golden Net)
-0x2520, Present (Drop to Open)(Golden Axe)
-0x2521, Present (Drop to Open)(Golden Shovel)
-0x2522, Present (Drop to Open)(Golden Rod)
+0x251C, Present (Random Item)
+0x251D, Map Sprite
+0x251E, Signboard
+0x251F, Present (Golden Net)
+0x2520, Present (Golden Axe)
+0x2521, Present (Golden Shovel)
+0x2522, Present(Golden Rod)
 0x2523, Exercise Card
 0x2524, Exercise Card
 0x2525, Exercise Card
