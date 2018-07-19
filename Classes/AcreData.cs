@@ -307,5 +307,52 @@ namespace ACSE
             if (burriedDataOffset > -1 && burriedDataOffset < burriedItemData.Length)
                 item.Buried = DataConverter.ToBit(burriedItemData[burriedDataOffset], item.Location.X % 8) == 1;
         }
+
+        /// <summary>
+        /// Loads the Acre's default <see cref="Item"/>s from a file.
+        /// </summary>
+        /// <param name="SaveFile">The current save file.</param>
+        /// <returns>bool ItemsWereLoaded</returns>
+        public bool LoadDefaultItems(Save SaveFile)
+        {
+            string DefaultAcreDataFolder = MainForm.Assembly_Location + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + "Default Acre Info";
+
+            switch (SaveFile.Save_Generation)
+            {
+                case SaveGeneration.GCN:
+                    DefaultAcreDataFolder += Path.DirectorySeparatorChar + "GCN" + Path.DirectorySeparatorChar;
+                    break;
+            }
+
+            if (Directory.Exists(DefaultAcreDataFolder))
+            {
+                string FilePath = DefaultAcreDataFolder + BaseAcreID.ToString("X4");
+                if (File.Exists(FilePath))
+                {
+                    try
+                    {
+                        using (var FStream = new FileStream(FilePath, FileMode.Open))
+                        {
+                            using (var Reader = new BinaryReader(FStream))
+                            {
+                                for (int i = 0; i < FStream.Length / 2; i++)
+                                {
+                                    if (i >= 0x100) // Don't read past the maximum item slot.
+                                        break;
+                                    Acre_Items[i].ItemID = Reader.ReadUInt16().Reverse();
+                                }
+                            }
+                        }
+                        return true;
+                    }
+                    catch
+                    {
+                        MainForm.Debug_Manager.WriteLine(string.Format("Unable to open default acre data for Acre Id 0x{0}", BaseAcreID.ToString("X4")), DebugLevel.Error);
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }
