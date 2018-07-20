@@ -50,9 +50,9 @@ namespace ACSE
         {
             int Mask = 1 << (Reverse ? 7 - Bit_Index : Bit_Index);
             if (Set)
-                Bit_Byte = Bit_Byte |= (byte)Mask;
+                Bit_Byte |= (byte)Mask;
             else
-                Bit_Byte = Bit_Byte &= (byte)~Mask;
+                Bit_Byte &= (byte)~Mask;
         }
 
         public static byte ToByte(object Variant)

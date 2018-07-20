@@ -128,7 +128,7 @@ namespace ACSE
     public static class SaveDataManager
     {
         #region SaveOffsets
-        public static Offsets Doubutsu_no_Mori_Offsets = new Offsets // Remember that these addresses are valid *after* byteswapping
+        public static readonly Offsets Doubutsu_no_Mori_Offsets = new Offsets // Remember that these addresses are valid *after* byteswapping
         {
             Save_Size = 0x10000,
             Player_Start = 0x20,
@@ -152,7 +152,7 @@ namespace ACSE
             Grass_Type = -1, // Find
         };
 
-        public static Offsets Doubutsu_no_Mori_Plus_Offsets = new Offsets
+        public static readonly Offsets Doubutsu_no_Mori_Plus_Offsets = new Offsets
         {
             Save_Size = 0x1E000,
             Player_Start = 0x20, // Might not be right
@@ -182,7 +182,7 @@ namespace ACSE
             Checksum = 0x12,
         };
 
-        public static Offsets Animal_Crossing_Offsets = new Offsets
+        public static readonly Offsets Animal_Crossing_Offsets = new Offsets
         {
             Save_Size = 0x26000,
             Town_Name = 0x9120,
@@ -222,7 +222,7 @@ namespace ACSE
             // Lighthouse Event active: 0x2416F (byte != 0)
         };
 
-        public static Offsets Doubutsu_no_Mori_e_Plus_Offsets = new Offsets
+        public static readonly Offsets Doubutsu_no_Mori_e_Plus_Offsets = new Offsets
         {
             Save_Size = 0x2E000,
             Town_Name = 0x14,
@@ -254,7 +254,7 @@ namespace ACSE
             Checksum = 0x12,
         };
 
-        public static Offsets Animal_Forest_Offsets = new Offsets
+        public static readonly Offsets Animal_Forest_Offsets = new Offsets
         {
             Save_Size = 0x10000,
             Player_Start = 0x20,
@@ -278,7 +278,7 @@ namespace ACSE
             Grass_Type = -1, // Find
         };
 
-        public static Offsets Wild_World_Offsets = new Offsets
+        public static readonly Offsets Wild_World_Offsets = new Offsets
         {
             Save_Size = 0x15FE0,
             Town_ID = 0x0002,
@@ -312,7 +312,7 @@ namespace ACSE
             Checksum = 0x15FDC
         };
 
-        public static Offsets City_Folk_Offsets = new Offsets
+        public static readonly Offsets City_Folk_Offsets = new Offsets
         {
             Save_Size = 0x40F340,
             Player_Start = 0,
@@ -347,7 +347,7 @@ namespace ACSE
             Weather = -1,
         };
 
-        public static Offsets New_Leaf_Offsets = new Offsets
+        public static readonly Offsets New_Leaf_Offsets = new Offsets
         {
             Save_Size = 0x7F980,
             Player_Start = 0x20,
@@ -378,7 +378,7 @@ namespace ACSE
             Train_Station_Type = -1
         };
 
-        public static Offsets Welcome_Amiibo_Offsets = new Offsets
+        public static readonly Offsets Welcome_Amiibo_Offsets = new Offsets
         {
             Save_Size = 0x89A80,
             Player_Start = 0x20,
@@ -413,7 +413,7 @@ namespace ACSE
         #endregion
 
         #region SaveInfo
-        public static Save_Info Doubutsu_no_Mori = new Save_Info
+        public static readonly Save_Info Doubutsu_no_Mori = new Save_Info
         {
             Contains_Island = false,
             Has_Islander = false,
@@ -429,7 +429,7 @@ namespace ACSE
             Villager_Count = 15
         };
 
-        public static Save_Info Doubutsu_no_Mori_Plus = new Save_Info
+        public static readonly Save_Info Doubutsu_no_Mori_Plus = new Save_Info
         {
             Contains_Island = true,
             Has_Islander = true,
@@ -446,7 +446,7 @@ namespace ACSE
             House_Rooms = new string[3] { "Main Floor", "Upper Floor", "Basement" } //Don't forget about island house
         };
 
-        public static Save_Info Animal_Crossing = new Save_Info // Valid for GAFE and GAFP
+        public static readonly Save_Info Animal_Crossing = new Save_Info // Valid for GAFE and GAFP
         {
             Contains_Island = true,
             Has_Islander = true,
@@ -463,7 +463,7 @@ namespace ACSE
             House_Rooms = new string[3] { "Main Floor", "Upper Floor", "Basement" } //Don't forget about island house
         };
 
-        public static Save_Info Doubutsu_no_Mori_e_Plus = new Save_Info
+        public static readonly Save_Info Doubutsu_no_Mori_e_Plus = new Save_Info
         {
             Contains_Island = true,
             Has_Islander = true,
@@ -480,7 +480,7 @@ namespace ACSE
             House_Rooms = new string[3] { "Main Floor", "Upper Floor", "Basement" } //Don't forget about island house
         };
 
-        public static Save_Info Animal_Forest = new Save_Info
+        public static readonly Save_Info Animal_Forest = new Save_Info
         {
             Contains_Island = false,
             Has_Islander = false,
@@ -496,7 +496,7 @@ namespace ACSE
             Villager_Count = 15
         };
 
-        public static Save_Info Wild_World = new Save_Info
+        public static readonly Save_Info Wild_World = new Save_Info
         {
             Contains_Island = false,
             Has_Islander = false,
@@ -512,7 +512,7 @@ namespace ACSE
             //6 drawers with 15 items per
         };
 
-        public static Save_Info City_Folk = new Save_Info
+        public static readonly Save_Info City_Folk = new Save_Info
         {
             Contains_Island = false,
             Has_Islander = false,
@@ -527,7 +527,7 @@ namespace ACSE
             House_Rooms = new string[3] { "Main Floor", "Upper Floor", "Basement" }
         };
 
-        public static Save_Info New_Leaf = new Save_Info
+        public static readonly Save_Info New_Leaf = new Save_Info
         {
             Contains_Island = true,
             Has_Islander = false,
@@ -545,7 +545,7 @@ namespace ACSE
             //3 drawers with 60 items per
         };
 
-        public static Save_Info Welcome_Amiibo = new Save_Info
+        public static readonly Save_Info Welcome_Amiibo = new Save_Info
         {
             Contains_Island = true,
             Has_Islander = false,
@@ -1047,20 +1047,20 @@ namespace ACSE
 
     public class Save
     {
-        public SaveType Save_Type;
-        public SaveGeneration Save_Generation;
-        public Save_Info Save_Info;
+        public readonly SaveType Save_Type;
+        public readonly SaveGeneration Save_Generation;
+        public readonly Save_Info Save_Info;
         public byte[] Original_Save_Data;
         public byte[] Working_Save_Data;
-        public int Save_Data_Start_Offset;
+        public readonly int Save_Data_Start_Offset;
         public string Full_Save_Path;
         public string Save_Path;
         public string Save_Name;
         public string Save_Extension;
         public string Save_ID;
-        public bool Is_Big_Endian = true;
+        public readonly bool Is_Big_Endian = true;
         public bool ChangesMade = false;
-        public bool SuccessfullyLoaded = true;
+        public readonly bool SuccessfullyLoaded = true;
         private FileStream Save_File;
         private BinaryReader Save_Reader;
         private BinaryWriter Save_Writer;

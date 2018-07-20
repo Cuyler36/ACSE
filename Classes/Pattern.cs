@@ -23,7 +23,7 @@ namespace ACSE
     {
         #region Palettes
 
-        public static uint[][] AC_Palette_Data = new uint[16][]
+        public static readonly uint[][] AC_Palette_Data = new uint[16][]
         {
             new uint[15]
             {
@@ -91,12 +91,12 @@ namespace ACSE
             },
         };
 
-        public static byte[] WW_Pattern_Offsets = new byte[16]
+        public static readonly byte[] WW_Pattern_Offsets = new byte[16]
         {
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xC, 0xB, 0xD, 0xE, 0xF //Not in order??
         };
 
-        public static uint[][] WW_Palette_Data = new uint[16][]
+        public static readonly uint[][] WW_Palette_Data = new uint[16][]
         {
             new uint [15]
             {
@@ -164,7 +164,7 @@ namespace ACSE
             },
         }; 
 
-        public static uint[][] CF_Palette_Data = new uint[16][]
+        public static readonly uint[][] CF_Palette_Data = new uint[16][]
         {
             new uint [15]
             {
@@ -248,7 +248,7 @@ namespace ACSE
         };
 
         //Should probably convert other palette data to be like this, and just do palette * 16 + color_idx to find the color
-        public static uint[] NL_Palette_Data = new uint[256]
+        public static readonly uint[] NL_Palette_Data = new uint[256]
         {
             0xFFFFEEFF, 0xFFFF99AA, 0xFFEE5599, 0xFFFF66AA, 0xFFFF0066, 0xFFBB4477, 0xFFCC0055, 0xFF990033, 0xFF552233, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
             0xFFFFBBCC, 0xFFFF7777, 0xFFDD3311, 0xFFFF5544, 0xFFFF0000, 0xFFCC6666, 0xFFBB4444, 0xFFBB0000, 0xFF882222, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFEEEEEE,
