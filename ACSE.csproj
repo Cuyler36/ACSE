@@ -4846,6 +4846,7 @@
   <ItemGroup>
     <Compile Include="Classes\AcreData.cs" />
     <Compile Include="Classes\AlertToggledEventArgs.cs" />
+    <Compile Include="Classes\Backup.cs" />
     <Compile Include="Classes\Catalog.cs" />
     <Compile Include="Classes\Emotion.cs" />
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
