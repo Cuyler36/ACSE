@@ -44,6 +44,7 @@ namespace ACSE
                 if (Properties.Settings.Default.DebugLevel == DebugLevel.None)
                 {
                     MainForm.Debug_Manager.CloseDebugLogWriter();
+                    MainForm.Debug_Manager.DeleteLogFile(MainForm.Debug_Manager.Get_Log_File_Path());
                 }
                 else
                 {

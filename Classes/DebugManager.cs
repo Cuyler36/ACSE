@@ -38,9 +38,16 @@ namespace ACSE
         public void CloseDebugLogWriter()
         {
             if (Log_Writer != null)
+            {
                 Log_Writer.Close();
+                Log_Writer.Dispose();
+            }
+
             if (Log_File != null)
+            {
                 Log_File.Close();
+                Log_File.Dispose();
+            }
 
             Enabled = false;
         }
@@ -68,7 +75,7 @@ namespace ACSE
             return Info.Length <= MaxLogSize;
         }
 
-        private void DeleteLogFile(string FilePath)
+        public void DeleteLogFile(string FilePath)
         {
             try
             {
