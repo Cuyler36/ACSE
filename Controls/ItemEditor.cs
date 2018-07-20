@@ -172,7 +172,7 @@ namespace ACSE
                             Img.Dispose();
 
                         // Update ToolTip
-                        ItemToolTip.Show(string.Format(HoverText, NewItem.Name, NewItem.ItemID.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
+                        ItemToolTip.Show(string.Format(HoverText, NewItem.Name, NewItem.ItemID.ToString("X4"), NewItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
 
                         // Fire ItemChanged Event
                         OnItemChanged(SelectedItem, NewItem, Index);

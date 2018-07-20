@@ -4096,28 +4096,38 @@ namespace ACSE
             }
         }
 
-        private void ConfirmSave(string ConfirmationString)
+        private bool ConfirmSave(string ConfirmationString)
         {
             if (Save_File != null)
             {
                 if (Save_File.ChangesMade) // TODO: Changes aren't updated when placing items, etc. Must change that.
                 {
-                    DialogResult Result = MessageBox.Show(ConfirmationString, "Save File", MessageBoxButtons.YesNo);
-                    Save_File.Close(Result == DialogResult.Yes);
+                    DialogResult Result = MessageBox.Show(ConfirmationString, "Save File", MessageBoxButtons.YesNoCancel);
+
+                    if (Result != DialogResult.Cancel)
+                    {
+                        Save_File.Close(Result == DialogResult.Yes);
+                        return true;
+                    }
                 }
                 else
                 {
                     Save_File.Close(false);
+                    return true;
                 }
+                return false;
             }
+            return true;
         }
 
         private async void OpenSave(string SaveFileLocation)
         {
             if (File.Exists(SaveFileLocation))
             {
-                ConfirmSave("A save file is already being edited. Would you like to save your changes before opening another file?");
-                await SetupEditor(new Save(SaveFileLocation));
+                if (ConfirmSave("A save file is already being edited. Would you like to save your changes before opening another file?"))
+                {
+                    await SetupEditor(new Save(SaveFileLocation));
+                }
             }
             else
             {
@@ -4870,7 +4880,10 @@ namespace ACSE
         {
             if (Save_File != null && !Loading && Save_File.ChangesMade)
             {
-                ConfirmSave("You've made changes to this save file. Would you like to save them before closing it?");
+                if (!ConfirmSave("You've made changes to this save file. Would you like to save them before closing it?"))
+                {
+                    e.Cancel = true; // Don't close the form
+                }
             }
         }
 
