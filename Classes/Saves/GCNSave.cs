@@ -11,7 +11,7 @@ namespace ACSE.Classes.Saves
     /// </summary>
     class GCNSave : SaveBase
     {
-        public GCNSave(string path) : base(path)
+        public GCNSave(string path) : base(path, true)
         {
             Generation = SaveGeneration.GCN;
         }

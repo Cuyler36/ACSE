@@ -11,7 +11,7 @@ namespace ACSE.Classes.Saves
     /// </summary>
     class N3DSSave : SaveBase
     {
-        public N3DSSave(string path) : base(path)
+        public N3DSSave(string path) : base(path, false)
         {
             Generation = SaveGeneration.N3DS;
         }

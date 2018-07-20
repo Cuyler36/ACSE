@@ -33,14 +33,13 @@ namespace ACSE.Classes.Saves
         public bool Loaded { get; protected set; } = false;
         public bool ChangesMade { get; protected set; } = false;
 
-        public SaveBase(string savePath, bool bigEndian, int saveDataStartOffset)
+        public SaveBase(string savePath, bool bigEndian)
         {
             FileName = Path.GetFileNameWithoutExtension(savePath);
             FileExtension = Path.GetExtension(savePath);
             FilePath = Path.GetDirectoryName(savePath);
 
             IsBigEndian = bigEndian;
-            SaveDataStartOffset = saveDataStartOffset;
 
             bool SuccessfullyLoadedFile = false;
 

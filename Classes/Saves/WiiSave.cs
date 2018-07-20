@@ -11,7 +11,7 @@ namespace ACSE.Classes.Saves
     /// </summary>
     class WiiSave : SaveBase
     {
-        public WiiSave(string path) : base(path)
+        public WiiSave(string path) : base(path, true)
         {
             Generation = SaveGeneration.Wii;
             SaveType = SaveType.City_Folk;

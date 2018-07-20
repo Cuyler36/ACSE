@@ -11,7 +11,7 @@ namespace ACSE.Classes.Saves
     /// </summary>
     class NDSSave : SaveBase
     {
-        public NDSSave(string path) : base(path)
+        public NDSSave(string path) : base(path, false)
         {
             Generation = SaveGeneration.NDS;
             SaveType = SaveType.Wild_World;

@@ -11,7 +11,7 @@ namespace ACSE.Classes.Saves
     /// </summary>
     class N64Save : SaveBase
     {
-        public N64Save(string path) : base(path)
+        public N64Save(string path) : base(path, true)
         {
             Generation = SaveGeneration.N64;
             SaveType = SaveType.Doubutsu_no_Mori;
