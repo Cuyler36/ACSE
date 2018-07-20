@@ -315,7 +315,7 @@ namespace ACSE
         /// <returns>bool ItemsWereLoaded</returns>
         public bool LoadDefaultItems(Save SaveFile)
         {
-            string DefaultAcreDataFolder = MainForm.Assembly_Location + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + "Default Acre Info";
+            string DefaultAcreDataFolder = MainForm.Assembly_Location + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + "Default Acre Items";
 
             switch (SaveFile.Save_Generation)
             {
@@ -326,7 +326,7 @@ namespace ACSE
 
             if (Directory.Exists(DefaultAcreDataFolder))
             {
-                string FilePath = DefaultAcreDataFolder + BaseAcreID.ToString("X4");
+                string FilePath = DefaultAcreDataFolder + BaseAcreID.ToString("X4") + ".bin";
                 if (File.Exists(FilePath))
                 {
                     try
@@ -339,7 +339,7 @@ namespace ACSE
                                 {
                                     if (i >= 0x100) // Don't read past the maximum item slot.
                                         break;
-                                    Acre_Items[i].ItemID = Reader.ReadUInt16().Reverse();
+                                    Acre_Items[i] = new WorldItem(Reader.ReadUInt16().Reverse(), i);
                                 }
                             }
                         }

@@ -487,27 +487,45 @@ namespace ACSE
             Roof_Color = -1
         };
 
-        public static string[] DnM_House_Names = new string[1]
+        #region Room Names
+
+        private static readonly string[] DnM_House_Names = new string[1]
         {
             "Main Room"
         };
 
-        public static string[] AC_Room_Names = new string[3]
+        private static readonly string[] AC_Room_Names = new string[3]
         {
             "First Floor", "Second Floor", "Basement"
         };
 
-        public static string[] WW_Room_Names = new string[5]
+        private static readonly string[] WW_Room_Names = new string[5]
         {
             "Entry Room", "Back Wing", "Right Wing", "Left Wing", "Second Floor"
         };
 
-        public static string[] NL_Room_Names = new string[6]
+        private static readonly string[] NL_Room_Names = new string[6]
         {
             "Entry Room", "Second Floor", "Basement", "Right Wing", "Left Wing", "Back Wing"
         };
 
-        public static string[] AC_Roof_Colors = new string[12]
+        #endregion
+
+        #region House Sizes
+
+        private static readonly string[] DnM_House_Sizes = new string[3]
+        {
+            "Small Room", "Medium Room", "Large Room"
+        };
+
+        private static readonly string[] AC_House_Sizes = new string[6]
+        {
+            "Small Room", "Medium Room", "Large Room", "Basement", "Second Floor", "Second Floor w/o Statue" // The basement is a separate flag
+        };
+
+        #endregion
+
+        private static readonly string[] AC_Roof_Colors = new string[12]
         {
             "Red", "Orange", "Yellow", "Pale Green", "Green", "Sky Blue", "Blue", "Purple", "Pink", "Black", "White", "Brown"
         };
@@ -567,11 +585,27 @@ namespace ACSE
                     return AC_Room_Names;
 
                 case SaveGeneration.NDS:
-                default:
                     return WW_Room_Names;
 
                 case SaveGeneration.N3DS:
                     return NL_Room_Names;
+
+                default:
+                    return new string[0];
+            }
+        }
+
+        public static string[] GetHouseSizes(SaveGeneration Generation)
+        {
+            switch (Generation)
+            {
+                case SaveGeneration.N64:
+                case SaveGeneration.iQue:
+                    return DnM_House_Sizes;
+                case SaveGeneration.GCN:
+                    return AC_House_Sizes;
+                default:
+                    return new string[0];
             }
         }
 
@@ -605,12 +639,32 @@ namespace ACSE
             {
                 case SaveType.Animal_Crossing: // NOTE: N64 & GameCube titles don't include Basement in the size
                     return (MainForm.Save_File.Working_Save_Data[Offset + 0x2A] >> 5) & 7;
+                case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     return (MainForm.Save_File.Working_Save_Data[Offset + 0x26] >> 5) & 7;
                 case SaveType.Wild_World:
                     return MainForm.Save_File.ReadByte(0xFAF8) & 7; // Not sure about this
                 default:
                     return 0;
+            }
+        }
+
+        public static void SetHouseSize(int Offset, SaveType Save_Type, int Value)
+        {
+            switch (Save_Type)
+            {
+                case SaveType.Animal_Crossing: // NOTE: N64 & GameCube titles don't include Basement in the size
+                    MainForm.Save_File.Write(Offset + 0x2A, (byte)(MainForm.Save_File.ReadByte(Offset + 0x2A) & ~(7 << 5) | ((Value & 7) << 5)));
+                    break;
+                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    MainForm.Save_File.Write(Offset + 0x26, (byte)(MainForm.Save_File.ReadByte(Offset + 0x26) & ~(7 << 5) | ((Value & 7) << 5)));
+                    break;
+                case SaveType.Wild_World:
+                    MainForm.Save_File.Write(0xFAF8, (byte)((MainForm.Save_File.ReadByte(0xFAF8) & ~7) | (Value & 7))); // Not sure about this
+                    break;
+                default:
+                    break;
             }
         }
 

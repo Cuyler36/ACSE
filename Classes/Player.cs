@@ -907,7 +907,7 @@ namespace ACSE
                                 Type FieldType = Current_Field.FieldType;
                                 int DataOffset = Offset + (int)Field.GetValue(Offsets);
 
-                                if (Field.Name == "TownPassCardImage" && (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo))
+                                if (Field.Name == "TownPassCardImage" && save.Save_Generation == SaveGeneration.N3DS)
                                 {
                                     PlayerDataType.GetField("TownPassCardData").SetValue(BoxedData, SaveData.ReadByteArray(DataOffset, 0x1400));
                                     Current_Field.SetValue(BoxedData,
@@ -933,14 +933,14 @@ namespace ACSE
                                     Current_Field.SetValue(BoxedData, new ACString(SaveData.ReadByteArray(DataOffset,
                                         (int)PlayerSaveInfoType.GetField(Field.Name + "Size").GetValue(Offsets)), SaveData.Save_Type).Trim());
                                 else if (FieldType == typeof(Inventory))
-                                    if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
+                                    if (save.Save_Generation == SaveGeneration.N3DS)
                                         Current_Field.SetValue(BoxedData, new Inventory(SaveData.ReadUInt32Array(DataOffset,
                                             (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), false), save, this));
                                     else
                                         Current_Field.SetValue(BoxedData, new Inventory(SaveData.ReadUInt16Array(DataOffset,
                                             (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian), save, this));
                                 else if (FieldType == typeof(Item))
-                                    if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
+                                    if (save.Save_Generation == SaveGeneration.N3DS)
                                         Current_Field.SetValue(BoxedData, new Item(SaveData.ReadUInt32(DataOffset, false)));
                                     else
                                         Current_Field.SetValue(BoxedData, new Item(SaveData.ReadUInt16(DataOffset, SaveData.Is_Big_Endian)));
@@ -957,10 +957,10 @@ namespace ACSE
                                     Item[] ItemArray = new Item[(int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets)];
                                     for (int i = 0; i < ItemArray.Length; i++)
                                     {
-                                        if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo)
+                                        if (save.Save_Generation == SaveGeneration.N3DS)
                                             ItemArray[i] = new Item(SaveData.ReadUInt32(DataOffset + i * 4, false));
                                         else
-                                            ItemArray[i] =  new Item(SaveData.ReadUInt16(DataOffset + i * 2, SaveData.Is_Big_Endian));
+                                            ItemArray[i] = new Item(SaveData.ReadUInt16(DataOffset + i * 2, SaveData.Is_Big_Endian));
                                     }
                                     Current_Field.SetValue(BoxedData, ItemArray);
                                 }
@@ -1058,7 +1058,7 @@ namespace ACSE
                             Type FieldType = typeof(PlayerData).GetField(Field.Name).FieldType;
                             int DataOffset = Offset + (int)Field.GetValue(Offsets);
                             //MessageBox.Show("Field Name: " + Field.Name + " | Data Offset: " + DataOffset.ToString("X"));
-                            if (Field.Name == "TownPassCardImage" && (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo))
+                            if (Field.Name == "TownPassCardImage" && SaveData.Save_Generation == SaveGeneration.N3DS)
                             {
                                 SaveData.Write(DataOffset, Data.TownPassCardData);
                             }
@@ -1122,7 +1122,7 @@ namespace ACSE
                             }
                             else if (FieldType == typeof(Inventory))
                             {
-                                if (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo)
+                                if (SaveData.Save_Generation == SaveGeneration.N3DS)
                                 {
                                     uint[] Items = new uint[Offsets.PocketsCount];
                                     for (int i = 0; i < Items.Length; i++)
@@ -1146,7 +1146,16 @@ namespace ACSE
                                 }
                                 else
                                 {
-                                    SaveData.Write(DataOffset, Item.ItemID, SaveData.Is_Big_Endian);
+                                    if (Field.Name.Equals("Shirt") &&
+                                        (SaveData.Save_Generation == SaveGeneration.N64 || SaveData.Save_Generation == SaveGeneration.GCN
+                                        || SaveData.Save_Generation == SaveGeneration.iQue)) // For some reason, the shirt lower byte is also stored before the actual item id.
+                                    {
+                                        SaveData.Write(DataOffset - 1, new byte[3] { (byte)Item.ItemID, (byte)(Item.ItemID >> 8), (byte)Item.ItemID }, SaveData.Is_Big_Endian);
+                                    }
+                                    else
+                                    {
+                                        SaveData.Write(DataOffset, Item.ItemID, SaveData.Is_Big_Endian);
+                                    }
                                 }
                             }
                             else if (FieldType == typeof(Item[]))
@@ -1162,7 +1171,7 @@ namespace ACSE
 
                                 for (int i = 0; i < ItemArray.Length; i++)
                                 {
-                                    if (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo)
+                                    if (SaveData.Save_Generation == SaveGeneration.NDS)
                                         SaveData.Write(DataOffset + i * 4, ItemArray[i].ToUInt32());
                                     else
                                         SaveData.Write(DataOffset + i * 2, ItemArray[i].ItemID, SaveData.Is_Big_Endian);
@@ -1170,7 +1179,7 @@ namespace ACSE
                             }
                             else if (FieldType == typeof(NL_Int32))
                             {
-                                if (SaveData.Save_Type == SaveType.New_Leaf || SaveData.Save_Type == SaveType.Welcome_Amiibo)
+                                if (SaveData.Save_Generation == SaveGeneration.NDS)
                                 {
                                     NL_Int32 Encrypted_Int = (NL_Int32)PlayerDataType.GetField(Field.Name).GetValue(Data);
                                     SaveData.Write(DataOffset, Encrypted_Int.Int_1);

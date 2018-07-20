@@ -31,11 +31,13 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TabPage patternsTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.paletteColorSelectedPictureBox = new System.Windows.Forms.PictureBox();
             this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
             this.patternEditorPanel = new System.Windows.Forms.Panel();
+            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
             this.patternEditorPreviewPanel = new System.Windows.Forms.Panel();
             this.patternGroupTabControl = new System.Windows.Forms.TabControl();
             this.player1Tab = new System.Windows.Forms.TabPage();
@@ -207,6 +209,7 @@
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.housesTab = new System.Windows.Forms.TabPage();
+            this.StatueCheckBox = new System.Windows.Forms.CheckBox();
             this.houseOwnerComboBox = new System.Windows.Forms.ComboBox();
             this.label30 = new System.Windows.Forms.Label();
             this.houseTabSelect = new System.Windows.Forms.TabControl();
@@ -262,15 +265,13 @@
             this.loadingPanel = new System.Windows.Forms.Panel();
             this.label45 = new System.Windows.Forms.Label();
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
-            this.itemIdLabel = new System.Windows.Forms.Label();
-            this.StatueCheckBox = new System.Windows.Forms.CheckBox();
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
-            this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
-            this.patternEditorPictureBox = new ACSE.PictureBoxWithInterpolationMode();
+            this.itemIdLabel = new System.Windows.Forms.Label();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
             this.patternEditorPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.patternGroupTabControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -306,7 +307,6 @@
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // patternsTab
@@ -326,6 +326,18 @@
             patternsTab.TabIndex = 8;
             patternsTab.Text = "Patterns";
             patternsTab.UseVisualStyleBackColor = true;
+            // 
+            // patternNameTextBox
+            // 
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
+            this.patternNameTextBox.MaxLength = 16;
+            this.patternNameTextBox.Name = "patternNameTextBox";
+            this.patternNameTextBox.PlaceholderText = "Pattern Name";
+            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.patternNameTextBox.TabIndex = 0;
+            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
             // paletteColorSelectedPictureBox
             // 
@@ -378,6 +390,23 @@
             this.patternEditorPanel.Name = "patternEditorPanel";
             this.patternEditorPanel.Size = new System.Drawing.Size(513, 513);
             this.patternEditorPanel.TabIndex = 16;
+            // 
+            // patternEditorPictureBox
+            // 
+            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
+            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
+            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.patternEditorPictureBox.TabIndex = 0;
+            this.patternEditorPictureBox.TabStop = false;
+            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
+            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
+            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
+            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
+            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
             // 
             // patternEditorPreviewPanel
             // 
@@ -2216,6 +2245,22 @@
             this.housesTab.Text = "Houses";
             this.housesTab.UseVisualStyleBackColor = true;
             // 
+            // StatueCheckBox
+            // 
+            this.StatueCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.StatueCheckBox.AutoSize = true;
+            this.StatueCheckBox.Enabled = false;
+            this.StatueCheckBox.Location = new System.Drawing.Point(682, 11);
+            this.StatueCheckBox.Name = "StatueCheckBox";
+            this.StatueCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.StatueCheckBox.Size = new System.Drawing.Size(125, 17);
+            this.StatueCheckBox.TabIndex = 9;
+            this.StatueCheckBox.Text = "Debt Statue Enabled";
+            this.houseToolTip.SetToolTip(this.StatueCheckBox, "Toggles the Player Debt Statue Nook gives you after paying off the final debt. To" +
+        "ggling this checkbox will set your house size to the max.");
+            this.StatueCheckBox.UseVisualStyleBackColor = true;
+            this.StatueCheckBox.CheckedChanged += new System.EventHandler(this.StatueCheckBox_CheckedChanged);
+            // 
             // houseOwnerComboBox
             // 
             this.houseOwnerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -2332,6 +2377,7 @@
             // 
             // houseSizeComboBox
             // 
+            this.houseSizeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.houseSizeComboBox.Enabled = false;
             this.houseSizeComboBox.FormattingEnabled = true;
             this.houseSizeComboBox.Location = new System.Drawing.Point(82, 9);
@@ -2707,32 +2753,6 @@
             this.label45.TabIndex = 15;
             this.label45.Text = "Loading...";
             // 
-            // itemIdLabel
-            // 
-            this.itemIdLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.itemIdLabel.AutoSize = true;
-            this.itemIdLabel.Location = new System.Drawing.Point(116, 623);
-            this.itemIdLabel.Name = "itemIdLabel";
-            this.itemIdLabel.Size = new System.Drawing.Size(18, 13);
-            this.itemIdLabel.TabIndex = 79;
-            this.itemIdLabel.Text = "0x";
-            // 
-            // StatueCheckBox
-            // 
-            this.StatueCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.StatueCheckBox.AutoSize = true;
-            this.StatueCheckBox.Enabled = false;
-            this.StatueCheckBox.Location = new System.Drawing.Point(682, 11);
-            this.StatueCheckBox.Name = "StatueCheckBox";
-            this.StatueCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.StatueCheckBox.Size = new System.Drawing.Size(125, 17);
-            this.StatueCheckBox.TabIndex = 9;
-            this.StatueCheckBox.Text = "Debt Statue Enabled";
-            this.houseToolTip.SetToolTip(this.StatueCheckBox, "Toggles the Player Debt Statue Nook gives you after paying off the final debt. To" +
-        "ggling this checkbox will set your house size to the max.");
-            this.StatueCheckBox.UseVisualStyleBackColor = true;
-            this.StatueCheckBox.CheckedChanged += new System.EventHandler(this.StatueCheckBox_CheckedChanged);
-            // 
             // itemIdTextBox
             // 
             this.itemIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -2748,34 +2768,15 @@
             this.itemIdTextBox.TextChanged += new System.EventHandler(this.CurrentItemId_TextChanged);
             this.itemIdTextBox.Leave += new System.EventHandler(this.CurrentItemId_LostFocus);
             // 
-            // patternNameTextBox
+            // itemIdLabel
             // 
-            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
-            this.patternNameTextBox.MaxLength = 16;
-            this.patternNameTextBox.Name = "patternNameTextBox";
-            this.patternNameTextBox.PlaceholderText = "Pattern Name";
-            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
-            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.patternNameTextBox.TabIndex = 0;
-            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
-            // 
-            // patternEditorPictureBox
-            // 
-            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
-            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
-            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.patternEditorPictureBox.TabIndex = 0;
-            this.patternEditorPictureBox.TabStop = false;
-            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
-            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
-            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
-            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
-            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
+            this.itemIdLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.itemIdLabel.AutoSize = true;
+            this.itemIdLabel.Location = new System.Drawing.Point(116, 623);
+            this.itemIdLabel.Name = "itemIdLabel";
+            this.itemIdLabel.Size = new System.Drawing.Size(18, 13);
+            this.itemIdLabel.TabIndex = 79;
+            this.itemIdLabel.Text = "0x";
             // 
             // MainForm
             // 
@@ -2807,6 +2808,7 @@
             patternsTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).EndInit();
             this.patternEditorPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.patternGroupTabControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -2853,7 +2855,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

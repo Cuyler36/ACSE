@@ -210,16 +210,25 @@ namespace ACSE
             {
                 if (Save_File != null && ushort.TryParse(acreCustomIdBox.Text, NumberStyles.AllowHexSpecifier, null, out ushort Custom_ID))
                 {
-                    Set_Selected_Acre(Custom_ID);
+                    Set_Selected_Acre(Custom_ID, false);
                 }
             };
 
             // Roof ComboBox Changed
             roofColorComboBox.SelectedIndexChanged += delegate (object sender, EventArgs e)
             {
-                if (roofColorComboBox.Enabled && roofColorComboBox.SelectedIndex > -1 && Selected_House != null)
+                if (!Loading && roofColorComboBox.Enabled && roofColorComboBox.SelectedIndex > -1 && Selected_House != null)
                 {
                     Selected_House.Data.Roof_Color = (byte)(roofColorComboBox.SelectedIndex);
+                }
+            };
+
+            // House Size ComboBox
+            houseSizeComboBox.SelectedIndexChanged += delegate (object sender, EventArgs e)
+            {
+                if (!Loading && houseSizeComboBox.Enabled && houseSizeComboBox.SelectedIndex > -1 && Selected_House != null)
+                {
+                    HouseInfo.SetHouseSize(Selected_House.Offset, Save_File.Save_Type, houseSizeComboBox.SelectedIndex);
                 }
             };
 
@@ -544,8 +553,6 @@ namespace ACSE
             weatherComboBox.Enabled = true;
             nativeFruitBox.Enabled = true;
             stationTypeComboBox.Enabled = TrainStation.HasModifiableTrainStation(save.Save_Generation);
-            houseSizeComboBox.Enabled = true;
-            roofColorComboBox.Enabled = true;
             houseOwnerComboBox.Enabled = save.Save_Generation != SaveGeneration.NDS;
             houseTabSelect.Visible = save.Save_Generation != SaveGeneration.NDS;
             houseTabSelect.Enabled = save.Save_Generation != SaveGeneration.NDS;
@@ -596,6 +603,10 @@ namespace ACSE
             // Add Roof Color Items
             roofColorComboBox.Items.AddRange(HouseInfo.GetRoofColors(save.Save_Type));
             roofColorComboBox.Enabled = roofColorComboBox.Items.Count > 0;
+
+            // Add House Size Items
+            houseSizeComboBox.Items.AddRange(HouseInfo.GetHouseSizes(Save_File.Save_Generation));
+            houseSizeComboBox.Enabled = houseSizeComboBox.Items.Count > 0;
 
             //Load Villager Database
             if (Save_File.Save_Type != SaveType.City_Folk) //City Folk has completely editable villagers! That's honestly a pain for editing...
@@ -981,6 +992,9 @@ namespace ACSE
             SetupHousePictureBoxes();
             if (roofColorComboBox.Enabled && Selected_House != null)
                 roofColorComboBox.SelectedIndex = Math.Min(roofColorComboBox.Items.Count - 1, Selected_House.Data.Roof_Color);
+
+            if (houseSizeComboBox.Enabled && Selected_House != null)
+                houseSizeComboBox.SelectedIndex = HouseInfo.GetHouseSize(Selected_House.Offset, save.Save_Type);
 
             if (Properties.Settings.Default.OutputInt32s && Save_File.Save_Generation == SaveGeneration.N3DS)
                 Utility.Scan_For_NL_Int32();
@@ -1754,7 +1768,7 @@ namespace ACSE
             }
         }
 
-        private void Set_Selected_Acre(ushort AcreID)
+        private void Set_Selected_Acre(ushort AcreID, bool FocusTreeNode = true)
         {
             Selected_Acre_ID = AcreID;
             if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue)
@@ -1794,7 +1808,8 @@ namespace ACSE
                 {
                     Node.Toggle();
                     acreTreeView.SelectedNode = Matching_Nodes[0];
-                    acreTreeView.Focus();
+                    if (FocusTreeNode)
+                        acreTreeView.Focus();
                     return;
                 }
             }
@@ -1852,6 +1867,7 @@ namespace ACSE
                             Properties.Settings.Default.ShowBetaAcreWarning = !Alert.AlertDisabled;
                             Properties.Settings.Default.Save();
                         }
+                        Alert.Dispose();
                     }
                     else if (Node.Tag != null && ushort.TryParse((string)Node.Tag, NumberStyles.AllowHexSpecifier, null, out ushort Acre_ID))
                     {
@@ -1863,6 +1879,7 @@ namespace ACSE
                                 Properties.Settings.Default.ShowDumpAcreWarning = !Alert.AlertDisabled;
                                 Properties.Settings.Default.Save();
                             }
+                            Alert.Dispose();
                         }
                     }
                 }
@@ -2316,6 +2333,7 @@ namespace ACSE
         {
             if (SelectedHouse != null)
             {
+                Loading = true;
                 if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue)
                 {
                     basementCheckBox.Checked = HouseInfo.HasBasement(SelectedHouse.Offset, Save_File.Save_Type);
@@ -2347,7 +2365,11 @@ namespace ACSE
                     }
                 }
 
-                roofColorComboBox.SelectedIndex = Math.Min(roofColorComboBox.Items.Count - 1, SelectedHouse.Data.Roof_Color);
+                if (roofColorComboBox.Enabled && Selected_House != null)
+                    roofColorComboBox.SelectedIndex = Math.Min(roofColorComboBox.Items.Count - 1, SelectedHouse.Data.Roof_Color);
+
+                if (houseSizeComboBox.Enabled && Selected_House != null)
+                    houseSizeComboBox.SelectedIndex = HouseInfo.GetHouseSize(Selected_House.Offset, Save_File.Save_Type);
 
                 for (int i = 0; i < House_Boxes.Length; i++)
                 {
@@ -2361,6 +2383,8 @@ namespace ACSE
                         }
                     }
                 }
+
+                Loading = false;
             }
         }
 
@@ -2892,11 +2916,16 @@ namespace ACSE
                 {
                     Save_File.ChangesMade = true;
                     string Acre_ID_String = Selected_Acre_ID.ToString("X");
+
                     if (Island)
+                    {
                         Island_Acres[Acre_Index] = new WorldAcre((ushort)(Selected_Acre_ID + Acre_Height_Modifier), Acre_Index,
                             Island_Acres[Acre_Index].Acre_Items);
+                    }
                     else
+                    {
                         Acres[Acre_Index] = new WorldAcre((ushort)(Selected_Acre_ID + Acre_Height_Modifier), Acre_Index);
+                    }
 
                     var OldImage = Acre_Box.BackgroundImage;
                     Acre_Box.BackgroundImage = selectedAcrePicturebox.Image;
@@ -2908,7 +2937,16 @@ namespace ACSE
                     if (!Island && Grass_Map != null && Grass_Map.Length == Acre_Map.Length)
                         Grass_Map[Acre_Index].BackgroundImage = Acre_Box.BackgroundImage;
 
-                    if (!Island && Acre_Y >= Current_Save_Info.Town_Y_Acre_Start && Acre_X > 0 && Acre_X < Current_Save_Info.X_Acre_Count - 1)
+                    bool IsTownAcre = Acre_Y >= Current_Save_Info.Town_Y_Acre_Start && Acre_X > 0 && Acre_X < Current_Save_Info.X_Acre_Count - 1;
+                    bool IsIslandAcre = Acre_Y > 0 && Acre_X > 0 && Acre_Y < 3 && Acre_X < 3;
+                    bool LoadDefaultItems = false;
+                    if (Save_File.Save_Generation == SaveGeneration.GCN && (IsTownAcre || IsIslandAcre))
+                    {
+                        LoadDefaultItems = MessageBox.Show("Would you like to load the default items for this acre?", "Load Default Items?",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+                    }
+
+                    if (!Island && IsTownAcre)
                     {
                         int Town_Acre = (Acre_Y - Current_Save_Info.Town_Y_Acre_Start) * (Current_Save_Info.X_Acre_Count - 2) + (Acre_X - 1);
 
@@ -2917,7 +2955,13 @@ namespace ACSE
                             WorldAcre Current_Town_Acre = Town_Acres[Town_Acre];
                             Town_Acres[Town_Acre] = new WorldAcre((ushort)(Selected_Acre_ID + Acre_Height_Modifier),
                                 Town_Acre, Current_Town_Acre.Acre_Items, Buried_Buffer, Save_File.Save_Type);
+                            if (LoadDefaultItems)
+                            {
+                                Town_Acres[Town_Acre].LoadDefaultItems(Save_File);
+                                Acres[Acre_Index].Acre_Items = Town_Acres[Town_Acre].Acre_Items;
+                            }
                             Town_Acre_Map[Town_Acre].BackgroundImage = Acre_Box.BackgroundImage;
+                            Refresh_PictureBox_Image(Town_Acre_Map[Town_Acre], GenerateAcreItemsBitmap(Current_Town_Acre.Acre_Items, Acre_Index));
                         }
 
                         if (Grass_Map != null && Grass_Map.Length == Town_Acre_Map.Length)
@@ -2929,11 +2973,16 @@ namespace ACSE
                             NL_Grass_Overlay.BackgroundImage = ImageGeneration.Draw_NL_Grass_BG(Acre_Map);
                         }
                     }
-                    else if (Island && Acre_Y > 0 && Acre_X > 0 && Acre_Y < 3 && Acre_X < 3)
+                    else if (Island && IsIslandAcre)
                     {
                         OldImage = Island_Acre_Map[Acre_Index].BackgroundImage;
                         Island_Acre_Map[Acre_Index].BackgroundImage = selectedAcrePicturebox.Image;
                         AcreData.CheckReferencesAndDispose(OldImage, Island_Acre_Map, selectedAcrePicturebox);
+                        if (LoadDefaultItems)
+                        {
+                            Island_Acres[Acre_Index].LoadDefaultItems(Save_File);
+                        }
+                        Refresh_PictureBox_Image(Island_Acre_Map[Acre_Index], GenerateAcreItemsBitmap(Island_Acres[Acre_Index].Acre_Items, Acre_Index, true));
                     }
 
                     Acre_Editor_Mouse_Move(sender, e, Island, true);
