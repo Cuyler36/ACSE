@@ -39,6 +39,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.acreMapSizeTrackBar = new System.Windows.Forms.TrackBar();
             this.label2 = new System.Windows.Forms.Label();
+            this.BackupCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.townMapSizeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.acreMapSizeTrackBar)).BeginInit();
             this.SuspendLayout();
@@ -62,7 +63,7 @@
             // 
             // doneButton
             // 
-            this.doneButton.Location = new System.Drawing.Point(269, 111);
+            this.doneButton.Location = new System.Drawing.Point(269, 134);
             this.doneButton.Name = "doneButton";
             this.doneButton.Size = new System.Drawing.Size(75, 23);
             this.doneButton.TabIndex = 2;
@@ -96,7 +97,7 @@
             // 
             this.scanForInt32Checkbox.AutoSize = true;
             this.scanForInt32Checkbox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.scanForInt32Checkbox.Location = new System.Drawing.Point(8, 116);
+            this.scanForInt32Checkbox.Location = new System.Drawing.Point(8, 139);
             this.scanForInt32Checkbox.Name = "scanForInt32Checkbox";
             this.scanForInt32Checkbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.scanForInt32Checkbox.Size = new System.Drawing.Size(190, 17);
@@ -158,12 +159,25 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "(Requires Restart)";
             // 
+            // BackupCheckBox
+            // 
+            this.BackupCheckBox.AutoSize = true;
+            this.BackupCheckBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BackupCheckBox.Location = new System.Drawing.Point(8, 116);
+            this.BackupCheckBox.Name = "BackupCheckBox";
+            this.BackupCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.BackupCheckBox.Size = new System.Drawing.Size(105, 17);
+            this.BackupCheckBox.TabIndex = 12;
+            this.BackupCheckBox.Text = ":Create Backups";
+            this.BackupCheckBox.UseVisualStyleBackColor = true;
+            // 
             // SettingsMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(358, 146);
+            this.ClientSize = new System.Drawing.Size(358, 170);
             this.ControlBox = false;
+            this.Controls.Add(this.BackupCheckBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.acreMapSizeTrackBar);
             this.Controls.Add(this.label4);
@@ -197,5 +211,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TrackBar acreMapSizeTrackBar;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox BackupCheckBox;
     }
 }

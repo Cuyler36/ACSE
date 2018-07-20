@@ -13,16 +13,20 @@ namespace ACSE
         {
             MainFormReference = Reference;
             InitializeComponent();
+
             Array EnumItems = Enum.GetValues(typeof(InterpolationMode));
             foreach (var Enum in EnumItems)
                 imageSizeModeComboBox.Items.Add(Enum.ToString());
             imageSizeModeComboBox.SelectedIndex = Properties.Settings.Default.ImageResizeMode;
-            imageSizeModeComboBox.SelectedIndexChanged += new EventHandler((object o, EventArgs e) => ImageResizeMode_Changed());
             debugLevelComboBox.SelectedIndex = (int)Properties.Settings.Default.DebugLevel;
-            debugLevelComboBox.SelectedIndexChanged += new EventHandler((object o, EventArgs e) => DebugLevel_Changed());
             scanForInt32Checkbox.Checked = Properties.Settings.Default.OutputInt32s;
+            BackupCheckBox.Checked = Properties.Settings.Default.BackupFiles;
             townMapSizeTrackBar.Value = Math.Max(0, (Properties.Settings.Default.TownMapSize - 128) / 16);
             acreMapSizeTrackBar.Value = Math.Max(0, (Properties.Settings.Default.AcreMapSize - 64) / 8);
+
+            imageSizeModeComboBox.SelectedIndexChanged += new EventHandler((object o, EventArgs e) => ImageResizeMode_Changed());
+            debugLevelComboBox.SelectedIndexChanged += new EventHandler((object o, EventArgs e) => DebugLevel_Changed());
+            BackupCheckBox.CheckedChanged += new EventHandler(BackupCheckBox_CheckedChanged);
             Loaded = true;
         }
 
@@ -83,6 +87,11 @@ namespace ACSE
                 if (MainFormReference != null)
                     MainFormReference.SetAcreMapPictureBoxSize(NewSize);
             }
+        }
+
+        private void BackupCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.BackupFiles = BackupCheckBox.Checked;
         }
     }
 }

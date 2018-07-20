@@ -1125,6 +1125,10 @@ namespace ACSE
                 Save_File.Close();
                 Save_Reader.Dispose();
                 Save_File.Dispose();
+
+                // Create a Backup
+                if (Properties.Settings.Default.BackupFiles)
+                    new Backup(this);
             }
             else
                 MessageBox.Show("File doesn't exist!");
