@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ACSE.Classes.Saves
@@ -13,8 +10,8 @@ namespace ACSE.Classes.Saves
     /// </summary>
     abstract class SaveBase
     {
-        private int SaveDataStartOffset;
-        private bool BigEndian;
+        private readonly int SaveDataStartOffset;
+        private readonly bool IsBigEndian;
 
         public SaveType SaveType;
         public SaveGeneration Generation;
@@ -48,6 +45,12 @@ namespace ACSE.Classes.Saves
             {
                 OriginalData = File.ReadAllBytes(savePath);
                 SuccessfullyLoadedFile = true;
+
+                // Backup the file if backups are enabled
+                if (Properties.Settings.Default.BackupFiles)
+                {
+                    //new Backup(this); // Uncomment this once we switch over to using SaveBase & the new save classes.
+                }
             }
             catch
             {
@@ -107,7 +110,7 @@ namespace ACSE.Classes.Saves
             offset += SaveDataStartOffset;
             if (!bigEndian.HasValue)
             {
-                return BigEndian ? (ushort)((Data[offset] << 8) | Data[offset + 1]) : (ushort)((Data[offset + 1] << 8) | Data[offset]);
+                return IsBigEndian ? (ushort)((Data[offset] << 8) | Data[offset + 1]) : (ushort)((Data[offset + 1] << 8) | Data[offset]);
             }
             else
             {
@@ -142,7 +145,7 @@ namespace ACSE.Classes.Saves
             offset += SaveDataStartOffset;
             uint Value = (uint)((Data[offset + 3] << 24) | (Data[offset + 2] << 16) | (Data[offset + 1] << 8) | Data[offset]);
 
-            if ((!bigEndian.HasValue && BigEndian) || (bigEndian.HasValue && bigEndian.Value))
+            if ((!bigEndian.HasValue && IsBigEndian) || (bigEndian.HasValue && bigEndian.Value))
                 Value = Value.Reverse();
 
             return Value;
@@ -177,7 +180,7 @@ namespace ACSE.Classes.Saves
                 | ((ulong)Data[offset + 4] << 32) | ((ulong)Data[offset + 3] << 24) | ((ulong)Data[offset + 2] << 16) | ((ulong)Data[offset + 1] << 8)
                 | (Data[offset]);
 
-            if ((!bigEndian.HasValue && BigEndian) || (bigEndian.HasValue && bigEndian.Value))
+            if ((!bigEndian.HasValue && IsBigEndian) || (bigEndian.HasValue && bigEndian.Value))
                 Value = Value.Reverse();
 
             return Value;
@@ -242,13 +245,13 @@ namespace ACSE.Classes.Saves
         /// </summary>
         /// <param name="offset">The offset to write to</param>
         /// <param name="data">The data to be written</param>
-        /// <param name="bigEndian">Write as big endian</param>
+        /// <param name="useEndianness">Write as big endian if the save file is big endian format</param>
         /// <param name="stringLength">The length of the string to be written, only used if data is a string</param>
-        public virtual void Write(int offset, dynamic data, bool? bigEndian = null, int stringLength = 0)
+        public virtual void Write(int offset, dynamic data, bool? useEndianness = null, int stringLength = 0)
         {
             bool reversed = false;
-            if (bigEndian.HasValue)
-                reversed = bigEndian.Value;
+            if (useEndianness.HasValue && useEndianness.Value)
+                reversed = IsBigEndian;
 
             ChangesMade = true;
             Type Data_Type = data.GetType();
