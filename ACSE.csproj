@@ -4887,7 +4887,6 @@
     <Compile Include="Classes\SongLibrary.cs" />
     <Compile Include="Classes\NL_Int32.cs" />
     <Compile Include="Classes\Save.cs" />
-    <Compile Include="Classes\SecretCode.cs" />
     <Compile Include="Classes\SimpleTownInfo.cs" />
     <Compile Include="Controls\ItemEditor.cs">
       <SubType>UserControl</SubType>
