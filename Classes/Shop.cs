@@ -27,23 +27,23 @@
 
     public static class ShopInfo
     {
-        private static ShopOffsets AnimalCrossing_ShopOffsets = new ShopOffsets
+        private static readonly ShopOffsets AnimalCrossing_ShopOffsets = new ShopOffsets
         {
             FurnitureShopUpgrade = 0x20466
         };
 
-        private static ShopOffsets WelcomeAmiibo_ShopOffsets = new ShopOffsets
+        private static readonly ShopOffsets WelcomeAmiibo_ShopOffsets = new ShopOffsets
         {
             FurnitureShopUpgrade = 0x621E4,
             GardenShopUpgrade = 0x66674
         };
 
-        private static string[] NookShopNames = new string[4]
+        private static readonly string[] NookShopNames = new string[4]
         {
             "Nook's Cranny", "Nook 'n' Go", "Nookway", "Nookington's"
         };
 
-        private static string[] NewLeaf_NookShopNames = new string[5]
+        private static readonly string[] NewLeaf_NookShopNames = new string[5]
         {
             "Nookling Junction", "T&T Mart", "Super T&T", "T.I.Y.", "T&T Emporium"
         };

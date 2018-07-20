@@ -9,7 +9,7 @@ namespace ACSE
     {
         internal readonly static Random Rand = new Random();
 
-        private static byte[] DefaultTownStructure = new byte[70]
+        private static readonly byte[] DefaultTownStructure = new byte[70]
         {
         //   00    01    02    03    04    05    06
             0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, // 0
@@ -24,7 +24,7 @@ namespace ACSE
             0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67  // I
         };
 
-        private static Dictionary<byte, ushort[]> TownAcrePool = new Dictionary<byte, ushort[]>
+        private static readonly Dictionary<byte, ushort[]> TownAcrePool = new Dictionary<byte, ushort[]>
         {
             { 0x00, new ushort[] {0x0324} },
             { 0x01, new ushort[] {0x0328} },

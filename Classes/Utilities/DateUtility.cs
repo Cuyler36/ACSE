@@ -4,7 +4,7 @@ namespace ACSE.Classes.Utilities
 {
     public class ACDate
     {
-        static string[] Months = new string[12]
+        static readonly string[] Months = new string[12]
         {
             "January", "February", "March", "April",
             "May", "June", "July", "August",

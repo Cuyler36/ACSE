@@ -338,8 +338,8 @@ namespace ACSE
     public class Pattern
     {
         private Save Save_File;
-        private int Offset = 0;
-        public int Index;
+        private readonly int Offset = 0;
+        public readonly int Index;
         public byte[] patternBitmapBuffer = new byte[4 * 32 * 32];
         public byte[] DecodedData;
         public string Name;
@@ -354,6 +354,7 @@ namespace ACSE
         {
             Offset = patternOffset;
             Save_File = save;
+            Index = index;
             Read(index);
         }
 
@@ -450,7 +451,6 @@ namespace ACSE
 
         public void Read(int Index)
         {
-            this.Index = Index;
             if (Save_File.Save_Type == SaveType.Animal_Crossing)
             {
                 Name = new ACString(Save_File.ReadByteArray(Offset, 0x10), Save_File.Save_Type).Trim();

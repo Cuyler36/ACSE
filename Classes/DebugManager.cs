@@ -13,10 +13,10 @@ namespace ACSE
 
     public class DebugManager
     {
-        private static string Log_File_Name = "ACSE_Log";
+        private static readonly string Log_File_Name = "ACSE_Log";
         private FileStream Log_File;
         private StreamWriter Log_Writer;
-        private int MaxLogSize = 5000000; // 5MB Max Size
+        private readonly int MaxLogSize = 5000000; // 5MB Max Size
         public bool Enabled = false;
 
         public DebugManager()

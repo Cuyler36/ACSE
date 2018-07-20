@@ -7,18 +7,18 @@
     {
         #region Island Offsets
 
-        int IslandName = 0x00;
-        int TownNameOffset = 0x06;
-        int IslandId = 0x0C;
-        int TownIdOffset = 0x0E;
-        int WorldData = 0x10;
-        int CottageData = 0x418;
-        int FlagData = 0xD00;
-        int IslanderData = 0xF20;
-        int BuriedData = 0x15A0;
-        int IslandLeftAcreData = 0x15E0;
-        int IslandRightAcreData = 0x15E1;
-        int IslandInfoFlag = 0x15FB;
+        private readonly int IslandName = 0x00;
+        private readonly int TownNameOffset = 0x06;
+        private readonly int IslandId = 0x0C;
+        private readonly int TownIdOffset = 0x0E;
+        private readonly int WorldData = 0x10;
+        private readonly int CottageData = 0x418;
+        private readonly int FlagData = 0xD00;
+        private readonly int IslanderData = 0xF20;
+        private readonly int BuriedData = 0x15A0;
+        private readonly int IslandLeftAcreData = 0x15E0;
+        private readonly int IslandRightAcreData = 0x15E1;
+        private readonly int IslandInfoFlag = 0x15FB;
 
         #endregion
 
@@ -68,7 +68,7 @@
         }
 
         private Save SaveFile;
-        private int Offset;
+        private readonly int Offset;
         public string Name;
         public ushort Id;
         public string TownName;
