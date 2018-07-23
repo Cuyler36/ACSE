@@ -18,6 +18,10 @@
 * Animal Crossing: New Leaf
 * Animal Crossing: New Leaf - Welcome Amiibo
 
+## Partially Supported Games
+### ![iQP](https://i.imgur.com/kwQLeUJ.png) iQue Player
+* Dòngwù Sēnlín
+
 ## Features
 * Player Editing
 	* Name
