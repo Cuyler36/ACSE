@@ -13,7 +13,7 @@
 ### ![DS](https://i.imgur.com/36cZPqr.png) Nintendo DS
 * Animal Crossing: Wild World
 ### ![Wii](https://i.imgur.com/6o0ajrG.png) Nintendo Wii
-* Animaml Crossing: City Folk
+* Animal Crossing: City Folk
 ### ![N3DS](https://i.imgur.com/en3u576.png) Nintendo 3DS
 * Animal Crossing: New Leaf
 * Animal Crossing: New Leaf - Welcome Amiibo
