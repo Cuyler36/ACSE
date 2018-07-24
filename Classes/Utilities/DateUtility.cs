@@ -45,40 +45,57 @@ namespace ACSE.Classes.Utilities
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                 case SaveType.Animal_Crossing:
-                    if (dateData.Length == 0x8)
+                case SaveType.Animal_Forest:
+                    switch (dateData.Length)
                     {
-                        Second = dateData[0];
-                        Minute = dateData[1];
-                        Hour = dateData[2];
-                        Day = dateData[3];
-                        Day_of_Week = dateData[4];
-                        Month = dateData[5];
-                        Year = (ushort)((dateData[6] << 8) | dateData[7]);
+                        case 2:
+                            Month = dateData[0];
+                            Day = dateData[1];
+                            break;
+                        case 4:
+                            Year = (ushort)((dateData[0] << 8) | dateData[1]);
+                            Month = dateData[2];
+                            Day = dateData[3];
+                            break;
+                        case 8:
+                            Second = dateData[0];
+                            Minute = dateData[1];
+                            Hour = dateData[2];
+                            Day = dateData[3];
+                            Day_of_Week = dateData[4];
+                            Month = dateData[5];
+                            Year = (ushort)((dateData[6] << 8) | dateData[7]);
+                            break;
                     }
-                    else if (dateData.Length == 0x4)
+                    break;
+
+                case SaveType.Wild_World:
+                    switch (dateData.Length)
                     {
-                        Year = (ushort)((dateData[0] << 8) | dateData[1]);
-                        Month = dateData[2];
-                        Day = dateData[3];
-                    }
-                    else if (dateData.Length == 0x2)
-                    {
-                        Month = dateData[0];
-                        Day = dateData[1];
+                        case 2:
+                            Day = dateData[0];
+                            Month = dateData[1];
+                            break;
+                        case 4:
+                        case 8:
+                            break;
+                        default:
+                            break;
                     }
                     break;
                 case SaveType.New_Leaf:
                 case SaveType.Welcome_Amiibo:
-                    if (dateData.Length == 2)
+                    switch (dateData.Length)
                     {
-                        Day = dateData[1];
-                        Month = dateData[0];
-                    }
-                    else if (dateData.Length == 4)
-                    {
-                        Day = dateData[3];
-                        Month = dateData[2];
-                        Year = (ushort)((dateData[1] << 8) + dateData[0]);
+                        case 2:
+                            Day = dateData[1];
+                            Month = dateData[0];
+                            break;
+                        case 4:
+                            Day = dateData[3];
+                            Month = dateData[2];
+                            Year = (ushort)((dateData[1] << 8) + dateData[0]);
+                            break;
                     }
                     break;
             }
@@ -165,6 +182,10 @@ namespace ACSE.Classes.Utilities
                 case SaveGeneration.GCN:
                 case SaveGeneration.N3DS:
                     return new byte[2] { (byte)Month, (byte)Day };
+
+                case SaveGeneration.NDS:
+                    return new byte[2] { (byte)Month, (byte)Day };
+
                 default:
                     return new byte[0];
             }

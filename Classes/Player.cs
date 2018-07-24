@@ -385,6 +385,7 @@ namespace ACSE
             LastPlayDate = 0x2216,
             LastPlayDateSize = 4,
             Birthday = 0x2218,
+            BirthdaySize = 2,
             HairType = 0x223C, //Upper Nibble is Hair Type, Lower Nibble is Face Type
             HairColor = 0x223D, //Upper Nibble is Hair Color, Lower Nibble is Tan
             Gender = 0x228A,
