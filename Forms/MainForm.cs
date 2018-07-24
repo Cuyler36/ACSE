@@ -202,8 +202,8 @@ namespace ACSE
             caravan2ComboBox.DisplayMember = "Value";
 
             //Birthday Event Hookups
-            birthdayMonth.LostFocus += new EventHandler((object sender, EventArgs e) => Birthday_Month_FocusLost());
-            birthdayDay.LostFocus += new EventHandler((object sender, EventArgs e) => Birthday_Day_FocusLost());
+            birthdayMonth.SelectedIndexChanged += new EventHandler((object sender, EventArgs e) => Birthday_Month_SelectedIndexChanged());
+            birthdayDay.SelectedIndexChanged += new EventHandler((object sender, EventArgs e) => Birthday_Day_SelectedIndexChanged());
 
             //Custom Acre ID Event Hookup
             acreCustomIdBox.TextChanged += delegate (object sender, EventArgs e)
@@ -328,10 +328,11 @@ namespace ACSE
 
         #endregion
 
-        private void Birthday_Month_FocusLost()
+        private void Birthday_Month_SelectedIndexChanged()
         {
             if (Last_Month != birthdayMonth.SelectedIndex)
             {
+                int CurrentSelectedIndex = birthdayDay.SelectedIndex;
                 birthdayDay.Items.Clear();
                 if (birthdayMonth.SelectedIndex > -1 && birthdayMonth.SelectedIndex < 12)
                 {
@@ -341,11 +342,11 @@ namespace ACSE
                     }
                 }
                 birthdayDay.Items.Add("Not Set");
-                birthdayDay.SelectedIndex = birthdayDay.Items.Count - 1;
+                birthdayDay.SelectedIndex = CurrentSelectedIndex >= birthdayDay.Items.Count ? birthdayDay.Items.Count - 1 : CurrentSelectedIndex;
                 Last_Month = birthdayMonth.SelectedIndex;
             }
 
-            if (Selected_Player != null && Selected_Player.Data.Birthday != null)
+            if (!Loading && Selected_Player != null && Selected_Player.Data.Birthday != null)
             {
                 if (birthdayMonth.SelectedIndex < 1 || birthdayMonth.SelectedIndex > 12)
                 {
@@ -358,9 +359,9 @@ namespace ACSE
             }
         }
 
-        private void Birthday_Day_FocusLost()
+        private void Birthday_Day_SelectedIndexChanged()
         {
-            if (Selected_Player != null && Selected_Player.Data.Birthday != null)
+            if (!Loading && Selected_Player != null && Selected_Player.Data.Birthday != null)
             {
                 if (birthdayDay.Items.Count < 2 || birthdayDay.SelectedIndex < 1 || birthdayDay.SelectedIndex > 31)
                 {
@@ -1439,7 +1440,7 @@ namespace ACSE
             if (Player.Data.Birthday != null)
             {
                 birthdayMonth.SelectedIndex = Player.Data.Birthday.Month < 13 ? (int)Player.Data.Birthday.Month - 1 : 12;
-                Birthday_Month_FocusLost(); // Update days
+                Birthday_Month_SelectedIndexChanged(); // Update days
                 try { birthdayDay.SelectedIndex = Player.Data.Birthday.Day < 32 ? (int)Player.Data.Birthday.Day - 1 : (birthdayDay.Items.Count - 1); } catch { birthdayDay.SelectedIndex = 0; }
             }
 

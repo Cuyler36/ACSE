@@ -824,7 +824,7 @@ namespace ACSE.Classes.Utilities
             else if (Save_Type == SaveType.Wild_World)
             {
                 byte[] String_Buffer = new byte[maxSize > 0 ? maxSize : String.Length];
-                for (int i = 0; i < String_Buffer.Length; i++)
+                for (int i = 0; i < String.Length; i++)
                 {
                     string Char = String[i].ToString();
                     if (StringUtility.WW_CharacterDictionary.ContainsValue(Char))

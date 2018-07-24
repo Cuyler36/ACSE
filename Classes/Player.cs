@@ -1172,7 +1172,7 @@ namespace ACSE
 
                                 for (int i = 0; i < ItemArray.Length; i++)
                                 {
-                                    if (SaveData.Save_Generation == SaveGeneration.NDS)
+                                    if (SaveData.Save_Generation == SaveGeneration.N3DS)
                                         SaveData.Write(DataOffset + i * 4, ItemArray[i].ToUInt32());
                                     else
                                         SaveData.Write(DataOffset + i * 2, ItemArray[i].ItemID, SaveData.Is_Big_Endian);
@@ -1187,7 +1187,7 @@ namespace ACSE
                                     SaveData.Write(DataOffset + 4, Encrypted_Int.Int_2);
                                 }
                             }
-                            else if (FieldType == typeof(ACDate) && SaveData.Save_Generation == SaveGeneration.GCN)
+                            else if (FieldType == typeof(ACDate) && (SaveData.Save_Generation == SaveGeneration.GCN || SaveData.Save_Generation == SaveGeneration.NDS))
                             {
                                 if (Field.Name.Equals("Birthday"))
                                 {
