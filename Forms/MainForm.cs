@@ -107,7 +107,7 @@ namespace ACSE
             DragDrop += OnDragDrop;
 
             // GENERATION TEST \\
-            //Generation.Generate(SaveType.Animal_Crossing);
+            Generation.Generate(SaveType.Animal_Crossing);
 
             // Clamp Map Sizes
             if (TownMapCellSize < 8)

@@ -7,8 +7,19 @@ namespace ACSE
 {
     class Generation
     {
-        internal readonly static Random Rand = new Random();
+        private readonly static Random Rand = new Random();
 
+        // Generation Common Things
+        private static readonly int[] blockGroup_428 = new int[16]
+        {
+            0x0F, 0x15, 0x28, 0x2E, 0x2F, 0x35, 0x36, 0x3C,
+            0x16, 0x26, 0x16, 0x1C, 0x1D, 0x21, 0x22, 0x26
+        };
+
+        private static readonly int[] x_offset_409 = new int[4] { 0, -1, 0, 1 };
+        private static readonly int[] z_offset_410 = new int[4] { -1, 0, 1, 0 };
+
+        // Two Layered Town Base Layout
         private static readonly byte[] DefaultTownStructure = new byte[70]
         {
         //   00    01    02    03    04    05    06
@@ -22,6 +33,236 @@ namespace ACSE
             0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65, // G
             0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66, // H
             0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67  // I
+        };
+
+        // Two Layered Town Variables
+
+        #region Cliff Variables
+        // Cliff Variables
+        private static readonly byte[] cliff_startA_factor = new byte[2] { 0x0F, 0x13 };
+        private static readonly byte[] cliff_startB_factor = new byte[3] { 0x0F, 0x10, 0x13 };
+        private static readonly byte[] cliff_startC_factor = new byte[2] { 0x0F, 0x10 };
+
+        private static readonly byte[][] cliff_start_table = new byte[4][]
+        {
+            cliff_startA_factor,
+            cliff_startA_factor,
+            cliff_startB_factor,
+            cliff_startC_factor
+        };
+
+        private static readonly byte[] cliff1_next = new byte[3] { 0x0F, 0x10, 0x13 };
+        private static readonly byte[] cliff2_next = new byte[2] { 0x11, 0x12 };
+        private static readonly byte[] cliff3_next = new byte[2] { 0x11, 0x12 };
+        private static readonly byte[] cliff4_next = new byte[3] { 0x0F, 0x10, 0x13 };
+        private static readonly byte[] cliff5_next = new byte[2] { 0x14, 0x15 };
+        private static readonly byte[] cliff6_next = new byte[2] { 0x14, 0x15 };
+        private static readonly byte[] cliff7_next = new byte[3] { 0x0F, 0x10, 0x13 };
+
+        private static readonly byte[][] cliff_next_data = new byte[7][]
+        {
+            cliff1_next, cliff2_next, cliff3_next, cliff4_next,
+            cliff5_next, cliff6_next, cliff7_next
+        };
+
+        /// <summary>
+        /// The Direction of the next cliff section (0 = North, 1 = East? 2 = South, 3 = West?)
+        /// </summary>
+        private static readonly byte[] cliff_next_direct = new byte[8] // I think this is only 7 bytes long
+        {
+            3, 0, 0, 3, 2, 2, 3, 0
+        };
+
+        #endregion
+
+        #region River Variables
+        // River Variables
+        private static readonly byte[] river1_album_data   = new byte[7] { 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C };
+        private static readonly byte[] river2_album_data   = new byte[7] { 0x1D, 0x1E, 0x1F, 0x20, 0x21, 0xFF, 0xFF };
+        private static readonly byte[] river3_album_data   = new byte[7] { 0x22, 0xFF, 0xFF, 0x23, 0x24, 0x25, 0x26 };
+        private static readonly byte[] river_no_album_data = new byte[7] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+
+        private static readonly byte[][] river_cliff_album_data = new byte[7][]
+        {
+            river1_album_data, river2_album_data, river3_album_data, river_no_album_data,
+            river_no_album_data, river_no_album_data, river_no_album_data
+        };
+
+        /// <summary>
+        /// Valid river start X-Acres
+        /// </summary>
+        private static readonly int[] startX_table = new int[4] { 1, 2, 4, 5 };
+
+        private static readonly byte[] cross_data = new byte[7] { 0x16, 0x17, 0x1A, 0x1E, 0x1F, 0x25, 0x26 };
+
+        private static readonly byte[] river1_next = new byte[3] { 0x28, 0x2B, 0x2D };
+        private static readonly byte[] river2_next = new byte[2] { 0x29, 0x2C };
+        private static readonly byte[] river3_next = new byte[2] { 0x2A, 0x2E };
+        private static readonly byte[] river4_next = new byte[2] { 0x29, 0x2C };
+        private static readonly byte[] river5_next = new byte[3] { 0x28, 0x2B, 0x2D };
+        private static readonly byte[] river6_next = new byte[2] { 0x2A, 0x2E };
+        private static readonly byte[] river7_next = new byte[3] { 0x28, 0x2B, 0x2D };
+
+        private static readonly byte[][] river_next_data = new byte[7][]
+        {
+            river1_next, river2_next, river3_next, river4_next,
+            river5_next, river6_next, river7_next
+        };
+
+        /// <summary>
+        /// The Direction of the next river section (0 = North, 1 = East? 2 = South, 3 = West?)
+        /// </summary>
+        private static readonly byte[] river_next_direct = new byte[7] { 2, 3, 1, 3, 2, 1, 2 };
+
+        #endregion
+
+
+        // Three Layered Town Layouts
+        private static readonly byte[] step3_blocks3 = new byte[70]
+        {
+            0x05, 0x01, 0x00, 0x00, 0x00, 0x00, 0x08,
+            0x09, 0x0D, 0x0C, 0x0B, 0x0C, 0x0C, 0x0A,
+            0x02, 0x2B, 0x2C, 0x0E, 0x12, 0x0F, 0x3E,
+            0x3D, 0x0F, 0x16, 0x0F, 0x10, 0x12, 0x3E,
+            0x3D, 0x0F, 0x1A, 0x27, 0x27, 0x11, 0x04,
+            0x02, 0x27, 0x1C, 0x0F, 0x0F, 0x10, 0x04,
+            0x50, 0x27, 0x28, 0x27, 0x27, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
+        private static readonly byte[] step3_blocks7 = new byte[70]
+        {
+            0x05, 0x01, 0x00, 0x00, 0x00, 0x00, 0x08,
+            0x09, 0x0D, 0x0C, 0x0B, 0x0C, 0x0C, 0x0A,
+            0x02, 0x2B, 0x2C, 0x0E, 0x27, 0x12, 0x3E,
+            0x3D, 0x0F, 0x16, 0x0F, 0x0F, 0x10, 0x04,
+            0x02, 0x27, 0x28, 0x12, 0x0F, 0x0F, 0x3E,
+            0x3D, 0x0F, 0x16, 0x10, 0x27, 0x27, 0x04,
+            0x50, 0x27, 0x28, 0x27, 0x27, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
+        private static readonly byte[] step3_blocks7R = new byte[70]
+        {
+            0x05, 0x00, 0x00, 0x00, 0x00, 0x01, 0x08,
+            0x09, 0x0C, 0x0C, 0x0B, 0x0C, 0x0D, 0x0A,
+            0x3D, 0x13, 0x27, 0x0E, 0x2E, 0x2D, 0x04,
+            0x02, 0x15, 0x0F, 0x0F, 0x16, 0x0F, 0x3E,
+            0x3D, 0x0F, 0x0F, 0x13, 0x28, 0x27, 0x04,
+            0x02, 0x27, 0x27, 0x15, 0x16, 0x0F, 0x3E,
+            0x50, 0x27, 0x27, 0x27, 0x28, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
+        private static readonly byte[] step3_blocks8 = new byte[70]
+        {
+            0x05, 0x00, 0x00, 0x00, 0x00, 0x01, 0x08,
+            0x09, 0x0C, 0x0C, 0x0B, 0x0C, 0x0D, 0x0A,
+            0x3D, 0x0F, 0x13, 0x0E, 0x2E, 0x2D, 0x04,
+            0x02, 0x27, 0x15, 0x0F, 0x1A, 0x12, 0x3E,
+            0x3D, 0x0F, 0x0F, 0x13, 0x1C, 0x10, 0x04,
+            0x02, 0x27, 0x27, 0x15, 0x16, 0x0F, 0x3E,
+            0x50, 0x27, 0x27, 0x27, 0x28, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
+        private static readonly byte[] step3_blocksB = new byte[70]
+        {
+            0x05, 0x00, 0x00, 0x00, 0x01, 0x00, 0x08,
+            0x09, 0x0C, 0x0C, 0x0B, 0x0D, 0x0C, 0x0A,
+            0x3D, 0x0F, 0x13, 0x0E, 0x28, 0x12, 0x3E,
+            0x02, 0x27, 0x15, 0x0F, 0x16, 0x10, 0x04,
+            0x3D, 0x0F, 0x13, 0x2E, 0x2D, 0x27, 0x04,
+            0x02, 0x27, 0x15, 0x16, 0x0F, 0x0F, 0x3E,
+            0x50, 0x27, 0x27, 0x28, 0x27, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
+        private static readonly byte[] step3_blocksBR = new byte[70]
+        {
+            0x05, 0x00, 0x01, 0x00, 0x00, 0x00, 0x08,
+            0x09, 0x0C, 0x0D, 0x0B, 0x0C, 0x0C, 0x0A,
+            0x3D, 0x13, 0x28, 0x0E, 0x12, 0x0F, 0x3E,
+            0x02, 0x15, 0x16, 0x0F, 0x10, 0x27, 0x04,
+            0x02, 0x27, 0x2B, 0x2C, 0x12, 0x0F, 0x3E,
+            0x3D, 0x0F, 0x0F, 0x16, 0x10, 0x27, 0x04,
+            0x50, 0x27, 0x27, 0x28, 0x27, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
+        private static readonly byte[] step3_blocksE = new byte[70]
+        {
+            0x05, 0x00, 0x01, 0x00, 0x00, 0x00, 0x08,
+            0x09, 0x0C, 0x0D, 0x0B, 0x0C, 0x0C, 0x0A,
+            0x3D, 0x13, 0x28, 0x0E, 0x12, 0x0F, 0x3E,
+            0x02, 0x15, 0x16, 0x0F, 0x10, 0x27, 0x04,
+            0x02, 0x27, 0x2B, 0x2C, 0x12, 0x0F, 0x3E,
+            0x3D, 0x0F, 0x0F, 0x16, 0x10, 0x27, 0x04,
+            0x50, 0x27, 0x27, 0x28, 0x27, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
+        private static readonly byte[] step3_blocksER = new byte[70]
+        {
+            0x05, 0x00, 0x00, 0x00, 0x01, 0x00, 0x08,
+            0x09, 0x0C, 0x0C, 0x0B, 0x0D, 0x0C, 0x0A,
+            0x3D, 0x0F, 0x13, 0x0E, 0x28, 0x12, 0x3E,
+            0x02, 0x27, 0x15, 0x0F, 0x16, 0x10, 0x04,
+            0x3D, 0x0F, 0x13, 0x2E, 0x2D, 0x27, 0x04,
+            0x02, 0x27, 0x15, 0x16, 0x0F, 0x0F, 0x3E,
+            0x50, 0x27, 0x27, 0x28, 0x27, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
+        private static readonly byte[] step3_blocksF = new byte[70]
+        {
+            0x05, 0x00, 0x01, 0x00, 0x00, 0x00, 0x08,
+            0x09, 0x0C, 0x0D, 0x0B, 0x0C, 0x0C, 0x0A,
+            0x02, 0x27, 0x28, 0x0E, 0x12, 0x0F, 0x3E,
+            0x3D, 0x0F, 0x16, 0x0F, 0x10, 0x27, 0x04,
+            0x02, 0x27, 0x2B, 0x29, 0x2C, 0x27, 0x04,
+            0x3D, 0x0F, 0x0F, 0x0F, 0x16, 0x0F, 0x3E,
+            0x50, 0x27, 0x27, 0x27, 0x28, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
+        private static readonly byte[] step3_blocksFR = new byte[70]
+        {
+            0x05, 0x00, 0x00, 0x00, 0x01, 0x00, 0x08,
+            0x09, 0x0C, 0x0C, 0x0B, 0x0D, 0x0C, 0x0A,
+            0x3D, 0x0F, 0x13, 0x0E, 0x28, 0x27, 0x04,
+            0x02, 0x27, 0x15, 0x0F, 0x16, 0x0F, 0x3E,
+            0x02, 0x27, 0x2E, 0x2A, 0x2D, 0x27, 0x04,
+            0x3D, 0x0F, 0x16, 0x0F, 0x0F, 0x0F, 0x3E,
+            0x50, 0x27, 0x28, 0x27, 0x27, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
+        private static readonly byte[][] step3_blockss = new byte[10][]
+        {
+            step3_blocks3, step3_blocks7, step3_blocks7R, step3_blocks8,
+            step3_blocksB, step3_blocksBR, step3_blocksE, step3_blocksER,
+            step3_blocksF, step3_blocksFR
         };
 
         private static readonly Dictionary<byte, ushort[]> TownAcrePool = new Dictionary<byte, ushort[]>
@@ -161,6 +402,10 @@ namespace ACSE
             return Index;
         }
 
+        /// <summary>
+        /// Selects the "step" mode, or layer count, of your town. If 0, it's a 2 layered town. If 1, it's a 3 layered town.
+        /// </summary>
+        /// <returns>Step Mode</returns>
         private static int GetRandomStepMode()
         {
             int RNG = Rand.Next(0, 64);
@@ -171,11 +416,529 @@ namespace ACSE
             return (Temp >> 31) & 1;
         }
 
+        /// <summary>
+        /// Returns 0x1FF
+        /// </summary>
+        /// <returns>0x1FF</returns>
+        private static int MakePerfectBit()
+        {
+            int Perfect = 0;
+            for (int i = 0; i < 9; i++)
+                Perfect |= 1 << i;
+            return Perfect;
+        }
+
+        /// <summary>
+        /// Takes the current X & Y acre and a direction, and returns the next X & Y acre for that direction
+        /// </summary>
+        /// <param name="X">The next X acre</param>
+        /// <param name="Y">The next Y acre</param>
+        /// <param name="AcreX">The current X acre</param>
+        /// <param name="AcreY">The current Y acre</param>
+        /// <param name="Direction">The direction of the current feature</param>
+        private static void Direct2BlockNo(out int X, out int Y, int AcreX, int AcreY, int Direction)
+        {
+            X = AcreX + x_offset_409[Direction & 3];
+            Y = AcreY + z_offset_410[Direction & 3];
+        }
+
+        private static bool CheckBlockGroup(int BlockType, int AcreTypeSet)
+        {
+            if (AcreTypeSet != 8)
+            {
+                int MinType = blockGroup_428[AcreTypeSet * 2];
+                int MaxType = blockGroup_428[AcreTypeSet * 2 + 1];
+
+                return BlockType >= MinType && BlockType <= MaxType;
+            }
+            else
+            {
+                if (BlockType >= blockGroup_428[0] && BlockType <= blockGroup_428[1])
+                {
+                    return true;
+                }
+                else if (BlockType >= blockGroup_428[6] && BlockType <= blockGroup_428[7])
+                {
+                    return true;
+                }
+                else if (BlockType >= blockGroup_428[8] && BlockType <= blockGroup_428[9])
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks that both acre X & Y are within their valid parameters.
+        /// </summary>
+        /// <param name="AcreX">X-Acre</param>
+        /// <param name="AcreY">Y-Acre</param>
+        /// <param name="AcreXMin">Minimum X-Acre value</param>
+        /// <param name="AcreXMax">Maximum X-Acre value</param>
+        /// <param name="AcreYMin">Minimum Y-Acre value</param>
+        /// <param name="AcreYMax">Maximum Y-Acre value</param>
+        /// <returns>bool AcresAreValid</returns>
+        private static bool CheckCorrectBlockNo(int AcreX, int AcreY, int AcreXMin, int AcreXMax, int AcreYMin, int AcreYMax)
+            => (AcreX >= AcreXMin && AcreX <= AcreXMax && AcreY >= AcreYMin && AcreY <= AcreYMax);
+
+        private static bool DecideBaseCliff(ref byte[] AcreData)
+        {
+            int CliffStartTableIndex = Rand.Next(4);
+            byte[] CliffStartTable = cliff_start_table[CliffStartTableIndex];
+            byte CliffStartAcreType = CliffStartTable[Rand.Next(CliffStartTable.Length)];
+
+            // Set the first in-town cliff acre
+            int CliffStartAcre = D2toD1(1, CliffStartTableIndex + 2);
+            AcreData[CliffStartAcre] = CliffStartAcreType;
+
+            // Set the border acre
+            int CliffBorderStartAcre = D2toD1(0, CliffStartTableIndex + 2);
+            AcreData[CliffBorderStartAcre] = 0x3D;
+
+            Console.WriteLine("\n===================================");
+            Console.WriteLine("     Begin Cliff Tracing");
+            Console.WriteLine("===================================\n");
+
+            // Trace Cliff
+            TraceCliffBlock(ref AcreData, 1, CliffStartTableIndex + 2);
+            PrintAcreData(AcreData);
+
+            Console.WriteLine("\n===================================");
+            Console.WriteLine("     Set Cliff End");
+            Console.WriteLine("===================================\n");
+
+            // Set Cliff End Acre
+            SetEndCliffBlock(ref AcreData);
+
+            // Check Cliff is valid
+            return LastCheckCliff(AcreData, 1, CliffStartTableIndex + 2);
+        }
+
+        private static bool TraceCliffBlock(ref byte[] AcreData, int AcreX, int AcreY)
+        {
+            byte CurrentCliffAcreType = AcreData[D2toD1(AcreX, AcreY)];
+            int TraceState = 0;
+            byte CliffSubtractionValue = (byte)(CurrentCliffAcreType - 0xF);
+            int CliffSubtractionValueShifted = CliffSubtractionValue << 2;
+            int X = 0, Y = 0;
+
+            while (TraceState == 0)
+            {
+                PrintAcreData(AcreData);
+                byte[] CliffNext = cliff_next_data[CliffSubtractionValue];
+                byte CliffAcreType = CliffNext[Rand.Next(CliffNext.Length)];
+                byte CliffAdjustValue = cliff_next_direct[CliffSubtractionValue];
+
+                Direct2BlockNo(out X, out Y, AcreX, AcreY, CliffAdjustValue);
+
+                CliffAdjustValue = cliff_next_direct[(byte)(CliffAcreType - 0xF)];
+                Direct2BlockNo(out int X2, out int Y2, X, Y, CliffAdjustValue);
+
+                bool BlockCheck1 = CheckCorrectBlockNo(X, Y, 1, 5, 2, 5);
+                bool BlockCheck2 = CheckCorrectBlockNo(X2, Y2, 1, 6, 2, 5);
+                if (BlockCheck1 && BlockCheck2)
+                {
+                    int CliffReplaceAcre1 = D2toD1(X2, Y2);
+                    if (AcreData[CliffReplaceAcre1] == 0xE)
+                    {
+                        Console.WriteLine("\nHouse acre is the next acre! Cannot continue.");
+                        return false;
+                    }
+
+                    int CliffReplaceAcre2 = D2toD1(X, Y);
+                    if (AcreData[CliffReplaceAcre2] != 0x27)
+                    {
+                        Console.WriteLine("\nCurrently selected acre isn't a grass block! Cannot continue.");
+                        return false;
+                    }
+
+                    AcreData[CliffReplaceAcre2] = CliffAcreType;
+                    if (X == 5)
+                    {
+                        TraceState = 2;
+                    }
+                    else
+                    {
+                        TraceState = 1;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(string.Format("\nBlock number was incorrect! Cannot continue. Block Values: X1: {2} Y1: {3} Check1: {0}\n X2: {4} Y2: {5} Check2: {1}",
+                        BlockCheck1.ToString(), BlockCheck2.ToString(), X, Y, X2, Y2));
+                    return false;
+                }
+            }
+
+            if (TraceState == 1)
+            {
+                return TraceCliffBlock(ref AcreData, X, Y);
+            }
+            else
+            {
+                return TraceState == 2;
+            }
+        }
+
+        private static void SetEndCliffBlock(ref byte[] AcreData) // This doesn't always work. Double check it at some point.
+        {
+            int AcreY = 0;
+            int DirectType = 0;
+
+            for (int Y = 0; Y < 6; Y++)
+            {
+                byte AcreType = AcreData[D2toD1(5, Y)];
+                if (AcreType >= 0xF && AcreType <= 0x15)
+                {
+                    AcreY = Y;
+                    DirectType = (byte)(AcreType - 0xF);
+                }
+            }
+
+            byte CliffNextDirectValue = cliff_next_direct[DirectType];
+            if (CliffNextDirectValue == 3) // Cliff is going west, end immediately
+            {
+                AcreData[D2toD1(6, AcreY)] = 0x3E;
+            }
+            else
+            {
+                byte[] CliffNextSet = cliff_next_data[DirectType];
+                if (CliffNextSet.Length > 0)
+                {
+                    for (int i = 0; i < CliffNextSet.Length; i++)
+                    {
+                        byte CliffDirectValue = cliff_next_direct[CliffNextSet[i] - 0xF];
+                        if (CliffDirectValue == 3)
+                        {
+                            Direct2BlockNo(out int X2, out int Y2, 5, AcreY, CliffNextDirectValue);
+                            AcreData[D2toD1(X2, Y2)] = CliffNextSet[i];
+                            AcreData[D2toD1(X2 + 1, Y2)] = 0x3E;
+                        }
+                    }
+                }
+            }
+
+            PrintAcreData(AcreData);
+        }
+
+        private static bool LastCheckCliff(byte[] AcreData, int AcreX, int AcreY)
+        {
+            byte CliffAcreType = AcreData[D2toD1(AcreX, AcreY)];
+            int Y = AcreY;
+            while (CheckBlockGroup(CliffAcreType, 0) == true)
+            {
+                byte CliffDirectValue = cliff_next_direct[CliffAcreType - 0xF];
+                Direct2BlockNo(out AcreX, out AcreY, AcreX, AcreY, CliffDirectValue);
+                CliffAcreType = AcreData[D2toD1(AcreX, AcreY)];
+            }
+
+            return AcreX > 5 && AcreY == Y; // Might be AcreY >= Y or AcreY != Y
+        }
+
+        // River Generation Code
+        /// <summary>
+        /// Gets the direction of the next river section.
+        /// </summary>
+        /// <param name="RiverIdx">The current river block index</param>
+        /// <returns>The direction of the next river section</returns>
+        private static int RiverIdx2NextDirect(int RiverIdx)
+        {
+            if (RiverIdx > -1 && RiverIdx < 7)
+            {
+                return river_next_direct[RiverIdx];
+            }
+            return 2; // Return south by default
+        }
+
+        private static byte RiverAlbuminCliff(byte BlockType, byte AlbuminType)
+        {
+            if (CheckBlockGroup(BlockType, 0) && CheckBlockGroup(AlbuminType, 1))
+            {
+                sbyte AdjustType = (sbyte)(BlockType - 0xF);
+                sbyte AlbuminAdjustType = (sbyte)(AlbuminType - 0x28);
+
+                if (AlbuminAdjustType < 7 && AdjustType > -1 && AdjustType < 7)
+                {
+                    return river_cliff_album_data[AlbuminAdjustType][AdjustType];
+                }
+            }
+            return 0xFF;
+        }
+
+        /// <summary>
+        /// Checks if the river crosses the centerpoint of the map.
+        /// </summary>
+        /// <param name="AcreData">The current acre data</param>
+        /// <returns>int NumberOfTimesCrossed</returns>
+        private static int GetCenterCrossZoneRiverCount(byte[] AcreData)
+        {
+            int AcreY = 2;
+            int CrossZoneCount = 0;
+            while (AcreY <= 5)
+            {
+                if (CheckBlockGroup(AcreData[D2toD1(3, AcreY)], 1) == true)
+                {
+                    CrossZoneCount++;
+                }
+                AcreY++;
+            }
+            return CrossZoneCount;
+        }
+
+        private static bool TraceRiverPart1(ref byte[] AcreData, out int AcreX, out int AcreY)
+        {
+            int RiverTraceState = 0;
+            AcreX = 0;
+            AcreY = 0;
+            while (RiverTraceState == 0)
+            {
+                int RiverXStartAcre = startX_table[Rand.Next(4)];
+                byte[] RiverStartData = river_next_data[0];
+                byte RiverStartType = RiverStartData[Rand.Next(RiverStartData.Length)];
+
+                Direct2BlockNo(out int X, out int Y, RiverXStartAcre, 1, 2);
+                int RiverAbsoluteStartAcre = D2toD1(X, Y);
+                int NextRiverSectionDirection = RiverIdx2NextDirect((byte)(RiverStartType - 0x28));
+
+                Direct2BlockNo(out int X2, out int Y2, X, Y, NextRiverSectionDirection);
+                int NextRiverAbsoluteAcre = D2toD1(X2, Y2);
+
+                if (CheckCorrectBlockNo(X, Y, 1, 5, 1, 6) && AcreData[RiverAbsoluteStartAcre] != 0xE)
+                {
+                    if (CheckBlockGroup(AcreData[RiverAbsoluteStartAcre], 0))
+                    {
+                        byte RiverAlbum = RiverAlbuminCliff(AcreData[RiverAbsoluteStartAcre], 0x28);
+                        if (RiverAlbum == 0xFF)
+                        {
+                            Console.WriteLine("River Album in Cliff was invalid!");
+                            return false;
+                        }
+                        else
+                        {
+                            int RiverAlbumAbsoluteAcre = D2toD1(X, Y + 1);
+                            if (AcreData[RiverAlbumAbsoluteAcre] != 0xE)
+                            {
+                                RiverTraceState = 1;
+                                AcreData[RiverAbsoluteStartAcre] = 0x28;
+                                AcreX = X;
+                                AcreY = Y;
+                            }
+                        }
+                    }
+                    else if (AcreData[NextRiverAbsoluteAcre] != 0xE)
+                    {
+                        AcreData[RiverAbsoluteStartAcre] = RiverStartType;
+                        RiverTraceState = 1;
+                        AcreX = X;
+                        AcreY = Y;
+                    }
+                }
+
+                if (RiverTraceState == 1)
+                {
+                    // Set River Border Acre & River Train Track Bridge Acre
+                    int RiverBorderAcre = D2toD1(RiverXStartAcre, 0);
+                    int RiverTrainTrackAcre = D2toD1(RiverXStartAcre, 1);
+                    AcreData[RiverBorderAcre] = 1;
+                    AcreData[RiverTrainTrackAcre] = 0xD;
+                }
+            }
+            return true;
+        }
+
+        private static bool TraceRiverPart2(ref byte[] AcreData, ref byte[] UnchangedAcreData, int AcreX, int AcreY, byte[] challenge_flag)
+        {
+            PrintAcreData(AcreData);
+            int RiverStartAcre = D2toD1(AcreX, AcreY);
+            byte RiverStartAcreType = AcreData[RiverStartAcre];
+            int RiverDirection = RiverIdx2NextDirect((byte)(RiverStartAcreType - 0x28));
+            int X = 0, Y = 0;
+
+            int RiverTraceState = 0;
+            while (RiverTraceState == 0)
+            {
+                byte[] river_next_set = river_next_data[RiverStartAcreType - 0x28];
+                byte NextRiverType = river_next_set[Rand.Next(river_next_set.Length)];
+                int NextRiverDirection = RiverIdx2NextDirect((byte)(NextRiverType - 0x28));
+
+                Direct2BlockNo(out X, out Y, AcreX, AcreY, RiverDirection);
+                if (Y == 6)
+                {
+                    NextRiverType = 0x28;
+                    NextRiverDirection = RiverIdx2NextDirect(0);
+                }
+
+                Direct2BlockNo(out int X2, out int Y2, X, Y, NextRiverDirection);
+                if (CheckCorrectBlockNo(X, Y, 1, 5, 1, 6))
+                {
+                    if (CheckCorrectBlockNo(X2, Y2, 1, 5, 1, 7))
+                    {
+                        int RiverPlacementAcre = D2toD1(X, Y);
+                        int NextRiverPlacementAcre = D2toD1(X2, Y2);
+                        if (UnchangedAcreData[NextRiverPlacementAcre] != 0xE)
+                        {
+                            bool PlacedBlock = false;
+                            if (CheckBlockGroup(UnchangedAcreData[RiverPlacementAcre], 0))
+                            {
+                                byte RiverAlbum = RiverAlbuminCliff(UnchangedAcreData[RiverPlacementAcre], river_next_set[0]); // Check river_next_set
+                                if (RiverAlbum != 0xFF)
+                                {
+                                    AcreData[RiverPlacementAcre] = river_next_set[0];
+                                    PlacedBlock = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("River Album was invalid!");
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                AcreData[RiverPlacementAcre] = NextRiverType;
+                                PlacedBlock = true;
+                            }
+
+                            if (PlacedBlock)
+                            {
+                                if (Y2 == 7)
+                                {
+                                    RiverTraceState = 2;
+                                }
+                                else
+                                {
+                                    RiverTraceState = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("River destination block was invalid!");
+                    return false;
+                }
+            }
+
+            if (RiverTraceState == 1)
+            {
+                return TraceRiverPart2(ref AcreData, ref UnchangedAcreData, X, Y, challenge_flag);
+            }
+            else if(RiverTraceState == 2)
+            {
+
+                if (GetCenterCrossZoneRiverCount(AcreData) != 0)
+                {
+                    if (X == 1 || X == 5)
+                    {
+                        Console.WriteLine("River X value is invalid: " + X);
+                    }
+                    return X != 1 && X != 5;    
+                }
+                else
+                {
+                    Console.WriteLine("CrossZoneRiver Count was zero!");
+                    return false;
+                }
+            }
+            else
+            {
+                Console.WriteLine("RiverTraceState wasn't valid!");
+                return false;
+            }
+        }
+
+        private static bool LastCheckRiver(byte[] AcreData, int AcreX, int AcreY)
+        {
+            byte CurrentAcreType = AcreData[D2toD1(AcreX, AcreY)];
+            while (CheckBlockGroup(CurrentAcreType, 1) == true)
+            {
+                int NextRiverDirection = RiverIdx2NextDirect(CurrentAcreType - 0x28);
+                Direct2BlockNo(out int X, out int Y, AcreX, AcreY, NextRiverDirection);
+                CurrentAcreType = AcreData[D2toD1(X, Y)];
+                AcreX = X;
+                AcreY = Y;
+            }
+
+            int Valid = AcreY ^ 6;
+            Valid = (Valid >> 1) - (Valid & AcreY);
+            return ((Valid >> 31) & 1) == 1; // This can be simplified as AcreY >= 7. I'm sticking to the code, though.
+        }
+
+        private static bool DecideBaseRiver(ref byte[] AcreData)
+        {
+            byte[] UnchangedAcreData = new byte[AcreData.Length];
+            Array.Copy(AcreData, UnchangedAcreData, AcreData.Length);
+            Console.WriteLine("============== River Generation ==============\n");
+            if (TraceRiverPart1(ref AcreData, out int AcreX, out int AcreY))
+            {
+                if (TraceRiverPart2(ref AcreData, ref UnchangedAcreData, AcreX, AcreY, new byte[0x38]))
+                {
+                    PrintAcreData(AcreData);
+                    Console.WriteLine("============== End River Generation ============== ");
+                    return LastCheckRiver(AcreData, AcreX, AcreY);
+                }
+            }
+            return false;
+        }
+
+        private static bool SetRandomBlockData(ref byte[] AcreData) // Technically takes two copies of AcreData
+        {
+            if (DecideBaseCliff(ref AcreData))
+            {
+                return DecideBaseRiver(ref AcreData);
+            }
+            return false;
+        }
+
+        private static byte[] MakeBaseLandformStep2()
+        {
+            byte[] AcreData = new byte[70];
+            Array.Copy(DefaultTownStructure, AcreData, 70);
+            while (SetRandomBlockData(ref AcreData) == false)
+            {
+                Array.Copy(DefaultTownStructure, AcreData, 70);
+            }
+
+            //DecideRiverAlbuminCliff(ref AcreData);
+            return AcreData;
+        }
+
+        private static byte[] MakeBaseLandformStep3()
+        {
+            return step3_blockss[Rand.Next(10)];
+        }
+
+        private static byte[] MakeBaseLandform(int StepMode)
+        {
+            if (StepMode == 1)
+            {
+                return MakeBaseLandformStep3();
+            }
+            else
+            {
+                return MakeBaseLandformStep2();
+            }
+        }
+
+        private static byte[] MakeRandomField_ovl()
+        {
+            int StepMode = GetRandomStepMode();
+            int PerfectBit = MakePerfectBit();
+            int Bit = 0;
+
+            Console.WriteLine("StepMode: " + StepMode);
+
+            // TODO: Check for perfect bit vs current bit
+            return MakeBaseLandform(StepMode);
+        }
+
         private static ushort GetRandomTownAcreFromPool(byte AcreType)
         {
             if (TownAcrePool.ContainsKey(AcreType) && TownAcrePool[AcreType].Length > 0)
             {
-                int RandomlyChosenAcreIdx = new Random().Next(TownAcrePool[AcreType].Length);
+                int RandomlyChosenAcreIdx = Rand.Next(TownAcrePool[AcreType].Length);
                 return TownAcrePool[AcreType][RandomlyChosenAcreIdx];
             }
             else
@@ -280,11 +1043,14 @@ namespace ACSE
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Animal_Crossing:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
-                    byte[] Data = new byte[70];
+                    /*byte[] Data = new byte[70];
                     Array.Copy(DefaultTownStructure, Data, 70);
 
                     DecideRiverAlbuminCliff(ref Data);
-                    SetUniqueRailBlock(ref Data);
+                    SetUniqueRailBlock(ref Data);*/
+
+                    byte[] Data = MakeRandomField_ovl();
+                    PrintAcreData(Data);
 
                     ushort[] AcreData = new ushort[70];
                     string s = "";
@@ -304,6 +1070,21 @@ namespace ACSE
                 default:
                     return null;
             }
+        }
+
+        // Debug
+        private static void PrintAcreData(byte[] AcreData)
+        {
+            Console.Write("\n");
+            for (int i = 0; i < AcreData.Length; i++)
+            {
+                if (i > 0 && i % 7 == 0)
+                {
+                    Console.Write("\n");
+                }
+                Console.Write(AcreData[i].ToString("X2") + " ");
+            }
+            Console.Write("\n");
         }
     }
 }
