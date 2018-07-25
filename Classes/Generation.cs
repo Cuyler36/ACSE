@@ -368,6 +368,7 @@ namespace ACSE
             { 0x62, new ushort[] {0x04A4, 0x0598, 0x05A0, 0x05A8} },
             { 0x63, new ushort[] {0x04A0, 0x0594, 0x059C, 0x05A4} },
             { 0x64, new ushort[] {0x0498, 0x05AC, 0x05B0} },
+            // 0x65?
             { 0x66, new ushort[] {0x0578, 0x057C} },
             { 0x67, new ushort[] {0x0580, 0x0584, 0x0588, 0x058C} },
             { 0x68, new ushort[] {0x0518, 0x051C, 0x0520, 0x0524, 0x0528, 0x052C, 0x0530, 0x0534, 0x0538, 0x053C, 0x0540, 0x0544, 0x0548, 0x054C, 0x0550, 0x0554, 0x0558, 0x055C, 0x0560, 0x0564, 0x0568, 0x056C, 0x0570, 0x0574, 0x05B4, 0x05B8} },
@@ -866,28 +867,58 @@ namespace ACSE
             return ((Valid >> 31) & 1) == 1; // This can be simplified as AcreY >= 7. I'm sticking to the code, though.
         }
 
-        private static bool DecideBaseRiver(ref byte[] AcreData)
+        private static bool DecideRiverAlbuminCliff(ref byte[] CliffData, ref byte[] RiverCliffData)
+        {
+            for (int Y = 0; Y < 8; Y++)
+            {
+                for (int X = 0; X < 7; X++)
+                {
+                    int AbsoluteAcre = D2toD1(X, Y);
+                    byte RiverBlock = RiverCliffData[AbsoluteAcre];
+                    byte SelectedAcreType = RiverAlbuminCliff(CliffData[AbsoluteAcre], RiverBlock);
+
+                    if (SelectedAcreType == 0xFF)
+                    {
+                        // Check if the current block is a river block. If so, copy it to the "main" block data.
+                        if (CheckBlockGroup(RiverBlock, 1) == true || RiverBlock == 1 || RiverBlock == 0xD)
+                        {
+                            CliffData[AbsoluteAcre] = RiverCliffData[AbsoluteAcre];
+                        }
+                    }
+                    else
+                    {
+                        CliffData[AbsoluteAcre] = SelectedAcreType; // Set the block to a waterfall type.
+                    }
+                }
+            }
+            return true;
+        }
+
+        private static bool DecideBaseRiver(ref byte[] AcreData, out byte[] RiverData)
         {
             byte[] UnchangedAcreData = new byte[AcreData.Length];
             Array.Copy(AcreData, UnchangedAcreData, AcreData.Length);
+            RiverData = AcreData;
+            AcreData = UnchangedAcreData;
             Console.WriteLine("============== River Generation ==============\n");
-            if (TraceRiverPart1(ref AcreData, out int AcreX, out int AcreY))
+            if (TraceRiverPart1(ref RiverData, out int AcreX, out int AcreY))
             {
-                if (TraceRiverPart2(ref AcreData, ref UnchangedAcreData, AcreX, AcreY, new byte[0x38]))
+                if (TraceRiverPart2(ref RiverData, ref AcreData, AcreX, AcreY, new byte[0x38]))
                 {
-                    PrintAcreData(AcreData);
+                    PrintAcreData(RiverData);
                     Console.WriteLine("============== End River Generation ============== ");
-                    return LastCheckRiver(AcreData, AcreX, AcreY);
+                    return LastCheckRiver(RiverData, AcreX, AcreY);
                 }
             }
             return false;
         }
 
-        private static bool SetRandomBlockData(ref byte[] AcreData) // Technically takes two copies of AcreData
+        private static bool SetRandomBlockData(ref byte[] AcreData, out byte[] RiverData) // Technically takes two copies of AcreData
         {
+            RiverData = null;
             if (DecideBaseCliff(ref AcreData))
             {
-                return DecideBaseRiver(ref AcreData);
+                return DecideBaseRiver(ref AcreData, out RiverData);
             }
             return false;
         }
@@ -895,13 +926,14 @@ namespace ACSE
         private static byte[] MakeBaseLandformStep2()
         {
             byte[] AcreData = new byte[70];
+            byte[] RiverData = null;
             Array.Copy(DefaultTownStructure, AcreData, 70);
-            while (SetRandomBlockData(ref AcreData) == false)
+            while (SetRandomBlockData(ref AcreData, out RiverData) == false)
             {
                 Array.Copy(DefaultTownStructure, AcreData, 70);
             }
 
-            //DecideRiverAlbuminCliff(ref AcreData);
+            DecideRiverAlbuminCliff(ref AcreData, ref RiverData);
             return AcreData;
         }
 
@@ -944,56 +976,6 @@ namespace ACSE
             else
             {
                 return 0x0284;
-            }
-        }
-
-        private static void DecideRiverAlbuminCliff(ref byte[] Data)
-        {
-            bool Set = false;
-            while (!Set)
-            {
-                int XLocation = Rand.Next(1, 6);
-                int Location = D2toD1(XLocation, 1);
-                if (Data[Location] == 0x0C)
-                {
-                    Data[Location] = 0x0D; // Train Track River Bridge
-                    Data[XLocation] = 0x01; // River Start Cliff (I think this is set in TraceRiver1)
-                    Set = true;
-                }
-            }
-        }
-
-        private static int SearchForRiverStart(ref byte[] Data)
-        {
-            for (int i = 0; i < Data.Length; i++)
-            {
-                if (Data[i] == 0x0D)
-                {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-
-        private static void TraceRiver(ref byte[] Data)
-        {
-            int TrainTrackRiverAcre = SearchForRiverStart(ref Data);
-            if (TrainTrackRiverAcre > -1)
-            {
-                D1toD2(TrainTrackRiverAcre, out int TrainTrackRiverXAcre, out int TrainTrackRiverYAcre);
-                int CurrentYAcre = TrainTrackRiverYAcre;
-                int CurrentXAcre = TrainTrackRiverXAcre;
-
-                while (CurrentYAcre < 7)
-                {
-                    bool Turn = Rand.Next(0, 2) == 1;
-                    if (Turn)
-                    {
-                        bool TurnSuccessful = false;
-                        
-                    }
-                }
             }
         }
 
