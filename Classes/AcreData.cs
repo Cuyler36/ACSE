@@ -223,15 +223,17 @@ namespace ACSE
     {
         public WorldItem[] Acre_Items = new WorldItem[16 * 16];
 
-        public WorldAcre(ushort acreId, int position, ushort[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, uint[] nl_items = null, int townPosition = -1) : base(acreId, position)
+        public WorldAcre(ushort acreId, int position, ushort[] items = null, byte[] buriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, uint[] nl_items = null, int townPosition = -1) : base(acreId, position)
         {
             if (items != null)
+            {
                 for (int i = 0; i < 256; i++)
                 {
                     Acre_Items[i] = new WorldItem(items[i], i);
-                    if (burriedItemData != null)
-                        SetBuried(Acre_Items[i], townPosition == -1 ? position : townPosition, burriedItemData, saveType); //Broken in original save editor lol.. needs a position - 1 to function properly
+                    if (buriedItemData != null)
+                        SetBuried(Acre_Items[i], townPosition == -1 ? position : townPosition, buriedItemData, saveType); //Broken in original save editor lol.. needs a position - 1 to function properly
                 }
+            }
             else if (nl_items != null)
             {
                 for (int i = 0; i < 256; i++)

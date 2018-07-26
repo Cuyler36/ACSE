@@ -7,7 +7,389 @@ namespace ACSE
 {
     class Generation
     {
-        private readonly static Random Rand = new Random();
+        private static readonly Random Rand = new Random();
+
+        private struct data_combi
+        {
+            public ushort BlockType;
+            public ushort MatchingBlockType;
+            public byte ValidCombiCount; // Unsure about this name.
+            public byte Padding;
+        };
+
+        private const int data_combi_table_number = 0x170; // This is only valid for Animal Crossing. Animal Forest+ has one less, and Animal Forest e+ has one more.
+
+        private static readonly data_combi[] data_combi_table = new data_combi[368]
+        {
+            new data_combi { BlockType = 0x0124, MatchingBlockType = 0x00CB, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x003C, MatchingBlockType = 0x0000, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x00CB, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0004, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0005, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x000C, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0009, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x000B, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00F4, MatchingBlockType = 0x000D, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x000E, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x00CB, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x000F, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0010, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0011, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0012, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0013, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0014, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0015, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00F2, MatchingBlockType = 0x0016, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0017, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x001B, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00F6, MatchingBlockType = 0x001A, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x001B, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0069, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00CB, MatchingBlockType = 0x004E, ValidCombiCount = 0x33, Padding = 0x00 },
+            new data_combi { BlockType = 0x00F8, MatchingBlockType = 0x0022, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0027, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0033, MatchingBlockType = 0x002D, ValidCombiCount = 0x1A, Padding = 0x00 },
+            new data_combi { BlockType = 0x00DA, MatchingBlockType = 0x002E, ValidCombiCount = 0x0D, Padding = 0x00 },
+            new data_combi { BlockType = 0x010D, MatchingBlockType = 0x0001, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x010E, MatchingBlockType = 0x0001, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x010F, MatchingBlockType = 0x0001, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0110, MatchingBlockType = 0x0001, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0006, MatchingBlockType = 0x0029, ValidCombiCount = 0x16, Padding = 0x00 },
+            new data_combi { BlockType = 0x000F, MatchingBlockType = 0x002A, ValidCombiCount = 0x36, Padding = 0x00 },
+            new data_combi { BlockType = 0x0016, MatchingBlockType = 0x002B, ValidCombiCount = 0x17, Padding = 0x00 },
+            new data_combi { BlockType = 0x0018, MatchingBlockType = 0x002C, ValidCombiCount = 0x1E, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x002F, ValidCombiCount = 0x27, Padding = 0x00 },
+            new data_combi { BlockType = 0x005B, MatchingBlockType = 0x0030, ValidCombiCount = 0x27, Padding = 0x00 },
+            new data_combi { BlockType = 0x0001, MatchingBlockType = 0x0031, ValidCombiCount = 0x0F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0009, MatchingBlockType = 0x0032, ValidCombiCount = 0x1D, Padding = 0x00 },
+            new data_combi { BlockType = 0x000C, MatchingBlockType = 0x0033, ValidCombiCount = 0x22, Padding = 0x00 },
+            new data_combi { BlockType = 0x0013, MatchingBlockType = 0x0034, ValidCombiCount = 0x10, Padding = 0x00 },
+            new data_combi { BlockType = 0x001D, MatchingBlockType = 0x0035, ValidCombiCount = 0x11, Padding = 0x00 },
+            new data_combi { BlockType = 0x0020, MatchingBlockType = 0x0036, ValidCombiCount = 0x18, Padding = 0x00 },
+            new data_combi { BlockType = 0x0025, MatchingBlockType = 0x0037, ValidCombiCount = 0x12, Padding = 0x00 },
+            new data_combi { BlockType = 0x0028, MatchingBlockType = 0x0038, ValidCombiCount = 0x19, Padding = 0x00 },
+            new data_combi { BlockType = 0x002A, MatchingBlockType = 0x0039, ValidCombiCount = 0x20, Padding = 0x00 },
+            new data_combi { BlockType = 0x0030, MatchingBlockType = 0x003A, ValidCombiCount = 0x13, Padding = 0x00 },
+            new data_combi { BlockType = 0x0035, MatchingBlockType = 0x003B, ValidCombiCount = 0x21, Padding = 0x00 },
+            new data_combi { BlockType = 0x0037, MatchingBlockType = 0x003C, ValidCombiCount = 0x24, Padding = 0x00 },
+            new data_combi { BlockType = 0x003B, MatchingBlockType = 0x003D, ValidCombiCount = 0x14, Padding = 0x00 },
+            new data_combi { BlockType = 0x003E, MatchingBlockType = 0x003E, ValidCombiCount = 0x1B, Padding = 0x00 },
+            new data_combi { BlockType = 0x0042, MatchingBlockType = 0x003F, ValidCombiCount = 0x15, Padding = 0x00 },
+            new data_combi { BlockType = 0x00AA, MatchingBlockType = 0x0040, ValidCombiCount = 0x28, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B2, MatchingBlockType = 0x0041, ValidCombiCount = 0x29, Padding = 0x00 },
+            new data_combi { BlockType = 0x00BA, MatchingBlockType = 0x0042, ValidCombiCount = 0x2A, Padding = 0x00 },
+            new data_combi { BlockType = 0x00C2, MatchingBlockType = 0x0043, ValidCombiCount = 0x2B, Padding = 0x00 },
+            new data_combi { BlockType = 0x00C8, MatchingBlockType = 0x0044, ValidCombiCount = 0x2C, Padding = 0x00 },
+            new data_combi { BlockType = 0x00CE, MatchingBlockType = 0x0045, ValidCombiCount = 0x2D, Padding = 0x00 },
+            new data_combi { BlockType = 0x00D4, MatchingBlockType = 0x0046, ValidCombiCount = 0x2E, Padding = 0x00 },
+            new data_combi { BlockType = 0x0022, MatchingBlockType = 0x0047, ValidCombiCount = 0x1F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0047, MatchingBlockType = 0x0048, ValidCombiCount = 0x26, Padding = 0x00 },
+            new data_combi { BlockType = 0x0040, MatchingBlockType = 0x0049, ValidCombiCount = 0x25, Padding = 0x00 },
+            new data_combi { BlockType = 0x00AE, MatchingBlockType = 0x004A, ValidCombiCount = 0x2F, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B6, MatchingBlockType = 0x004B, ValidCombiCount = 0x30, Padding = 0x00 },
+            new data_combi { BlockType = 0x00BE, MatchingBlockType = 0x004C, ValidCombiCount = 0x31, Padding = 0x00 },
+            new data_combi { BlockType = 0x00C5, MatchingBlockType = 0x004D, ValidCombiCount = 0x32, Padding = 0x00 },
+            new data_combi { BlockType = 0x00D1, MatchingBlockType = 0x004F, ValidCombiCount = 0x34, Padding = 0x00 },
+            new data_combi { BlockType = 0x00D7, MatchingBlockType = 0x0050, ValidCombiCount = 0x35, Padding = 0x00 },
+            new data_combi { BlockType = 0x00DB, MatchingBlockType = 0x0051, ValidCombiCount = 0x0C, Padding = 0x00 },
+            new data_combi { BlockType = 0x0010, MatchingBlockType = 0x0052, ValidCombiCount = 0x36, Padding = 0x00 },
+            new data_combi { BlockType = 0x001A, MatchingBlockType = 0x0053, ValidCombiCount = 0x37, Padding = 0x00 },
+            new data_combi { BlockType = 0x0024, MatchingBlockType = 0x0054, ValidCombiCount = 0x38, Padding = 0x00 },
+            new data_combi { BlockType = 0x002E, MatchingBlockType = 0x0055, ValidCombiCount = 0x39, Padding = 0x00 },
+            new data_combi { BlockType = 0x0039, MatchingBlockType = 0x0056, ValidCombiCount = 0x3A, Padding = 0x00 },
+            new data_combi { BlockType = 0x0041, MatchingBlockType = 0x0057, ValidCombiCount = 0x3B, Padding = 0x00 },
+            new data_combi { BlockType = 0x0049, MatchingBlockType = 0x0058, ValidCombiCount = 0x3C, Padding = 0x00 },
+            new data_combi { BlockType = 0x0045, MatchingBlockType = 0x005A, ValidCombiCount = 0x1C, Padding = 0x00 },
+            new data_combi { BlockType = 0x002C, MatchingBlockType = 0x0059, ValidCombiCount = 0x23, Padding = 0x00 },
+            new data_combi { BlockType = 0x0115, MatchingBlockType = 0x0028, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x010B, MatchingBlockType = 0x00C8, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0105, MatchingBlockType = 0x00C9, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0105, MatchingBlockType = 0x00CA, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0006, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00EF, MatchingBlockType = 0x00CC, ValidCombiCount = 0x0B, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x00CD, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0002, MatchingBlockType = 0x00C0, ValidCombiCount = 0x0F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0003, MatchingBlockType = 0x006B, ValidCombiCount = 0x0F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0004, MatchingBlockType = 0x006C, ValidCombiCount = 0x0F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0005, MatchingBlockType = 0x00BF, ValidCombiCount = 0x0F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0014, MatchingBlockType = 0x0072, ValidCombiCount = 0x10, Padding = 0x00 },
+            new data_combi { BlockType = 0x00AB, MatchingBlockType = 0x0090, ValidCombiCount = 0x28, Padding = 0x00 },
+            new data_combi { BlockType = 0x00AC, MatchingBlockType = 0x0091, ValidCombiCount = 0x28, Padding = 0x00 },
+            new data_combi { BlockType = 0x00C3, MatchingBlockType = 0x009E, ValidCombiCount = 0x2B, Padding = 0x00 },
+            new data_combi { BlockType = 0x00C9, MatchingBlockType = 0x00A1, ValidCombiCount = 0x2C, Padding = 0x00 },
+            new data_combi { BlockType = 0x00D5, MatchingBlockType = 0x00A7, ValidCombiCount = 0x2E, Padding = 0x00 },
+            new data_combi { BlockType = 0x00D6, MatchingBlockType = 0x00A8, ValidCombiCount = 0x2E, Padding = 0x00 },
+            new data_combi { BlockType = 0x001B, MatchingBlockType = 0x0074, ValidCombiCount = 0x37, Padding = 0x00 },
+            new data_combi { BlockType = 0x0011, MatchingBlockType = 0x0071, ValidCombiCount = 0x36, Padding = 0x00 },
+            new data_combi { BlockType = 0x002F, MatchingBlockType = 0x007D, ValidCombiCount = 0x39, Padding = 0x00 },
+            new data_combi { BlockType = 0x003A, MatchingBlockType = 0x0081, ValidCombiCount = 0x3A, Padding = 0x00 },
+            new data_combi { BlockType = 0x003F, MatchingBlockType = 0x0084, ValidCombiCount = 0x1B, Padding = 0x00 },
+            new data_combi { BlockType = 0x0021, MatchingBlockType = 0x0077, ValidCombiCount = 0x18, Padding = 0x00 },
+            new data_combi { BlockType = 0x001E, MatchingBlockType = 0x0075, ValidCombiCount = 0x11, Padding = 0x00 },
+            new data_combi { BlockType = 0x0044, MatchingBlockType = 0x0086, ValidCombiCount = 0x15, Padding = 0x00 },
+            new data_combi { BlockType = 0x000A, MatchingBlockType = 0x006D, ValidCombiCount = 0x1D, Padding = 0x00 },
+            new data_combi { BlockType = 0x000D, MatchingBlockType = 0x006F, ValidCombiCount = 0x22, Padding = 0x00 },
+            new data_combi { BlockType = 0x0026, MatchingBlockType = 0x0078, ValidCombiCount = 0x12, Padding = 0x00 },
+            new data_combi { BlockType = 0x0031, MatchingBlockType = 0x007E, ValidCombiCount = 0x13, Padding = 0x00 },
+            new data_combi { BlockType = 0x003C, MatchingBlockType = 0x0082, ValidCombiCount = 0x14, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B3, MatchingBlockType = 0x0095, ValidCombiCount = 0x29, Padding = 0x00 },
+            new data_combi { BlockType = 0x00BB, MatchingBlockType = 0x0099, ValidCombiCount = 0x2A, Padding = 0x00 },
+            new data_combi { BlockType = 0x0029, MatchingBlockType = 0x007A, ValidCombiCount = 0x19, Padding = 0x00 },
+            new data_combi { BlockType = 0x002B, MatchingBlockType = 0x007B, ValidCombiCount = 0x20, Padding = 0x00 },
+            new data_combi { BlockType = 0x0046, MatchingBlockType = 0x0087, ValidCombiCount = 0x1C, Padding = 0x00 },
+            new data_combi { BlockType = 0x00CF, MatchingBlockType = 0x00A4, ValidCombiCount = 0x2D, Padding = 0x00 },
+            new data_combi { BlockType = 0x0036, MatchingBlockType = 0x00B2, ValidCombiCount = 0x21, Padding = 0x00 },
+            new data_combi { BlockType = 0x002D, MatchingBlockType = 0x007C, ValidCombiCount = 0x23, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B4, MatchingBlockType = 0x0096, ValidCombiCount = 0x29, Padding = 0x00 },
+            new data_combi { BlockType = 0x00BC, MatchingBlockType = 0x009A, ValidCombiCount = 0x2A, Padding = 0x00 },
+            new data_combi { BlockType = 0x0038, MatchingBlockType = 0x0080, ValidCombiCount = 0x24, Padding = 0x00 },
+            new data_combi { BlockType = 0x0032, MatchingBlockType = 0x007F, ValidCombiCount = 0x13, Padding = 0x00 },
+            new data_combi { BlockType = 0x0027, MatchingBlockType = 0x0079, ValidCombiCount = 0x12, Padding = 0x00 },
+            new data_combi { BlockType = 0x001F, MatchingBlockType = 0x0076, ValidCombiCount = 0x11, Padding = 0x00 },
+            new data_combi { BlockType = 0x0015, MatchingBlockType = 0x0073, ValidCombiCount = 0x10, Padding = 0x00 },
+            new data_combi { BlockType = 0x010C, MatchingBlockType = 0x00CE, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B1, MatchingBlockType = 0x00C1, ValidCombiCount = 0x45, Padding = 0x00 },
+            new data_combi { BlockType = 0x0007, MatchingBlockType = 0x005B, ValidCombiCount = 0x16, Padding = 0x00 },
+            new data_combi { BlockType = 0x0008, MatchingBlockType = 0x005C, ValidCombiCount = 0x16, Padding = 0x00 },
+            new data_combi { BlockType = 0x000B, MatchingBlockType = 0x006E, ValidCombiCount = 0x1D, Padding = 0x00 },
+            new data_combi { BlockType = 0x000E, MatchingBlockType = 0x0070, ValidCombiCount = 0x22, Padding = 0x00 },
+            new data_combi { BlockType = 0x0017, MatchingBlockType = 0x005E, ValidCombiCount = 0x17, Padding = 0x00 },
+            new data_combi { BlockType = 0x0034, MatchingBlockType = 0x005D, ValidCombiCount = 0x1A, Padding = 0x00 },
+            new data_combi { BlockType = 0x003D, MatchingBlockType = 0x0083, ValidCombiCount = 0x14, Padding = 0x00 },
+            new data_combi { BlockType = 0x0043, MatchingBlockType = 0x0085, ValidCombiCount = 0x15, Padding = 0x00 },
+            new data_combi { BlockType = 0x00AD, MatchingBlockType = 0x0092, ValidCombiCount = 0x28, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B5, MatchingBlockType = 0x00B3, ValidCombiCount = 0x29, Padding = 0x00 },
+            new data_combi { BlockType = 0x00BD, MatchingBlockType = 0x009B, ValidCombiCount = 0x2A, Padding = 0x00 },
+            new data_combi { BlockType = 0x00C4, MatchingBlockType = 0x009F, ValidCombiCount = 0x2B, Padding = 0x00 },
+            new data_combi { BlockType = 0x00CA, MatchingBlockType = 0x00A2, ValidCombiCount = 0x2C, Padding = 0x00 },
+            new data_combi { BlockType = 0x00D0, MatchingBlockType = 0x00A5, ValidCombiCount = 0x2D, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E4, MatchingBlockType = 0x0067, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E4, MatchingBlockType = 0x0066, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0068, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0019, MatchingBlockType = 0x005F, ValidCombiCount = 0x1E, Padding = 0x00 },
+            new data_combi { BlockType = 0x0023, MatchingBlockType = 0x0060, ValidCombiCount = 0x1F, Padding = 0x00 },
+            new data_combi { BlockType = 0x00AF, MatchingBlockType = 0x0093, ValidCombiCount = 0x2F, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B7, MatchingBlockType = 0x0097, ValidCombiCount = 0x30, Padding = 0x00 },
+            new data_combi { BlockType = 0x00C6, MatchingBlockType = 0x00A0, ValidCombiCount = 0x32, Padding = 0x00 },
+            new data_combi { BlockType = 0x00BF, MatchingBlockType = 0x009C, ValidCombiCount = 0x31, Padding = 0x00 },
+            new data_combi { BlockType = 0x00CC, MatchingBlockType = 0x00A3, ValidCombiCount = 0x33, Padding = 0x00 },
+            new data_combi { BlockType = 0x00D2, MatchingBlockType = 0x00A6, ValidCombiCount = 0x34, Padding = 0x00 },
+            new data_combi { BlockType = 0x00D8, MatchingBlockType = 0x00A9, ValidCombiCount = 0x35, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B0, MatchingBlockType = 0x0094, ValidCombiCount = 0x2F, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B8, MatchingBlockType = 0x0098, ValidCombiCount = 0x30, Padding = 0x00 },
+            new data_combi { BlockType = 0x00C0, MatchingBlockType = 0x009D, ValidCombiCount = 0x31, Padding = 0x00 },
+            new data_combi { BlockType = 0x005C, MatchingBlockType = 0x0088, ValidCombiCount = 0x27, Padding = 0x00 },
+            new data_combi { BlockType = 0x005D, MatchingBlockType = 0x0089, ValidCombiCount = 0x27, Padding = 0x00 },
+            new data_combi { BlockType = 0x005E, MatchingBlockType = 0x008A, ValidCombiCount = 0x27, Padding = 0x00 },
+            new data_combi { BlockType = 0x005F, MatchingBlockType = 0x008B, ValidCombiCount = 0x27, Padding = 0x00 },
+            new data_combi { BlockType = 0x0060, MatchingBlockType = 0x008C, ValidCombiCount = 0x27, Padding = 0x00 },
+            new data_combi { BlockType = 0x0061, MatchingBlockType = 0x008D, ValidCombiCount = 0x27, Padding = 0x00 },
+            new data_combi { BlockType = 0x0062, MatchingBlockType = 0x008E, ValidCombiCount = 0x27, Padding = 0x00 },
+            new data_combi { BlockType = 0x0063, MatchingBlockType = 0x008F, ValidCombiCount = 0x27, Padding = 0x00 },
+            new data_combi { BlockType = 0x00DC, MatchingBlockType = 0x00AA, ValidCombiCount = 0x0C, Padding = 0x00 },
+            new data_combi { BlockType = 0x00DD, MatchingBlockType = 0x00B6, ValidCombiCount = 0x0C, Padding = 0x00 },
+            new data_combi { BlockType = 0x00DE, MatchingBlockType = 0x00B7, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00DF, MatchingBlockType = 0x00AB, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E0, MatchingBlockType = 0x00AE, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E1, MatchingBlockType = 0x00B8, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E2, MatchingBlockType = 0x00AF, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E3, MatchingBlockType = 0x00B9, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E4, MatchingBlockType = 0x00AD, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E8, MatchingBlockType = 0x00B0, ValidCombiCount = 0x0D, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E9, MatchingBlockType = 0x00BA, ValidCombiCount = 0x0D, Padding = 0x00 },
+            new data_combi { BlockType = 0x00EA, MatchingBlockType = 0x00BB, ValidCombiCount = 0x0D, Padding = 0x00 },
+            new data_combi { BlockType = 0x00EB, MatchingBlockType = 0x00B1, ValidCombiCount = 0x0D, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B9, MatchingBlockType = 0x00B4, ValidCombiCount = 0x46, Padding = 0x00 },
+            new data_combi { BlockType = 0x00C1, MatchingBlockType = 0x00C2, ValidCombiCount = 0x47, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x006A, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0061, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0062, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0063, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0064, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00AA, MatchingBlockType = 0x0065, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00D3, MatchingBlockType = 0x00B5, ValidCombiCount = 0x4A, Padding = 0x00 },
+            new data_combi { BlockType = 0x00D9, MatchingBlockType = 0x00AC, ValidCombiCount = 0x4B, Padding = 0x00 },
+            new data_combi { BlockType = 0x00F0, MatchingBlockType = 0x00BC, ValidCombiCount = 0x0B, Padding = 0x00 },
+            new data_combi { BlockType = 0x00F1, MatchingBlockType = 0x00BD, ValidCombiCount = 0x0B, Padding = 0x00 },
+            new data_combi { BlockType = 0x00C7, MatchingBlockType = 0x00C3, ValidCombiCount = 0x48, Padding = 0x00 },
+            new data_combi { BlockType = 0x00CD, MatchingBlockType = 0x00BE, ValidCombiCount = 0x49, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FF, MatchingBlockType = 0x00CF, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x010A, MatchingBlockType = 0x00D0, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0103, MatchingBlockType = 0x0016, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0104, MatchingBlockType = 0x0016, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0106, MatchingBlockType = 0x00CB, ValidCombiCount = 0x4C, Padding = 0x00 },
+            new data_combi { BlockType = 0x0107, MatchingBlockType = 0x00CB, ValidCombiCount = 0x4D, Padding = 0x00 },
+            new data_combi { BlockType = 0x0108, MatchingBlockType = 0x00CB, ValidCombiCount = 0x4E, Padding = 0x00 },
+            new data_combi { BlockType = 0x0109, MatchingBlockType = 0x00CB, ValidCombiCount = 0x4F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0012, MatchingBlockType = 0x00E8, ValidCombiCount = 0x36, Padding = 0x00 },
+            new data_combi { BlockType = 0x004C, MatchingBlockType = 0x00CB, ValidCombiCount = 0x00, Padding = 0x00 },
+            new data_combi { BlockType = 0x004D, MatchingBlockType = 0x00CB, ValidCombiCount = 0x01, Padding = 0x00 },
+            new data_combi { BlockType = 0x004E, MatchingBlockType = 0x00CB, ValidCombiCount = 0x02, Padding = 0x00 },
+            new data_combi { BlockType = 0x004F, MatchingBlockType = 0x00CB, ValidCombiCount = 0x3D, Padding = 0x00 },
+            new data_combi { BlockType = 0x0052, MatchingBlockType = 0x00CB, ValidCombiCount = 0x09, Padding = 0x00 },
+            new data_combi { BlockType = 0x0053, MatchingBlockType = 0x00CB, ValidCombiCount = 0x04, Padding = 0x00 },
+            new data_combi { BlockType = 0x0054, MatchingBlockType = 0x00CB, ValidCombiCount = 0x3E, Padding = 0x00 },
+            new data_combi { BlockType = 0x0057, MatchingBlockType = 0x00CB, ValidCombiCount = 0x0A, Padding = 0x00 },
+            new data_combi { BlockType = 0x0058, MatchingBlockType = 0x00CB, ValidCombiCount = 0x05, Padding = 0x00 },
+            new data_combi { BlockType = 0x0059, MatchingBlockType = 0x00CB, ValidCombiCount = 0x08, Padding = 0x00 },
+            new data_combi { BlockType = 0x0064, MatchingBlockType = 0x0068, ValidCombiCount = 0x44, Padding = 0x00 },
+            new data_combi { BlockType = 0x0065, MatchingBlockType = 0x00DC, ValidCombiCount = 0x44, Padding = 0x00 },
+            new data_combi { BlockType = 0x0066, MatchingBlockType = 0x00E4, ValidCombiCount = 0x44, Padding = 0x00 },
+            new data_combi { BlockType = 0x0067, MatchingBlockType = 0x0069, ValidCombiCount = 0x0E, Padding = 0x00 },
+            new data_combi { BlockType = 0x0068, MatchingBlockType = 0x00E2, ValidCombiCount = 0x0E, Padding = 0x00 },
+            new data_combi { BlockType = 0x0069, MatchingBlockType = 0x00E3, ValidCombiCount = 0x0E, Padding = 0x00 },
+            new data_combi { BlockType = 0x006D, MatchingBlockType = 0x006A, ValidCombiCount = 0x42, Padding = 0x00 },
+            new data_combi { BlockType = 0x006E, MatchingBlockType = 0x00E0, ValidCombiCount = 0x42, Padding = 0x00 },
+            new data_combi { BlockType = 0x006F, MatchingBlockType = 0x00E1, ValidCombiCount = 0x42, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E5, MatchingBlockType = 0x00DD, ValidCombiCount = 0x43, Padding = 0x00 },
+            new data_combi { BlockType = 0x00EC, MatchingBlockType = 0x00E5, ValidCombiCount = 0x41, Padding = 0x00 },
+            new data_combi { BlockType = 0x00ED, MatchingBlockType = 0x00E6, ValidCombiCount = 0x41, Padding = 0x00 },
+            new data_combi { BlockType = 0x00EE, MatchingBlockType = 0x00E7, ValidCombiCount = 0x41, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E6, MatchingBlockType = 0x00DE, ValidCombiCount = 0x43, Padding = 0x00 },
+            new data_combi { BlockType = 0x00E7, MatchingBlockType = 0x00DF, ValidCombiCount = 0x43, Padding = 0x00 },
+            new data_combi { BlockType = 0x005D, MatchingBlockType = 0x0002, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x0023, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0100, MatchingBlockType = 0x0025, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0101, MatchingBlockType = 0x0026, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0102, MatchingBlockType = 0x0024, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0000, MatchingBlockType = 0x00D1, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0078, MatchingBlockType = 0x0061, ValidCombiCount = 0x3F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0079, MatchingBlockType = 0x0062, ValidCombiCount = 0x3F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0078, MatchingBlockType = 0x0061, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0079, MatchingBlockType = 0x0062, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0082, MatchingBlockType = 0x0065, ValidCombiCount = 0x40, Padding = 0x00 },
+            new data_combi { BlockType = 0x0050, MatchingBlockType = 0x00CB, ValidCombiCount = 0x50, Padding = 0x00 },
+            new data_combi { BlockType = 0x0055, MatchingBlockType = 0x00CB, ValidCombiCount = 0x51, Padding = 0x00 },
+            new data_combi { BlockType = 0x00F9, MatchingBlockType = 0x0151, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0083, MatchingBlockType = 0x0152, ValidCombiCount = 0x40, Padding = 0x00 },
+            new data_combi { BlockType = 0x0084, MatchingBlockType = 0x0153, ValidCombiCount = 0x40, Padding = 0x00 },
+            new data_combi { BlockType = 0x0085, MatchingBlockType = 0x0154, ValidCombiCount = 0x40, Padding = 0x00 },
+            new data_combi { BlockType = 0x0086, MatchingBlockType = 0x0155, ValidCombiCount = 0x40, Padding = 0x00 },
+            new data_combi { BlockType = 0x0087, MatchingBlockType = 0x0156, ValidCombiCount = 0x52, Padding = 0x00 },
+            new data_combi { BlockType = 0x0088, MatchingBlockType = 0x0157, ValidCombiCount = 0x52, Padding = 0x00 },
+            new data_combi { BlockType = 0x0089, MatchingBlockType = 0x0158, ValidCombiCount = 0x52, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x007A, MatchingBlockType = 0x0063, ValidCombiCount = 0x3F, Padding = 0x00 },
+            new data_combi { BlockType = 0x007B, MatchingBlockType = 0x0064, ValidCombiCount = 0x3F, Padding = 0x00 },
+            new data_combi { BlockType = 0x007C, MatchingBlockType = 0x0159, ValidCombiCount = 0x3F, Padding = 0x00 },
+            new data_combi { BlockType = 0x007D, MatchingBlockType = 0x015A, ValidCombiCount = 0x3F, Padding = 0x00 },
+            new data_combi { BlockType = 0x007E, MatchingBlockType = 0x015B, ValidCombiCount = 0x3F, Padding = 0x00 },
+            new data_combi { BlockType = 0x007F, MatchingBlockType = 0x015C, ValidCombiCount = 0x3F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0080, MatchingBlockType = 0x015D, ValidCombiCount = 0x3F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0081, MatchingBlockType = 0x015E, ValidCombiCount = 0x3F, Padding = 0x00 },
+            new data_combi { BlockType = 0x001C, MatchingBlockType = 0x0160, ValidCombiCount = 0x37, Padding = 0x00 },
+            new data_combi { BlockType = 0x0048, MatchingBlockType = 0x0162, ValidCombiCount = 0x26, Padding = 0x00 },
+            new data_combi { BlockType = 0x004A, MatchingBlockType = 0x015F, ValidCombiCount = 0x3C, Padding = 0x00 },
+            new data_combi { BlockType = 0x004B, MatchingBlockType = 0x0161, ValidCombiCount = 0x3C, Padding = 0x00 },
+            new data_combi { BlockType = 0x00B1, MatchingBlockType = 0x0007, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x004B, MatchingBlockType = 0x0011, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0174, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0013, MatchingBlockType = 0x0175, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0030, MatchingBlockType = 0x0176, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0088, MatchingBlockType = 0x0177, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00CE, MatchingBlockType = 0x0178, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00BA, MatchingBlockType = 0x0179, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x000F, MatchingBlockType = 0x017A, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x007A, MatchingBlockType = 0x017B, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00AE, MatchingBlockType = 0x017C, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0030, MatchingBlockType = 0x017D, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0042, MatchingBlockType = 0x017E, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0008, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0116, MatchingBlockType = 0x017F, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0118, MatchingBlockType = 0x0180, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0117, MatchingBlockType = 0x0181, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x011A, MatchingBlockType = 0x0182, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0119, MatchingBlockType = 0x0183, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0184, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x005A, MatchingBlockType = 0x0185, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0006, MatchingBlockType = 0x0020, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x00AB, MatchingBlockType = 0x0021, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0122, MatchingBlockType = 0x0186, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x006A, MatchingBlockType = 0x0187, ValidCombiCount = 0x54, Padding = 0x00 },
+            new data_combi { BlockType = 0x006B, MatchingBlockType = 0x0188, ValidCombiCount = 0x54, Padding = 0x00 },
+            new data_combi { BlockType = 0x006C, MatchingBlockType = 0x0189, ValidCombiCount = 0x54, Padding = 0x00 },
+            new data_combi { BlockType = 0x008A, MatchingBlockType = 0x018A, ValidCombiCount = 0x55, Padding = 0x00 },
+            new data_combi { BlockType = 0x008B, MatchingBlockType = 0x018B, ValidCombiCount = 0x55, Padding = 0x00 },
+            new data_combi { BlockType = 0x008C, MatchingBlockType = 0x018C, ValidCombiCount = 0x55, Padding = 0x00 },
+            new data_combi { BlockType = 0x008D, MatchingBlockType = 0x018D, ValidCombiCount = 0x64, Padding = 0x00 },
+            new data_combi { BlockType = 0x0090, MatchingBlockType = 0x00CB, ValidCombiCount = 0x5E, Padding = 0x00 },
+            new data_combi { BlockType = 0x0070, MatchingBlockType = 0x018F, ValidCombiCount = 0x63, Padding = 0x00 },
+            new data_combi { BlockType = 0x0074, MatchingBlockType = 0x018E, ValidCombiCount = 0x62, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x00FE, MatchingBlockType = 0x00CB, ValidCombiCount = 0x53, Padding = 0x00 },
+            new data_combi { BlockType = 0x0090, MatchingBlockType = 0x00CB, ValidCombiCount = 0x5E, Padding = 0x00 },
+            new data_combi { BlockType = 0x0090, MatchingBlockType = 0x00CB, ValidCombiCount = 0x5E, Padding = 0x00 },
+            new data_combi { BlockType = 0x0091, MatchingBlockType = 0x00CB, ValidCombiCount = 0x5F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0091, MatchingBlockType = 0x00CB, ValidCombiCount = 0x5F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0091, MatchingBlockType = 0x00CB, ValidCombiCount = 0x5F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0091, MatchingBlockType = 0x00CB, ValidCombiCount = 0x5F, Padding = 0x00 },
+            new data_combi { BlockType = 0x0092, MatchingBlockType = 0x00CB, ValidCombiCount = 0x60, Padding = 0x00 },
+            new data_combi { BlockType = 0x0092, MatchingBlockType = 0x00CB, ValidCombiCount = 0x60, Padding = 0x00 },
+            new data_combi { BlockType = 0x0092, MatchingBlockType = 0x00CB, ValidCombiCount = 0x60, Padding = 0x00 },
+            new data_combi { BlockType = 0x0093, MatchingBlockType = 0x00CB, ValidCombiCount = 0x61, Padding = 0x00 },
+            new data_combi { BlockType = 0x0093, MatchingBlockType = 0x00CB, ValidCombiCount = 0x61, Padding = 0x00 },
+            new data_combi { BlockType = 0x0093, MatchingBlockType = 0x00CB, ValidCombiCount = 0x61, Padding = 0x00 },
+            new data_combi { BlockType = 0x0093, MatchingBlockType = 0x00CB, ValidCombiCount = 0x61, Padding = 0x00 },
+            new data_combi { BlockType = 0x0093, MatchingBlockType = 0x00CB, ValidCombiCount = 0x61, Padding = 0x00 },
+            new data_combi { BlockType = 0x0051, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0056, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0090, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0091, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0092, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0093, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0094, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0095, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0096, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0097, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0098, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x0099, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x009C, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x009D, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x009E, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x009F, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x00A0, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x00A1, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x00A2, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x00A3, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x00A4, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x00A5, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x00A6, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x00A7, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x009A, MatchingBlockType = 0x00CB, ValidCombiCount = 0x66, Padding = 0x00 },
+            new data_combi { BlockType = 0x009A, MatchingBlockType = 0x00CB, ValidCombiCount = 0x66, Padding = 0x00 },
+            new data_combi { BlockType = 0x009B, MatchingBlockType = 0x00CB, ValidCombiCount = 0x67, Padding = 0x00 },
+            new data_combi { BlockType = 0x009B, MatchingBlockType = 0x00CB, ValidCombiCount = 0x67, Padding = 0x00 },
+            new data_combi { BlockType = 0x009B, MatchingBlockType = 0x00CB, ValidCombiCount = 0x67, Padding = 0x00 },
+            new data_combi { BlockType = 0x009B, MatchingBlockType = 0x00CB, ValidCombiCount = 0x67, Padding = 0x00 },
+            new data_combi { BlockType = 0x0123, MatchingBlockType = 0x0190, ValidCombiCount = 0xFF, Padding = 0x00 },
+            new data_combi { BlockType = 0x0071, MatchingBlockType = 0x0192, ValidCombiCount = 0x63, Padding = 0x00 },
+            new data_combi { BlockType = 0x0075, MatchingBlockType = 0x0191, ValidCombiCount = 0x62, Padding = 0x00 },
+            new data_combi { BlockType = 0x0072, MatchingBlockType = 0x0194, ValidCombiCount = 0x63, Padding = 0x00 },
+            new data_combi { BlockType = 0x0076, MatchingBlockType = 0x0193, ValidCombiCount = 0x62, Padding = 0x00 },
+            new data_combi { BlockType = 0x0073, MatchingBlockType = 0x0196, ValidCombiCount = 0x63, Padding = 0x00 },
+            new data_combi { BlockType = 0x0077, MatchingBlockType = 0x0195, ValidCombiCount = 0x62, Padding = 0x00 },
+            new data_combi { BlockType = 0x008E, MatchingBlockType = 0x0197, ValidCombiCount = 0x64, Padding = 0x00 },
+            new data_combi { BlockType = 0x008F, MatchingBlockType = 0x0198, ValidCombiCount = 0x64, Padding = 0x00 },
+            new data_combi { BlockType = 0x00A8, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x00A9, MatchingBlockType = 0x00CB, ValidCombiCount = 0x68, Padding = 0x00 },
+            new data_combi { BlockType = 0x00F3, MatchingBlockType = 0x0199, ValidCombiCount = 0xFF, Padding = 0x00 }
+        };
 
         // Generation Common Things
         private static readonly int[] blockGroup_428 = new int[16]
@@ -16,8 +398,50 @@ namespace ACSE
             0x16, 0x26, 0x16, 0x1C, 0x1D, 0x21, 0x22, 0x26
         };
 
-        private static readonly int[] x_offset_409 = new int[4] { 0, -1, 0, 1 };
+        private static readonly int[] x_offset_409 = new int[4] { 0, -1, 0, 1 }; // Directions: North, West, South, East
         private static readonly int[] z_offset_410 = new int[4] { -1, 0, 1, 0 };
+
+        private static readonly int[] system_block_info = new int[108]
+        {
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000001,
+            0x00000002, 0x00000004, 0x00000008, 0x00000010,
+            0x00000020, 0x00000040, 0x00000001, 0x00000002,
+            0x00000004, 0x00000008, 0x00000010, 0x00000020,
+            0x00000040, 0x00000001, 0x00000002, 0x00000004,
+            0x00000008, 0x00000010, 0x00000001, 0x00000008,
+            0x00000010, 0x00000020, 0x00000040, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000001, 0x00000002,
+            0x00000004, 0x00000008, 0x00000010, 0x00000020,
+            0x00000040, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000001,
+            0x00000004, 0x00000008, 0x00000008, 0x00000010,
+            0x00000020, 0x00000040, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000001, 0x00000008, 0x00000010
+        };
+
+        private static readonly ushort[] exceptional_table = new ushort[54]
+        {
+            0x0050, 0x0051, 0x0055, 0x0056, 0x0078, 0x0090, 0x0079, 0x0091,
+            0x007A, 0x0092, 0x007B, 0x0093, 0x007C, 0x0094, 0x007D, 0x0095,
+            0x007E, 0x0096, 0x007F, 0x0097, 0x0080, 0x0098, 0x0081, 0x0099,
+            0x0082, 0x009C, 0x0083, 0x009D, 0x0084, 0x009E, 0x0085, 0x009F,
+            0x0086, 0x00A0, 0x0087, 0x00A1, 0x0088, 0x00A2, 0x0089, 0x00A3,
+            0x008A, 0x00A4, 0x008B, 0x00A5, 0x008C, 0x00A6, 0x008D, 0x00A7,
+            0x008E, 0x00A8, 0x008F, 0x00A9, 0x0125, 0x0125
+        };
 
         // Two Layered Town Base Layout
         private static readonly byte[] DefaultTownStructure = new byte[70]
@@ -65,6 +489,8 @@ namespace ACSE
             cliff5_next, cliff6_next, cliff7_next
         };
 
+        private static readonly int[] cliff_info = new int[7] { 1, 2, 4, 8, 0x10, 0x20, 0x40 };
+
         /// <summary>
         /// The Direction of the next cliff section (0 = North, 1 = East? 2 = South, 3 = West?)
         /// </summary>
@@ -93,6 +519,9 @@ namespace ACSE
         /// </summary>
         private static readonly int[] startX_table = new int[4] { 1, 2, 4, 5 };
 
+        /// <summary>
+        /// River & Cliff Acres
+        /// </summary>
         private static readonly byte[] cross_data = new byte[7] { 0x16, 0x17, 0x1A, 0x1E, 0x1F, 0x25, 0x26 };
 
         private static readonly byte[] river1_next = new byte[3] { 0x28, 0x2B, 0x2D };
@@ -368,10 +797,11 @@ namespace ACSE
             { 0x62, new ushort[] {0x04A4, 0x0598, 0x05A0, 0x05A8} },
             { 0x63, new ushort[] {0x04A0, 0x0594, 0x059C, 0x05A4} },
             { 0x64, new ushort[] {0x0498, 0x05AC, 0x05B0} },
-            // 0x65?
+            // 0x65? these are handled slighly differently by the game.
             { 0x66, new ushort[] {0x0578, 0x057C} },
             { 0x67, new ushort[] {0x0580, 0x0584, 0x0588, 0x058C} },
             { 0x68, new ushort[] {0x0518, 0x051C, 0x0520, 0x0524, 0x0528, 0x052C, 0x0530, 0x0534, 0x0538, 0x053C, 0x0540, 0x0544, 0x0548, 0x054C, 0x0550, 0x0554, 0x0558, 0x055C, 0x0560, 0x0564, 0x0568, 0x056C, 0x0570, 0x0574, 0x05B4, 0x05B8} },
+            // 69 - 6B
         };
 
         private static int D2toD1(int AcreX, int AcreY)
@@ -484,6 +914,10 @@ namespace ACSE
         private static bool CheckCorrectBlockNo(int AcreX, int AcreY, int AcreXMin, int AcreXMax, int AcreYMin, int AcreYMax)
             => (AcreX >= AcreXMin && AcreX <= AcreXMax && AcreY >= AcreYMin && AcreY <= AcreYMax);
 
+        private static int GetSystemBlockInfo(int BlockType)
+            => system_block_info[BlockType & 0xFF];
+
+        // Cliff code
         private static bool DecideBaseCliff(ref byte[] AcreData)
         {
             int CliffStartTableIndex = Rand.Next(4);
@@ -498,17 +932,8 @@ namespace ACSE
             int CliffBorderStartAcre = D2toD1(0, CliffStartTableIndex + 2);
             AcreData[CliffBorderStartAcre] = 0x3D;
 
-            Console.WriteLine("\n===================================");
-            Console.WriteLine("     Begin Cliff Tracing");
-            Console.WriteLine("===================================\n");
-
             // Trace Cliff
             TraceCliffBlock(ref AcreData, 1, CliffStartTableIndex + 2);
-            PrintAcreData(AcreData);
-
-            Console.WriteLine("\n===================================");
-            Console.WriteLine("     Set Cliff End");
-            Console.WriteLine("===================================\n");
 
             // Set Cliff End Acre
             SetEndCliffBlock(ref AcreData);
@@ -527,7 +952,6 @@ namespace ACSE
 
             while (TraceState == 0)
             {
-                PrintAcreData(AcreData);
                 byte[] CliffNext = cliff_next_data[CliffSubtractionValue];
                 byte CliffAcreType = CliffNext[Rand.Next(CliffNext.Length)];
                 byte CliffAdjustValue = cliff_next_direct[CliffSubtractionValue];
@@ -620,8 +1044,6 @@ namespace ACSE
                     }
                 }
             }
-
-            PrintAcreData(AcreData);
         }
 
         private static bool LastCheckCliff(byte[] AcreData, int AcreX, int AcreY)
@@ -635,10 +1057,11 @@ namespace ACSE
                 CliffAcreType = AcreData[D2toD1(AcreX, AcreY)];
             }
 
-            return AcreX > 5 && AcreY == Y; // Might be AcreY >= Y or AcreY != Y
+            return AcreX > 5 && AcreY != Y; // Might be AcreY >= Y or AcreY == Y
         }
 
         // River Generation Code
+
         /// <summary>
         /// Gets the direction of the next river section.
         /// </summary>
@@ -751,7 +1174,6 @@ namespace ACSE
 
         private static bool TraceRiverPart2(ref byte[] AcreData, ref byte[] UnchangedAcreData, int AcreX, int AcreY, byte[] challenge_flag)
         {
-            PrintAcreData(AcreData);
             int RiverStartAcre = D2toD1(AcreX, AcreY);
             byte RiverStartAcreType = AcreData[RiverStartAcre];
             int RiverDirection = RiverIdx2NextDirect((byte)(RiverStartAcreType - 0x28));
@@ -900,13 +1322,10 @@ namespace ACSE
             Array.Copy(AcreData, UnchangedAcreData, AcreData.Length);
             RiverData = AcreData;
             AcreData = UnchangedAcreData;
-            Console.WriteLine("============== River Generation ==============\n");
             if (TraceRiverPart1(ref RiverData, out int AcreX, out int AcreY))
             {
                 if (TraceRiverPart2(ref RiverData, ref AcreData, AcreX, AcreY, new byte[0x38]))
                 {
-                    PrintAcreData(RiverData);
-                    Console.WriteLine("============== End River Generation ============== ");
                     return LastCheckRiver(RiverData, AcreX, AcreY);
                 }
             }
@@ -954,16 +1373,424 @@ namespace ACSE
             }
         }
 
-        private static byte[] MakeRandomField_ovl()
+        // Grass Blocks
+        private static void MakeFlatPlaceInformation(ref byte[] AcreData)
         {
-            int StepMode = GetRandomStepMode();
-            int PerfectBit = MakePerfectBit();
-            int Bit = 0;
+            // might not be needed
+        }
 
-            Console.WriteLine("StepMode: " + StepMode);
+        // Oceanfront Blocks
+        private static void SetMarinBlock(ref byte[] AcreData)
+        {
+            for (int X = 1; X < 6; X++)
+            {
+                int AcreIndex = D2toD1(X, 6);
+                if (AcreData[AcreIndex] == 0x27)
+                {
+                    AcreData[AcreIndex] = 0x3F;
+                }
+                else if (AcreData[AcreIndex] == 0x28)
+                {
+                    AcreData[AcreIndex] = 0x40;
+                }
+            }
 
-            // TODO: Check for perfect bit vs current bit
-            return MakeBaseLandform(StepMode);
+            // Set border blocks
+            AcreData[D2toD1(0, 6)] = 0x50;
+            AcreData[D2toD1(6, 6)] = 0x51;
+        }
+
+        // Bridges & Slopes
+        /// <summary>
+        /// Counts the number of times the river & cliffs cross paths.
+        /// </summary>
+        /// <param name="AcreX">The X-Acre of the first cliff-river crossing.</param>
+        /// <param name="AcreY">The Y-Acre of the first cliff-river crossing.</param>
+        /// <param name="AcreData">The current acre data.</param>
+        /// <returns>The amount of times the river & cliffs cross.</returns>
+        public static int GetRiverCrossCliffInfo(out int AcreX, out int AcreY, byte[] AcreData)
+        {
+            int AcreIdx = 0;
+            int Count = 0;
+
+            AcreX = AcreY = 0;
+
+            for (int i = 0; i < 0x38; i++)
+            {
+                int Y = i / 7;
+                int X = i % 7;
+
+                for (int x = 0; x < 7; x++)
+                {
+                    if (AcreData[AcreIdx] == cross_data[x])
+                    {
+                        if (Count == 0)
+                        {
+                            AcreX = X;
+                            AcreY = Y;
+                        }
+                        Count++;
+                    }
+                }
+
+                AcreIdx++;
+            }
+
+            return Count;
+        }
+
+        private static int SetBridgeBlock(ref byte[] AcreData, bool ThreeLayeredTown)
+        {
+            bool PlaceUpperBridge = (Rand.Next(10) & 1) == 1;
+            GetRiverCrossCliffInfo(out int AcreX, out int AcreY, AcreData);
+            int AcreIdx = 0;
+            int ValidBridgePlaceUpper = 0;
+            int ValidBridgePlaceLower = 0;
+            int SetBridgeBlockBit = 0;
+
+            for (int Y = 0; Y < 8; Y++)
+            {
+                for (int X = 0; X < 7; X++)
+                {
+                    if (CheckBlockGroup(AcreData[AcreIdx], 1) == true)
+                    {
+                        if (Y >= AcreY)
+                        {
+                            ValidBridgePlaceUpper++;
+                        }
+                        else
+                        {
+                            ValidBridgePlaceLower++;
+                        }
+                    }
+                    AcreIdx++;
+                }
+            }
+
+            // Lower area first
+            if (ValidBridgePlaceLower != 0)
+            {
+                int BridgeLowerLocation = Rand.Next(ValidBridgePlaceLower);
+                AcreIdx = 0;
+                int Count = 0;
+
+                for (int Y = 0; Y < 8; Y++)
+                {
+                    for (int X = 0; X < 7; X++)
+                    {
+                        if (CheckBlockGroup(AcreData[AcreIdx], 1) == true)
+                        {
+                            if (Y < AcreY)
+                            {
+                                if (Count == BridgeLowerLocation)
+                                {
+                                    SetBridgeBlockBit |= (1 << 2); // 4
+                                    AcreData[AcreIdx] = (byte)(AcreData[AcreIdx] + 7);
+                                }
+                                Count++;
+                            }
+                        }
+                        AcreIdx++;
+                    }
+                }
+            }
+
+            // Upper area next
+            if (ValidBridgePlaceUpper != 0 && ThreeLayeredTown == false && PlaceUpperBridge == true)
+            {
+                int BridgeUpperLocation = Rand.Next(ValidBridgePlaceUpper);
+                AcreIdx = 0;
+                int Count = 0;
+
+                for (int Y = 0; Y < 8; Y++)
+                {
+                    for (int X = 0; X < 7; X++)
+                    {
+                        if (CheckBlockGroup(AcreData[AcreIdx], 1) == true)
+                        {
+                            if (Y > AcreY)
+                            {
+                                if (Count == BridgeUpperLocation)
+                                {
+                                    SetBridgeBlockBit |= (1 << 3); // 8
+                                    AcreData[AcreIdx] = (byte)(AcreData[AcreIdx] + 7);
+                                }
+                                Count++;
+                            }
+                        }
+                        AcreIdx++;
+                    }
+                }
+            }
+
+            return SetBridgeBlockBit;
+        }
+
+        // Slope Code
+        private static int BlockType2CliffIndex(int CliffIdx)
+        {
+            int CliffBlockInfo = GetSystemBlockInfo(CliffIdx);
+            for (int i = 0; i < 7; i++)
+            {
+                if ((CliffBlockInfo & cliff_info[i]) == cliff_info[i])
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        private static int CountDirectedInfoCliff(byte[] AcreData, int AcreX, int AcreY, int ValidBlockType) // not sure what "ValidBlockType" is
+        {
+            AcreX += 1;
+            byte CurrentBlockType = AcreData[D2toD1(AcreX, AcreY)];
+            int Unknown = 0;
+            int Unknown2 = 0;
+
+            while (CurrentBlockType != 0x3E)
+            {
+                int BlockCliffIndex = BlockType2CliffIndex(CurrentBlockType);
+                if (CheckBlockGroup(CurrentBlockType, 4) == true)
+                {
+                    Unknown = 1;
+                }
+                else
+                {
+                    if (ValidBlockType == Unknown)
+                    {
+                        Unknown2++;
+                    }
+                }
+
+                byte CliffDirection = cliff_next_direct[BlockCliffIndex];
+                Direct2BlockNo(out int X, out int Y, AcreX, AcreY, CliffDirection);
+                CurrentBlockType = AcreData[D2toD1(X, Y)];
+                AcreX = X;
+                AcreY = Y;
+            }
+
+            return Unknown2;
+        }
+
+        private static bool SetSlopeDirectedInfoCliff(ref byte[] AcreData, int AcreX, int AcreY, int ValidBlockType, int WriteIndex)
+        {
+            AcreX += 1;
+            byte CurrentBlockType = AcreData[D2toD1(AcreX, AcreY)];
+            int Unknown = 0;
+            int Count = 0;
+
+            while (CurrentBlockType != 0x3E)
+            {
+                int BlockCliffIndex = BlockType2CliffIndex(CurrentBlockType);
+                if (CheckBlockGroup(CurrentBlockType, 4) == true)
+                {
+                    Unknown = 1;
+                }
+                else
+                {
+                    if (ValidBlockType == Unknown)
+                    {
+                        if (Count == WriteIndex)
+                        {
+                            AcreData[D2toD1(AcreX, AcreY)] = (byte)(BlockCliffIndex + 0x36);
+                            return true;
+                        }
+                        else
+                        {
+                            Count++;
+                        }
+                    }
+                }
+
+                byte CliffDirection = cliff_next_direct[BlockCliffIndex];
+                Direct2BlockNo(out int X, out int Y, AcreX, AcreY, CliffDirection);
+                CurrentBlockType = AcreData[D2toD1(X, Y)];
+                AcreX = X;
+                AcreY = Y;
+            }
+
+            return false;
+        }
+
+        private static int SetSlopeBlock(ref byte[] AcreData)
+        {
+            int SlopeBit = 0;
+            for (int Y = 0; Y < 8; Y++)
+            {
+                byte BlockType = AcreData[D2toD1(0, Y)];
+                if (BlockType == 0x3D)
+                {
+                    int Count = CountDirectedInfoCliff(AcreData, 0, Y, 0);
+                    if (Count > 0)
+                    {
+                        int SlopeIndex = Rand.Next(Count);
+                        if (SetSlopeDirectedInfoCliff(ref AcreData, 0, Y, 0, SlopeIndex))
+                        {
+                            SlopeBit |= (1 << 0); // 1
+                        }
+                    }
+
+                    Count = CountDirectedInfoCliff(AcreData, 0, Y, 1);
+                    if (Count > 0)
+                    {
+                        int SlopeIndex = Rand.Next(Count);
+                        if (SetSlopeDirectedInfoCliff(ref AcreData, 0, Y, 1, SlopeIndex))
+                        {
+                            SlopeBit |= (1 << 1); // 2
+                        }
+                    }
+                }
+            }
+
+            return SlopeBit;
+        }
+
+        private static int SetBridgeAndSlopeBlock(ref byte[] AcreData, bool IsThreeLayeredTown)
+        {
+            return SetBridgeBlock(ref AcreData, IsThreeLayeredTown) | SetSlopeBlock(ref AcreData);
+        }
+
+        private static int SetNeedleworkAndWharfBlock(ref byte[] AcreData)
+        {
+            int WorkBit = 0;
+            int CurrentNeedleworkCheckIdx = 0;
+            int NeedleworkXAcre = Rand.Next(3);
+            int WharfBlockIdx = D2toD1(5, 6);
+            if (AcreData[WharfBlockIdx] == 0x3F)
+            {
+                AcreData[WharfBlockIdx] = 0x64;
+                for (int X = 1; X < 6; X++)
+                {
+                    if (AcreData[D2toD1(X, 6)] == 0x3F && NeedleworkXAcre == CurrentNeedleworkCheckIdx)
+                    {
+                        AcreData[D2toD1(X, 6)] = 0x55;
+                        WorkBit |= (1 << 8); // 0x100
+                    }
+                    CurrentNeedleworkCheckIdx++;
+                }
+            }
+
+            return WorkBit;
+        }
+
+        // Lake Code
+        private static int CountPureRiver(byte[] AcreData)
+        {
+            int RiverAcres = 0;
+            for (int i = 0; i < 0x38; i++)
+            {
+                if (AcreData[i] == 0x28 || (byte)(AcreData[i] - 0x29) <= 4 || AcreData[i] == 0x29)
+                {
+                    RiverAcres++;
+                }
+            }
+
+            return RiverAcres;
+        }
+
+        private static bool SetPoolDirectedRiverBlock(ref byte[] AcreData, int LakeRiverIndex)
+        {
+            int RiverAcre = 0;
+            for (int i = 0; i < 0x38; i++)
+            {
+                if (AcreData[i] == 0x28 || (byte)(AcreData[i] - 0x29) <= 4 || AcreData[i] == 0x29)
+                {
+                    if (RiverAcre == LakeRiverIndex)
+                    {
+                        AcreData[i] += 0x1D;
+                        return true;
+                    }
+                    else
+                    {
+                        RiverAcre++;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private static int SetPoolBlock(ref byte[] AcreData)
+        {
+            int RiverAcres = CountPureRiver(AcreData);
+            if (RiverAcres > 0)
+            {
+                int LakeAcre = Rand.Next(RiverAcres);
+                if (SetPoolDirectedRiverBlock(ref AcreData, LakeAcre) == true)
+                {
+                    return 0x80;
+                }
+            }
+            return 0;
+        }
+
+        // Oceanfront Bridge
+        private static int SetSeaBlockWithBridgeRiver(ref byte[] AcreData, int CurrentGenerationBit)
+        {
+            if ((CurrentGenerationBit & 8) == 0) // Make sure the lower bridge wasn't placed already
+            {
+                for (int i = 0; i < 0x38; i++)
+                {
+                    if (AcreData[i] == 0x40)
+                    {
+                        AcreData[i] = 0x52;
+                        return 8;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        private static ushort GetExceptionalSeaBgDownBgName(ushort BgType)
+        {
+            ushort CurrentValue = 0;
+            ushort CurrentIdx = 0;
+            do
+            {
+                CurrentValue = exceptional_table[CurrentIdx];
+                if (CurrentValue != 0x125)
+                {
+                    if (CurrentValue == BgType)
+                    {
+                        return exceptional_table[CurrentIdx + 1];
+                    }
+                }
+                CurrentIdx += 2;
+            } while (CurrentValue != 0x125);
+            return BgType;
+        }
+
+        private static ushort BgName2RandomConbiNo(ushort ExceptionalValue)
+        {
+            int Matches = 0;
+            for (int i = 0; i < data_combi_table_number; i++)
+            {
+                if (ExceptionalValue == data_combi_table[i].BlockType && data_combi_table[i].ValidCombiCount != 0xFF)
+                {
+                    Matches++;
+                }
+            }
+
+            if (Matches > 0)
+            {
+                int CurrentMatch = 0;
+                int RandomlySelectedMatch = Rand.Next(0); // Silly Animal Crossing Devs. This isn't random.
+                for (int i = 0; i < data_combi_table_number; i++)
+                {
+                    if (data_combi_table[i].BlockType == ExceptionalValue && data_combi_table[i].ValidCombiCount != 0xFF)
+                    {
+                        if (CurrentMatch == RandomlySelectedMatch)
+                        {
+                            return (ushort)i;
+                        }
+                        else
+                        {
+                            CurrentMatch++;
+                        }
+                    }
+                }
+            }
+
+            return data_combi_table_number;
         }
 
         private static ushort GetRandomTownAcreFromPool(byte AcreType)
@@ -1018,6 +1845,76 @@ namespace ACSE
             }
         }
 
+        private static int SetUniqueFlatBlock(ref byte[] AcreData)
+        {
+            return 0x70; // Stubbed at the moment
+        }
+
+        private static void ReportRandomFieldBitResult(int RandomFieldBit, int PerfectBit)
+        {
+            Console.WriteLine(string.Format("RandomField Bit: {0} | Perfect Bit: {1}", RandomFieldBit.ToString("X2"), PerfectBit.ToString("X2")));
+        }
+
+        // Acre Height Code
+        private static byte[] InitBlockBase()
+            => new byte[70];
+
+        private static void GetBlockBase(ref byte[] HeightTable, byte[] AcreData)
+        {
+            for (int X = 0; X < 7; X++)
+            {
+                byte CurrentHeight = 0;
+                for (int Y = 9; Y > -1; Y--)
+                {
+                    byte CurrentBlock = AcreData[D2toD1(X, Y)];
+                    HeightTable[D2toD1(X, Y)] = CurrentHeight;
+                    if ((GetSystemBlockInfo(CurrentBlock) & 1) == 1 || (GetSystemBlockInfo(CurrentBlock) & 8) == 8 || (GetSystemBlockInfo(CurrentBlock) & 0x10) == 0x10
+                        || CurrentBlock == 0x3D || CurrentBlock == 0x3E)
+                    {
+                        CurrentHeight++;
+                    }
+                }
+            }
+        }
+
+        private static byte[] MakeBaseHeightTable(byte[] AcreData)
+        {
+            byte[] HeightTable = InitBlockBase();
+            GetBlockBase(ref HeightTable, AcreData);
+            return HeightTable;
+        }
+
+        private static Tuple<byte[], byte[]> MakeRandomField_ovl()
+        {
+            int StepMode = GetRandomStepMode();
+            int PerfectBit = MakePerfectBit();
+            int Bit = 0;
+            byte[] AcreData = null;
+            byte[] HeightTable = null;
+            Console.WriteLine("StepMode: " + StepMode);
+
+            while ((PerfectBit & Bit) != PerfectBit)
+            {
+                AcreData = MakeBaseLandform(StepMode);
+                MakeFlatPlaceInformation(ref AcreData);
+                SetMarinBlock(ref AcreData);
+                Bit = SetBridgeAndSlopeBlock(ref AcreData, StepMode == 1);
+                Bit |= SetNeedleworkAndWharfBlock(ref AcreData);
+                Bit |= SetUniqueFlatBlock(ref AcreData);
+                SetUniqueRailBlock(ref AcreData);
+                Bit |= SetPoolBlock(ref AcreData);
+                Bit |= SetSeaBlockWithBridgeRiver(ref AcreData, Bit);
+                HeightTable = MakeBaseHeightTable(AcreData);
+                ReportRandomFieldBitResult(Bit, PerfectBit);
+            }
+            // MakeBaseHeightTable(AcreData, ref BaseHeightTable);
+            // ReportRandomFieldBitResult(Bit, PerfectBit);
+            // SelectBlock
+            // CopyBaseHeightData
+
+            return new Tuple<byte[], byte[]>(AcreData, HeightTable);
+        }
+
         public static ushort[] Generate(SaveType saveType)
         {
             switch (saveType)
@@ -1025,20 +1922,39 @@ namespace ACSE
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Animal_Crossing:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
-                    /*byte[] Data = new byte[70];
-                    Array.Copy(DefaultTownStructure, Data, 70);
-
-                    DecideRiverAlbuminCliff(ref Data);
-                    SetUniqueRailBlock(ref Data);*/
-
-                    byte[] Data = MakeRandomField_ovl();
-                    PrintAcreData(Data);
+                    var RandomFieldData = MakeRandomField_ovl();
+                    byte[] Data = RandomFieldData.Item1;
+                    byte[] HeightData = RandomFieldData.Item2;
 
                     ushort[] AcreData = new ushort[70];
                     string s = "";
                     for (int i = 0; i < 70; i++)
                     {
-                        AcreData[i] = GetRandomTownAcreFromPool(Data[i]);
+                        ushort BlockId = 0;
+                        if (Data[i] == 0x65)
+                        {
+                            // TODO: fix this
+                            ushort AboveAcreId = AcreData[D2toD1(i % 7, (i / 7) - 1)];
+                            int AcreBlockId = AboveAcreId >> 2;
+                            ushort OceanId = data_combi_table[AcreBlockId].BlockType;
+                            ushort ExceptionalValue = GetExceptionalSeaBgDownBgName(OceanId);
+                            ushort CorrectBgValue = BgName2RandomConbiNo(ExceptionalValue);
+                            BlockId = (ushort)(CorrectBgValue << 2);
+                        }
+                        else
+                        {
+                            BlockId = GetRandomTownAcreFromPool(Data[i]);
+                            if (i > 6 && i < 50 && i % 7 > 0 && i % 7 < 6)
+                            {
+                                int Count = 0;
+                                while (IsUniqueBlock(AcreData, BlockId) == false && Count < 10)
+                                {
+                                    BlockId = GetRandomTownAcreFromPool(Data[i]);
+                                    Count++;
+                                }
+                            }
+                        }
+                        AcreData[i] = (ushort)(BlockId | HeightData[i]);
                         if (i % 7 == 0)
                         {
                             Console.WriteLine(s);
@@ -1047,26 +1963,20 @@ namespace ACSE
 
                         s += "0x" + AcreData[i].ToString("X4") + " ";
                     }
+                    Console.WriteLine(s);
 
-                    return null;
+                    return AcreData;
                 default:
                     return null;
             }
         }
 
-        // Debug
-        private static void PrintAcreData(byte[] AcreData)
+        private static bool IsUniqueBlock(ushort[] AcreData, ushort BlockId)
         {
-            Console.Write("\n");
-            for (int i = 0; i < AcreData.Length; i++)
-            {
-                if (i > 0 && i % 7 == 0)
-                {
-                    Console.Write("\n");
-                }
-                Console.Write(AcreData[i].ToString("X2") + " ");
-            }
-            Console.Write("\n");
+            foreach (var Block in AcreData)
+                if (Block == BlockId)
+                    return false;
+            return true;
         }
     }
 }

@@ -106,9 +106,6 @@ namespace ACSE
             DragEnter += OnDragEnter;
             DragDrop += OnDragDrop;
 
-            // GENERATION TEST \\
-            Generation.Generate(SaveType.Animal_Crossing);
-
             // Clamp Map Sizes
             if (TownMapCellSize < 8)
             {
@@ -4888,11 +4885,6 @@ namespace ACSE
             }
         }
 
-        private void generateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Town_Acres != null && ushort.TryParse(ReplaceItemBox.Text, NumberStyles.HexNumber, null, out ushort ReplaceId)
@@ -4938,6 +4930,53 @@ namespace ACSE
             if (Save_File != null && !Loading && Save_File.Save_Generation == SaveGeneration.GCN && Selected_House != null)
             {
                 HouseInfo.SetStatueEnabled(Selected_House.Offset, Save_File.Save_Type, StatueCheckBox.Checked);
+            }
+        }
+
+        private void generateRandomTownToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!Loading && Save_File != null)
+            {
+                switch (Save_File.Save_Generation)
+                {
+                    case SaveGeneration.GCN:
+                        ushort[] NewAcreData = Generation.Generate(Save_File.Save_Type);
+
+                        // Clear Buried Items Bitmap if it exists
+                        if (Buried_Buffer != null)
+                        {
+                            Buried_Buffer = new byte[Buried_Buffer.Length];
+                        }
+
+                        for (int i = 0; i < NewAcreData.Length; i++)
+                        {
+                            Acres[i] = new WorldAcre(NewAcreData[i], i);
+                            Acres[i].LoadDefaultItems(Save_File);
+                            Image OldImage = Acre_Map[i].BackgroundImage;
+                            Acre_Map[i].BackgroundImage = Get_Acre_Image(Acres[i], Acres[i].BaseAcreID);
+                            AcreData.CheckReferencesAndDispose(OldImage, Acre_Map, selectedAcrePicturebox);
+                            Acre_Map[i].Refresh();
+                            int X = i % Current_Save_Info.X_Acre_Count;
+                            int Y = i / Current_Save_Info.X_Acre_Count;
+                            if (Y >= Current_Save_Info.Town_Y_Acre_Start && X > 0 && X < Current_Save_Info.X_Acre_Count - 1)
+                            {
+                                int Town_Acre = (Y - Current_Save_Info.Town_Y_Acre_Start) * (Current_Save_Info.X_Acre_Count - 2) + (X - 1);
+                                if (Town_Acre < Current_Save_Info.Town_Acre_Count)
+                                {
+                                    Town_Acres[Town_Acre] = new WorldAcre(Acres[i].AcreID, Town_Acre, Acres[i].Acre_Items, Buried_Buffer, Save_File.Save_Type);
+                                    Refresh_PictureBox_Image(Town_Acre_Map[Town_Acre], GenerateAcreItemsBitmap(Town_Acres[Town_Acre].Acre_Items, Town_Acre));
+                                    Town_Acre_Map[Town_Acre].BackgroundImage = Acre_Map[i].BackgroundImage;
+                                    Town_Acre_Map[Town_Acre].Refresh();
+                                }
+
+                                // TODO: Island Acres
+                            }
+                        }
+                        break;
+                    default:
+                        MessageBox.Show("Town Generation for this game hasn't been implemented yet!", "Generation Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+                }
             }
         }
 
