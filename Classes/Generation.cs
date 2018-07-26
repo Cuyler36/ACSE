@@ -1358,7 +1358,7 @@ namespace ACSE
 
         private static byte[] MakeBaseLandformStep3()
         {
-            return step3_blockss[Rand.Next(10)];
+            return step3_blockss[Rand.Next(10)].Copy();
         }
 
         private static byte[] MakeBaseLandform(int StepMode)
@@ -1895,6 +1895,7 @@ namespace ACSE
 
             while ((PerfectBit & Bit) != PerfectBit)
             {
+                AcreData = HeightTable = null;
                 AcreData = MakeBaseLandform(StepMode);
                 MakeFlatPlaceInformation(ref AcreData);
                 SetMarinBlock(ref AcreData);

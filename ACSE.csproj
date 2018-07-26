@@ -4849,6 +4849,7 @@
     <Compile Include="Classes\Backup.cs" />
     <Compile Include="Classes\Catalog.cs" />
     <Compile Include="Classes\Emotion.cs" />
+    <Compile Include="Classes\Extensions\ArrayExtensions.cs" />
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
     <Compile Include="Classes\Extensions\LinqExtensions.cs" />
     <Compile Include="Classes\Extensions\PointExtension.cs" />
