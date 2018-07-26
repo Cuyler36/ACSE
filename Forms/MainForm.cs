@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ACSE.Classes.Utilities;
@@ -81,6 +82,7 @@ namespace ACSE
         private PictureBoxWithInterpolationMode NL_Grass_Overlay;
         private PlaceholderTextBox ReplaceItemBox;
         private PlaceholderTextBox ReplacingItemBox;
+        private PlaceholderTextBox SeedBox;
         private ItemEditor inventoryEditor;
         private SingleItemEditor shirtEditor;
         private ItemEditor dresserEditor;
@@ -249,6 +251,9 @@ namespace ACSE
             // Construct Replace Item Menu
             ConstructReplaceItemMenu();
 
+            // Construct Town Generation Seed TextBox
+            ConstructGenerationSeedTextBox();
+
             // Island Tab Index Changed
             islandSelectionTab.Selected += IslandTabIndexChanged;
 
@@ -308,11 +313,11 @@ namespace ACSE
             replaceItemsToolStripMenuItem.DropDown.Items.Insert(0, ReplaceToolStripHost);
             replaceItemsToolStripMenuItem.DropDown.Items.Insert(1, ReplacingToolStripHost);
 
-            ReplaceItemBox.TextChanged += new EventHandler((object s, EventArgs e) => ReplaceVerifyHex(ReplaceItemBox));
-            ReplacingItemBox.TextChanged += new EventHandler((object s, EventArgs e) => ReplaceVerifyHex(ReplacingItemBox));
+            ReplaceItemBox.TextChanged += new EventHandler((object s, EventArgs e) => ReplaceVerifyHex(ReplaceItemBox, 4));
+            ReplacingItemBox.TextChanged += new EventHandler((object s, EventArgs e) => ReplaceVerifyHex(ReplacingItemBox, 4));
         }
 
-        private void ReplaceVerifyHex(PlaceholderTextBox TextBox)
+        private void ReplaceVerifyHex(PlaceholderTextBox TextBox, short MaxLength)
         {
             string Text = TextBox.Text;
             if (!int.TryParse(Text, NumberStyles.HexNumber, NumberFormatInfo.CurrentInfo, out int Hex) && Text != string.Empty)
@@ -320,7 +325,42 @@ namespace ACSE
                 TextBox.Text = Text.Remove(Text.Length - 1, 1);
                 TextBox.SelectionStart = TextBox.Text.Length;
             }
-            TextBox.MaxLength = TextBox.IsPlaceholderActive ? short.MaxValue : 4;
+            TextBox.MaxLength = TextBox.IsPlaceholderActive ? short.MaxValue : MaxLength;
+        }
+
+        #endregion
+
+        #region Town Generation Seed TextBox Construction
+
+        private void ConstructGenerationSeedTextBox()
+        {
+            SeedBox = new PlaceholderTextBox
+            {
+                PlaceholderText = "Seed",
+                Size = new Size(generateToolStripMenuItem.Size.Width, 18),
+                PlaceholderTextColor = Color.Gray
+            };
+
+            var SeedBoxToolStripHost = new ToolStripControlHost(SeedBox)
+            {
+                AutoSize = false,
+                Size = SeedBox.Size
+            };
+
+            generateRandomTownToolStripMenuItem.DropDownItems.Insert(0, SeedBoxToolStripHost);
+
+            SeedBox.TextChanged += new EventHandler((object s, EventArgs e) => VerifyNumbers(SeedBox, 10));
+        }
+
+        private void VerifyNumbers(PlaceholderTextBox TextBox, short MaxLength)
+        {
+            string Text = TextBox.Text;
+            if (!string.IsNullOrWhiteSpace(Text) && !Text.All(o => char.IsDigit(o) || o.Equals('-')))
+            {
+                TextBox.Text = Text.Remove(Text.Length - 1, 1);
+                TextBox.SelectionStart = TextBox.Text.Length;
+            }
+            TextBox.MaxLength = TextBox.IsPlaceholderActive ? short.MaxValue : MaxLength;
         }
 
         #endregion
@@ -539,6 +579,7 @@ namespace ACSE
             clearWeedsToolStripMenuItem.Enabled = true;
             removeAllItemsToolStripMenuItem.Enabled = true;
             replaceItemsToolStripMenuItem.Enabled = true;
+            generateRandomTownToolStripMenuItem.Enabled = true;
             fillMuseumToolStripMenuItem.Enabled = save.Save_Generation != SaveGeneration.N64 && save.Save_Generation != SaveGeneration.iQue;
             clearMuseumToolStripMenuItem.Enabled = save.Save_Generation != SaveGeneration.N64 && save.Save_Generation != SaveGeneration.iQue;
             unlockAllPublicWorkProjectsToolStripMenuItem.Enabled = save.Save_Generation == SaveGeneration.N3DS;
@@ -1751,7 +1792,7 @@ namespace ACSE
 
         private void CurrentItemId_TextChanged(object sender, EventArgs e)
         {
-            ReplaceVerifyHex(itemIdTextBox);
+            ReplaceVerifyHex(itemIdTextBox, 4);
             if (ushort.TryParse(itemIdTextBox.Text, NumberStyles.HexNumber, null, out ushort itemId))
             {
                 SetCurrentItem(new Item(itemId, byte.Parse(itemFlag1.Text, NumberStyles.HexNumber), byte.Parse(itemFlag2.Text, NumberStyles.HexNumber)));
@@ -4937,10 +4978,16 @@ namespace ACSE
         {
             if (!Loading && Save_File != null)
             {
+                int? Seed = null;
+                if (!string.IsNullOrWhiteSpace(SeedBox.Text))
+                {
+                    Seed = int.Parse(SeedBox.Text);
+                }
+
                 switch (Save_File.Save_Generation)
                 {
                     case SaveGeneration.GCN:
-                        ushort[] NewAcreData = Generation.Generate(Save_File.Save_Type);
+                        ushort[] NewAcreData = Generation.Generate(Save_File.Save_Type, Seed);
 
                         // Clear Buried Items Bitmap if it exists
                         if (Buried_Buffer != null)

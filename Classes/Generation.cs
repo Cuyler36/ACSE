@@ -7,7 +7,7 @@ namespace ACSE
 {
     class Generation
     {
-        private static readonly Random Rand = new Random();
+        private static Random Rand = new Random();
 
         private struct data_combi
         {
@@ -1811,7 +1811,7 @@ namespace ACSE
             byte A = 0, B = 0;
             bool ASet = false, BSet = false;
 
-            if (Rand.Next(1000) >= 500) // This may not be accurate. I believe it's only true when it equals one.
+            if ((Rand.Next(1000) & 1) == 0)
             {
                 A = 0x43;
                 B = 0x41;
@@ -1915,8 +1915,17 @@ namespace ACSE
             return new Tuple<byte[], byte[]>(AcreData, HeightTable);
         }
 
-        public static ushort[] Generate(SaveType saveType)
+        public static ushort[] Generate(SaveType saveType, int? Seed = null)
         {
+            if (Seed.HasValue)
+            {
+                Rand = new Random(Seed.Value);
+            }
+            else
+            {
+                Rand = new Random();
+            }
+
             switch (saveType)
             {
                 case SaveType.Doubutsu_no_Mori_Plus:
@@ -1927,13 +1936,11 @@ namespace ACSE
                     byte[] HeightData = RandomFieldData.Item2;
 
                     ushort[] AcreData = new ushort[70];
-                    string s = "";
                     for (int i = 0; i < 70; i++)
                     {
                         ushort BlockId = 0;
                         if (Data[i] == 0x65)
                         {
-                            // TODO: fix this
                             ushort AboveAcreId = AcreData[D2toD1(i % 7, (i / 7) - 1)];
                             int AcreBlockId = AboveAcreId >> 2;
                             ushort OceanId = data_combi_table[AcreBlockId].BlockType;
@@ -1955,16 +1962,7 @@ namespace ACSE
                             }
                         }
                         AcreData[i] = (ushort)(BlockId | HeightData[i]);
-                        if (i % 7 == 0)
-                        {
-                            Console.WriteLine(s);
-                            s = "";
-                        }
-
-                        s += "0x" + AcreData[i].ToString("X4") + " ";
                     }
-                    Console.WriteLine(s);
-
                     return AcreData;
                 default:
                     return null;
