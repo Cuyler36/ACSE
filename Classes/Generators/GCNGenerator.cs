@@ -1593,25 +1593,25 @@ namespace ACSE.Generators
             return -1;
         }
 
-        private int CountDirectedInfoCliff(byte[] AcreData, int AcreX, int AcreY, int ValidBlockType) // not sure what "ValidBlockType" is
+        private int CountDirectedInfoCliff(byte[] AcreData, int AcreX, int AcreY, int DesiredRiverSide)
         {
             AcreX += 1;
             byte CurrentBlockType = AcreData[D2toD1(AcreX, AcreY)];
-            int Unknown = 0;
-            int Unknown2 = 0;
+            int RiverSide = 0;
+            int ValidCliffBlocks = 0;
 
             while (CurrentBlockType != 0x3E)
             {
                 int BlockCliffIndex = BlockType2CliffIndex(CurrentBlockType);
-                if (CheckBlockGroup(CurrentBlockType, 4) == true)
+                if (CheckBlockGroup(CurrentBlockType, 4) == true) // Check if the current block is a waterfall acre
                 {
-                    Unknown = 1;
+                    RiverSide = 1;
                 }
                 else
                 {
-                    if (ValidBlockType == Unknown)
+                    if (DesiredRiverSide == RiverSide)
                     {
-                        Unknown2++;
+                        ValidCliffBlocks++;
                     }
                 }
 
@@ -1622,7 +1622,7 @@ namespace ACSE.Generators
                 AcreY = Y;
             }
 
-            return Unknown2;
+            return ValidCliffBlocks;
         }
 
         private bool SetSlopeDirectedInfoCliff(ref byte[] AcreData, int AcreX, int AcreY, int ValidBlockType, int WriteIndex)
