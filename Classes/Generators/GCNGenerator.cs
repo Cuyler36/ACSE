@@ -2143,8 +2143,9 @@ namespace ACSE.Generators
 
         private bool IsUniqueBlock(ushort[] AcreData, ushort BlockId)
         {
+            BlockId &= 0xFFFC; // Remove the height data
             foreach (var Block in AcreData)
-                if (Block == BlockId)
+                if ((Block & 0xFFFC) == BlockId)
                     return false;
             return true;
         }
