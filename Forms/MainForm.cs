@@ -8,10 +8,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ACSE.Classes.Utilities;
+using ACSE.Generators;
 
 namespace ACSE
 {
@@ -4987,7 +4987,7 @@ namespace ACSE
                 switch (Save_File.Save_Generation)
                 {
                     case SaveGeneration.GCN:
-                        ushort[] NewAcreData = Generation.Generate(Save_File.Save_Type, Seed);
+                        ushort[] NewAcreData = Generator.GetGenerator(Save_File.Save_Generation).Generate(Seed);
 
                         // Clear Buried Items Bitmap if it exists
                         if (Buried_Buffer != null)

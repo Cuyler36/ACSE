@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace ACSE
+namespace ACSE.Generators
 {
-    class Generation
+    public class GCNGenerator : IGenerator
     {
         private enum CliffSide : ushort
         {
@@ -21,7 +19,7 @@ namespace ACSE
             Any = 2
         }
 
-        private static Random Rand = new Random();
+        private Random Rand;
 
         private struct data_combi
         {
@@ -818,18 +816,18 @@ namespace ACSE
             // 69 - 6B
         };
 
-        private static int D2toD1(int AcreX, int AcreY)
+        private int D2toD1(int AcreX, int AcreY)
         {
             return AcreY * 7 + AcreX;
         }
 
-        private static void D1toD2(int Index, out int X, out int Y)
+        private void D1toD2(int Index, out int X, out int Y)
         {
             X = Index % 7;
             Y = Index / 7;
         }
 
-        private static int GetXYCoordinateForBlockType(byte[] Data, int BlockType, out int X, out int Y)
+        private int GetXYCoordinateForBlockType(byte[] Data, int BlockType, out int X, out int Y)
         {
             int Index = -1;
             X = Y = -1;
@@ -851,7 +849,7 @@ namespace ACSE
         /// Selects the "step" mode, or layer count, of your town. If 0, it's a 2 layered town. If 1, it's a 3 layered town.
         /// </summary>
         /// <returns>Step Mode</returns>
-        private static int GetRandomStepMode()
+        private int GetRandomStepMode()
         {
             int RNG = Rand.Next(0, 64);
             int Temp = 0xF ^ RNG;
@@ -865,7 +863,7 @@ namespace ACSE
         /// Returns 0x1FF
         /// </summary>
         /// <returns>0x1FF</returns>
-        private static int MakePerfectBit()
+        private int MakePerfectBit()
         {
             int Perfect = 0;
             for (int i = 0; i < 9; i++)
@@ -881,13 +879,13 @@ namespace ACSE
         /// <param name="AcreX">The current X acre</param>
         /// <param name="AcreY">The current Y acre</param>
         /// <param name="Direction">The direction of the current feature</param>
-        private static void Direct2BlockNo(out int X, out int Y, int AcreX, int AcreY, int Direction)
+        private void Direct2BlockNo(out int X, out int Y, int AcreX, int AcreY, int Direction)
         {
             X = AcreX + x_offset_409[Direction & 3];
             Y = AcreY + z_offset_410[Direction & 3];
         }
 
-        private static bool CheckBlockGroup(int BlockType, int AcreTypeSet)
+        private bool CheckBlockGroup(int BlockType, int AcreTypeSet)
         {
             if (AcreTypeSet != 8)
             {
@@ -925,14 +923,14 @@ namespace ACSE
         /// <param name="AcreYMin">Minimum Y-Acre value</param>
         /// <param name="AcreYMax">Maximum Y-Acre value</param>
         /// <returns>bool AcresAreValid</returns>
-        private static bool CheckCorrectBlockNo(int AcreX, int AcreY, int AcreXMin, int AcreXMax, int AcreYMin, int AcreYMax)
+        private bool CheckCorrectBlockNo(int AcreX, int AcreY, int AcreXMin, int AcreXMax, int AcreYMin, int AcreYMax)
             => (AcreX >= AcreXMin && AcreX <= AcreXMax && AcreY >= AcreYMin && AcreY <= AcreYMax);
 
-        private static int GetSystemBlockInfo(int BlockType)
+        private int GetSystemBlockInfo(int BlockType)
             => system_block_info[BlockType & 0xFF];
 
         // Cliff code
-        private static bool DecideBaseCliff(ref byte[] AcreData)
+        private bool DecideBaseCliff(ref byte[] AcreData)
         {
             int CliffStartTableIndex = Rand.Next(4);
             byte[] CliffStartTable = cliff_start_table[CliffStartTableIndex];
@@ -956,7 +954,7 @@ namespace ACSE
             return LastCheckCliff(AcreData, 1, CliffStartTableIndex + 2);
         }
 
-        private static bool TraceCliffBlock(ref byte[] AcreData, int AcreX, int AcreY)
+        private bool TraceCliffBlock(ref byte[] AcreData, int AcreX, int AcreY)
         {
             byte CurrentCliffAcreType = AcreData[D2toD1(AcreX, AcreY)];
             int TraceState = 0;
@@ -1021,7 +1019,7 @@ namespace ACSE
             }
         }
 
-        private static void SetEndCliffBlock(ref byte[] AcreData) // This doesn't always work. Double check it at some point.
+        private void SetEndCliffBlock(ref byte[] AcreData) // This doesn't always work. Double check it at some point.
         {
             int AcreY = 0;
             int DirectType = 0;
@@ -1060,7 +1058,7 @@ namespace ACSE
             }
         }
 
-        private static bool LastCheckCliff(byte[] AcreData, int AcreX, int AcreY)
+        private bool LastCheckCliff(byte[] AcreData, int AcreX, int AcreY)
         {
             byte CliffAcreType = AcreData[D2toD1(AcreX, AcreY)];
             int Y = AcreY;
@@ -1081,7 +1079,7 @@ namespace ACSE
         /// </summary>
         /// <param name="RiverIdx">The current river block index</param>
         /// <returns>The direction of the next river section</returns>
-        private static int RiverIdx2NextDirect(int RiverIdx)
+        private int RiverIdx2NextDirect(int RiverIdx)
         {
             if (RiverIdx > -1 && RiverIdx < 7)
             {
@@ -1090,7 +1088,7 @@ namespace ACSE
             return 2; // Return south by default
         }
 
-        private static byte RiverAlbuminCliff(byte BlockType, byte AlbuminType)
+        private byte RiverAlbuminCliff(byte BlockType, byte AlbuminType)
         {
             if (CheckBlockGroup(BlockType, 0) && CheckBlockGroup(AlbuminType, 1))
             {
@@ -1110,7 +1108,7 @@ namespace ACSE
         /// </summary>
         /// <param name="AcreData">The current acre data</param>
         /// <returns>int NumberOfTimesCrossed</returns>
-        private static int GetCenterCrossZoneRiverCount(byte[] AcreData)
+        private int GetCenterCrossZoneRiverCount(byte[] AcreData)
         {
             int AcreY = 2;
             int CrossZoneCount = 0;
@@ -1125,7 +1123,7 @@ namespace ACSE
             return CrossZoneCount;
         }
 
-        private static bool TraceRiverPart1(ref byte[] AcreData, out int AcreX, out int AcreY)
+        private bool TraceRiverPart1(ref byte[] AcreData, out int AcreX, out int AcreY)
         {
             int RiverTraceState = 0;
             AcreX = 0;
@@ -1186,7 +1184,7 @@ namespace ACSE
             return true;
         }
 
-        private static bool TraceRiverPart2(ref byte[] AcreData, ref byte[] UnchangedAcreData, int AcreX, int AcreY, byte[] challenge_flag)
+        private bool TraceRiverPart2(ref byte[] AcreData, ref byte[] UnchangedAcreData, int AcreX, int AcreY, byte[] challenge_flag)
         {
             int RiverStartAcre = D2toD1(AcreX, AcreY);
             byte RiverStartAcreType = AcreData[RiverStartAcre];
@@ -1286,7 +1284,7 @@ namespace ACSE
             }
         }
 
-        private static bool LastCheckRiver(byte[] AcreData, int AcreX, int AcreY)
+        private bool LastCheckRiver(byte[] AcreData, int AcreX, int AcreY)
         {
             byte CurrentAcreType = AcreData[D2toD1(AcreX, AcreY)];
             while (CheckBlockGroup(CurrentAcreType, 1) == true)
@@ -1303,7 +1301,7 @@ namespace ACSE
             return ((Valid >> 31) & 1) == 1; // This can be simplified as AcreY >= 7. I'm sticking to the code, though.
         }
 
-        private static bool DecideRiverAlbuminCliff(ref byte[] CliffData, ref byte[] RiverCliffData)
+        private bool DecideRiverAlbuminCliff(ref byte[] CliffData, ref byte[] RiverCliffData)
         {
             for (int Y = 0; Y < 8; Y++)
             {
@@ -1330,7 +1328,7 @@ namespace ACSE
             return true;
         }
 
-        private static bool DecideBaseRiver(ref byte[] AcreData, out byte[] RiverData)
+        private bool DecideBaseRiver(ref byte[] AcreData, out byte[] RiverData)
         {
             byte[] UnchangedAcreData = new byte[AcreData.Length];
             Array.Copy(AcreData, UnchangedAcreData, AcreData.Length);
@@ -1346,7 +1344,7 @@ namespace ACSE
             return false;
         }
 
-        private static bool SetRandomBlockData(ref byte[] AcreData, out byte[] RiverData) // Technically takes two copies of AcreData
+        private bool SetRandomBlockData(ref byte[] AcreData, out byte[] RiverData) // Technically takes two copies of AcreData
         {
             RiverData = null;
             if (DecideBaseCliff(ref AcreData))
@@ -1356,7 +1354,7 @@ namespace ACSE
             return false;
         }
 
-        private static byte[] MakeBaseLandformStep2()
+        private byte[] MakeBaseLandformStep2()
         {
             byte[] AcreData = new byte[70];
             byte[] RiverData = null;
@@ -1370,12 +1368,12 @@ namespace ACSE
             return AcreData;
         }
 
-        private static byte[] MakeBaseLandformStep3()
+        private byte[] MakeBaseLandformStep3()
         {
             return step3_blockss[Rand.Next(10)].Copy();
         }
 
-        private static byte[] MakeBaseLandform(int StepMode)
+        private byte[] MakeBaseLandform(int StepMode)
         {
             if (StepMode == 1)
             {
@@ -1394,7 +1392,7 @@ namespace ACSE
         /// <param name="AcreData">Current accre data</param>
         /// <param name="river_left_right_info">River right & left acre map</param>
         /// <param name="cliff_up_down_info">Cliff up & down acre map</param>
-        private static void MakeFlatPlaceInformation(byte[] AcreData, out ushort[] river_left_right_info, out ushort[] cliff_up_down_info)
+        private void MakeFlatPlaceInformation(byte[] AcreData, out ushort[] river_left_right_info, out ushort[] cliff_up_down_info)
         {
             river_left_right_info = new ushort[70];
             cliff_up_down_info = new ushort[70];
@@ -1435,7 +1433,7 @@ namespace ACSE
         }
 
         // Oceanfront Blocks
-        private static void SetMarinBlock(ref byte[] AcreData)
+        private void SetMarinBlock(ref byte[] AcreData)
         {
             for (int X = 1; X < 6; X++)
             {
@@ -1463,7 +1461,7 @@ namespace ACSE
         /// <param name="AcreY">The Y-Acre of the first cliff-river crossing.</param>
         /// <param name="AcreData">The current acre data.</param>
         /// <returns>The amount of times the river & cliffs cross.</returns>
-        public static int GetRiverCrossCliffInfo(out int AcreX, out int AcreY, byte[] AcreData)
+        public int GetRiverCrossCliffInfo(out int AcreX, out int AcreY, byte[] AcreData)
         {
             int AcreIdx = 0;
             int Count = 0;
@@ -1494,7 +1492,7 @@ namespace ACSE
             return Count;
         }
 
-        private static int SetBridgeBlock(ref byte[] AcreData, bool ThreeLayeredTown)
+        private int SetBridgeBlock(ref byte[] AcreData, bool ThreeLayeredTown)
         {
             bool PlaceUpperBridge = (Rand.Next(10) & 1) == 1;
             GetRiverCrossCliffInfo(out int AcreX, out int AcreY, AcreData);
@@ -1582,7 +1580,7 @@ namespace ACSE
         }
 
         // Slope Code
-        private static int BlockType2CliffIndex(int CliffIdx)
+        private int BlockType2CliffIndex(int CliffIdx)
         {
             int CliffBlockInfo = GetSystemBlockInfo(CliffIdx);
             for (int i = 0; i < 7; i++)
@@ -1595,7 +1593,7 @@ namespace ACSE
             return -1;
         }
 
-        private static int CountDirectedInfoCliff(byte[] AcreData, int AcreX, int AcreY, int ValidBlockType) // not sure what "ValidBlockType" is
+        private int CountDirectedInfoCliff(byte[] AcreData, int AcreX, int AcreY, int ValidBlockType) // not sure what "ValidBlockType" is
         {
             AcreX += 1;
             byte CurrentBlockType = AcreData[D2toD1(AcreX, AcreY)];
@@ -1627,7 +1625,7 @@ namespace ACSE
             return Unknown2;
         }
 
-        private static bool SetSlopeDirectedInfoCliff(ref byte[] AcreData, int AcreX, int AcreY, int ValidBlockType, int WriteIndex)
+        private bool SetSlopeDirectedInfoCliff(ref byte[] AcreData, int AcreX, int AcreY, int ValidBlockType, int WriteIndex)
         {
             AcreX += 1;
             byte CurrentBlockType = AcreData[D2toD1(AcreX, AcreY)];
@@ -1667,7 +1665,7 @@ namespace ACSE
             return false;
         }
 
-        private static int SetSlopeBlock(ref byte[] AcreData)
+        private int SetSlopeBlock(ref byte[] AcreData)
         {
             int SlopeBit = 0;
             for (int Y = 0; Y < 8; Y++)
@@ -1700,12 +1698,12 @@ namespace ACSE
             return SlopeBit;
         }
 
-        private static int SetBridgeAndSlopeBlock(ref byte[] AcreData, bool IsThreeLayeredTown)
+        private int SetBridgeAndSlopeBlock(ref byte[] AcreData, bool IsThreeLayeredTown)
         {
             return SetBridgeBlock(ref AcreData, IsThreeLayeredTown) | SetSlopeBlock(ref AcreData);
         }
 
-        private static int SetNeedleworkAndWharfBlock(ref byte[] AcreData)
+        private int SetNeedleworkAndWharfBlock(ref byte[] AcreData)
         {
             int WorkBit = 0;
             int CurrentNeedleworkCheckIdx = 0;
@@ -1731,7 +1729,7 @@ namespace ACSE
         // Museum, Wishing Well, & Police Station Code
 
         // Man the devs really really made this terrible
-        private static bool JudgeFlatBlock(byte[] AcreData, int Index, RiverSide RiverDirection, CliffSide CliffDirection, ushort[] cliff_up_down_info, ushort[] river_left_right_info)
+        private bool JudgeFlatBlock(byte[] AcreData, int Index, RiverSide RiverDirection, CliffSide CliffDirection, ushort[] cliff_up_down_info, ushort[] river_left_right_info)
         {
             if ((int)RiverDirection > -1 && (int)RiverDirection < 3 && (int)CliffDirection > -1 && (int)CliffDirection < 3)
             {
@@ -1785,7 +1783,7 @@ namespace ACSE
             return false;
         }
 
-        private static int CountFlatBlock(byte[] AcreData, RiverSide RiverDirection, CliffSide CliffDirection, ushort[] cliff_up_down_info, ushort[] river_left_right_info)
+        private int CountFlatBlock(byte[] AcreData, RiverSide RiverDirection, CliffSide CliffDirection, ushort[] cliff_up_down_info, ushort[] river_left_right_info)
         {
             int FlatBlocks = 0;
             for (int i = 0; i < 0x38; i++)
@@ -1798,7 +1796,7 @@ namespace ACSE
             return FlatBlocks;
         }
 
-        private static int RewriteFlatType(ref byte[] AcreData, int FlatBlockIndex, byte NewFlatBlockType, RiverSide RiverDirection, CliffSide CliffDirection,
+        private int RewriteFlatType(ref byte[] AcreData, int FlatBlockIndex, byte NewFlatBlockType, RiverSide RiverDirection, CliffSide CliffDirection,
             ushort[] cliff_up_down_info, ushort[] river_left_right_info)
         {
             int FlatBlock = 0;
@@ -1818,7 +1816,7 @@ namespace ACSE
             return -1;
         }
 
-        private static bool FlatBlock2Unique(ref byte[] AcreData, byte NewFlatBlockType, RiverSide RiverDirection, CliffSide CliffDirection,
+        private bool FlatBlock2Unique(ref byte[] AcreData, byte NewFlatBlockType, RiverSide RiverDirection, CliffSide CliffDirection,
             ushort[] cliff_up_down_info, ushort[] river_left_right_info)
         {
             int FlatBlocks = CountFlatBlock(AcreData, RiverDirection, CliffDirection, cliff_up_down_info, river_left_right_info);
@@ -1832,7 +1830,7 @@ namespace ACSE
             return false;
         }
 
-        private static int SetUniqueFlatBlock(ref byte[] AcreData, ushort[] cliff_up_down_info, ushort[] river_left_right_info)
+        private int SetUniqueFlatBlock(ref byte[] AcreData, ushort[] cliff_up_down_info, ushort[] river_left_right_info)
         {
             int FlatBit = 0;
 
@@ -1865,7 +1863,7 @@ namespace ACSE
         }
 
         // Lake Code
-        private static int CountPureRiver(byte[] AcreData)
+        private int CountPureRiver(byte[] AcreData)
         {
             int RiverAcres = 0;
             for (int i = 0; i < 0x38; i++)
@@ -1879,7 +1877,7 @@ namespace ACSE
             return RiverAcres;
         }
 
-        private static bool SetPoolDirectedRiverBlock(ref byte[] AcreData, int LakeRiverIndex)
+        private bool SetPoolDirectedRiverBlock(ref byte[] AcreData, int LakeRiverIndex)
         {
             int RiverAcre = 0;
             for (int i = 0; i < 0x38; i++)
@@ -1900,7 +1898,7 @@ namespace ACSE
             return false;
         }
 
-        private static int SetPoolBlock(ref byte[] AcreData)
+        private int SetPoolBlock(ref byte[] AcreData)
         {
             int RiverAcres = CountPureRiver(AcreData);
             if (RiverAcres > 0)
@@ -1915,7 +1913,7 @@ namespace ACSE
         }
 
         // Oceanfront Bridge
-        private static int SetSeaBlockWithBridgeRiver(ref byte[] AcreData, int CurrentGenerationBit)
+        private int SetSeaBlockWithBridgeRiver(ref byte[] AcreData, int CurrentGenerationBit)
         {
             if ((CurrentGenerationBit & 8) == 0) // Make sure the lower bridge wasn't placed already
             {
@@ -1931,7 +1929,7 @@ namespace ACSE
             return 0;
         }
 
-        private static ushort GetExceptionalSeaBgDownBgName(ushort BgType)
+        private ushort GetExceptionalSeaBgDownBgName(ushort BgType)
         {
             ushort CurrentValue = 0;
             ushort CurrentIdx = 0;
@@ -1950,7 +1948,7 @@ namespace ACSE
             return BgType;
         }
 
-        private static ushort BgName2RandomConbiNo(ushort ExceptionalValue)
+        private ushort BgName2RandomConbiNo(ushort ExceptionalValue)
         {
             int Matches = 0;
             for (int i = 0; i < data_combi_table_number; i++)
@@ -1984,7 +1982,7 @@ namespace ACSE
             return data_combi_table_number;
         }
 
-        private static ushort GetRandomTownAcreFromPool(byte AcreType)
+        private ushort GetRandomTownAcreFromPool(byte AcreType)
         {
             if (TownAcrePool.ContainsKey(AcreType) && TownAcrePool[AcreType].Length > 0)
             {
@@ -1997,7 +1995,7 @@ namespace ACSE
             }
         }
 
-        private static void SetUniqueRailBlock(ref byte[] Data)
+        private void SetUniqueRailBlock(ref byte[] Data)
         {
             byte A = 0, B = 0;
             bool ASet = false, BSet = false;
@@ -2036,16 +2034,16 @@ namespace ACSE
             }
         }
 
-        private static void ReportRandomFieldBitResult(int RandomFieldBit, int PerfectBit)
+        private void ReportRandomFieldBitResult(int RandomFieldBit, int PerfectBit)
         {
             Console.WriteLine(string.Format("RandomField Bit: {0} | Perfect Bit: {1}", RandomFieldBit.ToString("X2"), PerfectBit.ToString("X2")));
         }
 
         // Acre Height Code
-        private static byte[] InitBlockBase()
+        private byte[] InitBlockBase()
             => new byte[70];
 
-        private static void GetBlockBase(ref byte[] HeightTable, byte[] AcreData)
+        private void GetBlockBase(ref byte[] HeightTable, byte[] AcreData)
         {
             for (int X = 0; X < 7; X++)
             {
@@ -2063,14 +2061,14 @@ namespace ACSE
             }
         }
 
-        private static byte[] MakeBaseHeightTable(byte[] AcreData)
+        private byte[] MakeBaseHeightTable(byte[] AcreData)
         {
             byte[] HeightTable = InitBlockBase();
             GetBlockBase(ref HeightTable, AcreData);
             return HeightTable;
         }
 
-        private static Tuple<byte[], byte[]> MakeRandomField_ovl()
+        private Tuple<byte[], byte[]> MakeRandomField_ovl()
         {
             int StepMode = GetRandomStepMode();
             int PerfectBit = MakePerfectBit();
@@ -2097,7 +2095,7 @@ namespace ACSE
             return new Tuple<byte[], byte[]>(AcreData, HeightTable);
         }
 
-        public static ushort[] Generate(SaveType saveType, int? Seed = null)
+        public ushort[] Generate(int? Seed = null)
         {
             if (Seed.HasValue)
             {
@@ -2108,50 +2106,42 @@ namespace ACSE
                 Rand = new Random();
             }
 
-            switch (saveType)
-            {
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Animal_Crossing:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                    var RandomFieldData = MakeRandomField_ovl();
-                    byte[] Data = RandomFieldData.Item1;
-                    byte[] HeightData = RandomFieldData.Item2;
+            var RandomFieldData = MakeRandomField_ovl();
+            byte[] Data = RandomFieldData.Item1;
+            byte[] HeightData = RandomFieldData.Item2;
 
-                    ushort[] AcreData = new ushort[70];
-                    for (int i = 0; i < 70; i++)
+            ushort[] AcreData = new ushort[70];
+            for (int i = 0; i < 70; i++)
+            {
+                ushort BlockId = 0;
+                if (Data[i] == 0x65)
+                {
+                    ushort AboveAcreId = AcreData[D2toD1(i % 7, (i / 7) - 1)];
+                    int AcreBlockId = AboveAcreId >> 2;
+                    ushort OceanId = data_combi_table[AcreBlockId].BlockType;
+                    ushort ExceptionalValue = GetExceptionalSeaBgDownBgName(OceanId);
+                    ushort CorrectBgValue = BgName2RandomConbiNo(ExceptionalValue);
+                    BlockId = (ushort)(CorrectBgValue << 2);
+                }
+                else
+                {
+                    BlockId = GetRandomTownAcreFromPool(Data[i]);
+                    if (i > 6 && i < 50 && i % 7 > 0 && i % 7 < 6)
                     {
-                        ushort BlockId = 0;
-                        if (Data[i] == 0x65)
-                        {
-                            ushort AboveAcreId = AcreData[D2toD1(i % 7, (i / 7) - 1)];
-                            int AcreBlockId = AboveAcreId >> 2;
-                            ushort OceanId = data_combi_table[AcreBlockId].BlockType;
-                            ushort ExceptionalValue = GetExceptionalSeaBgDownBgName(OceanId);
-                            ushort CorrectBgValue = BgName2RandomConbiNo(ExceptionalValue);
-                            BlockId = (ushort)(CorrectBgValue << 2);
-                        }
-                        else
+                        int Count = 0;
+                        while (IsUniqueBlock(AcreData, BlockId) == false && Count < 10)
                         {
                             BlockId = GetRandomTownAcreFromPool(Data[i]);
-                            if (i > 6 && i < 50 && i % 7 > 0 && i % 7 < 6)
-                            {
-                                int Count = 0;
-                                while (IsUniqueBlock(AcreData, BlockId) == false && Count < 10)
-                                {
-                                    BlockId = GetRandomTownAcreFromPool(Data[i]);
-                                    Count++;
-                                }
-                            }
+                            Count++;
                         }
-                        AcreData[i] = (ushort)(BlockId | HeightData[i]);
                     }
-                    return AcreData;
-                default:
-                    return null;
+                }
+                AcreData[i] = (ushort)(BlockId | HeightData[i]);
             }
+            return AcreData;
         }
 
-        private static bool IsUniqueBlock(ushort[] AcreData, ushort BlockId)
+        private bool IsUniqueBlock(ushort[] AcreData, ushort BlockId)
         {
             foreach (var Block in AcreData)
                 if (Block == BlockId)

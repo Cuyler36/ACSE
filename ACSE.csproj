@@ -4853,6 +4853,8 @@
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
     <Compile Include="Classes\Extensions\LinqExtensions.cs" />
     <Compile Include="Classes\Extensions\PointExtension.cs" />
+    <Compile Include="Classes\Generators\Generator.cs" />
+    <Compile Include="Classes\Generators\IGenerator.cs" />
     <Compile Include="Classes\ItemChange.cs" />
     <Compile Include="Classes\ItemChangedEventArgs.cs" />
     <Compile Include="Classes\Museum.cs" />
@@ -4874,7 +4876,7 @@
     <Compile Include="Classes\Encyclopedia.cs" />
     <Compile Include="Classes\Enums.cs" />
     <Compile Include="Classes\Extensions\EndianExtensions.cs" />
-    <Compile Include="Classes\Generation.cs" />
+    <Compile Include="Classes\Generators\GCNGenerator.cs" />
     <Compile Include="Classes\ImageGeneration.cs" />
     <Compile Include="Classes\Island.cs" />
     <Compile Include="Classes\Message.cs" />
