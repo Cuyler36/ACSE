@@ -365,6 +365,11 @@ namespace ACSE
 
         #endregion
 
+        private void SetStatusText(string Text)
+        {
+            StatusLabel.Text = Text;
+        }
+
         private void Birthday_Month_SelectedIndexChanged()
         {
             if (Last_Month != birthdayMonth.SelectedIndex)
@@ -4983,6 +4988,10 @@ namespace ACSE
                 {
                     Seed = int.Parse(SeedBox.Text);
                 }
+                else
+                {
+                    Seed = Environment.TickCount;
+                }
 
                 switch (Save_File.Save_Generation)
                 {
@@ -5019,6 +5028,7 @@ namespace ACSE
                                 // TODO: Island Acres
                             }
                         }
+                        SetStatusText("A new town layout was successfully generated with the seed: " + Seed.Value);
                         break;
                     default:
                         MessageBox.Show("Town Generation for this game hasn't been implemented yet!", "Generation Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
