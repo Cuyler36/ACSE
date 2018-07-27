@@ -7,6 +7,20 @@ namespace ACSE
 {
     class Generation
     {
+        private enum CliffSide : ushort
+        {
+            Up = 0,
+            Down = 1,
+            Any = 2
+        }
+
+        private enum RiverSide : ushort
+        {
+            Left = 0,
+            Right = 1,
+            Any = 2
+        }
+
         private static Random Rand = new Random();
 
         private struct data_combi
@@ -1374,9 +1388,50 @@ namespace ACSE
         }
 
         // Grass Blocks
-        private static void MakeFlatPlaceInformation(ref byte[] AcreData)
+        /// <summary>
+        /// Creates a map of North & South acres for cliffs, & East & West acres for rivers.
+        /// </summary>
+        /// <param name="AcreData">Current accre data</param>
+        /// <param name="river_left_right_info">River right & left acre map</param>
+        /// <param name="cliff_up_down_info">Cliff up & down acre map</param>
+        private static void MakeFlatPlaceInformation(byte[] AcreData, out ushort[] river_left_right_info, out ushort[] cliff_up_down_info)
         {
-            // might not be needed
+            river_left_right_info = new ushort[70];
+            cliff_up_down_info = new ushort[70];
+
+            for (int i = 0; i < 70; i++)
+            {
+                river_left_right_info[i] = 2;
+                cliff_up_down_info[i] = 2;
+            }
+
+            // Cliff Check
+            for (int X = 1; X < 6; X++)
+            {
+                ushort StoreValue = 0;
+                for (int Y = 1; Y < 9; Y++)
+                {
+                    if (StoreValue == 0 && CheckBlockGroup(AcreData[D2toD1(X, Y)], 8) == true)
+                    {
+                        StoreValue = 1;
+                    }
+                    cliff_up_down_info[D2toD1(X, Y)] = StoreValue;
+                }
+            }
+
+            // River Check
+            for (int Y = 1; Y < 9; Y++)
+            {
+                ushort StoreValue = 0;
+                for (int X = 1; X < 6; X++)
+                {
+                    if (StoreValue == 0 && ((CheckBlockGroup(AcreData[D2toD1(X, Y)], 1) == true || CheckBlockGroup(AcreData[D2toD1(X, Y)], 4) == true)))
+                    {
+                        StoreValue = 1;
+                    }
+                    river_left_right_info[D2toD1(X, Y)] = StoreValue;
+                }
+            }
         }
 
         // Oceanfront Blocks
@@ -1673,6 +1728,142 @@ namespace ACSE
             return WorkBit;
         }
 
+        // Museum, Wishing Well, & Police Station Code
+
+        // Man the devs really really made this terrible
+        private static bool JudgeFlatBlock(byte[] AcreData, int Index, RiverSide RiverDirection, CliffSide CliffDirection, ushort[] cliff_up_down_info, ushort[] river_left_right_info)
+        {
+            if ((int)RiverDirection > -1 && (int)RiverDirection < 3 && (int)CliffDirection > -1 && (int)CliffDirection < 3)
+            {
+                if (Index > 0 && Index < 0x38)
+                {
+                    if (AcreData[Index] == 0x27)
+                    {
+                        if (CliffDirection == CliffSide.Any)
+                        {
+                            if (RiverDirection == RiverSide.Any)
+                            {
+                                if ((CliffSide)cliff_up_down_info[Index] == CliffDirection)
+                                {
+                                    return true;
+                                }
+                            }
+                            else
+                            {
+                                if ((RiverSide)river_left_right_info[Index] == RiverDirection)
+                                {
+                                    if ((CliffSide)cliff_up_down_info[Index] == CliffDirection)
+                                    {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (RiverDirection == RiverSide.Any)
+                            {
+                                if ((CliffSide)cliff_up_down_info[Index] == CliffDirection)
+                                {
+                                    return true;
+                                }
+                            }
+                            else
+                            {
+                                if ((RiverSide)river_left_right_info[Index] == RiverDirection)
+                                {
+                                    if ((CliffSide)cliff_up_down_info[Index] == CliffDirection)
+                                    {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private static int CountFlatBlock(byte[] AcreData, RiverSide RiverDirection, CliffSide CliffDirection, ushort[] cliff_up_down_info, ushort[] river_left_right_info)
+        {
+            int FlatBlocks = 0;
+            for (int i = 0; i < 0x38; i++)
+            {
+                if (JudgeFlatBlock(AcreData, i, RiverDirection, CliffDirection, cliff_up_down_info, river_left_right_info) == true)
+                {
+                    FlatBlocks++;
+                }
+            }
+            return FlatBlocks;
+        }
+
+        private static int RewriteFlatType(ref byte[] AcreData, int FlatBlockIndex, byte NewFlatBlockType, RiverSide RiverDirection, CliffSide CliffDirection,
+            ushort[] cliff_up_down_info, ushort[] river_left_right_info)
+        {
+            int FlatBlock = 0;
+            for (int i = 0; i < 0x38; i++)
+            {
+                if (JudgeFlatBlock(AcreData, i, RiverDirection, CliffDirection, cliff_up_down_info, river_left_right_info) == true)
+                {
+                    if (FlatBlock == FlatBlockIndex)
+                    {
+                        AcreData[i] = NewFlatBlockType;
+                        return i;
+                    }
+                    FlatBlock++;
+                }
+            }
+
+            return -1;
+        }
+
+        private static bool FlatBlock2Unique(ref byte[] AcreData, byte NewFlatBlockType, RiverSide RiverDirection, CliffSide CliffDirection,
+            ushort[] cliff_up_down_info, ushort[] river_left_right_info)
+        {
+            int FlatBlocks = CountFlatBlock(AcreData, RiverDirection, CliffDirection, cliff_up_down_info, river_left_right_info);
+            if (FlatBlocks > 0)
+            {
+                if (RewriteFlatType(ref AcreData, Rand.Next(FlatBlocks), NewFlatBlockType, RiverDirection, CliffDirection, cliff_up_down_info, river_left_right_info) != -1)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static int SetUniqueFlatBlock(ref byte[] AcreData, ushort[] cliff_up_down_info, ushort[] river_left_right_info)
+        {
+            int FlatBit = 0;
+
+            var RiverSide = (RiverSide)(Rand.Next(100) & 1);
+            var OppositeRiverSide = (RiverSide)(((int)RiverSide ^ 1) & 1);
+            if (FlatBlock2Unique(ref AcreData, 0x42, RiverSide, CliffSide.Down, cliff_up_down_info, river_left_right_info) == true)
+            {
+                FlatBit |= 0x10;
+            }
+            else if (FlatBlock2Unique(ref AcreData, 0x42, OppositeRiverSide, CliffSide.Down, cliff_up_down_info, river_left_right_info) == true)
+            {
+                FlatBit |= 0x10;
+            }
+
+            if (FlatBlock2Unique(ref AcreData, 0x44, OppositeRiverSide, CliffSide.Down, cliff_up_down_info, river_left_right_info) == true)
+            {
+                FlatBit |= 0x20;
+            }
+            else if (FlatBlock2Unique(ref AcreData, 0x44, RiverSide, CliffSide.Down, cliff_up_down_info, river_left_right_info) == true)
+            {
+                FlatBit |= 0x20;
+            }
+
+            if (FlatBlock2Unique(ref AcreData, 0x54, RiverSide.Any, CliffSide.Down, cliff_up_down_info, river_left_right_info) == true)
+            {
+                FlatBit |= 0x40;
+            }
+
+            return FlatBit;
+        }
+
         // Lake Code
         private static int CountPureRiver(byte[] AcreData)
         {
@@ -1845,11 +2036,6 @@ namespace ACSE
             }
         }
 
-        private static int SetUniqueFlatBlock(ref byte[] AcreData)
-        {
-            return 0x70; // Stubbed at the moment
-        }
-
         private static void ReportRandomFieldBitResult(int RandomFieldBit, int PerfectBit)
         {
             Console.WriteLine(string.Format("RandomField Bit: {0} | Perfect Bit: {1}", RandomFieldBit.ToString("X2"), PerfectBit.ToString("X2")));
@@ -1897,22 +2083,17 @@ namespace ACSE
             {
                 AcreData = HeightTable = null;
                 AcreData = MakeBaseLandform(StepMode);
-                MakeFlatPlaceInformation(ref AcreData);
+                MakeFlatPlaceInformation(AcreData, out ushort[] river_left_right_info, out ushort[] cliff_up_down_info);
                 SetMarinBlock(ref AcreData);
                 Bit = SetBridgeAndSlopeBlock(ref AcreData, StepMode == 1);
                 Bit |= SetNeedleworkAndWharfBlock(ref AcreData);
-                Bit |= SetUniqueFlatBlock(ref AcreData);
+                Bit |= SetUniqueFlatBlock(ref AcreData, cliff_up_down_info, river_left_right_info);
                 SetUniqueRailBlock(ref AcreData);
                 Bit |= SetPoolBlock(ref AcreData);
                 Bit |= SetSeaBlockWithBridgeRiver(ref AcreData, Bit);
                 HeightTable = MakeBaseHeightTable(AcreData);
                 ReportRandomFieldBitResult(Bit, PerfectBit);
             }
-            // MakeBaseHeightTable(AcreData, ref BaseHeightTable);
-            // ReportRandomFieldBitResult(Bit, PerfectBit);
-            // SelectBlock
-            // CopyBaseHeightData
-
             return new Tuple<byte[], byte[]>(AcreData, HeightTable);
         }
 
