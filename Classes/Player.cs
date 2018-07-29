@@ -1042,7 +1042,7 @@ namespace ACSE
                     for (int i = 0; i < 10; i++)
                     {
                         GCNPlayerMail Mail = new GCNPlayerMail(SaveData, this, i);
-                        //System.Windows.Forms.MessageBox.Show(Mail.Contents);
+                        //System.Windows.Forms.MessageBox.Show(Mail.GetFormattedMailString());
                     }
                 }
             }

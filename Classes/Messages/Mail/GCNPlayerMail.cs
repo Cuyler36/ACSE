@@ -26,14 +26,20 @@
                     // Unknown @ 2B
                     Present = new Item(SaveFile.ReadUInt16(Offset + 0x2C, true)); // TODO: There has to be a flag that tells the game if the item is wrapped or a quest item.
                     Read = SaveFile.ReadByte(Offset + 0x2E) == 1; // Check this.
-                    // Unknown @ 2F
+                    HeaderReceipiantStartOffset = SaveFile.ReadByte(Offset + 0x2F); // How many characters until the receipiant's name should be inserted
                     // Unknown @ 30, might be Sender Type?
                     StationaryType = new Item((ushort)(0x2000 | SaveFile.ReadByte(Offset + 0x31)));
-                    Contents = SaveFile.ReadString(Offset + 0x32, 0xF8);
+                    Header = SaveFile.ReadString(Offset + 0x32, 0x18);
+                    Contents = SaveFile.ReadString(Offset + 0x4A, 0xC0);
+                    Footer = SaveFile.ReadString(Offset + 0x10A, 0x20);
                     break;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
                     break;
             }
         }
+
+        public string GetFormattedMailString()
+            => string.Format("{0}{1}{2}\n{3}\n{4}",
+                Header.Substring(0, HeaderReceipiantStartOffset), Receipiant, Header.Substring(HeaderReceipiantStartOffset), Contents, Footer);
     }
 }

@@ -11,6 +11,7 @@ namespace ACSE.Messages.Mail
         public bool Read { get; set; }
         public string Header { get; set; }
         public string Footer { get; set; }
+        public byte HeaderReceipiantStartOffset { get; set; }
         public Item StationaryType { get; set; }
         public Item Present { get; set; }
 
