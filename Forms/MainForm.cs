@@ -192,14 +192,6 @@ namespace ACSE
             //Setup Campsite EventHandler
             Campsite_EventHandler = new EventHandler((object sender, EventArgs e) => Campsite_Villager_Changed());
 
-            //Setup Welcome Amiibo Caravan ComboBoxes
-            caravan1ComboBox.DataSource = VillagerData.GetCaravanBindingSource();
-            caravan2ComboBox.DataSource = VillagerData.GetCaravanBindingSource();
-            caravan1ComboBox.ValueMember = "Key";
-            caravan1ComboBox.DisplayMember = "Value";
-            caravan2ComboBox.ValueMember = "Key";
-            caravan2ComboBox.DisplayMember = "Value";
-
             //Birthday Event Hookups
             birthdayMonth.SelectedIndexChanged += new EventHandler((object sender, EventArgs e) => Birthday_Month_SelectedIndexChanged());
             birthdayDay.SelectedIndexChanged += new EventHandler((object sender, EventArgs e) => Birthday_Day_SelectedIndexChanged());
@@ -617,6 +609,25 @@ namespace ACSE
             clearEmotionsButton.Enabled = fillEmotionsButton.Enabled;
 
             SetTrainStationImage();
+
+            //Setup Welcome Amiibo Caravan ComboBoxes
+            if (save.Save_Generation == SaveGeneration.N3DS)
+            {
+                if (caravan1ComboBox.DataSource == null)
+                {
+                    caravan1ComboBox.DataSource = VillagerData.GetCaravanBindingSource();
+                    caravan2ComboBox.DataSource = VillagerData.GetCaravanBindingSource();
+                    caravan1ComboBox.ValueMember = "Key";
+                    caravan1ComboBox.DisplayMember = "Value";
+                    caravan2ComboBox.ValueMember = "Key";
+                    caravan2ComboBox.DisplayMember = "Value";
+                }
+            }
+            else
+            {
+                caravan1ComboBox.Items.Clear();
+                caravan2ComboBox.Items.Clear();
+            }
 
             //Clear Acre Images
             if (Acre_Map != null)
