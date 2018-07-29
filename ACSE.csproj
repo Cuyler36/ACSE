@@ -4857,6 +4857,10 @@
     <Compile Include="Classes\Generators\IGenerator.cs" />
     <Compile Include="Classes\ItemChange.cs" />
     <Compile Include="Classes\ItemChangedEventArgs.cs" />
+    <Compile Include="Classes\Messages\Mail\GCNPlayerMail.cs" />
+    <Compile Include="Classes\Messages\Mail\MailBase.cs" />
+    <Compile Include="Classes\Messages\Mail\PlayerMailBase.cs" />
+    <Compile Include="Classes\Messages\MessageBoardPost.cs" />
     <Compile Include="Classes\Museum.cs" />
     <Compile Include="Classes\Saves\GCNSave.cs" />
     <Compile Include="Classes\Saves\N3DSSave.cs" />
@@ -4879,7 +4883,7 @@
     <Compile Include="Classes\Generators\GCNGenerator.cs" />
     <Compile Include="Classes\ImageGeneration.cs" />
     <Compile Include="Classes\Island.cs" />
-    <Compile Include="Classes\Message.cs" />
+    <Compile Include="Classes\Messages\MessageBase.cs" />
     <Compile Include="Controls\PictureBoxWithInterpolationMode.cs">
       <SubType>Component</SubType>
     </Compile>

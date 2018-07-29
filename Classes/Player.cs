@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Reflection;
 using ACSE.Classes.Utilities;
+using ACSE.Messages.Mail;
 
 namespace ACSE
 {
@@ -1034,6 +1035,16 @@ namespace ACSE
                 }
 
                 Console.WriteLine(string.Format("Player {0}'s house = {1}", Index, House));
+
+                // Mail Test
+                if (SaveData.Save_Generation == SaveGeneration.GCN)
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        GCNPlayerMail Mail = new GCNPlayerMail(SaveData, this, i);
+                        //System.Windows.Forms.MessageBox.Show(Mail.Contents);
+                    }
+                }
             }
         }
 

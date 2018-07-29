@@ -2677,7 +2677,14 @@ namespace ACSE
                         }
                         else
                         {
-                            Villager.Data.House_Coordinates = Utility.Find_Villager_House(Villager.Data.Villager_ID);
+                            var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.Villager_ID);
+                            Villager.Data.House_Coordinates = HouseCoordinatesInfo.Item1;
+                            if (HouseCoordinatesInfo.Item2 == false)
+                            {
+                                MessageBox.Show(
+                                    string.Format("Couldn't find a valid house for {0}!\nThey will have a random sign chosen as their house location if you don't place one.",
+                                        Villager_Database.Values.ElementAt(Villager_Idx).Name), "Villager House Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
 
                         if (VillagerPreviewBox != null)
@@ -3789,7 +3796,8 @@ namespace ACSE
                             Villager Villager = Utility.GetVillagerFromHouse(CurrentItem.ItemID, Villagers);
                             if (Villager != null)
                             {
-                                Villager.Data.House_Coordinates = Utility.Find_Villager_House(Villager.Data.Villager_ID);
+                                var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.Villager_ID);
+                                Villager.Data.House_Coordinates = HouseCoordinatesInfo.Item1;
                             }
                         }
                     }
@@ -4019,15 +4027,30 @@ namespace ACSE
             {
                 //Save Players
                 foreach (Player Player in Players)
+                {
                     if (Player != null && Player.Exists)
+                    {
                         Player.Write();
+                    }
+                }
 
                 //Save Villagers
                 if (Villagers != null)
                 {
                     foreach (Villager Villager in Villagers)
+                    {
                         if (Villager != null)
+                        {
+                            if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue)
+                            {
+                                // Save House Coordinates (TOOD: Wild World)
+                                var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.Villager_ID);
+                                Villager.Data.House_Coordinates = HouseCoordinatesInfo.Item1;
+                            }
+
                             Villager.Write();
+                        }
+                    }
                     
                     // Update Villager Count in N64/GCN (Possibly others too?)
                     if (Save_File.Save_Type == SaveType.Animal_Crossing) // TODO: Others

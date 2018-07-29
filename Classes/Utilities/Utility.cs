@@ -57,7 +57,7 @@ namespace ACSE.Classes.Utilities
             Save_File.Flush();
         }
 
-        public static byte[] Find_Villager_House(ushort Villager_ID) // TODO: Apply to WW
+        public static Tuple<byte[], bool> Find_Villager_House(ushort Villager_ID) // TODO: Apply to WW
         {
             if (MainForm.Save_File != null)
             {
@@ -67,11 +67,13 @@ namespace ACSE.Classes.Utilities
                     WorldItem Villager_House = Acre.Acre_Items.FirstOrDefault(o => o.ItemID == Villager_House_ID);
                     if (Villager_House != null)
                     {
-                        return new byte[4] { (byte)(Acre.Index % 7), (byte)(Acre.Index / 7), (byte)(Villager_House.Location.X), (byte)(Villager_House.Location.Y + 1) };
+                        return new Tuple<byte[], bool>(
+                            new byte[4] { (byte)(Acre.Index % 7), (byte)(Acre.Index / 7), (byte)(Villager_House.Location.X), (byte)(Villager_House.Location.Y + 1) },
+                            true);
                     }
                 }
             }
-            return new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF };
+            return new Tuple<byte[], bool>(new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF }, false);
         }
 
         public static Villager GetVillagerFromHouse(ushort HouseId, Villager[] Villagers)

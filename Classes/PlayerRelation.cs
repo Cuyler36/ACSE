@@ -1,4 +1,5 @@
 ﻿using ACSE.Classes.Utilities;
+using ACSE.Messages.Mail;
 
 namespace ACSE
 {
@@ -21,7 +22,7 @@ namespace ACSE
         public byte Friendship;
         public byte Flags;
         // byte[] Unknown2 [29]
-        public Mail Saved_Letter;
+        //public Mail Saved_Letter;
         // byte[] Unknown3 [41]
 
         public abstract void Write();
