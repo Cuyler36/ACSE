@@ -667,7 +667,7 @@ namespace ACSE
                         case SaveType.Doubutsu_no_Mori_e_Plus:
                             return "どうぶつの森e+";
                         case SaveType.Animal_Forest:
-                            return "动物森林";
+                            return "どうぶつの森 iQue";
                         case SaveType.Wild_World:
                             return "おいでよどうぶつの森";
                         case SaveType.City_Folk:
