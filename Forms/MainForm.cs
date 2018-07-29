@@ -376,15 +376,15 @@ namespace ACSE
             {
                 int CurrentSelectedIndex = birthdayDay.SelectedIndex;
                 birthdayDay.Items.Clear();
-                if (birthdayMonth.SelectedIndex > -1 && birthdayMonth.SelectedIndex < 12)
+                birthdayDay.Items.Add("Not Set");
+                if (birthdayMonth.SelectedIndex > 1 && birthdayMonth.SelectedIndex < 13)
                 {
-                    for (int i = 1; i <= DateTime.DaysInMonth(2000, birthdayMonth.SelectedIndex + 1); i++)
+                    for (int i = 1; i <= DateTime.DaysInMonth(2000, birthdayMonth.SelectedIndex); i++)
                     {
                         birthdayDay.Items.Add(i.ToString());
                     }
                 }
-                birthdayDay.Items.Add("Not Set");
-                birthdayDay.SelectedIndex = CurrentSelectedIndex >= birthdayDay.Items.Count ? birthdayDay.Items.Count - 1 : CurrentSelectedIndex;
+                birthdayDay.SelectedIndex = CurrentSelectedIndex >= birthdayDay.Items.Count ? 0 : CurrentSelectedIndex;
                 Last_Month = birthdayMonth.SelectedIndex;
             }
 
@@ -396,7 +396,7 @@ namespace ACSE
                 }
                 else
                 {
-                    Selected_Player.Data.Birthday.Month = (uint)birthdayMonth.SelectedIndex + 1;
+                    Selected_Player.Data.Birthday.Month = (uint)birthdayMonth.SelectedIndex;
                 }
             }
         }
@@ -411,7 +411,7 @@ namespace ACSE
                 }
                 else
                 {
-                    Selected_Player.Data.Birthday.Day = (uint)birthdayDay.SelectedIndex + 1;
+                    Selected_Player.Data.Birthday.Day = (uint)birthdayDay.SelectedIndex;
                 }
             }
         }
@@ -1482,9 +1482,24 @@ namespace ACSE
             //Birthday
             if (Player.Data.Birthday != null)
             {
-                birthdayMonth.SelectedIndex = Player.Data.Birthday.Month < 13 ? (int)Player.Data.Birthday.Month - 1 : 12;
+                if (Player.Data.Birthday.Month < 1 || Player.Data.Birthday.Month > 12)
+                {
+                    birthdayMonth.SelectedIndex = 0;
+                }
+                else
+                {
+                    birthdayMonth.SelectedIndex = (int)Player.Data.Birthday.Month;
+                }
                 Birthday_Month_SelectedIndexChanged(); // Update days
-                try { birthdayDay.SelectedIndex = Player.Data.Birthday.Day < 32 ? (int)Player.Data.Birthday.Day - 1 : (birthdayDay.Items.Count - 1); } catch { birthdayDay.SelectedIndex = 0; }
+
+                try
+                {
+                    birthdayDay.SelectedIndex = Player.Data.Birthday.Day < 32 ? (int)Player.Data.Birthday.Day : 0;
+                }
+                catch
+                {
+                    birthdayDay.SelectedIndex = 0;
+                }
             }
 
             //These vary game to game
