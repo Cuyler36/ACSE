@@ -3068,6 +3068,17 @@ namespace ACSE
 
                     Selected_Acre_ID = Island ? Island_Acres[Acre_Index].AcreID : Acres[Acre_Index].AcreID;
                     string Acre_Str = Save_File.Save_Generation == SaveGeneration.NDS ? Selected_Acre_ID.ToString("X2") : Selected_Acre_ID.ToString("X4");
+                    string Base_Acre_Str = Acre_Str;
+
+                    switch (Save_File.Save_Generation)
+                    {
+                        case SaveGeneration.N64:
+                        case SaveGeneration.GCN:
+                        case SaveGeneration.iQue:
+                            Base_Acre_Str = (Selected_Acre_ID & 0xFFFC).ToString("X4");
+                            break;
+                    }
+
                     if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue)
                     {
                         acreHeightTrackBar.Value = Selected_Acre_ID % 4;
@@ -3094,7 +3105,7 @@ namespace ACSE
 
                     foreach (TreeNode Node in acreTreeView.Nodes)
                     {
-                        TreeNode[] Matching_Nodes = Node.Nodes.Find(Acre_Str, true);
+                        TreeNode[] Matching_Nodes = Node.Nodes.Find(Base_Acre_Str, true);
                         if (Matching_Nodes.Length > 0)
                         {
                             Node.Toggle();

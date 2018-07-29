@@ -18,6 +18,8 @@
                     TownName = SaveFile.ReadString(Offset + 8, 8);
                     ReceipiantID = SaveFile.ReadUInt16(Offset + 0x10, true);
                     TownID = SaveFile.ReadUInt16(Offset + 0x12, true);
+                    // Unknown @ 13, receipiant type?
+                    // Unknown @ 14
                     Sender = SaveFile.ReadString(Offset + 0x16, 8);
                     SenderTownName = SaveFile.ReadString(Offset + 0x1E, 8);
                     SenderID = SaveFile.ReadUInt16(Offset + 0x26, true);
