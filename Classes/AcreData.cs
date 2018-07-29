@@ -206,7 +206,7 @@ namespace ACSE
         public Acre(ushort acreId, int position)
         {
             AcreID = acreId;
-            BaseAcreID = (ushort)(acreId - acreId % 4);
+            BaseAcreID = (ushort)(acreId & 0xFFFC);
             Index = position;
             //Name = AcreData.GetAcreName(acreId);
         }

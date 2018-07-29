@@ -1832,7 +1832,7 @@ namespace ACSE
             Selected_Acre_ID = AcreID;
             if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue)
             {
-                acreHeightTrackBar.Value = Selected_Acre_ID % 4;
+                acreHeightTrackBar.Value = Selected_Acre_ID & 3;
                 Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
                 Selected_Acre_ID -= (ushort)acreHeightTrackBar.Value;
             }
@@ -1956,7 +1956,7 @@ namespace ACSE
             Image Acre_Image = null;
             if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Type == SaveType.Animal_Forest)
             {
-                ID -= (ushort)(ID % 4);
+                ID = (ushort)(ID & 0xFFFC);
                 if (Is_Ocean(ID))
                 {
                     Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, 0x03DC);
@@ -2041,7 +2041,7 @@ namespace ACSE
                     if (Save_File.Save_Type == SaveType.Wild_World)
                         Acre_ID_Str = CurrentAcre.AcreID.ToString("X2");
                     else if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue)
-                        Acre_ID_Str = (CurrentAcre.AcreID - (CurrentAcre.AcreID % 4)).ToString("X4");
+                        Acre_ID_Str = (CurrentAcre.AcreID & 0xFFFC).ToString("X4");
 
                     Image Acre_Image = Get_Acre_Image(CurrentAcre, CurrentAcre.AcreID);
 
@@ -2153,7 +2153,7 @@ namespace ACSE
                                 Acre_Items[i] = new WorldItem(Save_File.ReadUInt32(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Island_World_Data + World_Idx * 1024 + i * 4), i);
                             }
                         Island_Acres[Idx] = new WorldAcre(Acre_ID, Idx, Acre_Items, Island_Buried_Buffer); //Add buried item data for Animal Crossing
-                        string Acre_ID_Str = Save_File.Save_Generation == SaveGeneration.GCN ? (Acre_ID - (Acre_ID % 4)).ToString("X4") : Island_Acres[Idx].AcreID.ToString("X2");
+                        string Acre_ID_Str = Save_File.Save_Generation == SaveGeneration.GCN ? (Acre_ID & 0xFFFC).ToString("X4") : Island_Acres[Idx].AcreID.ToString("X2");
 
                         if (Save_File.Save_Generation == SaveGeneration.GCN || ((Idx > 4 && Idx < 7) || (Idx > 8 && Idx < 11)))
                         {
@@ -2953,7 +2953,7 @@ namespace ACSE
                     {
                         acreToolTip.Show(string.Format("{0}[{2}] - 0x{1}", UInt16_Acre_Info.ContainsKey(Hovered_Acre.BaseAcreID) ? UInt16_Acre_Info[Hovered_Acre.BaseAcreID] + " "
                             : (Is_Ocean(Hovered_Acre.AcreID) ? "Ocean " : ""),
-                            Hovered_Acre.AcreID.ToString("X4"), AcreData.Acre_Height_Identifiers[Hovered_Acre.AcreID % 4]), sender as Control, e.X + 15, e.Y + 10);
+                            Hovered_Acre.AcreID.ToString("X4"), AcreData.Acre_Height_Identifiers[Hovered_Acre.AcreID & 3]), sender as Control, e.X + 15, e.Y + 10);
                     }
                     else
                         acreToolTip.Show(string.Format("{0}0x{1}", UInt16_Acre_Info.ContainsKey(Hovered_Acre.AcreID) ? UInt16_Acre_Info[Hovered_Acre.AcreID] + " - " : "",
@@ -3081,7 +3081,7 @@ namespace ACSE
 
                     if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue)
                     {
-                        acreHeightTrackBar.Value = Selected_Acre_ID % 4;
+                        acreHeightTrackBar.Value = Selected_Acre_ID & 3;
                         Acre_Height_Modifier = (ushort)acreHeightTrackBar.Value;
                         Selected_Acre_ID -= (ushort)acreHeightTrackBar.Value;
                     }
@@ -3094,8 +3094,8 @@ namespace ACSE
                     if (Acre_Info != null)
                         acreDesc.Text = Acre_Info.ContainsKey((byte)Selected_Acre_ID) ? Acre_Info[(byte)Selected_Acre_ID] : "No Description";
                     else if (UInt16_Acre_Info != null)
-                        if ((Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue) && UInt16_Acre_Info.ContainsKey((ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)))
-                            acreDesc.Text = UInt16_Acre_Info[(ushort)(Selected_Acre_ID - Selected_Acre_ID % 4)];
+                        if ((Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue) && UInt16_Acre_Info.ContainsKey((ushort)(Selected_Acre_ID & 0xFFFC)))
+                            acreDesc.Text = UInt16_Acre_Info[(ushort)(Selected_Acre_ID & 0xFFFC)];
                         else if (UInt16_Acre_Info.ContainsKey(Selected_Acre_ID))
                             acreDesc.Text = UInt16_Acre_Info[Selected_Acre_ID];
                         else
