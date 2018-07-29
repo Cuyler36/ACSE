@@ -71,7 +71,7 @@ namespace ACSE
     public struct VillagerOffsets
     {
         public int Villager_ID;
-        public int Villager_AI;
+        public int Name_ID;
         public int Catchphrase;
         public int CatchphraseSize;
         public int Nicknames;
@@ -122,7 +122,7 @@ namespace ACSE
             Town_ID = 2,
             Town_Name = 4,
             Town_NameSize = 6,
-            Villager_AI = 0xA,
+            Name_ID = 0xA,
             Personality = 0xB,
             House_Coordinates = 0x4E1,
             House_CoordinatesCount = 4,
@@ -137,7 +137,7 @@ namespace ACSE
             Town_ID = 2,
             Town_Name = 4,
             Town_NameSize = 6,
-            Villager_AI = 0xA, // Goes unused??
+            Name_ID = 0xA, // Goes unused??
             Personality = 0xB,
             House_Coordinates = 0x4E1,
             House_CoordinatesCount = 4,
@@ -160,7 +160,7 @@ namespace ACSE
             Town_ID = 2,
             Town_Name = 4,
             Town_NameSize = 8,
-            Villager_AI = 0xC,
+            Name_ID = 0xC,
             Personality = 0xD,
             House_Coordinates = 0x899,
             House_CoordinatesCount = 4,
@@ -183,7 +183,7 @@ namespace ACSE
             Town_ID = 2,
             Town_Name = 4,
             Town_NameSize = 6,
-            Villager_AI = 0xA, // Goes unused??
+            Name_ID = 0xA, // Goes unused??
             Personality = 0xB,
             House_Coordinates = 0x591, // Confirm
             House_CoordinatesCount = 4,
@@ -214,7 +214,7 @@ namespace ACSE
             Shirt = 0x6EC,
             Catchphrase = 0x6DE,
             CatchphraseSize = 0xA,
-            Villager_AI = -1, // Research
+            Name_ID = -1, // Research
             Town_ID = -1, //Research
             Town_Name = -1, //Research
             House_Coordinates = -1, //Research
@@ -253,7 +253,7 @@ namespace ACSE
             FurnitureCount = 16,
             House_Coordinates = -1,
             Nicknames = -1, //Research
-            Villager_AI = -1,
+            Name_ID = -1,
         };
 
         public static VillagerOffsets WA_Villager_Offsets = new VillagerOffsets
@@ -275,7 +275,7 @@ namespace ACSE
             FurnitureCount = 16,
             House_Coordinates = -1,
             Nicknames = -1, //Research
-            Villager_AI = -1,
+            Name_ID = -1,
         };
 
         public static string[] AC_Personalities = new string[7]
