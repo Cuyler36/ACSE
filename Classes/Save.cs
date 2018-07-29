@@ -739,31 +739,26 @@ namespace ACSE
         // This method is useful for grouping games by the console they were released on (since they're normally expansions/revisions)
         public static SaveGeneration GetSaveGeneration(SaveType Save_Type)
         {
-            if (Save_Type == SaveType.Doubutsu_no_Mori)
+            switch (Save_Type)
             {
-                return SaveGeneration.N64;
+                case SaveType.Doubutsu_no_Mori:
+                    return SaveGeneration.N64;
+                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.Animal_Crossing:
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    return SaveGeneration.GCN;
+                case SaveType.Animal_Forest:
+                    return SaveGeneration.iQue;
+                case SaveType.Wild_World:
+                    return SaveGeneration.NDS;
+                case SaveType.City_Folk:
+                    return SaveGeneration.Wii;
+                case SaveType.New_Leaf:
+                case SaveType.Welcome_Amiibo:
+                    return SaveGeneration.N3DS;
+                default:
+                    return SaveGeneration.Unknown;
             }
-            else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Animal_Crossing || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
-            {
-                return SaveGeneration.GCN;
-            }
-            else if (Save_Type == SaveType.Animal_Forest)
-            {
-                return SaveGeneration.iQue;
-            }
-            else if (Save_Type == SaveType.Wild_World)
-            {
-                return SaveGeneration.NDS;
-            }
-            else if (Save_Type == SaveType.City_Folk)
-            {
-                return SaveGeneration.Wii;
-            }
-            else if (Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
-            {
-                return SaveGeneration.N3DS;
-            }
-            return SaveGeneration.Unknown;
         }
 
         public static Save_Info GetSaveInfo(SaveType Save_Type)
@@ -797,22 +792,35 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Item_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Forest)
-                Item_DB_Location += "DnM_Items_" + Language + ".txt";
-            else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus)
-                Item_DB_Location += "DBNM_Plus_Items_" + Language + ".txt";
-            else if (Save_Type == SaveType.Animal_Crossing)
-                Item_DB_Location += "AC_Items_" + Language + ".txt";
-            else if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
-                Item_DB_Location += "DBNM_e_Plus_Items_" + Language + ".txt";
-            else if (Save_Type == SaveType.Wild_World)
-                Item_DB_Location += "WW_Items_" + Language + ".txt";
-            else if (Save_Type == SaveType.City_Folk)
-                Item_DB_Location += "CF_Items_" + Language + ".txt";
-            else if (Save_Type == SaveType.New_Leaf)
-                Item_DB_Location += "NL_Items_" + Language + ".txt";
-            else if (Save_Type == SaveType.Welcome_Amiibo)
-                Item_DB_Location += "WA_Items_" + Language + ".txt";
+            switch (Save_Type)
+            {
+                case SaveType.Doubutsu_no_Mori:
+                case SaveType.Animal_Forest:
+                    Item_DB_Location += "DnM_Items_" + Language + ".txt";
+                    break;
+                case SaveType.Doubutsu_no_Mori_Plus:
+                    Item_DB_Location += "DBNM_Plus_Items_" + Language + ".txt";
+                    break;
+                case SaveType.Animal_Crossing:
+                    Item_DB_Location += "AC_Items_" + Language + ".txt";
+                    break;
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    Item_DB_Location += "DBNM_e_Plus_Items_" + Language + ".txt";
+                    break;
+                case SaveType.Wild_World:
+                    Item_DB_Location += "WW_Items_" + Language + ".txt";
+                    break;
+                case SaveType.City_Folk:
+                    Item_DB_Location += "CF_Items_" + Language + ".txt";
+                    break;
+                case SaveType.New_Leaf:
+                    Item_DB_Location += "NL_Items_" + Language + ".txt";
+                    break;
+                case SaveType.Welcome_Amiibo:
+                    Item_DB_Location += "WA_Items_" + Language + ".txt";
+                    break;
+            }
+
             try { Contents = File.OpenText(Item_DB_Location); }
             catch (Exception e)
             {
@@ -885,18 +893,30 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Acre_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Forest || Save_Type == SaveType.Animal_Crossing) // TODO: DnM needs to have a custom list, since the docks/islands don't exist
-                Acre_DB_Location += "AC_Acres_" + Language + ".txt";
-            else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus)
-                Acre_DB_Location += "DBNM_Plus_Acres_" + Language + ".txt";
-            else if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
-                Acre_DB_Location += "DBNM_e_Plus_Acres_" + Language + ".txt";
-            else if (Save_Type == SaveType.City_Folk)
-                Acre_DB_Location += "CF_Acres_" + Language + ".txt";
-            else if (Save_Type == SaveType.New_Leaf)
-                Acre_DB_Location += "NL_Acres_" + Language + ".txt";
-            else if (Save_Type == SaveType.Welcome_Amiibo)
-                Acre_DB_Location += "WA_Acres_" + Language + ".txt";
+            switch (Save_Type)
+            {
+                case SaveType.Doubutsu_no_Mori:
+                case SaveType.Animal_Forest:
+                case SaveType.Animal_Crossing: // TODO: DnM needs to have a custom list, since the docks/islands don't exist
+                    Acre_DB_Location += "AC_Acres_" + Language + ".txt";
+                    break;
+                case SaveType.Doubutsu_no_Mori_Plus:
+                    Acre_DB_Location += "DBNM_Plus_Acres_" + Language + ".txt";
+                    break;
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    Acre_DB_Location += "DBNM_e_Plus_Acres_" + Language + ".txt";
+                    break;
+                case SaveType.City_Folk:
+                    Acre_DB_Location += "CF_Acres_" + Language + ".txt";
+                    break;
+                case SaveType.New_Leaf:
+                    Acre_DB_Location += "NL_Acres_" + Language + ".txt";
+                    break;
+                case SaveType.Welcome_Amiibo:
+                    Acre_DB_Location += "WA_Acres_" + Language + ".txt";
+                    break;
+            }
+
             try { Contents = File.OpenText(Acre_DB_Location); }
             catch (Exception e)
             {
@@ -980,18 +1000,30 @@ namespace ACSE
         {
             StreamReader Contents = null;
             string Acre_DB_Location = MainForm.Assembly_Location + "\\Resources\\";
-            if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Animal_Forest || Save_Type == SaveType.Animal_Crossing) // TODO: DnM needs to have a custom list, since the docks/islands don't exist
-                Acre_DB_Location += "AC_Acres_" + Language + ".txt";
-            else if (Save_Type == SaveType.Doubutsu_no_Mori_Plus)
-                Acre_DB_Location += "DBNM_Plus_Acres_" + Language + ".txt";
-            else if (Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
-                Acre_DB_Location += "DBNM_e_Plus_Acres_" + Language + ".txt";
-            else if (Save_Type == SaveType.City_Folk)
-                Acre_DB_Location += "CF_Acres_" + Language + ".txt";
-            else if (Save_Type == SaveType.New_Leaf)
-                Acre_DB_Location += "NL_Acres_" + Language + ".txt";
-            else if (Save_Type == SaveType.Welcome_Amiibo)
-                Acre_DB_Location += "WA_Acres_" + Language + ".txt";
+            switch (Save_Type)
+            {
+                case SaveType.Doubutsu_no_Mori:
+                case SaveType.Animal_Forest:
+                case SaveType.Animal_Crossing: // TODO: DnM needs to have a custom list, since the docks/islands don't exist
+                    Acre_DB_Location += "AC_Acres_" + Language + ".txt";
+                    break;
+                case SaveType.Doubutsu_no_Mori_Plus:
+                    Acre_DB_Location += "DBNM_Plus_Acres_" + Language + ".txt";
+                    break;
+                case SaveType.Doubutsu_no_Mori_e_Plus:
+                    Acre_DB_Location += "DBNM_e_Plus_Acres_" + Language + ".txt";
+                    break;
+                case SaveType.City_Folk:
+                    Acre_DB_Location += "CF_Acres_" + Language + ".txt";
+                    break;
+                case SaveType.New_Leaf:
+                    Acre_DB_Location += "NL_Acres_" + Language + ".txt";
+                    break;
+                case SaveType.Welcome_Amiibo:
+                    Acre_DB_Location += "WA_Acres_" + Language + ".txt";
+                    break;
+            }
+
             try { Contents = File.OpenText(Acre_DB_Location); }
             catch (Exception e)
             {
