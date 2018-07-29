@@ -1954,32 +1954,43 @@ namespace ACSE
         private Image Get_Acre_Image(WorldAcre CurrentAcre, ushort ID)
         {
             Image Acre_Image = null;
-            if (Save_File.Save_Type == SaveType.Doubutsu_no_Mori || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Type == SaveType.Animal_Forest)
+
+            switch (Save_File.Save_Generation)
             {
-                ID = (ushort)(ID & 0xFFFC);
-                if (Is_Ocean(ID))
-                {
-                    Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, 0x03DC);
-                }
-                else
-                {
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                case SaveGeneration.iQue:
+                    ID = (ushort)(ID & 0xFFFC);
+                    if (Is_Ocean(ID))
+                    {
+                        Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, 0x03DC);
+                    }
+                    else
+                    {
+                        Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, ID);
+                        if (Acre_Image == null)
+                        {
+                            Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, 0xFFFF);
+                        }
+                    }
+                    break;
+                case SaveGeneration.NDS:
                     Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, ID);
                     if (Acre_Image == null)
+                    {
+                        Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, 0xFF);
+                    }
+                    break;
+                case SaveGeneration.Wii:
+                case SaveGeneration.N3DS:
+                    Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, ID);
+                    if (Acre_Image == null)
+                    {
                         Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, 0xFFFF);
-                }
+                    }
+                    break;
             }
-            else if (Save_File.Save_Type == SaveType.City_Folk || Save_File.Save_Generation == SaveGeneration.N3DS)
-            {
-                Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, ID);
-                if (Acre_Image == null)
-                    Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, 0xFFFF);
-            }
-            else
-            {
-                Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, ID);
-                if (Acre_Image == null)
-                    Acre_Image = AcreData.FetchAcreImage(Save_File.Save_Type, 0xFF);
-            }
+
             return Acre_Image;
         }
 
