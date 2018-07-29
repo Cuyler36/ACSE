@@ -1332,8 +1332,7 @@ namespace ACSE
             byte[] Data = new byte[count];
             if (reversed)
             {
-                int idx = count - 1;
-                for (int i = 0; i < count; i++)
+                for (int i = 0, idx = count - 1; i < count; i++, idx--)
                 {
                     Data[idx] = Working_Save_Data[offset + i];
                 }
