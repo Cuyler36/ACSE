@@ -903,7 +903,7 @@ namespace ACSE
                     for (int i = 0; i < 16; i++)
                     {
                         ushort Villager_ID = save.ReadUInt16(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Past_Villagers + i * 2);
-                        Past_Villagers[i] = Villager_Database.Values.FirstOrDefault(o => o.Villager_ID == Villager_ID);
+                        Past_Villagers[i] = Villager_Database.Values.FirstOrDefault(o => o.VillagerId == Villager_ID);
                     }
 
                 //UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.New_Leaf);
@@ -1640,8 +1640,8 @@ namespace ACSE
                 {
                     if (Villager != null && Villager.Exists)
                     {
-                        var VillagerTownName = Villager.Data.Town_Name;
-                        Villager.Data.Town_Name = townNameBox.Text;
+                        var VillagerTownName = Villager.Data.TownName;
+                        Villager.Data.TownName = townNameBox.Text;
                         
                         if (Villager.PlayerRelations != null)
                         {
@@ -1649,12 +1649,12 @@ namespace ACSE
                             {
                                 if (Relation.Exists)
                                 {
-                                    if (Relation.PlayerTownName.Equals(VillagerTownName) && Relation.PlayerTownId == Villager.Data.Town_ID)
+                                    if (Relation.PlayerTownName.Equals(VillagerTownName) && Relation.PlayerTownId == Villager.Data.TownId)
                                     {
                                         Relation.PlayerTownName = townNameBox.Text;
                                     }
 
-                                    if (Relation.MetTownName.Equals(VillagerTownName) && Relation.MetTownId == Villager.Data.Town_ID)
+                                    if (Relation.MetTownName.Equals(VillagerTownName) && Relation.MetTownId == Villager.Data.TownId)
                                     {
                                         Relation.MetTownName = townNameBox.Text;
                                     }
@@ -2620,7 +2620,7 @@ namespace ACSE
                 Text = ((Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus) && Villager.Index == 15) ? "Islander" : (Villager.Index + 1).ToString() };
             ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 32), Location = new Point(45, 22), DropDownStyle = ComboBoxStyle.DropDownList };
             Villager_Selection_Box.Items.AddRange(Villager_Names);
-            Villager_Selection_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Villager.Data.Villager_ID);
+            Villager_Selection_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Villager.Data.VillagerId);
             ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 32), Location = new Point(175, 22), DropDownStyle = ComboBoxStyle.DropDownList };
             Personality_Selection_Box.Items.AddRange(Personality_Database);
             OffsetablePictureBox VillagerPreviewBox = null;
@@ -2633,8 +2633,8 @@ namespace ACSE
                     Size = new Size(64, 64),
                     Location = new Point(450, 0),
                     Image = Properties.Resources.Villagers,
-                    Offset = (Villager.Data.Villager_ID < 0xE000 || Villager.Data.Villager_ID > 0xE0EB) ? new Point(64 * 6, 64 * 23)
-                        : new Point(64 * ((Villager.Data.Villager_ID & 0xFF) % 10), 64 * ((Villager.Data.Villager_ID & 0xFF) / 10))
+                    Offset = (Villager.Data.VillagerId < 0xE000 || Villager.Data.VillagerId > 0xE0EB) ? new Point(64 * 6, 64 * 23)
+                        : new Point(64 * ((Villager.Data.VillagerId & 0xFF) % 10), 64 * ((Villager.Data.VillagerId & 0xFF) / 10))
                 };
 
                 Container.Controls.Add(VillagerPreviewBox);
@@ -2702,20 +2702,26 @@ namespace ACSE
                 int Villager_Idx = Array.IndexOf(Villager_Names, Villager_Selection_Box.Text);
                 if (Villager_Idx > -1)
                 {
-                    Villager.Data.Villager_ID = Villager_Database.Keys.ElementAt(Villager_Idx);
-                    Villager.Exists = (Villager.Data.Villager_ID != 0 && Villager.Data.Villager_ID != 0xFFFF);
+                    Villager.Data.VillagerId = Villager_Database.Keys.ElementAt(Villager_Idx);
+                    Villager.Exists = (Villager.Data.VillagerId != 0 && Villager.Data.VillagerId != 0xFFFF);
 
                     if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue) // TODO: Wild World
                     {
-                        Villager.Data.Villager_AI = (Villager.Index == 15) ? (byte)0xFF : (byte)(Villager.Data.Villager_ID & 0xFF);
-                        if (Villager.Data.Villager_ID == 0)
+                        if (Save_File.Save_Type != SaveType.Doubutsu_no_Mori_e_Plus)
                         {
-                            Villager.Data.House_Coordinates = new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF }; // This will force a new construction of the villager's house
+                            Villager.Data.NameId = (Villager.Index == 15)
+                                ? (byte) 0xFF
+                                : (byte) (Villager.Data.VillagerId & 0xFF);
+                        }
+
+                        if (Villager.Data.VillagerId == 0)
+                        {
+                            Villager.Data.HouseCoordinates = new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF }; // This will force a new construction of the villager's house
                         }
                         else
                         {
-                            var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.Villager_ID);
-                            Villager.Data.House_Coordinates = HouseCoordinatesInfo.Item1;
+                            var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.VillagerId);
+                            Villager.Data.HouseCoordinates = HouseCoordinatesInfo.Item1;
                             if (HouseCoordinatesInfo.Item2 == false)
                             {
                                 MessageBox.Show(
@@ -2726,8 +2732,8 @@ namespace ACSE
 
                         if (VillagerPreviewBox != null)
                         {
-                            VillagerPreviewBox.Offset = (Villager.Data.Villager_ID < 0xE000 || Villager.Data.Villager_ID > 0xE0EB) ? new Point(64 * 6, 64 * 23)
-                                : new Point(64 * ((Villager.Data.Villager_ID & 0xFF) % 10), 64 * ((Villager.Data.Villager_ID & 0xFF) / 10));
+                            VillagerPreviewBox.Offset = (Villager.Data.VillagerId < 0xE000 || Villager.Data.VillagerId > 0xE0EB) ? new Point(64 * 6, 64 * 23)
+                                : new Point(64 * ((Villager.Data.VillagerId & 0xFF) % 10), 64 * ((Villager.Data.VillagerId & 0xFF) / 10));
                         }
                     }
                 }
@@ -2809,7 +2815,7 @@ namespace ACSE
                     //Change to combobox after confirmed working
                     ComboBox Villager_Box = new ComboBox { Size = new Size(150, 20), Location = new Point(5, 5 + 24 * i) };
                     Villager_Box.Items.AddRange(Villager_Names);
-                    Villager_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Past_Villagers[i].Villager_ID);
+                    Villager_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Past_Villagers[i].VillagerId);
                     pastVillagersPanel.Controls.Add(Villager_Box);
                 }
             }
@@ -3844,8 +3850,8 @@ namespace ACSE
                             Villager Villager = Utility.GetVillagerFromHouse(CurrentItem.ItemID, Villagers);
                             if (Villager != null)
                             {
-                                var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.Villager_ID);
-                                Villager.Data.House_Coordinates = HouseCoordinatesInfo.Item1;
+                                var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.VillagerId);
+                                Villager.Data.HouseCoordinates = HouseCoordinatesInfo.Item1;
                             }
                         }
                     }
@@ -4092,8 +4098,8 @@ namespace ACSE
                             if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue)
                             {
                                 // Save House Coordinates (TOOD: Wild World)
-                                var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.Villager_ID);
-                                Villager.Data.House_Coordinates = HouseCoordinatesInfo.Item1;
+                                var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.VillagerId);
+                                Villager.Data.HouseCoordinates = HouseCoordinatesInfo.Item1;
                             }
 
                             Villager.Write();

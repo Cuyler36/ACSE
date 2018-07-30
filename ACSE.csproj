@@ -4869,6 +4869,8 @@
     <Compile Include="Classes\Saves\SaveBase.cs" />
     <Compile Include="Classes\Saves\WiiSave.cs" />
     <Compile Include="Classes\TrainStation.cs" />
+    <Compile Include="Classes\Villagers\SimpleVillager.cs" />
+    <Compile Include="Classes\Villagers\Villager.cs" />
     <Compile Include="Controls\BadgeControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -4967,7 +4969,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Classes\Utilities\StringUtility.cs" />
-    <Compile Include="Classes\VillagerData.cs" />
+    <Compile Include="Classes\Villagers\VillagerData.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\CodeGeneratorForm.resx">

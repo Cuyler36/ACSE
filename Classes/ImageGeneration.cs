@@ -541,9 +541,9 @@ namespace ACSE
             {
                 if (Villager.Exists)
                 {
-                    int Index = (Villager.Data.House_Coordinates[0]) + Villager.Data.House_Coordinates[1] * 7;
-                    var Position = new Point((Villager.Data.House_Coordinates[2] * PixelsPerItemSlotX) - HouseImageSize / 2, 
-                        (Villager.Data.House_Coordinates[3] * PixelsPerItemSlotY) - HouseImageSize / 2);
+                    int Index = (Villager.Data.HouseCoordinates[0]) + Villager.Data.HouseCoordinates[1] * 7;
+                    var Position = new Point((Villager.Data.HouseCoordinates[2] * PixelsPerItemSlotX) - HouseImageSize / 2, 
+                        (Villager.Data.HouseCoordinates[3] * PixelsPerItemSlotY) - HouseImageSize / 2);
 
                     Image CloneImage = null;
                     if (PictureBoxes[Index].BackgroundImage != null)
