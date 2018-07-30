@@ -708,17 +708,6 @@ namespace ACSE.Classes.Utilities
             { 0xDE, "❤" },
             { 0xDF, "♪" },
         };
-
-        public static int StringToMaxChars(string s)
-        {
-            var t = StringInfo.GetTextElementEnumerator(s);
-            var size = 0;
-            while (t.MoveNext())
-            {
-                size += Encoding.UTF8.GetBytes(((string)(t.Current)).ToCharArray()).Length;
-            }
-            return size;
-        }
     }
 
     public class ACString
