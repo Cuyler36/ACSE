@@ -224,7 +224,7 @@ namespace ACSE.Classes.Utilities
             { 0xD4, "⚷" },
         };
 
-        public static Dictionary<byte, string> Doubutsu_no_Mori_e_Plus_Char_Map = new Dictionary<byte, string>
+        public static readonly Dictionary<byte, string> Doubutsu_no_Mori_e_Plus_Char_Map = new Dictionary<byte, string>
         {
             { 0x00, "あ" },
             { 0x01, "い" },
@@ -711,12 +711,10 @@ namespace ACSE.Classes.Utilities
 
         public static int StringToMaxChars(string s)
         {
-            TextElementEnumerator t = StringInfo.GetTextElementEnumerator(s);
-            int size = 0;
-            int chars = 0;
+            var t = StringInfo.GetTextElementEnumerator(s);
+            var size = 0;
             while (t.MoveNext())
             {
-                chars++;
                 size += Encoding.UTF8.GetBytes(((string)(t.Current)).ToCharArray()).Length;
             }
             return size;
@@ -725,40 +723,38 @@ namespace ACSE.Classes.Utilities
 
     public class ACString
     {
-        byte[] String_Bytes;
-        static SaveType Save_Type;
         public string String = "";
-        static Dictionary<byte, string> Char_Dictionary;
+        private static SaveType _saveType;
+        private static Dictionary<byte, string> _charDictionary;
 
         public ACString(byte[] stringBuffer, SaveType saveType)
         {
-            Save_Type = saveType;
-            String_Bytes = stringBuffer;
+            _saveType = saveType;
             switch (saveType)
             {
                 case SaveType.Doubutsu_no_Mori:
                 case SaveType.Doubutsu_no_Mori_Plus:
                 case SaveType.Doubutsu_no_Mori_e_Plus:
-                    Char_Dictionary = StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map;
+                    _charDictionary = StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map;
                     break;
                 case SaveType.Animal_Crossing:
-                    Char_Dictionary = StringUtility.AC_CharacterDictionary;
+                    _charDictionary = StringUtility.AC_CharacterDictionary;
                     break;
                 case SaveType.Wild_World:
-                    Char_Dictionary = StringUtility.WW_CharacterDictionary;
+                    _charDictionary = StringUtility.WW_CharacterDictionary;
                     break;
                 default:
-                    Char_Dictionary = null;
+                    _charDictionary = null;
                     break;
             }
 
-            if (Char_Dictionary != null)
+            if (_charDictionary != null)
             {
-                for (int i = 0; i < stringBuffer.Length; i++)
+                for (var i = 0; i < stringBuffer.Length; i++)
                 {
-                    if (Char_Dictionary.ContainsKey(stringBuffer[i]))
+                    if (_charDictionary.ContainsKey(stringBuffer[i]))
                     {
-                        String += Char_Dictionary[stringBuffer[i]];
+                        String += _charDictionary[stringBuffer[i]];
                     }
                     else
                     {
@@ -766,106 +762,115 @@ namespace ACSE.Classes.Utilities
                     }
                 }
             }
-            else if (saveType == SaveType.City_Folk)
+            else
             {
-                String = Encoding.BigEndianUnicode.GetString(stringBuffer);
-            }
-            else if (saveType == SaveType.New_Leaf || saveType == SaveType.Welcome_Amiibo)
-            {
-                String = Encoding.Unicode.GetString(stringBuffer);
+                switch (saveType)
+                {
+                    case SaveType.City_Folk:
+                        String = Encoding.BigEndianUnicode.GetString(stringBuffer);
+                        break;
+                    case SaveType.New_Leaf:
+                    case SaveType.Welcome_Amiibo:
+                        String = Encoding.Unicode.GetString(stringBuffer);
+                        break;
+                    default:
+                        String = "";
+                        break;
+                }
             }
         }
 
         public static byte[] GetBytes(string String, int maxSize = 0)
         {
-            if (Save_Type == SaveType.Animal_Crossing)
+            var i = 0;
+            switch (_saveType)
             {
-                byte[] returnedString = new byte[maxSize > 0 ? maxSize : String.Length];
-                TextElementEnumerator t = StringInfo.GetTextElementEnumerator(String);
-                int i = 0;
-                while (t.MoveNext() && i < returnedString.Length)
-                {
-                    if (Char_Dictionary.ContainsValue((string)t.Current))
-                        returnedString[i] = Char_Dictionary.FirstOrDefault(o => o.Value == (string)t.Current).Key;
-                    else
-                        returnedString[i] = Encoding.UTF8.GetBytes(new char[1] { String[t.ElementIndex] })[0];
-                    i++;
-                }
-                for (int x = 0; x < returnedString.Length; x++)
-                    if (returnedString[x] == 0)
-                        returnedString[x] = 0x20;
-                return returnedString;
-            }
-            else if (Save_Type == SaveType.Doubutsu_no_Mori || Save_Type == SaveType.Doubutsu_no_Mori_Plus || Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
-            {
-                byte[] String_Bytes = new byte[maxSize > 0 ? maxSize : String.Length];
-                for (int i = 0; i < String.Length; i++)
-                {
-                    if (i >= String_Bytes.Length)
-                        break;
-                    if (StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map.ContainsValue(String[i].ToString()))
+                case SaveType.Animal_Crossing:
+                    var returnedString = new byte[maxSize > 0 ? maxSize : String.Length];
+                    var t = StringInfo.GetTextElementEnumerator(String);
+                    while (t.MoveNext() && i < returnedString.Length)
                     {
-                        String_Bytes[i] = StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map.First(o => o.Value == String[i].ToString()).Key;
+                        if (_charDictionary.ContainsValue((string)t.Current))
+                            returnedString[i] = _charDictionary.FirstOrDefault(o => o.Value == (string)t.Current).Key;
+                        else
+                            returnedString[i] = Encoding.UTF8.GetBytes(new[] { String[t.ElementIndex] })[0];
+                        i++;
                     }
-                    else
-                    {
-                        String_Bytes[i] = Encoding.ASCII.GetBytes(new char[1] { String[i] })[0];
-                    }
-                }
-                if (maxSize > 0 && String.Length < maxSize)
+                    for (var x = 0; x < returnedString.Length; x++)
+                        if (returnedString[x] == 0)
+                            returnedString[x] = 0x20;
+                    return returnedString;
+                case SaveType.Doubutsu_no_Mori:
+                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.Doubutsu_no_Mori_e_Plus:
                 {
-                    for (int i = String.Length; i < maxSize; i++)
+                    var stringBytes = new byte[maxSize > 0 ? maxSize : String.Length];
+                    for (i = 0; i < String.Length; i++)
                     {
-                        String_Bytes[i] = 0x20;
+                        if (i >= stringBytes.Length)
+                            break;
+                        if (StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map.ContainsValue(String[i].ToString()))
+                        {
+                            stringBytes[i] = StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map.First(o => o.Value == String[i].ToString()).Key;
+                        }
+                        else
+                        {
+                            stringBytes[i] = Encoding.ASCII.GetBytes(new[] { String[i] })[0];
+                        }
                     }
+
+                    if (maxSize <= 0 || String.Length >= maxSize) return stringBytes;
+                    for (i = String.Length; i < maxSize; i++)
+                    {
+                        stringBytes[i] = 0x20;
+                    }
+                    return stringBytes;
                 }
-                return String_Bytes;
-            }
-            else if (Save_Type == SaveType.Wild_World)
-            {
-                byte[] String_Buffer = new byte[maxSize > 0 ? maxSize : String.Length];
-                for (int i = 0; i < String.Length; i++)
+                case SaveType.Wild_World:
                 {
-                    string Char = String[i].ToString();
-                    if (StringUtility.WW_CharacterDictionary.ContainsValue(Char))
+                    var stringBuffer = new byte[maxSize > 0 ? maxSize : String.Length];
+                    for (i = 0; i < String.Length; i++)
                     {
-                        String_Buffer[i] = StringUtility.WW_CharacterDictionary.FirstOrDefault(o => o.Value.Equals(Char)).Key;
+                        var character = String[i].ToString();
+                        if (StringUtility.WW_CharacterDictionary.ContainsValue(character))
+                        {
+                            stringBuffer[i] = StringUtility.WW_CharacterDictionary.FirstOrDefault(o => o.Value.Equals(character)).Key;
+                        }
                     }
-                }
                 
-                return String_Buffer;
-            }
-            else if (Save_Type == SaveType.City_Folk)
-            {
-                byte[] String_Buffer = new byte[maxSize > 0 ? maxSize : String.Length * 2]; //Characters are now unicode
-                byte[] String_Bytes = Encoding.Unicode.GetBytes(String);
-                for (int i = 0; i < String_Bytes.Length; i += 2)
-                    Buffer.BlockCopy(String_Bytes.Skip(i).Take(2).Reverse().ToArray(), 0, String_Buffer, i, 2);
-                return String_Buffer;
-            }
-            else if (Save_Type == SaveType.New_Leaf || Save_Type == SaveType.Welcome_Amiibo)
-            {
-                byte[] String_Buffer = Encoding.Unicode.GetBytes(String);
-                if (maxSize > 0)
-                    Array.Resize(ref String_Buffer, maxSize);
-                return String_Buffer;
-            }
-            else
-            {
-                MainForm.Debug_Manager.WriteLine(string.Format("StringUtil was passed an unknown SaveType enum. Received Type: {0}", Save_Type.ToString()), DebugLevel.Error);
-                return null;
+                    return stringBuffer;
+                }
+                case SaveType.City_Folk:
+                {
+                    var stringBuffer = new byte[maxSize > 0 ? maxSize : String.Length * 2]; //Characters are now unicode
+                    var stringBytes = Encoding.Unicode.GetBytes(String);
+                    for (i = 0; i < stringBytes.Length; i += 2)
+                        Buffer.BlockCopy(stringBytes.Skip(i).Take(2).Reverse().ToArray(), 0, stringBuffer, i, 2);
+                    return stringBuffer;
+                }
+                case SaveType.New_Leaf:
+                case SaveType.Welcome_Amiibo:
+                {
+                    var stringBuffer = Encoding.Unicode.GetBytes(String);
+                    if (maxSize > 0)
+                        Array.Resize(ref stringBuffer, maxSize);
+                    return stringBuffer;
+                }
+                case SaveType.Animal_Forest: // Animal Forest iQue support will be added soon
+                    return null;
+                case SaveType.Unknown:
+                    MainForm.Debug_Manager.WriteLine(
+                        $"StringUtil was passed an unknown SaveType enum. Received Type: {_saveType.ToString()}", DebugLevel.Error);
+                    return null;
+                default:
+                    return null;
             }
         }
 
         public string Trim()
-        {
-            return String.Trim(' ');
-        }
+            => String.Trim(' ');
 
         public string Clean()
-        {
-            string Cleaned_String = Regex.Replace(String, "[\n]{3,}", "\n\n");
-            return Regex.Replace(Cleaned_String.Trim(' '), "[ ]{2,}", " ");
-        }
+            => Regex.Replace(Regex.Replace(String, "[\n]{3,}", "\n\n").Trim(' '), "[ ]{2,}", " ");
     }
 }
