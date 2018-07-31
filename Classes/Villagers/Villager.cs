@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using ACSE.Classes.Utilities;
 
 namespace ACSE
@@ -121,6 +122,15 @@ namespace ACSE
         public PlayerRelation GetPlayerRelation(Player player)
         {
             return PlayerRelations?.First(o => o.PlayerId == player.Data.Identifier && o.PlayerName.Equals(player.Data.Name));
+        }
+
+        public void ImportDlcVillager(byte[] dlcData, int dlcIndex)
+        {
+            if (_saveData.Save_Type != SaveType.Doubutsu_no_Mori_e_Plus || dlcData.Length < 0x10 ||
+                Encoding.ASCII.GetString(dlcData, 0, 4) != "Yaz0") return;
+
+            var offset = _saveData.Save_Data_Start_Offset + 0x24494 + dlcIndex * 0x749;
+            _saveData.Write(offset, dlcData);
         }
 
         public void Write()
