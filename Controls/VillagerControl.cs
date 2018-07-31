@@ -27,6 +27,7 @@ namespace ACSE.Controls
         private readonly ItemEditor _carpetWallpaperEditor;
         private readonly SingleItemEditor _umbrellaEditor;
         private readonly SingleItemEditor _musicEditor;
+        private readonly TextBox _nameBox;
 
         /// <summary>
         /// The index of the control.
@@ -148,6 +149,22 @@ namespace ACSE.Controls
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
                 case SaveGeneration.iQue:
+                    // e+ exclusive controls TODO: These will probably be used in City Folk as well.
+                    if (_saveFile.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+                    {
+                        _nameBox = new TextBox
+                        {
+                            Size = new Size(60, 32),
+                            Text = _villager.Name,
+                            MaxLength = 6
+                        };
+
+                        margin = CalculateControlVerticalMargin(_nameBox);
+                        _nameBox.Margin = new Padding(0, margin, 10, margin);
+                        _nameBox.TextChanged += (s, e) => NameTextChanged();
+                        Controls.Add(_nameBox);
+                    }
+
                     _villagerPreviewBox = new OffsetablePictureBox
                     {
                         Size = new Size(64, 64),
@@ -156,6 +173,7 @@ namespace ACSE.Controls
                             : new Point(64 * ((_villager.Data.VillagerId & 0xFF) % 10), 64 * ((_villager.Data.VillagerId & 0xFF) / 10))
                     };
                     Controls.Add(_villagerPreviewBox);
+
                     break;
                 case SaveGeneration.NDS:
                 case SaveGeneration.Wii:
@@ -207,7 +225,11 @@ namespace ACSE.Controls
             if (_villagerSelectionBox.SelectedIndex < 0) return;
 
             var kvPair = _villagers.ElementAt(_villagerSelectionBox.SelectedIndex);
-            _villager.Name = _villagerNames[_villagerSelectionBox.SelectedIndex];
+            if (_saveFile.Save_Type != SaveType.Doubutsu_no_Mori_e_Plus)
+            {
+                _villager.Name = _villagerNames[_villagerSelectionBox.SelectedIndex];
+            }
+
             _villager.Data.VillagerId = kvPair.Value.VillagerId;
             _villager.Exists = _villager.Data.VillagerId != 0 && _villager.Data.VillagerId != 0xFFFF;
 
@@ -270,6 +292,14 @@ namespace ACSE.Controls
             else
             {
                 _villager.Data.Status &= 0xFE;
+            }
+        }
+
+        private void NameTextChanged()
+        {
+            if (!string.IsNullOrWhiteSpace(_nameBox.Text))
+            {
+                _villager.Name = _nameBox.Text;
             }
         }
 

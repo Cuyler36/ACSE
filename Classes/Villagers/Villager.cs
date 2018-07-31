@@ -93,6 +93,12 @@ namespace ACSE
 
             Data = (VillagerDataStruct)boxedData;
 
+            // Set Villager Name for e+ TODO: Separate translated e+ & untranslated e+.
+            if (_saveData.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            {
+                Name = _saveData.ReadString(Offset + 0xC, 6);
+            }
+
             // Create Player Relations;
             if (save.Save_Type != SaveType.Animal_Crossing) return;
             {
@@ -230,7 +236,7 @@ namespace ACSE
                 }
             }
 
-            // Write the NameId for N64/GC/iQue games. TODO: Check if Wild World also has this.
+            // Write the NameId for N64/GC/iQue games, & name for e+. TODO: Check if Wild World also has this.
             if (_saveData.Save_Generation != SaveGeneration.N64 && _saveData.Save_Generation != SaveGeneration.GCN &&
                 _saveData.Save_Generation != SaveGeneration.iQue) return;
 
@@ -241,6 +247,7 @@ namespace ACSE
                     _saveData.Write(Offset + Offsets.NameId, Index == 15 ? (byte)0xFF : (byte)Data.VillagerId);
                     break;
                 case SaveType.Doubutsu_no_Mori_e_Plus: // e+ doesn't set this byte, as they changed the SetNameID function
+                    _saveData.Write(Offset + 0xC, ACString.GetBytes(Name), false, 6);
                     break;
                 default:
                     _saveData.Write(Offset + Offsets.NameId, (byte)Data.VillagerId);
