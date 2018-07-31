@@ -331,7 +331,7 @@ namespace ACSE
                     databaseFilename = string.Format(databaseFilename, "AC");
                     break;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
-                    databaseFilename = String.Format(databaseFilename, "DBNM_e_Plus");
+                    databaseFilename = string.Format(databaseFilename, "DBNM_e_Plus");
                     break;
                 case SaveType.Wild_World:
                     databaseFilename = string.Format(databaseFilename, "WW");
