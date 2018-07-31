@@ -1016,12 +1016,65 @@ namespace ACSE
                         Console.WriteLine(exc.Message);
                     }
                 });
-                for (int i = villagerPanel.Controls.Count - 1; i > -1; i--)
-                    if (villagerPanel.Controls[i] is Panel)
-                    {
-                        villagerPanel.Controls[i].Dispose();
-                    }
-                foreach (Villager v in Villagers)
+
+                // Set labels for the villager panel
+                villagerPanel.Controls.DisposeChildren();
+                var labelFlowPanel = new FlowLayoutPanel
+                {
+                    AutoSize = true,
+                    MaximumSize = new Size(0, 20),
+                    FlowDirection = FlowDirection.LeftToRight
+                };
+
+                // Add common labels
+                var indexLabel = new Label
+                {
+                    Text = "Index",
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Size = new Size(45, 20)
+                };
+                indexLabel.SetCenterMargins(labelFlowPanel, 0, 0);
+
+                var villagerLabel = new Label
+                {
+                    Text = "Villager",
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Size = new Size(120, 20)
+                };
+                villagerLabel.SetCenterMargins(labelFlowPanel, 0, 10);
+
+                var personalityLabel = new Label
+                {
+                    Text = "Personality",
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Size = new Size(80, 20)
+                };
+                personalityLabel.SetCenterMargins(labelFlowPanel, 0, 10);
+
+                var catchphraseLabel = new Label
+                {
+                    Text = "Catchphrase",
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Size = new Size(100, 20)
+                };
+                catchphraseLabel.SetCenterMargins(labelFlowPanel, 0, 10);
+
+                var itemsLabel = new Label
+                {
+                    Text = "Items",
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    Size = new Size(80, 20)
+                };
+                itemsLabel.SetCenterMargins(labelFlowPanel, 0, 10);
+
+                labelFlowPanel.Controls.Add(indexLabel);
+                labelFlowPanel.Controls.Add(villagerLabel);
+                labelFlowPanel.Controls.Add(personalityLabel);
+                labelFlowPanel.Controls.Add(catchphraseLabel);
+                labelFlowPanel.Controls.Add(itemsLabel);
+                villagerPanel.Controls.Add(labelFlowPanel);
+
+                foreach (var v in Villagers)
                     GenerateVillagerPanel(v);
 
                 if (Save_File.Save_Generation == SaveGeneration.N3DS)
