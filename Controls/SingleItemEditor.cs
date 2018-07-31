@@ -128,7 +128,7 @@ namespace ACSE
 
         protected virtual void OnEditorMouseMove(object sender, MouseEventArgs e)
         {
-            if (!disabled && (e.X != LastX || e.Y != LastY))
+            if (item != null && !disabled && (e.X != LastX || e.Y != LastY))
             {
                 // Update Last Hover Position
                 LastX = e.X;

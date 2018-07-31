@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ACSE.Classes.Utilities;
+using ACSE.Controls;
 using ACSE.Generators;
 
 namespace ACSE
@@ -2611,213 +2612,25 @@ namespace ACSE
         #endregion
 
         #region Villagers
-        private int Villager_X = -1, Villager_Y = -1;
-        private void GenerateVillagerPanel(Villager Villager)
+
+        private void GenerateVillagerPanel(Villager villager)
         {
-            // TODO: Draw House Coordinate boxes for AC/WW, and also Furniture Boxes
-            Panel Container = new Panel { Size = new Size(700, 68), Location = new Point(0, 32 + Villager.Index * 66) };
-            Label Index = new Label { AutoSize = false, Size = new Size(45, 64), TextAlign = ContentAlignment.MiddleCenter,
-                Text = ((Save_File.Save_Type == SaveType.Animal_Crossing || Save_File.Save_Type == SaveType.Doubutsu_no_Mori_Plus) && Villager.Index == 15) ? "Islander" : (Villager.Index + 1).ToString() };
-            ComboBox Villager_Selection_Box = new ComboBox { Size = new Size(120, 32), Location = new Point(45, 22), DropDownStyle = ComboBoxStyle.DropDownList };
-            Villager_Selection_Box.Items.AddRange(Villager_Names);
-            Villager_Selection_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Villager.Data.VillagerId);
-            ComboBox Personality_Selection_Box = new ComboBox { Size = new Size(80, 32), Location = new Point(175, 22), DropDownStyle = ComboBoxStyle.DropDownList };
-            Personality_Selection_Box.Items.AddRange(Personality_Database);
-            OffsetablePictureBox VillagerPreviewBox = null;
+            var villagerEditor = new VillagerControl(this, villager.Index, Save_File, villager, Villager_Database,
+                Villager_Names, Personality_Database);
+            villagerEditor.Location = new Point(0, 32 + villager.Index * villagerEditor.Height);
 
-            // Villager Preview Image
-            if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue)
-            {
-                VillagerPreviewBox = new OffsetablePictureBox
-                {
-                    Size = new Size(64, 64),
-                    Location = new Point(450, 0),
-                    Image = Properties.Resources.Villagers,
-                    Offset = (Villager.Data.VillagerId < 0xE000 || Villager.Data.VillagerId > 0xE0EB) ? new Point(64 * 6, 64 * 23)
-                        : new Point(64 * ((Villager.Data.VillagerId & 0xFF) % 10), 64 * ((Villager.Data.VillagerId & 0xFF) / 10))
-                };
-
-                Container.Controls.Add(VillagerPreviewBox);
-            }
-
-            if (Save_File.Save_Generation == SaveGeneration.N3DS)
-            {
-                Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 9 ? Villager.Data.Personality : 8;
-            }
-            else
-            {
-                Personality_Selection_Box.SelectedIndex = Villager.Data.Personality < 7 ? Villager.Data.Personality : 6;
-            }
-            int CatchphraseSize = Save_File.Save_Generation == SaveGeneration.N3DS ? 10 : Villager.Offsets.CatchphraseSize;
-            TextBox Villager_Catchphrase_Box = new TextBox { Size = new Size(100, 32), Location = new Point (265, 22), MaxLength = CatchphraseSize, Text = Villager.Data.Catchphrase };
-            CheckBox Boxed = new CheckBox { Size = new Size(22, 22), Location = new Point(375, 22), Checked = Villager.Boxed(), Enabled = (Save_File.Save_Generation != SaveGeneration.N64 && Save_File.Save_Generation != SaveGeneration.GCN && Save_File.Save_Generation != SaveGeneration.iQue)};
-            PictureBox Shirt_Box = new PictureBox {BorderStyle = BorderStyle.FixedSingle, Size = new Size(16, 16), Location = new Point(415, 24), Image = Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type)};
-            if (Save_File.Save_Type == SaveType.Wild_World || Save_File.Save_Type == SaveType.City_Folk || Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
-            {
-                //TODO: Add wallpaper/floor/song boxes
-                PictureBox Furniture_Box = new PictureBox { BorderStyle = BorderStyle.FixedSingle, Size = new Size(16 * Villager.Data.Furniture.Length, 16), Location = new Point(441, 24) };
-                Refresh_PictureBox_Image(Furniture_Box, Inventory.GetItemPic(16, Villager.Data.Furniture.Length, Villager.Data.Furniture, Save_File.Save_Type));
-
-                Furniture_Box.MouseMove += delegate (object sender, MouseEventArgs e)
-                {
-                    if (e.X != Villager_X || e.Y != Villager_Y)
-                    {
-                        Item Selected_Item = Villager.Data.Furniture[e.X / 16];
-                        villagerToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Item.Name, Selected_Item.ItemID.ToString("X4")), sender as Control, e.X + 15, e.Y + 10);
-                        Villager_X = e.X;
-                        Villager_Y = e.Y;
-                    }
-                };
-
-                Furniture_Box.MouseLeave += delegate (object sender, EventArgs e)
-                {
-                    villagerToolTip.Hide(this);
-                };
-
-                Furniture_Box.MouseClick += delegate (object sender, MouseEventArgs e)
-                {
-                    int Item_Index = (e.X / 16) + (e.Y / 16) * ((sender as PictureBox).Width / 16);
-                    if (e.Button == MouseButtons.Right)
-                    {
-                        //selectedItem.SelectedValue = Villager.Data.Furniture[Item_Index].ItemID;
-                        SetCurrentItem(Villager.Data.Furniture[Item_Index]);
-                    }
-                    else if (e.Button == MouseButtons.Left)
-                    {
-                        Save_File.ChangesMade = true;
-                        Villager.Data.Furniture[Item_Index] = new Item(GetCurrentItem());
-                        Refresh_PictureBox_Image(Furniture_Box, Inventory.GetItemPic(16, Villager.Data.Furniture.Length, Villager.Data.Furniture, Save_File.Save_Type));
-                    }
-                    else if (e.Button == MouseButtons.Middle)
-                    {
-                        Utility.FloodFillItemArray(ref Villager.Data.Furniture, 16, Item_Index, Villager.Data.Furniture[Item_Index], new Item(GetCurrentItem()));
-                        Refresh_PictureBox_Image(Furniture_Box, Inventory.GetItemPic(16, Villager.Data.Furniture.Length, Villager.Data.Furniture, Save_File.Save_Type));
-                    }
-                };
-                Container.Controls.Add(Furniture_Box);
-            }
-            
-            Villager_Selection_Box.SelectedIndexChanged += delegate (object sender, EventArgs e)
-            {
-                int Villager_Idx = Array.IndexOf(Villager_Names, Villager_Selection_Box.Text);
-                if (Villager_Idx > -1)
-                {
-                    Villager.Data.VillagerId = Villager_Database.Keys.ElementAt(Villager_Idx);
-                    Villager.Exists = (Villager.Data.VillagerId != 0 && Villager.Data.VillagerId != 0xFFFF);
-
-                    if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue) // TODO: Wild World
-                    {
-                        if (Save_File.Save_Type != SaveType.Doubutsu_no_Mori_e_Plus)
-                        {
-                            Villager.Data.NameId = (Villager.Index == 15)
-                                ? (byte) 0xFF
-                                : (byte) (Villager.Data.VillagerId & 0xFF);
-                        }
-
-                        if (Villager.Data.VillagerId == 0)
-                        {
-                            Villager.Data.HouseCoordinates = new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF }; // This will force a new construction of the villager's house
-                        }
-                        else
-                        {
-                            var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.VillagerId);
-                            Villager.Data.HouseCoordinates = HouseCoordinatesInfo.Item1;
-                            if (HouseCoordinatesInfo.Item2 == false)
-                            {
-                                MessageBox.Show(
-                                    string.Format("Couldn't find a valid house for {0}!\nThey will have a random sign chosen as their house location if you don't place one.",
-                                        Villager_Database.Values.ElementAt(Villager_Idx).Name), "Villager House Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
-
-                        if (VillagerPreviewBox != null)
-                        {
-                            VillagerPreviewBox.Offset = (Villager.Data.VillagerId < 0xE000 || Villager.Data.VillagerId > 0xE0EB) ? new Point(64 * 6, 64 * 23)
-                                : new Point(64 * ((Villager.Data.VillagerId & 0xFF) % 10), 64 * ((Villager.Data.VillagerId & 0xFF) / 10));
-                        }
-                    }
-                }
-            };
-
-            Personality_Selection_Box.SelectedIndexChanged += delegate (object sender, EventArgs e)
-            {
-                if (Personality_Selection_Box.SelectedIndex > -1)
-                    Villager.Data.Personality = (byte)Personality_Selection_Box.SelectedIndex;
-            };
-
-            Villager_Catchphrase_Box.TextChanged += delegate (object sender, EventArgs e)
-            {
-                Villager.Data.Catchphrase = Villager_Catchphrase_Box.Text;
-            };
-
-            Shirt_Box.MouseMove += delegate (object sender, MouseEventArgs e)
-            {
-                if (e.X != Villager_X || e.Y != Villager_Y)
-                {
-                    villagerToolTip.Show(string.Format("{0} - [0x{1}]", Villager.Data.Shirt.Name, Villager.Data.Shirt.ItemID.ToString("X4")), sender as Control, e.X + 15, e.Y + 10);
-                    Villager_X = e.X;
-                    Villager_Y = e.Y;
-                }
-            };
-
-            Shirt_Box.MouseLeave += delegate (object sender, EventArgs e)
-            {
-                villagerToolTip.Hide(this);
-            };
-
-            Shirt_Box.MouseClick += delegate (object sender, MouseEventArgs e)
-            {
-                if (e.Button == MouseButtons.Right)
-                {
-                    SetCurrentItem(Villager.Data.Shirt);
-                    //selectedItem.SelectedValue = Villager.Data.Shirt.ItemID;
-                    itemFlag1.Text = Villager.Data.Shirt.Flag1.ToString("X2");
-                    itemFlag2.Text = Villager.Data.Shirt.Flag2.ToString("X2");
-                }
-                else if (e.Button == MouseButtons.Left)
-                {
-                    Save_File.ChangesMade = true;
-                    Villager.Data.Shirt = new Item(GetCurrentItem());
-                    Refresh_PictureBox_Image(Shirt_Box, Inventory.GetItemPic(16, Villager.Data.Shirt, Save_File.Save_Type));
-                }
-            };
-
-            Boxed.CheckedChanged += delegate (object sender, EventArgs e)
-            {
-                if (Save_File != null && !Loading && Save_File.Save_Generation == SaveGeneration.N3DS)
-                {
-                    if (Boxed.Checked)
-                    {
-                        Villager.Data.Status = (byte)(Villager.Data.Status | 1);
-                    }
-                    else
-                    {
-                        Villager.Data.Status = (byte)(Villager.Data.Status & 0xFE);
-                    }
-                }
-            };
-
-            Container.Controls.Add(Index);
-            Container.Controls.Add(Villager_Selection_Box);
-            Container.Controls.Add(Personality_Selection_Box);
-            Container.Controls.Add(Villager_Catchphrase_Box);
-            Container.Controls.Add(Boxed);
-            Container.Controls.Add(Shirt_Box);
-            villagerPanel.Controls.Add(Container);
+            villagerPanel.Controls.Add(villagerEditor);
         }
 
         private void GeneratePastVillagersPanel()
         {
-            if (Past_Villagers != null)
+            if (Past_Villagers == null) return;
+            for (var i = 0; i < Past_Villagers.Length - 1; i++)
             {
-                for (int i = 0; i < Past_Villagers.Length - 1; i++)
-                {
-                    //Change to combobox after confirmed working
-                    ComboBox Villager_Box = new ComboBox { Size = new Size(150, 20), Location = new Point(5, 5 + 24 * i) };
-                    Villager_Box.Items.AddRange(Villager_Names);
-                    Villager_Box.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Past_Villagers[i].VillagerId);
-                    pastVillagersPanel.Controls.Add(Villager_Box);
-                }
+                var villagerBox = new ComboBox { Size = new Size(150, 20), Location = new Point(5, 5 + 24 * i) };
+                villagerBox.Items.AddRange(Villager_Names);
+                villagerBox.SelectedIndex = Array.IndexOf(Villager_Database.Keys.ToArray(), Past_Villagers[i].VillagerId);
+                pastVillagersPanel.Controls.Add(villagerBox);
             }
         }
 

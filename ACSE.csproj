@@ -4912,6 +4912,9 @@
     <Compile Include="Controls\SingleItemEditor.Designer.cs">
       <DependentUpon>SingleItemEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\VillagerControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\CodeGeneratorForm.cs">
       <SubType>Form</SubType>
     </Compile>

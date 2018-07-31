@@ -127,7 +127,7 @@ namespace ACSE
         public void ImportDlcVillager(byte[] dlcData, int dlcIndex)
         {
             if (_saveData.Save_Type != SaveType.Doubutsu_no_Mori_e_Plus || dlcData.Length < 0x10 ||
-                Encoding.ASCII.GetString(dlcData, 0, 4) != "Yaz0") return;
+                dlcData.Length > 0x73B || Encoding.ASCII.GetString(dlcData, 0, 4) != "Yaz0") return;
 
             var offset = _saveData.Save_Data_Start_Offset + 0x24494 + dlcIndex * 0x749;
             _saveData.Write(offset, dlcData);
@@ -191,6 +191,23 @@ namespace ACSE
                                     _saveData.Write(dataOffset, ((Item)dataObject).ItemID, _saveData.Is_Big_Endian);
                                     break;
                             }
+                        }
+                        else if (fieldType == typeof(Item[]))
+                        {
+                            if (dataObject is Item[] collection)
+                                for (var i = 0; i < collection.Length; i++)
+                                {
+                                    switch (_saveData.Save_Generation)
+                                    {
+                                        case SaveGeneration.N3DS:
+                                            _saveData.Write(dataOffset + i * 4, ItemData.EncodeItem(collection[i]));
+                                            break;
+                                        default:
+                                            _saveData.Write(dataOffset + i * 2, collection[i].ItemID,
+                                                _saveData.Is_Big_Endian);
+                                            break;
+                                    }
+                                }
                         }
                         else if (!fieldType.IsClass) // Don't write classes. If we're here, the that means that we haven't handled saving the class.
                         {
