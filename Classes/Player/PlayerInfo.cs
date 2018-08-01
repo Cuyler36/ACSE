@@ -1,8 +1,6 @@
-﻿using System;
+﻿using ACSE.Classes.Utilities;
+using System;
 using System.Drawing;
-using System.Reflection;
-using ACSE.Classes.Utilities;
-using ACSE.Messages.Mail;
 
 namespace ACSE
 {
@@ -66,11 +64,11 @@ namespace ACSE
         public int BirthdaySize;
         public int TownIdentifier;
         public int TownIdentifierSize;
-        public int NL_Wallet;
-        public int NL_Savings;
-        public int NL_Debt;
+        public int NlWallet;
+        public int NlSavings;
+        public int NlDebt;
         public int MeowCoupons;
-        public int Island_Medals;
+        public int IslandMedals;
         public int IslandBox;
         public int IslandBoxCount;
     }
@@ -115,16 +113,16 @@ namespace ACSE
         public byte ShoeColor; //CF only
         public Image TownPassCardImage;
         public byte[] TownPassCardData;
-        public NL_Int32 NL_Wallet;
-        public NL_Int32 NL_Savings;
-        public NL_Int32 NL_Debt;
+        public NL_Int32 NlWallet;
+        public NL_Int32 NlSavings;
+        public NL_Int32 NlDebt;
         public NL_Int32 MeowCoupons;
-        public NL_Int32 Island_Medals;
+        public NL_Int32 IslandMedals;
     }
 
     public static class PlayerInfo
     {
-        public static PlayerSaveInfo Doubutsu_no_Mori = new PlayerSaveInfo
+        public static PlayerSaveInfo DoubutsuNoMori = new PlayerSaveInfo
         {
             Name = 0,
             NameSize = 6,
@@ -139,7 +137,7 @@ namespace ACSE
             Pockets = 0x14,
             PocketsCount = 15,
             Bells = 0x38,
-            Debt = 0x3C, 
+            Debt = 0x3C,
             HeldItem = 0x3EC,
             InventoryBackground = 0xA72,
             Shirt = 0xA78,
@@ -173,16 +171,16 @@ namespace ACSE
             Shoes = -1,
             Socks = -1,
             Wetsuit = -1,
-            NL_Debt = -1,
-            NL_Savings = -1,
-            NL_Wallet = -1,
+            NlDebt = -1,
+            NlSavings = -1,
+            NlWallet = -1,
             MeowCoupons = -1,
-            Island_Medals = -1,
+            IslandMedals = -1,
             ResetCount = -1,
             IslandBox = -1,
         };
 
-        public static PlayerSaveInfo Doubutsu_no_Mori_Plus = new PlayerSaveInfo
+        public static PlayerSaveInfo DoubutsuNoMoriPlus = new PlayerSaveInfo
         {
             Name = 0,
             NameSize = 6,
@@ -231,16 +229,16 @@ namespace ACSE
             Shoes = -1,
             Socks = -1,
             Wetsuit = -1,
-            NL_Debt = -1,
-            NL_Savings = -1,
-            NL_Wallet = -1,
+            NlDebt = -1,
+            NlSavings = -1,
+            NlWallet = -1,
             MeowCoupons = -1,
-            Island_Medals = -1,
+            IslandMedals = -1,
             ResetCount = -1,
             IslandBox = -1,
         };
 
-        public static PlayerSaveInfo Animal_Crossing = new PlayerSaveInfo
+        public static PlayerSaveInfo AnimalCrossing = new PlayerSaveInfo
         {
             Name = 0,
             NameSize = 8,
@@ -290,15 +288,15 @@ namespace ACSE
             Shoes = -1,
             Socks = -1,
             Wetsuit = -1,
-            NL_Debt = -1,
-            NL_Savings = -1,
-            NL_Wallet = -1,
+            NlDebt = -1,
+            NlSavings = -1,
+            NlWallet = -1,
             MeowCoupons = -1,
-            Island_Medals = -1,
+            IslandMedals = -1,
             IslandBox = -1,
         };
 
-        public static PlayerSaveInfo Doubutsu_no_Mori_e_Plus = new PlayerSaveInfo
+        public static PlayerSaveInfo DoubutsuNoMoriEPlus = new PlayerSaveInfo
         {
             Name = 0,
             NameSize = 6,
@@ -348,16 +346,16 @@ namespace ACSE
             Shoes = -1,
             Socks = -1,
             Wetsuit = -1,
-            NL_Debt = -1,
-            NL_Savings = -1,
-            NL_Wallet = -1,
+            NlDebt = -1,
+            NlSavings = -1,
+            NlWallet = -1,
             MeowCoupons = -1,
-            Island_Medals = -1,
+            IslandMedals = -1,
             ResetCount = -1,
             IslandBox = -1,
         };
 
-        public static PlayerSaveInfo Wild_World = new PlayerSaveInfo
+        public static PlayerSaveInfo WildWorld = new PlayerSaveInfo
         {
             Patterns = 0,
             PatternCount = 8,
@@ -414,16 +412,16 @@ namespace ACSE
             EyeColor = -1,
             Encyclopedia = -1, //Research
             Wetsuit = -1,
-            NL_Debt = -1,
-            NL_Savings = -1,
-            NL_Wallet = -1,
+            NlDebt = -1,
+            NlSavings = -1,
+            NlWallet = -1,
             MeowCoupons = -1,
-            Island_Medals = -1,
+            IslandMedals = -1,
             ResetCount = -1,
             IslandBox = -1,
         };
 
-        public static PlayerSaveInfo City_Folk = new PlayerSaveInfo
+        public static PlayerSaveInfo CityFolk = new PlayerSaveInfo
         {
             Bells = 0x1154,
             Debt = 0x1158,
@@ -473,16 +471,16 @@ namespace ACSE
             InventoryBackground = -1,
             Messages = -1,
             Wetsuit = -1,
-            NL_Debt = -1,
-            NL_Savings = -1,
-            NL_Wallet = -1,
+            NlDebt = -1,
+            NlSavings = -1,
+            NlWallet = -1,
             MeowCoupons = -1,
-            Island_Medals = -1,
+            IslandMedals = -1,
             ResetCount = -1,
             IslandBox = -1,
         };
 
-        public static PlayerSaveInfo New_Leaf = new PlayerSaveInfo
+        public static PlayerSaveInfo NewLeaf = new PlayerSaveInfo
         {
             HairType = 4,
             HairColor = 5,
@@ -512,11 +510,11 @@ namespace ACSE
             RegisterDate = 0x55D6,
             RegisterDateSize = 0x4,
             TownPassCardImage = 0x5724,
-            NL_Savings = 0x6B6C,
-            NL_Debt = 0x6B74,
-            Island_Medals = 0x6B7C,
+            NlSavings = 0x6B6C,
+            NlDebt = 0x6B74,
+            IslandMedals = 0x6B7C,
             Pockets = 0x6BB0,
-            NL_Wallet = 0x6E38,
+            NlWallet = 0x6E38,
             IslandBox = 0x6E40,
             IslandBoxCount = 40,
             PocketsCount = 16,
@@ -533,7 +531,7 @@ namespace ACSE
             ResetCount = -1,
         };
 
-        public static PlayerSaveInfo Welcome_Amiibo = new PlayerSaveInfo
+        public static PlayerSaveInfo WelcomeAmiibo = new PlayerSaveInfo
         {
             HairType = 4,
             HairColor = 5,
@@ -565,10 +563,10 @@ namespace ACSE
             TownPassCardImage = 0x5738,
             Pockets = 0x6BD0,
             PocketsCount = 16,
-            NL_Savings = 0x6B8C,
-            NL_Debt = 0x6B94,
-            Island_Medals = 0x6B9C,
-            NL_Wallet = 0x6F08,
+            NlSavings = 0x6B8C,
+            NlDebt = 0x6B94,
+            IslandMedals = 0x6B9C,
+            NlWallet = 0x6F08,
             IslandBox = 0x6F10,
             IslandBoxCount = 40,
             Emotions = 0x89D0,
@@ -586,35 +584,34 @@ namespace ACSE
             // Statistics Menu Enable Flag (0x572F set to 0xC0 [binary: 1000 0000])
         };
 
-        public static PlayerSaveInfo GetPlayerInfo(SaveType Save_Type)
+        public static PlayerSaveInfo GetPlayerInfo(SaveType saveType)
         {
-            switch (Save_Type)
+            switch (saveType)
             {
                 case SaveType.Doubutsu_no_Mori:
-                    return Doubutsu_no_Mori;
+                    return DoubutsuNoMori;
                 case SaveType.Doubutsu_no_Mori_Plus:
-                    return Doubutsu_no_Mori_Plus;
+                    return DoubutsuNoMoriPlus;
                 case SaveType.Animal_Crossing:
-                    return Animal_Crossing;
+                    return AnimalCrossing;
                 case SaveType.Doubutsu_no_Mori_e_Plus:
-                    return Doubutsu_no_Mori_e_Plus;
+                    return DoubutsuNoMoriEPlus;
                 case SaveType.Animal_Forest:
-                    return Doubutsu_no_Mori; // TEMP
+                    return DoubutsuNoMori; // TEMP
                 case SaveType.Wild_World:
-                    return Wild_World;
+                    return WildWorld;
                 case SaveType.City_Folk:
-                    return City_Folk;
+                    return CityFolk;
                 case SaveType.New_Leaf:
-                    return New_Leaf;
+                    return NewLeaf;
                 case SaveType.Welcome_Amiibo:
-                    return Welcome_Amiibo;
+                    return WelcomeAmiibo;
                 default:
                     return new PlayerSaveInfo { Null = true };
             }
         }
 
-        public static string[] AC_Faces = new string[64]
-        {
+        public static readonly string[] AcFaces = {
             "Male #1 Eyes w/ Eyelashes",
             "Male #2 Circle Eyes w/ Eyebrows",
             "Male #3 Eyes w/ Purple Bags",
@@ -681,8 +678,7 @@ namespace ACSE
             "Lloyd Face (Bee Sting) [Female #8]"
         };
 
-        public static string[] WW_Faces = new string[16]
-        {
+        public static readonly string[] WwFaces = {
             "Male #1 - Brown Eyes w/ Lashes",
             "Male #2 - Black Eyes w/ Brows",
             "Male #3 - Blue Eyes w/ Eyelids",
@@ -701,8 +697,7 @@ namespace ACSE
             "Female #8 - Green Circle Eyes w/ Lashes"
         };
 
-        public static string[] WW_Hair_Colors = new string[8]
-        {
+        public static readonly string[] WwHairColors = {
             "Dark Brown",
             "Light Brown",
             "Orange",
@@ -713,8 +708,7 @@ namespace ACSE
             "White"
         };
 
-        public static string[] WW_Hair_Styles = new string[16]
-        {
+        public static readonly string[] WwHairStyles = {
             "Male #1 - Buzz Cut",
             "Male #2 - Front Cowlick",
             "Male #3 - Long Bangs w/ Left Part",
@@ -733,8 +727,7 @@ namespace ACSE
             "Female #8 - Curly"
         };
 
-        public static string[] CF_Shoe_Colors = new string[20]
-        {
+        public static readonly string[] CfShoeColors = {
             "Yellow & Pink",
             "Red",
             "Orange",
@@ -758,8 +751,7 @@ namespace ACSE
         };
 
         //Set accurate names
-        public static string[] CF_Hair_Styles = new string[26]
-        {
+        public static readonly string[] CfHairStyles = {
             "Male #1 Regular",
             "Male #2 Cowlick",
             "Male #3 Covereye",
@@ -788,8 +780,7 @@ namespace ACSE
             "Female #13 Messy"
         };
 
-        public static string[] NL_Hair_Styles = new string[34]
-        {
+        public static readonly string[] NlHairStyles = {
             "Male #1",
             "Male #2",
             "Male #3",
@@ -826,26 +817,22 @@ namespace ACSE
             "Female #17 - Bed Head",
         };
 
-        public static string[] NL_Hair_Colors = new string[16]
-        {
+        public static readonly string[] NlHairColors = {
             "Dark Brown", "Light Brown", "Orange", "Light Blue", "Gold", "Light Green", "Pink", "White",
             "Black", "Auburn", "Red", "Dark Blue", "Blonde", "Dark Green", "Light Purple", "Ash Brown"
         };
 
-        public static string[] NL_Eye_Colors = new string[8]
-        {
+        public static readonly string[] NlEyeColors = {
             "Black", "Brown", "Green", "Gray", "Blue", "Light Blue", "Light Blue", "Light Blue"
         };
 
-        public static uint[] NL_Hair_Color_Values = new uint[16]
-        {
+        public static readonly uint[] NlHairColorValues = {
             0xFF593A38, 0xFF935929, 0xFFEF572E, 0xFF41A6DC, 0xFFFFE779, 0xFF8BCF62, 0xFFEE798B, 0xFFFFF8DE,
             0xFF171806, 0xFF550601, 0xFFBB0C07, 0xFF001449, 0xFFDEA70F, 0xFF015A22, 0xFFAD75BC, 0xFF7A795A
         };
 
         //TODO: Name NL Faces
-        public static string[] NL_Male_Faces = new string[12]
-        {
+        public static readonly string[] NlMaleFaces = {
             "Male #1",
             "Male #2",
             "Male #3",
@@ -860,8 +847,7 @@ namespace ACSE
             "Male #12",
         };
 
-        public static string[] NL_Female_Faces = new string[12]
-        {
+        public static readonly string[] NlFemaleFaces = {
             "Female #1",
             "Female #2",
             "Female #3",
@@ -875,356 +861,5 @@ namespace ACSE
             "Female #11",
             "Female #12",
         };
-    }
-
-    public class Player
-    {
-        public PlayerSaveInfo Offsets;
-        public PlayerData Data;
-        public House House;
-        public int Index;
-        public int Offset;
-        public bool Exists = false;
-        private Save SaveData;
-
-        public Player(int offset, int idx, Save save)
-        {
-            SaveData = save;
-            Index = idx;
-            Offset = offset;
-            Offsets = PlayerInfo.GetPlayerInfo(save.Save_Type);
-            Exists = SaveData.ReadByte(offset + Offsets.Identifier) != 0 && SaveData.ReadByte(offset + Offsets.Identifier) != 0xFF;
-            if (Exists)
-            {
-                Type PlayerDataType = typeof(PlayerData);
-                Type PlayerSaveInfoType = typeof(PlayerSaveInfo);
-                object BoxedData = new PlayerData();
-                foreach (var Field in PlayerSaveInfoType.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                    if (Field.GetValue(Offsets) != null && !Field.Name.Contains("Count") && !Field.Name.Contains("Size"))
-                        if (PlayerDataType.GetField(Field.Name) != null)
-                        {
-                            if (Field.FieldType == typeof(int) && (int)Field.GetValue(Offsets) != -1)
-                            {
-                                var Current_Field = PlayerDataType.GetField(Field.Name);
-                                Type FieldType = Current_Field.FieldType;
-                                int DataOffset = Offset + (int)Field.GetValue(Offsets);
-
-                                if (Field.Name == "TownPassCardImage" && save.Save_Generation == SaveGeneration.N3DS)
-                                {
-                                    PlayerDataType.GetField("TownPassCardData").SetValue(BoxedData, SaveData.ReadByteArray(DataOffset, 0x1400));
-                                    Current_Field.SetValue(BoxedData,
-                                        ImageGeneration.GetTPCImage((byte[])PlayerDataType.GetField("TownPassCardData").GetValue(BoxedData)));
-                                }
-                                else if (Field.Name == "Reset" && save.Save_Generation == SaveGeneration.GCN)
-                                {
-                                    Current_Field.SetValue(BoxedData, SaveData.ReadUInt32(DataOffset, SaveData.Is_Big_Endian) != 0);
-                                }
-                                else if (FieldType == typeof(byte))
-                                    Current_Field.SetValue(BoxedData, SaveData.ReadByte(DataOffset));
-                                else if (FieldType == typeof(byte[]) && PlayerSaveInfoType.GetField(Field.Name + "Count") != null)
-                                    Current_Field.SetValue(BoxedData, SaveData.ReadByteArray(DataOffset,
-                                        (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets)));
-                                else if (FieldType == typeof(ushort))
-                                    Current_Field.SetValue(BoxedData, SaveData.ReadUInt16(DataOffset, SaveData.Is_Big_Endian));
-                                else if (FieldType == typeof(ushort[]))
-                                    Current_Field.SetValue(BoxedData, SaveData.ReadUInt16Array(DataOffset,
-                                        (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian));
-                                else if (FieldType == typeof(uint))
-                                    Current_Field.SetValue(BoxedData, SaveData.ReadUInt32(DataOffset, SaveData.Is_Big_Endian));
-                                else if (FieldType == typeof(string))
-                                    Current_Field.SetValue(BoxedData, new ACString(SaveData.ReadByteArray(DataOffset,
-                                        (int)PlayerSaveInfoType.GetField(Field.Name + "Size").GetValue(Offsets)), SaveData.Save_Type).Trim());
-                                else if (FieldType == typeof(Inventory))
-                                    if (save.Save_Generation == SaveGeneration.N3DS)
-                                        Current_Field.SetValue(BoxedData, new Inventory(SaveData.ReadUInt32Array(DataOffset,
-                                            (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), false), save, this));
-                                    else
-                                        Current_Field.SetValue(BoxedData, new Inventory(SaveData.ReadUInt16Array(DataOffset,
-                                            (int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets), SaveData.Is_Big_Endian), save, this));
-                                else if (FieldType == typeof(Item))
-                                    if (save.Save_Generation == SaveGeneration.N3DS)
-                                        Current_Field.SetValue(BoxedData, new Item(SaveData.ReadUInt32(DataOffset, false)));
-                                    else
-                                        Current_Field.SetValue(BoxedData, new Item(SaveData.ReadUInt16(DataOffset, SaveData.Is_Big_Endian)));
-                                else if (FieldType == typeof(Item[]))
-                                {
-                                    if (Field.Name.Equals("Dressers"))
-                                    {
-                                        if (SaveData.Save_Generation == SaveGeneration.NDS)
-                                            DataOffset = 0x15430 + 0xB4 * Index; // Terrible hack
-                                        else if (SaveData.Save_Generation == SaveGeneration.Wii)
-                                            DataOffset = 0x1F3038 + 0x140 * Index;
-                                    }
-
-                                    Item[] ItemArray = new Item[(int)PlayerSaveInfoType.GetField(Field.Name + "Count").GetValue(Offsets)];
-                                    for (int i = 0; i < ItemArray.Length; i++)
-                                    {
-                                        if (save.Save_Generation == SaveGeneration.N3DS)
-                                            ItemArray[i] = new Item(SaveData.ReadUInt32(DataOffset + i * 4, false));
-                                        else
-                                            ItemArray[i] = new Item(SaveData.ReadUInt16(DataOffset + i * 2, SaveData.Is_Big_Endian));
-                                    }
-                                    Current_Field.SetValue(BoxedData, ItemArray);
-                                }
-                                else if (FieldType == typeof(NL_Int32))
-                                {
-                                    uint[] Int_Data = SaveData.ReadUInt32Array(DataOffset, 2);
-                                    Current_Field.SetValue(BoxedData, new NL_Int32(Int_Data[0], Int_Data[1]));
-                                }
-                                else if (FieldType == typeof(ACDate) && DataOffset > 0)
-                                {
-                                    Current_Field.SetValue(BoxedData, new ACDate(SaveData.ReadByteArray(DataOffset,
-                                        (int)PlayerSaveInfoType.GetField(Field.Name + "Size").GetValue(Offsets))));
-                                }
-                            }
-                        }
-                Data = (PlayerData)BoxedData;
-                //MessageBox.Show("ID: " + Data.Identifier.ToString("X"));
-                if (save.Save_Type == SaveType.Wild_World)
-                {
-                    byte Condensed_Data = Data.HairColor;
-                    Data.HairColor = (byte)(Condensed_Data & 0x0F);
-                    Data.Tan = (byte)((Condensed_Data & 0xF0) >> 4); //Has to be 0 - 3
-                    Condensed_Data = Data.HairType;
-                    Data.FaceType = (byte)(Condensed_Data & 0x0F);
-                    Data.HairType = (byte)((Condensed_Data & 0xF0) >> 4);
-
-                    if (Data.Tan > 3)
-                        Data.Tan = 0;
-                    if (Data.HairColor > 7)
-                        Data.HairColor = 0;
-                }
-                else if (save.Save_Type == SaveType.City_Folk)
-                {
-                    Data.Tan = (byte)(Data.Tan >> 1); //Not 100% sure about this, but this is what ACToolkit does
-                    if (Data.Tan > 7)
-                        Data.Tan = 0;
-                    if (Data.HairType > 0x19)
-                        Data.HairType = 0x19;
-                    Data.FaceType = (byte)(Data.FaceType & 0x0F);
-                    Data.EyeColor = (byte)(Data.FaceType & 0xF0); //Not actually eye color, just there to hold the upper nibble
-                }
-                if (Offsets.Patterns > -1)
-                {
-                    Data.Patterns = new Pattern[Offsets.PatternCount];
-                    for (int i = 0; i < Data.Patterns.Length; i++)
-                        Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, i, save);
-                }
-
-                if (SaveData.Save_Type == SaveType.City_Folk)
-                {
-                    Data.Reset = (SaveData.ReadByte(Offset + 0x8670) & 0x02) == 0x02;
-                }
-                else if (SaveData.Save_Type == SaveType.New_Leaf)
-                {
-                    Data.Reset = (SaveData.ReadByte(Offset + 0x5702) & 0x02) == 0x02;
-                }
-                else if (SaveData.Save_Type == SaveType.Welcome_Amiibo)
-                {
-                    Data.Reset = (SaveData.ReadByte(Offset + 0x570A) & 0x02) == 0x02;
-                }
-
-                // Get the Player's House
-                House = HouseInfo.GetHouse(this, save.Save_Type);
-                if (House != null)
-                {
-                    if (House.Data.Bed != null)
-                    {
-                        Data.Bed = House.Data.Bed;
-                    }
-                }
-
-                Console.WriteLine(string.Format("Player {0}'s house = {1}", Index, House));
-
-                // Mail Test
-                if (SaveData.Save_Generation == SaveGeneration.GCN)
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        GCNPlayerMail Mail = new GCNPlayerMail(SaveData, this, i);
-                        //System.Windows.Forms.MessageBox.Show(Mail.GetFormattedMailString());
-                    }
-                }
-            }
-        }
-
-        public void Write()
-        {
-            // Set City Folk Bed first
-            if (SaveData.Save_Generation == SaveGeneration.Wii && House != null && Data.Bed != null)
-            {
-                House.Data.Bed = Data.Bed;
-                Data.Bed = null;
-            }
-
-            Type PlayerSaveInfoType = typeof(PlayerSaveInfo);
-            Type PlayerDataType = typeof(PlayerData);
-            foreach (var Field in PlayerSaveInfoType.GetFields(BindingFlags.Public | BindingFlags.Instance))
-            {
-                if (Field.GetValue(Offsets) != null && !Field.Name.Contains("Count") && !Field.Name.Contains("Size"))
-                {
-                    if (PlayerDataType.GetField(Field.Name) != null)
-                    {
-                        if (Field.FieldType == typeof(int) && (int)Field.GetValue(Offsets) != -1)
-                        {
-                            Type FieldType = typeof(PlayerData).GetField(Field.Name).FieldType;
-                            int DataOffset = Offset + (int)Field.GetValue(Offsets);
-                            //MessageBox.Show("Field Name: " + Field.Name + " | Data Offset: " + DataOffset.ToString("X"));
-                            if (Field.Name == "TownPassCardImage" && SaveData.Save_Generation == SaveGeneration.N3DS)
-                            {
-                                SaveData.Write(DataOffset, Data.TownPassCardData);
-                            }
-                            else if (Field.Name == "Reset" && SaveData.Save_Generation == SaveGeneration.GCN)
-                            {
-                                SaveData.Write(DataOffset, Data.Reset ? (uint)0x250C : (uint)0 ,SaveData.Is_Big_Endian);
-                            }
-                            else if (FieldType == typeof(string))
-                            {
-                                SaveData.Write(DataOffset, ACString.GetBytes((string)PlayerDataType.GetField(Field.Name).GetValue(Data),
-                                    (int)PlayerSaveInfoType.GetField(Field.Name + "Size").GetValue(Offsets)));
-                            }
-                            else if (FieldType == typeof(byte))
-                            {
-                                if (SaveData.Save_Type == SaveType.Wild_World)
-                                {
-                                    if (Field.Name == "HairColor")
-                                    {
-                                        byte Condensed_Data = (byte)(Data.HairColor & 0x0F); //Remove upper nibble just incase
-                                        Condensed_Data += (byte)((Data.Tan & 0x0F) << 4); //Add in tan to the byte
-                                        SaveData.Write(DataOffset, Condensed_Data);
-                                        //MessageBox.Show("HairColor: " + Condensed_Data.ToString("X2"));
-                                    }
-                                    else if (Field.Name == "HairType")
-                                    {
-                                        byte Condensed_Data = (byte)(Data.FaceType & 0x0F);
-                                        Condensed_Data += (byte)((Data.HairType & 0x0F) << 4);
-                                        SaveData.Write(DataOffset, Condensed_Data);
-                                        //MessageBox.Show("HairType: " + Condensed_Data.ToString("X2"));
-                                    }
-                                    else
-                                    {
-                                        SaveData.Write(DataOffset, (byte)PlayerDataType.GetField(Field.Name).GetValue(Data));
-                                        //MessageBox.Show("Hello! " + Field.Name + " Offset: " + DataOffset.ToString("X"));
-                                    }
-                                }
-                                else if (SaveData.Save_Type == SaveType.City_Folk)
-                                {
-                                    if (Field.Name == "Tan")
-                                    {
-                                        byte Shifted_Data = (byte)(Data.Tan << 1); //ACToolkit does this
-                                        SaveData.Write(DataOffset, Shifted_Data);
-                                    }
-                                    else if (Field.Name == "FaceType")
-                                    {
-                                        SaveData.Write(DataOffset, (byte)(Data.EyeColor + Data.FaceType));
-                                    }
-                                    else
-                                    {
-                                        SaveData.Write(DataOffset, (byte)PlayerDataType.GetField(Field.Name).GetValue(Data));
-                                    }
-                                }
-                                else
-                                {
-                                    SaveData.Write(DataOffset, (byte)PlayerDataType.GetField(Field.Name).GetValue(Data));
-                                }
-                            }
-                            else if (FieldType == typeof(ushort) || FieldType == typeof(uint))
-                            {
-                                SaveData.Write(DataOffset, (dynamic)PlayerDataType.GetField(Field.Name).GetValue(Data), SaveData.Is_Big_Endian);
-                            }
-                            else if (FieldType == typeof(Inventory))
-                            {
-                                if (SaveData.Save_Generation == SaveGeneration.N3DS)
-                                {
-                                    uint[] Items = new uint[Offsets.PocketsCount];
-                                    for (int i = 0; i < Items.Length; i++)
-                                        Items[i] = ItemData.EncodeItem(Data.Pockets.Items[i]);
-                                    SaveData.Write(DataOffset, Items);
-                                }
-                                else
-                                {
-                                    ushort[] Items = new ushort[Offsets.PocketsCount];
-                                    for (int i = 0; i < Items.Length; i++)
-                                        Items[i] = Data.Pockets.Items[i].ItemID;
-                                    SaveData.Write(DataOffset, Items, SaveData.Is_Big_Endian);
-                                }
-                            }
-                            else if (FieldType == typeof(Item))
-                            {
-                                Item Item = (Item)PlayerDataType.GetField(Field.Name).GetValue(Data);
-                                if (SaveData.Save_Generation == SaveGeneration.N3DS)
-                                {
-                                    SaveData.Write(DataOffset, Item.ToUInt32());
-                                }
-                                else
-                                {
-                                    if (Field.Name.Equals("Shirt") &&
-                                        (SaveData.Save_Generation == SaveGeneration.N64 || SaveData.Save_Generation == SaveGeneration.GCN
-                                        || SaveData.Save_Generation == SaveGeneration.iQue)) // For some reason, the shirt lower byte is also stored before the actual item id.
-                                    {
-                                        SaveData.Write(DataOffset - 1, new byte[3] { (byte)Item.ItemID, (byte)(Item.ItemID >> 8), (byte)Item.ItemID }, SaveData.Is_Big_Endian);
-                                    }
-                                    else
-                                    {
-                                        SaveData.Write(DataOffset, Item.ItemID, SaveData.Is_Big_Endian);
-                                    }
-                                }
-                            }
-                            else if (FieldType == typeof(Item[]))
-                            {
-                                Item[] ItemArray = (Item[])PlayerDataType.GetField(Field.Name).GetValue(Data);
-                                if (Field.Name.Equals("Dressers"))
-                                {
-                                    if (SaveData.Save_Generation == SaveGeneration.NDS)
-                                        DataOffset = 0x15430 + 0xB4 * Index; // Terrible hack
-                                    else if (SaveData.Save_Generation == SaveGeneration.Wii)
-                                        DataOffset = 0x1F3038 + 0x140 * Index;
-                                }
-
-                                for (int i = 0; i < ItemArray.Length; i++)
-                                {
-                                    if (SaveData.Save_Generation == SaveGeneration.N3DS)
-                                        SaveData.Write(DataOffset + i * 4, ItemArray[i].ToUInt32());
-                                    else
-                                        SaveData.Write(DataOffset + i * 2, ItemArray[i].ItemID, SaveData.Is_Big_Endian);
-                                }
-                            }
-                            else if (FieldType == typeof(NL_Int32))
-                            {
-                                if (SaveData.Save_Generation == SaveGeneration.NDS)
-                                {
-                                    NL_Int32 Encrypted_Int = (NL_Int32)PlayerDataType.GetField(Field.Name).GetValue(Data);
-                                    SaveData.Write(DataOffset, Encrypted_Int.Int_1);
-                                    SaveData.Write(DataOffset + 4, Encrypted_Int.Int_2);
-                                }
-                            }
-                            else if (FieldType == typeof(ACDate) && (SaveData.Save_Generation == SaveGeneration.GCN || SaveData.Save_Generation == SaveGeneration.NDS))
-                            {
-                                if (Field.Name.Equals("Birthday"))
-                                {
-                                    SaveData.Write(DataOffset, ((ACDate)PlayerDataType.GetField(Field.Name).GetValue(Data)).ToMonthDayDateData());
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        public void WriteToFile(string Path)
-        {
-            if (Exists && !string.IsNullOrEmpty(Path))
-            {
-                /*using (BinaryWriter Writer = new BinaryWriter(File.Create(Path)))
-                {
-                    using (XmlSerializer Serializer = new XmlSerializer(Data))
-                    {
-                        Writer.Write("ACSEPlayerSave"); // File Identifier
-                        Writer.Write((int)SaveData.Save_Type); // Save Type
-                        Writer.Write(Index);
-                    }
-                }*/
-            }
-        }
     }
 }

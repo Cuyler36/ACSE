@@ -745,40 +745,40 @@ namespace ACSE
             playerShoeColor.Text = "";
             if (save.Save_Type == SaveType.Wild_World)
             {
-                foreach (string Face_Name in PlayerInfo.WW_Faces)
+                foreach (string Face_Name in PlayerInfo.WwFaces)
                     playerFace.Items.Add(Face_Name);
-                foreach (string Hair_Color in PlayerInfo.WW_Hair_Colors)
+                foreach (string Hair_Color in PlayerInfo.WwHairColors)
                     playerHairColor.Items.Add(Hair_Color);
-                foreach (string Hair_Style in PlayerInfo.WW_Hair_Styles)
+                foreach (string Hair_Style in PlayerInfo.WwHairStyles)
                     playerHairType.Items.Add(Hair_Style);
                 playerDebt.Text = save.ReadUInt32(Current_Save_Info.Save_Offsets.Debt).ToString();
             }
             else if (save.Save_Type == SaveType.City_Folk)
             {
-                foreach (string Face_Name in PlayerInfo.WW_Faces)   //Same order as WW
+                foreach (string Face_Name in PlayerInfo.WwFaces)   //Same order as WW
                     playerFace.Items.Add(Face_Name);
-                foreach (string Hair_Color in PlayerInfo.WW_Hair_Colors)
+                foreach (string Hair_Color in PlayerInfo.WwHairColors)
                     playerHairColor.Items.Add(Hair_Color);
-                foreach (string Shoe_Color in PlayerInfo.CF_Shoe_Colors)
+                foreach (string Shoe_Color in PlayerInfo.CfShoeColors)
                     playerShoeColor.Items.Add(Shoe_Color);
-                foreach (string Hair_Style in PlayerInfo.CF_Hair_Styles)
+                foreach (string Hair_Style in PlayerInfo.CfHairStyles)
                     playerHairType.Items.Add(Hair_Style);
                 Grass_Wear = save.ReadByteArray(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Wear, Current_Save_Info.Save_Offsets.Grass_Wear_Size);
             }
             else if (save.Save_Generation == SaveGeneration.N3DS)
             {
                 Grass_Wear = save.ReadByteArray(save.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Grass_Wear, Current_Save_Info.Save_Offsets.Grass_Wear_Size);
-                foreach (string Hair_Style in PlayerInfo.NL_Hair_Styles)
+                foreach (string Hair_Style in PlayerInfo.NlHairStyles)
                     playerHairType.Items.Add(Hair_Style);
-                foreach (string Hair_Color in PlayerInfo.NL_Hair_Colors)
+                foreach (string Hair_Color in PlayerInfo.NlHairColors)
                     playerHairColor.Items.Add(Hair_Color);
-                foreach (string Eye_Color in PlayerInfo.NL_Eye_Colors)
+                foreach (string Eye_Color in PlayerInfo.NlEyeColors)
                     playerEyeColor.Items.Add(Eye_Color);
                 Secure_NAND_Value_Form.Set_Secure_NAND_Value(Save_File.ReadUInt64(0));
             }
             else if (save.Save_Type == SaveType.Doubutsu_no_Mori || save.Save_Generation == SaveGeneration.GCN || save.Save_Type == SaveType.Animal_Forest)
             {
-                foreach (string Face_Name in PlayerInfo.AC_Faces)
+                foreach (string Face_Name in PlayerInfo.AcFaces)
                     playerFace.Items.Add(Face_Name);
             }
 
@@ -936,7 +936,7 @@ namespace ACSE
                 if (Selected_Player != null)
                 {
                     playerFace.Items.Clear();
-                    foreach (string Face_Name in Selected_Player.Data.Gender == 0 ? PlayerInfo.NL_Male_Faces : PlayerInfo.NL_Female_Faces)
+                    foreach (string Face_Name in Selected_Player.Data.Gender == 0 ? PlayerInfo.NlMaleFaces : PlayerInfo.NlFemaleFaces)
                         playerFace.Items.Add(Face_Name);
                     playerFace.SelectedIndex = Selected_Player.Data.FaceType;
                 }
@@ -1628,10 +1628,10 @@ namespace ACSE
             if (Save_File.Save_Generation == SaveGeneration.N3DS)
             {
                 Refresh_PictureBox_Image(TPC_Picture, Player.Data.TownPassCardImage, false, false);
-                playerWallet.Text = Player.Data.NL_Wallet.Value.ToString();
-                playerSavings.Text = Player.Data.NL_Savings.Value.ToString();
-                playerDebt.Text = Player.Data.NL_Debt.Value.ToString();
-                playerIslandMedals.Text = Player.Data.Island_Medals.Value.ToString();
+                playerWallet.Text = Player.Data.NlWallet.Value.ToString();
+                playerSavings.Text = Player.Data.NlSavings.Value.ToString();
+                playerDebt.Text = Player.Data.NlDebt.Value.ToString();
+                playerIslandMedals.Text = Player.Data.IslandMedals.Value.ToString();
                 if (Save_File.Save_Type == SaveType.Welcome_Amiibo)
                     playerMeowCoupons.Text = Player.Data.MeowCoupons.Value.ToString();
             }
@@ -1738,7 +1738,7 @@ namespace ACSE
             if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
             {
                 playerFace.Items.Clear();
-                playerFace.Items.AddRange(playerGender.Text == "Male" ? PlayerInfo.NL_Male_Faces : PlayerInfo.NL_Female_Faces);
+                playerFace.Items.AddRange(playerGender.Text == "Male" ? PlayerInfo.NlMaleFaces : PlayerInfo.NlFemaleFaces);
                 playerFace.SelectedIndex = Selected_Player.Data.FaceType;
             }
             Selected_Player.Data.Gender = playerGender.Text == "Female" ? (byte)1 : (byte)0;
@@ -4387,7 +4387,7 @@ namespace ACSE
                 {
                     if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
                     {
-                        Selected_Player.Data.NL_Wallet = new NL_Int32(Wallet_Value);
+                        Selected_Player.Data.NlWallet = new NL_Int32(Wallet_Value);
                     }
                     else
                     {
@@ -4397,7 +4397,7 @@ namespace ACSE
                 else
                 {
                     if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
-                        playerWallet.Text = Selected_Player.Data.NL_Wallet.Value.ToString();
+                        playerWallet.Text = Selected_Player.Data.NlWallet.Value.ToString();
                     else
                         playerWallet.Text = Selected_Player.Data.Bells.ToString();
                 }
@@ -4412,7 +4412,7 @@ namespace ACSE
                 {
                     if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
                     {
-                        Selected_Player.Data.NL_Debt = new NL_Int32(Debt_Value);
+                        Selected_Player.Data.NlDebt = new NL_Int32(Debt_Value);
                     }
                     else
                     {
@@ -4422,7 +4422,7 @@ namespace ACSE
                 else
                 {
                     if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
-                        playerDebt.Text = Selected_Player.Data.NL_Debt.Value.ToString();
+                        playerDebt.Text = Selected_Player.Data.NlDebt.Value.ToString();
                     else
                         playerDebt.Text = Selected_Player.Data.Debt.ToString();
                 }
@@ -4437,7 +4437,7 @@ namespace ACSE
                 {
                     if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
                     {
-                        Selected_Player.Data.NL_Savings = new NL_Int32(Savings_Value);
+                        Selected_Player.Data.NlSavings = new NL_Int32(Savings_Value);
                     }
                     else
                     {
@@ -4447,7 +4447,7 @@ namespace ACSE
                 else
                 {
                     if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
-                        playerSavings.Text = Selected_Player.Data.NL_Savings.Value.ToString();
+                        playerSavings.Text = Selected_Player.Data.NlSavings.Value.ToString();
                     else
                         playerSavings.Text = Selected_Player.Data.Savings.ToString();
                 }
@@ -4475,11 +4475,11 @@ namespace ACSE
             {
                 if (uint.TryParse(playerIslandMedals.Text, out uint IslandMedals_Value))
                 {
-                    Selected_Player.Data.Island_Medals = new NL_Int32(IslandMedals_Value);
+                    Selected_Player.Data.IslandMedals = new NL_Int32(IslandMedals_Value);
                 }
                 else
                 {
-                    playerIslandMedals.Text = Selected_Player.Data.Island_Medals.Value.ToString();
+                    playerIslandMedals.Text = Selected_Player.Data.IslandMedals.Value.ToString();
                 }
             }
         }

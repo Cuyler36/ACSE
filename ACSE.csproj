@@ -4865,6 +4865,7 @@
     <Compile Include="Classes\Messages\Mail\PlayerMailBase.cs" />
     <Compile Include="Classes\Messages\MessageBoardPost.cs" />
     <Compile Include="Classes\Museum.cs" />
+    <Compile Include="Classes\Player\PlayerInfo.cs" />
     <Compile Include="Classes\Saves\GCNSave.cs" />
     <Compile Include="Classes\Saves\N3DSSave.cs" />
     <Compile Include="Classes\Saves\N64Save.cs" />
@@ -4949,7 +4950,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Pattern.cs" />
-    <Compile Include="Classes\Player.cs" />
+    <Compile Include="Classes\Player\Player.cs" />
     <Compile Include="Classes\Program.cs" />
     <Compile Include="Forms\SecureValueForm.cs">
       <SubType>Form</SubType>

@@ -477,7 +477,7 @@ namespace ACSE
                         try
                         {
                             HairImage = (Bitmap)Image.FromFile(HairImageFile);
-                            ReplaceGrayscaleColor(ref HairImage, Color.FromArgb((int)PlayerInfo.NL_Hair_Color_Values[ColorIndex]));
+                            ReplaceGrayscaleColor(ref HairImage, Color.FromArgb((int)PlayerInfo.NlHairColorValues[ColorIndex]));
                         }
                         catch
                         {
