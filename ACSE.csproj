@@ -4847,7 +4847,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\AcreData.cs" />
+    <Compile Include="Classes\Acre\Acre.cs" />
+    <Compile Include="Classes\Acre\AcreData.cs" />
     <Compile Include="Classes\AlertToggledEventArgs.cs" />
     <Compile Include="Classes\Backup.cs" />
     <Compile Include="Classes\Catalog.cs" />

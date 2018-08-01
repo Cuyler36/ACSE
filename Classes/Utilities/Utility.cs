@@ -45,7 +45,7 @@ namespace ACSE.Classes.Utilities
             var villagerHouseId = (ushort)(0x5000 + (villagerId & 0xFF));
             foreach (var acre in MainForm.Town_Acres)
             {
-                var villagerHouse = acre.Acre_Items.FirstOrDefault(o => o.ItemID == villagerHouseId);
+                var villagerHouse = acre.AcreItems.FirstOrDefault(o => o.ItemID == villagerHouseId);
                 if (villagerHouse != null)
                 {
                     return new Tuple<byte[], bool>(
@@ -80,13 +80,13 @@ namespace ACSE.Classes.Utilities
                         var weedCount = 0;
                         for (var o = 0; o < 256; o++)
                         {
-                            var item = acre.Acre_Items[o];
+                            var item = acre.AcreItems[o];
                             if (item.Name == "Weed")
                             {
                                 weedCount++;
                                 if (Make_Perfect)
                                 {
-                                    acre.Acre_Items[o] = new WorldItem(0, o);
+                                    acre.AcreItems[o] = new WorldItem(0, o);
                                 }
                             }
                             else if (ItemData.GetItemType(item.ItemID, MainForm.Save_File.Save_Type) == "Tree")
@@ -102,9 +102,9 @@ namespace ACSE.Classes.Utilities
                                 {
                                     for (var x = 0; x < 256; x++)
                                     {
-                                        if (ItemData.GetItemType(acre.Acre_Items[x].ItemID,
+                                        if (ItemData.GetItemType(acre.AcreItems[x].ItemID,
                                                 MainForm.Save_File.Save_Type) != "Tree") continue;
-                                        acre.Acre_Items[x] = new WorldItem(0, x);
+                                        acre.AcreItems[x] = new WorldItem(0, x);
                                         break;
                                     }
                                 }
@@ -116,12 +116,12 @@ namespace ACSE.Classes.Utilities
                                     for (var x = 0; x < 256; x++)
                                     {
                                         // Check to make sure the item directly above, below, and to the left and right isn't already occupied.
-                                        if (acre.Acre_Items[x].ItemID != 0 ||
-                                            (x >= 16 && acre.Acre_Items[x - 16].ItemID != 0) ||
-                                            (x <= 239 && acre.Acre_Items[x + 16].ItemID != 0) ||
-                                            (x != 0 && acre.Acre_Items[x - 1].ItemID != 0) ||
-                                            (x != 255 && acre.Acre_Items[x + 1].ItemID != 0)) continue;
-                                        acre.Acre_Items[x] = new WorldItem(0x0804, x);
+                                        if (acre.AcreItems[x].ItemID != 0 ||
+                                            (x >= 16 && acre.AcreItems[x - 16].ItemID != 0) ||
+                                            (x <= 239 && acre.AcreItems[x + 16].ItemID != 0) ||
+                                            (x != 0 && acre.AcreItems[x - 1].ItemID != 0) ||
+                                            (x != 255 && acre.AcreItems[x + 1].ItemID != 0)) continue;
+                                        acre.AcreItems[x] = new WorldItem(0x0804, x);
                                         break;
                                     }
                                 }
@@ -157,10 +157,10 @@ namespace ACSE.Classes.Utilities
                         case 0: // Just for alignment
                             break;
                         case 1:
-                            acre.Acre_Items[index] = new WorldItem(0xFFFF, index);
+                            acre.AcreItems[index] = new WorldItem(0xFFFF, index);
                             break;
                         default:
-                            acre.Acre_Items[index] = new WorldItem(structureInfo[y][x], index);
+                            acre.AcreItems[index] = new WorldItem(structureInfo[y][x], index);
                             break;
                     }
                 }
@@ -308,7 +308,7 @@ namespace ACSE.Classes.Utilities
                             writer.Write(new byte[] { 0, 0, 0 }); // Padding
                             foreach (var t in acres)
                             {
-                                writer.Write(BitConverter.GetBytes(t.AcreID));
+                                writer.Write(BitConverter.GetBytes(t.AcreId));
                             }
 
                             writer.Flush();
@@ -343,8 +343,8 @@ namespace ACSE.Classes.Utilities
                             reader.BaseStream.Seek(8, SeekOrigin.Begin);
                             foreach (var t in acres)
                             {
-                                t.AcreID = reader.ReadUInt16();
-                                t.BaseAcreID = (ushort)(t.AcreID & 0xFFFC);
+                                t.AcreId = reader.ReadUInt16();
+                                t.BaseAcreId = (ushort)(t.AcreId & 0xFFFC);
                             }
                         }
                     }
@@ -380,7 +380,7 @@ namespace ACSE.Classes.Utilities
                             {
                                 foreach (var acre in acres)
                                 {
-                                    foreach (var item in acre.Acre_Items)
+                                    foreach (var item in acre.AcreItems)
                                     {
                                         writer.Write(BitConverter.GetBytes(item.ToUInt32()));
                                     }
@@ -390,7 +390,7 @@ namespace ACSE.Classes.Utilities
                             {
                                 foreach (var acre in acres)
                                 {
-                                    foreach (var item in acre.Acre_Items)
+                                    foreach (var item in acre.AcreItems)
                                     {
                                         writer.Write(BitConverter.GetBytes(item.ItemID));
                                     }
@@ -431,9 +431,9 @@ namespace ACSE.Classes.Utilities
                             {
                                 foreach (var acre in acres)
                                 {
-                                    for (var x = 0; x < acre.Acre_Items.Length; x++)
+                                    for (var x = 0; x < acre.AcreItems.Length; x++)
                                     {
-                                        acre.Acre_Items[x] = new WorldItem(reader.ReadUInt32(), acre.Acre_Items[x].Index);
+                                        acre.AcreItems[x] = new WorldItem(reader.ReadUInt32(), acre.AcreItems[x].Index);
                                     }
                                 }
                             }
@@ -441,9 +441,9 @@ namespace ACSE.Classes.Utilities
                             {
                                 foreach (var acre in acres)
                                 {
-                                    for (var x = 0; x < acre.Acre_Items.Length; x++)
+                                    for (var x = 0; x < acre.AcreItems.Length; x++)
                                     {
-                                        acre.Acre_Items[x] = new WorldItem(reader.ReadUInt16(), acre.Acre_Items[x].Index);
+                                        acre.AcreItems[x] = new WorldItem(reader.ReadUInt16(), acre.AcreItems[x].Index);
                                     }
                                 }
                             }
