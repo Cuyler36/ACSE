@@ -194,7 +194,7 @@ namespace ACSE
                                     _saveData.Write(dataOffset, ItemData.EncodeItem((Item)dataObject));
                                     break;
                                 default:
-                                    _saveData.Write(dataOffset, ((Item)dataObject).ItemID, _saveData.Is_Big_Endian);
+                                    _saveData.Write(dataOffset, ((Item)dataObject).ItemId, _saveData.Is_Big_Endian);
                                     break;
                             }
                         }
@@ -209,7 +209,7 @@ namespace ACSE
                                             _saveData.Write(dataOffset + i * 4, ItemData.EncodeItem(collection[i]));
                                             break;
                                         default:
-                                            _saveData.Write(dataOffset + i * 2, collection[i].ItemID,
+                                            _saveData.Write(dataOffset + i * 2, collection[i].ItemId,
                                                 _saveData.Is_Big_Endian);
                                             break;
                                     }

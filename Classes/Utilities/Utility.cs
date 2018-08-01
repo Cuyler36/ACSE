@@ -45,7 +45,7 @@ namespace ACSE.Classes.Utilities
             var villagerHouseId = (ushort)(0x5000 + (villagerId & 0xFF));
             foreach (var acre in MainForm.Town_Acres)
             {
-                var villagerHouse = acre.AcreItems.FirstOrDefault(o => o.ItemID == villagerHouseId);
+                var villagerHouse = acre.AcreItems.FirstOrDefault(o => o.ItemId == villagerHouseId);
                 if (villagerHouse != null)
                 {
                     return new Tuple<byte[], bool>(
@@ -89,7 +89,7 @@ namespace ACSE.Classes.Utilities
                                     acre.AcreItems[o] = new WorldItem(0, o);
                                 }
                             }
-                            else if (ItemData.GetItemType(item.ItemID, MainForm.Save_File.Save_Type) == "Tree")
+                            else if (ItemData.GetItemType(item.ItemId, MainForm.Save_File.Save_Type) == "Tree")
                             {
                                 treeCount++;
                             }
@@ -102,7 +102,7 @@ namespace ACSE.Classes.Utilities
                                 {
                                     for (var x = 0; x < 256; x++)
                                     {
-                                        if (ItemData.GetItemType(acre.AcreItems[x].ItemID,
+                                        if (ItemData.GetItemType(acre.AcreItems[x].ItemId,
                                                 MainForm.Save_File.Save_Type) != "Tree") continue;
                                         acre.AcreItems[x] = new WorldItem(0, x);
                                         break;
@@ -116,11 +116,11 @@ namespace ACSE.Classes.Utilities
                                     for (var x = 0; x < 256; x++)
                                     {
                                         // Check to make sure the item directly above, below, and to the left and right isn't already occupied.
-                                        if (acre.AcreItems[x].ItemID != 0 ||
-                                            (x >= 16 && acre.AcreItems[x - 16].ItemID != 0) ||
-                                            (x <= 239 && acre.AcreItems[x + 16].ItemID != 0) ||
-                                            (x != 0 && acre.AcreItems[x - 1].ItemID != 0) ||
-                                            (x != 255 && acre.AcreItems[x + 1].ItemID != 0)) continue;
+                                        if (acre.AcreItems[x].ItemId != 0 ||
+                                            (x >= 16 && acre.AcreItems[x - 16].ItemId != 0) ||
+                                            (x <= 239 && acre.AcreItems[x + 16].ItemId != 0) ||
+                                            (x != 0 && acre.AcreItems[x - 1].ItemId != 0) ||
+                                            (x != 255 && acre.AcreItems[x + 1].ItemId != 0)) continue;
                                         acre.AcreItems[x] = new WorldItem(0x0804, x);
                                         break;
                                     }
@@ -234,7 +234,7 @@ namespace ACSE.Classes.Utilities
                     var i = items[idx];
                     if (i.Equals(originalItem))
                     {
-                        items[idx] = new WorldItem(newItem.ItemID, newItem.Flag1, newItem.Flag2, i.Index);
+                        items[idx] = new WorldItem(newItem.ItemId, newItem.Flag1, newItem.Flag2, i.Index);
                         if (p.X - 1 > -1)
                             locationStack.Push(new Point(p.X - 1, p.Y));
                         if (p.X + 1 < itemsPerRow)
@@ -392,7 +392,7 @@ namespace ACSE.Classes.Utilities
                                 {
                                     foreach (var item in acre.AcreItems)
                                     {
-                                        writer.Write(BitConverter.GetBytes(item.ItemID));
+                                        writer.Write(BitConverter.GetBytes(item.ItemId));
                                     }
                                 }
                             }

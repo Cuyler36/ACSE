@@ -279,7 +279,7 @@ namespace ACSE
                             {
                                 var items = new ushort[Offsets.PocketsCount];
                                 for (var i = 0; i < items.Length; i++)
-                                    items[i] = Data.Pockets.Items[i].ItemID;
+                                    items[i] = Data.Pockets.Items[i].ItemId;
                                 _saveData.Write(dataOffset, items, _saveData.Is_Big_Endian);
                             }
                         }
@@ -296,11 +296,11 @@ namespace ACSE
                                     (_saveData.Save_Generation == SaveGeneration.N64 || _saveData.Save_Generation == SaveGeneration.GCN ||
                                      _saveData.Save_Generation == SaveGeneration.iQue)) // For some reason, the shirt lower byte is also stored before the actual item id.
                                 {
-                                    _saveData.Write(dataOffset - 1, new[] { (byte)item.ItemID, (byte)(item.ItemID >> 8), (byte)item.ItemID }, _saveData.Is_Big_Endian);
+                                    _saveData.Write(dataOffset - 1, new[] { (byte)item.ItemId, (byte)(item.ItemId >> 8), (byte)item.ItemId }, _saveData.Is_Big_Endian);
                                 }
                                 else
                                 {
-                                    _saveData.Write(dataOffset, item.ItemID, _saveData.Is_Big_Endian);
+                                    _saveData.Write(dataOffset, item.ItemId, _saveData.Is_Big_Endian);
                                 }
                             }
                         }
@@ -325,7 +325,7 @@ namespace ACSE
                                 if (_saveData.Save_Generation == SaveGeneration.N3DS)
                                     _saveData.Write(dataOffset + i * 4, itemArray[i].ToUInt32());
                                 else
-                                    _saveData.Write(dataOffset + i * 2, itemArray[i].ItemID, _saveData.Is_Big_Endian);
+                                    _saveData.Write(dataOffset + i * 2, itemArray[i].ItemId, _saveData.Is_Big_Endian);
                             }
                         }
                         else if (fieldType == typeof(NL_Int32))

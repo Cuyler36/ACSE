@@ -145,7 +145,7 @@ namespace ACSE
 
         public static Bitmap Draw_Building(Bitmap Acre_Map, Building Building_to_Draw, int ItemSize,  bool Use_Text = false)
         {
-            RectangleF RectF = new RectangleF(Building_to_Draw.X_Pos * ItemSize, Building_to_Draw.Y_Pos * ItemSize, ItemSize, ItemSize);
+            RectangleF RectF = new RectangleF(Building_to_Draw.XPos * ItemSize, Building_to_Draw.YPos * ItemSize, ItemSize, ItemSize);
             Graphics Bitmap_Graphics = Graphics.FromImage(Acre_Map);
             Bitmap_Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             Bitmap_Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -156,7 +156,7 @@ namespace ACSE
                 Bitmap_Graphics.DrawString("B", new Font("Tahoma", ItemSize), Brushes.White, RectF);
             }
             else
-                Bitmap_Graphics.DrawImage(Properties.Resources.Building, Building_to_Draw.X_Pos * ItemSize, Building_to_Draw.Y_Pos * ItemSize, ItemSize, ItemSize);
+                Bitmap_Graphics.DrawImage(Properties.Resources.Building, Building_to_Draw.XPos * ItemSize, Building_to_Draw.YPos * ItemSize, ItemSize, ItemSize);
             Bitmap_Graphics.Flush();
             Bitmap_Graphics.Dispose();
             return Acre_Map;
@@ -168,7 +168,7 @@ namespace ACSE
                 return Acre_Map;
             foreach (Building B in Building_List)
             {
-                if (B.Exists && B.Acre_Index == Acre)
+                if (B.Exists && B.AcreIndex == Acre)
                 {
                     Draw_Building(Acre_Map, B, ItemSize);
                 }
@@ -198,7 +198,7 @@ namespace ACSE
             Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             for (int i = 0; i < Furniture.Length; i++)
             {
-                string ItemType = ItemData.GetItemType(Furniture[i].ItemID, MainForm.Save_File.Save_Type);
+                string ItemType = ItemData.GetItemType(Furniture[i].ItemId, MainForm.Save_File.Save_Type);
                 if (Furniture[i].Name != "Empty" && (ItemType.Equals("Furniture") || ItemType.Equals("Gyroids")))
                 {
                     Image Arrow = Properties.Resources.Arrow;

@@ -54,7 +54,7 @@ namespace ACSE
         public byte Roof_Color;
         public Item[] Customizations;
         //public Mail[] Mailbox;
-        public Gyroid_Item[] Gyroid_Items;
+        public GyroidItem[] Gyroid_Items;
         public string Gyroid_Message;
     }
 
@@ -86,7 +86,7 @@ namespace ACSE
                     {
                         if (Items[i] != null)
                         {
-                            SaveFile.Write(Offset + i * 2, Items[i].ItemID, SaveFile.Is_Big_Endian);
+                            SaveFile.Write(Offset + i * 2, Items[i].ItemId, SaveFile.Is_Big_Endian);
                         }
                     }
                 }
@@ -117,11 +117,11 @@ namespace ACSE
 
             if (Offsets.Room_Carpet != -1)
                 if (SaveFile.Save_Generation == SaveGeneration.N64 || SaveFile.Save_Generation == SaveGeneration.GCN) // TODO: Non-Original titles
-                    SaveFile.Write(Offset + Offsets.Room_Carpet, (byte)(Carpet.ItemID));
+                    SaveFile.Write(Offset + Offsets.Room_Carpet, (byte)(Carpet.ItemId));
 
             if (Offsets.Room_Wallpaper != -1)
                 if (SaveFile.Save_Generation == SaveGeneration.N64 || SaveFile.Save_Generation == SaveGeneration.GCN) // TODO: Non-Original titles
-                    SaveFile.Write(Offset + Offsets.Room_Wallpaper, (byte)(Wallpaper.ItemID));
+                    SaveFile.Write(Offset + Offsets.Room_Wallpaper, (byte)(Wallpaper.ItemId));
 
             // TODO: Room_Song
         }
@@ -328,7 +328,7 @@ namespace ACSE
                                 }
                                 else
                                 {
-                                    SaveData.Write(DataOffset, ((Item)HouseDataType.GetField(Field.Name).GetValue(Data)).ItemID, SaveData.Is_Big_Endian);
+                                    SaveData.Write(DataOffset, ((Item)HouseDataType.GetField(Field.Name).GetValue(Data)).ItemId, SaveData.Is_Big_Endian);
                                 }
                             }
                         }

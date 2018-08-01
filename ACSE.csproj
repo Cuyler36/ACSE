@@ -4861,6 +4861,7 @@
     <Compile Include="Classes\Generators\IGenerator.cs" />
     <Compile Include="Classes\ItemChange.cs" />
     <Compile Include="Classes\ItemChangedEventArgs.cs" />
+    <Compile Include="Classes\Item\Item.cs" />
     <Compile Include="Classes\Messages\Mail\GCNPlayerMail.cs" />
     <Compile Include="Classes\Messages\Mail\MailBase.cs" />
     <Compile Include="Classes\Messages\Mail\PlayerMailBase.cs" />
@@ -4943,7 +4944,7 @@
     <Compile Include="Classes\DataConverter.cs" />
     <Compile Include="Classes\HouseData.cs" />
     <Compile Include="Classes\Inventory.cs" />
-    <Compile Include="Classes\ItemData.cs" />
+    <Compile Include="Classes\Item\ItemData.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

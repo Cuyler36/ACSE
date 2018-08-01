@@ -52,7 +52,7 @@ namespace ACSE
                 int X = i % itemsPerRow;
                 int Y = i / itemsPerRow;
                 Item item = items[i] ?? new Item(0);
-                uint itemColor = ItemData.GetItemColor(ItemData.GetItemType(item.ItemID, Save_Type));
+                uint itemColor = ItemData.GetItemColor(ItemData.GetItemType(item.ItemId, Save_Type));
 
                 for (int x = 0; x < itemsize * itemsize; x++)
                 {
@@ -100,7 +100,7 @@ namespace ACSE
             int width = 16;
             int height = 16;
             byte[] bmpData = new byte[1024];
-            byte[] itemColor = item == null ? new byte[4] { 0xFF, 0xFF, 0x00, 0x00 } : BitConverter.GetBytes(ItemData.GetItemColor(ItemData.GetItemType(item.ItemID, Save_Type)));
+            byte[] itemColor = item == null ? new byte[4] { 0xFF, 0xFF, 0x00, 0x00 } : BitConverter.GetBytes(ItemData.GetItemColor(ItemData.GetItemType(item.ItemId, Save_Type)));
 
             for (int i = 0; i < 1024; i+=4)
                 itemColor.CopyTo(bmpData, i);
@@ -116,7 +116,7 @@ namespace ACSE
         {
             ushort[] ids = new ushort[15];
             for (int i = 0; i < 15; i++)
-                ids[i] = Items[i].ItemID;
+                ids[i] = Items[i].ItemId;
             return ids;
         }
 

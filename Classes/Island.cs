@@ -221,7 +221,7 @@
             {
                 for (int Item = 0; Item < 0x100; Item++)
                 {
-                    SaveFile.Write(Offset + WorldData + Acre * 0x200 + Item * 2, Items[Acre][Item].ItemID, true);
+                    SaveFile.Write(Offset + WorldData + Acre * 0x200 + Item * 2, Items[Acre][Item].ItemId, true);
                 }
             }
 

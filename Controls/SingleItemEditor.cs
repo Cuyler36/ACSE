@@ -135,7 +135,7 @@ namespace ACSE
                 LastY = e.Y;
 
                 // Refresh ToolTip
-                ItemToolTip.Show(string.Format("{0} - [0x{1}]", item.Name, item.ItemID.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
+                ItemToolTip.Show(string.Format("{0} - [0x{1}]", item.Name, item.ItemId.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
 
                 // Check for MouseDown
                 if (IsMouseDown)
@@ -163,7 +163,7 @@ namespace ACSE
                         Item = NewItem;
 
                         // Update ToolTip
-                        ItemToolTip.Show(string.Format("{0} - [0x{1}]", NewItem.Name, NewItem.ItemID.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
+                        ItemToolTip.Show(string.Format("{0} - [0x{1}]", NewItem.Name, NewItem.ItemId.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
 
                         Modified = true;
                     }

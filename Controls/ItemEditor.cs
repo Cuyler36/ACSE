@@ -138,7 +138,7 @@ namespace ACSE
                 Item HoveredItem = items[Index];
 
                 // Refresh ToolTip
-                ItemToolTip.Show(string.Format(HoverText, HoveredItem.Name, HoveredItem.ItemID.ToString("X4"), HoveredItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
+                ItemToolTip.Show(string.Format(HoverText, HoveredItem.Name, HoveredItem.ItemId.ToString("X4"), HoveredItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
 
                 // Check for MouseDown
                 if (IsMouseDown)
@@ -172,7 +172,7 @@ namespace ACSE
                             Img.Dispose();
 
                         // Update ToolTip
-                        ItemToolTip.Show(string.Format(HoverText, NewItem.Name, NewItem.ItemID.ToString("X4"), NewItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
+                        ItemToolTip.Show(string.Format(HoverText, NewItem.Name, NewItem.ItemId.ToString("X4"), NewItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
 
                         // Fire ItemChanged Event
                         OnItemChanged(SelectedItem, NewItem, Index);

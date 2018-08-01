@@ -444,7 +444,7 @@ namespace ACSE
                 {
                     CurrentItem = new Item(New_Item)
                     {
-                        ItemID = (New_Item as Furniture).BaseItemID
+                        ItemId = (New_Item as Furniture).BaseItemId
                     };
                 }
                 else
@@ -452,11 +452,11 @@ namespace ACSE
                     CurrentItem = New_Item;
                 }
 
-                selectedItem.SelectedValue = New_Item.ItemID;
+                selectedItem.SelectedValue = New_Item.ItemId;
                 itemFlag1.Text = New_Item.Flag1.ToString("X2");
                 itemFlag2.Text = New_Item.Flag2.ToString("X2");
                 if (!itemIdTextBox.Focused)
-                    itemIdTextBox.Text = New_Item.ItemID.ToString("X4");
+                    itemIdTextBox.Text = New_Item.ItemId.ToString("X4");
             }
         }
 
@@ -1888,7 +1888,7 @@ namespace ACSE
         {
             if (!string.IsNullOrEmpty(itemIdTextBox.Text))
             {
-                itemIdTextBox.Text = CurrentItem.ItemID.ToString("X4");
+                itemIdTextBox.Text = CurrentItem.ItemId.ToString("X4");
             }
         }
 
@@ -2395,7 +2395,7 @@ namespace ACSE
                                         }
 
                                         Item Selected_Item = Current_Layer.Items[Item_Index];
-                                        houseToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Item.Name, Selected_Item.ItemID.ToString("X4")), sender as Control, e.X + 15, e.Y + 10);
+                                        houseToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Item.Name, Selected_Item.ItemId.ToString("X4")), sender as Control, e.X + 15, e.Y + 10);
                                         House_X = e.X;
                                         House_Y = e.Y;
                                     }
@@ -2596,7 +2596,7 @@ namespace ACSE
                                     }
 
                                     Item Selected_Item = Current_Layer.Items[Item_Index];
-                                    houseToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Item.Name, Selected_Item.ItemID.ToString("X4")), sender as Control, e.X + 15, e.Y + 10);
+                                    houseToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Item.Name, Selected_Item.ItemId.ToString("X4")), sender as Control, e.X + 15, e.Y + 10);
                                     Island_House_X = e.X;
                                     Island_House_Y = e.Y;
                                 }
@@ -2701,7 +2701,7 @@ namespace ACSE
                 WorldItem item = items[i];
                 if (item.Name != "Empty")
                 {
-                    uint itemColor = ItemData.GetItemColor(ItemData.GetItemType(item.ItemID, Save_File.Save_Type));
+                    uint itemColor = ItemData.GetItemColor(ItemData.GetItemType(item.ItemId, Save_File.Save_Type));
                     // Draw Item Box
                     for (int x = 0; x < itemSize * itemSize; x++)
                         Buffer.BlockCopy(BitConverter.GetBytes(itemColor), 0, bitmapBuffer,
@@ -3061,40 +3061,40 @@ namespace ACSE
                 Last_Y = e.Y;
                 if (Box == heldItemPicturebox)
                 {
-                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.HeldItem.Name, Selected_Player.Data.HeldItem.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.HeldItem.Name, Selected_Player.Data.HeldItem.ItemId.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 }
                 else if (Box == hatPicturebox && hatPicturebox.Enabled)
                 {
-                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Hat.Name, Selected_Player.Data.Hat.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Hat.Name, Selected_Player.Data.Hat.ItemId.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 }
                 else if (Box == facePicturebox && facePicturebox.Enabled)
                 {
-                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.FaceItem.Name, Selected_Player.Data.FaceItem.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.FaceItem.Name, Selected_Player.Data.FaceItem.ItemId.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 }
                 else if (Box == pantsPicturebox && pantsPicturebox.Enabled)
                 {
-                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Pants.Name, Selected_Player.Data.Pants.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Pants.Name, Selected_Player.Data.Pants.ItemId.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 }
                 else if (Box == socksPicturebox && socksPicturebox.Enabled)
                 {
-                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Socks.Name, Selected_Player.Data.Socks.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Socks.Name, Selected_Player.Data.Socks.ItemId.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 }
                 else if (Box == shoesPicturebox && shoesPicturebox.Enabled)
                 {
-                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Shoes.Name, Selected_Player.Data.Shoes.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Shoes.Name, Selected_Player.Data.Shoes.ItemId.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 }
                 else if (Box == pocketsBackgroundPicturebox && pocketsBackgroundPicturebox.Enabled)
                 {
                     playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.InventoryBackground.Name,
-                        Selected_Player.Data.InventoryBackground.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                        Selected_Player.Data.InventoryBackground.ItemId.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 }
                 else if (Box == bedPicturebox && bedPicturebox.Enabled)
                 {
-                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Bed.Name, Selected_Player.Data.Bed.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Bed.Name, Selected_Player.Data.Bed.ItemId.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 }
                 else if (Box == playerWetsuit && playerWetsuit.Enabled)
                 {
-                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Wetsuit.Name, Selected_Player.Data.Wetsuit.ItemID.ToString("X4")), Box, e.X + 15, e.Y + 10);
+                    playersToolTip.Show(string.Format("{0} - [0x{1}]", Selected_Player.Data.Wetsuit.Name, Selected_Player.Data.Wetsuit.ItemId.ToString("X4")), Box, e.X + 15, e.Y + 10);
                 }
             }
         }
@@ -3483,7 +3483,7 @@ namespace ACSE
             for (int i = 0; i < Town_Acres.Length; i++)
             {
                 for (int x = 0; x < 256; x++)
-                    if (ItemData.GetItemType(Town_Acres[i].AcreItems[x].ItemID, Save_File.Save_Type) == "Empty" && Town_Acres[i].AcreItems[x].Buried)
+                    if (ItemData.GetItemType(Town_Acres[i].AcreItems[x].ItemId, Save_File.Save_Type) == "Empty" && Town_Acres[i].AcreItems[x].Buried)
                     {
                         Town_Acres[i].SetBuriedInMemory(Town_Acres[i].AcreItems[x], i, Buried_Buffer, false, Save_File.Save_Type);
                         Occurances++;
@@ -3498,10 +3498,10 @@ namespace ACSE
             ComboBox Sender_Box = sender as ComboBox;
             int Building_Idx = Array.IndexOf(Building_List_Panels, Sender_Box.Parent);
             Building Edited_Building = Buildings[Building_Idx];
-            Edited_Building.ID = Building_DB[Array.IndexOf(Building_Names, Sender_Box.Text)];
+            Edited_Building.Id = Building_DB[Array.IndexOf(Building_Names, Sender_Box.Text)];
             Edited_Building.Name = Sender_Box.Text;
-            Edited_Building.Exists = Save_File.Save_Type == SaveType.New_Leaf ? Edited_Building.ID != 0xF8 : Edited_Building.ID != 0xFC;
-            Town_Acre_Map[Edited_Building.Acre_Index].Image = GenerateAcreItemsBitmap(Town_Acres[Edited_Building.Acre_Index].AcreItems, Edited_Building.Acre_Index);
+            Edited_Building.Exists = Save_File.Save_Type == SaveType.New_Leaf ? Edited_Building.Id != 0xF8 : Edited_Building.Id != 0xFC;
+            Town_Acre_Map[Edited_Building.AcreIndex].Image = GenerateAcreItemsBitmap(Town_Acres[Edited_Building.AcreIndex].AcreItems, Edited_Building.AcreIndex);
         }
 
         //TODO: Update textboxes on change with mouse
@@ -3516,27 +3516,27 @@ namespace ACSE
                 if ((Save_File.Save_Type == SaveType.City_Folk && New_Position < 16 * 5) ||
                     ((Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo) && New_Position < 16 * (isY ? 4 : 5)))
                 {
-                    int Old_Acre = Edited_Building.Acre_Index;
+                    int Old_Acre = Edited_Building.AcreIndex;
                     int New_Acre = New_Position / 16;
                     if (!isY)
                     {
-                        Edited_Building.Acre_X = (byte)(New_Acre + 1);
-                        Edited_Building.X_Pos = (byte)(New_Position % 16);
+                        Edited_Building.AcreX = (byte)(New_Acre + 1);
+                        Edited_Building.XPos = (byte)(New_Position % 16);
                     }
                     else
                     {
-                        Edited_Building.Acre_Y = (byte)(New_Acre + 1);
-                        Edited_Building.Y_Pos = (byte)(New_Position % 16);
+                        Edited_Building.AcreY = (byte)(New_Acre + 1);
+                        Edited_Building.YPos = (byte)(New_Position % 16);
                     }
-                    Edited_Building.Acre_Index = (byte)((Edited_Building.Acre_Y - 1) * 5 + (Edited_Building.Acre_X - 1));
+                    Edited_Building.AcreIndex = (byte)((Edited_Building.AcreY - 1) * 5 + (Edited_Building.AcreX - 1));
                     Town_Acre_Map[Old_Acre].Image = GenerateAcreItemsBitmap(Town_Acres[Old_Acre].AcreItems, Old_Acre);
                     if (Old_Acre != New_Acre)
                         Town_Acre_Map[New_Acre].Image = GenerateAcreItemsBitmap(Town_Acres[New_Acre].AcreItems, New_Acre);
                 }
                 else //Return text to original position
                 {
-                    Position_Box.Text = isY ? (Edited_Building.Y_Pos + (Edited_Building.Acre_Y - 1) * 16).ToString()
-                        : (Edited_Building.X_Pos + (Edited_Building.Acre_X - 1) * 16).ToString();
+                    Position_Box.Text = isY ? (Edited_Building.YPos + (Edited_Building.AcreY - 1) * 16).ToString()
+                        : (Edited_Building.XPos + (Edited_Building.AcreX - 1) * 16).ToString();
                 }
             }
         }
@@ -3544,21 +3544,21 @@ namespace ACSE
         private void Update_Building_Position_Boxes(Building Edited_Building)
         {
             Panel Building_Panel = Building_List_Panels[Array.IndexOf(Buildings, Edited_Building)];
-            Building_Panel.Controls[1].Text = (Edited_Building.X_Pos + (Edited_Building.Acre_X - 1) * 16).ToString();
-            Building_Panel.Controls[2].Text = (Edited_Building.Y_Pos + (Edited_Building.Acre_Y - 1) * 16).ToString();
+            Building_Panel.Controls[1].Text = (Edited_Building.XPos + (Edited_Building.AcreX - 1) * 16).ToString();
+            Building_Panel.Controls[2].Text = (Edited_Building.YPos + (Edited_Building.AcreY - 1) * 16).ToString();
         }
 
         private void SetupBuildingList()
         {
             if (Save_File.Save_Type == SaveType.New_Leaf)
             {
-                Building_DB = ItemData.NL_Building_Names.Keys.ToArray();
-                Building_Names = ItemData.NL_Building_Names.Values.ToArray();
+                Building_DB = ItemData.NlBuildingNames.Keys.ToArray();
+                Building_Names = ItemData.NlBuildingNames.Values.ToArray();
             }
             else if (Save_File.Save_Type == SaveType.Welcome_Amiibo)
             {
-                Building_DB = ItemData.WA_Building_Names.Keys.ToArray();
-                Building_Names = ItemData.WA_Building_Names.Values.ToArray();
+                Building_DB = ItemData.WaBuildingNames.Keys.ToArray();
+                Building_Names = ItemData.WaBuildingNames.Values.ToArray();
             }
             Building_List_Panels = new Panel[Buildings.Length];
             for (int i = 0; i < Buildings.Length; i++)
@@ -3579,7 +3579,7 @@ namespace ACSE
                     };
                     Building_List_Box.Items.AddRange(Building_Names);
                     Building_Panel.Controls.Add(Building_List_Box);
-                    Building_List_Box.SelectedIndex = Array.IndexOf(Building_DB, Buildings[i].ID);
+                    Building_List_Box.SelectedIndex = Array.IndexOf(Building_DB, Buildings[i].Id);
                     Building_List_Box.SelectedIndexChanged += new EventHandler(Building_List_Index_Changed);
                 }
                 else
@@ -3595,14 +3595,14 @@ namespace ACSE
                 {
                     Size = new Size(22, 22),
                     Location = new Point(130, 0),
-                    Text = Math.Max(0, Buildings[i].X_Pos + (Buildings[i].Acre_X - 1) * 16).ToString(),
+                    Text = Math.Max(0, Buildings[i].XPos + (Buildings[i].AcreX - 1) * 16).ToString(),
                     Name = "X_Position"
                 };
                 TextBox Y_Location = new TextBox
                 {
                     Size = new Size(22, 22),
                     Location = new Point(154, 0),
-                    Text = Math.Max(0, Buildings[i].Y_Pos + (Buildings[i].Acre_Y - 1) * 16).ToString(),
+                    Text = Math.Max(0, Buildings[i].YPos + (Buildings[i].AcreY - 1) * 16).ToString(),
                     Name = "Y_Position"
                 };
                 X_Location.LostFocus += new EventHandler((object sender, EventArgs e) => Building_Position_Changed(sender, e, false));
@@ -3635,15 +3635,15 @@ namespace ACSE
                 if (Selected_Building > -1)
                 {
                     Building B = Island ? Island_Buildings[Selected_Building] : Buildings[Selected_Building];
-                    int Old_Acre = B.Acre_Index;
+                    int Old_Acre = B.AcreIndex;
                     int Adjusted_Acre = Island ? Acre - 5 : Acre;
                     if (Check_Building_is_Here(Adjusted_Acre, index % 16, index / 16, Island) != null)
                         return; //Don't place buildings on top of each other
-                    B.Acre_Index = (byte)Adjusted_Acre;
-                    B.Acre_X = Island ? (byte)((Adjusted_Acre % 2) + 1) : (byte)((Adjusted_Acre % (Current_Save_Info.X_Acre_Count - 2) + 1)); //Might have to change for NL
-                    B.Acre_Y = Island ? (byte)((Adjusted_Acre / 2) + 1) : (byte)((Adjusted_Acre / (Current_Save_Info.X_Acre_Count - 2) + 1));
-                    B.X_Pos = (byte)(index % 16);
-                    B.Y_Pos = (byte)(index / 16);
+                    B.AcreIndex = (byte)Adjusted_Acre;
+                    B.AcreX = Island ? (byte)((Adjusted_Acre % 2) + 1) : (byte)((Adjusted_Acre % (Current_Save_Info.X_Acre_Count - 2) + 1)); //Might have to change for NL
+                    B.AcreY = Island ? (byte)((Adjusted_Acre / 2) + 1) : (byte)((Adjusted_Acre / (Current_Save_Info.X_Acre_Count - 2) + 1));
+                    B.XPos = (byte)(index % 16);
+                    B.YPos = (byte)(index / 16);
                     if (B.Name != "Sign" && B.Name != "Bus Stop") //These two items has "actor" items at their location
                         if (Island)
                             Island_Acres[Acre].AcreItems[index] = new WorldItem(index);
@@ -3674,11 +3674,11 @@ namespace ACSE
                 }
                 else
                 {
-                    if (Item.ItemID == CurrentItem.ItemID)
+                    if (Item.ItemId == CurrentItem.ItemId)
                         return;
                     if (itemFlag1.Enabled)
                     {
-                        WorldItem NewItem = new WorldItem(CurrentItem.ItemID, index);
+                        WorldItem NewItem = new WorldItem(CurrentItem.ItemId, index);
                         byte.TryParse(itemFlag1.Text, NumberStyles.AllowHexSpecifier, null, out NewItem.Flag1);
                         byte.TryParse(itemFlag2.Text, NumberStyles.AllowHexSpecifier, null, out NewItem.Flag2);
                         switch (NewItem.Flag1)
@@ -3702,18 +3702,18 @@ namespace ACSE
                         if (Island)
                         {
                             if (SelectedIsland == null)
-                                Island_Acres[Acre].AcreItems[index] = new WorldItem(CurrentItem.ItemID, index);
+                                Island_Acres[Acre].AcreItems[index] = new WorldItem(CurrentItem.ItemId, index);
                             else
-                                SelectedIsland.Items[Acre][index] = new WorldItem(CurrentItem.ItemID, index);
+                                SelectedIsland.Items[Acre][index] = new WorldItem(CurrentItem.ItemId, index);
                         }
                         else
-                            Town_Acres[Acre].AcreItems[index] = new WorldItem(CurrentItem.ItemID, index);
+                            Town_Acres[Acre].AcreItems[index] = new WorldItem(CurrentItem.ItemId, index);
 
                         // Update Villager House Coordinates if a valid villager exists for the selected house
                         if ((Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN || Save_File.Save_Generation == SaveGeneration.iQue) && 
-                            CurrentItem.ItemID >= 0x5000 && CurrentItem.ItemID <= 0x50FF) // TODO: WW Support
+                            CurrentItem.ItemId >= 0x5000 && CurrentItem.ItemId <= 0x50FF) // TODO: WW Support
                         {
-                            Villager Villager = Utility.GetVillagerFromHouse(CurrentItem.ItemID, Villagers);
+                            Villager Villager = Utility.GetVillagerFromHouse(CurrentItem.ItemId, Villagers);
                             if (Villager != null)
                             {
                                 var HouseCoordinatesInfo = Utility.Find_Villager_House(Villager.Data.VillagerId);
@@ -3728,7 +3728,7 @@ namespace ACSE
                         {
                             if (Island)
                             {
-                                if (Island_Acres[Acre].AcreItems[index].ItemID != 0x7FFE)
+                                if (Island_Acres[Acre].AcreItems[index].ItemId != 0x7FFE)
                                 {
                                     Island_Acres[Acre].AcreItems[index].Flag1 = 0x80;
                                     Island_Acres[Acre].AcreItems[index].Buried = true;
@@ -3736,7 +3736,7 @@ namespace ACSE
                             }
                             else
                             {
-                                if (Town_Acres[Acre].AcreItems[index].ItemID != 0x7FFE)
+                                if (Town_Acres[Acre].AcreItems[index].ItemId != 0x7FFE)
                                 {
                                     Town_Acres[Acre].AcreItems[index].Flag1 = 0x80;
                                     Town_Acres[Acre].AcreItems[index].Buried = true;
@@ -3782,7 +3782,7 @@ namespace ACSE
                 if (B != null)
                 {
                     if (Selected_Building == -1)
-                        Last_Selected_Item = CurrentItem.ItemID;
+                        Last_Selected_Item = CurrentItem.ItemId;
                     selectedItem.SelectedValue = (ushort)0xFFFF;
                     Selected_Building = Island ? Array.IndexOf(Island_Buildings, B) : Array.IndexOf(Buildings, B);
                     selectedItem.Enabled = false;
@@ -3794,9 +3794,9 @@ namespace ACSE
                 else
                 {
                     selectedItem.Enabled = true;
-                    ushort Old_Selected_Item_ID = Selected_Building > -1 ? Last_Selected_Item : CurrentItem.ItemID;
+                    ushort Old_Selected_Item_ID = Selected_Building > -1 ? Last_Selected_Item : CurrentItem.ItemId;
                     Selected_Building = -1;
-                    selectedItem.SelectedValue = Item.ItemID;
+                    selectedItem.SelectedValue = Item.ItemId;
                     if (selectedItem.SelectedValue == null)
                         selectedItem.SelectedValue = Old_Selected_Item_ID;
                     else
@@ -3830,7 +3830,7 @@ namespace ACSE
                 {
                     Items = Town_Acres[Acre].AcreItems;
                 }
-                Utility.FloodFillWorldItemArray(ref Items, 16, index, Items[index], new WorldItem(CurrentItem.ItemID, byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text), Items[index].Index));
+                Utility.FloodFillWorldItemArray(ref Items, 16, index, Items[index], new WorldItem(CurrentItem.ItemId, byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text), Items[index].Index));
                 Refresh_PictureBox_Image(Box, GenerateAcreItemsBitmap(Items, Acre, Island));
             }
         }
@@ -3873,14 +3873,14 @@ namespace ACSE
                 {
                     Building B = Check_Building_is_Here(Acre, X, Y, Island);
                     if (B != null)
-                        townToolTip.Show(string.Format("{0} - [0x{1} - Building]", B.Name, B.ID.ToString("X2")), sender as PictureBox, e.X + 15, e.Y + 10);
+                        townToolTip.Show(string.Format("{0} - [0x{1} - Building]", B.Name, B.Id.ToString("X2")), sender as PictureBox, e.X + 15, e.Y + 10);
                     else if (Item != null)
                         townToolTip.Show(string.Format("{0}{1} - [0x{2}]", Item.Name,
                             Item.Buried ? " (Buried)" : (Item.Watered ? " (Watered)" : (Item.Flag1 == 1 ? " (Perfect Fruit)" : "")),
-                            Item.ItemID.ToString("X4")), sender as PictureBox, e.X + 15, e.Y + 10);
+                            Item.ItemId.ToString("X4")), sender as PictureBox, e.X + 15, e.Y + 10);
                 }
                 else
-                    townToolTip.Show(string.Format("{0}{1} - [0x{2}]", Item.Name, Item.Buried ? " (Buried)" : "", Item.ItemID.ToString("X4")), sender as PictureBox, e.X + 15, e.Y + 10);
+                    townToolTip.Show(string.Format("{0}{1} - [0x{2}]", Item.Name, Item.Buried ? " (Buried)" : "", Item.ItemId.ToString("X4")), sender as PictureBox, e.X + 15, e.Y + 10);
             }
         }
 
@@ -3928,13 +3928,13 @@ namespace ACSE
                 acre = acre - 5;
                 if (Island_Buildings != null)
                     foreach (Building B in Island_Buildings)
-                        if (B.Exists && B.Acre_Index == acre && B.X_Pos == x && B.Y_Pos == y)
+                        if (B.Exists && B.AcreIndex == acre && B.XPos == x && B.YPos == y)
                             return B;
             }
             else
                 if (Buildings != null)
                     foreach (Building B in Buildings)
-                        if (B.Exists && B.Acre_Index == acre && B.X_Pos == x && B.Y_Pos == y)
+                        if (B.Exists && B.AcreIndex == acre && B.XPos == x && B.YPos == y)
                             return B;
             return null;
         }
@@ -4010,7 +4010,7 @@ namespace ACSE
                                     ItemData.EncodeItem(Town_Acres[i].AcreItems[x]));
                             }
                             else
-                                Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Data + i * 512 + x * 2, Town_Acres[i].AcreItems[x].ItemID,
+                                Save_File.Write(Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Town_Data + i * 512 + x * 2, Town_Acres[i].AcreItems[x].ItemId,
                                     Save_File.Is_Big_Endian);
                 }
 
@@ -4029,28 +4029,28 @@ namespace ACSE
                             if (i < 33)
                             {
                                 int DataOffset = Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Buildings + i * 2;
-                                byte X = (byte)(((Buildings[i].Acre_X << 4) & 0xF0) + (Buildings[i].X_Pos & 0x0F)), Y = (byte)(((Buildings[i].Acre_Y << 4) & 0xF0) + (Buildings[i].Y_Pos & 0x0F));
+                                byte X = (byte)(((Buildings[i].AcreX << 4) & 0xF0) + (Buildings[i].XPos & 0x0F)), Y = (byte)(((Buildings[i].AcreY << 4) & 0xF0) + (Buildings[i].YPos & 0x0F));
                                 Save_File.Write(DataOffset, X);
                                 Save_File.Write(DataOffset + 1, Y);
                             }
-                            else if (Buildings[i].ID == 33) //Pave's Sign
+                            else if (Buildings[i].Id == 33) //Pave's Sign
                             {
                                 int DataOffset = Save_File.Save_Data_Start_Offset + 0x5EB90;
-                                byte X = (byte)(((Buildings[i].Acre_X << 4) & 0xF0) + (Buildings[i].X_Pos & 0x0F)), Y = (byte)(((Buildings[i].Acre_Y << 4) & 0xF0) + (Buildings[i].Y_Pos & 0x0F));
+                                byte X = (byte)(((Buildings[i].AcreX << 4) & 0xF0) + (Buildings[i].XPos & 0x0F)), Y = (byte)(((Buildings[i].AcreY << 4) & 0xF0) + (Buildings[i].YPos & 0x0F));
                                 Save_File.Write(DataOffset, X);
                                 Save_File.Write(DataOffset + 1, Y);
                             }
-                            else if (Buildings[i].ID == 34) //Bus Stop
+                            else if (Buildings[i].Id == 34) //Bus Stop
                             {
                                 int DataOffset = Save_File.Save_Data_Start_Offset + 0x5EB8A;
-                                byte X = (byte)(((Buildings[i].Acre_X << 4) & 0xF0) + (Buildings[i].X_Pos & 0x0F)), Y = (byte)(((Buildings[i].Acre_Y << 4) & 0xF0) + (Buildings[i].Y_Pos & 0x0F));
+                                byte X = (byte)(((Buildings[i].AcreX << 4) & 0xF0) + (Buildings[i].XPos & 0x0F)), Y = (byte)(((Buildings[i].AcreY << 4) & 0xF0) + (Buildings[i].YPos & 0x0F));
                                 Save_File.Write(DataOffset, X);
                                 Save_File.Write(DataOffset + 1, Y);
                             }
                             else if (i >= 35) //Signs
                             {
                                 int DataOffset = Save_File.Save_Data_Start_Offset + 0x5EB92 + (i - 35) * 2;
-                                byte X = (byte)(((Buildings[i].Acre_X << 4) & 0xF0) + (Buildings[i].X_Pos & 0x0F)), Y = (byte)(((Buildings[i].Acre_Y << 4) & 0xF0) + (Buildings[i].Y_Pos & 0x0F));
+                                byte X = (byte)(((Buildings[i].AcreX << 4) & 0xF0) + (Buildings[i].XPos & 0x0F)), Y = (byte)(((Buildings[i].AcreY << 4) & 0xF0) + (Buildings[i].YPos & 0x0F));
                                 Save_File.Write(DataOffset, X);
                                 Save_File.Write(DataOffset + 1, Y);
                             }
@@ -4061,8 +4061,8 @@ namespace ACSE
                         for (int i = 0; i < Buildings.Length; i++)
                         {
                             int DataOffset = Save_File.Save_Data_Start_Offset + Current_Save_Info.Save_Offsets.Buildings + i * 4;
-                            byte X = (byte)(((Buildings[i].Acre_X << 4) & 0xF0) + (Buildings[i].X_Pos & 0x0F)), Y = (byte)(((Buildings[i].Acre_Y << 4) & 0xF0) + (Buildings[i].Y_Pos & 0x0F));
-                            Save_File.Write(DataOffset, new byte[4] { Buildings[i].ID, 0x00, X, Y });
+                            byte X = (byte)(((Buildings[i].AcreX << 4) & 0xF0) + (Buildings[i].XPos & 0x0F)), Y = (byte)(((Buildings[i].AcreY << 4) & 0xF0) + (Buildings[i].YPos & 0x0F));
+                            Save_File.Write(DataOffset, new byte[4] { Buildings[i].Id, 0x00, X, Y });
                         }
                     }
                 }
@@ -4167,7 +4167,7 @@ namespace ACSE
                 {
                     for (int i = 0; i < 256; i++)
                     {
-                        if (ItemData.GetItemType(Acre.AcreItems[i].ItemID, Save_File.Save_Type) == "Weed")
+                        if (ItemData.GetItemType(Acre.AcreItems[i].ItemId, Save_File.Save_Type) == "Weed")
                         {
                             if (Save_File.Save_Type == SaveType.Wild_World || Save_File.Save_Type == SaveType.City_Folk)
                                 Acre.AcreItems[i] = new WorldItem(0xFFF1, Acre.AcreItems[i].Index);
@@ -4339,7 +4339,7 @@ namespace ACSE
                     {
                         if (Save_File.Save_Type == SaveType.New_Leaf || Save_File.Save_Type == SaveType.Welcome_Amiibo)
                         {
-                            foreach (WorldItem Fruit_Tree in Acre.AcreItems.Where(i => (i.ItemID >= 0x3A && i.ItemID <= 0x52 && i.Flag1 == 0 && i.Flag2 == 0)))
+                            foreach (WorldItem Fruit_Tree in Acre.AcreItems.Where(i => (i.ItemId >= 0x3A && i.ItemId <= 0x52 && i.Flag1 == 0 && i.Flag2 == 0)))
                             {
                                 Fruit_Tree.Flag1 = 1;
                                 Trees_Made_Perfect++;
@@ -4890,10 +4890,10 @@ namespace ACSE
                     {
                         foreach (WorldItem Item in Acre.AcreItems)
                         {
-                            if (Item.ItemID == ReplaceId)
+                            if (Item.ItemId == ReplaceId)
                             {
                                 Changed = true;
-                                Item.ItemID = ReplacingId;
+                                Item.ItemId = ReplacingId;
                                 Item.Name = ReplacingName;
                                 if (Item.Buried && Unbury)
                                 {
@@ -4994,15 +4994,15 @@ namespace ACSE
                     {
                         for (int i = 0; i < 256; i++)
                         {
-                            string ItemType = ItemData.GetItemType(Acre.AcreItems[i].ItemID, Save_File.Save_Type);
+                            string ItemType = ItemData.GetItemType(Acre.AcreItems[i].ItemId, Save_File.Save_Type);
                             if (ItemType == "Parched Flower")
                             {
-                                Acre.AcreItems[i] = new WorldItem((ushort)(Acre.AcreItems[i].ItemID + 0x1C), Acre.AcreItems[i].Index);
+                                Acre.AcreItems[i] = new WorldItem((ushort)(Acre.AcreItems[i].ItemId + 0x1C), Acre.AcreItems[i].Index);
                                 Flowers_Watered++;
                             }
                             else if (ItemType == "Flower")
                             {
-                                Acre.AcreItems[i] = new WorldItem((ushort)(Acre.AcreItems[i].ItemID + 0x8A), Acre.AcreItems[i].Index);
+                                Acre.AcreItems[i] = new WorldItem((ushort)(Acre.AcreItems[i].ItemId + 0x8A), Acre.AcreItems[i].Index);
                                 Flowers_Watered++;
                             }
                         }
@@ -5011,9 +5011,9 @@ namespace ACSE
                     {
                         for (int i = 0; i < 256; i++)
                         {
-                            if (ItemData.GetItemType(Acre.AcreItems[i].ItemID, Save_File.Save_Type) == "Parched Flower")
+                            if (ItemData.GetItemType(Acre.AcreItems[i].ItemId, Save_File.Save_Type) == "Parched Flower")
                             {
-                                Acre.AcreItems[i] = new WorldItem((ushort)(Acre.AcreItems[i].ItemID - 0x20), Acre.AcreItems[i].Index);
+                                Acre.AcreItems[i] = new WorldItem((ushort)(Acre.AcreItems[i].ItemId - 0x20), Acre.AcreItems[i].Index);
                                 Flowers_Watered++;
                             }
                         }
@@ -5022,7 +5022,7 @@ namespace ACSE
                     {
                         for (int i = 0; i < 256; i++)
                         {
-                            if (ItemData.GetItemType(Acre.AcreItems[i].ItemID, Save_File.Save_Type) == "Flower")
+                            if (ItemData.GetItemType(Acre.AcreItems[i].ItemId, Save_File.Save_Type) == "Flower")
                             {
                                 Acre.AcreItems[i].Flag1 = 0x40;
                                 Acre.AcreItems[i].Watered = true;
