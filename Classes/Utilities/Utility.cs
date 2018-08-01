@@ -11,155 +11,126 @@ namespace ACSE.Classes.Utilities
     {
         public static void Scan_For_NL_Int32()
         {
-            if (MainForm.Save_File != null && (MainForm.Save_File.Save_Type == SaveType.New_Leaf || MainForm.Save_File.Save_Type == SaveType.Welcome_Amiibo))
-            {
-                using (StreamWriter Int32_Stream = File.CreateText(MainForm.Assembly_Location + "\\" +
-                    (MainForm.Save_File.Save_Type == SaveType.Welcome_Amiibo ? "WA_" : "") + "NL_Int32_Database.txt"))
-                    for (int i = 0; i < MainForm.Save_File.Working_Save_Data.Length - 4; i += 4)
-                    {
-                        NL_Int32 Possible_NL_Int32 = new NL_Int32(MainForm.Save_File.ReadUInt32(i), MainForm.Save_File.ReadUInt32(i + 4));
-                        if (Possible_NL_Int32.Valid)
-                            Int32_Stream.WriteLine(string.Format("Found Valid NL_Int32 at offset 0x{0} | Value: {1}", i.ToString("X"), Possible_NL_Int32.Value));
-                    }
-            }
+            if (MainForm.Save_File == null || MainForm.Save_File.Save_Generation != SaveGeneration.N3DS) return;
+            using (var int32Stream = File.CreateText(MainForm.Assembly_Location + "\\" +
+                                                               (MainForm.Save_File.Save_Type == SaveType.Welcome_Amiibo ? "WA_" : "") + "NL_Int32_Database.txt"))
+                for (var i = 0; i < MainForm.Save_File.Working_Save_Data.Length - 4; i += 4)
+                {
+                    var possibleNlInt32 = new NL_Int32(MainForm.Save_File.ReadUInt32(i), MainForm.Save_File.ReadUInt32(i + 4));
+                    if (possibleNlInt32.Valid)
+                        int32Stream.WriteLine(
+                            $"Found Valid NL_Int32 at offset 0x{i:X} | Value: {possibleNlInt32.Value}");
+                }
         }
 
-        public static Image Set_Image_Color(Image Grayscale_Image, ColorMatrix Transform_Matrix)
+        public static Image Set_Image_Color(Image grayscaleImage, ColorMatrix transformMatrix)
         {
-            using (ImageAttributes Attributes = new ImageAttributes())
+            using (var attributes = new ImageAttributes())
             {
-                Attributes.SetColorMatrix(Transform_Matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-                Bitmap Transformed_Image = new Bitmap(Grayscale_Image.Width, Grayscale_Image.Height);
-                using (Graphics G = Graphics.FromImage(Transformed_Image))
+                attributes.SetColorMatrix(transformMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+                var transformedImage = new Bitmap(grayscaleImage.Width, grayscaleImage.Height);
+                using (var g = Graphics.FromImage(transformedImage))
                 {
-                    G.DrawImage(Grayscale_Image, 0, 0);
-                    G.DrawImage(Transformed_Image, new Rectangle(0, 0, Grayscale_Image.Size.Width, Grayscale_Image.Size.Height),
-                        0, 0, Grayscale_Image.Size.Width, Grayscale_Image.Size.Height, GraphicsUnit.Pixel, Attributes);
-                    return Transformed_Image;
+                    g.DrawImage(grayscaleImage, 0, 0);
+                    g.DrawImage(transformedImage, new Rectangle(0, 0, grayscaleImage.Size.Width, grayscaleImage.Size.Height),
+                        0, 0, grayscaleImage.Size.Width, grayscaleImage.Size.Height, GraphicsUnit.Pixel, attributes);
+                    return transformedImage;
                 }
             }
         }
 
-        public static void Increment_Town_ID(Save Save_File)
+        public static Tuple<byte[], bool> Find_Villager_House(ushort villagerId) // TODO: Apply to WW
         {
-            int Total_IDs = 0;
-            ushort Town_ID = Save_File.ReadUInt16(Save_File.Save_Data_Start_Offset + 8, true);
-            for (int i = 0x26040; i < 0x4C040; i += 2)
+            if (MainForm.Save_File == null) return new Tuple<byte[], bool>(new byte[] {0xFF, 0xFF, 0xFF, 0xFF}, false);
+            var villagerHouseId = (ushort)(0x5000 + (villagerId & 0xFF));
+            foreach (var acre in MainForm.Town_Acres)
             {
-                ushort Value = Save_File.ReadUInt16(i, true);
-                if (Value == Town_ID)
+                var villagerHouse = acre.Acre_Items.FirstOrDefault(o => o.ItemID == villagerHouseId);
+                if (villagerHouse != null)
                 {
-                    Total_IDs++;
-                    Save_File.Write(i, (ushort)(Value + 1), true);
-                }
-            }
-            System.Windows.Forms.MessageBox.Show("Total IDs Replaced: " + Total_IDs);
-            Save_File.Flush();
-        }
-
-        public static Tuple<byte[], bool> Find_Villager_House(ushort Villager_ID) // TODO: Apply to WW
-        {
-            if (MainForm.Save_File != null)
-            {
-                ushort Villager_House_ID = (ushort)(0x5000 + (Villager_ID & 0xFF));
-                foreach (WorldAcre Acre in MainForm.Town_Acres)
-                {
-                    WorldItem Villager_House = Acre.Acre_Items.FirstOrDefault(o => o.ItemID == Villager_House_ID);
-                    if (Villager_House != null)
-                    {
-                        return new Tuple<byte[], bool>(
-                            new byte[4] { (byte)(Acre.Index % 7), (byte)(Acre.Index / 7), (byte)(Villager_House.Location.X), (byte)(Villager_House.Location.Y + 1) },
-                            true);
-                    }
+                    return new Tuple<byte[], bool>(
+                        new byte[4] { (byte)(acre.Index % 7), (byte)(acre.Index / 7), (byte)(villagerHouse.Location.X), (byte)(villagerHouse.Location.Y + 1) },
+                        true);
                 }
             }
             return new Tuple<byte[], bool>(new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF }, false);
         }
 
-        public static Villager GetVillagerFromHouse(ushort HouseId, Villager[] Villagers)
+        public static Villager GetVillagerFromHouse(ushort houseId, Villager[] villagers)
         {
-            ushort VillagerId = (ushort)(0xE000 | (HouseId & 0x00FF));
-            
-            foreach (Villager Villager in Villagers)
-            {
-                if (Villager.Data.VillagerId == VillagerId)
-                {
-                    return Villager;
-                }
-            }
-
-            return null;
+            var villagerId = (ushort)(0xE000 | (houseId & 0x00FF));
+            return villagers.FirstOrDefault(villager => villager.Data.VillagerId == villagerId);
         }
 
 
         public static bool[] Check_Perfect_Town_Requirements(WorldAcre[] Acres, bool Make_Perfect = false)
         {
-            bool[] Acre_Results = new bool[Acres.Length];
-            int Points = 0;
-            for (int i = 0; i < Acre_Results.Length; i++)
+            var acreResults = new bool[Acres.Length];
+            var points = 0;
+            for (var i = 0; i < acreResults.Length; i++)
             {
-                WorldAcre Acre = Acres[i];
+                var acre = Acres[i];
                 switch (MainForm.Save_File.Save_Generation)
                 {
                     case SaveGeneration.N64:
                     case SaveGeneration.GCN:
                         //TODO: Implement Special Acre Check (Player Houses, Train Station, Oceanfront Acres, Lake Acres, Wishing Well, & Museum
                         //Special Acre Info: < 9 Trees, 0 Points | 9 - 11, 1 Point | 12 - 14, 2 Points | 15 - 17, 1 Point | > 18, 0 Points
-                        int Tree_Count = 0;
-                        int Weed_Count = 0;
-                        for (int o = 0; o < 256; o++)
+                        var treeCount = 0;
+                        var weedCount = 0;
+                        for (var o = 0; o < 256; o++)
                         {
-                            WorldItem Item = Acre.Acre_Items[o];
-                            if (Item.Name == "Weed")
+                            var item = acre.Acre_Items[o];
+                            if (item.Name == "Weed")
                             {
-                                Weed_Count++;
+                                weedCount++;
                                 if (Make_Perfect)
                                 {
-                                    Acre.Acre_Items[o] = new WorldItem(0, o);
+                                    acre.Acre_Items[o] = new WorldItem(0, o);
                                 }
                             }
-                            else if (ItemData.GetItemType(Item.ItemID, MainForm.Save_File.Save_Type) == "Tree")
+                            else if (ItemData.GetItemType(item.ItemID, MainForm.Save_File.Save_Type) == "Tree")
                             {
-                                Tree_Count++;
+                                treeCount++;
                             }
                         }
                         if (Make_Perfect)
                         {
-                            if (Tree_Count > 14)
+                            if (treeCount > 14)
                             {
-                                for (int o = 0; o < Tree_Count - 13; o++)
+                                for (var o = 0; o < treeCount - 13; o++)
                                 {
-                                    for (int x = 0; x < 256; x++)
+                                    for (var x = 0; x < 256; x++)
                                     {
-                                        if (ItemData.GetItemType(Acre.Acre_Items[x].ItemID, MainForm.Save_File.Save_Type) == "Tree")
-                                        {
-                                            Acre.Acre_Items[x] = new WorldItem(0, x);
-                                            break;
-                                        }
+                                        if (ItemData.GetItemType(acre.Acre_Items[x].ItemID,
+                                                MainForm.Save_File.Save_Type) != "Tree") continue;
+                                        acre.Acre_Items[x] = new WorldItem(0, x);
+                                        break;
                                     }
                                 }
                             }
-                            else if (Tree_Count < 12)
+                            else if (treeCount < 12)
                             {
-                                for (int o = 0; o < 13 - Tree_Count; o++)
+                                for (var o = 0; o < 13 - treeCount; o++)
                                 {
-                                    for (int x = 0; x < 256; x++)
+                                    for (var x = 0; x < 256; x++)
                                     {
                                         // Check to make sure the item directly above, below, and to the left and right isn't already occupied.
-                                        if (Acre.Acre_Items[x].ItemID == 0 && (x < 16 || Acre.Acre_Items[x - 16].ItemID == 0) && (x > 239 || Acre.Acre_Items[x + 16].ItemID == 0)
-                                            && (x == 0 || Acre.Acre_Items[x - 1].ItemID == 0) && (x == 255 || Acre.Acre_Items[x + 1].ItemID == 0))
-                                        {
-                                            Acre.Acre_Items[x] = new WorldItem(0x0804, x);
-                                            break;
-                                        }
+                                        if (acre.Acre_Items[x].ItemID != 0 ||
+                                            (x >= 16 && acre.Acre_Items[x - 16].ItemID != 0) ||
+                                            (x <= 239 && acre.Acre_Items[x + 16].ItemID != 0) ||
+                                            (x != 0 && acre.Acre_Items[x - 1].ItemID != 0) ||
+                                            (x != 255 && acre.Acre_Items[x + 1].ItemID != 0)) continue;
+                                        acre.Acre_Items[x] = new WorldItem(0x0804, x);
+                                        break;
                                     }
                                 }
                             }
                         }
-                        Acre_Results[i] = Make_Perfect || ((Tree_Count > 11 && Tree_Count < 15) && Weed_Count < 4);
-                        if (Acre_Results[i])
+                        acreResults[i] = Make_Perfect || ((treeCount > 11 && treeCount < 15) && weedCount < 4);
+                        if (acreResults[i])
                         {
-                            Points++;
+                            points++;
                         }
                         break;
                     case SaveGeneration.NDS:
@@ -168,338 +139,321 @@ namespace ACSE.Classes.Utilities
                         throw new NotImplementedException();
                 }
             }
-            return Acre_Results;
+            return acreResults;
         }
 
-        public static void Place_Structure(WorldAcre Acre, int Start_Index, List<ushort[]> Structure_Info)
+        public static void Place_Structure(WorldAcre acre, int startIndex, List<ushort[]> structureInfo)
         {
-            if (Start_Index > -1 && Start_Index < 256)
+            if (startIndex <= -1 || startIndex >= 256) return;
+            if (MainForm.Save_File.Save_Generation != SaveGeneration.GCN) return;
+            for (var y = 0; y < structureInfo.Count; y++)
             {
-                if (MainForm.Save_File.Save_Generation == SaveGeneration.GCN)
+                for (var x = 0; x < structureInfo[y].Length; x++)
                 {
-                    for (int y = 0; y < Structure_Info.Count; y++)
+                    var index = startIndex + y * 16 + x;
+                    if (index >= 256) continue;
+                    switch (structureInfo[y][x])
                     {
-                        for (int x = 0; x < Structure_Info[y].Length; x++)
-                        {
-                            int Index = Start_Index + y * 16 + x;
-                            if (Index < 256)
-                            {
-                                switch (Structure_Info[y][x])
-                                {
-                                    case 0: // Just for alignment
-                                        break;
-                                    case 1:
-                                        Acre.Acre_Items[Index] = new WorldItem(0xFFFF, Index);
-                                        break;
-                                    default:
-                                        Acre.Acre_Items[Index] = new WorldItem(Structure_Info[y][x], Index);
-                                        break;
-                                }
-                            }
-                        }
+                        case 0: // Just for alignment
+                            break;
+                        case 1:
+                            acre.Acre_Items[index] = new WorldItem(0xFFFF, index);
+                            break;
+                        default:
+                            acre.Acre_Items[index] = new WorldItem(structureInfo[y][x], index);
+                            break;
                     }
                 }
             }
         }
 
-        public static byte GetWildWorldGrassBaseType(byte Seasonal_Grass_Value)
+        public static byte GetWildWorldGrassBaseType(byte seasonalGrassValue)
         {
-            if (Seasonal_Grass_Value < 3)
-                return Seasonal_Grass_Value;
-            else
-                return (byte)((Seasonal_Grass_Value - 1) % 3); // May not be right.
+            if (seasonalGrassValue < 3)
+                return seasonalGrassValue;
+            return (byte)((seasonalGrassValue - 1) % 3); // May not be right.
         }
 
-        public static void FloodFillItemArray(ref Item[] Items, int ItemsPerRow, int StartIndex, Item OriginalItem, Item NewItem)
+        public static void FloodFillItemArray(ref Item[] items, int itemsPerRow, int startIndex, Item originalItem, Item newItem)
         {
-            int Rows = Items.Length / ItemsPerRow;
-            Stack<Point> LocationStack = new Stack<Point>();
-            int[] PreviousPoints = new int[Items.Length];
+            var rows = items.Length / itemsPerRow;
+            var locationStack = new Stack<Point>();
+            var previousPoints = new int[items.Length];
 
-            int X = StartIndex % ItemsPerRow;
-            int Y = StartIndex / ItemsPerRow;
+            var x = startIndex % itemsPerRow;
+            var y = startIndex / itemsPerRow;
 
-            LocationStack.Push(new Point(X, Y));
+            locationStack.Push(new Point(x, y));
 
-            while (LocationStack.Count > 0)
+            while (locationStack.Count > 0)
             {
-                Point p = LocationStack.Pop();
-                int Idx = p.X + p.Y * ItemsPerRow;
+                var p = locationStack.Pop();
+                var idx = p.X + p.Y * itemsPerRow;
 
-                if (p.X < ItemsPerRow && p.X > -1 &&
-                        p.Y < Rows && p.Y > -1 && PreviousPoints[Idx] == 0) // Make sure we stay within bounds
+                if (p.X < itemsPerRow && p.X > -1 &&
+                        p.Y < rows && p.Y > -1 && previousPoints[idx] == 0) // Make sure we stay within bounds
                 {
-                    Item i = Items[Idx];
-                    if (i.Equals(OriginalItem))
+                    var i = items[idx];
+                    if (i.Equals(originalItem))
                     {
-                        Items[Idx] = new Item(NewItem);
+                        items[idx] = new Item(newItem);
                         if (p.X - 1 > -1)
-                            LocationStack.Push(new Point(p.X - 1, p.Y));
-                        if (p.X + 1 < ItemsPerRow)
-                            LocationStack.Push(new Point(p.X + 1, p.Y));
+                            locationStack.Push(new Point(p.X - 1, p.Y));
+                        if (p.X + 1 < itemsPerRow)
+                            locationStack.Push(new Point(p.X + 1, p.Y));
                         if (p.Y - 1 > -1)
-                            LocationStack.Push(new Point(p.X, p.Y - 1));
-                        if (p.Y + 1 < Rows)
-                            LocationStack.Push(new Point(p.X, p.Y + 1));
+                            locationStack.Push(new Point(p.X, p.Y - 1));
+                        if (p.Y + 1 < rows)
+                            locationStack.Push(new Point(p.X, p.Y + 1));
                     }
                 }
-                PreviousPoints[Idx] = 1;
+                previousPoints[idx] = 1;
             }
         }
 
-        public static void FloodFillWorldItemArray(ref WorldItem[] Items, int ItemsPerRow, int StartIndex, WorldItem OriginalItem, WorldItem NewItem)
+        public static void FloodFillWorldItemArray(ref WorldItem[] items, int itemsPerRow, int startIndex, WorldItem originalItem, WorldItem newItem)
         {
-            int Rows = Items.Length / ItemsPerRow;
-            Stack<Point> LocationStack = new Stack<Point>();
-            int[] PreviousPoints = new int[Items.Length];
+            var rows = items.Length / itemsPerRow;
+            var locationStack = new Stack<Point>();
+            var previousPoints = new int[items.Length];
 
-            int X = StartIndex % ItemsPerRow;
-            int Y = StartIndex / ItemsPerRow;
+            var x = startIndex % itemsPerRow;
+            var y = startIndex / itemsPerRow;
 
-            LocationStack.Push(new Point(X, Y));
+            locationStack.Push(new Point(x, y));
 
-            while (LocationStack.Count > 0)
+            while (locationStack.Count > 0)
             {
-                Point p = LocationStack.Pop();
+                var p = locationStack.Pop();
 
-                int Idx = p.X + p.Y * ItemsPerRow;
+                var idx = p.X + p.Y * itemsPerRow;
 
-                if (p.X < ItemsPerRow && p.X > -1 &&
-                        p.Y < Rows && p.Y > -1 && PreviousPoints[Idx] == 0) // Make sure we stay within bounds
+                if (p.X < itemsPerRow && p.X > -1 &&
+                        p.Y < rows && p.Y > -1 && previousPoints[idx] == 0) // Make sure we stay within bounds
                 {
-                    WorldItem i = Items[Idx];
-                    if (i.Equals(OriginalItem))
+                    var i = items[idx];
+                    if (i.Equals(originalItem))
                     {
-                        Items[Idx] = new WorldItem(NewItem.ItemID, NewItem.Flag1, NewItem.Flag2, i.Index);
+                        items[idx] = new WorldItem(newItem.ItemID, newItem.Flag1, newItem.Flag2, i.Index);
                         if (p.X - 1 > -1)
-                            LocationStack.Push(new Point(p.X - 1, p.Y));
-                        if (p.X + 1 < ItemsPerRow)
-                            LocationStack.Push(new Point(p.X + 1, p.Y));
+                            locationStack.Push(new Point(p.X - 1, p.Y));
+                        if (p.X + 1 < itemsPerRow)
+                            locationStack.Push(new Point(p.X + 1, p.Y));
                         if (p.Y - 1 > -1)
-                            LocationStack.Push(new Point(p.X, p.Y - 1));
-                        if (p.Y + 1 < Rows)
-                            LocationStack.Push(new Point(p.X, p.Y + 1));
+                            locationStack.Push(new Point(p.X, p.Y - 1));
+                        if (p.Y + 1 < rows)
+                            locationStack.Push(new Point(p.X, p.Y + 1));
                     }
                 }
-                PreviousPoints[Idx] = 1;
+                previousPoints[idx] = 1;
             }
         }
 
-        public static void FloodFillFurnitureArray(ref Furniture[] Items, int ItemsPerRow, int StartIndex, Furniture OriginalItem, Furniture NewItem)
+        public static void FloodFillFurnitureArray(ref Furniture[] items, int itemsPerRow, int startIndex, Furniture originalItem, Furniture newItem)
         {
-            int Rows = Items.Length / ItemsPerRow;
-            Stack<Point> LocationStack = new Stack<Point>();
-            int[] PreviousPoints = new int[Items.Length];
+            var rows = items.Length / itemsPerRow;
+            var locationStack = new Stack<Point>();
+            var previousPoints = new int[items.Length];
 
-            int X = StartIndex % ItemsPerRow;
-            int Y = StartIndex / ItemsPerRow;
+            var x = startIndex % itemsPerRow;
+            var y = startIndex / itemsPerRow;
 
-            LocationStack.Push(new Point(X, Y));
+            locationStack.Push(new Point(x, y));
 
-            while (LocationStack.Count > 0)
+            while (locationStack.Count > 0)
             {
-                Point p = LocationStack.Pop();
+                var p = locationStack.Pop();
 
-                int Idx = p.X + p.Y * ItemsPerRow;
+                var idx = p.X + p.Y * itemsPerRow;
 
-                if (p.X < ItemsPerRow && p.X > -1 &&
-                        p.Y < Rows && p.Y > -1 && PreviousPoints[Idx] == 0) // Make sure we stay within bounds
+                if (p.X < itemsPerRow && p.X > -1 &&
+                        p.Y < rows && p.Y > -1 && previousPoints[idx] == 0) // Make sure we stay within bounds
                 {
-                    Furniture i = Items[Idx];
-                    if (i.Equals(OriginalItem))
+                    var i = items[idx];
+                    if (i.Equals(originalItem))
                     {
-                        Items[Idx] = new Furniture(NewItem);
+                        items[idx] = new Furniture(newItem);
                         if (p.X - 1 > -1)
-                            LocationStack.Push(new Point(p.X - 1, p.Y));
-                        if (p.X + 1 < ItemsPerRow)
-                            LocationStack.Push(new Point(p.X + 1, p.Y));
+                            locationStack.Push(new Point(p.X - 1, p.Y));
+                        if (p.X + 1 < itemsPerRow)
+                            locationStack.Push(new Point(p.X + 1, p.Y));
                         if (p.Y - 1 > -1)
-                            LocationStack.Push(new Point(p.X, p.Y - 1));
-                        if (p.Y + 1 < Rows)
-                            LocationStack.Push(new Point(p.X, p.Y + 1));
+                            locationStack.Push(new Point(p.X, p.Y - 1));
+                        if (p.Y + 1 < rows)
+                            locationStack.Push(new Point(p.X, p.Y + 1));
                     }
                 }
-                PreviousPoints[Idx] = 1;
+                previousPoints[idx] = 1;
             }
         }
 
         // Export/Import Methods
-        public static void ExportAcres(WorldAcre[] Acres, SaveGeneration Save_Generation, string SaveFileName)
+        public static void ExportAcres(WorldAcre[] acres, SaveGeneration saveGeneration, string saveFileName)
         {
             using (var saveDialog = new System.Windows.Forms.SaveFileDialog())
             {
                 saveDialog.Filter = "ACSE Acre Save (*.aas)|*.aas";
-                saveDialog.FileName = SaveFileName + " Acre Data.aas";
+                saveDialog.FileName = saveFileName + " Acre Data.aas";
 
-                if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (saveDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+                try
                 {
-                    try
+                    using (var stream = new FileStream(saveDialog.FileName, FileMode.Create))
                     {
-                        using (var Stream = new FileStream(saveDialog.FileName, FileMode.Create))
+                        using (var writer = new BinaryWriter(stream))
                         {
-                            using (var Writer = new BinaryWriter(Stream))
+                            writer.Write(new byte[] { 0x41, 0x41, 0x53 }); // "AAS" Identifier
+                            writer.Write((byte)acres.Length); // Total Acre Count
+                            writer.Write((byte)saveGeneration); // Save Generation
+                            writer.Write(new byte[] { 0, 0, 0 }); // Padding
+                            foreach (var t in acres)
                             {
-                                Writer.Write(new byte[] { 0x41, 0x41, 0x53 }); // "AAS" Identifier
-                                Writer.Write((byte)Acres.Length); // Total Acre Count
-                                Writer.Write((byte)Save_Generation); // Save Generation
-                                Writer.Write(new byte[3] { 0, 0, 0 }); // Padding
-                                for (int i = 0; i < Acres.Length; i++)
-                                {
-                                    Writer.Write(BitConverter.GetBytes(Acres[i].AcreID));
-                                }
-
-                                Writer.Flush();
+                                writer.Write(BitConverter.GetBytes(t.AcreID));
                             }
+
+                            writer.Flush();
                         }
                     }
-                    catch
-                    {
-                        System.Windows.Forms.MessageBox.Show("Acre exportation failed!", "Acre Export Error", System.Windows.Forms.MessageBoxButtons.OK,
-                            System.Windows.Forms.MessageBoxIcon.Error);
-                    }
+                }
+                catch
+                {
+                    System.Windows.Forms.MessageBox.Show("Acre exportation failed!", "Acre Export Error", System.Windows.Forms.MessageBoxButtons.OK,
+                        System.Windows.Forms.MessageBoxIcon.Error);
                 }
             }
         }
 
-        public static void ImportAcres(ref WorldAcre[] Acres, SaveGeneration Save_Generation)
+        public static void ImportAcres(ref WorldAcre[] acres, SaveGeneration saveGeneration)
         {
             using (var openDialog = new System.Windows.Forms.OpenFileDialog())
             {
                 openDialog.Filter = "ACSE Acre Save (*.aas)|*.aas";
                 openDialog.FileName = "";
 
-                if (openDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (openDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+                try
                 {
-                    try
+                    using (var stream = new FileStream(openDialog.FileName, FileMode.Open))
                     {
-                        using (var Stream = new FileStream(openDialog.FileName, FileMode.Open))
+                        using (var reader = new BinaryReader(stream))
                         {
-                            using (var Reader = new BinaryReader(Stream))
+                            if (!System.Text.Encoding.ASCII.GetString(reader.ReadBytes(3)).Equals("AAS") ||
+                                reader.ReadByte() != acres.Length ||
+                                (SaveGeneration) reader.ReadByte() != saveGeneration) return;
+                            reader.BaseStream.Seek(8, SeekOrigin.Begin);
+                            foreach (var t in acres)
                             {
-                                if (System.Text.Encoding.ASCII.GetString(Reader.ReadBytes(3)).Equals("AAS") && Reader.ReadByte() == Acres.Length
-                                    && (SaveGeneration)Reader.ReadByte() == Save_Generation)
-                                {
-                                    Reader.BaseStream.Seek(8, SeekOrigin.Begin);
-                                    for (int i = 0; i < Acres.Length; i++)
-                                    {
-                                        Acres[i].AcreID = Reader.ReadUInt16();
-                                        Acres[i].BaseAcreID = (ushort)(Acres[i].AcreID & 0xFFFC);
-                                    }
-                                }
+                                t.AcreID = reader.ReadUInt16();
+                                t.BaseAcreID = (ushort)(t.AcreID & 0xFFFC);
                             }
                         }
                     }
-                    catch
-                    {
-                        System.Windows.Forms.MessageBox.Show("Acre importation failed!", "Acre Import Error", System.Windows.Forms.MessageBoxButtons.OK,
-                            System.Windows.Forms.MessageBoxIcon.Error);
-                    }
+                }
+                catch
+                {
+                    System.Windows.Forms.MessageBox.Show("Acre importation failed!", "Acre Import Error", System.Windows.Forms.MessageBoxButtons.OK,
+                        System.Windows.Forms.MessageBoxIcon.Error);
                 }
             }
         }
 
-        public static void ExportTown(WorldAcre[] Acres, SaveGeneration Save_Generation, string SaveFileName)
+        public static void ExportTown(WorldAcre[] acres, SaveGeneration saveGeneration, string saveFileName)
         {
             using (var saveDialog = new System.Windows.Forms.SaveFileDialog())
             {
                 saveDialog.Filter = "ACSE Town Save (*.ats)|*.ats";
-                saveDialog.FileName = SaveFileName + " Town Data.ats";
+                saveDialog.FileName = saveFileName + " Town Data.ats";
 
-                if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (saveDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+                try
                 {
-                    try
+                    using (var stream = new FileStream(saveDialog.FileName, FileMode.Create))
                     {
-                        using (var Stream = new FileStream(saveDialog.FileName, FileMode.Create))
+                        using (var writer = new BinaryWriter(stream))
                         {
-                            using (var Writer = new BinaryWriter(Stream))
+                            writer.Write(new byte[] { 0x41, 0x54, 0x53 }); // "ATS" Identifier
+                            writer.Write((byte)acres.Length); // Total Acre Count
+                            writer.Write((byte)saveGeneration); // Save Generation
+                            writer.Write(new byte[] { 0, 0, 0 }); // Padding
+
+                            if (saveGeneration == SaveGeneration.N3DS)
                             {
-                                Writer.Write(new byte[] { 0x41, 0x54, 0x53 }); // "ATS" Identifier
-                                Writer.Write((byte)Acres.Length); // Total Acre Count
-                                Writer.Write((byte)Save_Generation); // Save Generation
-                                Writer.Write(new byte[3] { 0, 0, 0 }); // Padding
-
-                                if (Save_Generation == SaveGeneration.N3DS)
+                                foreach (var acre in acres)
                                 {
-                                    for (int i = 0; i < Acres.Length; i++)
+                                    foreach (var item in acre.Acre_Items)
                                     {
-                                        for (int x = 0; x < Acres[i].Acre_Items.Length; x++)
-                                        {
-                                            Writer.Write(BitConverter.GetBytes(Acres[i].Acre_Items[x].ToUInt32()));
-                                        }
+                                        writer.Write(BitConverter.GetBytes(item.ToUInt32()));
                                     }
                                 }
-                                else
-                                {
-                                    for (int i = 0; i < Acres.Length; i++)
-                                    {
-                                        for (int x = 0; x < Acres[i].Acre_Items.Length; x++)
-                                        {
-                                            Writer.Write(BitConverter.GetBytes(Acres[i].Acre_Items[x].ItemID));
-                                        }
-                                    }
-                                }
-
-                                Writer.Flush();
                             }
+                            else
+                            {
+                                foreach (var acre in acres)
+                                {
+                                    foreach (var item in acre.Acre_Items)
+                                    {
+                                        writer.Write(BitConverter.GetBytes(item.ItemID));
+                                    }
+                                }
+                            }
+
+                            writer.Flush();
                         }
                     }
-                    catch
-                    {
-                        System.Windows.Forms.MessageBox.Show("Town exportation failed!", "Town Export Error", System.Windows.Forms.MessageBoxButtons.OK,
-                            System.Windows.Forms.MessageBoxIcon.Error);
-                    }
+                }
+                catch
+                {
+                    System.Windows.Forms.MessageBox.Show("Town exportation failed!", "Town Export Error", System.Windows.Forms.MessageBoxButtons.OK,
+                        System.Windows.Forms.MessageBoxIcon.Error);
                 }
             }
         }
 
-        public static void ImportTown(ref WorldAcre[] Acres, SaveGeneration Save_Generation)
+        public static void ImportTown(ref WorldAcre[] acres, SaveGeneration saveGeneration)
         {
             using (var openDialog = new System.Windows.Forms.OpenFileDialog())
             {
                 openDialog.Filter = "ACSE Town Save (*.ats)|*.ats";
                 openDialog.FileName = "";
 
-                if (openDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (openDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+                try
                 {
-                    try
+                    using (var stream = new FileStream(openDialog.FileName, FileMode.Open))
                     {
-                        using (var Stream = new FileStream(openDialog.FileName, FileMode.Open))
+                        using (var reader = new BinaryReader(stream))
                         {
-                            using (var Reader = new BinaryReader(Stream))
+                            if (!System.Text.Encoding.ASCII.GetString(reader.ReadBytes(3)).Equals("ATS") ||
+                                reader.ReadByte() != acres.Length ||
+                                (SaveGeneration) reader.ReadByte() != saveGeneration) return;
+                            reader.BaseStream.Seek(8, SeekOrigin.Begin);
+                            if (saveGeneration == SaveGeneration.N3DS)
                             {
-                                if (System.Text.Encoding.ASCII.GetString(Reader.ReadBytes(3)).Equals("ATS") && Reader.ReadByte() == Acres.Length
-                                    && (SaveGeneration)Reader.ReadByte() == Save_Generation)
+                                foreach (var acre in acres)
                                 {
-                                    Reader.BaseStream.Seek(8, SeekOrigin.Begin);
-                                    if (Save_Generation == SaveGeneration.N3DS)
+                                    for (var x = 0; x < acre.Acre_Items.Length; x++)
                                     {
-                                        for (int i = 0; i < Acres.Length; i++)
-                                        {
-                                            for (int x = 0; x < Acres[i].Acre_Items.Length; x++)
-                                            {
-                                                Acres[i].Acre_Items[x] = new WorldItem(Reader.ReadUInt32(), Acres[i].Acre_Items[x].Index);
-                                            }
-                                        }
+                                        acre.Acre_Items[x] = new WorldItem(reader.ReadUInt32(), acre.Acre_Items[x].Index);
                                     }
-                                    else
+                                }
+                            }
+                            else
+                            {
+                                foreach (var acre in acres)
+                                {
+                                    for (var x = 0; x < acre.Acre_Items.Length; x++)
                                     {
-                                        for (int i = 0; i < Acres.Length; i++)
-                                        {
-                                            for (int x = 0; x < Acres[i].Acre_Items.Length; x++)
-                                            {
-                                                Acres[i].Acre_Items[x] = new WorldItem(Reader.ReadUInt16(), Acres[i].Acre_Items[x].Index);
-                                            }
-                                        }
+                                        acre.Acre_Items[x] = new WorldItem(reader.ReadUInt16(), acre.Acre_Items[x].Index);
                                     }
                                 }
                             }
                         }
                     }
-                    catch
-                    {
-                        System.Windows.Forms.MessageBox.Show("Acre importation failed!", "Acre Import Error", System.Windows.Forms.MessageBoxButtons.OK,
-                            System.Windows.Forms.MessageBoxIcon.Error);
-                    }
+                }
+                catch
+                {
+                    System.Windows.Forms.MessageBox.Show("Acre importation failed!", "Acre Import Error", System.Windows.Forms.MessageBoxButtons.OK,
+                        System.Windows.Forms.MessageBoxIcon.Error);
                 }
             }
         }
