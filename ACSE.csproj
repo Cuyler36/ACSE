@@ -4930,7 +4930,7 @@
     </Compile>
     <Compile Include="Classes\Utilities\PatternUtility.cs" />
     <Compile Include="Classes\Utilities\Utility.cs" />
-    <Compile Include="Classes\PlayerRelation.cs" />
+    <Compile Include="Classes\Villagers\PlayerRelation.cs" />
     <Compile Include="Classes\Weather.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
