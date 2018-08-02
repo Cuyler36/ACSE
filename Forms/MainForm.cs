@@ -1609,9 +1609,9 @@ namespace ACSE
             {
                 for (int i = 0; i < Player.Data.Patterns.Length; i++)
                 {
-                    if (Player.Data.Patterns[i] != null && Player.Data.Patterns[i].Pattern_Bitmap != null)
+                    if (Player.Data.Patterns[i] != null && Player.Data.Patterns[i].PatternBitmap != null)
                     {
-                        Refresh_PictureBox_Image(Pattern_Boxes[i], Player.Data.Patterns[i].Pattern_Bitmap, false, false);
+                        Refresh_PictureBox_Image(Pattern_Boxes[i], Player.Data.Patterns[i].PatternBitmap, false, false);
                     }
                 }
                 SelectedPaletteIndex = Player.Data.Patterns[0].Palette;
@@ -3269,7 +3269,7 @@ namespace ACSE
         {
             if (Idx > -1 && Selected_Player != null && Selected_Player.Data.Patterns.Length > Idx)
             {
-                var ExportPattern = Selected_Player.Data.Patterns[Idx].Pattern_Bitmap;
+                var ExportPattern = Selected_Player.Data.Patterns[Idx].PatternBitmap;
                 exportPatternFile.FileName = Selected_Player.Data.Patterns[Idx].Name + ".png";
                 if (exportPatternFile.ShowDialog() == DialogResult.OK && ExportPattern != null)
                 {
@@ -3291,11 +3291,11 @@ namespace ACSE
                         {
                             Selected_Player.Data.Patterns[Idx].Import(Pixel_Data);
                             Selected_Player.Data.Patterns[Idx].Name = Path.GetFileNameWithoutExtension(importPatternFile.FileName);
-                            Refresh_PictureBox_Image(Pattern_Boxes[Idx], Selected_Player.Data.Patterns[Idx].Pattern_Bitmap, false, false);
+                            Refresh_PictureBox_Image(Pattern_Boxes[Idx], Selected_Player.Data.Patterns[Idx].PatternBitmap, false, false);
 
                             if (SelectedPatternObject.Index == Idx)
                             {
-                                Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
+                                Selected_Pattern = SelectedPatternObject.PatternBitmap;
                                 patternNameTextBox.Text = SelectedPatternObject.Name;
                                 patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
                             }
@@ -3322,7 +3322,7 @@ namespace ACSE
                 paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData, SelectedPaletteIndex,
                     (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
                 SelectedPatternObject.RedrawBitmap();
-                Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
+                Selected_Pattern = SelectedPatternObject.PatternBitmap;
                 patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
                 Pattern_Boxes[SelectedPatternObject.Index].Image = Selected_Pattern;
                 patternEditorPictureBox.Refresh();
@@ -3385,7 +3385,7 @@ namespace ACSE
                 patternBox.MouseClick += delegate (object sender, MouseEventArgs e)
                 {
                     SelectedPatternObject = Selected_Player.Data.Patterns[Array.IndexOf(Pattern_Boxes, patternBox)];
-                    Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
+                    Selected_Pattern = SelectedPatternObject.PatternBitmap;
                     paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(SelectedPatternObject.PaletteData, SelectedPaletteIndex,
                         (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
                     patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
@@ -3428,7 +3428,7 @@ namespace ACSE
                     LastPatternPixel = PixelPosition;
                     SelectedPatternObject.DecodedData[PixelPosition] = Save_File.Save_Generation == SaveGeneration.N3DS ? (byte)SelectedPaletteIndex : (byte)(SelectedPaletteIndex + 1);
                     SelectedPatternObject.RedrawBitmap();
-                    Selected_Pattern = SelectedPatternObject.Pattern_Bitmap;
+                    Selected_Pattern = SelectedPatternObject.PatternBitmap;
                     Pattern_Boxes[SelectedPatternObject.Index].Image = Selected_Pattern;
                     patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(Selected_Pattern, 0x10, new Size(513, 513));
                     patternEditorPictureBox.Refresh();
