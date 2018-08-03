@@ -14,7 +14,7 @@ namespace ACSE.Classes.Saves
         public NDSSave(string path) : base(path, false)
         {
             Generation = SaveGeneration.NDS;
-            SaveType = SaveType.Wild_World;
+            SaveType = SaveType.WildWorld;
         }
 
         protected override bool Load()

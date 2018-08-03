@@ -144,13 +144,13 @@ namespace ACSE.Controls
 
             // Set up controls that are used on a per-save generation basis
 
-            switch (_saveFile.Save_Generation)
+            switch (_saveFile.SaveGeneration)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
                 case SaveGeneration.iQue:
                     // e+ exclusive controls TODO: These will probably be used in City Folk as well.
-                    if (_saveFile.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+                    if (_saveFile.SaveType == SaveType.DoubutsuNoMoriEPlus)
                     {
                         _nameBox = new TextBox
                         {
@@ -196,7 +196,7 @@ namespace ACSE.Controls
                     Controls.Add(_musicEditor);
                     Controls.Add(_furnitureEditor);
 
-                    if (_saveFile.Save_Generation == SaveGeneration.N3DS)
+                    if (_saveFile.SaveGeneration == SaveGeneration.N3DS)
                     {
                         _boxedCheckBox = new CheckBox
                         {
@@ -215,7 +215,7 @@ namespace ACSE.Controls
                 case SaveGeneration.Unknown:
                     break;
                 default:
-                    Console.Write($"Unhandled save generation {_saveFile.Save_Generation}!");
+                    Console.Write($"Unhandled save generation {_saveFile.SaveGeneration}!");
                     break;
             }
         }
@@ -225,7 +225,7 @@ namespace ACSE.Controls
             if (_villagerSelectionBox.SelectedIndex < 0) return;
 
             var kvPair = _villagers.ElementAt(_villagerSelectionBox.SelectedIndex);
-            if (_saveFile.Save_Type != SaveType.Doubutsu_no_Mori_e_Plus)
+            if (_saveFile.SaveType != SaveType.DoubutsuNoMoriEPlus)
             {
                 _villager.Name = _villagerNames[_villagerSelectionBox.SelectedIndex];
             }
@@ -233,10 +233,10 @@ namespace ACSE.Controls
             _villager.Data.VillagerId = kvPair.Value.VillagerId;
             _villager.Exists = _villager.Data.VillagerId != 0 && _villager.Data.VillagerId != 0xFFFF;
 
-            if (_saveFile.Save_Generation != SaveGeneration.N64 && _saveFile.Save_Generation != SaveGeneration.GCN &&
-                _saveFile.Save_Generation != SaveGeneration.iQue) return;
+            if (_saveFile.SaveGeneration != SaveGeneration.N64 && _saveFile.SaveGeneration != SaveGeneration.GCN &&
+                _saveFile.SaveGeneration != SaveGeneration.iQue) return;
 
-            if (_saveFile.Save_Type != SaveType.Doubutsu_no_Mori_e_Plus)
+            if (_saveFile.SaveType != SaveType.DoubutsuNoMoriEPlus)
             {
                 _villager.Data.NameId = _villager.Index == 15 ? (byte) 0xFF : (byte) _villager.Data.VillagerId;
             }

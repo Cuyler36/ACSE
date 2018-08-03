@@ -37,7 +37,7 @@
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
-                    return (byte)((MainForm.Save_File.ReadByte(MainForm.Save_File.Save_Data_Start_Offset + MainForm.Save_File.Save_Info.Save_Offsets.Weather) & 0x0F) | (Index << 4));
+                    return (byte)((MainForm.Save_File.ReadByte(MainForm.Save_File.SaveDataStartOffset + MainForm.Save_File.SaveInfo.SaveOffsets.Weather) & 0x0F) | (Index << 4));
                 default:
                     return Index;
             }
@@ -45,14 +45,14 @@
 
         public static bool UpdateWeather(Save SaveFile, byte Index)
         {
-            if (SaveFile.Save_Generation == SaveGeneration.N64 || SaveFile.Save_Generation == SaveGeneration.GCN)
+            if (SaveFile.SaveGeneration == SaveGeneration.N64 || SaveFile.SaveGeneration == SaveGeneration.GCN)
             {
-                if (SaveFile.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus || Index != 4
+                if (SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus || Index != 4
                     || System.Windows.Forms.MessageBox.Show("Setting the Weather to Fall Leaves will cause glitches, and will crash your game if you run."
                     + "Are you sure you want to change the weather to it?", "Weather Warning", System.Windows.Forms.MessageBoxButtons.YesNo,
                     System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    SaveFile.Write(SaveFile.Save_Data_Start_Offset + SaveFile.Save_Info.Save_Offsets.Weather, ToWeatherByte(Index, SaveFile.Save_Generation));
+                    SaveFile.Write(SaveFile.SaveDataStartOffset + SaveFile.SaveInfo.SaveOffsets.Weather, ToWeatherByte(Index, SaveFile.SaveGeneration));
                     return true;
                 }
             }

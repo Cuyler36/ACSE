@@ -721,15 +721,15 @@ namespace ACSE.Classes.Utilities
             _saveType = saveType;
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     _charDictionary = StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map;
                     break;
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     _charDictionary = StringUtility.AC_CharacterDictionary;
                     break;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     _charDictionary = StringUtility.WW_CharacterDictionary;
                     break;
                 default:
@@ -755,11 +755,11 @@ namespace ACSE.Classes.Utilities
             {
                 switch (saveType)
                 {
-                    case SaveType.City_Folk:
+                    case SaveType.CityFolk:
                         String = Encoding.BigEndianUnicode.GetString(stringBuffer);
                         break;
-                    case SaveType.New_Leaf:
-                    case SaveType.Welcome_Amiibo:
+                    case SaveType.NewLeaf:
+                    case SaveType.WelcomeAmiibo:
                         String = Encoding.Unicode.GetString(stringBuffer);
                         break;
                     default:
@@ -774,7 +774,7 @@ namespace ACSE.Classes.Utilities
             var i = 0;
             switch (_saveType)
             {
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     var returnedString = new byte[maxSize > 0 ? maxSize : String.Length];
                     var t = StringInfo.GetTextElementEnumerator(String);
                     while (t.MoveNext() && i < returnedString.Length)
@@ -789,9 +789,9 @@ namespace ACSE.Classes.Utilities
                         if (returnedString[x] == 0)
                             returnedString[x] = 0x20;
                     return returnedString;
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.DoubutsuNoMoriEPlus:
                 {
                     var stringBytes = new byte[maxSize > 0 ? maxSize : String.Length];
                     for (i = 0; i < String.Length; i++)
@@ -815,7 +815,7 @@ namespace ACSE.Classes.Utilities
                     }
                     return stringBytes;
                 }
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                 {
                     var stringBuffer = new byte[maxSize > 0 ? maxSize : String.Length];
                     for (i = 0; i < String.Length; i++)
@@ -829,7 +829,7 @@ namespace ACSE.Classes.Utilities
                 
                     return stringBuffer;
                 }
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                 {
                     var stringBuffer = new byte[maxSize > 0 ? maxSize : String.Length * 2]; //Characters are now unicode
                     var stringBytes = Encoding.Unicode.GetBytes(String);
@@ -837,15 +837,15 @@ namespace ACSE.Classes.Utilities
                         Buffer.BlockCopy(stringBytes.Skip(i).Take(2).Reverse().ToArray(), 0, stringBuffer, i, 2);
                     return stringBuffer;
                 }
-                case SaveType.New_Leaf:
-                case SaveType.Welcome_Amiibo:
+                case SaveType.NewLeaf:
+                case SaveType.WelcomeAmiibo:
                 {
                     var stringBuffer = Encoding.Unicode.GetBytes(String);
                     if (maxSize > 0)
                         Array.Resize(ref stringBuffer, maxSize);
                     return stringBuffer;
                 }
-                case SaveType.Animal_Forest: // Animal Forest iQue support will be added soon
+                case SaveType.AnimalForest: // Animal Forest iQue support will be added soon
                     return null;
                 case SaveType.Unknown:
                     MainForm.Debug_Manager.WriteLine(

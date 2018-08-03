@@ -69,7 +69,7 @@ namespace ACSE
         {
             if (Items == null || Index <= -1) return;
             var saveFile = MainForm.Save_File;
-            if (saveFile.Save_Generation == SaveGeneration.N3DS)
+            if (saveFile.SaveGeneration == SaveGeneration.N3DS)
             {
                 for (var i = 0; i < Items.Length; i++)
                 {
@@ -85,7 +85,7 @@ namespace ACSE
                 {
                     if (Items[i] != null)
                     {
-                        saveFile.Write(Offset + i * 2, Items[i].ItemId, saveFile.Is_Big_Endian);
+                        saveFile.Write(Offset + i * 2, Items[i].ItemId, saveFile.IsBigEndian);
                     }
                 }
             }
@@ -111,14 +111,14 @@ namespace ACSE
                 l.Write();
             }
 
-            var offsets = HouseInfo.GetHouseOffsets(saveFile.Save_Type);
+            var offsets = HouseInfo.GetHouseOffsets(saveFile.SaveType);
 
             if (offsets.RoomCarpet != -1)
-                if (saveFile.Save_Generation == SaveGeneration.N64 || saveFile.Save_Generation == SaveGeneration.GCN) // TODO: Non-Original titles
+                if (saveFile.SaveGeneration == SaveGeneration.N64 || saveFile.SaveGeneration == SaveGeneration.GCN) // TODO: Non-Original titles
                     saveFile.Write(Offset + offsets.RoomCarpet, (byte)(Carpet.ItemId));
 
             if (offsets.RoomWallpaper == -1) return;
-            if (saveFile.Save_Generation == SaveGeneration.N64 || saveFile.Save_Generation == SaveGeneration.GCN) // TODO: Non-Original titles
+            if (saveFile.SaveGeneration == SaveGeneration.N64 || saveFile.SaveGeneration == SaveGeneration.GCN) // TODO: Non-Original titles
                 saveFile.Write(Offset + offsets.RoomWallpaper, (byte)(Wallpaper.ItemId));
 
             // TODO: Room_Song
@@ -311,22 +311,22 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
+                case SaveType.DoubutsuNoMori:
                     return DoubutsuNoMoriHouseOffsets;
-                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.DoubutsuNoMoriPlus:
                     return DoubutsuNoMoriPlusOffsets;
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return AnimalCrossingHouseOffsets;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     return DoubutsuNoMoriEPlusOffsets;
-                case SaveType.Animal_Forest:
+                case SaveType.AnimalForest:
                     return DoubutsuNoMoriHouseOffsets; // TEMP
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     return WildWorldOffsets;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     return CityFolkOffsets;
-                case SaveType.New_Leaf:
-                case SaveType.Welcome_Amiibo:
+                case SaveType.NewLeaf:
+                case SaveType.WelcomeAmiibo:
                     return NewLeafOffsets;
                 default:
                     return AnimalCrossingHouseOffsets;
@@ -337,11 +337,11 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Animal_Crossing:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                case SaveType.Animal_Forest:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.AnimalCrossing:
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForest:
                     return AcRoofColors;
 
                 default:
@@ -390,12 +390,12 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Animal_Crossing:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                case SaveType.Animal_Forest:
-                case SaveType.City_Folk:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.AnimalCrossing:
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForest:
+                case SaveType.CityFolk:
                     for (var i = 0; i < 4; i++)
                     {
                         if (_houses[i].Owner != null || _houses[i].Data.OwningPlayerId != player.Data.Identifier ||
@@ -413,12 +413,12 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Animal_Crossing: // NOTE: N64 & GameCube titles don't include Basement in the size
-                    return (MainForm.Save_File.Working_Save_Data[offset + 0x2A] >> 5) & 7;
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                    return (MainForm.Save_File.Working_Save_Data[offset + 0x26] >> 5) & 7;
-                case SaveType.Wild_World:
+                case SaveType.AnimalCrossing: // NOTE: N64 & GameCube titles don't include Basement in the size
+                    return (MainForm.Save_File.WorkingSaveData[offset + 0x2A] >> 5) & 7;
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.DoubutsuNoMoriEPlus:
+                    return (MainForm.Save_File.WorkingSaveData[offset + 0x26] >> 5) & 7;
+                case SaveType.WildWorld:
                     return MainForm.Save_File.ReadByte(0xFAF8) & 7; // Not sure about this
                 default:
                     return 0;
@@ -429,14 +429,14 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Animal_Crossing: // NOTE: N64 & GameCube titles don't include Basement in the size
+                case SaveType.AnimalCrossing: // NOTE: N64 & GameCube titles don't include Basement in the size
                     MainForm.Save_File.Write(offset + 0x2A, (byte)(MainForm.Save_File.ReadByte(offset + 0x2A) & ~(7 << 5) | ((value & 7) << 5)));
                     break;
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     MainForm.Save_File.Write(offset + 0x26, (byte)(MainForm.Save_File.ReadByte(offset + 0x26) & ~(7 << 5) | ((value & 7) << 5)));
                     break;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     MainForm.Save_File.Write(0xFAF8, (byte)((MainForm.Save_File.ReadByte(0xFAF8) & ~7) | (value & 7))); // Not sure about this
                     break;
             }
@@ -446,11 +446,11 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.DoubutsuNoMoriPlus:
                     return ((MainForm.Save_File.ReadByte(offset + 0x26) >> 2) & 7) == 4;
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return ((MainForm.Save_File.ReadByte(offset + 0x2A) >> 2) & 7) == 4;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     return ((MainForm.Save_File.ReadByte(offset + 0x26) >> 2) & 7) == 5;
                 default:
                     return false;
@@ -462,15 +462,15 @@ namespace ACSE
             int writeValue;
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.DoubutsuNoMoriPlus:
                     writeValue = enabled ? (4 << 2) : (5 << 2);
                     MainForm.Save_File.Write(offset + 0x26, (byte)((MainForm.Save_File.ReadByte(offset + 0x26) & ~(7 << 2) | writeValue)));
                     break;
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     writeValue = enabled ? (4 << 2) : (5 << 2);
                     MainForm.Save_File.Write(offset + 0x2A, (byte)((MainForm.Save_File.ReadByte(offset + 0x2A) & ~(7 << 2) | writeValue)));
                     break;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     writeValue = enabled ? (5 << 2) : (6 << 2);
                     MainForm.Save_File.Write(offset + 0x26, (byte)((MainForm.Save_File.ReadByte(offset + 0x26) & ~(7 << 2) | writeValue)));
                     break;
@@ -481,8 +481,8 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                    return (MainForm.Save_File.Working_Save_Data[offset + 0x26] >> 2) & 7;
+                case SaveType.DoubutsuNoMoriEPlus:
+                    return (MainForm.Save_File.WorkingSaveData[offset + 0x26] >> 2) & 7;
                 default:
                     return 0;
             }
@@ -497,10 +497,10 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Animal_Crossing:
-                    return (MainForm.Save_File.Working_Save_Data[offset + 0x24] & 0x10) == 0x10;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                    return (MainForm.Save_File.Working_Save_Data[offset + 0x20] & 0x10) == 0x10;
+                case SaveType.AnimalCrossing:
+                    return (MainForm.Save_File.WorkingSaveData[offset + 0x24] & 0x10) == 0x10;
+                case SaveType.DoubutsuNoMoriEPlus:
+                    return (MainForm.Save_File.WorkingSaveData[offset + 0x20] & 0x10) == 0x10;
                 default:
                     return false;
             }
@@ -509,15 +509,15 @@ namespace ACSE
         public static void SetHasBasement(bool enabled, House selectedHouse)
         {
             var saveFile = MainForm.Save_File;
-            if (saveFile.Save_Generation != SaveGeneration.N64 && saveFile.Save_Generation != SaveGeneration.GCN &&
-                saveFile.Save_Generation != SaveGeneration.iQue) return;
+            if (saveFile.SaveGeneration != SaveGeneration.N64 && saveFile.SaveGeneration != SaveGeneration.GCN &&
+                saveFile.SaveGeneration != SaveGeneration.iQue) return;
             var basementFlagOffset = selectedHouse.Offset;
-            switch (saveFile.Save_Type)
+            switch (saveFile.SaveType)
             {
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     basementFlagOffset += 0x24;
                     break;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     basementFlagOffset += 0x20;
                     break;
             }
@@ -534,12 +534,12 @@ namespace ACSE
 
         public static House[] LoadHouses(Save saveFile)
         {
-            var houseCount = saveFile.Save_Generation == SaveGeneration.NDS ? 1 : 4;
+            var houseCount = saveFile.SaveGeneration == SaveGeneration.NDS ? 1 : 4;
             _houses = new House[houseCount];
 
             for (var i = 0; i < houseCount; i++)
             {
-                _houses[i] = new House(i, saveFile.Save_Data_Start_Offset + saveFile.Save_Info.Save_Offsets.House_Data + i * saveFile.Save_Info.Save_Offsets.House_Data_Size);
+                _houses[i] = new House(i, saveFile.SaveDataStartOffset + saveFile.SaveInfo.SaveOffsets.HouseData + i * saveFile.SaveInfo.SaveOffsets.HouseDataSize);
             }
             return _houses;
         }

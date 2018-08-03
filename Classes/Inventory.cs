@@ -22,7 +22,7 @@ namespace ACSE
             {
                 Item item = new Item(inventoryData[i]);
 
-                if (save.Save_Generation == SaveGeneration.GCN)
+                if (save.SaveGeneration == SaveGeneration.GCN)
                 {
                     item.ItemFlag = GetItemFlag(save, player, i);
                 }
@@ -122,13 +122,13 @@ namespace ACSE
 
         public static ACItemFlag GetItemFlag(Save SaveFile, Player Player, int InventoryIdx)
         {
-            switch (SaveFile.Save_Type)
+            switch (SaveFile.SaveType)
             {
-                case SaveType.Animal_Crossing:
-                    return (ACItemFlag)(SaveFile.ReadUInt32(Player.Offset + 0x88, SaveFile.Is_Big_Endian) >> (InventoryIdx << 1) & 3);
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                    return (ACItemFlag)(SaveFile.ReadUInt32(Player.Offset + 0x84, SaveFile.Is_Big_Endian) >> (InventoryIdx << 1) & 3);
+                case SaveType.AnimalCrossing:
+                    return (ACItemFlag)(SaveFile.ReadUInt32(Player.Offset + 0x88, SaveFile.IsBigEndian) >> (InventoryIdx << 1) & 3);
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.DoubutsuNoMoriEPlus:
+                    return (ACItemFlag)(SaveFile.ReadUInt32(Player.Offset + 0x84, SaveFile.IsBigEndian) >> (InventoryIdx << 1) & 3);
                 default:
                     return ACItemFlag.None;
             }
@@ -138,14 +138,14 @@ namespace ACSE
         {
             int FlagIdx = InventoryIdx << 1;
             uint FlagValue = (uint)Flag & 3;
-            switch (SaveFile.Save_Type)
+            switch (SaveFile.SaveType)
             {
-                case SaveType.Animal_Crossing:
-                    SaveFile.Write(Player.Offset + 0x88, (SaveFile.ReadUInt32(Player.Offset + 0x88, SaveFile.Is_Big_Endian) & ~(3 << FlagIdx)) | (FlagValue << FlagIdx));
+                case SaveType.AnimalCrossing:
+                    SaveFile.Write(Player.Offset + 0x88, (SaveFile.ReadUInt32(Player.Offset + 0x88, SaveFile.IsBigEndian) & ~(3 << FlagIdx)) | (FlagValue << FlagIdx));
                     break;
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                    SaveFile.Write(Player.Offset + 0x84, (SaveFile.ReadUInt32(Player.Offset + 0x84, SaveFile.Is_Big_Endian) & ~(3 << FlagIdx)) | (FlagValue << FlagIdx));
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.DoubutsuNoMoriEPlus:
+                    SaveFile.Write(Player.Offset + 0x84, (SaveFile.ReadUInt32(Player.Offset + 0x84, SaveFile.IsBigEndian) & ~(3 << FlagIdx)) | (FlagValue << FlagIdx));
                     break;
                 default:
                     break;

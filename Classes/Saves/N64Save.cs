@@ -14,7 +14,7 @@ namespace ACSE.Classes.Saves
         public N64Save(string path) : base(path, true)
         {
             Generation = SaveGeneration.N64;
-            SaveType = SaveType.Doubutsu_no_Mori;
+            SaveType = SaveType.DoubutsuNoMori;
         }
 
         protected override bool Load()

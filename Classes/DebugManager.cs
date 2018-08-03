@@ -115,7 +115,7 @@ namespace ACSE
                     InitiateDebugLogWriter();
                 }
                 Log_Writer.WriteLine(string.Format("[{0}] - ({1}) - {2} => {3}", Level, MainForm.Save_File != null
-                    ? MainForm.Save_File.Save_Type.ToString().Replace("_", " ") : "No Save", DateTime.Now, Contents));
+                    ? MainForm.Save_File.SaveType.ToString().Replace("_", " ") : "No Save", DateTime.Now, Contents));
                 Log_Writer.Flush();
             }
         }

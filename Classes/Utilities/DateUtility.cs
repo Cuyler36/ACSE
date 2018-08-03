@@ -39,13 +39,13 @@ namespace ACSE.Classes.Utilities
 
         public ACDate(byte[] dateData)
         {
-            switch (MainForm.Save_File.Save_Type)
+            switch (MainForm.Save_File.SaveType)
             {
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                case SaveType.Animal_Crossing:
-                case SaveType.Animal_Forest:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalCrossing:
+                case SaveType.AnimalForest:
                     switch (dateData.Length)
                     {
                         case 2:
@@ -69,7 +69,7 @@ namespace ACSE.Classes.Utilities
                     }
                     break;
 
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     switch (dateData.Length)
                     {
                         case 2:
@@ -83,8 +83,8 @@ namespace ACSE.Classes.Utilities
                             break;
                     }
                     break;
-                case SaveType.New_Leaf:
-                case SaveType.Welcome_Amiibo:
+                case SaveType.NewLeaf:
+                case SaveType.WelcomeAmiibo:
                     switch (dateData.Length)
                     {
                         case 2:
@@ -128,7 +128,7 @@ namespace ACSE.Classes.Utilities
 
         public byte[] ToFullDateData()
         {
-            switch (MainForm.Save_File.Save_Generation)
+            switch (MainForm.Save_File.SaveGeneration)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
@@ -150,7 +150,7 @@ namespace ACSE.Classes.Utilities
 
         public byte[] ToYearMonthDayDateData()
         {
-            switch (MainForm.Save_File.Save_Generation)
+            switch (MainForm.Save_File.SaveGeneration)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
@@ -176,7 +176,7 @@ namespace ACSE.Classes.Utilities
 
         public byte[] ToMonthDayDateData()
         {
-            switch (MainForm.Save_File.Save_Generation)
+            switch (MainForm.Save_File.SaveGeneration)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:

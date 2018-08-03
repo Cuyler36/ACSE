@@ -47,7 +47,7 @@ namespace ACSE
 
         public static BindingSource GetCaravanBindingSource()
         {
-            var waDatabase = VillagerInfo.GetVillagerDatabase(SaveType.Welcome_Amiibo);
+            var waDatabase = VillagerInfo.GetVillagerDatabase(SaveType.WelcomeAmiibo);
             if (waDatabase == null) return new BindingSource(WA_Special_Villagers, null);
             foreach (var v in WA_Special_Villagers)
             {
@@ -292,21 +292,21 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Animal_Crossing:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                case SaveType.Animal_Forest:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.AnimalCrossing:
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForest:
                     return AC_Personalities;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     return WW_Personalities;
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     return NL_Personalities;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     return NL_Personalities;
                 case SaveType.Unknown:
                     break;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(saveType), saveType, null);
@@ -322,29 +322,29 @@ namespace ACSE
             var databaseFilename = MainForm.Assembly_Location + "\\Resources\\{0}_Villagers_" + language + ".txt";
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Animal_Forest:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.AnimalForest:
                     databaseFilename = string.Format(databaseFilename, "DnM");
                     break;
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Animal_Crossing:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.AnimalCrossing:
                     databaseFilename = string.Format(databaseFilename, "AC");
                     break;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     databaseFilename = string.Format(databaseFilename, "DBNM_e_Plus");
                     break;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     databaseFilename = string.Format(databaseFilename, "WW");
                     break;
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     databaseFilename = string.Format(databaseFilename, "NL");
                     break;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     databaseFilename = string.Format(databaseFilename, "WA");
                     break;
                 case SaveType.Unknown:
                     break;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(saveType), saveType, null);
@@ -364,8 +364,8 @@ namespace ACSE
             string line;
             switch (saveType)
             {
-                case SaveType.New_Leaf:
-                case SaveType.Welcome_Amiibo:
+                case SaveType.NewLeaf:
+                case SaveType.WelcomeAmiibo:
                     while ((line = contents.ReadLine()) != null)
                     {
                         if (!line.Contains("0x")) continue;
@@ -380,7 +380,7 @@ namespace ACSE
                     }
 
                     break;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     while ((line = contents.ReadLine()) != null)
                     {
                         if (!line.Contains("0x")) continue;
@@ -393,11 +393,11 @@ namespace ACSE
                     }
 
                     break;
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Animal_Crossing:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                case SaveType.Animal_Forest:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.AnimalCrossing:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForest:
                     while ((line = contents.ReadLine()) != null)
                     {
                         if (!line.Contains("0x")) continue;
@@ -412,7 +412,7 @@ namespace ACSE
                     break;
                 case SaveType.Unknown:
                     break;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(saveType), saveType, null);
@@ -428,25 +428,25 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
+                case SaveType.DoubutsuNoMori:
                     return Doubutsu_no_Mori_Villager_Offsets;
-                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.DoubutsuNoMoriPlus:
                     return Doubtusu_no_Mori_Plus_Villager_Offsets;
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return AC_Villager_Offsets;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     return Doubtusu_no_Mori_e_Plus_Villager_Offsets;
-                case SaveType.Animal_Forest:
+                case SaveType.AnimalForest:
                     return Doubutsu_no_Mori_Villager_Offsets; // TEMP
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     return WW_Villager_Offsets;
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     return NL_Villager_Offsets;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     return WA_Villager_Offsets;
                 case SaveType.Unknown:
                     break;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(saveType), saveType, null);

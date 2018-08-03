@@ -272,17 +272,17 @@ namespace ACSE
         {
             switch (Save_Type)
             {
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return Animal_Crossing_Encyclopedia_Bit_Map;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     return Doubutsu_no_Mori_e_Plus_Encyclopedia_Bit_Map;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     return Wild_World_Encyclopedia_Bit_Map;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     return City_Folk_Encyclopedia_Bit_Map;
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     return New_Leaf_Encyclopedia_Bit_Map;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     return Welcome_Amiibo_Encyclopedia_Bit_Map;
                 default:
                     System.Windows.Forms.MessageBox.Show("Encylopedia data for this game has not been implemented yet!", "Unimplemented Notification",
@@ -298,7 +298,7 @@ namespace ACSE
         /// <param name="Player">Player whose encyclopedia will be cleared</param>
         public static void ClearEncylopedia(Save Save_File, Player Player)
         {
-            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
+            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.SaveType);
             if (Current_Bit_Map != null)
                 foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
                     Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) & ~Bit_Value.Value));
@@ -311,7 +311,7 @@ namespace ACSE
         /// <param name="Player">Player whose encyclopedia will be filled</param>
         public static void FillEncyclopedia(Save Save_File, Player Player)
         {
-            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
+            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.SaveType);
             if (Current_Bit_Map != null)
                 foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
                     Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));

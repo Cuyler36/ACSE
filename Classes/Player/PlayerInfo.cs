@@ -588,23 +588,23 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
+                case SaveType.DoubutsuNoMori:
                     return DoubutsuNoMori;
-                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.DoubutsuNoMoriPlus:
                     return DoubutsuNoMoriPlus;
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return AnimalCrossing;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     return DoubutsuNoMoriEPlus;
-                case SaveType.Animal_Forest:
+                case SaveType.AnimalForest:
                     return DoubutsuNoMori; // TEMP
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     return WildWorld;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     return CityFolk;
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     return NewLeaf;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     return WelcomeAmiibo;
                 default:
                     return new PlayerSaveInfo { Null = true };

@@ -37,24 +37,24 @@ namespace ACSE
             var imageDir = MainForm.Assembly_Location + "\\Resources\\Images\\";
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Animal_Crossing:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.AnimalCrossing:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.DoubutsuNoMoriEPlus:
                 // TODO: DnM needs its own set?
-                case SaveType.Animal_Forest:
+                case SaveType.AnimalForest:
                     imageDir += "Acre_Images";
                     break;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     imageDir += "WW_Acre_Images";
                     break;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     imageDir += "CF_Acre_Images";
                     break;
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     imageDir += "NL_Acre_Images";
                     break;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     imageDir += "WA_Acre_Images";
                     break;
                 default:
@@ -67,7 +67,7 @@ namespace ACSE
                 {
                     var extension = Path.GetExtension(file);
                     if (!extension.Equals(".png") && !extension.Equals(".jpg")) continue;
-                    if (saveType == SaveType.New_Leaf || saveType == SaveType.Welcome_Amiibo)
+                    if (saveType == SaveType.NewLeaf || saveType == SaveType.WelcomeAmiibo)
                     {
                         if (!ushort.TryParse(Path.GetFileNameWithoutExtension(file).Replace("acre_", ""),
                                 out var fileAcreId) || fileAcreId != acreId) continue;
@@ -176,13 +176,13 @@ namespace ACSE
             var indexFile = MainForm.Assembly_Location;
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Animal_Forest:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.AnimalForest:
                     indexFile += "\\Resources\\DnM_Map_Icon_Index.txt";
                     break;
-                case SaveType.Animal_Crossing:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.AnimalCrossing:
+                case SaveType.DoubutsuNoMoriEPlus:
                     indexFile += "\\Resources\\AC_Map_Icon_Index.txt";
                     break;
             }

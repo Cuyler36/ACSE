@@ -23,11 +23,11 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return 0x1108;
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     return 0x6C70;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     return 0x6C90;
                 default:
                     return -1;
@@ -38,11 +38,11 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return 0xD4;
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     return 0xE0;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     return 0x1A8;
                 default:
                     return 0;
@@ -53,7 +53,7 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return Animal_Crossing_Catalog_Bitmap;
                 default:
                     return null;
@@ -67,13 +67,13 @@ namespace ACSE
         /// <param name="player">The Player whose catalog will be filled</param>
         public static void FillCatalog(Save saveFile, Player player)
         {
-            int CatalogOffset = GetCatalogBaseOffset(saveFile.Save_Type);
+            int CatalogOffset = GetCatalogBaseOffset(saveFile.SaveType);
             if (CatalogOffset > -1)
             {
                 int OriginalOffset = CatalogOffset;
                 CatalogOffset += player.Offset;
-                int CatalogSize = GetCatalogSize(saveFile.Save_Type);
-                var NonCatalogBitmapFields = GetNonCatalogFields(saveFile.Save_Type);
+                int CatalogSize = GetCatalogSize(saveFile.SaveType);
+                var NonCatalogBitmapFields = GetNonCatalogFields(saveFile.SaveType);
 
                 for (int i = 0; i < CatalogSize; i++)
                 {
@@ -96,13 +96,13 @@ namespace ACSE
         /// <param name="player">The Player whose catalog will be cleared</param>
         public static void ClearCatalog(Save saveFile, Player player)
         {
-            int CatalogOffset = GetCatalogBaseOffset(saveFile.Save_Type);
+            int CatalogOffset = GetCatalogBaseOffset(saveFile.SaveType);
             if (CatalogOffset > -1)
             {
                 int OriginalOffset = CatalogOffset;
                 CatalogOffset += player.Offset;
-                int CatalogSize = GetCatalogSize(saveFile.Save_Type);
-                var NonCatalogBitmapFields = GetNonCatalogFields(saveFile.Save_Type);
+                int CatalogSize = GetCatalogSize(saveFile.SaveType);
+                var NonCatalogBitmapFields = GetNonCatalogFields(saveFile.SaveType);
 
                 for (int i = 0; i < CatalogSize; i++)
                 {

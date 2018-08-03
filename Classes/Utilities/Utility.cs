@@ -11,10 +11,10 @@ namespace ACSE.Classes.Utilities
     {
         public static void Scan_For_NL_Int32()
         {
-            if (MainForm.Save_File == null || MainForm.Save_File.Save_Generation != SaveGeneration.N3DS) return;
+            if (MainForm.Save_File == null || MainForm.Save_File.SaveGeneration != SaveGeneration.N3DS) return;
             using (var int32Stream = File.CreateText(MainForm.Assembly_Location + "\\" +
-                                                               (MainForm.Save_File.Save_Type == SaveType.Welcome_Amiibo ? "WA_" : "") + "NL_Int32_Database.txt"))
-                for (var i = 0; i < MainForm.Save_File.Working_Save_Data.Length - 4; i += 4)
+                                                               (MainForm.Save_File.SaveType == SaveType.WelcomeAmiibo ? "WA_" : "") + "NL_Int32_Database.txt"))
+                for (var i = 0; i < MainForm.Save_File.WorkingSaveData.Length - 4; i += 4)
                 {
                     var possibleNlInt32 = new NL_Int32(MainForm.Save_File.ReadUInt32(i), MainForm.Save_File.ReadUInt32(i + 4));
                     if (possibleNlInt32.Valid)
@@ -70,7 +70,7 @@ namespace ACSE.Classes.Utilities
             for (var i = 0; i < acreResults.Length; i++)
             {
                 var acre = Acres[i];
-                switch (MainForm.Save_File.Save_Generation)
+                switch (MainForm.Save_File.SaveGeneration)
                 {
                     case SaveGeneration.N64:
                     case SaveGeneration.GCN:
@@ -89,7 +89,7 @@ namespace ACSE.Classes.Utilities
                                     acre.AcreItems[o] = new WorldItem(0, o);
                                 }
                             }
-                            else if (ItemData.GetItemType(item.ItemId, MainForm.Save_File.Save_Type) == "Tree")
+                            else if (ItemData.GetItemType(item.ItemId, MainForm.Save_File.SaveType) == "Tree")
                             {
                                 treeCount++;
                             }
@@ -103,7 +103,7 @@ namespace ACSE.Classes.Utilities
                                     for (var x = 0; x < 256; x++)
                                     {
                                         if (ItemData.GetItemType(acre.AcreItems[x].ItemId,
-                                                MainForm.Save_File.Save_Type) != "Tree") continue;
+                                                MainForm.Save_File.SaveType) != "Tree") continue;
                                         acre.AcreItems[x] = new WorldItem(0, x);
                                         break;
                                     }
@@ -145,7 +145,7 @@ namespace ACSE.Classes.Utilities
         public static void Place_Structure(WorldAcre acre, int startIndex, List<ushort[]> structureInfo)
         {
             if (startIndex <= -1 || startIndex >= 256) return;
-            if (MainForm.Save_File.Save_Generation != SaveGeneration.GCN) return;
+            if (MainForm.Save_File.SaveGeneration != SaveGeneration.GCN) return;
             for (var y = 0; y < structureInfo.Count; y++)
             {
                 for (var x = 0; x < structureInfo[y].Length; x++)

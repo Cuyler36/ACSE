@@ -198,7 +198,7 @@ namespace ACSE
             Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             for (int i = 0; i < Furniture.Length; i++)
             {
-                string ItemType = ItemData.GetItemType(Furniture[i].ItemId, MainForm.Save_File.Save_Type);
+                string ItemType = ItemData.GetItemType(Furniture[i].ItemId, MainForm.Save_File.SaveType);
                 if (Furniture[i].Name != "Empty" && (ItemType.Equals("Furniture") || ItemType.Equals("Gyroids")))
                 {
                     Image Arrow = Properties.Resources.Arrow;
@@ -240,7 +240,7 @@ namespace ACSE
 
         public static Bitmap Draw_Grass_Wear(byte[] Grass_Buffer)
         {
-            if (MainForm.Save_File.Save_Type == SaveType.City_Folk)
+            if (MainForm.Save_File.SaveType == SaveType.CityFolk)
             {
                 Bitmap Grass_Bitmap = new Bitmap(64, 64, PixelFormat.Format32bppArgb);
                 Graphics Bitmap_Graphics = Graphics.FromImage(Grass_Bitmap);

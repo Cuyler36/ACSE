@@ -15,19 +15,19 @@ namespace ACSE
             Index = index;
             Offset = offset;
 
-            var houseSize = HouseInfo.GetHouseSize(offset, MainForm.Save_File.Save_Type);
+            var houseSize = HouseInfo.GetHouseSize(offset, MainForm.Save_File.SaveType);
             var basement = false;
             //Console.WriteLine("House Index: " + Index);
             //Console.WriteLine("House Offset: 0x" + Offset.ToString("X"));
             //Console.WriteLine("House Size: " + HouseSize.ToString());
-            if (MainForm.Save_File.Save_Generation == SaveGeneration.N64 || MainForm.Save_File.Save_Generation == SaveGeneration.GCN)
+            if (MainForm.Save_File.SaveGeneration == SaveGeneration.N64 || MainForm.Save_File.SaveGeneration == SaveGeneration.GCN)
             {
-                basement = HouseInfo.HasBasement(offset, MainForm.Save_File.Save_Type);
+                basement = HouseInfo.HasBasement(offset, MainForm.Save_File.SaveType);
                 //Console.WriteLine("Basement: " + Basement.ToString());
             }
 
             // Load House Data
-            var offsets = HouseInfo.GetHouseOffsets(MainForm.Save_File.Save_Type);
+            var offsets = HouseInfo.GetHouseOffsets(MainForm.Save_File.SaveType);
             var saveData = MainForm.Save_File;
             var playerDataType = typeof(HouseData);
             var playerSaveInfoType = typeof(HouseOffsets);
@@ -50,20 +50,20 @@ namespace ACSE
                     currentField.SetValue(boxedData, saveData.ReadByteArray(dataOffset,
                         (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(offsets)));
                 else if (fieldType == typeof(ushort))
-                    currentField.SetValue(boxedData, saveData.ReadUInt16(dataOffset, saveData.Is_Big_Endian));
+                    currentField.SetValue(boxedData, saveData.ReadUInt16(dataOffset, saveData.IsBigEndian));
                 else if (fieldType == typeof(ushort[]))
                     currentField.SetValue(boxedData, saveData.ReadUInt16Array(dataOffset,
-                        (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(offsets), saveData.Is_Big_Endian));
+                        (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(offsets), saveData.IsBigEndian));
                 else if (fieldType == typeof(uint))
-                    currentField.SetValue(boxedData, saveData.ReadUInt32(dataOffset, saveData.Is_Big_Endian));
+                    currentField.SetValue(boxedData, saveData.ReadUInt32(dataOffset, saveData.IsBigEndian));
                 else if (fieldType == typeof(string))
                     currentField.SetValue(boxedData, new ACString(saveData.ReadByteArray(dataOffset,
-                        (int)playerSaveInfoType.GetField(field.Name + "Size").GetValue(offsets)), saveData.Save_Type).Trim());
+                        (int)playerSaveInfoType.GetField(field.Name + "Size").GetValue(offsets)), saveData.SaveType).Trim());
                 else if (fieldType == typeof(Item))
-                    if (saveData.Save_Generation == SaveGeneration.N3DS)
+                    if (saveData.SaveGeneration == SaveGeneration.N3DS)
                         currentField.SetValue(boxedData, new Item(saveData.ReadUInt32(dataOffset, false)));
                     else
-                        currentField.SetValue(boxedData, new Item(saveData.ReadUInt16(dataOffset, saveData.Is_Big_Endian)));
+                        currentField.SetValue(boxedData, new Item(saveData.ReadUInt16(dataOffset, saveData.IsBigEndian)));
                 else if (fieldType == typeof(NL_Int32))
                 {
                     var intData = saveData.ReadUInt32Array(dataOffset, 2);
@@ -78,10 +78,10 @@ namespace ACSE
             Data = (HouseData)boxedData;
 
             // Load Rooms/Layers
-            var itemDataSize = MainForm.Save_File.Save_Generation == SaveGeneration.N3DS ? 4 : 2;
+            var itemDataSize = MainForm.Save_File.SaveGeneration == SaveGeneration.N3DS ? 4 : 2;
             const int itemsPerLayer = 256; //Offsets.Layer_Size / ItemDataSize;
             Data.Rooms = new Room[offsets.RoomCount];
-            var roomNames = HouseInfo.GetRoomNames(saveData.Save_Generation);
+            var roomNames = HouseInfo.GetRoomNames(saveData.SaveGeneration);
 
             for (var i = 0; i < offsets.RoomCount; i++)
             {
@@ -94,15 +94,15 @@ namespace ACSE
                     Layers = new Layer[offsets.LayerCount]
                 };
 
-                if (saveData.Save_Generation == SaveGeneration.N64 || saveData.Save_Generation == SaveGeneration.GCN)
+                if (saveData.SaveGeneration == SaveGeneration.N64 || saveData.SaveGeneration == SaveGeneration.GCN)
                 {
                     room.Carpet = new Item((ushort)(0x2600 | saveData.ReadByte(roomOffset + offsets.RoomCarpet)));
                     room.Wallpaper = new Item((ushort)(0x2700 | saveData.ReadByte(roomOffset + offsets.RoomWallpaper)));
                 }
                 else
                 {
-                    room.Carpet = new Item(saveData.ReadUInt16(roomOffset + offsets.RoomCarpet, saveData.Is_Big_Endian));
-                    room.Wallpaper = new Item(saveData.ReadUInt16(roomOffset + offsets.RoomWallpaper, saveData.Is_Big_Endian));
+                    room.Carpet = new Item(saveData.ReadUInt16(roomOffset + offsets.RoomCarpet, saveData.IsBigEndian));
+                    room.Wallpaper = new Item(saveData.ReadUInt16(roomOffset + offsets.RoomWallpaper, saveData.IsBigEndian));
                 }
 
                 for (var x = 0; x < offsets.LayerCount; x++)
@@ -126,7 +126,7 @@ namespace ACSE
                         }
                         else
                         {
-                            layer.Items[f] = new Furniture(saveData.ReadUInt16(furnitureOffset, saveData.Is_Big_Endian));
+                            layer.Items[f] = new Furniture(saveData.ReadUInt16(furnitureOffset, saveData.IsBigEndian));
                         }
                     }
 
@@ -139,17 +139,17 @@ namespace ACSE
         public void Write()
         {
             var saveData = MainForm.Save_File;
-            var offsets = HouseInfo.GetHouseOffsets(saveData.Save_Type);
+            var offsets = HouseInfo.GetHouseOffsets(saveData.SaveType);
 
             // Set House TownID & Name
             if (offsets.OwningPlayerName != -1 && Owner != null && offsets.TownId != -1)
             {
-                Data.TownId = saveData.ReadUInt16(saveData.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Town_ID, saveData.Is_Big_Endian); // Might not be UInt16 in all games
+                Data.TownId = saveData.ReadUInt16(saveData.SaveDataStartOffset + MainForm.Current_Save_Info.SaveOffsets.TownId, saveData.IsBigEndian); // Might not be UInt16 in all games
             }
             if (offsets.OwningPlayerName != -1 && Owner != null && offsets.TownName != -1)
             {
-                Data.TownName = saveData.ReadString(saveData.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Town_Name,
-                    MainForm.Current_Save_Info.Save_Offsets.Town_NameSize);
+                Data.TownName = saveData.ReadString(saveData.SaveDataStartOffset + MainForm.Current_Save_Info.SaveOffsets.TownName,
+                    MainForm.Current_Save_Info.SaveOffsets.TownNameSize);
             }
             if (offsets.OwningPlayerName != -1 && Owner != null)
             {
@@ -186,17 +186,17 @@ namespace ACSE
                 }
                 else if (fieldType == typeof(ushort))
                 {
-                    saveData.Write(dataOffset, (ushort)houseDataType.GetField(field.Name).GetValue(Data), saveData.Is_Big_Endian);
+                    saveData.Write(dataOffset, (ushort)houseDataType.GetField(field.Name).GetValue(Data), saveData.IsBigEndian);
                 }
                 else if (fieldType == typeof(Item))
                 {
-                    if (saveData.Save_Generation == SaveGeneration.N3DS)
+                    if (saveData.SaveGeneration == SaveGeneration.N3DS)
                     {
-                        saveData.Write(dataOffset, ItemData.EncodeItem((Item)houseDataType.GetField(field.Name).GetValue(Data)), saveData.Is_Big_Endian);
+                        saveData.Write(dataOffset, ItemData.EncodeItem((Item)houseDataType.GetField(field.Name).GetValue(Data)), saveData.IsBigEndian);
                     }
                     else
                     {
-                        saveData.Write(dataOffset, ((Item)houseDataType.GetField(field.Name).GetValue(Data)).ItemId, saveData.Is_Big_Endian);
+                        saveData.Write(dataOffset, ((Item)houseDataType.GetField(field.Name).GetValue(Data)).ItemId, saveData.IsBigEndian);
                     }
                 }
             }

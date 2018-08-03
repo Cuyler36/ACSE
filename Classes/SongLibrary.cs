@@ -104,13 +104,13 @@ namespace ACSE
         {
             switch (Save_Type)
             {
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return Animal_Crossing_SongLibrary_Bit_Map;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     return Wild_World_SongLibrary_Bit_Map;
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     return New_Leaf_SongLibrary_Bit_Map;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     return Welcome_Amiibo_SongLibrary_Bit_Map;
                 default:
                     System.Windows.Forms.MessageBox.Show("Songs for this game have not been implemented yet!", "Unimplemented Notification",
@@ -126,10 +126,10 @@ namespace ACSE
         /// <param name="Player">Current Player whose Song Library will be cleared</param>
         public static void ClearSongLibrary(Save Save_File, Player Player)
         {
-            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
+            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.SaveType);
             if (Current_Bit_Map != null)
             {
-                if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
+                if (Save_File.SaveGeneration == SaveGeneration.N64 || Save_File.SaveGeneration == SaveGeneration.GCN)
                 {
                     if (Player.House != null)
                     {
@@ -156,10 +156,10 @@ namespace ACSE
         /// <param name="Player">Current Player whose Song Library will be filled</param>
         public static void FillSongLibrary(Save Save_File, Player Player)
         {
-            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.Save_Type);
+            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.SaveType);
             if (Current_Bit_Map != null)
             {
-                if (Save_File.Save_Generation == SaveGeneration.N64 || Save_File.Save_Generation == SaveGeneration.GCN)
+                if (Save_File.SaveGeneration == SaveGeneration.N64 || Save_File.SaveGeneration == SaveGeneration.GCN)
                 {
                     if (Player.House != null)
                     {

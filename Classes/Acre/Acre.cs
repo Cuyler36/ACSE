@@ -28,7 +28,7 @@ namespace ACSE
     {
         public WorldItem[] AcreItems = new WorldItem[16 * 16];
 
-        public WorldAcre(ushort acreId, int position, ushort[] items = null, byte[] buriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, uint[] nlItems = null, int townPosition = -1) : base(acreId, position)
+        public WorldAcre(ushort acreId, int position, ushort[] items = null, byte[] buriedItemData = null, SaveType saveType = SaveType.AnimalCrossing, uint[] nlItems = null, int townPosition = -1) : base(acreId, position)
         {
             if (items != null)
             {
@@ -51,10 +51,10 @@ namespace ACSE
 
         public WorldAcre(ushort acreId, int position) : base(acreId, position) { }
 
-        public WorldAcre(ushort acreId, int position, uint[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.Animal_Crossing)
+        public WorldAcre(ushort acreId, int position, uint[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.AnimalCrossing)
             : this(acreId, position, null, null, saveType, items) { }
 
-        public WorldAcre(ushort acreId, int position, WorldItem[] items, byte[] buriedItemData = null, SaveType saveType = SaveType.Animal_Crossing, int townPosition = -1) : base(acreId, position)
+        public WorldAcre(ushort acreId, int position, WorldItem[] items, byte[] buriedItemData = null, SaveType saveType = SaveType.AnimalCrossing, int townPosition = -1) : base(acreId, position)
         {
             AcreItems = items;
             if (buriedItemData == null || townPosition <= -1) return;
@@ -68,12 +68,12 @@ namespace ACSE
             var worldPosition = 0;
             switch (saveType)
             {
-                case SaveType.Animal_Crossing:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                case SaveType.City_Folk:
+                case SaveType.AnimalCrossing:
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.CityFolk:
                     worldPosition = (acre * 256) + (15 - item.Location.X) + item.Location.Y * 16; //15 - item.Location.X because it's stored as a ushort in memory w/ reversed endianess
                     break;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     worldPosition = (acre * 256) + item.Index;
                     break;
             }
@@ -82,7 +82,7 @@ namespace ACSE
 
         public void SetBuriedInMemory(WorldItem item, int acre, byte[] burriedItemData, bool buried, SaveType saveType)
         {
-            if (saveType == SaveType.New_Leaf || saveType == SaveType.Welcome_Amiibo) return;
+            if (saveType == SaveType.NewLeaf || saveType == SaveType.WelcomeAmiibo) return;
             var buriedLocation = GetBuriedDataLocation(item, acre, saveType);
             if (buriedLocation > -1)
             {
@@ -95,7 +95,7 @@ namespace ACSE
         //Correct decoding/setting of buried items. Fixes the hacky SaveType case for AC/CF. (Don't forget to implement this!)
         private void SetBuriedInMemoryFixed(WorldItem item, int acre, ushort[] buriedItemData, bool buried, SaveType saveType)
         {
-            if (saveType == SaveType.New_Leaf || saveType == SaveType.Welcome_Amiibo) return;
+            if (saveType == SaveType.NewLeaf || saveType == SaveType.WelcomeAmiibo) return;
             var buriedLocation = (acre * 256 + item.Index) / 16;
             if (buriedLocation > -1)
             {
@@ -124,7 +124,7 @@ namespace ACSE
         {
             var defaultAcreDataFolder = MainForm.Assembly_Location + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + "Default Acre Items";
 
-            switch (saveFile.Save_Generation)
+            switch (saveFile.SaveGeneration)
             {
                 case SaveGeneration.GCN:
                     defaultAcreDataFolder += Path.DirectorySeparatorChar + "GCN" + Path.DirectorySeparatorChar;

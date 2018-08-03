@@ -52,9 +52,9 @@
         {
             switch (Save_Type)
             {
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return AnimalCrossing_ShopOffsets;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     return WelcomeAmiibo_ShopOffsets;
                 default:
                     return null;
@@ -91,7 +91,7 @@
         {
             SaveFile = saveFile;
             Offset = offset;
-            ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.Save_Type);
+            ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.SaveType);
         }
 
         public abstract void Write();
@@ -106,11 +106,11 @@
         {
             Item[] Items = null;
 
-            Size = GetSize(saveFile.Save_Generation);
-            Name = ShopInfo.GetShopName(saveFile.Save_Generation, Size);
+            Size = GetSize(saveFile.SaveGeneration);
+            Name = ShopInfo.GetShopName(saveFile.SaveGeneration, Size);
             int ItemCount = 0;
 
-            switch (saveFile.Save_Generation)
+            switch (saveFile.SaveGeneration)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
@@ -130,7 +130,7 @@
             Items = new Item[ItemCount];
             for (int i = 0; i < ItemCount; i++)
             {
-                if (SaveFile.Save_Generation == SaveGeneration.N3DS)
+                if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
                 {
                     Items[i] = new Item(SaveFile.ReadUInt32(Offset + ShopOffsets.FurnitureShop + i * 4));
                 }
@@ -146,16 +146,16 @@
         public byte GetSize(SaveGeneration Generation)
         {
             var SaveFile = MainForm.Save_File;
-            var ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.Save_Type);
+            var ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.SaveType);
             if (ShopOffsets != null)
             {
                 switch (Generation)
                 {
                     case SaveGeneration.N64:
                     case SaveGeneration.GCN:
-                        return (byte)(SaveFile.ReadByte(SaveFile.Save_Data_Start_Offset + ShopOffsets.FurnitureShopUpgrade) >> 6);
+                        return (byte)(SaveFile.ReadByte(SaveFile.SaveDataStartOffset + ShopOffsets.FurnitureShopUpgrade) >> 6);
                     case SaveGeneration.N3DS:
-                        return SaveFile.ReadByte(SaveFile.Save_Data_Start_Offset + ShopOffsets.FurnitureShopUpgrade);
+                        return SaveFile.ReadByte(SaveFile.SaveDataStartOffset + ShopOffsets.FurnitureShopUpgrade);
                     default:
                         return 0;
                 }
@@ -166,18 +166,18 @@
         public void SetSize(byte Size)
         {
             var SaveFile = MainForm.Save_File;
-            var ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.Save_Type);
+            var ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.SaveType);
             if (ShopOffsets != null)
             {
-                switch (SaveFile.Save_Generation)
+                switch (SaveFile.SaveGeneration)
                 {
                     case SaveGeneration.N64:
                     case SaveGeneration.GCN:
-                        SaveFile.Write(SaveFile.Save_Data_Start_Offset + ShopOffsets.FurnitureShopUpgrade,
-                            (byte)((SaveFile.ReadByte(SaveFile.Save_Data_Start_Offset + ShopOffsets.FurnitureShopUpgrade) & 0x3F) | ((Size & 3) << 6)));
+                        SaveFile.Write(SaveFile.SaveDataStartOffset + ShopOffsets.FurnitureShopUpgrade,
+                            (byte)((SaveFile.ReadByte(SaveFile.SaveDataStartOffset + ShopOffsets.FurnitureShopUpgrade) & 0x3F) | ((Size & 3) << 6)));
                         break;
                     case SaveGeneration.N3DS:
-                        SaveFile.Write(SaveFile.Save_Data_Start_Offset + ShopOffsets.FurnitureShopUpgrade, Size);
+                        SaveFile.Write(SaveFile.SaveDataStartOffset + ShopOffsets.FurnitureShopUpgrade, Size);
                         break;
                 }
             }

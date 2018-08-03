@@ -14,7 +14,7 @@ namespace ACSE.Classes.Saves
         public WiiSave(string path) : base(path, true)
         {
             Generation = SaveGeneration.Wii;
-            SaveType = SaveType.City_Folk;
+            SaveType = SaveType.CityFolk;
         }
 
         protected override bool Load()

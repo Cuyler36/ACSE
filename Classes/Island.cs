@@ -54,7 +54,7 @@
                     for (int f = 0; f < 256; f++)
                     {
                         int FurnitureOffset = LayerOffset + f * 2;
-                        Layer.Items[f] = new Furniture(SaveData.ReadUInt16(FurnitureOffset, SaveData.Is_Big_Endian));
+                        Layer.Items[f] = new Furniture(SaveData.ReadUInt16(FurnitureOffset, SaveData.IsBigEndian));
                     }
 
                     MainRoom.Layers[x] = Layer;
@@ -87,10 +87,10 @@
             this.SaveFile = SaveFile;
             this.Offset = Offset;
 
-            Name = new ACSE.Classes.Utilities.ACString(SaveFile.ReadByteArray(Offset + IslandName, 6), SaveFile.Save_Type).Trim();
+            Name = new ACSE.Classes.Utilities.ACString(SaveFile.ReadByteArray(Offset + IslandName, 6), SaveFile.SaveType).Trim();
             Id = SaveFile.ReadUInt16(Offset + IslandId, true);
 
-            TownName = new ACSE.Classes.Utilities.ACString(SaveFile.ReadByteArray(Offset + TownNameOffset, 6), SaveFile.Save_Type).Trim();
+            TownName = new ACSE.Classes.Utilities.ACString(SaveFile.ReadByteArray(Offset + TownNameOffset, 6), SaveFile.SaveType).Trim();
             TownId = SaveFile.ReadUInt16(Offset + TownIdOffset, true);
 
             ushort Identifier = SaveFile.ReadUInt16(Offset - 0x2214, true);
@@ -112,7 +112,7 @@
                 foreach (ushort ItemId in SaveFile.ReadUInt16Array(Offset + WorldData + Acre * 0x200, 0x100, true))
                 {
                     Items[Acre][i] = new WorldItem(ItemId, i % 256);
-                    SetBuried(Items[Acre][i], Acre, BuriedDataArray, SaveFile.Save_Type);
+                    SetBuried(Items[Acre][i], Acre, BuriedDataArray, SaveFile.SaveType);
                     i++;
                 }
             }
@@ -167,9 +167,9 @@
             if (item != null)
             {
                 int worldPosition = 0;
-                if (saveType == SaveType.Animal_Crossing || saveType == SaveType.Doubutsu_no_Mori_e_Plus || saveType == SaveType.City_Folk)
+                if (saveType == SaveType.AnimalCrossing || saveType == SaveType.DoubutsuNoMoriEPlus || saveType == SaveType.CityFolk)
                     worldPosition = (acre * 256) + (15 - item.Location.X) + item.Location.Y * 16; //15 - item.Location.X because it's stored as a ushort in memory w/ reversed endianess
-                else if (saveType == SaveType.Wild_World)
+                else if (saveType == SaveType.WildWorld)
                     worldPosition = (acre * 256) + item.Index;
                 return worldPosition / 8;
             }
@@ -188,7 +188,7 @@
 
         public void SetBuriedInMemory(WorldItem item, int acre, byte[] burriedItemData, bool buried, SaveType saveType)
         {
-            if (saveType != SaveType.New_Leaf && saveType != SaveType.Welcome_Amiibo)
+            if (saveType != SaveType.NewLeaf && saveType != SaveType.WelcomeAmiibo)
             {
                 int buriedLocation = GetBuriedDataLocation(item, acre, saveType);
                 if (buriedLocation > -1)

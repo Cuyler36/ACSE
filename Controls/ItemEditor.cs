@@ -67,7 +67,7 @@ namespace ACSE
             if (items != null)
             {
                 Size = new Size(itemCellSize * itemsPerRow + 3, itemCellSize * (int)(Math.Ceiling((decimal)items.Length / itemsPerRow)) + 3);
-                EditorPictureBox.Image = Inventory.GetItemPic(itemCellSize, itemsPerRow, items, MainForm.Save_File.Save_Type, EditorPictureBox.Size);
+                EditorPictureBox.Image = Inventory.GetItemPic(itemCellSize, itemsPerRow, items, MainForm.Save_File.SaveType, EditorPictureBox.Size);
             }
 
             if (Img != null)
@@ -166,7 +166,7 @@ namespace ACSE
 
                         // Redraw Item Image
                         var Img = EditorPictureBox.Image;
-                        EditorPictureBox.Image = Inventory.GetItemPic(itemCellSize, itemsPerRow, items, MainForm.Save_File.Save_Type, EditorPictureBox.Size);
+                        EditorPictureBox.Image = Inventory.GetItemPic(itemCellSize, itemsPerRow, items, MainForm.Save_File.SaveType, EditorPictureBox.Size);
 
                         if (Img != null)
                             Img.Dispose();
@@ -202,7 +202,7 @@ namespace ACSE
                 // Undo
                 items[PreviousItemChange.Index] = PreviousItemChange.Item;
                 var Img = EditorPictureBox.Image;
-                EditorPictureBox.Image = Inventory.GetItemPic(itemCellSize, itemsPerRow, items, MainForm.Save_File.Save_Type, EditorPictureBox.Size);
+                EditorPictureBox.Image = Inventory.GetItemPic(itemCellSize, itemsPerRow, items, MainForm.Save_File.SaveType, EditorPictureBox.Size);
 
                 if (Img != null)
                     Img.Dispose();
@@ -226,7 +226,7 @@ namespace ACSE
                 // Redo
                 items[PreviousItemChange.Index] = PreviousItemChange.Item;
                 var Img = EditorPictureBox.Image;
-                EditorPictureBox.Image = Inventory.GetItemPic(itemCellSize, itemsPerRow, items, MainForm.Save_File.Save_Type, EditorPictureBox.Size);
+                EditorPictureBox.Image = Inventory.GetItemPic(itemCellSize, itemsPerRow, items, MainForm.Save_File.SaveType, EditorPictureBox.Size);
 
                 if (Img != null)
                     Img.Dispose();

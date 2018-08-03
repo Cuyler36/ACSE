@@ -411,7 +411,7 @@ namespace ACSE
 
         public static int GetBuildingCount(Building[] buildings, SaveType saveType)
         {
-            var noBuildingId = saveType == SaveType.New_Leaf ? 0xF8 : 0xFC;
+            var noBuildingId = saveType == SaveType.NewLeaf ? 0xF8 : 0xFC;
             return buildings.Count(b => b.Exists && b.Id != noBuildingId);
         }
 
@@ -419,12 +419,12 @@ namespace ACSE
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Animal_Crossing:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.AnimalCrossing:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.DoubutsuNoMoriEPlus:
                 // TODO: DnM+, and DnMe+ need their own cases
-                case SaveType.Animal_Forest:
+                case SaveType.AnimalForest:
                     if (id == 0)
                         return "Empty";
                     else if (id == 0xFFFF)
@@ -483,199 +483,199 @@ namespace ACSE
                         return "Furniture";
                     else
                         return "Unknown";
-                case SaveType.Wild_World when id == 0xFFF1:
+                case SaveType.WildWorld when id == 0xFFF1:
                     return "Empty";
-                case SaveType.Wild_World when id == 0xF030:
+                case SaveType.WildWorld when id == 0xF030:
                     return "Occupied";
-                case SaveType.Wild_World when id <= 0x1C:
+                case SaveType.WildWorld when id <= 0x1C:
                     return "Flower";
-                case SaveType.Wild_World when id >= 0x1D && id <= 0x24:
+                case SaveType.WildWorld when id >= 0x1D && id <= 0x24:
                     return "Weed";
-                case SaveType.Wild_World when (id >= 0x25 && id <= 0x6D) || (id >= 0xC7 && id <= 0xD3):
+                case SaveType.WildWorld when (id >= 0x25 && id <= 0x6D) || (id >= 0xC7 && id <= 0xD3):
                     return "Tree";
-                case SaveType.Wild_World when id >= 0x6E && id <= 0x89:
+                case SaveType.WildWorld when id >= 0x6E && id <= 0x89:
                     return "Parched Flower";
-                case SaveType.Wild_World when id >= 0x8A && id <= 0xA5:
+                case SaveType.WildWorld when id >= 0x8A && id <= 0xA5:
                     return "Watered Flower";
-                case SaveType.Wild_World when id >= 0xA7 && id <= 0xC6:
+                case SaveType.WildWorld when id >= 0xA7 && id <= 0xC6:
                     return "Pattern";
-                case SaveType.Wild_World when (id >= 0xE3 && id <= 0xE7) || (id >= 0xED && id <= 0xFB):
+                case SaveType.WildWorld when (id >= 0xE3 && id <= 0xE7) || (id >= 0xED && id <= 0xFB):
                     return "Rock";
-                case SaveType.Wild_World when id >= 0xE8 && id <= 0xEC:
+                case SaveType.WildWorld when id >= 0xE8 && id <= 0xEC:
                     return "Money Rock";
-                case SaveType.Wild_World when id >= 0x1000 && id <= 0x10FF:
+                case SaveType.WildWorld when id >= 0x1000 && id <= 0x10FF:
                     return "Paper";
                 //Wallpaper
-                case SaveType.Wild_World when id >= 0x1100 && id <= 0x1143:
+                case SaveType.WildWorld when id >= 0x1100 && id <= 0x1143:
                 //Carpet
-                case SaveType.Wild_World when id >= 0x1144 && id <= 0x1187:
+                case SaveType.WildWorld when id >= 0x1144 && id <= 0x1187:
                     return "Wall/Floor";
-                case SaveType.Wild_World when id >= 0x11A8 && id <= 0x12AF:
+                case SaveType.WildWorld when id >= 0x11A8 && id <= 0x12AF:
                     return "Clothes"; //Shirts
-                case SaveType.Wild_World when id >= 0x12B0 && id <= 0x131F:
+                case SaveType.WildWorld when id >= 0x12B0 && id <= 0x131F:
                     return "Catchable";
-                case SaveType.Wild_World when id >= 0x1323 && id <= 0x1368:
+                case SaveType.WildWorld when id >= 0x1323 && id <= 0x1368:
                     return "Song";
-                case SaveType.Wild_World when id >= 0x1369 && id <= 0x139F:
+                case SaveType.WildWorld when id >= 0x1369 && id <= 0x139F:
                     return "Tool";
-                case SaveType.Wild_World when id >= 0x13A8 && id <= 0x1457:
+                case SaveType.WildWorld when id >= 0x13A8 && id <= 0x1457:
                     return "Clothes"; //Hats, Flowers, & Glasses/Masks
-                case SaveType.Wild_World when id >= 0x1492 && id <= 0x14FD:
+                case SaveType.WildWorld when id >= 0x1492 && id <= 0x14FD:
                     return "Money";
-                case SaveType.Wild_World when (id >= 0x14FE && id <= 0x1530) || (id >= 0x1542 && id <= 0x1548) || (id >= 0x155E && id <= 0x156D):
+                case SaveType.WildWorld when (id >= 0x14FE && id <= 0x1530) || (id >= 0x1542 && id <= 0x1548) || (id >= 0x155E && id <= 0x156D):
                     return "Item";
-                case SaveType.Wild_World when (id >= 0x1531 && id <= 0x1541):
+                case SaveType.WildWorld when (id >= 0x1531 && id <= 0x1541):
                     return "Turnip";
-                case SaveType.Wild_World when id == 0x1549:
+                case SaveType.WildWorld when id == 0x1549:
                     return "Fossil";
-                case SaveType.Wild_World when id >= 0x1554 && id <= 0x155C:
+                case SaveType.WildWorld when id >= 0x1554 && id <= 0x155C:
                     return "Shell";
-                case SaveType.Wild_World when (id >= 0x3000 && id <= 0x45D8) || (id >= 0x47D8 && id <= 0x4BA0):
+                case SaveType.WildWorld when (id >= 0x3000 && id <= 0x45D8) || (id >= 0x47D8 && id <= 0x4BA0):
                     return "Furniture";
-                case SaveType.Wild_World when id >= 0x45DC && id <= 0x47D4:
+                case SaveType.WildWorld when id >= 0x45DC && id <= 0x47D4:
                     return "Gyroids";
                 // F030-1 = Multispace furniture item
-                case SaveType.Wild_World when (id >= 0x5000 && id <= 0x5021) || id == 0xF030 || id == 0xF031:
+                case SaveType.WildWorld when (id >= 0x5000 && id <= 0x5021) || id == 0xF030 || id == 0xF031:
                     return "Building";
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     return "Unknown";
-                case SaveType.City_Folk when id == 0xFFF1:
+                case SaveType.CityFolk when id == 0xFFF1:
                     return "Empty";
-                case SaveType.City_Folk when (id >= 0xB710 && id <= 0xCE50) || (id >= 0x93F0 && id <= 0x9414) || (id >= 0x9CC0 && id < 0x9EC0):
+                case SaveType.CityFolk when (id >= 0xB710 && id <= 0xCE50) || (id >= 0x93F0 && id <= 0x9414) || (id >= 0x9CC0 && id < 0x9EC0):
                     return "Furniture";
-                case SaveType.City_Folk when id >= 0xA518 && id <= 0xAA7C:
+                case SaveType.CityFolk when id >= 0xA518 && id <= 0xAA7C:
                     return "Clothes";
-                case SaveType.City_Folk when (id >= 0x93E8 && id <= 0x93EC) || (id >= 0x9FA0 && id <= 0xA420):
+                case SaveType.CityFolk when (id >= 0x93E8 && id <= 0x93EC) || (id >= 0x9FA0 && id <= 0xA420):
                     return "Wall/Floor";
-                case SaveType.City_Folk when id >= 0x94B0 && id <= 0x95D8:
+                case SaveType.CityFolk when id >= 0x94B0 && id <= 0x95D8:
                     return "Song";
-                case SaveType.City_Folk when id >= 0x9640 && id <= 0x974F:
+                case SaveType.CityFolk when id >= 0x9640 && id <= 0x974F:
                     return "Paper";
-                case SaveType.City_Folk when id >= 0x97D0 && id <= 0x9814:
+                case SaveType.CityFolk when id >= 0x97D0 && id <= 0x9814:
                     return "Turnip";
                 //Actually separated a little bit
-                case SaveType.City_Folk when id >= 0x9960 && id <= 0x9BEC:
+                case SaveType.CityFolk when id >= 0x9960 && id <= 0x9BEC:
                     return "Catchable";
-                case SaveType.City_Folk when id >= 0xAC20 && id <= 0xB2E4:
+                case SaveType.CityFolk when id >= 0xAC20 && id <= 0xB2E4:
                     return "Clothes"; //Hats, Masks/Glasses & Flowers
-                case SaveType.City_Folk when id >= 0xB3F0 && id <= 0xB5E8:
+                case SaveType.CityFolk when id >= 0xB3F0 && id <= 0xB5E8:
                     return "Gyroids";
-                case SaveType.City_Folk when (id >= 0xCE80 && id <= 0xCF54) || (id >= 0xAA90 && id <= 0xAB14):
+                case SaveType.CityFolk when (id >= 0xCE80 && id <= 0xCF54) || (id >= 0xAA90 && id <= 0xAB14):
                     return "Tool";
-                case SaveType.City_Folk when id == 0x9018:
+                case SaveType.CityFolk when id == 0x9018:
                     return "Fossil";
-                case SaveType.City_Folk when id >= 0x0001 && id <= 0x0056:
+                case SaveType.CityFolk when id >= 0x0001 && id <= 0x0056:
                     return "Tree";
-                case SaveType.City_Folk when (id >= 0x0057 && id <= 0x005A) || (id >= 0x00DD && id <= 0x00E1):
+                case SaveType.CityFolk when (id >= 0x0057 && id <= 0x005A) || (id >= 0x00DD && id <= 0x00E1):
                     return "Weed";
-                case SaveType.City_Folk when (id >= 0x005B && id <= 0x005F) || (id >= 0x0065 && id <= 0x0073):
+                case SaveType.CityFolk when (id >= 0x005B && id <= 0x005F) || (id >= 0x0065 && id <= 0x0073):
                     return "Rock";
-                case SaveType.City_Folk when id >= 0x0060 && id <= 0x0064:
+                case SaveType.CityFolk when id >= 0x0060 && id <= 0x0064:
                     return "Money Rock";
-                case SaveType.City_Folk when id >= 0x0074 && id <= 0x0093:
+                case SaveType.CityFolk when id >= 0x0074 && id <= 0x0093:
                     return "Pattern";
-                case SaveType.City_Folk when id >= 0x009E && id <= 0x00BD:
+                case SaveType.CityFolk when id >= 0x009E && id <= 0x00BD:
                     return "Flower";
-                case SaveType.City_Folk when id >= 0x00BE && id <= 0x00DD:
+                case SaveType.CityFolk when id >= 0x00BE && id <= 0x00DD:
                     return "Parched Flower";
-                case SaveType.City_Folk when id >= 0x9118 && id <= 0x9138:
+                case SaveType.CityFolk when id >= 0x9118 && id <= 0x9138:
                     return "Shell";
-                case SaveType.City_Folk when id >= 0x9194 && id <= 0x9340:
+                case SaveType.CityFolk when id >= 0x9194 && id <= 0x9340:
                     return "Money";
-                case SaveType.City_Folk when id >= 0x9348 && id <= 0x93D0:
+                case SaveType.CityFolk when id >= 0x9348 && id <= 0x93D0:
                     return "Quest Item";
-                case SaveType.City_Folk when (id >= 0x901C && id <= 0x9108) || (id >= 0x093D4 && id <= 0x93D8) || (id >= 0x9140 && id <= 0x9150) || (id >= 0x915C && id <= 0x9164):
+                case SaveType.CityFolk when (id >= 0x901C && id <= 0x9108) || (id >= 0x093D4 && id <= 0x93D8) || (id >= 0x9140 && id <= 0x9150) || (id >= 0x915C && id <= 0x9164):
                     return "Item";
-                case SaveType.City_Folk when (id >= 0x9000 && id <= 0x9014) || (id >= 0x9168 && id <= 0x9178):
+                case SaveType.CityFolk when (id >= 0x9000 && id <= 0x9014) || (id >= 0x9168 && id <= 0x9178):
                     return "Fruit";
-                case SaveType.City_Folk when id == 0xD000 || id == 0x7003 || id == 0xF030:
+                case SaveType.CityFolk when id == 0xD000 || id == 0x7003 || id == 0xF030:
                     return "Building";
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     return "Unknown";
-                case SaveType.New_Leaf when id == 0x7FFE:
+                case SaveType.NewLeaf when id == 0x7FFE:
                     return "Empty";
-                case SaveType.New_Leaf when id == 0x009D:
+                case SaveType.NewLeaf when id == 0x009D:
                     return "Pattern";
                 //C9 & CA = "weed" flowers
-                case SaveType.New_Leaf when id >= 0x009F && id <= 0x00C8:
+                case SaveType.NewLeaf when id >= 0x009F && id <= 0x00C8:
                     return "Flower";
-                case SaveType.New_Leaf when id >= 0x00CE && id <= 0x00F7:
+                case SaveType.NewLeaf when id >= 0x00CE && id <= 0x00F7:
                     return "Wilted Flower";
-                case SaveType.New_Leaf when (id >= 0x0005 && id <= 0x007B) || (id >= 0x0080 && id <= 0x0097):
+                case SaveType.NewLeaf when (id >= 0x0005 && id <= 0x007B) || (id >= 0x0080 && id <= 0x0097):
                     return "Tree";
-                case SaveType.New_Leaf when id >= 0x0098 && id <= 0x009C:
+                case SaveType.NewLeaf when id >= 0x0098 && id <= 0x009C:
                     return "Rock";
-                case SaveType.New_Leaf when (id >= 0x007C && id <= 0x007F) || (id >= 0x00C9 && id <= 0x00CD) || id == 0x00F8:
+                case SaveType.NewLeaf when (id >= 0x007C && id <= 0x007F) || (id >= 0x00C9 && id <= 0x00CD) || id == 0x00F8:
                     return "Weed";
-                case SaveType.New_Leaf when id >= 0x28B2 && id <= 0x2934:
+                case SaveType.NewLeaf when id >= 0x28B2 && id <= 0x2934:
                     return "Gyroids";
-                case SaveType.New_Leaf when id == 0x202A:
+                case SaveType.NewLeaf when id == 0x202A:
                     return "Fossil";
-                case SaveType.New_Leaf when id >= 0x2087 && id <= 0x2090:
+                case SaveType.NewLeaf when id >= 0x2087 && id <= 0x2090:
                     return "Shell";
-                case SaveType.New_Leaf when id >= 0x2126 && id <= 0x2239:
+                case SaveType.NewLeaf when id >= 0x2126 && id <= 0x2239:
                     return "Song";
-                case SaveType.New_Leaf when id >= 0x223A && id <= 0x227A:
+                case SaveType.NewLeaf when id >= 0x223A && id <= 0x227A:
                     return "Paper";
-                case SaveType.New_Leaf when id >= 0x227B && id <= 0x2285:
+                case SaveType.NewLeaf when id >= 0x227B && id <= 0x2285:
                     return "Turnip";
-                case SaveType.New_Leaf when id >= 0x2286 && id <= 0x2341:
+                case SaveType.NewLeaf when id >= 0x2286 && id <= 0x2341:
                     return "Catchable";
-                case SaveType.New_Leaf when (id >= 0x2342 && id <= 0x2445) || (id >= 0x2119 && id <= 0x211A):
+                case SaveType.NewLeaf when (id >= 0x2342 && id <= 0x2445) || (id >= 0x2119 && id <= 0x211A):
                     return "Wall/Floor";
-                case SaveType.New_Leaf when id >= 0x2446 && id <= 0x28B1:
+                case SaveType.NewLeaf when id >= 0x2446 && id <= 0x28B1:
                     return "Clothes";
-                case SaveType.New_Leaf when id >= 0x303B && id <= 0x307A:
+                case SaveType.NewLeaf when id >= 0x303B && id <= 0x307A:
                     return "Tool";
-                case SaveType.New_Leaf when id >= 0x20A7 && id <= 0x2112:
+                case SaveType.NewLeaf when id >= 0x20A7 && id <= 0x2112:
                     return "Money";
-                case SaveType.New_Leaf when id >= 0x209A && id <= 0x209B:
+                case SaveType.NewLeaf when id >= 0x209A && id <= 0x209B:
                     return "Item";
-                case SaveType.New_Leaf when id == 0x7FFC:
+                case SaveType.NewLeaf when id == 0x7FFC:
                     return "Occupied";
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     return "Furniture"; //Just until I gather furniture offsets
-                case SaveType.Welcome_Amiibo when id == 0x7FFE:
+                case SaveType.WelcomeAmiibo when id == 0x7FFE:
                     return "Empty";
-                case SaveType.Welcome_Amiibo when (id >= 0x0005 && id <= 0x007B) || (id >= 0x0080 && id <= 0x0097):
+                case SaveType.WelcomeAmiibo when (id >= 0x0005 && id <= 0x007B) || (id >= 0x0080 && id <= 0x0097):
                     return "Tree";
-                case SaveType.Welcome_Amiibo when (id >= 0x007C && id <= 0x007F) || (id >= 0x00C9 && id <= 0x00CD) || id == 0x00F8:
+                case SaveType.WelcomeAmiibo when (id >= 0x007C && id <= 0x007F) || (id >= 0x00C9 && id <= 0x00CD) || id == 0x00F8:
                     return "Weed";
-                case SaveType.Welcome_Amiibo when id == 0x009D:
+                case SaveType.WelcomeAmiibo when id == 0x009D:
                     return "Pattern";
-                case SaveType.Welcome_Amiibo when id >= 0x0098 && id <= 0x009C:
+                case SaveType.WelcomeAmiibo when id >= 0x0098 && id <= 0x009C:
                     return "Rock";
-                case SaveType.Welcome_Amiibo when id >= 0x009F && id <= 0x00C8:
+                case SaveType.WelcomeAmiibo when id >= 0x009F && id <= 0x00C8:
                     return "Flower";
-                case SaveType.Welcome_Amiibo when id >= 0x00CE && id <= 0x00F7:
+                case SaveType.WelcomeAmiibo when id >= 0x00CE && id <= 0x00F7:
                     return "Wilted Flower";
-                case SaveType.Welcome_Amiibo when id == 0x202A:
+                case SaveType.WelcomeAmiibo when id == 0x202A:
                     return "Fossil";
-                case SaveType.Welcome_Amiibo when id >= 0x20AC && id <= 0x2117:
+                case SaveType.WelcomeAmiibo when id >= 0x20AC && id <= 0x2117:
                     return "Money";
-                case SaveType.Welcome_Amiibo when id >= 0x212B && id <= 0x223E:
+                case SaveType.WelcomeAmiibo when id >= 0x212B && id <= 0x223E:
                     return "Song";
-                case SaveType.Welcome_Amiibo when id >= 0x223F && id <= 0x2282:
+                case SaveType.WelcomeAmiibo when id >= 0x223F && id <= 0x2282:
                     return "Paper";
-                case SaveType.Welcome_Amiibo when id >= 0x2283 && id <= 0x228D:
+                case SaveType.WelcomeAmiibo when id >= 0x2283 && id <= 0x228D:
                     return "Turnip";
-                case SaveType.Welcome_Amiibo when id >= 0x228E && id <= 0x234B:
+                case SaveType.WelcomeAmiibo when id >= 0x228E && id <= 0x234B:
                     return "Catchable";
-                case SaveType.Welcome_Amiibo when id >= 0x234C && id <= 0x2492:
+                case SaveType.WelcomeAmiibo when id >= 0x234C && id <= 0x2492:
                     return "Wall/Floor";
-                case SaveType.Welcome_Amiibo when id >= 0x2495 && id <= 0x295B:
+                case SaveType.WelcomeAmiibo when id >= 0x2495 && id <= 0x295B:
                     return "Clothes";
-                case SaveType.Welcome_Amiibo when id >= 0x295C && id <= 0x29DE:
+                case SaveType.WelcomeAmiibo when id >= 0x295C && id <= 0x29DE:
                     return "Gyroids";
-                case SaveType.Welcome_Amiibo when id >= 0x334C && id <= 0x338B:
+                case SaveType.WelcomeAmiibo when id >= 0x334C && id <= 0x338B:
                     return "Tool";
-                case SaveType.Welcome_Amiibo when id >= 0x209F && id <= 0x20A0:
+                case SaveType.WelcomeAmiibo when id >= 0x209F && id <= 0x20A0:
                     return "Item";
-                case SaveType.Welcome_Amiibo when id >= 0x208C && id <= 0x2095:
+                case SaveType.WelcomeAmiibo when id >= 0x208C && id <= 0x2095:
                     return "Shell";
-                case SaveType.Welcome_Amiibo when id == 0x7FFC:
+                case SaveType.WelcomeAmiibo when id == 0x7FFC:
                     return "Occupied";
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     return "Furniture";
                 default:
                     return "Unknown Save Type";
@@ -756,7 +756,7 @@ namespace ACSE
 
         public static string GetItemFlag1Type(Item item, byte itemFlag)
         {
-            var itemType = GetItemType(item.ItemId, MainForm.Save_File.Save_Type);
+            var itemType = GetItemType(item.ItemId, MainForm.Save_File.SaveType);
             switch (itemType)
             {
                 case "Fruit":
@@ -927,43 +927,43 @@ namespace ACSE
         public static Building[] GetBuildings(Save save, bool islandBuildings = false)
         {
             var buildings = new List<Building>();
-            if (save.Save_Type == SaveType.City_Folk)
+            if (save.SaveType == SaveType.CityFolk)
             {
                 for (var i = 0; i < 33; i++)
                 {
-                    var dataOffset = save.Save_Data_Start_Offset + SaveDataManager.City_Folk_Offsets.Buildings + i * 2;
-                    buildings.Add(new Building((byte)i, save.ReadByte(dataOffset), save.ReadByte(dataOffset + 1), SaveType.City_Folk));
+                    var dataOffset = save.SaveDataStartOffset + SaveDataManager.CityFolkOffsets.Buildings + i * 2;
+                    buildings.Add(new Building((byte)i, save.ReadByte(dataOffset), save.ReadByte(dataOffset + 1), SaveType.CityFolk));
                 }
                 //Add Pave's Table
-                var paveOffset = save.Save_Data_Start_Offset + 0x5EB90;
-                var paveTable = new Building(0x21, save.ReadByte(paveOffset), save.ReadByte(paveOffset + 1), SaveType.City_Folk);
+                var paveOffset = save.SaveDataStartOffset + 0x5EB90;
+                var paveTable = new Building(0x21, save.ReadByte(paveOffset), save.ReadByte(paveOffset + 1), SaveType.CityFolk);
                 buildings.Add(paveTable);
                 //Add Bus Stop
-                var busStopOffset = save.Save_Data_Start_Offset + 0x5EB8A;
-                var busStop = new Building(0x22, save.ReadByte(busStopOffset), save.ReadByte(busStopOffset + 1), SaveType.City_Folk);
+                var busStopOffset = save.SaveDataStartOffset + 0x5EB8A;
+                var busStop = new Building(0x22, save.ReadByte(busStopOffset), save.ReadByte(busStopOffset + 1), SaveType.CityFolk);
                 buildings.Add(busStop);
                 //Add Signs
                 for (var i = 0; i < 100; i++)
                 {
-                    var dataOffset = save.Save_Data_Start_Offset + 0x5EB92 + i * 2;
-                    var sign = new Building(0x23, save.ReadByte(dataOffset), save.ReadByte(dataOffset + 1), SaveType.City_Folk);
+                    var dataOffset = save.SaveDataStartOffset + 0x5EB92 + i * 2;
+                    var sign = new Building(0x23, save.ReadByte(dataOffset), save.ReadByte(dataOffset + 1), SaveType.CityFolk);
                     buildings.Add(sign);
                 }
             }
-            else if (save.Save_Type == SaveType.New_Leaf || save.Save_Type == SaveType.Welcome_Amiibo) //TODO: Add changed offsets for Welcome Amiibo
+            else if (save.SaveType == SaveType.NewLeaf || save.SaveType == SaveType.WelcomeAmiibo) //TODO: Add changed offsets for Welcome Amiibo
             {
                 if (islandBuildings == false)
                     for (var i = 0; i < 58; i++)
                     {
-                        var dataOffset = save.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Buildings + i * 4;
-                        buildings.Add(new Building(save.ReadByte(dataOffset), save.ReadByte(dataOffset + 2), save.ReadByte(dataOffset + 3), save.Save_Type));
+                        var dataOffset = save.SaveDataStartOffset + MainForm.Current_Save_Info.SaveOffsets.Buildings + i * 4;
+                        buildings.Add(new Building(save.ReadByte(dataOffset), save.ReadByte(dataOffset + 2), save.ReadByte(dataOffset + 3), save.SaveType));
                         //Technically, Building IDs are shorts, but since they only use the lower byte, we'll just ignore that
                     }
                 else
                     for (var i = 0; i < 2; i++)
                     {
-                        var dataOffset = save.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Island_Buildings + i * 4;
-                        buildings.Add(new Building(save.ReadByte(dataOffset), save.ReadByte(dataOffset + 2), save.ReadByte(dataOffset + 3), save.Save_Type));
+                        var dataOffset = save.SaveDataStartOffset + MainForm.Current_Save_Info.SaveOffsets.IslandBuildings + i * 4;
+                        buildings.Add(new Building(save.ReadByte(dataOffset), save.ReadByte(dataOffset + 2), save.ReadByte(dataOffset + 3), save.SaveType));
                     }
             }
             return buildings.ToArray();

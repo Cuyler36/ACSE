@@ -363,8 +363,8 @@ namespace ACSE
         // AC / CF
         public void GeneratePatternBitmap(byte[] importData = null, bool decode = true)
         {
-            var patternRawData = importData ?? (_saveFile.Save_Type == SaveType.City_Folk ? _saveFile.ReadByteArray(_offset, 0x200) : _saveFile.ReadByteArray(_offset + 0x20, 0x200));
-            var paletteData = _saveFile.Save_Type == SaveType.City_Folk ? PatternData.CfPaletteData : PatternData.AcPaletteData;
+            var patternRawData = importData ?? (_saveFile.SaveType == SaveType.CityFolk ? _saveFile.ReadByteArray(_offset, 0x200) : _saveFile.ReadByteArray(_offset + 0x20, 0x200));
+            var paletteData = _saveFile.SaveType == SaveType.CityFolk ? PatternData.CfPaletteData : PatternData.AcPaletteData;
 
             if (decode)
             {
@@ -439,44 +439,44 @@ namespace ACSE
 
         public void Read(int index)
         {
-            switch (_saveFile.Save_Type)
+            switch (_saveFile.SaveType)
             {
-                case SaveType.Animal_Crossing:
-                    Name = new ACString(_saveFile.ReadByteArray(_offset, 0x10), _saveFile.Save_Type).Trim();
+                case SaveType.AnimalCrossing:
+                    Name = new ACString(_saveFile.ReadByteArray(_offset, 0x10), _saveFile.SaveType).Trim();
                     Palette = _saveFile.ReadByte(_offset + 0x10);
                     PaletteData = PatternData.AcPaletteData[Palette];
                     GeneratePatternBitmap();
                     break;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
-                case SaveType.Doubutsu_no_Mori:
-                case SaveType.Doubutsu_no_Mori_Plus:
-                    Name = new ACString(_saveFile.ReadByteArray(_offset, 0xA), _saveFile.Save_Type).Trim();
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DoubutsuNoMoriPlus:
+                    Name = new ACString(_saveFile.ReadByteArray(_offset, 0xA), _saveFile.SaveType).Trim();
                     Palette = _saveFile.ReadByte(_offset + 0xA);
                     PaletteData = PatternData.AcPaletteData[Palette];
                     GeneratePatternBitmap();
                     break;
-                case SaveType.Wild_World:
-                    TownName = new ACString(_saveFile.ReadByteArray(_offset + 0x202, 8), SaveType.Wild_World).Trim();
-                    CreatorName = new ACString(_saveFile.ReadByteArray(_offset + 0x20C, 8), SaveType.Wild_World).Trim();
-                    Name = new ACString(_saveFile.ReadByteArray(_offset + 0x216, 16), SaveType.Wild_World).Trim();
+                case SaveType.WildWorld:
+                    TownName = new ACString(_saveFile.ReadByteArray(_offset + 0x202, 8), SaveType.WildWorld).Trim();
+                    CreatorName = new ACString(_saveFile.ReadByteArray(_offset + 0x20C, 8), SaveType.WildWorld).Trim();
+                    Name = new ACString(_saveFile.ReadByteArray(_offset + 0x216, 16), SaveType.WildWorld).Trim();
                     Palette = (byte)((_saveFile.ReadByte(_offset + 0x226) & 0xF0) >> 4);
                     Concept = (byte)(_saveFile.ReadByte(_offset + 0x226) & 0x0F);
                     PaletteData = PatternData.WwPaletteData[Palette];
                     GenerateWwPatternBitmap();
                     break;
-                case SaveType.City_Folk:
-                    TownName = new ACString(_saveFile.ReadByteArray(_offset + 0x822, 16), SaveType.City_Folk).Trim();
-                    CreatorName = new ACString(_saveFile.ReadByteArray(_offset + 0x838, 16), SaveType.City_Folk).Trim();
-                    Name = new ACString(_saveFile.ReadByteArray(_offset + 0x84C, 32), SaveType.City_Folk).Trim();
+                case SaveType.CityFolk:
+                    TownName = new ACString(_saveFile.ReadByteArray(_offset + 0x822, 16), SaveType.CityFolk).Trim();
+                    CreatorName = new ACString(_saveFile.ReadByteArray(_offset + 0x838, 16), SaveType.CityFolk).Trim();
+                    Name = new ACString(_saveFile.ReadByteArray(_offset + 0x84C, 32), SaveType.CityFolk).Trim();
                     Palette = _saveFile.ReadByte(_offset + 0x86F);
                     PaletteData = PatternData.CfPaletteData[Palette];
                     GeneratePatternBitmap();
                     break;
-                case SaveType.New_Leaf:
-                case SaveType.Welcome_Amiibo:
-                    Name = new ACString(_saveFile.ReadByteArray(_offset, 0x2A), SaveType.New_Leaf).Trim();
-                    CreatorName = new ACString(_saveFile.ReadByteArray(_offset + 0x2C, 0x14), SaveType.New_Leaf).Trim();
-                    TownName = new ACString(_saveFile.ReadByteArray(_offset + 0x42, 0x14), SaveType.New_Leaf).Trim();
+                case SaveType.NewLeaf:
+                case SaveType.WelcomeAmiibo:
+                    Name = new ACString(_saveFile.ReadByteArray(_offset, 0x2A), SaveType.NewLeaf).Trim();
+                    CreatorName = new ACString(_saveFile.ReadByteArray(_offset + 0x2C, 0x14), SaveType.NewLeaf).Trim();
+                    TownName = new ACString(_saveFile.ReadByteArray(_offset + 0x42, 0x14), SaveType.NewLeaf).Trim();
                     //No specific palette in NL/WA
                     GenerateNlPatternBitmap();
                     break;
@@ -488,7 +488,7 @@ namespace ACSE
 
         public void RedrawBitmap()
         {
-            switch (_saveFile.Save_Generation)
+            switch (_saveFile.SaveGeneration)
             {
                 case SaveGeneration.GCN:
                 case SaveGeneration.Wii:
@@ -511,7 +511,7 @@ namespace ACSE
             // Convert to nibble map array of bytes
             var patternBuffer = new byte[bitmapBuffer.Length / 2];
 
-            if (_saveFile.Save_Generation == SaveGeneration.NDS || _saveFile.Save_Generation == SaveGeneration.N3DS)
+            if (_saveFile.SaveGeneration == SaveGeneration.NDS || _saveFile.SaveGeneration == SaveGeneration.N3DS)
             {
                 for (var i = 0; i < patternBuffer.Length; i++)
                 {
@@ -529,7 +529,7 @@ namespace ACSE
                 patternBuffer = PatternUtility.EncodeC4(convertedBuffer);
             }
 
-            switch (_saveFile.Save_Generation)
+            switch (_saveFile.SaveGeneration)
             {
                 case SaveGeneration.GCN:
                 case SaveGeneration.Wii:
@@ -548,28 +548,28 @@ namespace ACSE
 
         public void Write(byte[] newPatternData)
         {
-            if (_saveFile.Save_Generation == SaveGeneration.GCN)
+            if (_saveFile.SaveGeneration == SaveGeneration.GCN)
             {
-                var patternNameSize = _saveFile.Save_Type == SaveType.Animal_Crossing ? 0x10 : 0x0A;
+                var patternNameSize = _saveFile.SaveType == SaveType.AnimalCrossing ? 0x10 : 0x0A;
                 _saveFile.Write(_offset, ACString.GetBytes(Name, patternNameSize));
                 _saveFile.Write(_offset + patternNameSize, Palette);
                 _saveFile.Write(_offset + 0x20, newPatternData);
             }
-            else switch (_saveFile.Save_Type)
+            else switch (_saveFile.SaveType)
             {
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     _saveFile.Write(_offset, newPatternData);
                     // TODO: Town Name & Creator Name (Also for City Folk, New Leaf)
                     _saveFile.Write(_offset + 0x216, ACString.GetBytes(Name, 0x10));
                     _saveFile.Write(_offset + 0x226, (byte)(((Palette & 0x0F) << 4) | (Concept & 0x0F)));
                     break;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     _saveFile.Write(_offset, newPatternData);
                     _saveFile.Write(_offset + 0x84C, ACString.GetBytes(Name, 0x20));
                     _saveFile.Write(_offset + 0x86F, Palette);
                     break;
                 default:
-                    if (_saveFile.Save_Generation == SaveGeneration.N3DS)
+                    if (_saveFile.SaveGeneration == SaveGeneration.N3DS)
                     {
                         _saveFile.Write(_offset, ACString.GetBytes(Name, 0x2A));
                         _saveFile.Write(_offset + 0x6C, newPatternData);

@@ -6,17 +6,17 @@
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Animal_Crossing:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.AnimalCrossing:
                     return 0x3F;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     return 0x47;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     return 0x5F;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     return 0x6C;
-                case SaveType.New_Leaf:
-                case SaveType.Welcome_Amiibo:
+                case SaveType.NewLeaf:
+                case SaveType.WelcomeAmiibo:
                     return 0x112;
                 default:
                     return 0;
@@ -33,19 +33,19 @@
         {
             switch (saveType)
             {
-                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.DoubutsuNoMoriPlus:
                     return 0x1A298; // Verify this.
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     return 0x213A8;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     return 0x22FB0;
-                case SaveType.Wild_World:
+                case SaveType.WildWorld:
                     return 0x15D50;
-                case SaveType.City_Folk:
+                case SaveType.CityFolk:
                     return 0x7352A;
-                case SaveType.New_Leaf:
+                case SaveType.NewLeaf:
                     return 0x65860;
-                case SaveType.Welcome_Amiibo:
+                case SaveType.WelcomeAmiibo:
                     return 0x6B280;
                 default:
                     return -1;
@@ -59,11 +59,11 @@
         /// <param name="player">The Player who it will show as the donor</param>
         public static void FillMuseum(Save saveFile, Player player)
         {
-            int MuseumDataOffset = saveFile.Save_Data_Start_Offset + GetBaseOffset(saveFile.Save_Type);
+            int MuseumDataOffset = saveFile.SaveDataStartOffset + GetBaseOffset(saveFile.SaveType);
             if (MuseumDataOffset != -1)
             {
-                int MuseumDataSize = GetMuseumFieldSize(saveFile.Save_Type);
-                byte PlayerDonationIndex = saveFile.Save_Generation == SaveGeneration.N3DS ? 
+                int MuseumDataSize = GetMuseumFieldSize(saveFile.SaveType);
+                byte PlayerDonationIndex = saveFile.SaveGeneration == SaveGeneration.N3DS ? 
                     (byte)(player.Index + 1) : (byte)(((player.Index + 1) << 4) | (byte)(player.Index + 1));
 
                 for (int i = MuseumDataOffset; i < MuseumDataOffset + MuseumDataSize; i++)
@@ -72,10 +72,10 @@
                 }
 
                 // Set Date/Time for donation to current system time
-                if (saveFile.Save_Generation == SaveGeneration.N3DS)
+                if (saveFile.SaveGeneration == SaveGeneration.N3DS)
                 {
                     byte[] NowDate = new Classes.Utilities.ACDate().ToYearMonthDayDateData();
-                    int DonationDateOffset = saveFile.Save_Data_Start_Offset + (saveFile.Save_Type == SaveType.New_Leaf ? 0x658C8 : 0x6AE38);
+                    int DonationDateOffset = saveFile.SaveDataStartOffset + (saveFile.SaveType == SaveType.NewLeaf ? 0x658C8 : 0x6AE38);
                     for (int i = DonationDateOffset; i < DonationDateOffset + 0x448; i += 4)
                     {
                         saveFile.Write(i, NowDate);
@@ -90,20 +90,20 @@
         /// <param name="saveFile">Current Save File</param>
         public static void ClearMuseum(Save saveFile)
         {
-            int MuseumDataOffset = saveFile.Save_Data_Start_Offset + GetBaseOffset(saveFile.Save_Type);
+            int MuseumDataOffset = saveFile.SaveDataStartOffset + GetBaseOffset(saveFile.SaveType);
             if (MuseumDataOffset != -1)
             {
-                int MuseumDataSize = GetMuseumFieldSize(saveFile.Save_Type);
+                int MuseumDataSize = GetMuseumFieldSize(saveFile.SaveType);
                 for (int i = MuseumDataOffset; i < MuseumDataOffset + MuseumDataSize; i++)
                 {
                     saveFile.Write(i, (byte)0);
                 }
 
                 // Clear Date/Time for donation to current system time
-                if (saveFile.Save_Generation == SaveGeneration.N3DS)
+                if (saveFile.SaveGeneration == SaveGeneration.N3DS)
                 {
                     byte[] ClearedDate = new byte[4];
-                    int DonationDateOffset = saveFile.Save_Data_Start_Offset + (saveFile.Save_Type == SaveType.New_Leaf ? 0x65948 : 0x6AEB8);
+                    int DonationDateOffset = saveFile.SaveDataStartOffset + (saveFile.SaveType == SaveType.NewLeaf ? 0x65948 : 0x6AEB8);
                     for (int i = DonationDateOffset; i < DonationDateOffset + 0x448; i += 4)
                     {
                         saveFile.Write(i, ClearedDate);

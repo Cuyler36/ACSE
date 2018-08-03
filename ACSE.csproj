@@ -4869,6 +4869,7 @@
     <Compile Include="Classes\Messages\MessageBoardPost.cs" />
     <Compile Include="Classes\Museum.cs" />
     <Compile Include="Classes\Player\PlayerInfo.cs" />
+    <Compile Include="Classes\SaveDataManager.cs" />
     <Compile Include="Classes\Saves\GCNSave.cs" />
     <Compile Include="Classes\Saves\N3DSSave.cs" />
     <Compile Include="Classes\Saves\N64Save.cs" />

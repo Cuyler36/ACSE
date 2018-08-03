@@ -27,7 +27,7 @@
                 return false;
             }
 
-            byte[] EmotionSet = GetEmotionSet(Save.Save_Generation);
+            byte[] EmotionSet = GetEmotionSet(Save.SaveGeneration);
 
             if (EmotionSet == null)
             {
@@ -49,7 +49,7 @@
                 return false;
             }
 
-            byte[] EmotionSet = GetEmotionSet(Save.Save_Generation);
+            byte[] EmotionSet = GetEmotionSet(Save.SaveGeneration);
 
             if (EmotionSet == null)
             {

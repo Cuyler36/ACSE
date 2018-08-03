@@ -22,15 +22,15 @@ namespace ACSE
             _saveData = save;
             Index = idx;
             Offset = offset;
-            Offsets = VillagerInfo.GetVillagerInfo(save.Save_Type);
+            Offsets = VillagerInfo.GetVillagerInfo(save.SaveType);
 
             var structType = typeof(VillagerDataStruct);
             var offsetType = typeof(VillagerOffsets);
 
-            if (save.Save_Type == SaveType.Wild_World)
+            if (save.SaveType == SaveType.WildWorld)
                 Exists = _saveData.ReadByte(offset + Offsets.VillagerId) != 0 && _saveData.ReadByte(offset + Offsets.VillagerId) != 0xFF;
             else
-                Exists = _saveData.ReadUInt16(offset + Offsets.VillagerId, save.Is_Big_Endian) != 0 && _saveData.ReadUInt16(offset + Offsets.VillagerId, save.Is_Big_Endian) != 0xFFFF;
+                Exists = _saveData.ReadUInt16(offset + Offsets.VillagerId, save.IsBigEndian) != 0 && _saveData.ReadUInt16(offset + Offsets.VillagerId, save.IsBigEndian) != 0xFFFF;
             object boxedData = new VillagerDataStruct();
             foreach (var field in offsetType.GetFields(BindingFlags.Public | BindingFlags.Instance))
             {
@@ -42,7 +42,7 @@ namespace ACSE
                 var fieldType = structType.GetField(field.Name).FieldType;
                 var dataOffset = Offset + (int)field.GetValue(Offsets);
 
-                if (field.Name == "Villager_ID" && save.Save_Type == SaveType.Wild_World) // Villager IDs are only a byte in WW
+                if (field.Name == "Villager_ID" && save.SaveType == SaveType.WildWorld) // Villager IDs are only a byte in WW
                     structType.GetField(field.Name).SetValue(boxedData, _saveData.ReadByte(dataOffset));
                 else if (fieldType == typeof(byte))
                     structType.GetField(field.Name).SetValue(boxedData, _saveData.ReadByte(dataOffset));
@@ -51,39 +51,39 @@ namespace ACSE
                         (int)offsetType.GetField(field.Name + "Count").GetValue(Offsets)));
                 else if (fieldType == typeof(ushort))
                     structType.GetField(field.Name).SetValue(boxedData,
-                        _saveData.ReadUInt16(dataOffset, _saveData.Is_Big_Endian));
+                        _saveData.ReadUInt16(dataOffset, _saveData.IsBigEndian));
                 else if (fieldType == typeof(ushort[]))
                     structType.GetField(field.Name).SetValue(boxedData, _saveData.ReadUInt16Array(dataOffset,
                         (int)offsetType.GetField(field.Name + "Count").GetValue(Offsets),
-                        _saveData.Is_Big_Endian));
+                        _saveData.IsBigEndian));
                 else if (fieldType == typeof(uint))
                     structType.GetField(field.Name).SetValue(boxedData,
-                        _saveData.ReadUInt32(dataOffset, _saveData.Is_Big_Endian));
+                        _saveData.ReadUInt32(dataOffset, _saveData.IsBigEndian));
                 else if (fieldType == typeof(string))
                     structType.GetField(field.Name).SetValue(boxedData, new ACString(_saveData.ReadByteArray(
                                 dataOffset,
                                 (int)offsetType.GetField(field.Name + "Size").GetValue(Offsets)),
-                            _saveData.Save_Type)
+                            _saveData.SaveType)
                         .Trim());
                 else if (fieldType == typeof(Item))
                     structType.GetField(field.Name).SetValue(boxedData,
-                        save.Save_Generation == SaveGeneration.N3DS
+                        save.SaveGeneration == SaveGeneration.N3DS
                             ? new Item(_saveData.ReadUInt32(dataOffset))
-                            : new Item(_saveData.ReadUInt16(dataOffset, _saveData.Is_Big_Endian)));
+                            : new Item(_saveData.ReadUInt16(dataOffset, _saveData.IsBigEndian)));
                 else if (fieldType == typeof(Item[]))
                 {
                     var collection =
                         new Item[(int)offsetType.GetField(field.Name + "Count").GetValue(Offsets)];
                     for (var i = 0; i < collection.Length; i++)
                     {
-                        if (save.Save_Generation == SaveGeneration.N3DS)
+                        if (save.SaveGeneration == SaveGeneration.N3DS)
                         {
                             collection[i] = new Item(_saveData.ReadUInt32(dataOffset + i * 4));
                         }
                         else
                         {
                             collection[i] =
-                                new Item(_saveData.ReadUInt16(dataOffset + i * 2, _saveData.Is_Big_Endian));
+                                new Item(_saveData.ReadUInt16(dataOffset + i * 2, _saveData.IsBigEndian));
                         }
                     }
 
@@ -94,13 +94,13 @@ namespace ACSE
             Data = (VillagerDataStruct)boxedData;
 
             // Set Villager Name for e+ TODO: Separate translated e+ & untranslated e+.
-            if (_saveData.Save_Type == SaveType.Doubutsu_no_Mori_e_Plus)
+            if (_saveData.SaveType == SaveType.DoubutsuNoMoriEPlus)
             {
                 Name = _saveData.ReadString(Offset + 0xC, 6);
             }
 
             // Create Player Relations;
-            if (save.Save_Type != SaveType.Animal_Crossing) return;
+            if (save.SaveType != SaveType.AnimalCrossing) return;
             {
                 PlayerRelations = new PlayerRelation[7];
                 for (var i = 0; i < 7; i++)
@@ -112,7 +112,7 @@ namespace ACSE
 
         public bool Boxed()
         {
-            if (_saveData.Save_Generation == SaveGeneration.N3DS)
+            if (_saveData.SaveGeneration == SaveGeneration.N3DS)
             {
                 return (Data.Status & 1) == 1;
             }
@@ -132,10 +132,10 @@ namespace ACSE
 
         public void ImportDlcVillager(byte[] dlcData, int dlcIndex)
         {
-            if (_saveData.Save_Type != SaveType.Doubutsu_no_Mori_e_Plus || dlcData.Length < 0x10 ||
+            if (_saveData.SaveType != SaveType.DoubutsuNoMoriEPlus || dlcData.Length < 0x10 ||
                 dlcData.Length > 0x73B || Encoding.ASCII.GetString(dlcData, 0, 4) != "Yaz0") return;
 
-            var offset = _saveData.Save_Data_Start_Offset + 0x24494 + dlcIndex * 0x749;
+            var offset = _saveData.SaveDataStartOffset + 0x24494 + dlcIndex * 0x749;
             _saveData.Write(offset, dlcData);
         }
 
@@ -146,12 +146,12 @@ namespace ACSE
             {
                 if (Offsets.TownId != -1)
                 {
-                    Data.TownId = _saveData.ReadUInt16(_saveData.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Town_ID, _saveData.Is_Big_Endian); // Might not be UInt16 in all games
+                    Data.TownId = _saveData.ReadUInt16(_saveData.SaveDataStartOffset + MainForm.Current_Save_Info.SaveOffsets.TownId, _saveData.IsBigEndian); // Might not be UInt16 in all games
                 }
                 if (Offsets.TownName != -1)
                 {
-                    Data.TownName = _saveData.ReadString(_saveData.Save_Data_Start_Offset + MainForm.Current_Save_Info.Save_Offsets.Town_Name,
-                        MainForm.Current_Save_Info.Save_Offsets.Town_NameSize);
+                    Data.TownName = _saveData.ReadString(_saveData.SaveDataStartOffset + MainForm.Current_Save_Info.SaveOffsets.TownName,
+                        MainForm.Current_Save_Info.SaveOffsets.TownNameSize);
                 }
             }
 
@@ -170,12 +170,12 @@ namespace ACSE
 
                 switch (field.Name)
                 {
-                    case "Villager_ID" when _saveData.Save_Type == SaveType.Wild_World:
+                    case "Villager_ID" when _saveData.SaveType == SaveType.WildWorld:
                         _saveData.Write(dataOffset, Convert.ToByte(dataObject));
                         break;
                     //Might not encompass City Folk
                     case "Villager_ID":
-                        _saveData.Write(dataOffset, dataObject, _saveData.Is_Big_Endian);
+                        _saveData.Write(dataOffset, dataObject, _saveData.IsBigEndian);
                         break;
                     default:
                         if (fieldType == typeof(string))
@@ -188,13 +188,13 @@ namespace ACSE
                         }
                         else if (fieldType == typeof(Item))
                         {
-                            switch (_saveData.Save_Generation)
+                            switch (_saveData.SaveGeneration)
                             {
                                 case SaveGeneration.N3DS:
                                     _saveData.Write(dataOffset, ItemData.EncodeItem((Item)dataObject));
                                     break;
                                 default:
-                                    _saveData.Write(dataOffset, ((Item)dataObject).ItemId, _saveData.Is_Big_Endian);
+                                    _saveData.Write(dataOffset, ((Item)dataObject).ItemId, _saveData.IsBigEndian);
                                     break;
                             }
                         }
@@ -203,21 +203,21 @@ namespace ACSE
                             if (dataObject is Item[] collection)
                                 for (var i = 0; i < collection.Length; i++)
                                 {
-                                    switch (_saveData.Save_Generation)
+                                    switch (_saveData.SaveGeneration)
                                     {
                                         case SaveGeneration.N3DS:
                                             _saveData.Write(dataOffset + i * 4, ItemData.EncodeItem(collection[i]));
                                             break;
                                         default:
                                             _saveData.Write(dataOffset + i * 2, collection[i].ItemId,
-                                                _saveData.Is_Big_Endian);
+                                                _saveData.IsBigEndian);
                                             break;
                                     }
                                 }
                         }
                         else if (!fieldType.IsClass) // Don't write classes. If we're here, the that means that we haven't handled saving the class.
                         {
-                            _saveData.Write(dataOffset, dataObject, _saveData.Is_Big_Endian);
+                            _saveData.Write(dataOffset, dataObject, _saveData.IsBigEndian);
                         }
 
                         break;
@@ -237,16 +237,16 @@ namespace ACSE
             }
 
             // Write the NameId for N64/GC/iQue games, & name for e+. TODO: Check if Wild World also has this.
-            if (_saveData.Save_Generation != SaveGeneration.N64 && _saveData.Save_Generation != SaveGeneration.GCN &&
-                _saveData.Save_Generation != SaveGeneration.iQue) return;
+            if (_saveData.SaveGeneration != SaveGeneration.N64 && _saveData.SaveGeneration != SaveGeneration.GCN &&
+                _saveData.SaveGeneration != SaveGeneration.iQue) return;
 
-            switch (_saveData.Save_Type)
+            switch (_saveData.SaveType)
             {
-                case SaveType.Doubutsu_no_Mori_Plus:
-                case SaveType.Animal_Crossing:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.AnimalCrossing:
                     _saveData.Write(Offset + Offsets.NameId, Index == 15 ? (byte)0xFF : (byte)Data.VillagerId);
                     break;
-                case SaveType.Doubutsu_no_Mori_e_Plus: // e+ doesn't set this byte, as they changed the SetNameID function
+                case SaveType.DoubutsuNoMoriEPlus: // e+ doesn't set this byte, as they changed the SetNameID function
                     _saveData.Write(Offset + 0xC, ACString.GetBytes(Name), false, 6);
                     break;
                 default:

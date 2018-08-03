@@ -8,11 +8,11 @@
         public GCNPlayerMail(Save SaveFile, Player Owner, int Index)
         {
             this.Index = Index;
-            switch (SaveFile.Save_Type)
+            switch (SaveFile.SaveType)
             {
-                case SaveType.Doubutsu_no_Mori_Plus:
+                case SaveType.DoubutsuNoMoriPlus:
                     break;
-                case SaveType.Animal_Crossing:
+                case SaveType.AnimalCrossing:
                     Offset = Owner.Offset + 0x4E0 + Index * 0x12A;
                     Receipiant = SaveFile.ReadString(Offset, 8);
                     TownName = SaveFile.ReadString(Offset + 8, 8);
@@ -35,7 +35,7 @@
                     Contents = SaveFile.ReadString(Offset + 0x4A, 0xC0);
                     Footer = SaveFile.ReadString(Offset + 0x10A, 0x20);
                     break;
-                case SaveType.Doubutsu_no_Mori_e_Plus:
+                case SaveType.DoubutsuNoMoriEPlus:
                     break;
             }
         }

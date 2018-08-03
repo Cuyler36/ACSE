@@ -23,13 +23,13 @@ namespace ACSE
 
         internal string GetBackupFileName(Save SaveFile)
         {
-            string SaveFileName = SaveFile.Save_Name + "_Backup_";
+            string SaveFileName = SaveFile.SaveName + "_Backup_";
             string BackupsLocation = GetBackupLocation();
             int BackupNumber = 0;
-            while (File.Exists(BackupsLocation + Path.DirectorySeparatorChar + SaveFileName + BackupNumber + SaveFile.Save_Extension))
+            while (File.Exists(BackupsLocation + Path.DirectorySeparatorChar + SaveFileName + BackupNumber + SaveFile.SaveExtension))
                 BackupNumber++;
 
-            return BackupsLocation + Path.DirectorySeparatorChar + SaveFileName + BackupNumber + SaveFile.Save_Extension;
+            return BackupsLocation + Path.DirectorySeparatorChar + SaveFileName + BackupNumber + SaveFile.SaveExtension;
         }
 
         public Backup(Save SaveFile)
@@ -42,13 +42,13 @@ namespace ACSE
                 {
                     using (var BackupFile = File.Create(BackupLocation))
                     {
-                        BackupFile.Write(SaveFile.Original_Save_Data, 0, SaveFile.Original_Save_Data.Length);
-                        MainForm.Debug_Manager.WriteLine(string.Format("Save File {0} was backuped to {1}", SaveFile.Save_Name, BackupLocation), DebugLevel.Info);
+                        BackupFile.Write(SaveFile.OriginalSaveData, 0, SaveFile.OriginalSaveData.Length);
+                        MainForm.Debug_Manager.WriteLine(string.Format("Save File {0} was backuped to {1}", SaveFile.SaveName, BackupLocation), DebugLevel.Info);
                     }
                 }
                 catch
                 {
-                    MainForm.Debug_Manager.WriteLine(string.Format("Failed to create backup for save {0} at {1}", SaveFile.Save_Name, BackupLocation), DebugLevel.Error);
+                    MainForm.Debug_Manager.WriteLine(string.Format("Failed to create backup for save {0} at {1}", SaveFile.SaveName, BackupLocation), DebugLevel.Error);
                 }
             }
         }
