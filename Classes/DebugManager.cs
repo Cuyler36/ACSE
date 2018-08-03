@@ -25,7 +25,7 @@ namespace ACSE
 
             if (Properties.Settings.Default.DebugLevel > 0)
             {
-                InitiateDebugLogWriter();
+                InitializeDebugLogWriter();
                 Enabled = true;
                 WriteLine("========== Debug Log Initiated ==========");
             }
@@ -52,7 +52,7 @@ namespace ACSE
             Enabled = false;
         }
 
-        public void InitiateDebugLogWriter()
+        public void InitializeDebugLogWriter()
         {
             CloseDebugLogWriter();
 
@@ -101,18 +101,16 @@ namespace ACSE
 
         public void WriteLine(string contents, DebugLevel level = DebugLevel.Info)
         {
-            if (_logWriter != null && level <= Properties.Settings.Default.DebugLevel)
+            if (_logWriter == null || level > Properties.Settings.Default.DebugLevel) return;
+            if (!CheckLogSizeOk())
             {
-                if (!CheckLogSizeOk())
-                {
-                    CloseDebugLogWriter();
-                    DeleteLogFile(GetLogFilePath());
-                    InitiateDebugLogWriter();
-                }
-                _logWriter.WriteLine(
-                    $"[{level}] - ({(MainForm.SaveFile != null ? MainForm.SaveFile.SaveType.ToString().Replace("_", " ") : "No Save")}) - {DateTime.Now} => {contents}");
-                _logWriter.Flush();
+                CloseDebugLogWriter();
+                DeleteLogFile(GetLogFilePath());
+                InitializeDebugLogWriter();
             }
+            _logWriter.WriteLine(
+                $"[{level}] - ({(MainForm.SaveFile != null ? MainForm.SaveFile.SaveType.ToString().Replace("_", " ") : "No Save")}) - {DateTime.Now} => {contents}");
+            _logWriter.Flush();
         }
     }
 }
