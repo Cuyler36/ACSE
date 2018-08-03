@@ -133,11 +133,11 @@ namespace ACSE
             playersTab.Controls.Add(_tpcPicture);
 
             _mainTabs = new TabPage[tabControl1.TabCount];
-            for (int i = 0; i < tabControl1.TabCount; i++)
+            for (var i = 0; i < tabControl1.TabCount; i++)
                 _mainTabs[i] = tabControl1.TabPages[i];
-            for (int i = 0; i < playerEditorSelect.TabCount; i++)
+            for (var i = 0; i < playerEditorSelect.TabCount; i++)
                 _playerTabs[i] = playerEditorSelect.TabPages[i];
-            for (int i = 0; i < patternGroupTabControl.TabCount; i++)
+            for (var i = 0; i < patternGroupTabControl.TabCount; i++)
                 _playerPatternTabs[i] = patternGroupTabControl.TabPages[i];
 
             selectedItem.SelectedValueChanged += ItemSelectedIndexChanged;
@@ -1083,7 +1083,7 @@ namespace ACSE
             if (save.SaveGeneration != SaveGeneration.NDS)
             {
                 houseOwnerComboBox.Items.Add("No One");
-                for (int i = 0; i < 4; i++)
+                for (var i = 0; i < 4; i++)
                 {
                     if (_players[i] != null && _players[i].Exists)
                     {
@@ -2730,7 +2730,7 @@ namespace ACSE
             ((PictureBox) sender)?.Refresh();
         }
 
-        int _lastAcreX = -1, _lastAcreY = -1;
+        private int _lastAcreX = -1, _lastAcreY = -1;
         private void AcreEditorMouseMove(object sender, MouseEventArgs e, bool island = false, bool forceOverride = false)
         {
             ((Control) sender).Capture = false;
@@ -4723,8 +4723,7 @@ namespace ACSE
         private void GenerateRandomTownToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (_loading || SaveFile == null) return;
-            int? seed;
-            seed = !string.IsNullOrWhiteSpace(_seedBox.Text) ? int.Parse(_seedBox.Text) : Environment.TickCount;
+            int? seed = !string.IsNullOrWhiteSpace(_seedBox.Text) ? int.Parse(_seedBox.Text) : Environment.TickCount;
 
             switch (SaveFile.SaveGeneration)
             {
