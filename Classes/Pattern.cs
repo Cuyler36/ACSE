@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using ACSE.Classes.Utilities;
+using ACSE.Utilities;
 
 namespace ACSE
 {
@@ -442,7 +442,7 @@ namespace ACSE
             switch (_saveFile.SaveType)
             {
                 case SaveType.AnimalCrossing:
-                    Name = new ACString(_saveFile.ReadByteArray(_offset, 0x10), _saveFile.SaveType).Trim();
+                    Name = new AcString(_saveFile.ReadByteArray(_offset, 0x10), _saveFile.SaveType).Trim();
                     Palette = _saveFile.ReadByte(_offset + 0x10);
                     PaletteData = PatternData.AcPaletteData[Palette];
                     GeneratePatternBitmap();
@@ -450,33 +450,33 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DoubutsuNoMoriPlus:
-                    Name = new ACString(_saveFile.ReadByteArray(_offset, 0xA), _saveFile.SaveType).Trim();
+                    Name = new AcString(_saveFile.ReadByteArray(_offset, 0xA), _saveFile.SaveType).Trim();
                     Palette = _saveFile.ReadByte(_offset + 0xA);
                     PaletteData = PatternData.AcPaletteData[Palette];
                     GeneratePatternBitmap();
                     break;
                 case SaveType.WildWorld:
-                    TownName = new ACString(_saveFile.ReadByteArray(_offset + 0x202, 8), SaveType.WildWorld).Trim();
-                    CreatorName = new ACString(_saveFile.ReadByteArray(_offset + 0x20C, 8), SaveType.WildWorld).Trim();
-                    Name = new ACString(_saveFile.ReadByteArray(_offset + 0x216, 16), SaveType.WildWorld).Trim();
+                    TownName = new AcString(_saveFile.ReadByteArray(_offset + 0x202, 8), SaveType.WildWorld).Trim();
+                    CreatorName = new AcString(_saveFile.ReadByteArray(_offset + 0x20C, 8), SaveType.WildWorld).Trim();
+                    Name = new AcString(_saveFile.ReadByteArray(_offset + 0x216, 16), SaveType.WildWorld).Trim();
                     Palette = (byte)((_saveFile.ReadByte(_offset + 0x226) & 0xF0) >> 4);
                     Concept = (byte)(_saveFile.ReadByte(_offset + 0x226) & 0x0F);
                     PaletteData = PatternData.WwPaletteData[Palette];
                     GenerateWwPatternBitmap();
                     break;
                 case SaveType.CityFolk:
-                    TownName = new ACString(_saveFile.ReadByteArray(_offset + 0x822, 16), SaveType.CityFolk).Trim();
-                    CreatorName = new ACString(_saveFile.ReadByteArray(_offset + 0x838, 16), SaveType.CityFolk).Trim();
-                    Name = new ACString(_saveFile.ReadByteArray(_offset + 0x84C, 32), SaveType.CityFolk).Trim();
+                    TownName = new AcString(_saveFile.ReadByteArray(_offset + 0x822, 16), SaveType.CityFolk).Trim();
+                    CreatorName = new AcString(_saveFile.ReadByteArray(_offset + 0x838, 16), SaveType.CityFolk).Trim();
+                    Name = new AcString(_saveFile.ReadByteArray(_offset + 0x84C, 32), SaveType.CityFolk).Trim();
                     Palette = _saveFile.ReadByte(_offset + 0x86F);
                     PaletteData = PatternData.CfPaletteData[Palette];
                     GeneratePatternBitmap();
                     break;
                 case SaveType.NewLeaf:
                 case SaveType.WelcomeAmiibo:
-                    Name = new ACString(_saveFile.ReadByteArray(_offset, 0x2A), SaveType.NewLeaf).Trim();
-                    CreatorName = new ACString(_saveFile.ReadByteArray(_offset + 0x2C, 0x14), SaveType.NewLeaf).Trim();
-                    TownName = new ACString(_saveFile.ReadByteArray(_offset + 0x42, 0x14), SaveType.NewLeaf).Trim();
+                    Name = new AcString(_saveFile.ReadByteArray(_offset, 0x2A), SaveType.NewLeaf).Trim();
+                    CreatorName = new AcString(_saveFile.ReadByteArray(_offset + 0x2C, 0x14), SaveType.NewLeaf).Trim();
+                    TownName = new AcString(_saveFile.ReadByteArray(_offset + 0x42, 0x14), SaveType.NewLeaf).Trim();
                     //No specific palette in NL/WA
                     GenerateNlPatternBitmap();
                     break;
@@ -551,7 +551,7 @@ namespace ACSE
             if (_saveFile.SaveGeneration == SaveGeneration.GCN)
             {
                 var patternNameSize = _saveFile.SaveType == SaveType.AnimalCrossing ? 0x10 : 0x0A;
-                _saveFile.Write(_offset, ACString.GetBytes(Name, patternNameSize));
+                _saveFile.Write(_offset, AcString.GetBytes(Name, patternNameSize));
                 _saveFile.Write(_offset + patternNameSize, Palette);
                 _saveFile.Write(_offset + 0x20, newPatternData);
             }
@@ -560,18 +560,18 @@ namespace ACSE
                 case SaveType.WildWorld:
                     _saveFile.Write(_offset, newPatternData);
                     // TODO: Town Name & Creator Name (Also for City Folk, New Leaf)
-                    _saveFile.Write(_offset + 0x216, ACString.GetBytes(Name, 0x10));
+                    _saveFile.Write(_offset + 0x216, AcString.GetBytes(Name, 0x10));
                     _saveFile.Write(_offset + 0x226, (byte)(((Palette & 0x0F) << 4) | (Concept & 0x0F)));
                     break;
                 case SaveType.CityFolk:
                     _saveFile.Write(_offset, newPatternData);
-                    _saveFile.Write(_offset + 0x84C, ACString.GetBytes(Name, 0x20));
+                    _saveFile.Write(_offset + 0x84C, AcString.GetBytes(Name, 0x20));
                     _saveFile.Write(_offset + 0x86F, Palette);
                     break;
                 default:
                     if (_saveFile.SaveGeneration == SaveGeneration.N3DS)
                     {
-                        _saveFile.Write(_offset, ACString.GetBytes(Name, 0x2A));
+                        _saveFile.Write(_offset, AcString.GetBytes(Name, 0x2A));
                         _saveFile.Write(_offset + 0x6C, newPatternData);
                         // TODO: Write Palette (since it's customizable)
                     }

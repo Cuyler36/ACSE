@@ -2,51 +2,51 @@
 {
     public static class UInt16Extension
     {
-        public static UInt16 Reverse(this UInt16 Value)
+        public static ushort Reverse(this ushort value)
         {
-            return (ushort)((Value << 8) | (Value >> 8));
+            return (ushort)((value << 8) | (value >> 8));
         }
     }
 
     public static class Int16Extension
     {
-        public static Int16 Reverse(this Int16 Value)
+        public static short Reverse(this short value)
         {
-            return (short)((Value << 8) | (Value >> 8));
+            return (short)((value << 8) | (value >> 8));
         }
     }
 
     public static class UInt32Extension
     {
-        public static UInt32 Reverse(this UInt32 Value)
+        public static uint Reverse(this uint value)
         {
-            return ((Value << 24) | ((Value >> 24) & 0xFF) | ((Value & 0xFF00) << 8) | ((Value >> 8) & 0xFF00));
+            return ((value << 24) | ((value >> 24) & 0xFF) | ((value & 0xFF00) << 8) | ((value >> 8) & 0xFF00));
         }
     }
 
     public static class Int32Extension
     {
-        public static Int32 Reverse(this Int32 Value)
+        public static int Reverse(this int value)
         {
-            return ((Value << 24) | ((Value >> 24) & 0xFF) | ((Value & 0xFF00) << 8) | ((Value >> 8) & 0xFF00));
+            return ((value << 24) | ((value >> 24) & 0xFF) | ((value & 0xFF00) << 8) | ((value >> 8) & 0xFF00));
         }
     }
 
     public static class UInt64Extension
     {
-        public static UInt64 Reverse(this UInt64 Value)
+        public static ulong Reverse(this ulong value)
         {
-            return (((Value & 0xFF00000000000000) >> 56) | ((Value & 0xFF000000000000) >> 40) | ((Value & 0xFF0000000000) >> 24) | ((Value & 0xFF00000000) >> 8)
-                | ((Value & 0xFF000000) << 8) | ((Value & 0xFF0000) << 24) | ((Value & 0xFF00) << 40) | ((Value & 0xFF) << 56));
+            return (((value & 0xFF00000000000000) >> 56) | ((value & 0xFF000000000000) >> 40) | ((value & 0xFF0000000000) >> 24) | ((value & 0xFF00000000) >> 8)
+                | ((value & 0xFF000000) << 8) | ((value & 0xFF0000) << 24) | ((value & 0xFF00) << 40) | ((value & 0xFF) << 56));
         }
     }
 
     public static class Int64Extension
     {
-        public static Int64 Reverse(this Int64 Value)
+        public static long Reverse(this long value)
         {
-            return (((Value >> 56) & 0xFF) | ((Value & 0xFF000000000000) >> 40) | ((Value & 0xFF0000000000) >> 24) | ((Value & 0xFF00000000) >> 8)
-                | ((Value & 0xFF000000) << 8) | ((Value & 0xFF0000) << 24) | ((Value & 0xFF00) << 40) | ((Value & 0xFF) << 56));
+            return (((value >> 56) & 0xFF) | ((value & 0xFF000000000000) >> 40) | ((value & 0xFF0000000000) >> 24) | ((value & 0xFF00000000) >> 8)
+                | ((value & 0xFF000000) << 8) | ((value & 0xFF0000) << 24) | ((value & 0xFF00) << 40) | ((value & 0xFF) << 56));
         }
     }
 }

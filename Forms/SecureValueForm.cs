@@ -18,11 +18,11 @@ namespace ACSE
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (MainForm.Save_File != null && (MainForm.Save_File.SaveGeneration == SaveGeneration.N3DS))
+            if (MainForm.SaveFile != null && (MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS))
             {
-                if (ulong.TryParse(textBox1.Text, NumberStyles.AllowHexSpecifier, null, out ulong Secure_NAND_Value))
+                if (ulong.TryParse(textBox1.Text, NumberStyles.AllowHexSpecifier, null, out var secureNandValue))
                 {
-                    MainForm.Save_File.Write(0, Secure_NAND_Value);
+                    MainForm.SaveFile.Write(0, secureNandValue);
                 }
             }
             Hide();

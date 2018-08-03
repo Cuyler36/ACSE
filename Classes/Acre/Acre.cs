@@ -122,7 +122,7 @@ namespace ACSE
         /// <returns>bool ItemsWereLoaded</returns>
         public bool LoadDefaultItems(Save saveFile)
         {
-            var defaultAcreDataFolder = MainForm.Assembly_Location + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + "Default Acre Items";
+            var defaultAcreDataFolder = MainForm.AssemblyLocation + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + "Default Acre Items";
 
             switch (saveFile.SaveGeneration)
             {
@@ -152,7 +152,7 @@ namespace ACSE
             }
             catch
             {
-                MainForm.Debug_Manager.WriteLine(
+                MainForm.DebugManager.WriteLine(
                     $"Unable to open default acre data for Acre Id 0x{BaseAcreId:X4}", DebugLevel.Error);
             }
 

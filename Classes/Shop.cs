@@ -27,54 +27,50 @@
 
     public static class ShopInfo
     {
-        private static readonly ShopOffsets AnimalCrossing_ShopOffsets = new ShopOffsets
+        private static readonly ShopOffsets AnimalCrossingShopOffsets = new ShopOffsets
         {
             FurnitureShopUpgrade = 0x20466
         };
 
-        private static readonly ShopOffsets WelcomeAmiibo_ShopOffsets = new ShopOffsets
+        private static readonly ShopOffsets WelcomeAmiiboShopOffsets = new ShopOffsets
         {
             FurnitureShopUpgrade = 0x621E4,
             GardenShopUpgrade = 0x66674
         };
 
-        private static readonly string[] NookShopNames = new string[4]
-        {
+        private static readonly string[] NookShopNames = {
             "Nook's Cranny", "Nook 'n' Go", "Nookway", "Nookington's"
         };
 
-        private static readonly string[] NewLeaf_NookShopNames = new string[5]
-        {
+        private static readonly string[] NewLeafNookShopNames = {
             "Nookling Junction", "T&T Mart", "Super T&T", "T.I.Y.", "T&T Emporium"
         };
 
-        public static ShopOffsets GetShopOffsets(SaveType Save_Type)
+        public static ShopOffsets GetShopOffsets(SaveType saveType)
         {
-            switch (Save_Type)
+            switch (saveType)
             {
                 case SaveType.AnimalCrossing:
-                    return AnimalCrossing_ShopOffsets;
+                    return AnimalCrossingShopOffsets;
                 case SaveType.WelcomeAmiibo:
-                    return WelcomeAmiibo_ShopOffsets;
+                    return WelcomeAmiiboShopOffsets;
                 default:
                     return null;
             }
         }
 
-        public static string GetShopName(SaveGeneration Generation, byte ShopSize)
+        public static string GetShopName(SaveGeneration generation, byte shopSize)
         {
-            if (Generation == SaveGeneration.N3DS)
+            if (generation == SaveGeneration.N3DS)
             {
-                if (ShopSize > 4)
-                    ShopSize = 4;
-                return NewLeaf_NookShopNames[ShopSize];
+                if (shopSize > 4)
+                    shopSize = 4;
+                return NewLeafNookShopNames[shopSize];
             }
-            else
-            {
-                if (ShopSize > 3)
-                    ShopSize = 3;
-                return NookShopNames[ShopSize];
-            }
+
+            if (shopSize > 3)
+                shopSize = 3;
+            return NookShopNames[shopSize];
         }
     }
 
@@ -104,82 +100,75 @@
 
         public FurnitureShop(Save saveFile, int offset) : base(saveFile, offset)
         {
-            Item[] Items = null;
-
             Size = GetSize(saveFile.SaveGeneration);
             Name = ShopInfo.GetShopName(saveFile.SaveGeneration, Size);
-            int ItemCount = 0;
+            var itemCount = 0;
 
             switch (saveFile.SaveGeneration)
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
                     if (Size == 0)
-                        ItemCount = 0;
+                        itemCount = 0;
                     else if (Size == 1)
-                        ItemCount = 0;
+                        itemCount = 0;
                     else if (Size == 2)
-                        ItemCount = 0;
+                        itemCount = 0;
                     else
-                        ItemCount = 35;
+                        itemCount = 35;
                     break;
                 case SaveGeneration.N3DS:
                     break;
             }
 
-            Items = new Item[ItemCount];
-            for (int i = 0; i < ItemCount; i++)
+            var items = new Item[itemCount];
+            for (var i = 0; i < itemCount; i++)
             {
                 if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
                 {
-                    Items[i] = new Item(SaveFile.ReadUInt32(Offset + ShopOffsets.FurnitureShop + i * 4));
+                    items[i] = new Item(SaveFile.ReadUInt32(Offset + ShopOffsets.FurnitureShop + i * 4));
                 }
                 else
                 {
-                    Items[i] = new Item(SaveFile.ReadUInt16(Offset + ShopOffsets.FurnitureShop + i * 2));
+                    items[i] = new Item(SaveFile.ReadUInt16(Offset + ShopOffsets.FurnitureShop + i * 2));
                 }
             }
 
-            Stock = Items;
+            Stock = items;
         }
 
-        public byte GetSize(SaveGeneration Generation)
+        public byte GetSize(SaveGeneration generation)
         {
-            var SaveFile = MainForm.Save_File;
-            var ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.SaveType);
-            if (ShopOffsets != null)
+            var saveFile = MainForm.SaveFile;
+            var shopOffsets = ShopInfo.GetShopOffsets(saveFile.SaveType);
+            if (shopOffsets == null) return 0;
+            switch (generation)
             {
-                switch (Generation)
-                {
-                    case SaveGeneration.N64:
-                    case SaveGeneration.GCN:
-                        return (byte)(SaveFile.ReadByte(SaveFile.SaveDataStartOffset + ShopOffsets.FurnitureShopUpgrade) >> 6);
-                    case SaveGeneration.N3DS:
-                        return SaveFile.ReadByte(SaveFile.SaveDataStartOffset + ShopOffsets.FurnitureShopUpgrade);
-                    default:
-                        return 0;
-                }
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                    return (byte)(saveFile.ReadByte(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade) >> 6);
+                case SaveGeneration.N3DS:
+                    return saveFile.ReadByte(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade);
+                default:
+                    return 0;
             }
-            return 0;
         }
 
-        public void SetSize(byte Size)
+        public void SetSize(byte size)
         {
-            var SaveFile = MainForm.Save_File;
-            var ShopOffsets = ShopInfo.GetShopOffsets(SaveFile.SaveType);
-            if (ShopOffsets != null)
+            var saveFile = MainForm.SaveFile;
+            var shopOffsets = ShopInfo.GetShopOffsets(saveFile.SaveType);
+            if (shopOffsets == null) return;
+            switch (saveFile.SaveGeneration)
             {
-                switch (SaveFile.SaveGeneration)
-                {
-                    case SaveGeneration.N64:
-                    case SaveGeneration.GCN:
-                        SaveFile.Write(SaveFile.SaveDataStartOffset + ShopOffsets.FurnitureShopUpgrade,
-                            (byte)((SaveFile.ReadByte(SaveFile.SaveDataStartOffset + ShopOffsets.FurnitureShopUpgrade) & 0x3F) | ((Size & 3) << 6)));
-                        break;
-                    case SaveGeneration.N3DS:
-                        SaveFile.Write(SaveFile.SaveDataStartOffset + ShopOffsets.FurnitureShopUpgrade, Size);
-                        break;
-                }
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                    saveFile.Write(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade,
+                        (byte)((saveFile.ReadByte(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade) & 0x3F) | ((size & 3) << 6)));
+                    break;
+                case SaveGeneration.N3DS:
+                    saveFile.Write(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade, size);
+                    break;
             }
         }
 

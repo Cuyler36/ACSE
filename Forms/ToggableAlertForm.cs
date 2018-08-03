@@ -3,14 +3,11 @@ using System.Windows.Forms;
 
 namespace ACSE
 {
-    public partial class ToggableAlertForm : Form
+    public sealed partial class ToggableAlertForm : Form
     {
         public event EventHandler<AlertToggledEventArgs> AlertToggled;
         public bool AlertDisabled {
-            get
-            {
-                return toggleCheckBox.Checked;
-            }
+            get => toggleCheckBox.Checked;
             set
             {
                 toggleCheckBox.Checked = value;
@@ -19,29 +16,23 @@ namespace ACSE
         }
         public string Message
         {
-            get
-            {
-                return infoLabel.Text;
-            }
-            set
-            {
-                infoLabel.Text = value;
-            }
+            get => infoLabel.Text;
+            set => infoLabel.Text = value;
         }
 
-        public ToggableAlertForm(string Message, string Title = null)
+        public ToggableAlertForm(string message, string title = null)
         {
             InitializeComponent();
             okayButton.Click += OkayButton_Click;
-            this.Message = Message;
-            Text = Title ?? "Alert";
+            Message = message;
+            Text = title ?? "Alert";
         }
 
         public new bool Close()
         {
-            bool Disabled = AlertDisabled;
+            var disabled = AlertDisabled;
             base.Close();
-            return Disabled;
+            return disabled;
         }
 
         private void OkayButton_Click(object sender, EventArgs e)
@@ -50,7 +41,7 @@ namespace ACSE
             Close();
         }
 
-        protected virtual void OnAlertToggled(AlertToggledEventArgs e)
+        private void OnAlertToggled(AlertToggledEventArgs e)
         {
             AlertToggled?.Invoke(this, e);
         }

@@ -13,11 +13,11 @@ namespace ACSE
 
     public class DebugManager
     {
-        private static readonly string Log_File_Name = "ACSE_Log";
-        private FileStream Log_File;
-        private StreamWriter Log_Writer;
-        private readonly int MaxLogSize = 5000000; // 5MB Max Size
-        public bool Enabled = false;
+        private const string LogFileName = "ACSE_Log";
+        private FileStream _logFile;
+        private StreamWriter _logWriter;
+        private const int MaxLogSize = 5000000; // 5MB Max Size
+        public bool Enabled;
 
         public DebugManager()
         {
@@ -37,16 +37,16 @@ namespace ACSE
 
         public void CloseDebugLogWriter()
         {
-            if (Log_Writer != null)
+            if (_logWriter != null)
             {
-                Log_Writer.Close();
-                Log_Writer.Dispose();
+                _logWriter.Close();
+                _logWriter.Dispose();
             }
 
-            if (Log_File != null)
+            if (_logFile != null)
             {
-                Log_File.Close();
-                Log_File.Dispose();
+                _logFile.Close();
+                _logFile.Dispose();
             }
 
             Enabled = false;
@@ -58,9 +58,9 @@ namespace ACSE
 
             try
             {
-                Log_File = new FileStream(Get_Log_File_Path(), FileMode.OpenOrCreate);
-                Log_Writer = new StreamWriter(Log_File);
-                Log_Writer.BaseStream.Seek(0, SeekOrigin.End);
+                _logFile = new FileStream(GetLogFilePath(), FileMode.OpenOrCreate);
+                _logWriter = new StreamWriter(_logFile);
+                _logWriter.BaseStream.Seek(0, SeekOrigin.End);
             }
             catch
             {
@@ -69,17 +69,17 @@ namespace ACSE
             }
         }
 
-        private bool CheckLogSizeOK()
+        private bool CheckLogSizeOk()
         {
-            var Info = new FileInfo(Get_Log_File_Path());
-            return Info.Length <= MaxLogSize;
+            var info = new FileInfo(GetLogFilePath());
+            return info.Length <= MaxLogSize;
         }
 
-        public void DeleteLogFile(string FilePath)
+        public void DeleteLogFile(string filePath)
         {
             try
             {
-                File.Delete(FilePath);
+                File.Delete(filePath);
                 Console.WriteLine("Log file exceeded maximum file length and was deleted.");
             }
             catch { Console.WriteLine("Unable to delete log file!"); }
@@ -87,36 +87,31 @@ namespace ACSE
 
         private void CheckAndDeleteLogFile()
         {
-            var FilePath = Get_Log_File_Path();
-            if (File.Exists(FilePath) && !CheckLogSizeOK())
+            var filePath = GetLogFilePath();
+            if (File.Exists(filePath) && !CheckLogSizeOk())
             {
-                DeleteLogFile(FilePath);
+                DeleteLogFile(filePath);
             }
         }
 
-        public bool Log_File_Exists()
+        public string GetLogFilePath()
         {
-            return File.Exists(Get_Log_File_Path());
+            return MainForm.AssemblyLocation + $"\\{LogFileName}.txt";
         }
 
-        public string Get_Log_File_Path()
+        public void WriteLine(string contents, DebugLevel level = DebugLevel.Info)
         {
-            return MainForm.Assembly_Location + string.Format("\\{0}.txt", Log_File_Name);
-        }
-
-        public void WriteLine(string Contents, DebugLevel Level = DebugLevel.Info)
-        {
-            if (Log_Writer != null && Level <= Properties.Settings.Default.DebugLevel)
+            if (_logWriter != null && level <= Properties.Settings.Default.DebugLevel)
             {
-                if (!CheckLogSizeOK())
+                if (!CheckLogSizeOk())
                 {
                     CloseDebugLogWriter();
-                    DeleteLogFile(Get_Log_File_Path());
+                    DeleteLogFile(GetLogFilePath());
                     InitiateDebugLogWriter();
                 }
-                Log_Writer.WriteLine(string.Format("[{0}] - ({1}) - {2} => {3}", Level, MainForm.Save_File != null
-                    ? MainForm.Save_File.SaveType.ToString().Replace("_", " ") : "No Save", DateTime.Now, Contents));
-                Log_Writer.Flush();
+                _logWriter.WriteLine(
+                    $"[{level}] - ({(MainForm.SaveFile != null ? MainForm.SaveFile.SaveType.ToString().Replace("_", " ") : "No Save")}) - {DateTime.Now} => {contents}");
+                _logWriter.Flush();
             }
         }
     }

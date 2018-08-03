@@ -10,25 +10,25 @@ namespace ACSE
         Circular = 1
     }
 
-    class OffsetablePictureBox : Panel
+    public class OffsetablePictureBox : Panel
     {
-        protected PictureBoxWithInterpolationMode pictureBox;
+        protected PictureBoxWithInterpolationMode PictureBox;
 
         public Point Offset
         {
-            get => pictureBox.Location;
-            set => pictureBox.Location = value.Negate();
+            get => PictureBox.Location;
+            set => PictureBox.Location = value.Negate();
         }
 
         public Image Image
         {
-            get => pictureBox.Image;
+            get => PictureBox.Image;
             set
             {
-                pictureBox.Image = value;
+                PictureBox.Image = value;
                 if (value != null)
                 {
-                    pictureBox.Size = Image.Size;
+                    PictureBox.Size = Image.Size;
                 }
             }
         }
@@ -37,21 +37,21 @@ namespace ACSE
 
         public OffsetablePictureBox()
         {
-            pictureBox = new PictureBoxWithInterpolationMode
+            PictureBox = new PictureBoxWithInterpolationMode
             {
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode
             };
 
-            pictureBox.Paint += pictureBox_Paint;
-            Controls.Add(pictureBox);
+            PictureBox.Paint += pictureBox_Paint;
+            Controls.Add(PictureBox);
         }
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
             if (ImageMaskingType == MaskingType.Circular)
             {
-                e.Graphics.DrawImage(Properties.Resources.Villager_Crop, pictureBox.Location.Negate());
+                e.Graphics.DrawImage(Properties.Resources.Villager_Crop, PictureBox.Location.Negate());
             }
         }
     }

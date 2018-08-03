@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using ACSE.Classes.Utilities;
+using ACSE.Utilities;
 using ACSE.Messages.Mail;
 
 namespace ACSE
@@ -42,7 +42,7 @@ namespace ACSE
                             case "TownPassCardImage" when save.SaveGeneration == SaveGeneration.N3DS:
                                 playerDataType.GetField("TownPassCardData").SetValue(boxedData, _saveData.ReadByteArray(dataOffset, 0x1400));
                                 currentField.SetValue(boxedData,
-                                    ImageGeneration.GetTPCImage((byte[])playerDataType.GetField("TownPassCardData").GetValue(boxedData)));
+                                    ImageGeneration.GetTpcImage((byte[])playerDataType.GetField("TownPassCardData").GetValue(boxedData)));
                                 break;
                             case "Reset" when save.SaveGeneration == SaveGeneration.GCN:
                                 currentField.SetValue(boxedData, _saveData.ReadUInt32(dataOffset, _saveData.IsBigEndian) != 0);
@@ -61,12 +61,12 @@ namespace ACSE
                                 else if (fieldType == typeof(uint))
                                     currentField.SetValue(boxedData, _saveData.ReadUInt32(dataOffset, _saveData.IsBigEndian));
                                 else if (fieldType == typeof(string))
-                                    currentField.SetValue(boxedData, new ACString(_saveData.ReadByteArray(dataOffset,
+                                    currentField.SetValue(boxedData, new AcString(_saveData.ReadByteArray(dataOffset,
                                         (int)playerSaveInfoType.GetField(field.Name + "Size").GetValue(Offsets)), _saveData.SaveType).Trim());
                                 else if (fieldType == typeof(Inventory))
                                     if (save.SaveGeneration == SaveGeneration.N3DS)
                                         currentField.SetValue(boxedData, new Inventory(_saveData.ReadUInt32Array(dataOffset,
-                                            (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(Offsets), false), save, this));
+                                            (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(Offsets), false)));
                                     else
                                         currentField.SetValue(boxedData, new Inventory(_saveData.ReadUInt16Array(dataOffset,
                                             (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(Offsets), _saveData.IsBigEndian), save, this));
@@ -100,14 +100,14 @@ namespace ACSE
                                     }
                                     currentField.SetValue(boxedData, itemArray);
                                 }
-                                else if (fieldType == typeof(NL_Int32))
+                                else if (fieldType == typeof(NewLeafInt32))
                                 {
                                     var intData = _saveData.ReadUInt32Array(dataOffset, 2);
-                                    currentField.SetValue(boxedData, new NL_Int32(intData[0], intData[1]));
+                                    currentField.SetValue(boxedData, new NewLeafInt32(intData[0], intData[1]));
                                 }
-                                else if (fieldType == typeof(ACDate) && dataOffset > 0)
+                                else if (fieldType == typeof(AcDate) && dataOffset > 0)
                                 {
-                                    currentField.SetValue(boxedData, new ACDate(_saveData.ReadByteArray(dataOffset,
+                                    currentField.SetValue(boxedData, new AcDate(_saveData.ReadByteArray(dataOffset,
                                         (int)playerSaveInfoType.GetField(field.Name + "Size").GetValue(Offsets))));
                                 }
                                 break;
@@ -176,7 +176,7 @@ namespace ACSE
             {
                 for (var i = 0; i < 10; i++)
                 {
-                    var mail = new GCNPlayerMail(_saveData, this, i);
+                    var mail = new GcnPlayerMail(_saveData, this, i);
                     //System.Windows.Forms.MessageBox.Show(Mail.GetFormattedMailString());
                 }
             }
@@ -213,7 +213,7 @@ namespace ACSE
                     default:
                         if (fieldType == typeof(string))
                         {
-                            _saveData.Write(dataOffset, ACString.GetBytes((string)playerDataType.GetField(field.Name).GetValue(Data),
+                            _saveData.Write(dataOffset, AcString.GetBytes((string)playerDataType.GetField(field.Name).GetValue(Data),
                                 (int)playerSaveInfoType.GetField(field.Name + "Size").GetValue(Offsets)));
                         }
                         else if (fieldType == typeof(byte))
@@ -328,20 +328,20 @@ namespace ACSE
                                     _saveData.Write(dataOffset + i * 2, itemArray[i].ItemId, _saveData.IsBigEndian);
                             }
                         }
-                        else if (fieldType == typeof(NL_Int32))
+                        else if (fieldType == typeof(NewLeafInt32))
                         {
                             if (_saveData.SaveGeneration == SaveGeneration.NDS)
                             {
-                                var encryptedInt = (NL_Int32)playerDataType.GetField(field.Name).GetValue(Data);
-                                _saveData.Write(dataOffset, encryptedInt.Int_1);
-                                _saveData.Write(dataOffset + 4, encryptedInt.Int_2);
+                                var encryptedInt = (NewLeafInt32)playerDataType.GetField(field.Name).GetValue(Data);
+                                _saveData.Write(dataOffset, encryptedInt.Int1);
+                                _saveData.Write(dataOffset + 4, encryptedInt.Int2);
                             }
                         }
-                        else if (fieldType == typeof(ACDate) && (_saveData.SaveGeneration == SaveGeneration.GCN || _saveData.SaveGeneration == SaveGeneration.NDS))
+                        else if (fieldType == typeof(AcDate) && (_saveData.SaveGeneration == SaveGeneration.GCN || _saveData.SaveGeneration == SaveGeneration.NDS))
                         {
                             if (field.Name.Equals("Birthday"))
                             {
-                                _saveData.Write(dataOffset, ((ACDate)playerDataType.GetField(field.Name).GetValue(Data)).ToMonthDayDateData());
+                                _saveData.Write(dataOffset, ((AcDate)playerDataType.GetField(field.Name).GetValue(Data)).ToMonthDayDateData());
                             }
                         }
 

@@ -1,153 +1,151 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace ACSE.Classes.Utilities
+namespace ACSE.Utilities
 {
     public static class PatternUtility
     {
-        private static byte[] DecompressC4(byte[] C4ImageData)
+        private static byte[] DecompressC4(IReadOnlyList<byte> c4ImageData)
         {
-            byte[] DecompressedData = new byte[C4ImageData.Length * 2];
-            int DecompressIdx = 0;
+            var decompressedData = new byte[c4ImageData.Count * 2];
 
-            for (int i = 0; i < C4ImageData.Length; i++)
+            for (var i = 0; i < c4ImageData.Count; i++)
             {
-                DecompressIdx = i * 2;
-                DecompressedData[DecompressIdx] = (byte)(C4ImageData[i] >> 4);
-                DecompressedData[DecompressIdx + 1] = (byte)(C4ImageData[i] & 0x0F);
+                var decompressIdx = i * 2;
+                decompressedData[decompressIdx] = (byte)(c4ImageData[i] >> 4);
+                decompressedData[decompressIdx + 1] = (byte)(c4ImageData[i] & 0x0F);
             }
 
-            return DecompressedData;
+            return decompressedData;
         }
 
-        private static byte[] CompressC4(byte[] ImageData)
+        private static byte[] CompressC4(IReadOnlyList<byte> imageData)
         {
-            byte[] CompressedData = new byte[ImageData.Length / 2];
-            int Index = 0;
-            byte CondensedPixel = 0;
+            var compressedData = new byte[imageData.Count / 2];
 
-            for (int i = 0; i < CompressedData.Length; i++)
+            for (var i = 0; i < compressedData.Length; i++)
             {
-                Index = i * 2;
-                CondensedPixel = (byte)(((ImageData[Index] & 0x0F) << 4) | (ImageData[Index + 1] & 0x0F));
-                CompressedData[i] = CondensedPixel;
+                var index = i * 2;
+                var condensedPixel = (byte)(((imageData[index] & 0x0F) << 4) | (imageData[index + 1] & 0x0F));
+                compressedData[i] = condensedPixel;
             }
 
-            return CompressedData;
+            return compressedData;
         }
 
-        private static byte[] C4ImageSubroutineDecode(byte[] C4ImageData, uint Width = 32, uint Height = 32)
+        private static byte[] C4ImageSubroutineDecode(IReadOnlyList<byte> c4ImageData, uint width = 32, uint height = 32)
         {
-            uint BlockXCount = Width / 8;
-            uint BlockYCount = Width / 8;
+            var blockXCount = width / 8;
+            var blockYCount = height / 8;
 
-            byte[] OutputBuffer = new byte[C4ImageData.Length];
-            uint PixelIndex = 0;
+            var outputBuffer = new byte[c4ImageData.Count];
+            var pixelIndex = 0;
 
-            for (int YBlock = 0; YBlock < BlockYCount; YBlock++)
+            for (var yBlock = 0; yBlock < blockYCount; yBlock++)
             {
-                for (int XBlock = 0; XBlock < BlockXCount; XBlock++)
+                for (var xBlock = 0; xBlock < blockXCount; xBlock++)
                 {
-                    for (int YPixel = 0; YPixel < 8; YPixel++)
+                    for (var yPixel = 0; yPixel < 8; yPixel++)
                     {
-                        for (int XPixel = 0; XPixel < 8; XPixel++)
+                        for (var xPixel = 0; xPixel < 8; xPixel++)
                         {
-                            int OutputBufferIndex = (int)((Width * 8 * YBlock) + YPixel * Width + XBlock * 8 + XPixel);
-                            OutputBuffer[OutputBufferIndex] = C4ImageData[PixelIndex];
-                            PixelIndex++;
+                            var outputBufferIndex = (int)(width * 8 * yBlock + yPixel * width + xBlock * 8 + xPixel);
+                            outputBuffer[outputBufferIndex] = c4ImageData[pixelIndex];
+                            pixelIndex++;
                         }
                     }
                 }
             }
 
-            return OutputBuffer;
+            return outputBuffer;
         }
 
-        private static byte[] C4ImageSubroutineEncode(byte[] C4ImageData, uint Width = 32, uint Height = 32)
+        private static byte[] C4ImageSubroutineEncode(IReadOnlyList<byte> c4ImageData, uint width = 32, uint height = 32)
         {
-            uint BlockXCount = Width / 8;
-            uint BlockYCount = Width / 8;
+            var blockXCount = width / 8;
+            var blockYCount = height / 8;
 
-            byte[] OutputBuffer = new byte[C4ImageData.Length];
-            uint OutputBufferIndex = 0;
+            var outputBuffer = new byte[c4ImageData.Count];
+            uint outputBufferIndex = 0;
 
-            for (int YBlock = 0; YBlock < BlockYCount; YBlock++)
+            for (var yBlock = 0; yBlock < blockYCount; yBlock++)
             {
-                for (int XBlock = 0; XBlock < BlockXCount; XBlock++)
+                for (var xBlock = 0; xBlock < blockXCount; xBlock++)
                 {
-                    for (int YPixel = 0; YPixel < 8; YPixel++)
+                    for (var yPixel = 0; yPixel < 8; yPixel++)
                     {
-                        for (int XPixel = 0; XPixel < 8; XPixel++)
+                        for (var xPixel = 0; xPixel < 8; xPixel++)
                         {
-                            int PixelIndex = (int)((Width * 8 * YBlock) + YPixel * Width + XBlock * 8 + XPixel);
-                            OutputBuffer[OutputBufferIndex] = C4ImageData[PixelIndex];
-                            OutputBufferIndex++;
+                            var pixelIndex = (int)(width * 8 * yBlock + yPixel * width + xBlock * 8 + xPixel);
+                            outputBuffer[outputBufferIndex] = c4ImageData[pixelIndex];
+                            outputBufferIndex++;
                         }
                     }
                 }
             }
 
-            return OutputBuffer;
+            return outputBuffer;
         }
 
-        private static Bitmap CreateBitmap(byte[] PatternBitmapBuffer, uint Width = 32, uint Height = 32)
+        private static Bitmap CreateBitmap(byte[] patternBitmapBuffer, uint width = 32, uint height = 32)
         {
-            Bitmap Pattern_Bitmap = new Bitmap((int)Width, (int)Height, PixelFormat.Format32bppArgb);
-            BitmapData bitmapData = Pattern_Bitmap.LockBits(new Rectangle(0, 0, (int)Width, (int)Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-            System.Runtime.InteropServices.Marshal.Copy(PatternBitmapBuffer, 0, bitmapData.Scan0, PatternBitmapBuffer.Length);
-            Pattern_Bitmap.UnlockBits(bitmapData);
-            return Pattern_Bitmap;
+            var patternBitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
+            var bitmapData = patternBitmap.LockBits(new Rectangle(0, 0, (int)width, (int)height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            System.Runtime.InteropServices.Marshal.Copy(patternBitmapBuffer, 0, bitmapData.Scan0, patternBitmapBuffer.Length);
+            patternBitmap.UnlockBits(bitmapData);
+            return patternBitmap;
         }
 
-        public static byte[] DecodeC4(byte[] C4ImageData, uint Width = 32, uint Height = 32)
+        public static byte[] DecodeC4(byte[] c4ImageData, uint width = 32, uint height = 32)
         {
-            return C4ImageSubroutineDecode(DecompressC4(C4ImageData), Width, Height);
+            return C4ImageSubroutineDecode(DecompressC4(c4ImageData), width, height);
         }
 
-        public static byte[] EncodeC4(byte[] ImageData, uint Width = 32, uint Height = 32)
+        public static byte[] EncodeC4(byte[] imageData, uint width = 32, uint height = 32)
         {
-            return CompressC4(C4ImageSubroutineEncode(ImageData, Width, Height));
+            return CompressC4(C4ImageSubroutineEncode(imageData, width, height));
         }
 
-        public static Bitmap C4PaletteMapToBitmap(byte[] DecodedC4ImageData, uint[] Palette, uint Width = 32, uint Height = 32)
+        public static Bitmap C4PaletteMapToBitmap(byte[] decodedC4ImageData, uint[] palette, uint width = 32, uint height = 32)
         {
-            byte[] PatternBitmapBuffer = new byte[4 * Width * Height];
+            var patternBitmapBuffer = new byte[4 * width * height];
 
-            for (int i = 0; i < DecodedC4ImageData.Length; i++)
-                Buffer.BlockCopy(BitConverter.GetBytes(Palette[Math.Max(0, DecodedC4ImageData[i] - 1)]), 0, PatternBitmapBuffer, i * 4, 4);
+            for (var i = 0; i < decodedC4ImageData.Length; i++)
+                Buffer.BlockCopy(BitConverter.GetBytes(palette[Math.Max(0, decodedC4ImageData[i] - 1)]), 0, patternBitmapBuffer, i * 4, 4);
             
-            return CreateBitmap(PatternBitmapBuffer, Width, Height);
+            return CreateBitmap(patternBitmapBuffer, width, height);
         }
 
-        public static Bitmap GeneratePalettePreview(uint[] Palette, int SelectedColor = -1, uint Width = 32, uint Height = 480)
+        public static Bitmap GeneratePalettePreview(uint[] palette, int selectedColor = -1, uint width = 32, uint height = 480)
         {
-            byte[] PaletteBitmapBuffer = new byte[Width * Height * 4];
-            int PaletteColorDataLength = (int)(Width * (Height / 15) * 4); // There are 15 colors in a Palette.
-            int PaletteIndex = -1;
+            var paletteBitmapBuffer = new byte[width * height * 4];
+            var paletteColorDataLength = (int)(width * (height / 15) * 4); // There are 15 colors in a Palette.
+            var paletteIndex = -1;
 
-            for (int i = 0; i < PaletteBitmapBuffer.Length; i += 4)
+            for (var i = 0; i < paletteBitmapBuffer.Length; i += 4)
             {
-                if (i % PaletteColorDataLength == 0)
-                    PaletteIndex++;
+                if (i % paletteColorDataLength == 0)
+                    paletteIndex++;
 
-                if (PaletteIndex < Palette.Length && i < PaletteBitmapBuffer.Length)
-                    Buffer.BlockCopy(BitConverter.GetBytes(Palette[PaletteIndex]), 0, PaletteBitmapBuffer, i, 4);
+                if (paletteIndex < palette.Length && i < paletteBitmapBuffer.Length)
+                    Buffer.BlockCopy(BitConverter.GetBytes(palette[paletteIndex]), 0, paletteBitmapBuffer, i, 4);
             }
 
-            Bitmap Preview = CreateBitmap(PaletteBitmapBuffer, Width, Height);
-            return ImageGeneration.DrawGrid2(Preview, (int)Width, new Size((int)Width, (int)Height), null, false, false, true);
+            var preview = CreateBitmap(paletteBitmapBuffer, width, height);
+            return ImageGeneration.DrawGrid2(preview, (int)width, new Size((int)width, (int)height), null, false, false, true);
         }
 
-        public static byte[] CondenseNonBlockPattern(byte[] Buffer)
+        public static byte[] CondenseNonBlockPattern(byte[] buffer)
         {
-            byte[] Pattern_Buffer = new byte[Buffer.Length / 2];
-            for (int i = 0; i < Pattern_Buffer.Length; i++)
+            var patternBuffer = new byte[buffer.Length / 2];
+            for (var i = 0; i < patternBuffer.Length; i++)
             {
-                int idx = i * 2;
-                Pattern_Buffer[i] = (byte)((Buffer[idx + 1] << 4) | Buffer[idx]);
+                var idx = i * 2;
+                patternBuffer[i] = (byte)((buffer[idx + 1] << 4) | buffer[idx]);
             }
-            return Pattern_Buffer;
+            return patternBuffer;
         }
     }
 }

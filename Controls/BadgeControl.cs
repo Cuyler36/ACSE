@@ -4,72 +4,70 @@ using System.Windows.Forms;
 
 namespace ACSE
 {
-    class BadgeControl : OffsetablePictureBox
+    public class BadgeControl : OffsetablePictureBox
     {
-        private static string[] BadgeNames = new string[]
-        {
+        private static readonly string[] BadgeNames = {
             "Fish Caught", "Insects Caught", "Marine Creatures Caught", "Fish Collection", "Insect Collection", "Marine Collection", "Balloons",
             "Towns Visited", "Town Visits", "Watering Flowers", "Savings", "Turnips", "Medals", "StreetPass", "Weeds Removed", "Shopping", "Letters",
             "Refurbishments", "Catalog", "K.K. Slider Listens", "HRA Points", "Time Played", "Helping Neighbors", "Dream Suite"
         };
 
-        private static string[] BadgeLevels = new string[4] { "None", "Bronze", "Silver", "Gold" };
+        private static readonly string[] BadgeLevels = { "None", "Bronze", "Silver", "Gold" };
 
-        private static int[][] BadgeValues = new int[][]
-        {
-            new int[] { 0, 500, 2000, 5000 },
-            new int[] { 0, 500, 2000, 5000 },
-            new int[] { 0, 100, 200, 1000 },
-            new int[] { 0, 0, 0, 0 },
-            new int[] { 0, 0, 0, 0 },
-            new int[] { 0, 0, 0, 0 },
-            new int[] { 0, 30, 100, 200 },
-            new int[] { 0, 100, 250, 500 },
-            new int[] { 0, 50, 200, 500 },
-            new int[] { 0, 100, 250, 500 },
-            new int[] { 0, 0, 0, 0 },
-            new int[] { 0, 500000, 3000000, 10000000 },
-            new int[] { 0, 300, 1500, 5000 },
-            new int[] { 0, 100, 300, 1000 },
-            new int[] { 0, 500, 2000, 5000 },
-            new int[] { 0, 500000, 2000000, 5000000 },
-            new int[] { 0, 50, 100, 200 },
-            new int[] { 0, 30, 100, 200 },
-            new int[] { 0, 0, 0, 0 },
-            new int[] { 0, 20, 50, 100 },
-            new int[] { 0, 0, 0, 0 },
-            new int[] { 0, 0, 0, 0 },
-            new int[] { 0, 50, 100, 300 },
-            new int[] { 0, 50, 200, 500 }
+        private static readonly int[][] BadgeValues = {
+            new[] { 0, 500, 2000, 5000 },
+            new[] { 0, 500, 2000, 5000 },
+            new[] { 0, 100, 200, 1000 },
+            new[] { 0, 0, 0, 0 },
+            new[] { 0, 0, 0, 0 },
+            new[] { 0, 0, 0, 0 },
+            new[] { 0, 30, 100, 200 },
+            new[] { 0, 100, 250, 500 },
+            new[] { 0, 50, 200, 500 },
+            new[] { 0, 100, 250, 500 },
+            new[] { 0, 0, 0, 0 },
+            new[] { 0, 500000, 3000000, 10000000 },
+            new[] { 0, 300, 1500, 5000 },
+            new[] { 0, 100, 300, 1000 },
+            new[] { 0, 500, 2000, 5000 },
+            new[] { 0, 500000, 2000000, 5000000 },
+            new[] { 0, 50, 100, 200 },
+            new[] { 0, 30, 100, 200 },
+            new[] { 0, 0, 0, 0 },
+            new[] { 0, 20, 50, 100 },
+            new[] { 0, 0, 0, 0 },
+            new[] { 0, 0, 0, 0 },
+            new[] { 0, 50, 100, 300 },
+            new[] { 0, 50, 200, 500 }
         };
 
-        internal bool Loaded = false;
-        readonly string BadgeName;
-        readonly int Index = -1;
-        readonly int DataOffset = -1;
-        readonly int ValueOffset = -1;
-        readonly ToolTip BadgeNameToolTip;
-        public byte Stage = 0;
-        public NL_Int32 Value;
+        internal bool Loaded;
+        private readonly string _badgeName;
+        private readonly int _index;
+        private readonly int _dataOffset;
+        private readonly int _valueOffset;
+        private readonly ToolTip _badgeNameToolTip;
+        public byte Stage;
+        public NewLeafInt32 Value;
 
-        private Save SaveFile;
+        private readonly Save _saveFile;
 
-        public BadgeControl(Save save, int index, int offset, int valueOffset) : base()
+        public BadgeControl(Save save, int index, int offset, int valueOffset)
         {
             if (index >= BadgeNames.Length)
             {
                 throw new Exception($"Badge index was invalid! Got {index} when {BadgeNames.Length - 1} was the maximum possible!");
             }
 
-            SaveFile = save;
-            Index = index;
-            DataOffset = offset;
-            ValueOffset = valueOffset;
-            Stage = SaveFile.ReadByte(offset);
-            Value = new NL_Int32(SaveFile.ReadUInt32(valueOffset), SaveFile.ReadUInt32(valueOffset + 4));
-            BadgeName = BadgeNames[index];
+            _saveFile = save;
+            _index = index;
+            _dataOffset = offset;
+            _valueOffset = valueOffset;
+            Stage = _saveFile.ReadByte(offset);
+            Value = new NewLeafInt32(_saveFile.ReadUInt32(valueOffset), _saveFile.ReadUInt32(valueOffset + 4));
+            _badgeName = BadgeNames[index];
 
-            BadgeNameToolTip = new ToolTip
+            _badgeNameToolTip = new ToolTip
             {
                 AutoPopDelay = 5000,
                 InitialDelay = 100,
@@ -77,19 +75,19 @@ namespace ACSE
                 ShowAlways = true
             };
 
-            BadgeNameToolTip.SetToolTip(pictureBox, BadgeName + $" - [{BadgeLevels[Stage]}] - " + Value.Value);
+            _badgeNameToolTip.SetToolTip(PictureBox, _badgeName + $" - [{BadgeLevels[Stage]}] - " + Value.Value);
 
             Size = new Size(28, 28);
             ImageMaskingType = MaskingType.None;
             SetImageCrop();
-            pictureBox.MouseClick += OnClick;
+            PictureBox.MouseClick += OnClick;
 
             Loaded = true;
         }
 
         private void SetImageCrop()
         {
-            if (Index > -1 && Index < BadgeNames.Length && Stage < 4)
+            if (_index > -1 && _index < BadgeNames.Length && Stage < 4)
             {
                 if (Stage == 0)
                 {
@@ -99,14 +97,14 @@ namespace ACSE
                 else
                 {
                     Image = Properties.Resources.Animal_Crossing_NL_Badges_28x28;
-                    Offset = new Point((Stage - 1) * 28, Index * 28);
+                    Offset = new Point((Stage - 1) * 28, _index * 28);
                 }
             }
         }
 
         private void OnClick(object sender, EventArgs e)
         {
-            if (Loaded && DataOffset > -1 && ValueOffset > -1 && Index > -1 && Index < BadgeNames.Length)
+            if (Loaded && _dataOffset > -1 && _valueOffset > -1 && _index > -1 && _index < BadgeNames.Length)
             {
                 Stage++;
                 if (Stage > 3)
@@ -114,23 +112,23 @@ namespace ACSE
                     Stage = 0;
                 }
 
-                Value = new NL_Int32((uint)BadgeValues[Index][Stage]);
+                Value = new NewLeafInt32((uint)BadgeValues[_index][Stage]);
 
-                if (SaveFile != null)
+                if (_saveFile != null)
                 {
-                    SaveFile.Write(DataOffset, Stage);
-                    SaveFile.Write(ValueOffset, Value.Int_1);
-                    SaveFile.Write(ValueOffset + 4, Value.Int_2);
+                    _saveFile.Write(_dataOffset, Stage);
+                    _saveFile.Write(_valueOffset, Value.Int1);
+                    _saveFile.Write(_valueOffset + 4, Value.Int2);
                 }
 
                 SetImageCrop();
-                BadgeNameToolTip.SetToolTip(pictureBox, BadgeName + $" - [{BadgeLevels[Stage]}] - " + Value.Value);
+                _badgeNameToolTip.SetToolTip(PictureBox, _badgeName + $" - [{BadgeLevels[Stage]}] - " + Value.Value);
             }
         }
 
         public new void Dispose()
         {
-            BadgeNameToolTip.Dispose();
+            _badgeNameToolTip.Dispose();
             base.Dispose();
         }
     }

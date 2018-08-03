@@ -1,6 +1,6 @@
 ﻿namespace ACSE
 {
-    class Museum
+    public static class Museum
     {
         private static int GetMuseumFieldSize(SaveType saveType)
         {
@@ -59,28 +59,24 @@
         /// <param name="player">The Player who it will show as the donor</param>
         public static void FillMuseum(Save saveFile, Player player)
         {
-            int MuseumDataOffset = saveFile.SaveDataStartOffset + GetBaseOffset(saveFile.SaveType);
-            if (MuseumDataOffset != -1)
+            var museumDataOffset = saveFile.SaveDataStartOffset + GetBaseOffset(saveFile.SaveType);
+            if (museumDataOffset == -1) return;
+            var museumDataSize = GetMuseumFieldSize(saveFile.SaveType);
+            var playerDonationIndex = saveFile.SaveGeneration == SaveGeneration.N3DS ? 
+                (byte)(player.Index + 1) : (byte)(((player.Index + 1) << 4) | (byte)(player.Index + 1));
+
+            for (var i = museumDataOffset; i < museumDataOffset + museumDataSize; i++)
             {
-                int MuseumDataSize = GetMuseumFieldSize(saveFile.SaveType);
-                byte PlayerDonationIndex = saveFile.SaveGeneration == SaveGeneration.N3DS ? 
-                    (byte)(player.Index + 1) : (byte)(((player.Index + 1) << 4) | (byte)(player.Index + 1));
+                saveFile.Write(i, playerDonationIndex);
+            }
 
-                for (int i = MuseumDataOffset; i < MuseumDataOffset + MuseumDataSize; i++)
-                {
-                    saveFile.Write(i, PlayerDonationIndex);
-                }
-
-                // Set Date/Time for donation to current system time
-                if (saveFile.SaveGeneration == SaveGeneration.N3DS)
-                {
-                    byte[] NowDate = new Classes.Utilities.ACDate().ToYearMonthDayDateData();
-                    int DonationDateOffset = saveFile.SaveDataStartOffset + (saveFile.SaveType == SaveType.NewLeaf ? 0x658C8 : 0x6AE38);
-                    for (int i = DonationDateOffset; i < DonationDateOffset + 0x448; i += 4)
-                    {
-                        saveFile.Write(i, NowDate);
-                    }
-                }
+            // Set Date/Time for donation to current system time
+            if (saveFile.SaveGeneration != SaveGeneration.N3DS) return;
+            var nowDate = new Utilities.AcDate().ToYearMonthDayDateData();
+            var donationDateOffset = saveFile.SaveDataStartOffset + (saveFile.SaveType == SaveType.NewLeaf ? 0x658C8 : 0x6AE38);
+            for (var i = donationDateOffset; i < donationDateOffset + 0x448; i += 4)
+            {
+                saveFile.Write(i, nowDate);
             }
         }
 
@@ -90,25 +86,21 @@
         /// <param name="saveFile">Current Save File</param>
         public static void ClearMuseum(Save saveFile)
         {
-            int MuseumDataOffset = saveFile.SaveDataStartOffset + GetBaseOffset(saveFile.SaveType);
-            if (MuseumDataOffset != -1)
+            var museumDataOffset = saveFile.SaveDataStartOffset + GetBaseOffset(saveFile.SaveType);
+            if (museumDataOffset == -1) return;
+            var museumDataSize = GetMuseumFieldSize(saveFile.SaveType);
+            for (var i = museumDataOffset; i < museumDataOffset + museumDataSize; i++)
             {
-                int MuseumDataSize = GetMuseumFieldSize(saveFile.SaveType);
-                for (int i = MuseumDataOffset; i < MuseumDataOffset + MuseumDataSize; i++)
-                {
-                    saveFile.Write(i, (byte)0);
-                }
+                saveFile.Write(i, (byte)0);
+            }
 
-                // Clear Date/Time for donation to current system time
-                if (saveFile.SaveGeneration == SaveGeneration.N3DS)
-                {
-                    byte[] ClearedDate = new byte[4];
-                    int DonationDateOffset = saveFile.SaveDataStartOffset + (saveFile.SaveType == SaveType.NewLeaf ? 0x65948 : 0x6AEB8);
-                    for (int i = DonationDateOffset; i < DonationDateOffset + 0x448; i += 4)
-                    {
-                        saveFile.Write(i, ClearedDate);
-                    }
-                }
+            // Clear Date/Time for donation to current system time
+            if (saveFile.SaveGeneration != SaveGeneration.N3DS) return;
+            var clearedDate = new byte[4];
+            var donationDateOffset = saveFile.SaveDataStartOffset + (saveFile.SaveType == SaveType.NewLeaf ? 0x65948 : 0x6AEB8);
+            for (var i = donationDateOffset; i < donationDateOffset + 0x448; i += 4)
+            {
+                saveFile.Write(i, clearedDate);
             }
         }
     }

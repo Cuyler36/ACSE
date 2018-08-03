@@ -1,4 +1,4 @@
-﻿using ACSE.Classes.Utilities;
+﻿using ACSE.Utilities;
 using System;
 using System.Drawing;
 
@@ -64,9 +64,9 @@ namespace ACSE
         public int BirthdaySize;
         public int TownIdentifier;
         public int TownIdentifierSize;
-        public int NlWallet;
-        public int NlSavings;
-        public int NlDebt;
+        public int NewLeafWallet;
+        public int NewLeafSavings;
+        public int NewLeafDebt;
         public int MeowCoupons;
         public int IslandMedals;
         public int IslandBox;
@@ -100,9 +100,9 @@ namespace ACSE
         public Pattern[] Patterns;
         public byte[] Emotions; //Add Emotions class?
         public ushort NookPoints;
-        public ACDate LastPlayDate;
-        public ACDate RegisterDate;
-        public ACDate Birthday;
+        public AcDate LastPlayDate;
+        public AcDate RegisterDate;
+        public AcDate Birthday;
         public bool Reset;
         public byte Gender;
         public byte HairType;
@@ -113,11 +113,11 @@ namespace ACSE
         public byte ShoeColor; //CF only
         public Image TownPassCardImage;
         public byte[] TownPassCardData;
-        public NL_Int32 NlWallet;
-        public NL_Int32 NlSavings;
-        public NL_Int32 NlDebt;
-        public NL_Int32 MeowCoupons;
-        public NL_Int32 IslandMedals;
+        public NewLeafInt32 NewLeafWallet;
+        public NewLeafInt32 NewLeafSavings;
+        public NewLeafInt32 NewLeafDebt;
+        public NewLeafInt32 MeowCoupons;
+        public NewLeafInt32 IslandMedals;
     }
 
     public static class PlayerInfo
@@ -171,9 +171,9 @@ namespace ACSE
             Shoes = -1,
             Socks = -1,
             Wetsuit = -1,
-            NlDebt = -1,
-            NlSavings = -1,
-            NlWallet = -1,
+            NewLeafDebt = -1,
+            NewLeafSavings = -1,
+            NewLeafWallet = -1,
             MeowCoupons = -1,
             IslandMedals = -1,
             ResetCount = -1,
@@ -229,9 +229,9 @@ namespace ACSE
             Shoes = -1,
             Socks = -1,
             Wetsuit = -1,
-            NlDebt = -1,
-            NlSavings = -1,
-            NlWallet = -1,
+            NewLeafDebt = -1,
+            NewLeafSavings = -1,
+            NewLeafWallet = -1,
             MeowCoupons = -1,
             IslandMedals = -1,
             ResetCount = -1,
@@ -288,9 +288,9 @@ namespace ACSE
             Shoes = -1,
             Socks = -1,
             Wetsuit = -1,
-            NlDebt = -1,
-            NlSavings = -1,
-            NlWallet = -1,
+            NewLeafDebt = -1,
+            NewLeafSavings = -1,
+            NewLeafWallet = -1,
             MeowCoupons = -1,
             IslandMedals = -1,
             IslandBox = -1,
@@ -346,9 +346,9 @@ namespace ACSE
             Shoes = -1,
             Socks = -1,
             Wetsuit = -1,
-            NlDebt = -1,
-            NlSavings = -1,
-            NlWallet = -1,
+            NewLeafDebt = -1,
+            NewLeafSavings = -1,
+            NewLeafWallet = -1,
             MeowCoupons = -1,
             IslandMedals = -1,
             ResetCount = -1,
@@ -412,9 +412,9 @@ namespace ACSE
             EyeColor = -1,
             Encyclopedia = -1, //Research
             Wetsuit = -1,
-            NlDebt = -1,
-            NlSavings = -1,
-            NlWallet = -1,
+            NewLeafDebt = -1,
+            NewLeafSavings = -1,
+            NewLeafWallet = -1,
             MeowCoupons = -1,
             IslandMedals = -1,
             ResetCount = -1,
@@ -471,9 +471,9 @@ namespace ACSE
             InventoryBackground = -1,
             Messages = -1,
             Wetsuit = -1,
-            NlDebt = -1,
-            NlSavings = -1,
-            NlWallet = -1,
+            NewLeafDebt = -1,
+            NewLeafSavings = -1,
+            NewLeafWallet = -1,
             MeowCoupons = -1,
             IslandMedals = -1,
             ResetCount = -1,
@@ -510,11 +510,11 @@ namespace ACSE
             RegisterDate = 0x55D6,
             RegisterDateSize = 0x4,
             TownPassCardImage = 0x5724,
-            NlSavings = 0x6B6C,
-            NlDebt = 0x6B74,
+            NewLeafSavings = 0x6B6C,
+            NewLeafDebt = 0x6B74,
             IslandMedals = 0x6B7C,
             Pockets = 0x6BB0,
-            NlWallet = 0x6E38,
+            NewLeafWallet = 0x6E38,
             IslandBox = 0x6E40,
             IslandBoxCount = 40,
             PocketsCount = 16,
@@ -563,10 +563,10 @@ namespace ACSE
             TownPassCardImage = 0x5738,
             Pockets = 0x6BD0,
             PocketsCount = 16,
-            NlSavings = 0x6B8C,
-            NlDebt = 0x6B94,
+            NewLeafSavings = 0x6B8C,
+            NewLeafDebt = 0x6B94,
             IslandMedals = 0x6B9C,
-            NlWallet = 0x6F08,
+            NewLeafWallet = 0x6F08,
             IslandBox = 0x6F10,
             IslandBoxCount = 40,
             Emotions = 0x89D0,

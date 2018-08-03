@@ -24,7 +24,7 @@ namespace ACSE.Messages.Mail
             Present = new Item();
         }
 
-        public MailBase(int Offset, SaveType Save_Type)
+        public MailBase(int offset, SaveType saveType)
         {
 
         }

@@ -2,9 +2,9 @@
 
 namespace ACSE
 {
-    class SongLibrary
+    public static class SongLibrary
     {
-        public static Dictionary<int, byte> Animal_Crossing_SongLibrary_Bit_Map = new Dictionary<int, byte>
+        public static readonly Dictionary<int, byte> AnimalCrossingSongLibraryBitMap = new Dictionary<int, byte>
         {
             { 0x2684, 0xFF },
             { 0x2685, 0xFF },
@@ -15,7 +15,7 @@ namespace ACSE
             { 0x268B, 0xFF },
         };
 
-        public static Dictionary<int, byte> Wild_World_SongLibrary_Bit_Map = new Dictionary<int, byte>
+        public static readonly Dictionary<int, byte> WildWorldSongLibraryBitMap = new Dictionary<int, byte>
         {
             { 0xFAE0, 0xFF },
             { 0xFAE1, 0xFF },
@@ -28,7 +28,7 @@ namespace ACSE
             { 0xFAE8, 0x3F },
         };
 
-        public static Dictionary<int, byte> New_Leaf_SongLibrary_Bit_Map = new Dictionary<int, byte>
+        public static readonly Dictionary<int, byte> NewLeafSongLibraryBitMap = new Dictionary<int, byte>
         {
             { 0x8C54, 0xFF },
             { 0x8C55, 0xFF },
@@ -44,7 +44,7 @@ namespace ACSE
             { 0x8FAF, 0x07 }
         };
 
-        public static Dictionary<int, byte> Welcome_Amiibo_SongLibrary_Bit_Map = new Dictionary<int, byte>
+        public static readonly Dictionary<int, byte> WelcomeAmiiboSongLibraryBitMap = new Dictionary<int, byte>
         {
             { 0x8F9C, 0xFF },
             { 0x8F9D, 0xFF },
@@ -60,58 +60,55 @@ namespace ACSE
             { 0x8FA7, 0x07 }
         };
 
-        public static string[][] Animal_Crossing_SongLibrary_Names = new string[7][]
-        {
-            new string[8] { "K.K. Safari", "K.K. Folk", "K.K. Rock", "Rockin' K.K.", "K.K. Ragtime", "K.K. Gumbo", "The K. Funk", "K.K. Blues" },
-            new string[8] { "K.K. Tango", "K.K. Faire", "Aloha K.K.", "Lucky K.K.", "K.K. Condor", "K.K. Steppe", "Imperial K.K.", "K.K. Casbah" },
-            new string[8] { "K.K. Aria", "K.K. Samba", "K.K. Bossa", "K.K. Calypso", "K.K. Salsa", "K.K. Mambo", "K.K. Reggae", "K.K. Ska" },
-            new string[8] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Etude", "K.K. Lullaby" },
-            new string[8] { "Mr. K.K.", "Café K.K.", "K.K. Parade", "Señor K.K.", "K.K. Song", "I Love You", "Two Days Ago", "" },
-            new string[8] { "K.K. Country", "Surfin' K.K.", "K.K. Ballad", "Comrade K.K.", "K.K. Lament", "Go K.K. Rider!", "K.K. Dirge", "K.K. Western" },
-            new string[8] { "Soulful K.K.", "K.K. Soul", "K.K. Crusin'", "K.K. Love Song", "K.K. D & B", "K.K. Technopop", "DJ K.K.", "Only Me" }
+        public static readonly string[][] AnimalCrossingSongLibraryNames = {
+            new[] { "K.K. Safari", "K.K. Folk", "K.K. Rock", "Rockin' K.K.", "K.K. Ragtime", "K.K. Gumbo", "The K. Funk", "K.K. Blues" },
+            new[] { "K.K. Tango", "K.K. Faire", "Aloha K.K.", "Lucky K.K.", "K.K. Condor", "K.K. Steppe", "Imperial K.K.", "K.K. Casbah" },
+            new[] { "K.K. Aria", "K.K. Samba", "K.K. Bossa", "K.K. Calypso", "K.K. Salsa", "K.K. Mambo", "K.K. Reggae", "K.K. Ska" },
+            new[] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Etude", "K.K. Lullaby" },
+            new[] { "Mr. K.K.", "Café K.K.", "K.K. Parade", "Señor K.K.", "K.K. Song", "I Love You", "Two Days Ago", "" },
+            new[] { "K.K. Country", "Surfin' K.K.", "K.K. Ballad", "Comrade K.K.", "K.K. Lament", "Go K.K. Rider!", "K.K. Dirge", "K.K. Western" },
+            new[] { "Soulful K.K.", "K.K. Soul", "K.K. Crusin'", "K.K. Love Song", "K.K. D & B", "K.K. Technopop", "DJ K.K.", "Only Me" }
         };
 
-        public static string[][] Wild_World_SongLibrary_Names = new string[9][]
-        {
-            new string[8] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Etude", "K.K. Lullaby" },
-            new string[8] { "K.K. Aria", "K.K. Samba", "K.K. Bossa", "K.K. Calypso", "K.K. Salsa", "K.K. Mambo", "K.K. Reggae", "K.K. Ska" },
-            new string[8] { "K.K. Tango", "K.K. Faire", "Aloha K.K.", "Lucky K.K.", "K.K. Condor", "K.K. Steppe", "Imperial K.K.", "K.K. Casbah" },
-            new string[8] { "K.K. Safari", "K.K. Folk", "K.K. Rock", "Rockin' K.K.", "K.K. Ragtime", "K.K. Gumbo", "The K. Funk", "K.K. Blues" },
-            new string[8] { "Soulful K.K.", "K.K. Soul", "K.K. Cruisin'", "K.K. Love Song", "K.K. D & B", "K.K. Technopop", "DJ K.K.", "Only Me" },
-            new string[8] { "K.K. Country", "Surfin' K.K.", "K.K. Ballad", "Comrade K.K.", "K.K. Lament", "Go K.K. Rider!", "K.K. Dirge", "K.K. Western" },
-            new string[8] { "Mr. K.K.", "Café K.K.", "K.K. Parade", "Señor K.K.", "K.K. Song", "I Love You", "Two Days Ago", "My Place" },
-            new string[8] { "Forest Life", "To the Edge", "Pondering", "K.K. Dixie", "K.K. Marathon", "King K.K.", "Mountain Song", "Marine Song 2001" },
-            new string[8] { "Neapolitan", "Steep Hill", "K.K. Rockabilly", "Agent K.K.", "K.K. Rally", "K.K. Metal", "", "" }
+        public static readonly string[][] WildWorldSongLibraryNames = {
+            new[] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Etude", "K.K. Lullaby" },
+            new[] { "K.K. Aria", "K.K. Samba", "K.K. Bossa", "K.K. Calypso", "K.K. Salsa", "K.K. Mambo", "K.K. Reggae", "K.K. Ska" },
+            new[] { "K.K. Tango", "K.K. Faire", "Aloha K.K.", "Lucky K.K.", "K.K. Condor", "K.K. Steppe", "Imperial K.K.", "K.K. Casbah" },
+            new[] { "K.K. Safari", "K.K. Folk", "K.K. Rock", "Rockin' K.K.", "K.K. Ragtime", "K.K. Gumbo", "The K. Funk", "K.K. Blues" },
+            new[] { "Soulful K.K.", "K.K. Soul", "K.K. Cruisin'", "K.K. Love Song", "K.K. D & B", "K.K. Technopop", "DJ K.K.", "Only Me" },
+            new[] { "K.K. Country", "Surfin' K.K.", "K.K. Ballad", "Comrade K.K.", "K.K. Lament", "Go K.K. Rider!", "K.K. Dirge", "K.K. Western" },
+            new[] { "Mr. K.K.", "Café K.K.", "K.K. Parade", "Señor K.K.", "K.K. Song", "I Love You", "Two Days Ago", "My Place" },
+            new[] { "Forest Life", "To the Edge", "Pondering", "K.K. Dixie", "K.K. Marathon", "King K.K.", "Mountain Song", "Marine Song 2001" },
+            new[] { "Neapolitan", "Steep Hill", "K.K. Rockabilly", "Agent K.K.", "K.K. Rally", "K.K. Metal", "", "" }
         };
 
-        public static string[][] New_Leaf_SongLibrary_Names = new string[12][]
-        {
-            new string[8] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Étude", "K.K. Lullaby" },
-            new string[8] { "K.K. Aria", "K.K. Samba", "K.K. Bossa", "K.K. Calypso", "K.K. Salsa", "K.K. Mambo", "K.K. Reggae", "K.K. Ska" },
-            new string[8] { "K.K. Tango", "K.K. Faire", "Aloha K.K.", "Lucky K.K.", "K.K. Condor", "K.K. Steppe", "Imperial K.K.", "K.K. Casbah" },
-            new string[8] { "K.K. Safari", "K.K. Folk", "K.K. Rock", "Rockin' K.K.", "K.K. Ragtime", "K.K. Gumbo", "The K. Funk", "K.K. Blues" },
-            new string[8] { "Soulful K.K.'", "K.K. Soul", "K.K. Cruisin'", "K.K. Love Song", "K.K. D&B", "K.K. Technopop", "DJ K.K.", "Only Me" },
-            new string[8] { "K.K. Country", "Surfin' K.K.", "K.K. Ballad", "Comrade K.K.", "K.K. Lament", "Go K.K. Rider", "K.K. Dirge", "K.K. Western" },
-            new string[8] { "Mr. K.K.", "Café K.K.", "K.K. Parade", "Señor K.K.", "K.K. Song", "I Love You", "Two Days Ago", "My Place" },
-            new string[8] { "Forest Life", "To The Edge", "Pondering", "K.K. Dixie", "K.K. Marathon", "King K.K.", "Mountain Song", "Marine Song 2001" },
-            new string[8] { "Neapolitan", "Steep Hill", "K.K. Rockabilly", "Agent K.K.", "K.K. Rally", "K.K. Metal", "Stale Cupcakes", "Spring Blossoms" },
-            new string[8] { "Wandering", "K.K. House", "K.K. Sonata", "Hypno K.K.", "K.K. Stroll", "K.K. Island", "Space K.K.", "K.K. Adventure" },
-            new string[8] { "K.K. Oasis", "K.K. Bazaar", "K.K. Milonga", "K.K. Groove", "K.K. Jongara", "K.K. Flamenco", "K.K. Moody", "Bubblegum K.K." },
-            new string[8] { "K.K. Synth", "K.K. Disco", "K.K. Birthday", "", "", "", "", "" }
+        public static readonly string[][] NewLeafSongLibraryNames = {
+            new[] { "K.K. Chorale", "K.K. March", "K.K. Waltz", "K.K. Swing", "K.K. Jazz", "K.K. Fusion", "K.K. Étude", "K.K. Lullaby" },
+            new[] { "K.K. Aria", "K.K. Samba", "K.K. Bossa", "K.K. Calypso", "K.K. Salsa", "K.K. Mambo", "K.K. Reggae", "K.K. Ska" },
+            new[] { "K.K. Tango", "K.K. Faire", "Aloha K.K.", "Lucky K.K.", "K.K. Condor", "K.K. Steppe", "Imperial K.K.", "K.K. Casbah" },
+            new[] { "K.K. Safari", "K.K. Folk", "K.K. Rock", "Rockin' K.K.", "K.K. Ragtime", "K.K. Gumbo", "The K. Funk", "K.K. Blues" },
+            new[] { "Soulful K.K.'", "K.K. Soul", "K.K. Cruisin'", "K.K. Love Song", "K.K. D&B", "K.K. Technopop", "DJ K.K.", "Only Me" },
+            new[] { "K.K. Country", "Surfin' K.K.", "K.K. Ballad", "Comrade K.K.", "K.K. Lament", "Go K.K. Rider", "K.K. Dirge", "K.K. Western" },
+            new[] { "Mr. K.K.", "Café K.K.", "K.K. Parade", "Señor K.K.", "K.K. Song", "I Love You", "Two Days Ago", "My Place" },
+            new[] { "Forest Life", "To The Edge", "Pondering", "K.K. Dixie", "K.K. Marathon", "King K.K.", "Mountain Song", "Marine Song 2001" },
+            new[] { "Neapolitan", "Steep Hill", "K.K. Rockabilly", "Agent K.K.", "K.K. Rally", "K.K. Metal", "Stale Cupcakes", "Spring Blossoms" },
+            new[] { "Wandering", "K.K. House", "K.K. Sonata", "Hypno K.K.", "K.K. Stroll", "K.K. Island", "Space K.K.", "K.K. Adventure" },
+            new[] { "K.K. Oasis", "K.K. Bazaar", "K.K. Milonga", "K.K. Groove", "K.K. Jongara", "K.K. Flamenco", "K.K. Moody", "Bubblegum K.K." },
+            new[] { "K.K. Synth", "K.K. Disco", "K.K. Birthday", "", "", "", "", "" }
         };
 
-        private static Dictionary<int, byte> GetBitMap(SaveType Save_Type)
+        private static Dictionary<int, byte> GetBitMap(SaveType saveType)
         {
-            switch (Save_Type)
+            switch (saveType)
             {
                 case SaveType.AnimalCrossing:
-                    return Animal_Crossing_SongLibrary_Bit_Map;
+                    return AnimalCrossingSongLibraryBitMap;
                 case SaveType.WildWorld:
-                    return Wild_World_SongLibrary_Bit_Map;
+                    return WildWorldSongLibraryBitMap;
                 case SaveType.NewLeaf:
-                    return New_Leaf_SongLibrary_Bit_Map;
+                    return NewLeafSongLibraryBitMap;
                 case SaveType.WelcomeAmiibo:
-                    return Welcome_Amiibo_SongLibrary_Bit_Map;
+                    return WelcomeAmiiboSongLibraryBitMap;
                 default:
                     System.Windows.Forms.MessageBox.Show("Songs for this game have not been implemented yet!", "Unimplemented Notification",
                         System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
@@ -122,29 +119,25 @@ namespace ACSE
         /// <summary>
         /// Clears a Player's Song Library.
         /// </summary>
-        /// <param name="Save_File">Current Save File</param>
-        /// <param name="Player">Current Player whose Song Library will be cleared</param>
-        public static void ClearSongLibrary(Save Save_File, Player Player)
+        /// <param name="saveFile">Current Save File</param>
+        /// <param name="player">Current Player whose Song Library will be cleared</param>
+        public static void ClearSongLibrary(Save saveFile, Player player)
         {
-            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.SaveType);
-            if (Current_Bit_Map != null)
+            var currentBitMap = GetBitMap(saveFile.SaveType);
+            if (currentBitMap == null) return;
+            if (saveFile.SaveGeneration == SaveGeneration.N64 || saveFile.SaveGeneration == SaveGeneration.GCN)
             {
-                if (Save_File.SaveGeneration == SaveGeneration.N64 || Save_File.SaveGeneration == SaveGeneration.GCN)
+                if (player.House == null) return;
+                foreach (var bitValue in currentBitMap)
                 {
-                    if (Player.House != null)
-                    {
-                        foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
-                        {
-                            Save_File.Write(Player.House.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.House.Offset + Bit_Value.Key) & ~Bit_Value.Value));
-                        }
-                    }
+                    saveFile.Write(player.House.Offset + bitValue.Key, (byte)(saveFile.ReadByte(player.House.Offset + bitValue.Key) & ~bitValue.Value));
                 }
-                else
+            }
+            else
+            {
+                foreach (var bitValue in currentBitMap)
                 {
-                    foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
-                    {
-                        Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) & ~Bit_Value.Value));
-                    }
+                    saveFile.Write(player.Offset + bitValue.Key, (byte)(saveFile.ReadByte(player.Offset + bitValue.Key) & ~bitValue.Value));
                 }
             }
         }
@@ -152,29 +145,25 @@ namespace ACSE
         /// <summary>
         /// Fills a Player's Song Library.
         /// </summary>
-        /// <param name="Save_File">Current Save File</param>
-        /// <param name="Player">Current Player whose Song Library will be filled</param>
-        public static void FillSongLibrary(Save Save_File, Player Player)
+        /// <param name="saveFile">Current Save File</param>
+        /// <param name="player">Current Player whose Song Library will be filled</param>
+        public static void FillSongLibrary(Save saveFile, Player player)
         {
-            Dictionary<int, byte> Current_Bit_Map = GetBitMap(Save_File.SaveType);
-            if (Current_Bit_Map != null)
+            var currentBitMap = GetBitMap(saveFile.SaveType);
+            if (currentBitMap == null) return;
+            if (saveFile.SaveGeneration == SaveGeneration.N64 || saveFile.SaveGeneration == SaveGeneration.GCN)
             {
-                if (Save_File.SaveGeneration == SaveGeneration.N64 || Save_File.SaveGeneration == SaveGeneration.GCN)
+                if (player.House == null) return;
+                foreach (var bitValue in currentBitMap)
                 {
-                    if (Player.House != null)
-                    {
-                        foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
-                        {
-                            Save_File.Write(Player.House.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.House.Offset + Bit_Value.Key) | Bit_Value.Value));
-                        }
-                    }
+                    saveFile.Write(player.House.Offset + bitValue.Key, (byte)(saveFile.ReadByte(player.House.Offset + bitValue.Key) | bitValue.Value));
                 }
-                else
+            }
+            else
+            {
+                foreach (var bitValue in currentBitMap)
                 {
-                    foreach (KeyValuePair<int, byte> Bit_Value in Current_Bit_Map)
-                    {
-                        Save_File.Write(Player.Offset + Bit_Value.Key, (byte)(Save_File.ReadByte(Player.Offset + Bit_Value.Key) | Bit_Value.Value));
-                    }
+                    saveFile.Write(player.Offset + bitValue.Key, (byte)(saveFile.ReadByte(player.Offset + bitValue.Key) | bitValue.Value));
                 }
             }
         }

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace ACSE
 {
+    /// <inheritdoc />
     /// <summary>
     /// An all-in-one control for editing a single item.
     /// </summary>
@@ -20,71 +21,69 @@ namespace ACSE
         public readonly ToolTip ItemToolTip;
         public readonly Stack<ItemChange> UndoStack = new Stack<ItemChange>();
         public readonly Stack<ItemChange> RedoStack = new Stack<ItemChange>();
-        public bool Modified { get; protected set; } = false;
+        public bool Modified { get; protected set; }
 
-        private bool disabled = false;
+        private bool _disabled;
         public bool Disabled
         {
-            get => disabled;
+            get => _disabled;
             set
             {
-                disabled = value;
+                _disabled = value;
 
-                var Img = EditorPictureBox.Image;
+                var img = EditorPictureBox.Image;
                 EditorPictureBox.Image = Properties.Resources.X;
 
-                if (Img != null)
-                    Img.Dispose();
+                img?.Dispose();
             }
         }
 
-        private int itemCellSize = 8;
+        private int _itemCellSize = 8;
         public int ItemCellSize
         {
-            get => itemCellSize;
+            get => _itemCellSize;
             set
             {
-                itemCellSize = value;
-                if (!disabled && EditorPictureBox != null)
+                _itemCellSize = value;
+                if (!_disabled && EditorPictureBox != null)
                 {
                     SetItemPicture();
                 }
             }
         }
 
-        private Item item;
+        private Item _item;
         public virtual Item Item
         {
-            get => item;
+            get => _item;
             set
             {
-                Item PreviousItem = item;
-                item = value;
+                var previousItem = _item;
+                _item = value;
 
-                OnItemChanged(PreviousItem, value);
+                OnItemChanged(previousItem, value);
 
-                if (!disabled)
+                if (!_disabled)
                     SetItemPicture();
             }
         }
 
         private void SetItemPicture()
         {
-            var Img = EditorPictureBox.Image;
+            var img = EditorPictureBox.Image;
 
             if (Item != null)
             {
-                Size = new Size(itemCellSize, itemCellSize);
-                EditorPictureBox.Image = Inventory.GetItemPic(itemCellSize, item, MainForm.Save_File.SaveType);
+                Size = new Size(_itemCellSize, _itemCellSize);
+                EditorPictureBox.Image = Inventory.GetItemPic(_itemCellSize, _item, MainForm.SaveFile.SaveType);
             }
 
-            if (Img != null)
-                Img.Dispose();
+            img?.Dispose();
         }
 
-        private MainForm MainFormReference;
-        private int LastX = -1, LastY = -1;
-        private bool IsMouseDown = false;
+        private readonly MainForm _mainFormReference;
+        private int _lastX = -1, _lastY = -1;
+        private bool _isMouseDown;
 
         protected SingleItemEditor()
         {
@@ -105,122 +104,110 @@ namespace ACSE
 
         public SingleItemEditor(MainForm mainForm, Item item, int itemCellSize = 8) : this()
         {
-            MainFormReference = mainForm;
-            this.item = item;
+            _mainFormReference = mainForm;
+            _item = item;
             ItemCellSize = itemCellSize;
 
             EditorPictureBox.MouseMove += OnEditorMouseMove;
             EditorPictureBox.MouseLeave += (sender, e) => ItemToolTip.Hide(this);
 
             EditorPictureBox.MouseDown += OnEditorMouseDown;
-            EditorPictureBox.MouseUp += (sender, e) => IsMouseDown = false;
+            EditorPictureBox.MouseUp += (sender, e) => _isMouseDown = false;
         }
 
-        protected virtual void OnItemChanged(Item PreviousItem, Item NewItem)
+        protected virtual void OnItemChanged(Item previousItem, Item newItem)
         {
-            ItemChanged?.Invoke(this, new ItemChangedEventArgs { PreviousItem = PreviousItem, NewItem = NewItem });
+            ItemChanged?.Invoke(this, new ItemChangedEventArgs { PreviousItem = previousItem, NewItem = newItem });
         }
 
-        protected virtual void PushNewItemChange(Item OldItem, int ItemIndex, Stack<ItemChange> Stack)
+        protected virtual void PushNewItemChange(Item oldItem, int itemIndex, Stack<ItemChange> stack)
         {
-            Stack.Push(new ItemChange { Item = OldItem, Index = ItemIndex });
+            stack.Push(new ItemChange { Item = oldItem, Index = itemIndex });
         }
 
         protected virtual void OnEditorMouseMove(object sender, MouseEventArgs e)
         {
-            if (item != null && !disabled && (e.X != LastX || e.Y != LastY))
-            {
-                // Update Last Hover Position
-                LastX = e.X;
-                LastY = e.Y;
+            if (_item == null || _disabled || (e.X == _lastX && e.Y == _lastY)) return;
+            // Update Last Hover Position
+            _lastX = e.X;
+            _lastY = e.Y;
 
-                // Refresh ToolTip
-                ItemToolTip.Show(string.Format("{0} - [0x{1}]", item.Name, item.ItemId.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
+            // Refresh ToolTip
+            ItemToolTip.Show($"{_item.Name} - [0x{_item.ItemId:X4}]", this, e.X + 10, e.Y + 10, 100000);
 
-                // Check for MouseDown
-                if (IsMouseDown)
-                    OnEditorMouseDown(sender, e);
-            }
+            // Check for MouseDown
+            if (_isMouseDown)
+                OnEditorMouseDown(sender, e);
         }
 
         protected virtual void OnEditorMouseDown(object sender, MouseEventArgs e)
         {
-            if (!disabled)
+            if (_disabled) return;
+            _isMouseDown = true;
+            switch (e.Button)
             {
-                IsMouseDown = true;
-                if (e.Button == MouseButtons.Left)
-                {
-                    Item NewItem = MainFormReference.GetCurrentItem();
-                    Item PreviousItem = item;
+                case MouseButtons.Left:
+                    var newItem = _mainFormReference.GetCurrentItem();
+                    var previousItem = _item;
 
-                    if (PreviousItem != NewItem)
+                    if (previousItem != newItem)
                     {
 
                         // Save Old Item
-                        PushNewItemChange(PreviousItem, 0, UndoStack);
+                        PushNewItemChange(previousItem, 0, UndoStack);
 
                         // Set New Item
-                        Item = NewItem;
+                        Item = newItem;
 
                         // Update ToolTip
-                        ItemToolTip.Show(string.Format("{0} - [0x{1}]", NewItem.Name, NewItem.ItemId.ToString("X4")), this, e.X + 10, e.Y + 10, 100000);
+                        ItemToolTip.Show($"{newItem.Name} - [0x{newItem.ItemId:X4}]", this, e.X + 10, e.Y + 10, 100000);
 
                         Modified = true;
                     }
-                }
-                else if (e.Button == MouseButtons.Right)
-                {
-                    MainFormReference.SetCurrentItem(item);
-                }
+
+                    break;
+                case MouseButtons.Right:
+                    _mainFormReference.SetCurrentItem(_item);
+                    break;
             }
         }
 
         protected virtual void Undo()
         {
-            if (UndoStack.Any())
-            {
-                Item PreviousItem = item;
-                // Get Previous Change
-                ItemChange PreviousItemChange = UndoStack.Pop();
+            if (!UndoStack.Any()) return;
+            // Get Previous Change
+            var previousItemChange = UndoStack.Pop();
 
-                // Set Redo Change
-                PushNewItemChange(item, PreviousItemChange.Index, RedoStack);
+            // Set Redo Change
+            PushNewItemChange(_item, previousItemChange.Index, RedoStack);
 
-                // Undo
-                Item = PreviousItemChange.Item;
+            // Undo
+            Item = previousItemChange.Item;
 
-                Modified = UndoStack.Any();
-            }
+            Modified = UndoStack.Any();
         }
 
         protected virtual void Redo()
         {
-            if (RedoStack.Any())
-            {
-                Item PreviousItem = item;
+            if (!RedoStack.Any()) return;
+            // Get Previous Change
+            var previousItemChange = RedoStack.Pop();
 
-                // Get Previous Change
-                ItemChange PreviousItemChange = RedoStack.Pop();
+            // Set Undo Change
+            PushNewItemChange(_item, previousItemChange.Index, UndoStack);
 
-                // Set Undo Change
-                PushNewItemChange(item, PreviousItemChange.Index, UndoStack);
+            // Redo
+            Item = previousItemChange.Item;
 
-                // Redo
-                Item = PreviousItemChange.Item;
-
-                Modified = true;
-            }
+            Modified = true;
         }
 
         protected virtual void Dipose()
         {
             ItemToolTip.Dispose();
-
-            if (EditorPictureBox.Image != null)
-                EditorPictureBox.Image.Dispose();
-
+            EditorPictureBox.Image?.Dispose();
             EditorPictureBox.Dispose();
-            base.Dispose();
+            Dispose();
         }
     }
 }

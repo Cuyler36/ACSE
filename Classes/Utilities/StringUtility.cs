@@ -5,11 +5,11 @@ using System.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace ACSE.Classes.Utilities
+namespace ACSE.Utilities
 {
     public static class StringUtility
     {
-        public static readonly Dictionary<byte, string> AC_CharacterDictionary = new Dictionary<byte, string>()
+        public static readonly Dictionary<byte, string> AcCharacterDictionary = new Dictionary<byte, string>
         {
             { 0x00, "¡" },
             { 0x01, "¿" },
@@ -224,7 +224,7 @@ namespace ACSE.Classes.Utilities
             { 0xD4, "⚷" },
         };
 
-        public static readonly Dictionary<byte, string> Doubutsu_no_Mori_e_Plus_Char_Map = new Dictionary<byte, string>
+        public static readonly Dictionary<byte, string> DoubutsuNoMoriEPlusCharMap = new Dictionary<byte, string>
         {
             { 0x00, "あ" },
             { 0x01, "い" },
@@ -484,7 +484,8 @@ namespace ACSE.Classes.Utilities
             { 0xFF, "ぽ" },
         };
 
-        public static readonly Dictionary<byte, string> WW_CharacterDictionary = new Dictionary<byte, string>() // TODO: some of the new characters are wrong. Look at them one-by-one in Wild World somehow.
+        // TODO: some of the new characters are wrong. Look at them one-by-one in Wild World somehow.
+        public static readonly Dictionary<byte, string> WwCharacterDictionary = new Dictionary<byte, string>
         {
             { 0x00, "\0" },
             { 0x01, "A" },
@@ -710,13 +711,13 @@ namespace ACSE.Classes.Utilities
         };
     }
 
-    public class ACString
+    public class AcString
     {
         public string String = "";
         private static SaveType _saveType;
         private static Dictionary<byte, string> _charDictionary;
 
-        public ACString(byte[] stringBuffer, SaveType saveType)
+        public AcString(byte[] stringBuffer, SaveType saveType)
         {
             _saveType = saveType;
             switch (saveType)
@@ -724,13 +725,13 @@ namespace ACSE.Classes.Utilities
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
-                    _charDictionary = StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map;
+                    _charDictionary = StringUtility.DoubutsuNoMoriEPlusCharMap;
                     break;
                 case SaveType.AnimalCrossing:
-                    _charDictionary = StringUtility.AC_CharacterDictionary;
+                    _charDictionary = StringUtility.AcCharacterDictionary;
                     break;
                 case SaveType.WildWorld:
-                    _charDictionary = StringUtility.WW_CharacterDictionary;
+                    _charDictionary = StringUtility.WwCharacterDictionary;
                     break;
                 default:
                     _charDictionary = null;
@@ -798,9 +799,9 @@ namespace ACSE.Classes.Utilities
                     {
                         if (i >= stringBytes.Length)
                             break;
-                        if (StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map.ContainsValue(String[i].ToString()))
+                        if (StringUtility.DoubutsuNoMoriEPlusCharMap.ContainsValue(String[i].ToString()))
                         {
-                            stringBytes[i] = StringUtility.Doubutsu_no_Mori_e_Plus_Char_Map.First(o => o.Value == String[i].ToString()).Key;
+                            stringBytes[i] = StringUtility.DoubutsuNoMoriEPlusCharMap.First(o => o.Value == String[i].ToString()).Key;
                         }
                         else
                         {
@@ -821,9 +822,9 @@ namespace ACSE.Classes.Utilities
                     for (i = 0; i < String.Length; i++)
                     {
                         var character = String[i].ToString();
-                        if (StringUtility.WW_CharacterDictionary.ContainsValue(character))
+                        if (StringUtility.WwCharacterDictionary.ContainsValue(character))
                         {
-                            stringBuffer[i] = StringUtility.WW_CharacterDictionary.FirstOrDefault(o => o.Value.Equals(character)).Key;
+                            stringBuffer[i] = StringUtility.WwCharacterDictionary.FirstOrDefault(o => o.Value.Equals(character)).Key;
                         }
                     }
                 
@@ -848,7 +849,7 @@ namespace ACSE.Classes.Utilities
                 case SaveType.AnimalForest: // Animal Forest iQue support will be added soon
                     return null;
                 case SaveType.Unknown:
-                    MainForm.Debug_Manager.WriteLine(
+                    MainForm.DebugManager.WriteLine(
                         $"StringUtil was passed an unknown SaveType enum. Received Type: {_saveType.ToString()}", DebugLevel.Error);
                     return null;
                 default:

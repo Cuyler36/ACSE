@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
-namespace ACSE.Classes.Saves
+namespace ACSE.Saves
 {
     /// <summary>
     /// The base class for all Save generations' Save Files.
@@ -237,7 +236,7 @@ namespace ACSE.Classes.Saves
         /// <returns></returns>
         public virtual string ReadString(int offset, int length)
         {
-            return new Utilities.ACString(ReadByteArray(offset, length), SaveType).Trim();
+            return new Utilities.AcString(ReadByteArray(offset, length), SaveType).Trim();
         }
 
         #endregion
@@ -264,7 +263,7 @@ namespace ACSE.Classes.Saves
                     Data[offset] = (byte)data;
                 else if (Data_Type == typeof(string))
                 {
-                    byte[] String_Byte_Buff = Utilities.ACString.GetBytes((string)data, stringLength);
+                    byte[] String_Byte_Buff = Utilities.AcString.GetBytes((string)data, stringLength);
                     Buffer.BlockCopy(String_Byte_Buff, 0, Data, offset, String_Byte_Buff.Length);
                 }
                 else

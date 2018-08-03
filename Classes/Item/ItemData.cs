@@ -756,7 +756,7 @@ namespace ACSE
 
         public static string GetItemFlag1Type(Item item, byte itemFlag)
         {
-            var itemType = GetItemType(item.ItemId, MainForm.Save_File.SaveType);
+            var itemType = GetItemType(item.ItemId, MainForm.SaveFile.SaveType);
             switch (itemType)
             {
                 case "Fruit":
@@ -955,14 +955,14 @@ namespace ACSE
                 if (islandBuildings == false)
                     for (var i = 0; i < 58; i++)
                     {
-                        var dataOffset = save.SaveDataStartOffset + MainForm.Current_Save_Info.SaveOffsets.Buildings + i * 4;
+                        var dataOffset = save.SaveDataStartOffset + MainForm.CurrentSaveInfo.SaveOffsets.Buildings + i * 4;
                         buildings.Add(new Building(save.ReadByte(dataOffset), save.ReadByte(dataOffset + 2), save.ReadByte(dataOffset + 3), save.SaveType));
                         //Technically, Building IDs are shorts, but since they only use the lower byte, we'll just ignore that
                     }
                 else
                     for (var i = 0; i < 2; i++)
                     {
-                        var dataOffset = save.SaveDataStartOffset + MainForm.Current_Save_Info.SaveOffsets.IslandBuildings + i * 4;
+                        var dataOffset = save.SaveDataStartOffset + MainForm.CurrentSaveInfo.SaveOffsets.IslandBuildings + i * 4;
                         buildings.Add(new Building(save.ReadByte(dataOffset), save.ReadByte(dataOffset + 2), save.ReadByte(dataOffset + 3), save.SaveType));
                     }
             }

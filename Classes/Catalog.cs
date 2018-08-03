@@ -2,9 +2,9 @@
 
 namespace ACSE
 {
-    class Catalog
+    public static class Catalog
     {
-        private static Dictionary<int, byte> Animal_Crossing_Catalog_Bitmap = new Dictionary<int, byte>
+        private static readonly Dictionary<int, byte> AnimalCrossingCatalogBitmap = new Dictionary<int, byte>
         {
             { 0x1164, 0x00 },
             { 0x1165, 0x03 },
@@ -54,7 +54,7 @@ namespace ACSE
             switch (saveType)
             {
                 case SaveType.AnimalCrossing:
-                    return Animal_Crossing_Catalog_Bitmap;
+                    return AnimalCrossingCatalogBitmap;
                 default:
                     return null;
             }
@@ -67,24 +67,22 @@ namespace ACSE
         /// <param name="player">The Player whose catalog will be filled</param>
         public static void FillCatalog(Save saveFile, Player player)
         {
-            int CatalogOffset = GetCatalogBaseOffset(saveFile.SaveType);
-            if (CatalogOffset > -1)
-            {
-                int OriginalOffset = CatalogOffset;
-                CatalogOffset += player.Offset;
-                int CatalogSize = GetCatalogSize(saveFile.SaveType);
-                var NonCatalogBitmapFields = GetNonCatalogFields(saveFile.SaveType);
+            var catalogOffset = GetCatalogBaseOffset(saveFile.SaveType);
+            if (catalogOffset <= -1) return;
+            var originalOffset = catalogOffset;
+            catalogOffset += player.Offset;
+            var catalogSize = GetCatalogSize(saveFile.SaveType);
+            var nonCatalogBitmapFields = GetNonCatalogFields(saveFile.SaveType);
 
-                for (int i = 0; i < CatalogSize; i++)
+            for (var i = 0; i < catalogSize; i++)
+            {
+                if (nonCatalogBitmapFields != null && nonCatalogBitmapFields.ContainsKey(originalOffset + i))
                 {
-                    if (NonCatalogBitmapFields != null && NonCatalogBitmapFields.ContainsKey(OriginalOffset + i))
-                    {
-                        saveFile.Write(CatalogOffset + i, (byte)(saveFile.ReadByte(CatalogOffset + i) | NonCatalogBitmapFields[OriginalOffset + i]));
-                    }
-                    else
-                    {
-                        saveFile.Write(CatalogOffset + i, (byte)0xFF);
-                    }
+                    saveFile.Write(catalogOffset + i, (byte)(saveFile.ReadByte(catalogOffset + i) | nonCatalogBitmapFields[originalOffset + i]));
+                }
+                else
+                {
+                    saveFile.Write(catalogOffset + i, (byte)0xFF);
                 }
             }
         }
@@ -96,24 +94,22 @@ namespace ACSE
         /// <param name="player">The Player whose catalog will be cleared</param>
         public static void ClearCatalog(Save saveFile, Player player)
         {
-            int CatalogOffset = GetCatalogBaseOffset(saveFile.SaveType);
-            if (CatalogOffset > -1)
-            {
-                int OriginalOffset = CatalogOffset;
-                CatalogOffset += player.Offset;
-                int CatalogSize = GetCatalogSize(saveFile.SaveType);
-                var NonCatalogBitmapFields = GetNonCatalogFields(saveFile.SaveType);
+            var catalogOffset = GetCatalogBaseOffset(saveFile.SaveType);
+            if (catalogOffset <= -1) return;
+            var originalOffset = catalogOffset;
+            catalogOffset += player.Offset;
+            var catalogSize = GetCatalogSize(saveFile.SaveType);
+            var nonCatalogBitmapFields = GetNonCatalogFields(saveFile.SaveType);
 
-                for (int i = 0; i < CatalogSize; i++)
+            for (var i = 0; i < catalogSize; i++)
+            {
+                if (nonCatalogBitmapFields != null && nonCatalogBitmapFields.ContainsKey(originalOffset + i))
                 {
-                    if (NonCatalogBitmapFields != null && NonCatalogBitmapFields.ContainsKey(OriginalOffset + i))
-                    {
-                        saveFile.Write(CatalogOffset + i, (byte)(saveFile.ReadByte(CatalogOffset + i) & ~NonCatalogBitmapFields[OriginalOffset + i]));
-                    }
-                    else
-                    {
-                        saveFile.Write(CatalogOffset + i, (byte)0x00);
-                    }
+                    saveFile.Write(catalogOffset + i, (byte)(saveFile.ReadByte(catalogOffset + i) & ~nonCatalogBitmapFields[originalOffset + i]));
+                }
+                else
+                {
+                    saveFile.Write(catalogOffset + i, (byte)0x00);
                 }
             }
         }

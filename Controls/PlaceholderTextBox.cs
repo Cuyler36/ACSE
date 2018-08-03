@@ -3,6 +3,7 @@ using System.Drawing;
 
 namespace System.Windows.Forms
 {
+    /// <inheritdoc />
     /// <summary>
     /// Represents a Windows text box control with placeholder.
     /// </summary>
@@ -10,8 +11,8 @@ namespace System.Windows.Forms
     {
         #region Properties
 
-        string _placeholderText = DEFAULT_PLACEHOLDER;
-        bool _isPlaceholderActive = true;
+        private string _placeholderText = DefaultPlaceholder;
+        private bool _isPlaceholderActive = true;
 
 
         /// <summary>
@@ -20,7 +21,7 @@ namespace System.Windows.Forms
         [Browsable(false)]
         public bool IsPlaceholderActive
         {
-            get { return _isPlaceholderActive; }
+            get => _isPlaceholderActive;
             private set
             {
                 if (_isPlaceholderActive == value) return;
@@ -38,10 +39,10 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets or sets the placeholder in the PlaceholderTextBox.
         /// </summary>
-        [Description("The placeholder associated with the control."), Category("Placeholder"), DefaultValue(DEFAULT_PLACEHOLDER)]
+        [Description("The placeholder associated with the control."), Category("Placeholder"), DefaultValue(DefaultPlaceholder)]
         public string PlaceholderText
         {
-            get { return _placeholderText; }
+            get => _placeholderText;
             set
             {
                 _placeholderText = value;
@@ -53,6 +54,7 @@ namespace System.Windows.Forms
         }
 
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the current text in the TextBox.
         /// </summary>
@@ -68,7 +70,7 @@ namespace System.Windows.Forms
 
                 return base.Text;
             }
-            set { base.Text = value; }
+            set => base.Text = value;
         }
 
 
@@ -80,7 +82,7 @@ namespace System.Windows.Forms
         [Description("The foreground color of this component, which is used to display the placeholder."), Category("Appearance"), DefaultValue(typeof(Color), "InactiveCaption")]
         public Color PlaceholderTextColor
         {
-            get { return _placeholderTextColor; }
+            get => _placeholderTextColor;
             set
             {
                 if (_placeholderTextColor == value) return;
@@ -98,20 +100,15 @@ namespace System.Windows.Forms
         [Description("The foreground color of this component, which is used to display text."), Category("Appearance"), DefaultValue(typeof(Color), "WindowText")]
         public Color TextColor { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
         /// Do not access directly. Use TextColor.
         /// </summary>
         [Browsable(false)]
         public override Color ForeColor
         {
-            get
-            {
-                if (IsPlaceholderActive)
-                    return PlaceholderTextColor;
-
-                return TextColor;
-            }
-            set { TextColor = value; }
+            get => IsPlaceholderActive ? PlaceholderTextColor : TextColor;
+            set => TextColor = value;
         }
 
 
@@ -129,18 +126,19 @@ namespace System.Windows.Forms
         /// <summary>
         /// Specifies the default placeholder text.
         /// </summary>
-        const string DEFAULT_PLACEHOLDER = "<Input>";
+        private const string DefaultPlaceholder = "<Input>";
 
         /// <summary>
         /// Flag to avoid the TextChanged Event. Don't access directly, use Method 'ActionWithoutTextChanged(Action act)' instead.
         /// </summary>
-        bool avoidTextChanged;
+        private bool _avoidTextChanged;
 
         #endregion
 
 
         #region Constructor
 
+        /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the PlaceholderTextBox class.
         /// </summary>
@@ -178,11 +176,11 @@ namespace System.Windows.Forms
         /// <param name="act">Specifies the action to run.</param>
         private void ActionWithoutTextChanged(Action act)
         {
-            avoidTextChanged = true;
+            _avoidTextChanged = true;
 
             act.Invoke();
 
-            avoidTextChanged = false;
+            _avoidTextChanged = false;
         }
 
         /// <summary>
@@ -201,13 +199,13 @@ namespace System.Windows.Forms
         private void PlaceholderTextBox_TextChanged(object sender, EventArgs e)
         {
             // Check flag
-            if (avoidTextChanged) return;
+            if (_avoidTextChanged) return;
 
             // Run code with avoiding recursive call
             ActionWithoutTextChanged(delegate
             {
                 // If the Text is empty, insert placeholder and set cursor to the first position
-                if (String.IsNullOrEmpty(Text))
+                if (string.IsNullOrEmpty(Text))
                 {
                     Reset();
                     return;
@@ -215,18 +213,16 @@ namespace System.Windows.Forms
 
                 // If the placeholder has been active but now the text changed,
                 // set the textbox to its usual state
-                if (IsPlaceholderActive && Text != PlaceholderText)
-                {
-                    IsPlaceholderActive = false;
+                if (!IsPlaceholderActive || Text == PlaceholderText) return;
+                IsPlaceholderActive = false;
 
-                    // Throw away the placeholder but leave the new typed text
-                    int Length = TextLength - PlaceholderText.Length;
-                    if (Length > -1)
-                        Text = Text.Substring(0, Length);
+                // Throw away the placeholder but leave the new typed text
+                var length = TextLength - PlaceholderText.Length;
+                if (length > -1)
+                    Text = Text.Substring(0, length);
 
-                    // Set Selection to last position
-                    Select(TextLength, 0);
-                }
+                // Set Selection to last position
+                Select(TextLength, 0);
             });
         }
 
@@ -252,19 +248,19 @@ namespace System.Windows.Forms
         // Base class has a selectionSet property, but its private.
         // We need to shadow with our own variable. If true, this means
         // "don't mess with the selection, the user did it."
-        bool selectionSet;
+        private bool _selectionSet;
 
         protected override void OnGotFocus(EventArgs e)
         {
-            bool needToDeselect = false;
+            var needToDeselect = false;
 
             // We don't want to avoid calling the base implementation
             // completely. We mirror the logic that we are trying to avoid;
             // if the base implementation will select all of the text, we
             // set a boolean.
-            if (!selectionSet)
+            if (!_selectionSet)
             {
-                selectionSet = true;
+                _selectionSet = true;
 
                 if (SelectionLength == 0 && MouseButtons == MouseButtons.None)
                 {
@@ -286,11 +282,13 @@ namespace System.Windows.Forms
         #endregion
     }
 
+    /// <inheritdoc />
     /// <summary>
     /// Provides data for the PlaceholderActiveChanged event.
     /// </summary>
     public class PlaceholderActiveChangedEventArgs : EventArgs
     {
+        /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the PlaceholderActiveChangedEventArgs class.
         /// </summary>
@@ -303,6 +301,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gets the new value of the IsPlaceholderActive property.
         /// </summary>
-        public bool IsActive { get; private set; }
+        public bool IsActive { get; }
     }
 }

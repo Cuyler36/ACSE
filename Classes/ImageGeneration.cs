@@ -6,7 +6,6 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
 
 namespace ACSE
 {
@@ -15,15 +14,14 @@ namespace ACSE
         //From: http://stackoverflow.com/questions/7350679/convert-a-bitmap-into-a-byte-array
         public static byte[] BitmapToByteArray(Bitmap bitmap)
         {
-
             BitmapData bmpdata = null;
 
             try
             {
                 bmpdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, bitmap.PixelFormat);
-                int numbytes = bmpdata.Stride * bitmap.Height;
-                byte[] bytedata = new byte[numbytes];
-                IntPtr ptr = bmpdata.Scan0;
+                var numbytes = bmpdata.Stride * bitmap.Height;
+                var bytedata = new byte[numbytes];
+                var ptr = bmpdata.Scan0;
 
                 Marshal.Copy(ptr, bytedata, 0, numbytes);
 
@@ -37,197 +35,190 @@ namespace ACSE
 
         }
 
-        private static void ReplaceGrayscaleColor(ref Bitmap EditingImage, Color ReplacingColor)
+        private static void ReplaceGrayscaleColor(ref Bitmap editingImage, Color replacingColor)
         {
-            for (int y = 0; y < EditingImage.Height; y++)
+            for (var y = 0; y < editingImage.Height; y++)
             {
-                for (int x = 0; x < EditingImage.Width; x++)
+                for (var x = 0; x < editingImage.Width; x++)
                 {
-                    Color Pixel = EditingImage.GetPixel(x, y);
-                    if (Pixel.A > 0 && (Pixel.R == Pixel.B) && (Pixel.R == Pixel.G))
-                    {
-                        // The pixel is gray
-                        float Vibrance = Pixel.R / (float)255;
+                    var pixel = editingImage.GetPixel(x, y);
+                    if (pixel.A <= 0 || (pixel.R != pixel.B) || (pixel.R != pixel.G)) continue;
+                    // The pixel is gray
+                    var vibrance = pixel.R / 255.0f;
 
-                        EditingImage.SetPixel(x, y, Color.FromArgb(Pixel.A, (int)(ReplacingColor.R * Vibrance), (int)(ReplacingColor.G * Vibrance), (int)(ReplacingColor.B * Vibrance)));
-                    }
+                    editingImage.SetPixel(x, y, Color.FromArgb(pixel.A, (int)(replacingColor.R * vibrance), (int)(replacingColor.G * vibrance), (int)(replacingColor.B * vibrance)));
                 }
             }
         }
 
-        public static void Draw_Buried_Icons(Bitmap Map, WorldItem[] Items, int Item_Size, bool Use_Text = false)
+        public static void DrawBuriedIcons(Bitmap map, WorldItem[] items, int itemSize, bool useText = false)
         {
-            Graphics Bitmap_Graphics = Graphics.FromImage(Map);
-            Bitmap_Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            Bitmap_Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            for (int i = 0; i < Items.Length; i++)
+            var bitmapGraphics = Graphics.FromImage(map);
+            bitmapGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+            bitmapGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            bitmapGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            foreach (var item in items)
             {
-                WorldItem Item = Items[i];
-                if (Item.Buried && !Item.Name.Equals("Empty"))
+                if (!item.Buried || item.Name.Equals("Empty")) continue;
+                if (useText)
                 {
-                    if (Use_Text)
-                    {
-                        Bitmap_Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                        Bitmap_Graphics.DrawString("X", new Font("Tahoma", Item_Size), Brushes.White, new RectangleF(Item.Location.X * Item_Size, Item.Location.Y * Item_Size, Item_Size, Item_Size));
-                    }
-                    else
-                        Bitmap_Graphics.DrawImage(Properties.Resources.Buried, Item.Location.X * Item_Size + 1, Item.Location.Y * Item_Size + 1, Item_Size - 1, Item_Size - 1);
+                    bitmapGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                    bitmapGraphics.DrawString("X", new Font("Tahoma", itemSize), Brushes.White, new RectangleF(item.Location.X * itemSize, item.Location.Y * itemSize, itemSize, itemSize));
                 }
+                else
+                    bitmapGraphics.DrawImage(Properties.Resources.Buried, item.Location.X * itemSize + 1, item.Location.Y * itemSize + 1, itemSize - 1, itemSize - 1);
             }
-            Bitmap_Graphics.Flush();
-            Bitmap_Graphics.Dispose();
+            bitmapGraphics.Flush();
+            bitmapGraphics.Dispose();
         }
 
-        public static Bitmap Draw_Grid(Bitmap Map, int Item_Size, uint Grid_Color = 0xFFAAAAAA, int Grid_Pixel_Size = 1)
+        public static Bitmap DrawGrid(Bitmap map, int itemSize, uint gridColor = 0xFFAAAAAA, int gridPixelSize = 1)
         {
-            Graphics Bitmap_Graphics = Graphics.FromImage(Map);
-            Bitmap_Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            Bitmap_Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            int Num_Lines_X = Map.Width / Item_Size, Num_Lines_Y = Map.Height / Item_Size;
-            Pen Grid_Pen = new Pen(new SolidBrush(Color.FromArgb((int)Grid_Color)))
+            var bitmapGraphics = Graphics.FromImage(map);
+            bitmapGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+            bitmapGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            bitmapGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            int numLinesX = map.Width / itemSize, numLinesY = map.Height / itemSize;
+            var gridPen = new Pen(new SolidBrush(Color.FromArgb((int)gridColor)))
             {
-                Width = Grid_Pixel_Size
+                Width = gridPixelSize
             };
-            for (int Y = 1; Y < Num_Lines_Y; Y++)
-                Bitmap_Graphics.DrawLine(Grid_Pen, 0, Y * Item_Size - 1, Map.Width, Y * Item_Size - 1);
-            for (int X = 1; X < Num_Lines_X; X++)
-                Bitmap_Graphics.DrawLine(Grid_Pen, X * Item_Size - 1, 0, X * Item_Size - 1, Map.Height);
-            Bitmap_Graphics.Flush();
-            Bitmap_Graphics.Dispose();
-            return Map;
+            for (var y = 1; y < numLinesY; y++)
+                bitmapGraphics.DrawLine(gridPen, 0, y * itemSize - 1, map.Width, y * itemSize - 1);
+            for (var x = 1; x < numLinesX; x++)
+                bitmapGraphics.DrawLine(gridPen, x * itemSize - 1, 0, x * itemSize - 1, map.Height);
+            bitmapGraphics.Flush();
+            bitmapGraphics.Dispose();
+            return map;
         }
 
-        public static Bitmap DrawGrid2(Image Img, int CellSize, Size ImageSize, Pen GridPen = null, bool Resize = true, bool DrawVertical = true, bool SkipFirstLine = false)
+        public static Bitmap DrawGrid2(Image img, int cellSize, Size imageSize, Pen gridPen = null, bool resize = true, bool drawVertical = true, bool skipFirstLine = false)
         {
-            if (GridPen == null)
-                GridPen = Pens.Black;
+            if (gridPen == null)
+                gridPen = Pens.Black;
 
-            Bitmap GridBitmap = Resize ? new Bitmap(ImageSize.Width, ImageSize.Height) : new Bitmap(Img);
+            var gridBitmap = resize ? new Bitmap(imageSize.Width, imageSize.Height) : new Bitmap(img);
 
-            using (Graphics GridGraphics = Graphics.FromImage(GridBitmap))
+            using (var gridGraphics = Graphics.FromImage(gridBitmap))
             {
-                GridGraphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-                if (Resize)
-                    GridGraphics.DrawImage(Img, new Rectangle(0, 0, ImageSize.Width, ImageSize.Height), new RectangleF((float)-0.5, (float)-0.5, 32, 32), GraphicsUnit.Pixel);
+                gridGraphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                if (resize)
+                    gridGraphics.DrawImage(img, new Rectangle(0, 0, imageSize.Width, imageSize.Height), new RectangleF((float)-0.5, (float)-0.5, 32, 32), GraphicsUnit.Pixel);
 
-                if (DrawVertical)
-                    for (int X = 0; X < GridBitmap.Width; X += CellSize)
+                if (drawVertical)
+                    for (var x = 0; x < gridBitmap.Width; x += cellSize)
                     {
-                        GridGraphics.DrawLine(GridPen, X, 0, X, GridBitmap.Height);
+                        gridGraphics.DrawLine(gridPen, x, 0, x, gridBitmap.Height);
                     }
 
-                for (int Y = SkipFirstLine ? CellSize : 0; Y < GridBitmap.Height; Y += CellSize)
+                for (var y = skipFirstLine ? cellSize : 0; y < gridBitmap.Height; y += cellSize)
                 {
-                    GridGraphics.DrawLine(GridPen, 0, Y, GridBitmap.Width, Y);
+                    gridGraphics.DrawLine(gridPen, 0, y, gridBitmap.Width, y);
                 }
             }
 
-            return GridBitmap;
+            return gridBitmap;
         }
 
-        public static Bitmap Draw_Acre_Highlight()
+        public static Bitmap DrawAcreHighlight()
         {
-            Bitmap Acre_Highlight = new Bitmap(64, 64);
-            Graphics Bitmap_Graphics = Graphics.FromImage(Acre_Highlight);
-            Pen Border_Color = new Pen(Color.FromArgb(0x80, Color.Gold))
+            var acreHighlight = new Bitmap(64, 64);
+            var bitmapGraphics = Graphics.FromImage(acreHighlight);
+            var borderColor = new Pen(Color.FromArgb(0x80, Color.Gold))
             {
                 Width = 8
             };
-            Bitmap_Graphics.DrawRectangle(Border_Color, new Rectangle(0, 0, 64, 64));
-            Bitmap_Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x80, Color.Yellow)), new Rectangle(4, 4, 56, 56));
-            Bitmap_Graphics.Flush();
-            Bitmap_Graphics.Dispose();
-            Border_Color.Dispose();
-            return Acre_Highlight;
+            bitmapGraphics.DrawRectangle(borderColor, new Rectangle(0, 0, 64, 64));
+            bitmapGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0x80, Color.Yellow)), new Rectangle(4, 4, 56, 56));
+            bitmapGraphics.Flush();
+            bitmapGraphics.Dispose();
+            borderColor.Dispose();
+            return acreHighlight;
         }
 
-        public static Bitmap Draw_Building(Bitmap Acre_Map, Building Building_to_Draw, int ItemSize,  bool Use_Text = false)
+        public static Bitmap DrawBuilding(Bitmap acreMap, Building buildingToDraw, int itemSize,  bool useText = false)
         {
-            RectangleF RectF = new RectangleF(Building_to_Draw.XPos * ItemSize, Building_to_Draw.YPos * ItemSize, ItemSize, ItemSize);
-            Graphics Bitmap_Graphics = Graphics.FromImage(Acre_Map);
-            Bitmap_Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            Bitmap_Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            if (Use_Text)
+            var rectF = new RectangleF(buildingToDraw.XPos * itemSize, buildingToDraw.YPos * itemSize, itemSize, itemSize);
+            var bitmapGraphics = Graphics.FromImage(acreMap);
+            bitmapGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+            bitmapGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            bitmapGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            if (useText)
             {
-                Bitmap_Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                Bitmap_Graphics.DrawString("B", new Font("Tahoma", ItemSize), Brushes.White, RectF);
+                bitmapGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                bitmapGraphics.DrawString("B", new Font("Tahoma", itemSize), Brushes.White, rectF);
             }
             else
-                Bitmap_Graphics.DrawImage(Properties.Resources.Building, Building_to_Draw.XPos * ItemSize, Building_to_Draw.YPos * ItemSize, ItemSize, ItemSize);
-            Bitmap_Graphics.Flush();
-            Bitmap_Graphics.Dispose();
-            return Acre_Map;
+                bitmapGraphics.DrawImage(Properties.Resources.Building, buildingToDraw.XPos * itemSize, buildingToDraw.YPos * itemSize, itemSize, itemSize);
+            bitmapGraphics.Flush();
+            bitmapGraphics.Dispose();
+            return acreMap;
         }
 
-        public static Bitmap Draw_Buildings(Bitmap Acre_Map, Building[] Building_List, int Acre, int ItemSize)
+        public static Bitmap DrawBuildings(Bitmap acreMap, Building[] buildingList, int acre, int itemSize)
         {
-            if (Building_List == null)
-                return Acre_Map;
-            foreach (Building B in Building_List)
+            if (buildingList == null)
+                return acreMap;
+            foreach (var b in buildingList)
             {
-                if (B.Exists && B.AcreIndex == Acre)
+                if (b.Exists && b.AcreIndex == acre)
                 {
-                    Draw_Building(Acre_Map, B, ItemSize);
+                    DrawBuilding(acreMap, b, itemSize);
                 }
             }
-            return Acre_Map;
+            return acreMap;
         }
 
-        public static Bitmap Draw_Inner_House_Extents(Bitmap Furniture_Map, int Floor_Size = 8)
+        public static Bitmap DrawInnerHouseExtents(Bitmap furnitureMap, int floorSize = 8)
         {
-            using (Graphics Bitmap_Graphics = Graphics.FromImage(Furniture_Map))
+            using (var bitmapGraphics = Graphics.FromImage(furnitureMap))
             {
-                int Corner = (16 - Floor_Size) / 2;
-                using (Pen Border_Pen = new Pen(Color.Gray, 2))
+                var corner = (16 - floorSize) / 2;
+                using (var borderPen = new Pen(Color.Gray, 2))
                 {
-                    Border_Pen.Alignment = PenAlignment.Inset;
-                    Bitmap_Graphics.DrawRectangle(Border_Pen, new Rectangle(Corner, Corner, Floor_Size * 16, Floor_Size * 16));
+                    borderPen.Alignment = PenAlignment.Inset;
+                    bitmapGraphics.DrawRectangle(borderPen, new Rectangle(corner, corner, floorSize * 16, floorSize * 16));
                 }
             }
-            return Furniture_Map;
+            return furnitureMap;
         }
 
-        public static Bitmap Draw_Furniture_Arrows(Bitmap Furniture_Map, Furniture[] Furniture, int Columns = 16)
+        public static Bitmap DrawFurnitureArrows(Bitmap furnitureMap, Furniture[] furniture, int columns = 16)
         {
-            Graphics Bitmap_Graphics = Graphics.FromImage(Furniture_Map);
-            Bitmap_Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            Bitmap_Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            Bitmap_Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            for (int i = 0; i < Furniture.Length; i++)
+            var bitmapGraphics = Graphics.FromImage(furnitureMap);
+            bitmapGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+            bitmapGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            bitmapGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            for (var i = 0; i < furniture.Length; i++)
             {
-                string ItemType = ItemData.GetItemType(Furniture[i].ItemId, MainForm.Save_File.SaveType);
-                if (Furniture[i].Name != "Empty" && (ItemType.Equals("Furniture") || ItemType.Equals("Gyroids")))
-                {
-                    Image Arrow = Properties.Resources.Arrow;
+                var itemType = ItemData.GetItemType(furniture[i].ItemId, MainForm.SaveFile.SaveType);
+                if (furniture[i].Name == "Empty" ||
+                    (!itemType.Equals("Furniture") && !itemType.Equals("Gyroids"))) continue;
+                Image arrow = Properties.Resources.Arrow;
 
-                    if (Furniture[i].Rotation > 0)
+                if (furniture[i].Rotation > 0)
+                {
+                    switch (furniture[i].Rotation % 360)
                     {
-                        switch (Furniture[i].Rotation % 360)
-                        {
-                            case 90:
-                                Arrow.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                                break;
-                            case 180:
-                                Arrow.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                                break;
-                            case 270:
-                                Arrow.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                                break;
-                        }
+                        case 90:
+                            arrow.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                            break;
+                        case 180:
+                            arrow.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                            break;
+                        case 270:
+                            arrow.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            break;
                     }
-                    Bitmap_Graphics.DrawImage(Arrow, (i % Columns) * (Furniture_Map.Width / Columns), (i / Columns) * (Furniture_Map.Width / Columns));
                 }
+                bitmapGraphics.DrawImage(arrow, (i % columns) * (furnitureMap.Width / columns), (i / columns) * (furnitureMap.Width / columns));
             }
-            Bitmap_Graphics.Flush();
-            Bitmap_Graphics.Dispose();
-            return Furniture_Map;
+            bitmapGraphics.Flush();
+            bitmapGraphics.Dispose();
+            return furnitureMap;
         }
 
-        public static int[] Grass_Wear_Offset_Map = new int[64] //Lazy Hack
-        {
+        public static readonly int[] GrassWearOffsetMap = {
             0, 1, 4, 5, 16, 17, 20, 21,
             2, 3, 6, 7, 18, 19, 22, 23,
             8, 9, 12, 13, 24, 25, 28, 29,
@@ -238,54 +229,54 @@ namespace ACSE
             42, 43, 46, 47, 58, 59, 62, 63
         };
 
-        public static Bitmap Draw_Grass_Wear(byte[] Grass_Buffer)
+        public static Bitmap DrawGrassWear(byte[] grassBuffer)
         {
-            if (MainForm.Save_File.SaveType == SaveType.CityFolk)
+            Bitmap grassBitmap;
+            Graphics bitmapGraphics;
+            if (MainForm.SaveFile.SaveType == SaveType.CityFolk)
             {
-                Bitmap Grass_Bitmap = new Bitmap(64, 64, PixelFormat.Format32bppArgb);
-                Graphics Bitmap_Graphics = Graphics.FromImage(Grass_Bitmap);
-                int i = 0;
-                for (int Y2 = 0; Y2 < 4; Y2++)
-                    for (int X2 = 0; X2 < 2; X2++)
-                        for (int Y = 0; Y < 4; Y++)
-                            for (int X = 0; X < 8; X++)
+                grassBitmap = new Bitmap(64, 64, PixelFormat.Format32bppArgb);
+                bitmapGraphics = Graphics.FromImage(grassBitmap);
+                var i = 0;
+                for (var y2 = 0; y2 < 4; y2++)
+                    for (var x2 = 0; x2 < 2; x2++)
+                        for (var y = 0; y < 4; y++)
+                            for (var x = 0; x < 8; x++)
                             {
-                                Bitmap_Graphics.FillRectangle(new SolidBrush(Color.FromArgb(Grass_Buffer[i] == 0 ? 0 : 0x60, 0, Grass_Buffer[i], 0)), (X + X2 * 8) * 4, (Y + Y2 * 4) * 4, 4, 4);
+                                bitmapGraphics.FillRectangle(new SolidBrush(Color.FromArgb(grassBuffer[i] == 0 ? 0 : 0x60, 0, grassBuffer[i], 0)), (x + x2 * 8) * 4, (y + y2 * 4) * 4, 4, 4);
                                 i++;
                             }
-                Bitmap_Graphics.Flush();
-                Bitmap_Graphics.Dispose();
-                return Grass_Bitmap;
+                bitmapGraphics.Flush();
+                bitmapGraphics.Dispose();
+                return grassBitmap;
             }
-            else // NL/WA
+
+            grassBitmap = new Bitmap(7 * 64, 6 * 64, PixelFormat.Format32bppArgb);
+            bitmapGraphics = Graphics.FromImage(grassBitmap);
+            for (var y = 0; y < 6 * 16; y++)
             {
-                Bitmap Grass_Bitmap = new Bitmap(7 * 64, 6 * 64, PixelFormat.Format32bppArgb);
-                Graphics Bitmap_Graphics = Graphics.FromImage(Grass_Bitmap);
-                for (int Y = 0; Y < 6 * 16; Y++)
+                for (var x = 0; x < 7 * 16; x++)
                 {
-                    for (int X = 0; X < 7 * 16; X++)
-                    {
-                        int Offset = 64 * ((Y / 8) * 16 + (X / 8)) + Grass_Wear_Offset_Map[(Y % 8) * 8 + (X % 8)];
-                        SolidBrush Brush = new SolidBrush(Color.FromArgb(Grass_Buffer[Offset] == 0 ? 0 : 0x60, 0, Grass_Buffer[Offset], 0));
-                        Bitmap_Graphics.FillRectangle(Brush, X * 4, Y * 4, 4, 4);
-                    }
+                    var offset = 64 * ((y / 8) * 16 + (x / 8)) + GrassWearOffsetMap[(y % 8) * 8 + (x % 8)];
+                    var brush = new SolidBrush(Color.FromArgb(grassBuffer[offset] == 0 ? 0 : 0x60, 0, grassBuffer[offset], 0));
+                    bitmapGraphics.FillRectangle(brush, x * 4, y * 4, 4, 4);
                 }
-                Bitmap_Graphics.Flush();
-                Bitmap_Graphics.Dispose();
-                return Grass_Bitmap;
             }
+            bitmapGraphics.Flush();
+            bitmapGraphics.Dispose();
+            return grassBitmap;
         }
 
-        public static Bitmap Draw_NL_Grass_BG(PictureBox[] Acre_Map)
+        public static Bitmap DrawNewLeafGrassBg(PictureBox[] acreMap)
         {
-            Bitmap BG_Bitmap = new Bitmap(64 * 7, 64 * 6);
-            Graphics BG_Graphics = Graphics.FromImage(BG_Bitmap);
-            for (int i = 0; i < Acre_Map.Length; i++)
-                if (Acre_Map[i].BackgroundImage != null)
-                    BG_Graphics.DrawImage(MakeGrayscale((Bitmap)Acre_Map[i].BackgroundImage), 64 * (i % 7), 64 * (i / 7));
-            BG_Graphics.Flush();
-            BG_Graphics.Dispose();
-            return BG_Bitmap;
+            var bgBitmap = new Bitmap(64 * 7, 64 * 6);
+            var bgGraphics = Graphics.FromImage(bgBitmap);
+            for (var i = 0; i < acreMap.Length; i++)
+                if (acreMap[i].BackgroundImage != null)
+                    bgGraphics.DrawImage(MakeGrayscale((Bitmap)acreMap[i].BackgroundImage), 64 * (i % 7), 64 * (i / 7));
+            bgGraphics.Flush();
+            bgGraphics.Dispose();
+            return bgBitmap;
         }
 
 
@@ -294,21 +285,21 @@ namespace ACSE
         {
             if (original == null)
                 return null;
-            Bitmap newBitmap = new Bitmap(original.Width, original.Height);
-            Graphics g = Graphics.FromImage(newBitmap);
+            var newBitmap = new Bitmap(original.Width, original.Height);
+            var g = Graphics.FromImage(newBitmap);
 
             //create the grayscale ColorMatrix
-            ColorMatrix colorMatrix = new ColorMatrix(
-               new float[][]
+            var colorMatrix = new ColorMatrix(
+               new[]
                {
-                 new float[] {.3f, .3f, .3f, 0, 0},
-                 new float[] {.59f, .59f, .59f, 0, 0},
-                 new float[] {.11f, .11f, .11f, 0, 0},
-                 new float[] {0, 0, 0, 1, 0},
-                 new float[] {0, 0, 0, 0, 1}
+                 new[] {0.3f, 0.3f, 0.3f, 0f, 0f},
+                 new[] {0.59f, 0.59f, 0.59f, 0f, 0f},
+                 new[] {0.11f, 0.11f, 0.11f, 0f, 0f},
+                 new[] {0f, 0f, 0f, 1f, 0f},
+                 new[] {0f, 0f, 0f, 0f, 1f}
                });
 
-            ImageAttributes attributes = new ImageAttributes();
+            var attributes = new ImageAttributes();
             attributes.SetColorMatrix(colorMatrix);
 
             g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height),
@@ -317,250 +308,234 @@ namespace ACSE
             return newBitmap;
         }
 
-        public static byte[] GetTPCTrimmedBytes(byte[] TPC_Bytes)
+        public static byte[] GetTpcTrimmedBytes(byte[] tpcBytes)
         {
-            byte[] Finalized_TPC_Bytes = new byte[0x1400];
-            if (TPC_Bytes.Length > 0x1400)
+            var finalizedTpcBytes = new byte[0x1400];
+            if (tpcBytes.Length > 0x1400)
             {
-                MessageBox.Show("Received TPC Card file size: " + TPC_Bytes.Length.ToString("X"));
-                Array.Resize(ref TPC_Bytes, 0x1400);
+                MessageBox.Show("Received TPC Card file size: " + tpcBytes.Length.ToString("X"));
+                Array.Resize(ref tpcBytes, 0x1400);
             }
-            for (int i = TPC_Bytes.Length - 1; i > 0; i--)
+            for (var i = tpcBytes.Length - 1; i > 0; i--)
             {
-                if (i > 0 && TPC_Bytes[i - 1] == 0xFF && TPC_Bytes[i] == 0xD9)
-                {
-                    Buffer.BlockCopy(TPC_Bytes, 0, Finalized_TPC_Bytes, 0, i == 0x13FF ? i : i + 1);
-                    break;
-                }
+                if (i <= 0 || tpcBytes[i - 1] != 0xFF || tpcBytes[i] != 0xD9) continue;
+                Buffer.BlockCopy(tpcBytes, 0, finalizedTpcBytes, 0, i == 0x13FF ? i : i + 1);
+                break;
             }
-            return Finalized_TPC_Bytes;
+            return finalizedTpcBytes;
         }
 
-        public static Image GetTPCImage(byte[] TPC_Bytes)
+        public static Image GetTpcImage(byte[] tpcBytes)
         {
-            if (TPC_Bytes.Length != 0x1400)
+            if (tpcBytes.Length != 0x1400)
             {
                 MessageBox.Show("The TPC Picture was an incorrect data size.");
                 return null;
             }
 
-            for (int i = TPC_Bytes.Length - 1; i > 0; i--)
+            for (var i = tpcBytes.Length - 1; i > 0; i--)
             {
-                if (i > 0 && TPC_Bytes[i - 1] == 0xFF && TPC_Bytes[i] == 0xD9)
+                if (i > 0 && tpcBytes[i - 1] == 0xFF && tpcBytes[i] == 0xD9)
                 {
-                    using (var ms = new MemoryStream(TPC_Bytes.Take(i).ToArray()))
+                    using (var ms = new MemoryStream(tpcBytes.Take(i).ToArray()))
                     {
                         return Image.FromStream(ms);
                     }
                 }
             }
-            MainForm.Debug_Manager.WriteLine("Unable to find JPEG End-of-File marker. No TPC?", DebugLevel.Error);
+            MainForm.DebugManager.WriteLine("Unable to find JPEG End-of-File marker. No TPC?", DebugLevel.Error);
             return Properties.Resources.no_tpc;
         }
 
-        public static uint[] GetBitmapDataFromPNG(string PNG_Location)
+        public static uint[] GetBitmapDataFromPng(string pngLocation)
         {
             try
             {
-                byte[] Bitmap_Buffer = null;
-                using (MemoryStream Stream = new MemoryStream())
+                byte[] bitmapBuffer;
+                var img = Image.FromFile(pngLocation);
+                using (var stream = new MemoryStream())
                 {
-                    Image Img = Image.FromFile(PNG_Location);
-                    Img.Save(Stream, ImageFormat.Bmp);
-                    Bitmap_Buffer = Stream.ToArray();
-                    Img.Dispose();
+                    img.Save(stream, ImageFormat.Bmp);
+                    bitmapBuffer = stream.ToArray();
+                    img.Dispose();
                 }
 
-                int DataSize = Bitmap_Buffer[0x1C] / 8;
-                int Width = BitConverter.ToInt32(Bitmap_Buffer, 0x12);
-                int Height = BitConverter.ToInt32(Bitmap_Buffer, 0x16);
+                var dataSize = bitmapBuffer[0x1C] / 8;
+                var width = BitConverter.ToInt32(bitmapBuffer, 0x12);
+                var height = BitConverter.ToInt32(bitmapBuffer, 0x16);
 
-                if (Width != 32 || Height != 32)
+                if (width != 32 || height != 32)
                 {
                     MessageBox.Show("Pattern Import Error: Image must be sized to 32x32!");
                     return null;
                 }
-                else if (DataSize < 3 || DataSize > 4)
+
+                if (dataSize < 3 || dataSize > 4)
                 {
                     MessageBox.Show("Pattern Import Error: Image must have either 24bpp or 32bpp color depth!");
                     return null;
                 }
 
-                if (DataSize == 3 || DataSize == 4)
+                if (dataSize == 3 || dataSize == 4)
                 {
-                    byte[] Image_Data = Bitmap_Buffer.Skip(BitConverter.ToInt32(Bitmap_Buffer.Skip(0xA).Take(4).ToArray(), 0)).ToArray();
-                    uint[] Pixel_Data = new uint[Image_Data.Length / DataSize];
+                    var imageData = bitmapBuffer.Skip(BitConverter.ToInt32(bitmapBuffer.Skip(0xA).Take(4).ToArray(), 0)).ToArray();
+                    var pixelData = new uint[imageData.Length / dataSize];
 
-                    for (int i = 0; i < Pixel_Data.Length; i++)
+                    for (var i = 0; i < pixelData.Length; i++)
                     {
-                        int Index = i * DataSize;
-                        Pixel_Data[i] = (uint)((0xFF << 24) | (Image_Data[Index + 2] << 16) | (Image_Data[Index + 1] << 8) | Image_Data[Index]); // i + 3 would be alpha data
+                        var index = i * dataSize;
+                        pixelData[i] = (uint)((0xFF << 24) | (imageData[index + 2] << 16) | (imageData[index + 1] << 8) | imageData[index]); // i + 3 would be alpha data
                     }
 
                     // Flip Vertically
-                    Array.Reverse(Pixel_Data);
+                    Array.Reverse(pixelData);
 
                     // Flip Horizontally
-                    for (int i = 0; i < Pixel_Data.Length; i += Width)
-                        Array.Reverse(Pixel_Data, i, Width);
+                    for (var i = 0; i < pixelData.Length; i += width)
+                        Array.Reverse(pixelData, i, width);
 
-                    return Pixel_Data;
+                    return pixelData;
                 }
-                else
-                {
-                    return new uint[0];
-                }
+
+                return new uint[0];
             }
             catch
             {
-                MainForm.Debug_Manager.WriteLine("Unable to import pattern!", DebugLevel.Error);
+                MainForm.DebugManager.WriteLine("Unable to import pattern!", DebugLevel.Error);
                 MessageBox.Show("Pattern Import Error: Failed to import the image!");
                 return null;
             }
         }
 
-        public static Image GetFaceImage(SaveGeneration Save_Generation, int Index, byte Gender)
+        public static Image GetFaceImage(SaveGeneration saveGeneration, int index, byte gender)
         {
-            Image FaceImage = null;
-            string FacesFolder = MainForm.Assembly_Location + "\\Resources\\Images\\Faces";
-            if (Directory.Exists(FacesFolder))
+            Image faceImage = null;
+            var facesFolder = MainForm.AssemblyLocation + "\\Resources\\Images\\Faces";
+            if (!Directory.Exists(facesFolder)) return null;
+            switch (saveGeneration)
             {
-                if (Save_Generation == SaveGeneration.N64 || Save_Generation == SaveGeneration.GCN || Save_Generation == SaveGeneration.iQue)
-                {
-                    FacesFolder += "\\Animal Crossing";
-                }
-                else if (Save_Generation == SaveGeneration.NDS || Save_Generation == SaveGeneration.Wii)
-                {
-                    FacesFolder += "\\Wild World";
-                }
-                else if (Save_Generation == SaveGeneration.N3DS)
-                {
-                    FacesFolder += "\\New Leaf\\" + (Gender == 1 ? "Female" : "Male");
-                }
-
-                if (Directory.Exists(FacesFolder))
-                {
-                    string FaceImageFile = FacesFolder + "\\" + Index + ".bmp";
-                    if (File.Exists(FaceImageFile))
-                    {
-                        try
-                        {
-                            FaceImage = Image.FromFile(FaceImageFile);
-                        }
-                        catch
-                        {
-                            MainForm.Debug_Manager.WriteLine(string.Format("Could not open face file: {0}", FaceImageFile), DebugLevel.Error);
-                        }
-                    }
-                }
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                case SaveGeneration.iQue:
+                    facesFolder += "\\Animal Crossing";
+                    break;
+                case SaveGeneration.NDS:
+                case SaveGeneration.Wii:
+                    facesFolder += "\\Wild World";
+                    break;
+                case SaveGeneration.N3DS:
+                    facesFolder += "\\New Leaf\\" + (gender == 1 ? "Female" : "Male");
+                    break;
             }
-            return FaceImage;
+
+            if (!Directory.Exists(facesFolder)) return null;
+            var faceImageFile = facesFolder + "\\" + index + ".bmp";
+            if (!File.Exists(faceImageFile)) return null;
+            try
+            {
+                faceImage = Image.FromFile(faceImageFile);
+            }
+            catch
+            {
+                MainForm.DebugManager.WriteLine($"Could not open face file: {faceImageFile}", DebugLevel.Error);
+            }
+            return faceImage;
         }
 
-        public static Bitmap GetHairImage(SaveGeneration Save_Generation, int Index, int ColorIndex)
+        public static Bitmap GetHairImage(SaveGeneration saveGeneration, int index, int colorIndex)
         {
-            Bitmap HairImage = null;
-            string HairFolder = MainForm.Assembly_Location + "\\Resources\\Images\\Hair Styles";
-            if (Directory.Exists(HairFolder))
+            Bitmap hairImage = null;
+            var hairFolder = MainForm.AssemblyLocation + "\\Resources\\Images\\Hair Styles";
+            if (!Directory.Exists(hairFolder)) return null;
+            // TODO: Wild World, City Folk
+            if (saveGeneration == SaveGeneration.N3DS)
             {
-                // TODO: Wild World, City Folk
-                if (Save_Generation == SaveGeneration.N3DS)
-                {
-                    HairFolder += "\\New Leaf";
-                }
-
-                if (Directory.Exists(HairFolder))
-                {
-                    string HairImageFile = HairFolder + "\\" + Index + ".png";
-                    if (File.Exists(HairImageFile))
-                    {
-                        try
-                        {
-                            HairImage = (Bitmap)Image.FromFile(HairImageFile);
-                            ReplaceGrayscaleColor(ref HairImage, Color.FromArgb((int)PlayerInfo.NlHairColorValues[ColorIndex]));
-                        }
-                        catch
-                        {
-                            MainForm.Debug_Manager.WriteLine(string.Format("Could not open hair file: {0}", HairImageFile), DebugLevel.Error);
-                        }
-                    }
-                }
+                hairFolder += "\\New Leaf";
             }
-            return HairImage;
+
+            if (!Directory.Exists(hairFolder)) return null;
+            var hairImageFile = hairFolder + "\\" + index + ".png";
+            if (!File.Exists(hairImageFile)) return null;
+            try
+            {
+                hairImage = (Bitmap)Image.FromFile(hairImageFile);
+                ReplaceGrayscaleColor(ref hairImage, Color.FromArgb((int)PlayerInfo.NlHairColorValues[colorIndex]));
+            }
+            catch
+            {
+                MainForm.DebugManager.WriteLine($"Could not open hair file: {hairImageFile}", DebugLevel.Error);
+            }
+            return hairImage;
         }
 
-        public static void DumpTownAcreBitmap(int AcreCountX, int AcreCountY, ref PictureBoxWithInterpolationMode[] PictureBoxes)
+        public static void DumpTownAcreBitmap(int acreCountX, int acreCountY, ref PictureBoxWithInterpolationMode[] pictureBoxes)
         {
-            Bitmap TownAcrePreview = new Bitmap(AcreCountX * PictureBoxes[0].BackgroundImage.Width, AcreCountY * PictureBoxes[0].BackgroundImage.Height);
+            var townAcrePreview = new Bitmap(acreCountX * pictureBoxes[0].BackgroundImage.Width, acreCountY * pictureBoxes[0].BackgroundImage.Height);
 
-            using (Graphics g = Graphics.FromImage(TownAcrePreview))
+            using (var g = Graphics.FromImage(townAcrePreview))
             {
-                for (int y = 0; y < AcreCountY; y++)
+                for (var y = 0; y < acreCountY; y++)
                 {
-                    for (int x = 0; x < AcreCountX; x++)
+                    for (var x = 0; x < acreCountX; x++)
                     {
-                        int LocationX = x * PictureBoxes[0].BackgroundImage.Width;
-                        int LocationY = y * PictureBoxes[0].BackgroundImage.Height;
+                        var locationX = x * pictureBoxes[0].BackgroundImage.Width;
+                        var locationY = y * pictureBoxes[0].BackgroundImage.Height;
 
-                        (PictureBoxes[y * AcreCountX + x].BackgroundImage as Bitmap).SetResolution(96, 96);
+                        (pictureBoxes[y * acreCountX + x].BackgroundImage as Bitmap)?.SetResolution(96, 96);
 
-                        g.DrawImage(PictureBoxes[y * AcreCountX + x].BackgroundImage, LocationX, LocationY);
+                        g.DrawImage(pictureBoxes[y * acreCountX + x].BackgroundImage, locationX, locationY);
                     }
                 }
             }
 
-            using (var SaveDialog = new SaveFileDialog())
+            using (var saveDialog = new SaveFileDialog())
             {
-                SaveDialog.Filter = "Portable Network Graphic|*.png";
-                SaveDialog.FileName = "";
+                saveDialog.Filter = "Portable Network Graphic|*.png";
+                saveDialog.FileName = "";
 
-                if (SaveDialog.ShowDialog() == DialogResult.OK)
+                if (saveDialog.ShowDialog() != DialogResult.OK) return;
+                try
                 {
-                    try
-                    {
-                        TownAcrePreview.Save(SaveDialog.FileName, ImageFormat.Png);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("An error occured while saving your town acre preview!", "Acre Preview Image Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    townAcrePreview.Save(saveDialog.FileName, ImageFormat.Png);
+                }
+                catch
+                {
+                    MessageBox.Show("An error occured while saving your town acre preview!", "Acre Preview Image Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        public static void DrawTownMapViewHouseImages(Villager[] Villagers, PictureBoxWithInterpolationMode[] PictureBoxes, Size PictureBoxSize)
+        public static void DrawTownMapViewHouseImages(Villager[] villagers, PictureBoxWithInterpolationMode[] pictureBoxes, Size pictureBoxSize)
         {
-            int HouseImageSize = 16;
-            int PixelsPerItemSlotX = PictureBoxSize.Width / 16;
-            int PixelsPerItemSlotY = PictureBoxSize.Height / 16;
+            const int houseImageSize = 16;
+            var pixelsPerItemSlotX = pictureBoxSize.Width / 16;
+            var pixelsPerItemSlotY = pictureBoxSize.Height / 16;
 
-            Console.WriteLine("X: " + PixelsPerItemSlotX + " | Y: " + PixelsPerItemSlotY);
-            var HouseImage = Properties.Resources.VillagerHouse;
-            foreach (Villager Villager in Villagers)
+            Console.WriteLine("X: " + pixelsPerItemSlotX + " | Y: " + pixelsPerItemSlotY);
+            var houseImage = Properties.Resources.VillagerHouse;
+            foreach (var villager in villagers)
             {
-                if (Villager.Exists)
+                if (!villager.Exists) continue;
+                var index = (villager.Data.HouseCoordinates[0]) + villager.Data.HouseCoordinates[1] * 7;
+                var position = new Point((villager.Data.HouseCoordinates[2] * pixelsPerItemSlotX) - houseImageSize / 2, 
+                    (villager.Data.HouseCoordinates[3] * pixelsPerItemSlotY) - houseImageSize / 2);
+
+                Image cloneImage;
+                if (pictureBoxes[index].BackgroundImage != null)
+                    cloneImage = (Image)pictureBoxes[index].BackgroundImage.Clone();
+                else
+                    cloneImage = new Bitmap(pictureBoxes[index].Size.Width, pictureBoxes[index].Size.Height);
+
+                using (var g = Graphics.FromImage(cloneImage))
                 {
-                    int Index = (Villager.Data.HouseCoordinates[0]) + Villager.Data.HouseCoordinates[1] * 7;
-                    var Position = new Point((Villager.Data.HouseCoordinates[2] * PixelsPerItemSlotX) - HouseImageSize / 2, 
-                        (Villager.Data.HouseCoordinates[3] * PixelsPerItemSlotY) - HouseImageSize / 2);
-
-                    Image CloneImage = null;
-                    if (PictureBoxes[Index].BackgroundImage != null)
-                        CloneImage = (Image)PictureBoxes[Index].BackgroundImage.Clone();
-                    else
-                        CloneImage = new Bitmap(PictureBoxes[Index].Size.Width, PictureBoxes[Index].Size.Height);
-
-                    using (Graphics g = Graphics.FromImage(CloneImage))
-                    {
-                        g.DrawImage(HouseImage, Position.X, Position.Y, 48, 48);
-                        g.Flush();
-                        PictureBoxes[Index].BackgroundImage = CloneImage;
-                    }
+                    g.DrawImage(houseImage, position.X, position.Y, 48, 48);
+                    g.Flush();
+                    pictureBoxes[index].BackgroundImage = cloneImage;
                 }
             }
 
-            HouseImage.Dispose();
+            houseImage.Dispose();
         }
     }
 }

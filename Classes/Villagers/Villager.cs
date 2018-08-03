@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using ACSE.Classes.Utilities;
+using ACSE.Utilities;
 
 namespace ACSE
 {
@@ -60,7 +60,7 @@ namespace ACSE
                     structType.GetField(field.Name).SetValue(boxedData,
                         _saveData.ReadUInt32(dataOffset, _saveData.IsBigEndian));
                 else if (fieldType == typeof(string))
-                    structType.GetField(field.Name).SetValue(boxedData, new ACString(_saveData.ReadByteArray(
+                    structType.GetField(field.Name).SetValue(boxedData, new AcString(_saveData.ReadByteArray(
                                 dataOffset,
                                 (int)offsetType.GetField(field.Name + "Size").GetValue(Offsets)),
                             _saveData.SaveType)
@@ -105,7 +105,7 @@ namespace ACSE
                 PlayerRelations = new PlayerRelation[7];
                 for (var i = 0; i < 7; i++)
                 {
-                    PlayerRelations[i] = new ACPlayerRelation(save, this, Offset + 0x10 + i * 0x138);
+                    PlayerRelations[i] = new AcPlayerRelation(save, this, Offset + 0x10 + i * 0x138);
                 }
             }
         }
@@ -146,12 +146,12 @@ namespace ACSE
             {
                 if (Offsets.TownId != -1)
                 {
-                    Data.TownId = _saveData.ReadUInt16(_saveData.SaveDataStartOffset + MainForm.Current_Save_Info.SaveOffsets.TownId, _saveData.IsBigEndian); // Might not be UInt16 in all games
+                    Data.TownId = _saveData.ReadUInt16(_saveData.SaveDataStartOffset + MainForm.CurrentSaveInfo.SaveOffsets.TownId, _saveData.IsBigEndian); // Might not be UInt16 in all games
                 }
                 if (Offsets.TownName != -1)
                 {
-                    Data.TownName = _saveData.ReadString(_saveData.SaveDataStartOffset + MainForm.Current_Save_Info.SaveOffsets.TownName,
-                        MainForm.Current_Save_Info.SaveOffsets.TownNameSize);
+                    Data.TownName = _saveData.ReadString(_saveData.SaveDataStartOffset + MainForm.CurrentSaveInfo.SaveOffsets.TownName,
+                        MainForm.CurrentSaveInfo.SaveOffsets.TownNameSize);
                 }
             }
 
@@ -180,7 +180,7 @@ namespace ACSE
                     default:
                         if (fieldType == typeof(string))
                         {
-                            _saveData.Write(dataOffset, ACString.GetBytes(dataObject, (int)villagerOffsetData.GetField(field.Name + "Size").GetValue(Offsets)));
+                            _saveData.Write(dataOffset, AcString.GetBytes(dataObject, (int)villagerOffsetData.GetField(field.Name + "Size").GetValue(Offsets)));
                         }
                         else if (fieldType == typeof(byte[]))
                         {
@@ -247,7 +247,7 @@ namespace ACSE
                     _saveData.Write(Offset + Offsets.NameId, Index == 15 ? (byte)0xFF : (byte)Data.VillagerId);
                     break;
                 case SaveType.DoubutsuNoMoriEPlus: // e+ doesn't set this byte, as they changed the SetNameID function
-                    _saveData.Write(Offset + 0xC, ACString.GetBytes(Name), false, 6);
+                    _saveData.Write(Offset + 0xC, AcString.GetBytes(Name), false, 6);
                     break;
                 default:
                     _saveData.Write(Offset + Offsets.NameId, (byte)Data.VillagerId);

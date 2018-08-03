@@ -766,7 +766,7 @@ namespace ACSE
         public static Dictionary<ushort, string> GetItemInfo(SaveType saveType, string language = "en")
         {
             StreamReader contents;
-            var itemDbLocation = MainForm.Assembly_Location + "\\Resources\\";
+            var itemDbLocation = MainForm.AssemblyLocation + "\\Resources\\";
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:
@@ -799,7 +799,7 @@ namespace ACSE
             try { contents = File.OpenText(itemDbLocation); }
             catch (Exception e)
             {
-                MainForm.Debug_Manager.WriteLine(
+                MainForm.DebugManager.WriteLine(
                     $"An error occured opening item database file:\n\"{itemDbLocation}\"\nError Info:\n{e.Message}", DebugLevel.Error);
                 return null;
             }
@@ -815,7 +815,7 @@ namespace ACSE
                     if (ushort.TryParse(itemIdString.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out var itemId))
                         itemDictionary.Add(itemId, itemName);
                     else
-                        MainForm.Debug_Manager.WriteLine("Unable to add item: " + itemIdString + " | " + itemName, DebugLevel.Error);
+                        MainForm.DebugManager.WriteLine("Unable to add item: " + itemIdString + " | " + itemName, DebugLevel.Error);
                 }
             }
 
@@ -828,13 +828,13 @@ namespace ACSE
         public static Dictionary<byte, string> GetAcreInfo(SaveType saveType, string language = "en")
         {
             StreamReader contents;
-            var acreDbLocation = MainForm.Assembly_Location + "\\Resources\\";
+            var acreDbLocation = MainForm.AssemblyLocation + "\\Resources\\";
             if (saveType == SaveType.WildWorld)
                 acreDbLocation += "WW_Acres_" + language + ".txt";
             try { contents = File.OpenText(acreDbLocation); }
             catch (Exception e)
             {
-                MainForm.Debug_Manager.WriteLine(
+                MainForm.DebugManager.WriteLine(
                     $"An error occured opening acre database file:\n\"{acreDbLocation}\"\nError Info:\n{e.Message}", DebugLevel.Error);
                 return null;
             }
@@ -850,7 +850,7 @@ namespace ACSE
                     if (byte.TryParse(acreIdString.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out var acreId))
                         acreDictionary.Add(acreId, acreName);
                     else
-                        MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + acreIdString + " | " + acreName, DebugLevel.Error);
+                        MainForm.DebugManager.WriteLine("Unable to add Acre: " + acreIdString + " | " + acreName, DebugLevel.Error);
                 }
             }
 
@@ -863,7 +863,7 @@ namespace ACSE
         public static Dictionary<ushort, string> GetAcreInfoUInt16(SaveType saveType, string language = "en")
         {
             StreamReader contents;
-            var acreDbLocation = MainForm.Assembly_Location + "\\Resources\\";
+            var acreDbLocation = MainForm.AssemblyLocation + "\\Resources\\";
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:
@@ -891,7 +891,7 @@ namespace ACSE
             try { contents = File.OpenText(acreDbLocation); }
             catch (Exception e)
             {
-                MainForm.Debug_Manager.WriteLine(
+                MainForm.DebugManager.WriteLine(
                     $"An error occured opening acre database file:\n\"{acreDbLocation}\"\nError Info:\n{e.Message}", DebugLevel.Error);
                 return null;
             }
@@ -907,7 +907,7 @@ namespace ACSE
                     if (ushort.TryParse(acreIdString.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out var acreId))
                         acreDictionary.Add(acreId, acreName);
                     else
-                        MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + acreIdString + " | " + acreName, DebugLevel.Error);
+                        MainForm.DebugManager.WriteLine("Unable to add Acre: " + acreIdString + " | " + acreName, DebugLevel.Error);
                 }
             }
 
@@ -921,13 +921,13 @@ namespace ACSE
         public static Dictionary<string, List<byte>> GetFiledAcreData(SaveType saveType, string language = "en")
         {
             StreamReader contents;
-            var acreDbLocation = MainForm.Assembly_Location + "\\Resources\\";
+            var acreDbLocation = MainForm.AssemblyLocation + "\\Resources\\";
             if (saveType == SaveType.WildWorld)
                 acreDbLocation += "WW_Acres_" + language + ".txt";
             try { contents = File.OpenText(acreDbLocation); }
             catch (Exception e)
             {
-                MainForm.Debug_Manager.WriteLine(
+                MainForm.DebugManager.WriteLine(
                     $"An error occured opening acre database file:\n\"{acreDbLocation}\"\nError Info:\n{e.Message}", DebugLevel.Error);
                 return null;
             }
@@ -953,7 +953,7 @@ namespace ACSE
                     if (byte.TryParse(acreIdString.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out var acreId))
                         filedList[currentAcreType].Add(acreId);
                     else
-                        MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + acreIdString + " | " + acreName, DebugLevel.Error);
+                        MainForm.DebugManager.WriteLine("Unable to add Acre: " + acreIdString + " | " + acreName, DebugLevel.Error);
                 }
             }
 
@@ -966,7 +966,7 @@ namespace ACSE
         public static Dictionary<string, Dictionary<ushort, string>> GetFiledAcreDataUInt16(SaveType saveType, string language = "en")
         {
             StreamReader contents;
-            var acreDbLocation = MainForm.Assembly_Location + "\\Resources\\";
+            var acreDbLocation = MainForm.AssemblyLocation + "\\Resources\\";
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:
@@ -994,7 +994,7 @@ namespace ACSE
             try { contents = File.OpenText(acreDbLocation); }
             catch (Exception e)
             {
-                MainForm.Debug_Manager.WriteLine(
+                MainForm.DebugManager.WriteLine(
                     $"An error occured opening acre database file:\n\"{acreDbLocation}\"\nError Info:\n{e.Message}", DebugLevel.Error);
                 return null;
             }
@@ -1020,7 +1020,7 @@ namespace ACSE
                     if (ushort.TryParse(acreIdString.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out var acreId))
                         filedList[currentAcreType].Add(acreId, line.Substring(7));
                     else
-                        MainForm.Debug_Manager.WriteLine("Unable to add Acre: " + acreIdString + " | " + acreName, DebugLevel.Error);
+                        MainForm.DebugManager.WriteLine("Unable to add Acre: " + acreIdString + " | " + acreName, DebugLevel.Error);
                 }
             }
 

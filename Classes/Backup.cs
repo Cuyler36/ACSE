@@ -7,49 +7,44 @@ namespace ACSE
     {
         public static string[] GetBackups()
         {
-            var BackupsDirectory = GetBackupDirectory();
-            if (BackupsDirectory.Exists)
-            {
-                return BackupsDirectory.GetFiles().Select(x => x.FullName).ToArray();
-            }
-            return new string[0];
+            var backupsDirectory = GetBackupDirectory();
+            return backupsDirectory.Exists ? backupsDirectory.GetFiles().Select(x => x.FullName).ToArray() : new string[0];
         }
 
         internal static string GetBackupLocation()
-            => MainForm.Assembly_Location + Path.DirectorySeparatorChar + "ACSE Backups";
+            => MainForm.AssemblyLocation + Path.DirectorySeparatorChar + "ACSE Backups";
 
         internal static DirectoryInfo GetBackupDirectory()
             => Directory.CreateDirectory(GetBackupLocation());
 
-        internal string GetBackupFileName(Save SaveFile)
+        internal string GetBackupFileName(Save saveFile)
         {
-            string SaveFileName = SaveFile.SaveName + "_Backup_";
-            string BackupsLocation = GetBackupLocation();
-            int BackupNumber = 0;
-            while (File.Exists(BackupsLocation + Path.DirectorySeparatorChar + SaveFileName + BackupNumber + SaveFile.SaveExtension))
-                BackupNumber++;
+            var saveFileName = saveFile.SaveName + "_Backup_";
+            var backupsLocation = GetBackupLocation();
+            var backupNumber = 0;
+            while (File.Exists(backupsLocation + Path.DirectorySeparatorChar + saveFileName + backupNumber + saveFile.SaveExtension))
+                backupNumber++;
 
-            return BackupsLocation + Path.DirectorySeparatorChar + SaveFileName + BackupNumber + SaveFile.SaveExtension;
+            return backupsLocation + Path.DirectorySeparatorChar + saveFileName + backupNumber + saveFile.SaveExtension;
         }
 
-        public Backup(Save SaveFile)
+        public Backup(Save saveFile)
         {
-            var BackupsDirectory = GetBackupDirectory();
-            if (BackupsDirectory.Exists)
+            var backupsDirectory = GetBackupDirectory();
+            if (!backupsDirectory.Exists) return;
+            var backupLocation = GetBackupFileName(saveFile);
+            try
             {
-                string BackupLocation = GetBackupFileName(SaveFile);
-                try
+                using (var backupFile = File.Create(backupLocation))
                 {
-                    using (var BackupFile = File.Create(BackupLocation))
-                    {
-                        BackupFile.Write(SaveFile.OriginalSaveData, 0, SaveFile.OriginalSaveData.Length);
-                        MainForm.Debug_Manager.WriteLine(string.Format("Save File {0} was backuped to {1}", SaveFile.SaveName, BackupLocation), DebugLevel.Info);
-                    }
+                    backupFile.Write(saveFile.OriginalSaveData, 0, saveFile.OriginalSaveData.Length);
+                    MainForm.DebugManager.WriteLine($"Save File {saveFile.SaveName} was backuped to {backupLocation}");
                 }
-                catch
-                {
-                    MainForm.Debug_Manager.WriteLine(string.Format("Failed to create backup for save {0} at {1}", SaveFile.SaveName, BackupLocation), DebugLevel.Error);
-                }
+            }
+            catch
+            {
+                MainForm.DebugManager.WriteLine(
+                    $"Failed to create backup for save {saveFile.SaveName} at {backupLocation}", DebugLevel.Error);
             }
         }
     }

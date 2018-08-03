@@ -1,6 +1,6 @@
 ﻿namespace ACSE
 {
-    partial class ToggableAlertForm
+    sealed partial class ToggableAlertForm
     {
         /// <summary>
         /// Required designer variable.

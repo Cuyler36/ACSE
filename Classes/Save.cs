@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Globalization;
-using ACSE.Classes.Utilities;
+using ACSE.Utilities;
 
 namespace ACSE
 {
@@ -32,7 +30,7 @@ namespace ACSE
         GCN,
         NDS,
         Wii,
-        N3DS //Nintendo 3DS (not New 3DS)
+        N3DS
     }
 
     public enum Region : byte
@@ -168,49 +166,49 @@ namespace ACSE
                     for (var i = 0; i < 4; i++)
                     {
                         var playerDataOffset = SaveDataStartOffset + i * 0x86C0 + 0x1140;
-                        var playerCrc32 = CRC32.Calculate_CRC32(WorkingSaveData.Skip(playerDataOffset + 4).Take(0x759C).ToArray());
+                        var playerCrc32 = Crc32.CalculateCrc32(WorkingSaveData.Skip(playerDataOffset + 4).Take(0x759C).ToArray());
                         Write(playerDataOffset, playerCrc32, true);
                     }
-                    Write(SaveDataStartOffset + 0x5EC60, CRC32.Calculate_CRC32(WorkingSaveData.Skip(SaveDataStartOffset + 0x5EC64).Take(0x1497C).ToArray()), true);
-                    Write(SaveDataStartOffset + 0x5EB04, CRC32.Calculate_CRC32(WorkingSaveData.Skip(SaveDataStartOffset + 0x5EB08).Take(0x152).ToArray(), 0x12141018), true);
-                    Write(SaveDataStartOffset + 0x73600, CRC32.Calculate_CRC32(WorkingSaveData.Skip(SaveDataStartOffset + 0x73604).Take(0x19BD1C).ToArray()), true);
-                    Write(SaveDataStartOffset, CRC32.Calculate_CRC32(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()), true);
-                    Write(SaveDataStartOffset + 0x20, CRC32.Calculate_CRC32(WorkingSaveData.Skip(SaveDataStartOffset + 0x24).Take(0x111C).ToArray()), true);
+                    Write(SaveDataStartOffset + 0x5EC60, Crc32.CalculateCrc32(WorkingSaveData.Skip(SaveDataStartOffset + 0x5EC64).Take(0x1497C).ToArray()), true);
+                    Write(SaveDataStartOffset + 0x5EB04, Crc32.CalculateCrc32(WorkingSaveData.Skip(SaveDataStartOffset + 0x5EB08).Take(0x152).ToArray(), 0x12141018), true);
+                    Write(SaveDataStartOffset + 0x73600, Crc32.CalculateCrc32(WorkingSaveData.Skip(SaveDataStartOffset + 0x73604).Take(0x19BD1C).ToArray()), true);
+                    Write(SaveDataStartOffset, Crc32.CalculateCrc32(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()), true);
+                    Write(SaveDataStartOffset + 0x20, Crc32.CalculateCrc32(WorkingSaveData.Skip(SaveDataStartOffset + 0x24).Take(0x111C).ToArray()), true);
                     break;
                 case SaveType.NewLeaf:
-                    Write(SaveDataStartOffset, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
+                    Write(SaveDataStartOffset, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
                     for (var i = 0; i < 4; i++)
                     {
                         var dataOffset = SaveDataStartOffset + 0x20 + i * 0x9F10;
-                        Write(dataOffset, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset + 4).Take(0x6B64).ToArray()));
+                        Write(dataOffset, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset + 4).Take(0x6B64).ToArray()));
                         var dataOffset2 = SaveDataStartOffset + 0x20 + 0x6B68 + i * 0x9F10;
-                        Write(dataOffset2, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset2 + 4).Take(0x33A4).ToArray()));
+                        Write(dataOffset2, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset2 + 4).Take(0x33A4).ToArray()));
                     }
-                    Write(SaveDataStartOffset + 0x27C60, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x27C60 + 4).Take(0x218B0).ToArray()));
-                    Write(SaveDataStartOffset + 0x49520, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x49520 + 4).Take(0x44B8).ToArray()));
-                    Write(SaveDataStartOffset + 0x4D9DC, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x4D9DC + 4).Take(0x1E420).ToArray()));
-                    Write(SaveDataStartOffset + 0x6BE00, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x6BE00 + 4).Take(0x20).ToArray()));
-                    Write(SaveDataStartOffset + 0x6BE24, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x6BE24 + 4).Take(0x13AF8).ToArray()));
+                    Write(SaveDataStartOffset + 0x27C60, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x27C60 + 4).Take(0x218B0).ToArray()));
+                    Write(SaveDataStartOffset + 0x49520, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x49520 + 4).Take(0x44B8).ToArray()));
+                    Write(SaveDataStartOffset + 0x4D9DC, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x4D9DC + 4).Take(0x1E420).ToArray()));
+                    Write(SaveDataStartOffset + 0x6BE00, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x6BE00 + 4).Take(0x20).ToArray()));
+                    Write(SaveDataStartOffset + 0x6BE24, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x6BE24 + 4).Take(0x13AF8).ToArray()));
                     break;
                 case SaveType.WelcomeAmiibo:
-                    Write(SaveDataStartOffset, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
+                    Write(SaveDataStartOffset, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
                     for (var i = 0; i < 4; i++)
                     {
                         var dataOffset = SaveDataStartOffset + 0x20 + i * 0xA480;
-                        Write(dataOffset, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset + 4).Take(0x6B84).ToArray()));
+                        Write(dataOffset, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset + 4).Take(0x6B84).ToArray()));
                         var dataOffset2 = SaveDataStartOffset + 0x20 + 0x6B88 + i * 0xA480;
-                        Write(dataOffset2, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset2 + 4).Take(0x38F4).ToArray()));
+                        Write(dataOffset2, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset2 + 4).Take(0x38F4).ToArray()));
                     }
-                    Write(SaveDataStartOffset + 0x29220, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x29220 + 4).Take(0x22BC8).ToArray()));
-                    Write(SaveDataStartOffset + 0x4BE00, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x4BE00 + 4).Take(0x44B8).ToArray()));
-                    Write(SaveDataStartOffset + 0x533A4, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x533A4 + 4).Take(0x1E4D8).ToArray()));
-                    Write(SaveDataStartOffset + 0x71880, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x71880 + 4).Take(0x20).ToArray()));
-                    Write(SaveDataStartOffset + 0x718A4, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x718A4 + 4).Take(0xBE4).ToArray()));
-                    Write(SaveDataStartOffset + 0x738D4, NL_CRC32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x738D4 + 4).Take(0x16188).ToArray()));
+                    Write(SaveDataStartOffset + 0x29220, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x29220 + 4).Take(0x22BC8).ToArray()));
+                    Write(SaveDataStartOffset + 0x4BE00, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x4BE00 + 4).Take(0x44B8).ToArray()));
+                    Write(SaveDataStartOffset + 0x533A4, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x533A4 + 4).Take(0x1E4D8).ToArray()));
+                    Write(SaveDataStartOffset + 0x71880, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x71880 + 4).Take(0x20).ToArray()));
+                    Write(SaveDataStartOffset + 0x718A4, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x718A4 + 4).Take(0xBE4).ToArray()));
+                    Write(SaveDataStartOffset + 0x738D4, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x738D4 + 4).Take(0x16188).ToArray()));
 
-                    Write(SaveDataStartOffset + 0x502BC, NL_CRC32.Calculate_CRC32Type2(WorkingSaveData.Skip(SaveDataStartOffset + 0x502BC + 4).Take(0x28F0).ToArray()));
-                    Write(SaveDataStartOffset + 0x52BB0, NL_CRC32.Calculate_CRC32Type2(WorkingSaveData.Skip(SaveDataStartOffset + 0x52BB0 + 4).Take(0x7F0).ToArray()));
-                    Write(SaveDataStartOffset + 0x7248C, NL_CRC32.Calculate_CRC32Type2(WorkingSaveData.Skip(SaveDataStartOffset + 0x7248C + 4).Take(0x1444).ToArray()));
+                    Write(SaveDataStartOffset + 0x502BC, NewLeaftCrc32.Calculate_CRC32Type2(WorkingSaveData.Skip(SaveDataStartOffset + 0x502BC + 4).Take(0x28F0).ToArray()));
+                    Write(SaveDataStartOffset + 0x52BB0, NewLeaftCrc32.Calculate_CRC32Type2(WorkingSaveData.Skip(SaveDataStartOffset + 0x52BB0 + 4).Take(0x7F0).ToArray()));
+                    Write(SaveDataStartOffset + 0x7248C, NewLeaftCrc32.Calculate_CRC32Type2(WorkingSaveData.Skip(SaveDataStartOffset + 0x7248C + 4).Take(0x1444).ToArray()));
                     break;
             }
             _saveWriter.Write(SaveType == SaveType.DoubutsuNoMori ? SaveDataManager.ByteSwap(WorkingSaveData) : WorkingSaveData); //Doubutsu no Mori is dword byteswapped
@@ -241,7 +239,7 @@ namespace ACSE
             if (data == null) return;
             ChangesMade = true;
             Type dataType = data.GetType();
-            MainForm.Debug_Manager.WriteLine(string.Format("Writing Data {2} of type {0} to offset 0x{1:X}", dataType.Name, offset, //recasting a value shows it as original type?
+            MainForm.DebugManager.WriteLine(string.Format("Writing Data {2} of type {0} to offset 0x{1:X}", dataType.Name, offset, //recasting a value shows it as original type?
                 dataType.IsArray ? "" : " with value 0x" + (data.ToString("X"))), DebugLevel.Debug);
             if (!dataType.IsArray)
             {
@@ -249,7 +247,7 @@ namespace ACSE
                     WorkingSaveData[offset] = (byte)data;
                 else if (dataType == typeof(string))
                 {
-                    var stringByteBuff = ACString.GetBytes((string)data, stringLength);
+                    var stringByteBuff = AcString.GetBytes((string)data, stringLength);
                     Buffer.BlockCopy(stringByteBuff, 0, WorkingSaveData, offset, stringByteBuff.Length);
                 }
                 else
@@ -357,7 +355,7 @@ namespace ACSE
 
         public string ReadString(int offset, int length)
         {
-             return new ACString(ReadByteArray(offset, length), SaveType).Trim();
+             return new AcString(ReadByteArray(offset, length), SaveType).Trim();
         }
 
         public string[] ReadStringArray(int offset, int length, int count)

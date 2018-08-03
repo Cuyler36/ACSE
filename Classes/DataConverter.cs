@@ -15,65 +15,61 @@ namespace ACSE
             return value;
         }
 
-        public static Dictionary<Type, Delegate> typeMap = new Dictionary<Type, Delegate>
+        public static Dictionary<Type, Delegate> TypeMap = new Dictionary<Type, Delegate>
         {
             {typeof(byte[]), new Func<byte[], byte>
-                (b => {
-                    return ConvertByte(new BitArray(b));
-                })
+                (b => ConvertByte(new BitArray(b)))
             },
             {typeof(BitArray), new Func<BitArray, byte>
-                (b => {
-                    return ConvertByte(b);
-                })
+                (ConvertByte)
             }
         };
 
-        public static byte[] ToBits(byte[] Byte_Buffer, bool Reverse = false)
+        public static byte[] ToBits(byte[] byteBuffer, bool reverse = false)
         {
-            byte[] Bits = new byte[8 * Byte_Buffer.Length];
-            for (int i = 0; i < Byte_Buffer.Length; i++)
+            var bits = new byte[8 * byteBuffer.Length];
+            for (var i = 0; i < byteBuffer.Length; i++)
             {
-                BitArray Bit_Array = new BitArray(new byte[] { Byte_Buffer[i] });
-                for (int x = 0; x < Bit_Array.Length; x++)
-                    Bits[i * 8 + (Reverse ? 7 - x : x)] = Convert.ToByte(Bit_Array[x]);
+                var bitArray = new BitArray(new[] { byteBuffer[i] });
+                for (var x = 0; x < bitArray.Length; x++)
+                    bits[i * 8 + (reverse ? 7 - x : x)] = Convert.ToByte(bitArray[x]);
             }
-            return Bits;
+            return bits;
         }
 
-        public static byte ToBit(byte Bit_Byte, int Bit_Index, bool Reverse = false)
+        public static byte ToBit(byte bitByte, int bitIndex, bool reverse = false)
         {
-            return (byte)((Reverse ? Bit_Byte >> (7 - Bit_Index) : Bit_Byte >> Bit_Index) & 1);
+            return (byte)((reverse ? bitByte >> (7 - bitIndex) : bitByte >> bitIndex) & 1);
         }
 
-        public static void SetBit(ref byte Bit_Byte, int Bit_Index, bool Set, bool Reverse = false)
+        public static void SetBit(ref byte bitByte, int bitIndex, bool set, bool reverse = false)
         {
-            int Mask = 1 << (Reverse ? 7 - Bit_Index : Bit_Index);
-            if (Set)
-                Bit_Byte |= (byte)Mask;
+            var mask = 1 << (reverse ? 7 - bitIndex : bitIndex);
+            if (set)
+                bitByte |= (byte)mask;
             else
-                Bit_Byte &= (byte)~Mask;
+                bitByte &= (byte)~mask;
         }
 
-        public static byte ToByte(object Variant)
+        public static byte ToByte(object variant)
         {
-            return (byte)typeMap[Variant.GetType()].DynamicInvoke(Variant);
+            return (byte)TypeMap[variant.GetType()].DynamicInvoke(variant);
         }
 
-        public static byte GetByte(byte[] Bits)
+        public static byte GetByte(byte[] bits)
         {
-            byte Value = 0;
-            for (int i = 0; i < 8; i++)
-                Value |= (byte)((Bits[i] & 1) << i);
-            return Value;
+            byte value = 0;
+            for (var i = 0; i < 8; i++)
+                value |= (byte)((bits[i] & 1) << i);
+            return value;
         }
 
-        public static byte[] GetBits(byte Value)
+        public static byte[] GetBits(byte value)
         {
-            byte[] Bits = new byte[8];
-            for (int i = 0; i < 8; i++)
-                Bits[i] = (byte)((Value >> i) & 1);
-            return Bits;
+            var bits = new byte[8];
+            for (var i = 0; i < 8; i++)
+                bits[i] = (byte)((value >> i) & 1);
+            return bits;
         }
     }
 }

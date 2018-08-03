@@ -1,4 +1,4 @@
-﻿using ACSE.Classes.Utilities;
+﻿using ACSE.Utilities;
 
 namespace ACSE.Messages
 {
@@ -6,22 +6,22 @@ namespace ACSE.Messages
     {
         public string Contents { get; set; }
         public string TownName { get; set; }
-        public ushort TownID { get; set; }
-        public ACDate Date { get; set; }
+        public ushort TownId { get; set; }
+        public AcDate Date { get; set; }
 
         public MessageBase()
         {
             Contents = "";
             TownName = "";
-            TownID = 0;
+            TownId = 0;
         }
 
-        public MessageBase(string Contents, string TownName, ushort TownID, ACDate Date)
+        public MessageBase(string contents, string townName, ushort townId, AcDate date)
         {
-            this.Contents = Contents;
-            this.TownName = TownName;
-            this.TownID = TownID;
-            this.Date = Date;
+            Contents = contents;
+            TownName = townName;
+            TownId = townId;
+            Date = date;
         }
     }
 }

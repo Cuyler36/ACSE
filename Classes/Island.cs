@@ -1,4 +1,6 @@
-﻿namespace ACSE
+﻿using System.Collections.Generic;
+
+namespace ACSE
 {
     /// <summary>
     /// Island class for Doubutsu no Mori e+
@@ -7,18 +9,18 @@
     {
         #region Island Offsets
 
-        private readonly int IslandName = 0x00;
-        private readonly int TownNameOffset = 0x06;
-        private readonly int IslandId = 0x0C;
-        private readonly int TownIdOffset = 0x0E;
-        private readonly int WorldData = 0x10;
-        private readonly int CottageData = 0x418;
-        private readonly int FlagData = 0xD00;
-        private readonly int IslanderData = 0xF20;
-        private readonly int BuriedData = 0x15A0;
-        private readonly int IslandLeftAcreData = 0x15E0;
-        private readonly int IslandRightAcreData = 0x15E1;
-        private readonly int IslandInfoFlag = 0x15FB;
+        private const int IslandName = 0x00;
+        private const int TownNameOffset = 0x06;
+        private const int IslandId = 0x0C;
+        private const int TownIdOffset = 0x0E;
+        private const int WorldData = 0x10;
+        private const int CottageData = 0x418;
+        private const int FlagData = 0xD00;
+        private const int IslanderData = 0xF20;
+        private const int BuriedData = 0x15A0;
+        private const int IslandLeftAcreData = 0x15E0;
+        private const int IslandRightAcreData = 0x15E1;
+        private const int IslandInfoFlag = 0x15FB;
 
         #endregion
 
@@ -27,37 +29,37 @@
 
             public Room MainRoom;
 
-            public Cottage(int Offset, Save SaveData)
+            public Cottage(int offset, Save saveData)
             {
                 MainRoom = new Room
                 {
-                    Offset = Offset,
+                    Offset = offset,
                     Name = "Cabana",
                     Layers = new Layer[4],
 
-                    Carpet = new Item((ushort)(0x2600 | SaveData.ReadByte(Offset + 0x8A0))),
-                    Wallpaper = new Item((ushort)(0x2700 | SaveData.ReadByte(Offset + 0x8A1)))
+                    Carpet = new Item((ushort)(0x2600 | saveData.ReadByte(offset + 0x8A0))),
+                    Wallpaper = new Item((ushort)(0x2700 | saveData.ReadByte(offset + 0x8A1)))
                 };
 
-                for (int x = 0; x < 4; x++)
+                for (var x = 0; x < 4; x++)
                 {
-                    int LayerOffset = Offset + 0x228 * x;
-                    var Layer = new Layer
+                    var layerOffset = offset + 0x228 * x;
+                    var layer = new Layer
                     {
-                        Offset = LayerOffset,
+                        Offset = layerOffset,
                         Index = x,
                         Items = new Furniture[256],
                         Parent = MainRoom
                     };
 
                     // Load furniture for the layer
-                    for (int f = 0; f < 256; f++)
+                    for (var f = 0; f < 256; f++)
                     {
-                        int FurnitureOffset = LayerOffset + f * 2;
-                        Layer.Items[f] = new Furniture(SaveData.ReadUInt16(FurnitureOffset, SaveData.IsBigEndian));
+                        var furnitureOffset = layerOffset + f * 2;
+                        layer.Items[f] = new Furniture(saveData.ReadUInt16(furnitureOffset, saveData.IsBigEndian));
                     }
 
-                    MainRoom.Layers[x] = Layer;
+                    MainRoom.Layers[x] = layer;
                 }
             }
 
@@ -67,8 +69,8 @@
             }
         }
 
-        private Save SaveFile;
-        private readonly int Offset;
+        private readonly Save _saveFile;
+        private readonly int _offset;
         public string Name;
         public ushort Id;
         public string TownName;
@@ -82,55 +84,56 @@
         public byte IslandLeftAcreIndex, IslandRightAcreIndex;
         public bool Purchased;
 
-        public Island(int Offset, Player[] Players, Save SaveFile)
+        public Island(int offset, IEnumerable<Player> players, Save saveFile)
         {
-            this.SaveFile = SaveFile;
-            this.Offset = Offset;
+            _saveFile = saveFile;
+            _offset = offset;
 
-            Name = new ACSE.Classes.Utilities.ACString(SaveFile.ReadByteArray(Offset + IslandName, 6), SaveFile.SaveType).Trim();
-            Id = SaveFile.ReadUInt16(Offset + IslandId, true);
+            Name = new Utilities.AcString(saveFile.ReadByteArray(offset + IslandName, 6), saveFile.SaveType).Trim();
+            Id = saveFile.ReadUInt16(offset + IslandId, true);
 
-            TownName = new ACSE.Classes.Utilities.ACString(SaveFile.ReadByteArray(Offset + TownNameOffset, 6), SaveFile.SaveType).Trim();
-            TownId = SaveFile.ReadUInt16(Offset + TownIdOffset, true);
+            TownName = new Utilities.AcString(saveFile.ReadByteArray(offset + TownNameOffset, 6), saveFile.SaveType).Trim();
+            TownId = saveFile.ReadUInt16(offset + TownIdOffset, true);
 
-            ushort Identifier = SaveFile.ReadUInt16(Offset - 0x2214, true);
-            foreach (Player Player in Players)
+            var identifier = saveFile.ReadUInt16(offset - 0x2214, true);
+            foreach (var player in players)
             {
-                if (Player != null && Player.Data.Identifier == Identifier)
+                if (player != null && player.Data.Identifier == identifier)
                 {
-                    Owner = Player;
+                    Owner = player;
                 }
             }
 
-            BuriedDataArray = SaveFile.ReadByteArray(Offset + BuriedData, 0x40, false);
+            BuriedDataArray = saveFile.ReadByteArray(offset + BuriedData, 0x40);
 
             Items = new WorldItem[2][];
-            for (int Acre = 0; Acre < 2; Acre++)
+            for (var acre = 0; acre < 2; acre++)
             {
-                Items[Acre] = new WorldItem[0x100];
-                int i = 0;
-                foreach (ushort ItemId in SaveFile.ReadUInt16Array(Offset + WorldData + Acre * 0x200, 0x100, true))
+                Items[acre] = new WorldItem[0x100];
+                var i = 0;
+                foreach (var itemId in saveFile.ReadUInt16Array(offset + WorldData + acre * 0x200, 0x100, true))
                 {
-                    Items[Acre][i] = new WorldItem(ItemId, i % 256);
-                    SetBuried(Items[Acre][i], Acre, BuriedDataArray, SaveFile.SaveType);
+                    Items[acre][i] = new WorldItem(itemId, i % 256);
+                    SetBuried(Items[acre][i], acre, BuriedDataArray, saveFile.SaveType);
                     i++;
                 }
             }
 
-            Cabana = new Cottage(Offset + CottageData, SaveFile);
-            FlagPattern = new Pattern(Offset + FlagData, 0, SaveFile);
-            Islander = new Villager(Offset + IslanderData, 0, SaveFile);
+            Cabana = new Cottage(offset + CottageData, saveFile);
+            FlagPattern = new Pattern(offset + FlagData, 0, saveFile);
+            Islander = new Villager(offset + IslanderData, 0, saveFile);
+            Purchased = IsPurchased();
 
-            IslandLeftAcreIndex = SaveFile.ReadByte(Offset + IslandLeftAcreData);
-            IslandRightAcreIndex = SaveFile.ReadByte(Offset + IslandRightAcreData);
+            IslandLeftAcreIndex = saveFile.ReadByte(offset + IslandLeftAcreData);
+            IslandRightAcreIndex = saveFile.ReadByte(offset + IslandRightAcreData);
         }
 
-        private ushort IslandAcreIndexToIslandAcreId(byte Side, byte Index)
+        private static ushort IslandAcreIndexToIslandAcreId(byte side, byte index)
         {
             // Left side
-            if (Side == 0)
+            if (side == 0)
             {
-                switch (Index)
+                switch (index)
                 {
                     case 0:
                         return 0x04A4;
@@ -144,84 +147,85 @@
                         return 0;
                 }
             }
-            else
+
+            switch (index)
             {
-                switch (Index)
-                {
-                    case 0:
-                        return 0x04A0;
-                    case 1:
-                        return 0x0594;
-                    case 2:
-                        return 0x059C;
-                    case 3:
-                        return 0x05A4;
-                    default:
-                        return 0;
-                }
+                case 0:
+                    return 0x04A0;
+                case 1:
+                    return 0x0594;
+                case 2:
+                    return 0x059C;
+                case 3:
+                    return 0x05A4;
+                default:
+                    return 0;
             }
         }
 
-        private int GetBuriedDataLocation(WorldItem item, int acre, SaveType saveType)
+        private static int GetBuriedDataLocation(WorldItem item, int acre, SaveType saveType)
         {
-            if (item != null)
+            if (item == null) return -1;
+            var worldPosition = 0;
+            switch (saveType)
             {
-                int worldPosition = 0;
-                if (saveType == SaveType.AnimalCrossing || saveType == SaveType.DoubutsuNoMoriEPlus || saveType == SaveType.CityFolk)
+                case SaveType.AnimalCrossing:
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.CityFolk:
                     worldPosition = (acre * 256) + (15 - item.Location.X) + item.Location.Y * 16; //15 - item.Location.X because it's stored as a ushort in memory w/ reversed endianess
-                else if (saveType == SaveType.WildWorld)
+                    break;
+                case SaveType.WildWorld:
                     worldPosition = (acre * 256) + item.Index;
-                return worldPosition / 8;
+                    break;
             }
-            return -1;
+            return worldPosition / 8;
         }
 
-        private void SetBuried(WorldItem item, int acre, byte[] burriedItemData, SaveType saveType)
+        private static void SetBuried(WorldItem item, int acre, IReadOnlyList<byte> burriedItemData, SaveType saveType)
         {
-            int burriedDataOffset = GetBuriedDataLocation(item, acre, saveType);
-            if (burriedDataOffset > -1 && burriedDataOffset < burriedItemData.Length)
+            var burriedDataOffset = GetBuriedDataLocation(item, acre, saveType);
+            if (burriedDataOffset > -1 && burriedDataOffset < burriedItemData.Count)
                 item.Buried = DataConverter.ToBit(burriedItemData[burriedDataOffset], item.Location.X % 8) == 1;
         }
 
         // TODO: Make a toggle to enable/disable the island.
-        private bool IsPurchased() => (SaveFile.ReadByte(Offset + IslandInfoFlag) & 0x80) == 0x80;
+        private bool IsPurchased()
+            => (_saveFile.ReadByte(_offset + IslandInfoFlag) & 0x80) == 0x80;
 
         public void SetBuriedInMemory(WorldItem item, int acre, byte[] burriedItemData, bool buried, SaveType saveType)
         {
-            if (saveType != SaveType.NewLeaf && saveType != SaveType.WelcomeAmiibo)
+            if (saveType == SaveType.NewLeaf || saveType == SaveType.WelcomeAmiibo) return;
+            var buriedLocation = GetBuriedDataLocation(item, acre, saveType);
+            if (buriedLocation > -1)
             {
-                int buriedLocation = GetBuriedDataLocation(item, acre, saveType);
-                if (buriedLocation > -1)
-                {
-                    DataConverter.SetBit(ref burriedItemData[buriedLocation], item.Location.X % 8, buried);
-                    item.Buried = DataConverter.ToBit(burriedItemData[buriedLocation], item.Location.X % 8) == 1;
-                }
-                else
-                    item.Buried = false;
+                DataConverter.SetBit(ref burriedItemData[buriedLocation], item.Location.X % 8, buried);
+                item.Buried = DataConverter.ToBit(burriedItemData[buriedLocation], item.Location.X % 8) == 1;
             }
+            else
+                item.Buried = false;
         }
 
         public ushort[] GetAcreIds()
         {
-            return new ushort[2] { IslandAcreIndexToIslandAcreId(0, IslandLeftAcreIndex), IslandAcreIndexToIslandAcreId(1, IslandRightAcreIndex) };
+            return new[] { IslandAcreIndexToIslandAcreId(0, IslandLeftAcreIndex), IslandAcreIndexToIslandAcreId(1, IslandRightAcreIndex) };
         }
 
         public void Write()
         {
             if (Owner != null)
             {
-                SaveFile.Write(Offset + 0x00, ACSE.Classes.Utilities.ACString.GetBytes(Name, 6));
-                SaveFile.Write(Offset + 0x06, ACSE.Classes.Utilities.ACString.GetBytes(TownName, 6));
-                SaveFile.Write(Offset + 0x0C, Id, true);
-                SaveFile.Write(Offset + 0x0E, TownId, true);
+                _saveFile.Write(_offset + 0x00, Utilities.AcString.GetBytes(Name, 6));
+                _saveFile.Write(_offset + 0x06, Utilities.AcString.GetBytes(TownName, 6));
+                _saveFile.Write(_offset + 0x0C, Id, true);
+                _saveFile.Write(_offset + 0x0E, TownId, true);
             }
 
             // Save World Items
-            for (int Acre = 0; Acre < 2; Acre++)
+            for (var acre = 0; acre < 2; acre++)
             {
-                for (int Item = 0; Item < 0x100; Item++)
+                for (var item = 0; item < 0x100; item++)
                 {
-                    SaveFile.Write(Offset + WorldData + Acre * 0x200 + Item * 2, Items[Acre][Item].ItemId, true);
+                    _saveFile.Write(_offset + WorldData + acre * 0x200 + item * 2, Items[acre][item].ItemId, true);
                 }
             }
 
@@ -231,7 +235,7 @@
             // TODO: Save Islander
 
             // Save Buried Data
-            SaveFile.Write(Offset + BuriedData, BuriedDataArray);
+            _saveFile.Write(_offset + BuriedData, BuriedDataArray);
         }
     }
 }

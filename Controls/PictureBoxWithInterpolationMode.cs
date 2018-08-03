@@ -3,6 +3,7 @@ using System.Windows.Forms;
 
 namespace ACSE
 {
+    /// <inheritdoc />
     /// <summary>
     /// Inherits from PictureBox; adds Interpolation Mode Setting
     /// </summary>
@@ -13,13 +14,14 @@ namespace ACSE
 
         protected override void OnPaint(PaintEventArgs paintEventArgs)
         {
-            if (paintEventArgs != null)
+            if (UseInternalInterpolationSetting || InterpolationMode == null)
+                paintEventArgs.Graphics.InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode;
+            else
+                paintEventArgs.Graphics.InterpolationMode = InterpolationMode.Value;
+            try { base.OnPaint(paintEventArgs); }
+            catch
             {
-                if (UseInternalInterpolationSetting || InterpolationMode == null)
-                    paintEventArgs.Graphics.InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode;
-                else
-                    paintEventArgs.Graphics.InterpolationMode = InterpolationMode.Value;
-                try { base.OnPaint(paintEventArgs); } catch { }
+                // ignored
             }
         }
 
@@ -29,7 +31,11 @@ namespace ACSE
                 paintEventArgs.Graphics.InterpolationMode = (InterpolationMode)Properties.Settings.Default.ImageResizeMode;
             else
                 paintEventArgs.Graphics.InterpolationMode = InterpolationMode.Value;
-            try { base.OnPaintBackground(paintEventArgs); } catch { }
+            try { base.OnPaintBackground(paintEventArgs); }
+            catch
+            {
+                // ignored
+            }
         }
     }
 }

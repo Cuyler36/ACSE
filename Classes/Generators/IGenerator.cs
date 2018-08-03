@@ -2,6 +2,6 @@
 {
     public interface IGenerator
     {
-        ushort[] Generate(int? Seed = null);
+        ushort[] Generate(int? seed = null);
     }
 }

@@ -5,25 +5,23 @@ namespace ACSE
 {
     public static class TrainStation
     {
-        public static bool HasModifiableTrainStation(SaveGeneration Generation)
-            => Generation == SaveGeneration.N64 || Generation == SaveGeneration.GCN;
+        public static bool HasModifiableTrainStation(SaveGeneration generation)
+            => generation == SaveGeneration.N64 || generation == SaveGeneration.GCN;
 
-        public static Image GetStationImage(int Station)
+        public static Image GetStationImage(int station)
         {
-            Image StationImg = null;
-            var StationFile = MainForm.Assembly_Location + "\\Resources\\Images\\Icons\\Stations\\" + (Station + 1).ToString() + ".png";
-            if (File.Exists(StationFile))
+            Image stationImg = null;
+            var stationFile = MainForm.AssemblyLocation + "\\Resources\\Images\\Icons\\Stations\\" + (station + 1).ToString() + ".png";
+            if (!File.Exists(stationFile)) return null;
+            try
             {
-                try
-                {
-                    StationImg = Image.FromFile(StationFile);
-                }
-                catch
-                {
-                    MainForm.Debug_Manager.WriteLine("Unable to load station image #" + (Station + 1), DebugLevel.Error);
-                }
+                stationImg = Image.FromFile(stationFile);
             }
-            return StationImg;
+            catch
+            {
+                MainForm.DebugManager.WriteLine("Unable to load station image #" + (station + 1), DebugLevel.Error);
+            }
+            return stationImg;
         }
     }
 }

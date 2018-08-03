@@ -1,6 +1,6 @@
 ﻿namespace ACSE
 {
-    partial class MainForm
+    sealed partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -403,10 +403,10 @@
             this.patternEditorPictureBox.TabIndex = 0;
             this.patternEditorPictureBox.TabStop = false;
             this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
-            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseDown);
-            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBox_MouseLeave);
-            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseMove);
-            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBox_MouseUp);
+            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBoxMouseDown);
+            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBoxMouseLeave);
+            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBoxMouseMove);
+            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBoxMouseUp);
             // 
             // patternEditorPreviewPanel
             // 
@@ -483,7 +483,7 @@
             this.paletteSelectionPictureBox.Size = new System.Drawing.Size(32, 480);
             this.paletteSelectionPictureBox.TabIndex = 17;
             this.paletteSelectionPictureBox.TabStop = false;
-            this.paletteSelectionPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PaletteImageBox_Click);
+            this.paletteSelectionPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PaletteImageBoxClick);
             // 
             // menuStrip1
             // 
@@ -518,7 +518,7 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
             // 
             // openCitraSaveFileToolStripMenuItem
             // 
@@ -545,28 +545,28 @@
             this.eURToolStripMenuItem.Name = "eURToolStripMenuItem";
             this.eURToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.eURToolStripMenuItem.Text = "EUR";
-            this.eURToolStripMenuItem.Click += new System.EventHandler(this.eURToolStripMenuItem_Click);
+            this.eURToolStripMenuItem.Click += new System.EventHandler(this.EurToolStripMenuItemClick);
             // 
             // uSAToolStripMenuItem
             // 
             this.uSAToolStripMenuItem.Name = "uSAToolStripMenuItem";
             this.uSAToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.uSAToolStripMenuItem.Text = "USA";
-            this.uSAToolStripMenuItem.Click += new System.EventHandler(this.uSAToolStripMenuItem_Click);
+            this.uSAToolStripMenuItem.Click += new System.EventHandler(this.UsaToolStripMenuItemClick);
             // 
             // jPNToolStripMenuItem
             // 
             this.jPNToolStripMenuItem.Name = "jPNToolStripMenuItem";
             this.jPNToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.jPNToolStripMenuItem.Text = "JPN";
-            this.jPNToolStripMenuItem.Click += new System.EventHandler(this.jPNToolStripMenuItem_Click);
+            this.jPNToolStripMenuItem.Click += new System.EventHandler(this.JpnToolStripMenuItemClick);
             // 
             // kORToolStripMenuItem
             // 
             this.kORToolStripMenuItem.Name = "kORToolStripMenuItem";
             this.kORToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.kORToolStripMenuItem.Text = "KOR";
-            this.kORToolStripMenuItem.Click += new System.EventHandler(this.kORToolStripMenuItem_Click);
+            this.kORToolStripMenuItem.Click += new System.EventHandler(this.KorToolStripMenuItemClick);
             // 
             // welcomeAmiiboToolStripMenuItem
             // 
@@ -584,28 +584,28 @@
             this.eURToolStripMenuItem1.Name = "eURToolStripMenuItem1";
             this.eURToolStripMenuItem1.Size = new System.Drawing.Size(96, 22);
             this.eURToolStripMenuItem1.Text = "EUR";
-            this.eURToolStripMenuItem1.Click += new System.EventHandler(this.eURToolStripMenuItem1_Click);
+            this.eURToolStripMenuItem1.Click += new System.EventHandler(this.EurToolStripMenuItem1Click);
             // 
             // uSAToolStripMenuItem1
             // 
             this.uSAToolStripMenuItem1.Name = "uSAToolStripMenuItem1";
             this.uSAToolStripMenuItem1.Size = new System.Drawing.Size(96, 22);
             this.uSAToolStripMenuItem1.Text = "USA";
-            this.uSAToolStripMenuItem1.Click += new System.EventHandler(this.uSAToolStripMenuItem1_Click);
+            this.uSAToolStripMenuItem1.Click += new System.EventHandler(this.UsaToolStripMenuItem1Click);
             // 
             // jPNToolStripMenuItem1
             // 
             this.jPNToolStripMenuItem1.Name = "jPNToolStripMenuItem1";
             this.jPNToolStripMenuItem1.Size = new System.Drawing.Size(96, 22);
             this.jPNToolStripMenuItem1.Text = "JPN";
-            this.jPNToolStripMenuItem1.Click += new System.EventHandler(this.jPNToolStripMenuItem1_Click);
+            this.jPNToolStripMenuItem1.Click += new System.EventHandler(this.JpnToolStripMenuItem1Click);
             // 
             // kORToolStripMenuItem1
             // 
             this.kORToolStripMenuItem1.Name = "kORToolStripMenuItem1";
             this.kORToolStripMenuItem1.Size = new System.Drawing.Size(96, 22);
             this.kORToolStripMenuItem1.Text = "KOR";
-            this.kORToolStripMenuItem1.Click += new System.EventHandler(this.kORToolStripMenuItem1_Click);
+            this.kORToolStripMenuItem1.Click += new System.EventHandler(this.KorToolStripMenuItem1Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -613,7 +613,7 @@
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItemClick);
             // 
             // saveAsToolStripMenuItem
             // 
@@ -621,7 +621,7 @@
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItemClick);
             // 
             // toolStripSeparator1
             // 
@@ -634,7 +634,7 @@
             this.saveTownMapToolStripMenuItem.Name = "saveTownMapToolStripMenuItem";
             this.saveTownMapToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.saveTownMapToolStripMenuItem.Text = "Save Town Map";
-            this.saveTownMapToolStripMenuItem.Click += new System.EventHandler(this.saveTownMapToolStripMenuItem_Click);
+            this.saveTownMapToolStripMenuItem.Click += new System.EventHandler(this.SaveTownMapToolStripMenuItemClick);
             // 
             // toolStripSeparator2
             // 
@@ -646,7 +646,7 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
             // editToolStripMenuItem
             // 
@@ -663,14 +663,14 @@
             this.secureValueToolStripMenuItem.Name = "secureValueToolStripMenuItem";
             this.secureValueToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.secureValueToolStripMenuItem.Text = "Secure Value";
-            this.secureValueToolStripMenuItem.Click += new System.EventHandler(this.secureValueToolStripMenuItem_Click);
+            this.secureValueToolStripMenuItem.Click += new System.EventHandler(this.SecureValueToolStripMenuItemClick);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItemClick);
             // 
             // tasksToolStripMenuItem
             // 
@@ -693,7 +693,7 @@
             this.clearWeedsToolStripMenuItem.Name = "clearWeedsToolStripMenuItem";
             this.clearWeedsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.clearWeedsToolStripMenuItem.Text = "Clear Weeds";
-            this.clearWeedsToolStripMenuItem.Click += new System.EventHandler(this.clearWeedsToolStripMenuItem_Click);
+            this.clearWeedsToolStripMenuItem.Click += new System.EventHandler(this.ClearWeedsToolStripMenuItemClick);
             // 
             // removeAllItemsToolStripMenuItem
             // 
@@ -701,7 +701,7 @@
             this.removeAllItemsToolStripMenuItem.Name = "removeAllItemsToolStripMenuItem";
             this.removeAllItemsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.removeAllItemsToolStripMenuItem.Text = "Remove All Items";
-            this.removeAllItemsToolStripMenuItem.Click += new System.EventHandler(this.removeAllItemsToolStripMenuItem_Click);
+            this.removeAllItemsToolStripMenuItem.Click += new System.EventHandler(this.RemoveAllItemsToolStripMenuItemClick);
             // 
             // waterFlowersToolStripMenuItem
             // 
@@ -709,7 +709,7 @@
             this.waterFlowersToolStripMenuItem.Name = "waterFlowersToolStripMenuItem";
             this.waterFlowersToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.waterFlowersToolStripMenuItem.Text = "Water Flowers";
-            this.waterFlowersToolStripMenuItem.Click += new System.EventHandler(this.waterFlowersToolStripMenuItem_Click);
+            this.waterFlowersToolStripMenuItem.Click += new System.EventHandler(this.WaterFlowersToolStripMenuItemClick);
             // 
             // makeFruitsPerfectToolStripMenuItem
             // 
@@ -717,7 +717,7 @@
             this.makeFruitsPerfectToolStripMenuItem.Name = "makeFruitsPerfectToolStripMenuItem";
             this.makeFruitsPerfectToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.makeFruitsPerfectToolStripMenuItem.Text = "Make Fruits Perfect";
-            this.makeFruitsPerfectToolStripMenuItem.Click += new System.EventHandler(this.makeFruitsPerfectToolStripMenuItem_Click);
+            this.makeFruitsPerfectToolStripMenuItem.Click += new System.EventHandler(this.MakeFruitsPerfectToolStripMenuItemClick);
             // 
             // replaceItemsToolStripMenuItem
             // 
@@ -733,7 +733,7 @@
             this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
             this.replaceToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.replaceToolStripMenuItem.Text = "Replace";
-            this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
+            this.replaceToolStripMenuItem.Click += new System.EventHandler(this.ReplaceToolStripMenuItemClick);
             // 
             // importTownToolStripMenuItem
             // 
@@ -741,7 +741,7 @@
             this.importTownToolStripMenuItem.Name = "importTownToolStripMenuItem";
             this.importTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.importTownToolStripMenuItem.Text = "Import Town";
-            this.importTownToolStripMenuItem.Click += new System.EventHandler(this.importTownToolStripMenuItem_Click);
+            this.importTownToolStripMenuItem.Click += new System.EventHandler(this.ImportTownToolStripMenuItemClick);
             // 
             // exportTownToolStripMenuItem
             // 
@@ -749,7 +749,7 @@
             this.exportTownToolStripMenuItem.Name = "exportTownToolStripMenuItem";
             this.exportTownToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.exportTownToolStripMenuItem.Text = "Export Town";
-            this.exportTownToolStripMenuItem.Click += new System.EventHandler(this.exportTownToolStripMenuItem_Click);
+            this.exportTownToolStripMenuItem.Click += new System.EventHandler(this.ExportTownToolStripMenuItemClick);
             // 
             // generateRandomTownToolStripMenuItem
             // 
@@ -765,7 +765,7 @@
             this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
             this.generateToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.generateToolStripMenuItem.Text = "Generate";
-            this.generateToolStripMenuItem.Click += new System.EventHandler(this.generateRandomTownToolStripMenuItem_Click);
+            this.generateToolStripMenuItem.Click += new System.EventHandler(this.GenerateRandomTownToolStripMenuItemClick);
             // 
             // extrasToolStripMenuItem
             // 
@@ -784,7 +784,7 @@
             this.fillMuseumToolStripMenuItem.Name = "fillMuseumToolStripMenuItem";
             this.fillMuseumToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.fillMuseumToolStripMenuItem.Text = "Fill Museum";
-            this.fillMuseumToolStripMenuItem.Click += new System.EventHandler(this.fillMuseumToolStripMenuItem_Click);
+            this.fillMuseumToolStripMenuItem.Click += new System.EventHandler(this.FillMuseumToolStripMenuItemClick);
             // 
             // clearMuseumToolStripMenuItem
             // 
@@ -792,7 +792,7 @@
             this.clearMuseumToolStripMenuItem.Name = "clearMuseumToolStripMenuItem";
             this.clearMuseumToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.clearMuseumToolStripMenuItem.Text = "Clear Museum";
-            this.clearMuseumToolStripMenuItem.Click += new System.EventHandler(this.clearMuseumToolStripMenuItem_Click);
+            this.clearMuseumToolStripMenuItem.Click += new System.EventHandler(this.ClearMuseumToolStripMenuItemClick);
             // 
             // unlockAllPublicWorkProjectsToolStripMenuItem
             // 
@@ -800,7 +800,7 @@
             this.unlockAllPublicWorkProjectsToolStripMenuItem.Name = "unlockAllPublicWorkProjectsToolStripMenuItem";
             this.unlockAllPublicWorkProjectsToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.unlockAllPublicWorkProjectsToolStripMenuItem.Text = "Unlock All Public Work Projects";
-            this.unlockAllPublicWorkProjectsToolStripMenuItem.Click += new System.EventHandler(this.unlockAllPublicWorkProjectsToolStripMenuItem_Click);
+            this.unlockAllPublicWorkProjectsToolStripMenuItem.Click += new System.EventHandler(this.UnlockAllPublicWorkProjectsToolStripMenuItemClick);
             // 
             // unlockHHDItemsToolStripMenuItem
             // 
@@ -808,7 +808,7 @@
             this.unlockHHDItemsToolStripMenuItem.Name = "unlockHHDItemsToolStripMenuItem";
             this.unlockHHDItemsToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.unlockHHDItemsToolStripMenuItem.Text = "Unlock HHD Items";
-            this.unlockHHDItemsToolStripMenuItem.Click += new System.EventHandler(this.unlockHHDItemsToolStripMenuItem_Click);
+            this.unlockHHDItemsToolStripMenuItem.Click += new System.EventHandler(this.UnlockHhdItemsToolStripMenuItemClick);
             // 
             // tabControl1
             // 
@@ -942,7 +942,7 @@
             this.clearEmotionsButton.TabIndex = 7;
             this.clearEmotionsButton.Text = "Clear Emotions";
             this.clearEmotionsButton.UseVisualStyleBackColor = true;
-            this.clearEmotionsButton.Click += new System.EventHandler(this.clearEmotionsButton_Click);
+            this.clearEmotionsButton.Click += new System.EventHandler(this.ClearEmotionsButtonClick);
             // 
             // fillEmotionsButton
             // 
@@ -953,7 +953,7 @@
             this.fillEmotionsButton.TabIndex = 6;
             this.fillEmotionsButton.Text = "Fill Emotions";
             this.fillEmotionsButton.UseVisualStyleBackColor = true;
-            this.fillEmotionsButton.Click += new System.EventHandler(this.fillEmotionsButton_Click);
+            this.fillEmotionsButton.Click += new System.EventHandler(this.FillEmotionsButtonClick);
             // 
             // clearEncylopediaButton
             // 
@@ -964,7 +964,7 @@
             this.clearEncylopediaButton.TabIndex = 5;
             this.clearEncylopediaButton.Text = "Clear Encyclopedia";
             this.clearEncylopediaButton.UseVisualStyleBackColor = true;
-            this.clearEncylopediaButton.Click += new System.EventHandler(this.clearEncylopediaButton_Click);
+            this.clearEncylopediaButton.Click += new System.EventHandler(this.ClearEncylopediaButtonClick);
             // 
             // fillEncyclopediaButton
             // 
@@ -975,7 +975,7 @@
             this.fillEncyclopediaButton.TabIndex = 4;
             this.fillEncyclopediaButton.Text = "Fill Encyclopedia";
             this.fillEncyclopediaButton.UseVisualStyleBackColor = true;
-            this.fillEncyclopediaButton.Click += new System.EventHandler(this.fillEncyclopediaButton_Click);
+            this.fillEncyclopediaButton.Click += new System.EventHandler(this.FillEncyclopediaButtonClick);
             // 
             // clearSongLibraryButton
             // 
@@ -986,7 +986,7 @@
             this.clearSongLibraryButton.TabIndex = 3;
             this.clearSongLibraryButton.Text = "Clear Song Library";
             this.clearSongLibraryButton.UseVisualStyleBackColor = true;
-            this.clearSongLibraryButton.Click += new System.EventHandler(this.clearSongLibraryButton_Click);
+            this.clearSongLibraryButton.Click += new System.EventHandler(this.ClearSongLibraryButtonClick);
             // 
             // fillSongLibraryButton
             // 
@@ -997,7 +997,7 @@
             this.fillSongLibraryButton.TabIndex = 2;
             this.fillSongLibraryButton.Text = "Fill Song Library";
             this.fillSongLibraryButton.UseVisualStyleBackColor = true;
-            this.fillSongLibraryButton.Click += new System.EventHandler(this.fillSongLibraryButton_Click);
+            this.fillSongLibraryButton.Click += new System.EventHandler(this.FillSongLibraryButtonClick);
             // 
             // clearCatalogButton
             // 
@@ -1008,7 +1008,7 @@
             this.clearCatalogButton.TabIndex = 1;
             this.clearCatalogButton.Text = "Clear Catalog";
             this.clearCatalogButton.UseVisualStyleBackColor = true;
-            this.clearCatalogButton.Click += new System.EventHandler(this.clearCatalogButton_Click);
+            this.clearCatalogButton.Click += new System.EventHandler(this.ClearCatalogButtonClick);
             // 
             // fillCatalogButton
             // 
@@ -1019,7 +1019,7 @@
             this.fillCatalogButton.TabIndex = 0;
             this.fillCatalogButton.Text = "Fill Catalog";
             this.fillCatalogButton.UseVisualStyleBackColor = true;
-            this.fillCatalogButton.Click += new System.EventHandler(this.fillCatalogButton_Click);
+            this.fillCatalogButton.Click += new System.EventHandler(this.FillCatalogButtonClick);
             // 
             // censusMenuEnabled
             // 
@@ -1033,7 +1033,7 @@
             this.censusMenuEnabled.Text = ":Census Menu Enabled";
             this.infoTip.SetToolTip(this.censusMenuEnabled, "Toggles the removed Census Menu in your TPC Menu in Welcome Amiibo");
             this.censusMenuEnabled.UseVisualStyleBackColor = true;
-            this.censusMenuEnabled.CheckedChanged += new System.EventHandler(this.censusMenuEnabled_CheckedChanged);
+            this.censusMenuEnabled.CheckedChanged += new System.EventHandler(this.CensusMenuEnabledCheckedChanged);
             // 
             // hairPictureBox
             // 
@@ -1064,7 +1064,7 @@
             this.resettiCheckBox.TabIndex = 74;
             this.resettiCheckBox.Text = ":Reset Pending";
             this.resettiCheckBox.UseVisualStyleBackColor = true;
-            this.resettiCheckBox.CheckedChanged += new System.EventHandler(this.resettiCheckBox_CheckedChanged);
+            this.resettiCheckBox.CheckedChanged += new System.EventHandler(this.ResettiCheckBoxCheckedChanged);
             // 
             // birthdayDay
             // 
@@ -1121,7 +1121,7 @@
             this.playerIslandMedals.Name = "playerIslandMedals";
             this.playerIslandMedals.Size = new System.Drawing.Size(121, 20);
             this.playerIslandMedals.TabIndex = 70;
-            this.playerIslandMedals.LostFocus += new System.EventHandler(this.playerIslandMedals_FocusLost);
+            this.playerIslandMedals.LostFocus += new System.EventHandler(this.PlayerIslandMedalsFocusLost);
             // 
             // label40
             // 
@@ -1160,7 +1160,7 @@
             this.playerMeowCoupons.Name = "playerMeowCoupons";
             this.playerMeowCoupons.Size = new System.Drawing.Size(121, 20);
             this.playerMeowCoupons.TabIndex = 60;
-            this.playerMeowCoupons.LostFocus += new System.EventHandler(this.playerMeowCoupons_FocusLost);
+            this.playerMeowCoupons.LostFocus += new System.EventHandler(this.PlayerMeowCouponsFocusLost);
             // 
             // label26
             // 
@@ -1230,7 +1230,7 @@
             this.playerShoeColor.Name = "playerShoeColor";
             this.playerShoeColor.Size = new System.Drawing.Size(121, 21);
             this.playerShoeColor.TabIndex = 53;
-            this.playerShoeColor.SelectedIndexChanged += new System.EventHandler(this.playerShoeColor_SelectedIndexChanged);
+            this.playerShoeColor.SelectedIndexChanged += new System.EventHandler(this.PlayerShoeColorSelectedIndexChanged);
             // 
             // label20
             // 
@@ -1263,7 +1263,7 @@
             this.tanTrackbar.Size = new System.Drawing.Size(121, 19);
             this.tanTrackbar.TabIndex = 50;
             this.tanTrackbar.Value = 1;
-            this.tanTrackbar.Scroll += new System.EventHandler(this.tanTrackbar_Scroll);
+            this.tanTrackbar.Scroll += new System.EventHandler(this.TanTrackbarScroll);
             // 
             // label17
             // 
@@ -1424,7 +1424,7 @@
             this.playerNookPoints.Name = "playerNookPoints";
             this.playerNookPoints.Size = new System.Drawing.Size(121, 20);
             this.playerNookPoints.TabIndex = 31;
-            this.playerNookPoints.LostFocus += new System.EventHandler(this.playerNookPoints_FocusLost);
+            this.playerNookPoints.LostFocus += new System.EventHandler(this.PlayerNookPointsFocusLost);
             // 
             // label7
             // 
@@ -1528,7 +1528,7 @@
             this.playerGender.Name = "playerGender";
             this.playerGender.Size = new System.Drawing.Size(121, 21);
             this.playerGender.TabIndex = 17;
-            this.playerGender.SelectedIndexChanged += new System.EventHandler(this.playerGender_SelectedIndexChanged);
+            this.playerGender.SelectedIndexChanged += new System.EventHandler(this.PlayerGenderSelectedIndexChanged);
             // 
             // playerEyeColor
             // 
@@ -1539,7 +1539,7 @@
             this.playerEyeColor.Name = "playerEyeColor";
             this.playerEyeColor.Size = new System.Drawing.Size(121, 21);
             this.playerEyeColor.TabIndex = 15;
-            this.playerEyeColor.SelectedIndexChanged += new System.EventHandler(this.playerEyeColor_SelectedIndexChanged);
+            this.playerEyeColor.SelectedIndexChanged += new System.EventHandler(this.PlayerEyeColorSelectedIndexChanged);
             // 
             // playerHairColor
             // 
@@ -1550,7 +1550,7 @@
             this.playerHairColor.Name = "playerHairColor";
             this.playerHairColor.Size = new System.Drawing.Size(121, 21);
             this.playerHairColor.TabIndex = 14;
-            this.playerHairColor.SelectedIndexChanged += new System.EventHandler(this.playerHairColor_SelectedIndexChanged);
+            this.playerHairColor.SelectedIndexChanged += new System.EventHandler(this.PlayerHairColorSelectedIndexChanged);
             // 
             // playerHairType
             // 
@@ -1562,7 +1562,7 @@
             this.playerHairType.Name = "playerHairType";
             this.playerHairType.Size = new System.Drawing.Size(121, 21);
             this.playerHairType.TabIndex = 13;
-            this.playerHairType.SelectedIndexChanged += new System.EventHandler(this.playerHairType_SelectedIndexChanged);
+            this.playerHairType.SelectedIndexChanged += new System.EventHandler(this.PlayerHairTypeSelectedIndexChanged);
             // 
             // playerFace
             // 
@@ -1574,7 +1574,7 @@
             this.playerFace.Name = "playerFace";
             this.playerFace.Size = new System.Drawing.Size(121, 21);
             this.playerFace.TabIndex = 12;
-            this.playerFace.SelectedIndexChanged += new System.EventHandler(this.playerFace_SelectedIndexChanged);
+            this.playerFace.SelectedIndexChanged += new System.EventHandler(this.PlayerFaceSelectedIndexChanged);
             // 
             // playerSavings
             // 
@@ -1584,7 +1584,7 @@
             this.playerSavings.Name = "playerSavings";
             this.playerSavings.Size = new System.Drawing.Size(121, 20);
             this.playerSavings.TabIndex = 8;
-            this.playerSavings.LostFocus += new System.EventHandler(this.playerSavings_FocusLost);
+            this.playerSavings.LostFocus += new System.EventHandler(this.PlayerSavingsFocusLost);
             // 
             // playerDebt
             // 
@@ -1594,7 +1594,7 @@
             this.playerDebt.Name = "playerDebt";
             this.playerDebt.Size = new System.Drawing.Size(121, 20);
             this.playerDebt.TabIndex = 7;
-            this.playerDebt.LostFocus += new System.EventHandler(this.playerDebt_FocusLost);
+            this.playerDebt.LostFocus += new System.EventHandler(this.PlayerDebtFocusLost);
             // 
             // playerWallet
             // 
@@ -1604,7 +1604,7 @@
             this.playerWallet.Name = "playerWallet";
             this.playerWallet.Size = new System.Drawing.Size(121, 20);
             this.playerWallet.TabIndex = 6;
-            this.playerWallet.LostFocus += new System.EventHandler(this.playerWallet_FocusLost);
+            this.playerWallet.LostFocus += new System.EventHandler(this.PlayerWalletFocusLost);
             // 
             // playerName
             // 
@@ -1614,7 +1614,7 @@
             this.playerName.Name = "playerName";
             this.playerName.Size = new System.Drawing.Size(121, 20);
             this.playerName.TabIndex = 4;
-            this.playerName.TextChanged += new System.EventHandler(this.playerName_TextChanged);
+            this.playerName.TextChanged += new System.EventHandler(this.PlayerNameTextChanged);
             // 
             // playerNameText
             // 
@@ -1733,7 +1733,7 @@
             this.townMapViewCheckbox.TabIndex = 4;
             this.townMapViewCheckbox.Text = ":Town Map View";
             this.townMapViewCheckbox.UseVisualStyleBackColor = true;
-            this.townMapViewCheckbox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.townMapViewCheckbox.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
             // 
             // acreCustomIdBox
             // 
@@ -1991,7 +1991,7 @@
             this.weatherComboBox.TabIndex = 25;
             this.townToolTip.SetToolTip(this.weatherComboBox, "Sets the weather. Note that this will only work if you set it the same in-game da" +
         "y as you dumped it.");
-            this.weatherComboBox.SelectedIndexChanged += new System.EventHandler(this.weatherComboBox_SelectedIndexChanged);
+            this.weatherComboBox.SelectedIndexChanged += new System.EventHandler(this.WeatherComboBoxSelectedIndexChanged);
             // 
             // label31
             // 
@@ -2253,7 +2253,7 @@
             this.houseToolTip.SetToolTip(this.StatueCheckBox, "Toggles the Player Debt Statue Nook gives you after paying off the final debt. To" +
         "ggling this checkbox will set your house size to the max.");
             this.StatueCheckBox.UseVisualStyleBackColor = true;
-            this.StatueCheckBox.CheckedChanged += new System.EventHandler(this.StatueCheckBox_CheckedChanged);
+            this.StatueCheckBox.CheckedChanged += new System.EventHandler(this.StatueCheckBoxCheckedChanged);
             // 
             // houseOwnerComboBox
             // 
@@ -2511,7 +2511,7 @@
             this.removeGrass.TabIndex = 4;
             this.removeGrass.Text = "Remove Grass";
             this.removeGrass.UseVisualStyleBackColor = true;
-            this.removeGrass.Click += new System.EventHandler(this.removeGrass_Click);
+            this.removeGrass.Click += new System.EventHandler(this.RemoveGrassClick);
             // 
             // reviveGrass
             // 
@@ -2522,7 +2522,7 @@
             this.reviveGrass.TabIndex = 3;
             this.reviveGrass.Text = "Revive Grass";
             this.reviveGrass.UseVisualStyleBackColor = true;
-            this.reviveGrass.Click += new System.EventHandler(this.reviveGrass_Click);
+            this.reviveGrass.Click += new System.EventHandler(this.ReviveGrassClick);
             // 
             // grassLevelBox
             // 
@@ -2552,7 +2552,7 @@
             this.setAllGrass.TabIndex = 0;
             this.setAllGrass.Text = "Set All";
             this.setAllGrass.UseVisualStyleBackColor = true;
-            this.setAllGrass.Click += new System.EventHandler(this.setAllGrass_Click);
+            this.setAllGrass.Click += new System.EventHandler(this.SetAllGrassClick);
             // 
             // acreID
             // 
@@ -2597,14 +2597,14 @@
             this.importPicture.Name = "importPicture";
             this.importPicture.Size = new System.Drawing.Size(110, 22);
             this.importPicture.Text = "Import";
-            this.importPicture.Click += new System.EventHandler(this.importPicture_Click);
+            this.importPicture.Click += new System.EventHandler(this.ImportPictureClick);
             // 
             // exportPicture
             // 
             this.exportPicture.Name = "exportPicture";
             this.exportPicture.Size = new System.Drawing.Size(110, 22);
             this.exportPicture.Text = "Export";
-            this.exportPicture.Click += new System.EventHandler(this.exportPicture_Click);
+            this.exportPicture.Click += new System.EventHandler(this.ExportPictureClick);
             // 
             // selectedItem
             // 
@@ -2703,7 +2703,7 @@
             this.acreHeightTrackBar.Name = "acreHeightTrackBar";
             this.acreHeightTrackBar.Size = new System.Drawing.Size(60, 20);
             this.acreHeightTrackBar.TabIndex = 7;
-            this.acreHeightTrackBar.Scroll += new System.EventHandler(this.acreHeightTrackBar_Scroll);
+            this.acreHeightTrackBar.Scroll += new System.EventHandler(this.AcreHeightTrackBarScroll);
             // 
             // label43
             // 
@@ -2759,8 +2759,8 @@
             this.itemIdTextBox.TabIndex = 78;
             this.itemIdTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.infoTip.SetToolTip(this.itemIdTextBox, "The hexadecimal Item ID. Example: A31C");
-            this.itemIdTextBox.TextChanged += new System.EventHandler(this.CurrentItemId_TextChanged);
-            this.itemIdTextBox.Leave += new System.EventHandler(this.CurrentItemId_LostFocus);
+            this.itemIdTextBox.TextChanged += new System.EventHandler(this.CurrentItemIdTextChanged);
+            this.itemIdTextBox.Leave += new System.EventHandler(this.CurrentItemIdLostFocus);
             // 
             // itemIdLabel
             // 
@@ -2810,7 +2810,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainForm";
             this.Text = "ACSE";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
             patternsTab.ResumeLayout(false);
             patternsTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).EndInit();

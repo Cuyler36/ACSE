@@ -13,21 +13,21 @@ namespace ACSE
         //The checksum offset can then be verfied by adding 0x26040 - 0x4C03F in two byte intervals. If your sum is 0, then the checksum offset value is correct!
         //Important to note that the gamecube used Big Endian notation, so you will likely have to convert between Little & Big Endian values to get a correct chksum
 
-        public static ushort Calculate(byte[] buffer, int checksumOffset, bool little_endian = false)
+        public static ushort Calculate(byte[] buffer, int checksumOffset, bool littleEndian = false)
         {
             ushort checksum = 0;
-            if (little_endian) //WW case
+            if (littleEndian) //WW case
             {
-                for (int i = 0; i < checksumOffset; i += 2)
+                for (var i = 0; i < checksumOffset; i += 2)
                     checksum += (ushort)((buffer[i + 1] << 8) | buffer[i]);
-                for (int i = checksumOffset + 2; i < buffer.Length - 1; i += 2)
+                for (var i = checksumOffset + 2; i < buffer.Length - 1; i += 2)
                     checksum += (ushort)((buffer[i + 1] << 8) | buffer[i]);
             }
             else
             {
-                for (int i = 0; i < checksumOffset; i += 2)
+                for (var i = 0; i < checksumOffset; i += 2)
                     checksum += (ushort)((buffer[i] << 8) | buffer[i + 1]);
-                for (int i = checksumOffset + 2; i < buffer.Length - 1; i += 2)
+                for (var i = checksumOffset + 2; i < buffer.Length - 1; i += 2)
                     checksum += (ushort)((buffer[i] << 8) | buffer[i + 1]);
             }
             return (ushort)-checksum;
@@ -35,19 +35,18 @@ namespace ACSE
 
         public static bool Verify(byte[] buffer, int checksumOffset)
         {
-            ushort Checksum = 0;
-            for (int i = 0; i < buffer.Length; i += 2)
-                Checksum += (ushort)((buffer[i] << 8) + buffer[i + 1]);
-            return Checksum == 0;
+            ushort checksum = 0;
+            for (var i = 0; i < buffer.Length; i += 2)
+                checksum += (ushort)((buffer[i] << 8) + buffer[i + 1]);
+            return checksum == 0;
         }
     }
 
     //Used in City Folk
-    public static class CRC32
+    public static class Crc32
     {
         // Table of CRC-32's of all single byte values
-        public static uint[] crctab = new uint[]
-        {
+        public static uint[] Crctab = {
             0x00000000, 0x77073096, 0xEE0E612C, 0x990951BA, 0x076DC419,
             0x706AF48F, 0xE963A535, 0x9E6495A3, 0x0EDB8832, 0x79DCB8A4,
             0xE0D5E91E, 0x97D2D988, 0x09B64C2B, 0x7EB17CBD, 0xE7B82D07,
@@ -102,23 +101,23 @@ namespace ACSE
             0x2D02EF8D
         };
 
-        public static uint Calculate_CRC32(byte[] pBuf, uint initial = 0xFFFFFFFF)
+        public static uint CalculateCrc32(byte[] pBuf, uint initial = 0xFFFFFFFF)
         {
-            uint c = initial;
+            var c = initial;
             int i, n = pBuf.Length;
             for (i = 0; i < n; i++)
             {
-                byte index = (byte)((c & 0xFF) ^ pBuf[i]);
-                c = crctab[index] ^ ((c >> 8) & 0xFFFFFF);
+                var index = (byte)((c & 0xFF) ^ pBuf[i]);
+                c = Crctab[index] ^ ((c >> 8) & 0xFFFFFF);
             }
             return ~c;
         }
     }
 
     //Used in New Leaf + Welcome Amiibo
-    public static class NL_CRC32
+    public static class NewLeaftCrc32
     {
-        public static uint[] NL_CRC_TableType1 = {
+        public static uint[] NewLeafCrcTableType1 = {
             0x00000000, 0xF26B8303, 0xE13B70F7, 0x1350F3F4, 0xC79A971F,
             0x35F1141C, 0x26A1E7E8, 0xD4CA64EB, 0x8AD958CF, 0x78B2DBCC,
             0x6BE22838, 0x9989AB3B, 0x4D43CFD0, 0xBF284CD3, 0xAC78BF27,
@@ -173,7 +172,7 @@ namespace ACSE
             0xAD7D5351
         };
 
-        public static uint[] NL_CRC_TableType2 = {
+        public static uint[] NewLeafCrcTableType2 = {
             0x00000000, 0x04C11DB7, 0x09823B6E, 0x0D4326D9, 0x130476DC,
             0x17C56B6B, 0x1A864DB2, 0x1E475005, 0x2608EDB8, 0x22C9F00F,
             0x2F8AD6D6, 0x2B4BCB61, 0x350C9B64, 0x31CD86D3, 0x3C8EA00A,
@@ -230,22 +229,22 @@ namespace ACSE
 
         public static uint Calculate_CRC32Type1(byte[] data)
         {
-            int size = data.Length;
-            uint crc = 0xFFFFFFFF;
-            int p = 0;
+            var size = data.Length;
+            var crc = 0xFFFFFFFF;
+            var p = 0;
             while (size-- != 0)
-                crc = NL_CRC_TableType1[(crc ^ data[p++]) & 0xFF] ^ (crc >> 8);
+                crc = NewLeafCrcTableType1[(crc ^ data[p++]) & 0xFF] ^ (crc >> 8);
 
             return ~crc;
         }
 
         public static uint Calculate_CRC32Type2(byte[] data)
         {
-            int size = data.Length;
+            var size = data.Length;
             uint crc = 0x00000000;
-            int p = 0;
+            var p = 0;
             while (size-- != 0)
-                crc = NL_CRC_TableType2[data[p++] ^ (crc >> 24)] ^ (crc << 8);
+                crc = NewLeafCrcTableType2[data[p++] ^ (crc >> 24)] ^ (crc << 8);
 
             return ~crc;
         }

@@ -9,7 +9,7 @@ namespace ACSE
 {
     internal class VillagerData
     {
-        public static readonly Dictionary<ushort, string> WA_Special_Villagers = new Dictionary<ushort, string>
+        public static readonly Dictionary<ushort, string> WaSpecialVillagers = new Dictionary<ushort, string>
         {
             {0x1000, "Copper"},
             {0x1001, "Booker"},
@@ -48,8 +48,8 @@ namespace ACSE
         public static BindingSource GetCaravanBindingSource()
         {
             var waDatabase = VillagerInfo.GetVillagerDatabase(SaveType.WelcomeAmiibo);
-            if (waDatabase == null) return new BindingSource(WA_Special_Villagers, null);
-            foreach (var v in WA_Special_Villagers)
+            if (waDatabase == null) return new BindingSource(WaSpecialVillagers, null);
+            foreach (var v in WaSpecialVillagers)
             {
                 var specialVillager = new SimpleVillager
                 {
@@ -111,7 +111,7 @@ namespace ACSE
 
     public static class VillagerInfo
     {
-        public static readonly VillagerOffsets Doubutsu_no_Mori_Villager_Offsets = new VillagerOffsets
+        public static readonly VillagerOffsets DoubutsuNoMoriVillagerOffsets = new VillagerOffsets
         {
             VillagerId = 0,
             TownId = 2,
@@ -126,7 +126,7 @@ namespace ACSE
             Shirt = 0x520
         };
 
-        public static readonly VillagerOffsets Doubtusu_no_Mori_Plus_Villager_Offsets = new VillagerOffsets
+        public static readonly VillagerOffsets DoubtusuNoMoriPlusVillagerOffsets = new VillagerOffsets
         {
             VillagerId = 0,
             TownId = 2,
@@ -149,7 +149,7 @@ namespace ACSE
             //Add Player Entries (Relationships)
         };
 
-        public static readonly VillagerOffsets AC_Villager_Offsets = new VillagerOffsets
+        public static readonly VillagerOffsets AcVillagerOffsets = new VillagerOffsets
         {
             VillagerId = 0,
             TownId = 2,
@@ -172,7 +172,7 @@ namespace ACSE
             //Add Player Entries (Relationships)
         };
 
-        public static readonly VillagerOffsets Doubtusu_no_Mori_e_Plus_Villager_Offsets = new VillagerOffsets
+        public static readonly VillagerOffsets DoubtusuNoMoriEPlusVillagerOffsets = new VillagerOffsets
         {
             VillagerId = 0,
             TownId = 2,
@@ -195,7 +195,7 @@ namespace ACSE
             //Add Player Entries (Relationships)
         };
 
-        public static readonly VillagerOffsets WW_Villager_Offsets = new VillagerOffsets
+        public static readonly VillagerOffsets WwVillagerOffsets = new VillagerOffsets
         {
             //0 = Relationships (0x68 bytes each)
             //Pattern as well
@@ -219,7 +219,7 @@ namespace ACSE
             //Finish rest of offsets
         };
 
-        public static readonly VillagerOffsets CF_Villager_Offsets = new VillagerOffsets
+        public static readonly VillagerOffsets CfVillagerOffsets = new VillagerOffsets
         {
             //Villagers in City Folk are interesting.
             //The actual data structure is stored in the save file, allowing for customization of the entire villager.
@@ -229,7 +229,7 @@ namespace ACSE
             //This means I'll probably have to reverse engineer the format myself
         };
 
-        public static readonly VillagerOffsets NL_Villager_Offsets = new VillagerOffsets
+        public static readonly VillagerOffsets NlVillagerOffsets = new VillagerOffsets
         {
             VillagerId = 0,
             Personality = 2,
@@ -251,7 +251,7 @@ namespace ACSE
             NameId = -1,
         };
 
-        public static readonly VillagerOffsets WA_Villager_Offsets = new VillagerOffsets
+        public static readonly VillagerOffsets WaVillagerOffsets = new VillagerOffsets
         {
             VillagerId = 0,
             Personality = 2,
@@ -273,18 +273,15 @@ namespace ACSE
             NameId = -1,
         };
 
-        public static readonly string[] AC_Personalities =
-        {
+        public static readonly string[] AcPersonalities = {
             "Normal ♀", "Peppy ♀", "Lazy ♂", "Jock ♂", "Cranky ♂", "Snooty ♀", "Not Set"
         };
 
-        public static readonly string[] WW_Personalities =
-        {
+        public static readonly string[] WwPersonalities = {
             "Lazy ♂", "Jock ♂", "Cranky ♂", "Normal ♀", "Peppy ♀", "Snooty ♀", "Not Set"
         };
 
-        public static readonly string[] NL_Personalities =
-        {
+        public static readonly string[] NlPersonalities = {
             "Lazy ♂", "Jock ♂", "Cranky ♂", "Smug ♂", "Normal ♀", "Peppy ♀", "Snooty ♀", "Uchi ♀", "Not Set"
         };
 
@@ -297,13 +294,13 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForest:
-                    return AC_Personalities;
+                    return AcPersonalities;
                 case SaveType.WildWorld:
-                    return WW_Personalities;
+                    return WwPersonalities;
                 case SaveType.NewLeaf:
-                    return NL_Personalities;
+                    return NlPersonalities;
                 case SaveType.WelcomeAmiibo:
-                    return NL_Personalities;
+                    return NlPersonalities;
                 case SaveType.Unknown:
                     break;
                 case SaveType.CityFolk:
@@ -319,7 +316,7 @@ namespace ACSE
         {
             var database = new Dictionary<ushort, SimpleVillager>();
             StreamReader contents;
-            var databaseFilename = MainForm.Assembly_Location + "\\Resources\\{0}_Villagers_" + language + ".txt";
+            var databaseFilename = MainForm.AssemblyLocation + "\\Resources\\{0}_Villagers_" + language + ".txt";
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:
@@ -429,21 +426,21 @@ namespace ACSE
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:
-                    return Doubutsu_no_Mori_Villager_Offsets;
+                    return DoubutsuNoMoriVillagerOffsets;
                 case SaveType.DoubutsuNoMoriPlus:
-                    return Doubtusu_no_Mori_Plus_Villager_Offsets;
+                    return DoubtusuNoMoriPlusVillagerOffsets;
                 case SaveType.AnimalCrossing:
-                    return AC_Villager_Offsets;
+                    return AcVillagerOffsets;
                 case SaveType.DoubutsuNoMoriEPlus:
-                    return Doubtusu_no_Mori_e_Plus_Villager_Offsets;
+                    return DoubtusuNoMoriEPlusVillagerOffsets;
                 case SaveType.AnimalForest:
-                    return Doubutsu_no_Mori_Villager_Offsets; // TEMP
+                    return DoubutsuNoMoriVillagerOffsets; // TEMP
                 case SaveType.WildWorld:
-                    return WW_Villager_Offsets;
+                    return WwVillagerOffsets;
                 case SaveType.NewLeaf:
-                    return NL_Villager_Offsets;
+                    return NlVillagerOffsets;
                 case SaveType.WelcomeAmiibo:
-                    return WA_Villager_Offsets;
+                    return WaVillagerOffsets;
                 case SaveType.Unknown:
                     break;
                 case SaveType.CityFolk:

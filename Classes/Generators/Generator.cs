@@ -2,9 +2,9 @@
 {
     public static class Generator
     {
-        public static IGenerator GetGenerator(SaveGeneration Generation)
+        public static IGenerator GetGenerator(SaveGeneration generation)
         {
-            switch (Generation)
+            switch (generation)
             {
                 case SaveGeneration.GCN:
                     return new GCNGenerator();

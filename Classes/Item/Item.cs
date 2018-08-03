@@ -4,7 +4,7 @@ namespace ACSE
 {
     public class Item
     {
-        public Inventory.ACItemFlag ItemFlag;
+        public Inventory.AcItemFlag ItemFlag;
         public ushort ItemId;
         public byte Flag1;
         public byte Flag2;
@@ -12,7 +12,7 @@ namespace ACSE
 
         public Item()
         {
-            var saveType = MainForm.Save_File == null ? SaveType.AnimalCrossing : MainForm.Save_File.SaveType;
+            var saveType = MainForm.SaveFile == null ? SaveType.AnimalCrossing : MainForm.SaveFile.SaveType;
             switch (saveType)
             {
                 case SaveType.WildWorld:
@@ -180,7 +180,7 @@ namespace ACSE
 
         public Furniture(ushort itemId) : base(itemId)
         {
-            if (MainForm.Save_File.SaveGeneration == SaveGeneration.N3DS)
+            if (MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
                 BaseItemId = itemId;
                 Rotation = 0;
@@ -188,7 +188,7 @@ namespace ACSE
             else
             {
                 BaseItemId = (ushort)(ItemId & 0xFFFC);
-                if (ItemData.GetItemType(itemId, MainForm.Save_File.SaveType) == "Furniture" || ItemData.GetItemType(itemId, MainForm.Save_File.SaveType).Equals("Gyroids"))
+                if (ItemData.GetItemType(itemId, MainForm.SaveFile.SaveType) == "Furniture" || ItemData.GetItemType(itemId, MainForm.SaveFile.SaveType).Equals("Gyroids"))
                 {
                     Rotation = (ItemId % 4) * 90;
                 }
@@ -203,7 +203,7 @@ namespace ACSE
 
         public Furniture(ushort item, byte flag1, byte flag2) : base(item, flag1, flag2)
         {
-            if (MainForm.Save_File.SaveGeneration == SaveGeneration.N3DS)
+            if (MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
                 BaseItemId = ItemId;
                 Rotation = ((Flag1 >> 4) / 4) * 90;
@@ -211,8 +211,8 @@ namespace ACSE
             else
             {
                 BaseItemId = (ushort)(ItemId & 0xFFFC);
-                if (ItemData.GetItemType(ItemId, MainForm.Save_File.SaveType) == "Furniture" ||
-                    ItemData.GetItemType(ItemId, MainForm.Save_File.SaveType).Equals("Gyroids"))
+                if (ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == "Furniture" ||
+                    ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType).Equals("Gyroids"))
                 {
                     Rotation = (ItemId % 4) * 90;
                 }
@@ -226,7 +226,7 @@ namespace ACSE
             Flag1 = item.Flag1;
             Flag2 = item.Flag2;
 
-            if (MainForm.Save_File.SaveGeneration == SaveGeneration.N3DS)
+            if (MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
                 BaseItemId = ItemId;
                 Rotation = ((Flag1 >> 4) / 4) * 90;
@@ -234,8 +234,8 @@ namespace ACSE
             else
             {
                 BaseItemId = (ushort)(ItemId & 0xFFFC);
-                if (ItemData.GetItemType(ItemId, MainForm.Save_File.SaveType) == "Furniture" ||
-                    ItemData.GetItemType(ItemId, MainForm.Save_File.SaveType).Equals("Gyroids"))
+                if (ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == "Furniture" ||
+                    ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType).Equals("Gyroids"))
                 {
                     Rotation = (ItemId % 4) * 90;
                 }
@@ -255,7 +255,7 @@ namespace ACSE
             {
                 case Furniture _:
                     var comparingItem = obj as Furniture;
-                    if (MainForm.Save_File.SaveGeneration == SaveGeneration.N3DS)
+                    if (MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS)
                         return comparingItem != null && (comparingItem.ItemId == ItemId && comparingItem.Flag1 == Flag1 && comparingItem.Flag2 == Flag2);
                     else
                         return comparingItem != null && comparingItem.BaseItemId == BaseItemId;

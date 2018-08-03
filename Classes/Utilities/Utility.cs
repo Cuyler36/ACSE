@@ -5,21 +5,21 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
-namespace ACSE.Classes.Utilities
+namespace ACSE.Utilities
 {
     public static class Utility
     {
         public static void Scan_For_NL_Int32()
         {
-            if (MainForm.Save_File == null || MainForm.Save_File.SaveGeneration != SaveGeneration.N3DS) return;
-            using (var int32Stream = File.CreateText(MainForm.Assembly_Location + "\\" +
-                                                               (MainForm.Save_File.SaveType == SaveType.WelcomeAmiibo ? "WA_" : "") + "NL_Int32_Database.txt"))
-                for (var i = 0; i < MainForm.Save_File.WorkingSaveData.Length - 4; i += 4)
+            if (MainForm.SaveFile == null || MainForm.SaveFile.SaveGeneration != SaveGeneration.N3DS) return;
+            using (var int32Stream = File.CreateText(MainForm.AssemblyLocation + "\\" +
+                                                               (MainForm.SaveFile.SaveType == SaveType.WelcomeAmiibo ? "WA_" : "") + "NL_Int32_Database.txt"))
+                for (var i = 0; i < MainForm.SaveFile.WorkingSaveData.Length - 4; i += 4)
                 {
-                    var possibleNlInt32 = new NL_Int32(MainForm.Save_File.ReadUInt32(i), MainForm.Save_File.ReadUInt32(i + 4));
+                    var possibleNlInt32 = new NewLeafInt32(MainForm.SaveFile.ReadUInt32(i), MainForm.SaveFile.ReadUInt32(i + 4));
                     if (possibleNlInt32.Valid)
                         int32Stream.WriteLine(
-                            $"Found Valid NL_Int32 at offset 0x{i:X} | Value: {possibleNlInt32.Value}");
+                            $"Found Valid NewLeafInt32 at offset 0x{i:X} | Value: {possibleNlInt32.Value}");
                 }
         }
 
@@ -41,9 +41,9 @@ namespace ACSE.Classes.Utilities
 
         public static Tuple<byte[], bool> Find_Villager_House(ushort villagerId) // TODO: Apply to WW
         {
-            if (MainForm.Save_File == null) return new Tuple<byte[], bool>(new byte[] {0xFF, 0xFF, 0xFF, 0xFF}, false);
+            if (MainForm.SaveFile == null) return new Tuple<byte[], bool>(new byte[] {0xFF, 0xFF, 0xFF, 0xFF}, false);
             var villagerHouseId = (ushort)(0x5000 + (villagerId & 0xFF));
-            foreach (var acre in MainForm.Town_Acres)
+            foreach (var acre in MainForm.TownAcres)
             {
                 var villagerHouse = acre.AcreItems.FirstOrDefault(o => o.ItemId == villagerHouseId);
                 if (villagerHouse != null)
@@ -70,7 +70,7 @@ namespace ACSE.Classes.Utilities
             for (var i = 0; i < acreResults.Length; i++)
             {
                 var acre = Acres[i];
-                switch (MainForm.Save_File.SaveGeneration)
+                switch (MainForm.SaveFile.SaveGeneration)
                 {
                     case SaveGeneration.N64:
                     case SaveGeneration.GCN:
@@ -89,7 +89,7 @@ namespace ACSE.Classes.Utilities
                                     acre.AcreItems[o] = new WorldItem(0, o);
                                 }
                             }
-                            else if (ItemData.GetItemType(item.ItemId, MainForm.Save_File.SaveType) == "Tree")
+                            else if (ItemData.GetItemType(item.ItemId, MainForm.SaveFile.SaveType) == "Tree")
                             {
                                 treeCount++;
                             }
@@ -103,7 +103,7 @@ namespace ACSE.Classes.Utilities
                                     for (var x = 0; x < 256; x++)
                                     {
                                         if (ItemData.GetItemType(acre.AcreItems[x].ItemId,
-                                                MainForm.Save_File.SaveType) != "Tree") continue;
+                                                MainForm.SaveFile.SaveType) != "Tree") continue;
                                         acre.AcreItems[x] = new WorldItem(0, x);
                                         break;
                                     }
@@ -145,7 +145,7 @@ namespace ACSE.Classes.Utilities
         public static void Place_Structure(WorldAcre acre, int startIndex, List<ushort[]> structureInfo)
         {
             if (startIndex <= -1 || startIndex >= 256) return;
-            if (MainForm.Save_File.SaveGeneration != SaveGeneration.GCN) return;
+            if (MainForm.SaveFile.SaveGeneration != SaveGeneration.GCN) return;
             for (var y = 0; y < structureInfo.Count; y++)
             {
                 for (var x = 0; x < structureInfo[y].Length; x++)

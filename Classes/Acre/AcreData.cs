@@ -34,7 +34,7 @@ namespace ACSE
 
             Image result = null;
 
-            var imageDir = MainForm.Assembly_Location + "\\Resources\\Images\\";
+            var imageDir = MainForm.AssemblyLocation + "\\Resources\\Images\\";
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:
@@ -109,7 +109,7 @@ namespace ACSE
 
             Image result = null;
 
-            var iconDirectory = MainForm.Assembly_Location + "\\Resources\\Images\\AC_Map_Icons";
+            var iconDirectory = MainForm.AssemblyLocation + "\\Resources\\Images\\AC_Map_Icons";
             if (Directory.Exists(iconDirectory))
             {
                 foreach (var iconFile in Directory.GetFiles(iconDirectory))
@@ -173,7 +173,7 @@ namespace ACSE
 
         public static Dictionary<ushort, byte> Load_AC_Map_Index(SaveType saveType)
         {
-            var indexFile = MainForm.Assembly_Location;
+            var indexFile = MainForm.AssemblyLocation;
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:

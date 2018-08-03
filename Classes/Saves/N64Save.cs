@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ACSE.Classes.Saves
+namespace ACSE.Saves
 {
     /// <summary>
     /// Nintendo 64 Save File

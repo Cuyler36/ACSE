@@ -7,3 +7,4 @@
 bin/
 .vs/
 obj/
+*.DotSettings

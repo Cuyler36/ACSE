@@ -9,7 +9,7 @@ namespace ACSE
         public AboutBox1()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
+            Text = $"About {AssemblyTitle}";
         }
 
         #region Assembly Attribute Accessors

@@ -4902,9 +4902,8 @@
     </Compile>
     <Compile Include="Classes\Shop.cs" />
     <Compile Include="Classes\SongLibrary.cs" />
-    <Compile Include="Classes\NL_Int32.cs" />
+    <Compile Include="Classes\NewLeafInt32.cs" />
     <Compile Include="Classes\Save.cs" />
-    <Compile Include="Classes\SimpleTownInfo.cs" />
     <Compile Include="Controls\ItemEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -4919,12 +4918,6 @@
     </Compile>
     <Compile Include="Controls\VillagerControl.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\CodeGeneratorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CodeGeneratorForm.Designer.cs">
-      <DependentUpon>CodeGeneratorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ToggableAlertForm.cs">
       <SubType>Form</SubType>
@@ -4983,9 +4976,6 @@
     <Compile Include="Classes\Villagers\VillagerData.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\CodeGeneratorForm.resx">
-      <DependentUpon>CodeGeneratorForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ToggableAlertForm.resx">
       <DependentUpon>ToggableAlertForm.cs</DependentUpon>
     </EmbeddedResource>
