@@ -211,7 +211,7 @@ namespace ACSE
             {
                 if (!Loading && roofColorComboBox.Enabled && roofColorComboBox.SelectedIndex > -1 && Selected_House != null)
                 {
-                    Selected_House.Data.Roof_Color = (byte)(roofColorComboBox.SelectedIndex);
+                    Selected_House.Data.RoofColor = (byte)(roofColorComboBox.SelectedIndex);
                 }
             };
 
@@ -1100,7 +1100,7 @@ namespace ACSE
             // Draw House PictureBoxes
             SetupHousePictureBoxes();
             if (roofColorComboBox.Enabled && Selected_House != null)
-                roofColorComboBox.SelectedIndex = Math.Min(roofColorComboBox.Items.Count - 1, Selected_House.Data.Roof_Color);
+                roofColorComboBox.SelectedIndex = Math.Min(roofColorComboBox.Items.Count - 1, Selected_House.Data.RoofColor);
 
             if (houseSizeComboBox.Enabled && Selected_House != null)
                 houseSizeComboBox.SelectedIndex = HouseInfo.GetHouseSize(Selected_House.Offset, save.Save_Type);
@@ -1685,7 +1685,7 @@ namespace ACSE
                         Player.Data.TownName = townNameBox.Text;
                         if (Player.House != null)
                         {
-                            Player.House.Data.Town_Name = townNameBox.Text;
+                            Player.House.Data.TownName = townNameBox.Text;
                         }
                     }
                 }
@@ -2335,11 +2335,11 @@ namespace ACSE
                     }
                 }
 
-                House_Boxes = new PictureBoxWithInterpolationMode[HouseOffsets.Room_Count][];
+                House_Boxes = new PictureBoxWithInterpolationMode[HouseOffsets.RoomCount][];
 
-                for (int x = 0; x < HouseOffsets.Room_Count; x++)
+                for (int x = 0; x < HouseOffsets.RoomCount; x++)
                 {
-                    House_Boxes[x] = new PictureBoxWithInterpolationMode[HouseOffsets.Layer_Count];
+                    House_Boxes[x] = new PictureBoxWithInterpolationMode[HouseOffsets.LayerCount];
                     Label RoomLabel = new Label
                     {
                         Text = RoomNames[x],
@@ -2350,7 +2350,7 @@ namespace ACSE
                     };
                     housePanel.Controls.Add(RoomLabel);
 
-                    for (int y = 0; y < HouseOffsets.Layer_Count; y++)
+                    for (int y = 0; y < HouseOffsets.LayerCount; y++)
                     {
                         PictureBoxWithInterpolationMode LayerBox = new PictureBoxWithInterpolationMode
                         {
@@ -2501,7 +2501,7 @@ namespace ACSE
                 }
 
                 if (roofColorComboBox.Enabled && Selected_House != null)
-                    roofColorComboBox.SelectedIndex = Math.Min(roofColorComboBox.Items.Count - 1, SelectedHouse.Data.Roof_Color);
+                    roofColorComboBox.SelectedIndex = Math.Min(roofColorComboBox.Items.Count - 1, SelectedHouse.Data.RoofColor);
 
                 if (houseSizeComboBox.Enabled && Selected_House != null)
                     houseSizeComboBox.SelectedIndex = HouseInfo.GetHouseSize(Selected_House.Offset, Save_File.Save_Type);
