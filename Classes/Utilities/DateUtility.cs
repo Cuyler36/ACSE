@@ -43,6 +43,7 @@ namespace ACSE.Utilities
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                 case SaveType.AnimalCrossing:
                 case SaveType.AnimalForest:
                     switch (dateData.Length)

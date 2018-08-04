@@ -423,6 +423,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                 // TODO: DnM+, and DnMe+ need their own cases
                 case SaveType.AnimalForest:
                     if (id == 0)

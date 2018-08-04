@@ -5,7 +5,7 @@ namespace ACSE
     /// <summary>
     /// Island class for Doubutsu no Mori e+
     /// </summary>
-    class Island
+    public sealed class Island
     {
         #region Island Offsets
 
@@ -171,6 +171,7 @@ namespace ACSE
             {
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                 case SaveType.CityFolk:
                     worldPosition = (acre * 256) + (15 - item.Location.X) + item.Location.Y * 16; //15 - item.Location.X because it's stored as a ushort in memory w/ reversed endianess
                     break;

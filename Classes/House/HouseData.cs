@@ -318,6 +318,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                     return AnimalCrossingHouseOffsets;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return DoubutsuNoMoriEPlusOffsets;
                 case SaveType.AnimalForest:
                     return DoubutsuNoMoriHouseOffsets; // TEMP
@@ -341,6 +342,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                 case SaveType.AnimalForest:
                     return AcRoofColors;
 
@@ -394,6 +396,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                 case SaveType.AnimalForest:
                 case SaveType.CityFolk:
                     for (var i = 0; i < 4; i++)
@@ -417,6 +420,7 @@ namespace ACSE
                     return (MainForm.SaveFile.WorkingSaveData[offset + 0x2A] >> 5) & 7;
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return (MainForm.SaveFile.WorkingSaveData[offset + 0x26] >> 5) & 7;
                 case SaveType.WildWorld:
                     return MainForm.SaveFile.ReadByte(0xFAF8) & 7; // Not sure about this
@@ -434,6 +438,7 @@ namespace ACSE
                     break;
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     MainForm.SaveFile.Write(offset + 0x26, (byte)(MainForm.SaveFile.ReadByte(offset + 0x26) & ~(7 << 5) | ((value & 7) << 5)));
                     break;
                 case SaveType.WildWorld:
@@ -451,6 +456,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                     return ((MainForm.SaveFile.ReadByte(offset + 0x2A) >> 2) & 7) == 4;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return ((MainForm.SaveFile.ReadByte(offset + 0x26) >> 2) & 7) == 5;
                 default:
                     return false;
@@ -471,6 +477,7 @@ namespace ACSE
                     MainForm.SaveFile.Write(offset + 0x2A, (byte)((MainForm.SaveFile.ReadByte(offset + 0x2A) & ~(7 << 2) | writeValue)));
                     break;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     writeValue = enabled ? (5 << 2) : (6 << 2);
                     MainForm.SaveFile.Write(offset + 0x26, (byte)((MainForm.SaveFile.ReadByte(offset + 0x26) & ~(7 << 2) | writeValue)));
                     break;
@@ -482,6 +489,7 @@ namespace ACSE
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return (MainForm.SaveFile.WorkingSaveData[offset + 0x26] >> 2) & 7;
                 default:
                     return 0;
@@ -500,6 +508,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                     return (MainForm.SaveFile.WorkingSaveData[offset + 0x24] & 0x10) == 0x10;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return (MainForm.SaveFile.WorkingSaveData[offset + 0x20] & 0x10) == 0x10;
                 default:
                     return false;
@@ -518,6 +527,7 @@ namespace ACSE
                     basementFlagOffset += 0x24;
                     break;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     basementFlagOffset += 0x20;
                     break;
             }

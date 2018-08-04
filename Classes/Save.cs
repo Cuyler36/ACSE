@@ -15,6 +15,7 @@ namespace ACSE
         DoubutsuNoMoriPlus,
         AnimalCrossing,
         DoubutsuNoMoriEPlus,
+        AnimalForestEPlus, // Fan translated version of Doubutsu no Mori e+
         AnimalForest, // iQue version
         WildWorld,
         CityFolk,

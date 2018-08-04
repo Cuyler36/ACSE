@@ -46,7 +46,8 @@
         {
             if (saveFile.SaveGeneration != SaveGeneration.N64 && saveFile.SaveGeneration != SaveGeneration.GCN)
                 return false;
-            if (saveFile.SaveType != SaveType.DoubutsuNoMoriEPlus && index == 4 && System.Windows.Forms.MessageBox.Show(
+            if (saveFile.SaveType != SaveType.DoubutsuNoMoriEPlus && saveFile.SaveType != SaveType.AnimalForestEPlus
+                                                                  && index == 4 && System.Windows.Forms.MessageBox.Show(
                     "Setting the Weather to Fall Leaves will cause glitches, and will crash your game if you run."
                     + "Are you sure you want to change the weather to it?", "Weather Warning",
                     System.Windows.Forms.MessageBoxButtons.YesNo,

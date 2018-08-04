@@ -595,6 +595,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                     return AnimalCrossing;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return DoubutsuNoMoriEPlus;
                 case SaveType.AnimalForest:
                     return DoubutsuNoMori; // TEMP

@@ -814,8 +814,8 @@ namespace ACSE
             // Load islands if DnMe+
             _selectedIsland = null;
             _islands = null;
-            islandSelectionTab.Visible = save.SaveType == SaveType.DoubutsuNoMoriEPlus;
-            if (save.SaveType == SaveType.DoubutsuNoMoriEPlus)
+            islandSelectionTab.Visible = save.SaveType == SaveType.DoubutsuNoMoriEPlus || save.SaveType == SaveType.AnimalForestEPlus;
+            if (save.SaveType == SaveType.DoubutsuNoMoriEPlus || save.SaveType == SaveType.AnimalForestEPlus)
             {
                 _islands = new Island[4];
 
@@ -1352,6 +1352,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                 case SaveType.AnimalForest:
                     SetMainTabEnabled("islandTab", currentSaveType != SaveType.DoubutsuNoMori && currentSaveType != SaveType.AnimalForest);
                     SetMainTabEnabled("patternsTab", currentSaveType != SaveType.DoubutsuNoMori && currentSaveType != SaveType.AnimalForest);
@@ -2170,7 +2171,7 @@ namespace ACSE
                             InterpolationMode = InterpolationMode.HighQualityBicubic,
                             UseInternalInterpolationSetting = false,
                         };
-                        if (SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus)
+                        if (SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus || SaveFile.SaveType == SaveType.AnimalForestEPlus)
                         {
                             _islandAcreMap[idx].Image = GenerateAcreItemsBitmap(_selectedIsland.Items[idx], idx, true);
                             _islandAcreMap[idx].BackgroundImage = GetAcreImage(_acres[0x3C + idx], _acres[0x3C + idx].BaseAcreId);
@@ -2209,7 +2210,8 @@ namespace ACSE
                 }
             }
 
-            if (SaveFile.SaveType != SaveType.DoubutsuNoMoriEPlus || _selectedIsland == null) return;
+            if ((SaveFile.SaveType != SaveType.DoubutsuNoMoriEPlus && SaveFile.SaveType != SaveType.AnimalForestEPlus)
+                || _selectedIsland == null) return;
             var islandAcreIds = _selectedIsland.GetAcreIds();
             _islandAcreMap[0].BackgroundImage = GetAcreImage(new WorldAcre(islandAcreIds[0], 0), islandAcreIds[0]);
             _islandAcreMap[1].BackgroundImage = GetAcreImage(new WorldAcre(islandAcreIds[1], 0), islandAcreIds[1]);
@@ -2464,9 +2466,11 @@ namespace ACSE
                     BorderStyle = BorderStyle.FixedSingle
                 };
 
-                if (SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus && _selectedIsland != null) // Remove this after adding DnM+/AC support
+                if ((SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus || SaveFile.SaveType == SaveType.AnimalForestEPlus)
+                    && _selectedIsland != null) // Remove this after adding DnM+/AC support
                 {
-                    var layerFurnitureMap = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, _selectedIsland.Cabana.MainRoom.Layers[i].Items, SaveFile.SaveType),
+                    var layerFurnitureMap = ImageGeneration.DrawFurnitureArrows(
+                        (Bitmap)Inventory.GetItemPic(16, 16, _selectedIsland.Cabana.MainRoom.Layers[i].Items, SaveFile.SaveType),
                         _selectedIsland.Cabana.MainRoom.Layers[i].Items);
                     _islandHouseBoxes[i].Image = layerFurnitureMap;
                 }
@@ -2481,6 +2485,7 @@ namespace ACSE
                     {
                         // TODO: DnM+/AC support
                         case SaveType.DoubutsuNoMoriEPlus when _selectedIsland != null:
+                        case SaveType.AnimalForestEPlus when _selectedIsland != null:
                             currentLayer = _selectedIsland.Cabana.MainRoom.Layers[Array.IndexOf(_islandHouseBoxes, sender)];
                             break;
                         case SaveType.DoubutsuNoMoriPlus:
@@ -2527,6 +2532,7 @@ namespace ACSE
                     {
                         // TODO: DnM+/AC
                         case SaveType.DoubutsuNoMoriEPlus when _selectedIsland != null:
+                        case SaveType.AnimalForestEPlus when _selectedIsland != null:
                             currentLayer = _selectedIsland.Cabana.MainRoom.Layers[Array.IndexOf(_islandHouseBoxes, sender)];
                             break;
                         case SaveType.DoubutsuNoMoriPlus:

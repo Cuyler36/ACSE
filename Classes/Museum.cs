@@ -10,6 +10,7 @@
                 case SaveType.AnimalCrossing:
                     return 0x3F;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return 0x47;
                 case SaveType.WildWorld:
                     return 0x5F;
@@ -38,6 +39,7 @@
                 case SaveType.AnimalCrossing:
                     return 0x213A8;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return 0x22FB0;
                 case SaveType.WildWorld:
                     return 0x15D50;

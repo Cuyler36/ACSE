@@ -725,6 +725,7 @@ namespace ACSE.Utilities
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     _charDictionary = StringUtility.DoubutsuNoMoriEPlusCharMap;
                     break;
                 case SaveType.AnimalCrossing:
@@ -793,7 +794,8 @@ namespace ACSE.Utilities
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
-                {
+                case SaveType.AnimalForestEPlus:
+                    {
                     var stringBytes = new byte[maxSize > 0 ? maxSize : String.Length];
                     for (i = 0; i < String.Length; i++)
                     {

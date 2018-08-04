@@ -293,6 +293,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                 case SaveType.AnimalForest:
                     return AcPersonalities;
                 case SaveType.WildWorld:
@@ -328,6 +329,7 @@ namespace ACSE
                     databaseFilename = string.Format(databaseFilename, "AC");
                     break;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     databaseFilename = string.Format(databaseFilename, "DBNM_e_Plus");
                     break;
                 case SaveType.WildWorld:
@@ -394,6 +396,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                 case SaveType.AnimalForest:
                     while ((line = contents.ReadLine()) != null)
                     {
@@ -432,6 +435,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                     return AcVillagerOffsets;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return DoubtusuNoMoriEPlusVillagerOffsets;
                 case SaveType.AnimalForest:
                     return DoubutsuNoMoriVillagerOffsets; // TEMP

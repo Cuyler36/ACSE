@@ -25,6 +25,7 @@ namespace ACSE.Controls
         private readonly SingleItemEditor _umbrellaEditor;
         private readonly SingleItemEditor _musicEditor;
         private readonly TextBox _nameBox;
+        private readonly Button _importDlcButton;
 
         /// <summary>
         /// The index of the control.
@@ -147,7 +148,7 @@ namespace ACSE.Controls
                 case SaveGeneration.GCN:
                 case SaveGeneration.iQue:
                     // e+ exclusive controls TODO: These will probably be used in City Folk as well.
-                    if (_saveFile.SaveType == SaveType.DoubutsuNoMoriEPlus)
+                    if (_saveFile.SaveType == SaveType.DoubutsuNoMoriEPlus || _saveFile.SaveType == SaveType.AnimalForestEPlus)
                     {
                         _nameBox = new TextBox
                         {
@@ -159,7 +160,18 @@ namespace ACSE.Controls
                         margin = CalculateControlVerticalMargin(_nameBox);
                         _nameBox.Margin = new Padding(0, margin, 10, margin);
                         _nameBox.TextChanged += (s, e) => NameTextChanged();
+
+                        _importDlcButton = new Button
+                        {
+                            Text = "Import DLC Data"
+                        };
+
+                        margin = CalculateControlVerticalMargin(_importDlcButton);
+                        _importDlcButton.Margin = new Padding(0, margin, 10, margin);
+                        _importDlcButton.Click += (s, e) => ImportDlcVillager();
+
                         Controls.Add(_nameBox);
+                        Controls.Add(_importDlcButton);
                     }
 
                     _villagerPreviewBox = new OffsetablePictureBox
@@ -222,7 +234,7 @@ namespace ACSE.Controls
             if (_villagerSelectionBox.SelectedIndex < 0) return;
 
             var kvPair = _villagers.ElementAt(_villagerSelectionBox.SelectedIndex);
-            if (_saveFile.SaveType != SaveType.DoubutsuNoMoriEPlus)
+            if (_saveFile.SaveType != SaveType.DoubutsuNoMoriEPlus && _saveFile.SaveType != SaveType.AnimalForestEPlus)
             {
                 _villager.Name = _villagerNames[_villagerSelectionBox.SelectedIndex];
             }
@@ -233,7 +245,7 @@ namespace ACSE.Controls
             if (_saveFile.SaveGeneration != SaveGeneration.N64 && _saveFile.SaveGeneration != SaveGeneration.GCN &&
                 _saveFile.SaveGeneration != SaveGeneration.iQue) return;
 
-            if (_saveFile.SaveType != SaveType.DoubutsuNoMoriEPlus)
+            if (_saveFile.SaveType != SaveType.DoubutsuNoMoriEPlus && _saveFile.SaveType != SaveType.AnimalForestEPlus)
             {
                 _villager.Data.NameId = _villager.Index == 15 ? (byte) 0xFF : (byte) _villager.Data.VillagerId;
             }
@@ -297,6 +309,41 @@ namespace ACSE.Controls
             if (!string.IsNullOrWhiteSpace(_nameBox.Text))
             {
                 _villager.Name = _nameBox.Text;
+            }
+        }
+
+        private void ImportDlcVillager()
+        {
+            if (_villager.Data.VillagerId < 0xE0EC || _villager.Data.VillagerId > 0xE0FF)
+            {
+                MessageBox.Show("You must set your villager to one of the DLC villagers before importing!", "DLC Villager Import Info");
+                return;
+            }
+
+            using (var openFileDialog = new OpenFileDialog {Filter = "Yaz0 compressed file|*.yaz0"})
+            {
+                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                byte[] villagerData = null;
+                try
+                {
+                    villagerData = System.IO.File.ReadAllBytes(openFileDialog.FileName);
+                }
+                catch
+                {
+                    MessageBox.Show("An error occurred while importing the DLC villager info.\nPlease try again!",
+                        "DLC Villager Import Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (villagerData != null)
+                    {
+                        _villager.ImportDlcVillager(villagerData, (_villager.Data.VillagerId - 0xEC) & 0xFF);
+                        MessageBox.Show("DLC Villager import was succsessful!", "DLC Villager Import Info",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
         }
 

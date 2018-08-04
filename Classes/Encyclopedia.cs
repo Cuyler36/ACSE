@@ -269,6 +269,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                     return AnimalCrossingEncyclopediaBitMap;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return DoubutsuNoMoriEPlusEncyclopediaBitMap;
                 case SaveType.WildWorld:
                     return WildWorldEncyclopediaBitMap;

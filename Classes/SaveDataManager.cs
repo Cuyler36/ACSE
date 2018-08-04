@@ -74,6 +74,7 @@ namespace ACSE
         gafegcs = 0x26150,
         gaferaw = 0x30000,
         gaejgci = 0x10040, // Doubutsu_no_Mori_e_Plus
+        gaeegci = 0x10040, // AnimalForestEPlus (Fan translation)
         gaejraw = 0x1A000,
         gaeeraw = 0x1A000,
         admeduc = 0x1F4,
@@ -551,8 +552,9 @@ namespace ACSE
                             case "GAFJ":
                                 return SaveType.DoubutsuNoMoriPlus;
                             case "GAEJ":
-                            case "GAEE": // GAEE temp, save file struct will likely change
                                 return SaveType.DoubutsuNoMoriEPlus;
+                            case "GAEE":
+                                return SaveType.AnimalForestEPlus;
                         }
                         break;
                     }
@@ -569,8 +571,9 @@ namespace ACSE
                             case "GAFJ":
                                 return SaveType.DoubutsuNoMoriPlus;
                             case "GAEJ":
-                            case "GAEE":
                                 return SaveType.DoubutsuNoMoriEPlus;
+                            case "GAEE":
+                                return SaveType.AnimalForestEPlus;
                         }
                         break;
                     }
@@ -613,6 +616,8 @@ namespace ACSE
                     return "GAFJ";
                 case SaveType.DoubutsuNoMoriEPlus:
                     return "GAEJ";
+                case SaveType.AnimalForestEPlus:
+                    return "GAEE";
                 case SaveType.AnimalForest:
                     return "NAFJ"; // internally still has NAFJ code
                 case SaveType.WildWorld: //Currently only supporting the English versions of WW+
@@ -643,6 +648,8 @@ namespace ACSE
                             return "Animal Crossing";
                         case SaveType.DoubutsuNoMoriEPlus:
                             return "どうぶつの森e+";
+                        case SaveType.AnimalForestEPlus:
+                            return "Animal Forest e+";
                         case SaveType.AnimalForest:
                             return "どうぶつの森 iQue";
                         case SaveType.WildWorld:
@@ -668,6 +675,8 @@ namespace ACSE
                             return "Animal Crossing";
                         case SaveType.DoubutsuNoMoriEPlus:
                             return "Dōbutsu no Mori e+";
+                        case SaveType.AnimalForestEPlus:
+                            return "Animal Forest e+";
                         case SaveType.AnimalForest:
                             return "Animal Forest";
                         case SaveType.WildWorld:
@@ -694,6 +703,8 @@ namespace ACSE
                             return "Animal Crossing";
                         case SaveType.DoubutsuNoMoriEPlus:
                             return "Dōbutsu no Mori e+";
+                        case SaveType.AnimalForestEPlus:
+                            return "Animal Forest e+";
                         case SaveType.AnimalForest:
                             return "Animal Forest";
                         case SaveType.WildWorld:
@@ -721,6 +732,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return SaveGeneration.GCN;
                 case SaveType.AnimalForest:
                     return SaveGeneration.iQue;
@@ -747,6 +759,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                     return AnimalCrossing;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus: // TODO: Change this?
                     return DoubutsuNoMoriEPlus;
                 case SaveType.AnimalForest:
                     return AnimalForest;
@@ -780,6 +793,7 @@ namespace ACSE
                     itemDbLocation += "AC_Items_" + language + ".txt";
                     break;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     itemDbLocation += "DBNM_e_Plus_Items_" + language + ".txt";
                     break;
                 case SaveType.WildWorld:
@@ -875,6 +889,7 @@ namespace ACSE
                     acreDbLocation += "DBNM_Plus_Acres_" + language + ".txt";
                     break;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     acreDbLocation += "DBNM_e_Plus_Acres_" + language + ".txt";
                     break;
                 case SaveType.CityFolk:
@@ -978,6 +993,7 @@ namespace ACSE
                     acreDbLocation += "DBNM_Plus_Acres_" + language + ".txt";
                     break;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     acreDbLocation += "DBNM_e_Plus_Acres_" + language + ".txt";
                     break;
                 case SaveType.CityFolk:

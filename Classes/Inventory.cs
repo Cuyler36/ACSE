@@ -129,6 +129,7 @@ namespace ACSE
                     return (AcItemFlag)(saveFile.ReadUInt32(player.Offset + 0x88, saveFile.IsBigEndian) >> (inventoryIdx << 1) & 3);
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     return (AcItemFlag)(saveFile.ReadUInt32(player.Offset + 0x84, saveFile.IsBigEndian) >> (inventoryIdx << 1) & 3);
                 default:
                     return AcItemFlag.None;
@@ -146,6 +147,7 @@ namespace ACSE
                     break;
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
                     saveFile.Write(player.Offset + 0x84, (saveFile.ReadUInt32(player.Offset + 0x84, saveFile.IsBigEndian) & ~(3 << flagIdx)) | (flagValue << flagIdx));
                     break;
             }

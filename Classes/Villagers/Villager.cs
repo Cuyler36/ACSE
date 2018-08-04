@@ -30,7 +30,8 @@ namespace ACSE
             if (save.SaveType == SaveType.WildWorld)
                 Exists = _saveData.ReadByte(offset + Offsets.VillagerId) != 0 && _saveData.ReadByte(offset + Offsets.VillagerId) != 0xFF;
             else
-                Exists = _saveData.ReadUInt16(offset + Offsets.VillagerId, save.IsBigEndian) != 0 && _saveData.ReadUInt16(offset + Offsets.VillagerId, save.IsBigEndian) != 0xFFFF;
+                Exists = _saveData.ReadUInt16(offset + Offsets.VillagerId, save.IsBigEndian) != 0 &&
+                         _saveData.ReadUInt16(offset + Offsets.VillagerId, save.IsBigEndian) != 0xFFFF;
             object boxedData = new VillagerDataStruct();
             foreach (var field in offsetType.GetFields(BindingFlags.Public | BindingFlags.Instance))
             {
@@ -98,6 +99,10 @@ namespace ACSE
             {
                 Name = _saveData.ReadString(Offset + 0xC, 6);
             }
+            else if (_saveData.SaveType == SaveType.AnimalForestEPlus)
+            {
+                Name = _saveData.ReadString(Offset + 0xC, 8);
+            }
 
             // Create Player Relations;
             if (save.SaveType != SaveType.AnimalCrossing) return;
@@ -130,11 +135,25 @@ namespace ACSE
             return PlayerRelations?.First(o => o.PlayerId == player.Data.Identifier && o.PlayerName.Equals(player.Data.Name));
         }
 
+        public void SetDlcVillager(int dlcIndex)
+        {
+            _saveData.Write(_saveData.SaveDataStartOffset + 0x24490,
+                _saveData.ReadUInt32(_saveData.SaveDataStartOffset + 0x24490, _saveData.IsBigEndian) | (uint)(1 << dlcIndex),
+                _saveData.IsBigEndian);
+        }
+
+        private void ClearDlcVillager(int dlcIndex)
+        {
+            _saveData.Write(_saveData.SaveDataStartOffset + 0x24490,
+                _saveData.ReadUInt32(_saveData.SaveDataStartOffset + 0x24490) & (uint)~(1 << dlcIndex));
+        }
+
         public void ImportDlcVillager(byte[] dlcData, int dlcIndex)
         {
-            if (_saveData.SaveType != SaveType.DoubutsuNoMoriEPlus || dlcData.Length < 0x10 ||
-                dlcData.Length > 0x73B || Encoding.ASCII.GetString(dlcData, 0, 4) != "Yaz0") return;
+            if ((_saveData.SaveType != SaveType.DoubutsuNoMoriEPlus && _saveData.SaveType != SaveType.AnimalForestEPlus) ||
+                dlcData.Length < 0x10 || dlcData.Length > 0x73B || Encoding.ASCII.GetString(dlcData, 0, 4) != "Yaz0") return;
 
+            SetDlcVillager((Data.VillagerId & 0xFF) - 0xEC);
             var offset = _saveData.SaveDataStartOffset + 0x24494 + dlcIndex * 0x749;
             _saveData.Write(offset, dlcData);
         }
@@ -247,7 +266,10 @@ namespace ACSE
                     _saveData.Write(Offset + Offsets.NameId, Index == 15 ? (byte)0xFF : (byte)Data.VillagerId);
                     break;
                 case SaveType.DoubutsuNoMoriEPlus: // e+ doesn't set this byte, as they changed the SetNameID function
-                    _saveData.Write(Offset + 0xC, AcString.GetBytes(Name), false, 6);
+                    _saveData.Write(Offset + 0xC, AcString.GetBytes(Name, 6), false, 6);
+                    break;
+                case SaveType.AnimalForestEPlus:
+                    _saveData.Write(Offset + 0xC, AcString.GetBytes(Name, 8), false, 8);
                     break;
                 default:
                     _saveData.Write(Offset + Offsets.NameId, (byte)Data.VillagerId);

@@ -450,6 +450,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.AnimalForestEPlus:
                     Name = new AcString(_saveFile.ReadByteArray(_offset, 0xA), _saveFile.SaveType).Trim();
                     Palette = _saveFile.ReadByte(_offset + 0xA);
                     PaletteData = PatternData.AcPaletteData[Palette];
