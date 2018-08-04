@@ -47,7 +47,7 @@ namespace ACSE
             }
             else
             {
-                MainForm.DebugManager.InitiateDebugLogWriter();
+                MainForm.DebugManager.InitializeDebugLogWriter();
             }
         }
 
