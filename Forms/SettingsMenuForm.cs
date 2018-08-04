@@ -16,7 +16,8 @@ namespace ACSE
 
             var enumItems = Enum.GetValues(typeof(InterpolationMode));
             foreach (var Enum in enumItems)
-                imageSizeModeComboBox.Items.Add(Enum.ToString());
+                if ((InterpolationMode)Enum != InterpolationMode.Invalid)
+                    imageSizeModeComboBox.Items.Add(Enum.ToString());
             imageSizeModeComboBox.SelectedIndex = Properties.Settings.Default.ImageResizeMode;
             debugLevelComboBox.SelectedIndex = (int)Properties.Settings.Default.DebugLevel;
             scanForInt32Checkbox.Checked = Properties.Settings.Default.OutputInt32s;
@@ -33,7 +34,8 @@ namespace ACSE
         private void ImageResizeMode_Changed()
         {
             Properties.Settings.Default.ImageResizeMode = imageSizeModeComboBox.SelectedIndex;
-            //TODO: Redraw pictureboxes with the image mode, rather than wait to restart
+            _mainFormReference?.SetMapPictureBoxSize(Properties.Settings.Default.TownMapSize);
+            _mainFormReference?.SetAcreMapPictureBoxSize(Properties.Settings.Default.AcreMapSize);
         }
 
         private void DebugLevel_Changed()

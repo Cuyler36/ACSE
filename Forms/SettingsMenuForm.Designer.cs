@@ -38,7 +38,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.acreMapSizeTrackBar = new System.Windows.Forms.TrackBar();
-            this.label2 = new System.Windows.Forms.Label();
             this.BackupCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.townMapSizeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.acreMapSizeTrackBar)).BeginInit();
@@ -150,15 +149,6 @@
             this.acreMapSizeTrackBar.Value = 8;
             this.acreMapSizeTrackBar.Scroll += new System.EventHandler(this.acreMapSizeTrackBar_Scroll);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(252, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(92, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "(Requires Restart)";
-            // 
             // BackupCheckBox
             // 
             this.BackupCheckBox.AutoSize = true;
@@ -185,7 +175,6 @@
             this.Controls.Add(this.scanForInt32Checkbox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.debugLevelComboBox);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.doneButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.imageSizeModeComboBox);
@@ -210,7 +199,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TrackBar acreMapSizeTrackBar;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox BackupCheckBox;
     }
 }
