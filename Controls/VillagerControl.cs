@@ -167,7 +167,8 @@ namespace ACSE.Controls
 
                         _importDlcButton = new Button
                         {
-                            Text = "Import DLC Data"
+                            Text = "Import DLC Data",
+                            AutoSize = true
                         };
 
                         margin = CalculateControlVerticalMargin(_importDlcButton);
