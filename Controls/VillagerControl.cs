@@ -123,6 +123,10 @@ namespace ACSE.Controls
             _shirtEditor = new SingleItemEditor(mainFormReference, _villager.Data.Shirt, 16);
             margin = CalculateControlVerticalMargin(_shirtEditor);
             _shirtEditor.Margin = new Padding(0, margin, 10, margin);
+            _shirtEditor.ItemChanged += delegate(object sender, ItemChangedEventArgs e)
+            {
+                _villager.Data.Shirt = e.NewItem;
+            };
 
             if (_villager.Data.Umbrella != null)
             {
@@ -154,7 +158,7 @@ namespace ACSE.Controls
                         {
                             Size = new Size(60, 32),
                             Text = _villager.Name,
-                            MaxLength = 6
+                            MaxLength = _saveFile.SaveType == SaveType.AnimalForestEPlus ? 8 : 6
                         };
 
                         margin = CalculateControlVerticalMargin(_nameBox);
@@ -340,6 +344,19 @@ namespace ACSE.Controls
                     if (villagerData != null)
                     {
                         _villager.ImportDlcVillager(villagerData, (_villager.Data.VillagerId - 0xEC) & 0xFF);
+
+                        // Decompress Yaz0 data and set accordingly
+                        var decompressedData = Yaz0.Decompress(villagerData);
+                        _villager.Name = new AcString(decompressedData.Skip(1).Take(6).ToArray(), _saveFile.SaveType).Trim();
+                        _villager.Data.Catchphrase = new AcString(decompressedData.Skip(7).Take(4).ToArray(), _saveFile.SaveType).Trim();
+                        _shirtEditor.Item = new Item((ushort)(0x2400 | decompressedData[0xE]));
+                        _villager.Data.Personality = decompressedData[0xD];
+
+                        // Update controls to reflect changes
+                        _nameBox.Text = _villager.Name;
+                        _catchphraseBox.Text = _villager.Data.Catchphrase;
+                        _personalityBox.SelectedIndex = _villager.Data.Personality;
+
                         MessageBox.Show("DLC Villager import was succsessful!", "DLC Villager Import Info",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }

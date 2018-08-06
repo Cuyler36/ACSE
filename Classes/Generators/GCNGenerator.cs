@@ -5,6 +5,8 @@ namespace ACSE.Generators
 {
     public class GCNGenerator : IGenerator
     {
+        private int _randomSeed = Environment.TickCount;
+
         private enum CliffSide : ushort
         {
             Up = 0,
@@ -844,6 +846,19 @@ namespace ACSE.Generators
 
             return Index;
         }
+
+        private float fqrand(int? seed = null) // NOTE: seed isn't a parameter in the actual function.
+        {
+            var startSeed = seed ?? _randomSeed;
+            startSeed *= 0x19660D;
+            startSeed += 0x3C6EF35F;
+            _randomSeed = startSeed;
+            startSeed = 0x3F800000 | (startSeed >> 9);
+            return BitConverter.ToSingle(BitConverter.GetBytes(startSeed), 0);
+        }
+
+        private int GetRandom(int maxValue, int? seed) // NOTE: seed isn't a parameter in the actual function.
+            => (int)(fqrand(seed) * maxValue);
 
         /// <summary>
         /// Selects the "step" mode, or layer count, of your town. If 0, it's a 2 layered town. If 1, it's a 3 layered town.

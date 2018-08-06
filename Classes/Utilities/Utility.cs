@@ -9,6 +9,54 @@ namespace ACSE.Utilities
 {
     public static class Utility
     {
+        public static int[] FindAllMatches(ref List<byte> dictionary, byte match)
+        {
+            var matchPositons = new List<int>();
+
+            for (var i = 0; i < dictionary.Count; i++)
+            {
+                if (dictionary[i] == match)
+                {
+                    matchPositons.Add(i);
+                }
+            }
+
+            return matchPositons.ToArray();
+        }
+
+        public static int[] FindLargestMatch(ref List<byte> dictionary, int[] matchesFound, ref byte[] file, int fileIndex, int maxMatch)
+        {
+            var matchSizes = new int[matchesFound.Length];
+
+            for (var i = 0; i < matchesFound.Length; i++)
+            {
+                var matchSize = 1;
+                var matchFound = true;
+
+                while (matchFound && matchSize < maxMatch && (fileIndex + matchSize < file.Length) && (matchesFound[i] + matchSize < dictionary.Count)) //NOTE: This could be relevant to compression issues? I suspect it's more related to writing
+                {
+                    if (file[fileIndex + matchSize] == dictionary[matchesFound[i] + matchSize])
+                    {
+                        matchSize++;
+                    }
+                    else
+                    {
+                        matchFound = false;
+                    }
+                }
+                matchSizes[i] = matchSize;
+            }
+
+            var bestMatch = new[] {matchesFound[0], matchSizes[0]};
+            for (var i = 1; i < matchesFound.Length; i++)
+            {
+                if (matchSizes[i] <= bestMatch[1]) continue;
+                bestMatch[0] = matchesFound[i];
+                bestMatch[1] = matchSizes[i];
+            }
+            return bestMatch;
+        }
+
         public static void Scan_For_NL_Int32()
         {
             if (MainForm.SaveFile == null || MainForm.SaveFile.SaveGeneration != SaveGeneration.N3DS) return;

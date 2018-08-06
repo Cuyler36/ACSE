@@ -516,7 +516,10 @@ namespace ACSE
             var houseImage = Properties.Resources.VillagerHouse;
             foreach (var villager in villagers)
             {
-                if (!villager.Exists) continue;
+                if (!villager.Exists ||
+                    villager.Data.HouseCoordinates[0] < 1 || villager.Data.HouseCoordinates[0] > 5 ||
+                    villager.Data.HouseCoordinates[1] < 1 || villager.Data.HouseCoordinates[1] > 6 ||
+                    villager.Data.HouseCoordinates[2] > 15 || villager.Data.HouseCoordinates[3] > 15) continue;
                 var index = (villager.Data.HouseCoordinates[0]) + villager.Data.HouseCoordinates[1] * 7;
                 var position = new Point((villager.Data.HouseCoordinates[2] * pixelsPerItemSlotX) - houseImageSize / 2, 
                     (villager.Data.HouseCoordinates[3] * pixelsPerItemSlotY) - houseImageSize / 2);

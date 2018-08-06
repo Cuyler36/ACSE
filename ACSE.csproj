@@ -4879,6 +4879,7 @@
     <Compile Include="Classes\TrainStation.cs" />
     <Compile Include="Classes\Villagers\SimpleVillager.cs" />
     <Compile Include="Classes\Villagers\Villager.cs" />
+    <Compile Include="Classes\Yaz0.cs" />
     <Compile Include="Controls\BadgeControl.cs">
       <SubType>Component</SubType>
     </Compile>
