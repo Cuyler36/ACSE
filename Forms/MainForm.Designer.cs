@@ -2669,7 +2669,7 @@
             // 
             // openSaveFile
             // 
-            this.openSaveFile.Filter = "Nintendo 64 Save Files (*.fla, *.bin)|*.fla;*.bin;|Nintendo GameCube Save Files (*.gci, *.gcs, *.raw, *.bin)|*.gci;*.gcs;*.raw;*.bin;|iQue Player Save Files (*.sta, *.bin)|*.sta;*.bin;|Nintendo DS Save Files (*.sav, *.duc, *.dss, *.dsc, *.bin)|*.sav;*.duc;*.dss;*.dsc;*.bin;|Nintendo Wii Save Files (*.dat, *.bin)|*.dat;*.bin;|Nintendo 3DS Save Files (*.bin)|*.bin;|All Supported Save Files|*.fla;*.gci;*.gcs;*.sta;*.raw;*.duc;*.dss;*.dsv;*.sav;*.dat;*.bin;|All Files (*.*)|*.*";
+            this.openSaveFile.Filter = resources.GetString("openSaveFile.Filter");
             // 
             // importPatternFile
             // 
@@ -2779,7 +2779,7 @@
             this.StatusLabel.Location = new System.Drawing.Point(12, 673);
             this.StatusLabel.Name = "StatusLabel";
             this.StatusLabel.ReadOnly = true;
-            this.StatusLabel.Size = new System.Drawing.Size(600, 20);
+            this.StatusLabel.Size = new System.Drawing.Size(600, 13);
             this.StatusLabel.TabIndex = 16;
             this.StatusLabel.TabStop = false;
             // 
