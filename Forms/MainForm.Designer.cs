@@ -2669,8 +2669,7 @@
             // 
             // openSaveFile
             // 
-            this.openSaveFile.Filter = "All Supported Save Types|*.fla;*.gci;*.gcs;*.sta;*.raw;*.duc;*.dss;*.dsv;*.sav;*." +
-    "dat;*.bin;|All Files (*.*)|*.*";
+            this.openSaveFile.Filter = "Nintendo 64 Save Files (*.fla, *.bin)|*.fla;*.bin;|Nintendo GameCube Save Files (*.gci, *.gcs, *.raw, *.bin)|*.gci;*.gcs;*.raw;*.bin;|iQue Player Save Files (*.sta, *.bin)|*.sta;*.bin;|Nintendo DS Save Files (*.sav, *.duc, *.dss, *.dsc, *.bin)|*.sav;*.duc;*.dss;*.dsc;*.bin;|Nintendo Wii Save Files (*.dat, *.bin)|*.dat;*.bin;|Nintendo 3DS Save Files (*.bin)|*.bin;|All Supported Save Files|*.fla;*.gci;*.gcs;*.sta;*.raw;*.duc;*.dss;*.dsv;*.sav;*.dat;*.bin;|All Files (*.*)|*.*";
             // 
             // importPatternFile
             // 
