@@ -854,7 +854,7 @@ namespace ACSE.Generators
             startSeed += 0x3C6EF35F;
             _randomSeed = startSeed;
             startSeed = 0x3F800000 | (startSeed >> 9);
-            return BitConverter.ToSingle(BitConverter.GetBytes(startSeed), 0);
+            return BitConverter.ToSingle(BitConverter.GetBytes(startSeed), 0) - 1.0f;
         }
 
         private int GetRandom(int maxValue, int? seed) // NOTE: seed isn't a parameter in the actual function.
