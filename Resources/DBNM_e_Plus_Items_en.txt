@@ -3097,6 +3097,26 @@
 0x50E9, Pigleg's House
 0x50EA, Ankha's House
 0x50EB, Punchy's House
+0x50EC, DLC Villager #1's House
+0x50ED, DLC Villager #2's House
+0x50EE, DLC Villager #3's House
+0x50EF, DLC Villager #4's House
+0x50F0, DLC Villager #5's House
+0x50F1, DLC Villager #6's House
+0x50F2, DLC Villager #7's House
+0x50F3, DLC Villager #8's House
+0x50F4, DLC Villager #9's House
+0x50F5, DLC Villager #10's House
+0x50F6, DLC Villager #11's House
+0x50F7, DLC Villager #12's House
+0x50F8, DLC Villager #13's House
+0x50F9, DLC Villager #14's House
+0x50FA, DLC Villager #15's House
+0x50FB, DLC Villager #16's House
+0x50FC, DLC Villager #17's House
+0x50FD, DLC Villager #18's House
+0x50FE, DLC Villager #19's House
+0x50FF, DLC Villager #20's House
 0x5800, Upper Left Player House
 0x5801, Upper Right Player House
 0x5802, Lower Left Player House
