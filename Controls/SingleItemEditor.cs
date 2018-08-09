@@ -6,11 +6,11 @@ using System.Windows.Forms;
 
 namespace ACSE
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="IModifiable" />
     /// <summary>
     /// An all-in-one control for editing a single item.
     /// </summary>
-    public partial class SingleItemEditor : UserControl
+    public partial class SingleItemEditor : UserControl, IModifiable
     {
         /// <summary>
         /// This event fires when the item is set or changed. PreviousItem will be null if it is the first time setting the item.
@@ -172,7 +172,7 @@ namespace ACSE
             }
         }
 
-        protected virtual void Undo()
+        public virtual void Undo()
         {
             if (!UndoStack.Any()) return;
             // Get Previous Change
@@ -187,7 +187,7 @@ namespace ACSE
             Modified = UndoStack.Any();
         }
 
-        protected virtual void Redo()
+        public virtual void Redo()
         {
             if (!RedoStack.Any()) return;
             // Get Previous Change
@@ -200,6 +200,13 @@ namespace ACSE
             Item = previousItemChange.Item;
 
             Modified = true;
+        }
+
+        public virtual void NewChange(object change)
+        {
+            if (!(change is ItemChange newItem)) return;
+            RedoStack.Clear();
+            UndoStack.Push(newItem);
         }
 
         protected virtual void Dipose()

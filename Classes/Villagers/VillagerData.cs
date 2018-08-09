@@ -123,7 +123,14 @@ namespace ACSE
             HouseCoordinatesCount = 4,
             Catchphrase = 0x4E5,
             CatchphraseSize = 0x4,
-            Shirt = 0x520
+            Shirt = 0x520,
+            Status = -1,
+            Umbrella = -1,
+            Furniture = -1,
+            Carpet = -1,
+            Wallpaper = -1,
+            Nicknames = -1,
+            Song = -1,
         };
 
         public static readonly VillagerOffsets DoubtusuNoMoriPlusVillagerOffsets = new VillagerOffsets

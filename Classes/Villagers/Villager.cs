@@ -161,7 +161,7 @@ namespace ACSE
         public void Write()
         {
             // Set Villager TownID & Name when villager exists.
-            if (Exists)
+            if (Exists && _saveData.SaveGeneration != SaveGeneration.iQue) // TODO: Once iQue text is implemented, remove this.
             {
                 if (Offsets.TownId != -1)
                 {
@@ -173,6 +173,8 @@ namespace ACSE
                         MainForm.CurrentSaveInfo.SaveOffsets.TownNameSize);
                 }
             }
+
+            if (!Exists) return; // TODO: Do I need this? it overwrites important stuff in Animal Forest iQue if I don't have it.
 
             var villagerOffsetData = typeof(VillagerOffsets);
             var villagerDataType = typeof(VillagerDataStruct);

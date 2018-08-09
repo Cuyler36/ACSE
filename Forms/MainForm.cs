@@ -20,6 +20,13 @@ namespace ACSE
         #region Variables
         public static readonly string AssemblyLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
         public static DebugManager DebugManager = new DebugManager();
+        public static Save SaveFile;
+        public static SaveInfo CurrentSaveInfo;
+        public static WorldAcre[] TownAcres;
+        public static WorldAcre[] IslandAcres;
+
+        internal static ModifiedHandler UndoRedoHandler;
+
         private readonly TabPage[] _mainTabs;
         private readonly TabPage[] _playerTabs = new TabPage[4];
         private readonly TabPage[] _playerPatternTabs = new TabPage[4];
@@ -40,12 +47,8 @@ namespace ACSE
         private Pattern _selectedPatternObject;
         private Panel[] _buildingListPanels;
         private WorldAcre[] _acres;
-        public static WorldAcre[] TownAcres;
-        public static WorldAcre[] IslandAcres;
         private Building[] _buildings;
         private Building[] _islandBuildings;
-        public static Save SaveFile;
-        public static SaveInfo CurrentSaveInfo;
         private List<KeyValuePair<ushort, string>> _itemList;
         private Player _selectedPlayer;
         private House _selectedHouse;
@@ -488,6 +491,7 @@ namespace ACSE
             }
 
             SaveFile = null; //Set to null so we can set the checkbox to false without having the method run
+            UndoRedoHandler = new ModifiedHandler();
             townMapViewCheckbox.Checked = false;
             townMapViewCheckbox.Enabled = save.SaveGeneration == SaveGeneration.N64 || save.SaveGeneration == SaveGeneration.GCN || save.SaveGeneration == SaveGeneration.iQue;
             acreHeightTrackBar.Enabled = save.SaveGeneration == SaveGeneration.N64 || save.SaveGeneration == SaveGeneration.GCN || save.SaveGeneration == SaveGeneration.iQue;

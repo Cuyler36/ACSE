@@ -149,7 +149,8 @@ namespace ACSE
             _saveWriter = new BinaryWriter(_saveFile);
             if (SaveGeneration == SaveGeneration.N64 || SaveGeneration == SaveGeneration.GCN || SaveGeneration == SaveGeneration.NDS)
             {
-                Write(SaveDataStartOffset + SaveInfo.SaveOffsets.Checksum, Checksum.Calculate(WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray(),
+                Write(SaveDataStartOffset + SaveInfo.SaveOffsets.Checksum,
+                    Checksum.Calculate(WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray(),
                     SaveInfo.SaveOffsets.Checksum, !IsBigEndian), IsBigEndian);
                 WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray().CopyTo(WorkingSaveData,
                     SaveDataStartOffset + SaveInfo.SaveOffsets.SaveSize); //Update second save copy
@@ -163,6 +164,12 @@ namespace ACSE
             }
             else switch (SaveType)
             {
+                case SaveType.AnimalForest:
+                    Write(SaveDataStartOffset + SaveInfo.SaveOffsets.Checksum,
+                        Checksum.Calculate(WorkingSaveData.Skip(SaveDataStartOffset).Take(0xF980).ToArray(), SaveInfo.SaveOffsets.Checksum, !IsBigEndian), IsBigEndian);
+                    WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray().CopyTo(WorkingSaveData,
+                    SaveDataStartOffset + SaveInfo.SaveOffsets.SaveSize); //Update second save copy
+                    break;
                 case SaveType.CityFolk:
                     for (var i = 0; i < 4; i++)
                     {

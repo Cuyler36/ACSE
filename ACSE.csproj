@@ -4860,6 +4860,7 @@
     <Compile Include="Classes\Generators\Generator.cs" />
     <Compile Include="Classes\Generators\IGenerator.cs" />
     <Compile Include="Classes\House\House.cs" />
+    <Compile Include="Classes\IModifiable.cs" />
     <Compile Include="Classes\ItemChange.cs" />
     <Compile Include="Classes\ItemChangedEventArgs.cs" />
     <Compile Include="Classes\Item\Item.cs" />
@@ -4962,6 +4963,7 @@
     <Compile Include="Forms\SettingsMenuForm.Designer.cs">
       <DependentUpon>SettingsMenuForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModifiedHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources1.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -6,11 +6,11 @@ using System.Windows.Forms;
 
 namespace ACSE
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="IModifiable" />
     /// <summary>
     /// An all-in-one control for editing items.
     /// </summary>
-    public class ItemEditor : UserControl
+    public class ItemEditor : UserControl, IModifiable
     {
         /// <summary>
         /// This event fires when an item is set or changed. PreviousItem will be null if it is the first time setting the item.
@@ -21,7 +21,7 @@ namespace ACSE
         public readonly ToolTip ItemToolTip;
         public readonly Stack<ItemChange> UndoStack = new Stack<ItemChange>();
         public readonly Stack<ItemChange> RedoStack = new Stack<ItemChange>();
-        public bool Modified { get; protected set; } = false;
+        public bool Modified { get; protected set; }
         public string HoverText = "{0} - [0x{1}]";
 
         private int _itemsPerRow;
@@ -129,7 +129,7 @@ namespace ACSE
 
         protected virtual void OnEditorMouseMove(object sender, MouseEventArgs e)
         {
-            if (_items == null || !GetXyPosition(e, out var x, out var y, out var index) ||
+            if (_items == null || !GetXyPosition(e, out _, out _, out var index) ||
                 (e.X == _lastX && e.Y == _lastY)) return;
             // Update Last Hover Position
             _lastX = e.X;
@@ -148,7 +148,7 @@ namespace ACSE
         protected virtual void OnEditorMouseDown(object sender, MouseEventArgs e)
         {
             _isMouseDown = true;
-            if (!GetXyPosition(e, out var x, out var y, out var index)) return;
+            if (!GetXyPosition(e, out _, out _, out var index)) return;
             var selectedItem = _items[index];
             switch (e.Button)
             {
@@ -159,6 +159,9 @@ namespace ACSE
                     {
                         // Save Old Item
                         PushNewItemChange(selectedItem, index, UndoStack);
+
+                        // Clear Redo Stack
+                        NewChange(null);
 
                         // Set New Item
                         _items[index] = newItem;
@@ -184,7 +187,7 @@ namespace ACSE
             }
         }
 
-        protected virtual void Undo()
+        public virtual void Undo()
         {
             if (!UndoStack.Any()) return;
             // Get Previous Change
@@ -204,7 +207,7 @@ namespace ACSE
             OnItemChanged(selectedItem, Items[previousItemChange.Index], previousItemChange.Index);
         }
 
-        protected virtual void Redo()
+        public virtual void Redo()
         {
             if (!RedoStack.Any()) return;
             // Get Previous Change
@@ -222,6 +225,13 @@ namespace ACSE
             img?.Dispose();
 
             OnItemChanged(selectedItem, Items[previousItemChange.Index], previousItemChange.Index);
+        }
+
+        public virtual void NewChange(object change)
+        {
+            if (!(change is ItemChange newItem)) return;
+            RedoStack.Clear();
+            UndoStack.Push(newItem);
         }
 
         protected virtual void Dipose()
