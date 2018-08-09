@@ -4733,7 +4733,7 @@ namespace ACSE
         private void GenerateRandomTownToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (_loading || SaveFile == null) return;
-            int? seed = !string.IsNullOrWhiteSpace(_seedBox.Text) ? int.Parse(_seedBox.Text) : Environment.TickCount;
+            int? seed = !string.IsNullOrWhiteSpace(_seedBox.Text) ? (int)long.Parse(_seedBox.Text) : Environment.TickCount;
 
             switch (SaveFile.SaveGeneration)
             {
