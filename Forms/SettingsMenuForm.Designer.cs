@@ -166,7 +166,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(358, 170);
-            this.ControlBox = false;
             this.Controls.Add(this.BackupCheckBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.acreMapSizeTrackBar);
@@ -178,8 +177,9 @@
             this.Controls.Add(this.doneButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.imageSizeModeComboBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "SettingsMenuForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ACSE Settings";
             ((System.ComponentModel.ISupportInitialize)(this.townMapSizeTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.acreMapSizeTrackBar)).EndInit();

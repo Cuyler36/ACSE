@@ -4216,7 +4216,7 @@ namespace ACSE
         private void SecureValueToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (SaveFile != null && SaveFile.SaveGeneration == SaveGeneration.N3DS)
-                _secureNandValueForm.Show();
+                _secureNandValueForm.ShowDialog();
         }
 
         private void PlayerWalletFocusLost(object sender, EventArgs e)
@@ -4719,7 +4719,7 @@ namespace ACSE
 
         private void SettingsToolStripMenuItemClick(object sender, EventArgs e)
         {
-            _settingsMenu.Show();
+            _settingsMenu.ShowDialog();
         }
 
         private void StatueCheckBoxCheckedChanged(object sender, EventArgs e)
