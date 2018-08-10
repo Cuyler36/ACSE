@@ -188,7 +188,8 @@ namespace ACSE
             else
             {
                 BaseItemId = (ushort)(ItemId & 0xFFFC);
-                if (ItemData.GetItemType(itemId, MainForm.SaveFile.SaveType) == "Furniture" || ItemData.GetItemType(itemId, MainForm.SaveFile.SaveType).Equals("Gyroids"))
+                if (ItemData.GetItemType(itemId, MainForm.SaveFile.SaveType) == ItemType.Furniture ||
+                    ItemData.GetItemType(itemId, MainForm.SaveFile.SaveType) == ItemType.Gyroid)
                 {
                     Rotation = (ItemId % 4) * 90;
                 }
@@ -211,8 +212,8 @@ namespace ACSE
             else
             {
                 BaseItemId = (ushort)(ItemId & 0xFFFC);
-                if (ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == "Furniture" ||
-                    ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType).Equals("Gyroids"))
+                if (ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == ItemType.Furniture ||
+                    ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == ItemType.Gyroid)
                 {
                     Rotation = (ItemId % 4) * 90;
                 }
@@ -234,8 +235,8 @@ namespace ACSE
             else
             {
                 BaseItemId = (ushort)(ItemId & 0xFFFC);
-                if (ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == "Furniture" ||
-                    ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType).Equals("Gyroids"))
+                if (ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == ItemType.Furniture ||
+                    ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == ItemType.Gyroid)
                 {
                     Rotation = (ItemId % 4) * 90;
                 }

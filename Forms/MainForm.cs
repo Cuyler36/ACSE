@@ -4031,7 +4031,7 @@ namespace ACSE
                 if (acre.AcreItems == null) continue;
                 for (var i = 0; i < 256; i++)
                 {
-                    if (ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType) != "Weed") continue;
+                    if (ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType) != ItemType.Weed) continue; // Weed
                     switch (SaveFile.SaveGeneration)
                     {
                         case SaveGeneration.NDS:
@@ -4794,11 +4794,11 @@ namespace ACSE
                             var itemType = ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType);
                             switch (itemType)
                             {
-                                case "Parched Flower":
+                                case ItemType.ParchedFlower:
                                     acre.AcreItems[i] = new WorldItem((ushort)(acre.AcreItems[i].ItemId + 0x1C), acre.AcreItems[i].Index);
                                     flowersWatered++;
                                     break;
-                                case "Flower":
+                                case ItemType.Flower:
                                     acre.AcreItems[i] = new WorldItem((ushort)(acre.AcreItems[i].ItemId + 0x8A), acre.AcreItems[i].Index);
                                     flowersWatered++;
                                     break;
@@ -4809,7 +4809,7 @@ namespace ACSE
                     case SaveGeneration.Wii:
                         for (var i = 0; i < 256; i++)
                         {
-                            if (ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType) != "Parched Flower")
+                            if (ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType) != ItemType.ParchedFlower)
                                 continue;
                             acre.AcreItems[i] = new WorldItem((ushort)(acre.AcreItems[i].ItemId - 0x20), acre.AcreItems[i].Index);
                             flowersWatered++;
@@ -4819,7 +4819,7 @@ namespace ACSE
                     case SaveGeneration.N3DS:
                         for (var i = 0; i < 256; i++)
                         {
-                            if (ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType) != "Flower")
+                            if (ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType) != ItemType.Flower)
                                 continue;
                             acre.AcreItems[i].Flag1 = 0x40;
                             acre.AcreItems[i].Watered = true;
