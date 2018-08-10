@@ -45,6 +45,43 @@ namespace ACSE
     {
         public static List<KeyValuePair<ushort, string>> ItemDatabase = new List<KeyValuePair<ushort, string>>();
 
+        internal static readonly string[] ItemTypeNames =
+        {
+            "Empty",
+            "Furniture",
+            "Gyroid",
+            "Diary",
+            "Clothes",
+            "Song",
+            "Paper",
+            "Trash",
+            "Shell",
+            "Fruit",
+            "Turnip",
+            "Catchable",
+            "Quest Item",
+            "Item",
+            "Raffle Ticket",
+            "Wallpaper & Carpet",
+            "Fossil",
+            "Tool",
+            "Tree",
+            "Weed",
+            "Flower",
+            "Rock",
+            "Money Rock",
+            "Signboard",
+            "Money",
+            "House Object",
+            "Building",
+            "Parched Flower",
+            "Watered Flower",
+            "Pattern",
+            "Wilted Flower",
+            "Occupied",
+            "Invalid"
+        };
+
         public static readonly string[] CfBuildingNames = {
             "Player House #1",
             "Player House #2",
@@ -722,74 +759,75 @@ namespace ACSE
         }
         public static uint GetItemColor(ItemType itemType)
         {
+            var settings = ItemColorSettings.Default;
             switch (itemType)
             {
                 case ItemType.Furniture:
-                    return 0xC83CDE30;
+                    return settings.FurnitureColor;
                 case ItemType.Flower:
-                    return 0xC8EC67B8;
+                    return settings.FlowerColor;
                 case ItemType.Pattern:
-                    return 0xC89999FF;
+                    return settings.PatternColor;
                 case ItemType.ParchedFlower:
-                    return 0xC8A36700;
+                    return settings.ParchedFlowerColor;
                 case ItemType.WiltedFlower:
-                    return 0xC84D4D33;
+                    return settings.WiltedFlowerColor;
                 case ItemType.WateredFlower:
-                    return 0xC800A0A0;
+                    return settings.WateredFlowerColor;
                 case ItemType.Money:
-                    return 0xC8FFFF00;
+                    return settings.MoneyColor;
                 case ItemType.Rock:
-                    return 0xC8000000;
+                    return settings.RockColor;
                 case ItemType.MoneyRock:
-                    return 0xC8A32F2F;
+                    return settings.MoneyRockColor;
                 case ItemType.Signboard:
-                    return 0xC8663300;
+                    return settings.SignboardColor;
                 case ItemType.Song:
-                    return 0xC8A4ECB8;
+                    return settings.SongColor;
                 case ItemType.Paper:
-                    return 0xC8A4ECE8;
+                    return settings.PaperColor;
                 case ItemType.Turnip:
-                    return 0xC8BBAC9D;
+                    return settings.TurnipColor;
                 case ItemType.Catchable:
-                    return 0xC8BAE33E;
+                    return settings.CatchableColor;
                 case ItemType.WallpaperCarpet:
-                    return 0xC8994040;
+                    return settings.WallpaperCarpetColor;
                 case ItemType.Clothes:
-                    return 0xC82874AA;
+                    return settings.ClothesColor;
                 case ItemType.Gyroid:
-                    return 0xC8D48324;
+                    return settings.GyroidColor;
                 case ItemType.Fossil:
-                    return 0xC8513D2F;
+                    return settings.FossilColor;
                 case ItemType.Tool:
-                    return 0xC8818181;
+                    return settings.ToolColor;
                 case ItemType.Item:
-                    return 0xC8FFA500;
+                    return settings.ItemColor;
                 case ItemType.Fruit:
-                    return 0xC8DDA0DD;
+                    return settings.FruitColor;
                 case ItemType.Trash:
-                    return 0xC8556B2F;
+                    return settings.TrashColor;
                 case ItemType.QuestItem:
-                    return 0xC8BDB76B;
+                    return settings.QuestItemColor;
                 case ItemType.RaffleTicket:
-                    return 0xC81E90FF;
+                    return settings.RaffleTicketColor;
                 case ItemType.Tree:
-                    return 0xC88B4513; //0xC800FF00;
+                    return settings.TreeColor;
                 case ItemType.Weed:
-                    return 0xC8008000;
+                    return settings.WeedColor;
                 case ItemType.Shell:
-                    return 0xC8FFC0CB;
+                    return settings.ShellColor;
                 case ItemType.Empty:
-                    return 0x00FFFFFF;
+                    return 0x00FFFFFF; // No setting for empty since we always want it transparent
                 case ItemType.Occupied:
-                    return 0xDD999999;
+                    return settings.OccupiedColor;
                 case ItemType.Building:
-                    return 0xFF777777;
+                    return settings.BuildingColor;
                 case ItemType.Diary:
-                    return 0xC8FF007F;
+                    return settings.DiaryColor;
                 case ItemType.HouseObject:
-                    return 0xC8A59895;
+                    return settings.HouseObjectColor;
                 default:
-                    return 0xC8FF0000;
+                    return settings.InvalidColor;
             }
         }
 

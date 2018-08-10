@@ -267,6 +267,7 @@
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.itemIdLabel = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.TextBox();
+            this.itemColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -652,7 +653,8 @@
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.secureValueToolStripMenuItem,
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.itemColorsToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -661,14 +663,14 @@
             // 
             this.secureValueToolStripMenuItem.Enabled = false;
             this.secureValueToolStripMenuItem.Name = "secureValueToolStripMenuItem";
-            this.secureValueToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.secureValueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.secureValueToolStripMenuItem.Text = "Secure Value";
             this.secureValueToolStripMenuItem.Click += new System.EventHandler(this.SecureValueToolStripMenuItemClick);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItemClick);
             // 
@@ -2783,6 +2785,13 @@
             this.StatusLabel.TabIndex = 16;
             this.StatusLabel.TabStop = false;
             // 
+            // itemColorsToolStripMenuItem
+            // 
+            this.itemColorsToolStripMenuItem.Name = "itemColorsToolStripMenuItem";
+            this.itemColorsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.itemColorsToolStripMenuItem.Text = "Item Colors";
+            this.itemColorsToolStripMenuItem.Click += new System.EventHandler(this.itemColorsToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3104,5 +3113,6 @@
         private System.Windows.Forms.ToolStripMenuItem generateRandomTownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateToolStripMenuItem;
         private System.Windows.Forms.TextBox StatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem itemColorsToolStripMenuItem;
     }
 }

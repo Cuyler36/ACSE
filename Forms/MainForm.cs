@@ -1309,7 +1309,6 @@ namespace ACSE
 
         private void SetMainTabEnabled(string tabName, bool enabled)
         {
-            var h = tabControl1.Handle; //Necessary to use TabPages.Insert... (Can switch to tabControl1.CreateControl()) if wanted
             if (!enabled)
             {
                 foreach (TabPage page in tabControl1.TabPages)
@@ -1981,7 +1980,7 @@ namespace ACSE
                 && (id >= 0x03DC && id <= 0x03EC) || id == 0x49C || (id >= 0x04A8 && id <= 0x058C) || (id >= 0x05B4 && id <= 0x05B8));
         }
 
-        private static Image GetAcreImage(WorldAcre currentAcre, ushort id)
+        private static Image GetAcreImage(ushort id)
         {
             Image acreImage = null;
 
@@ -2061,7 +2060,7 @@ namespace ACSE
                 {
                     var acre = y * CurrentSaveInfo.XAcreCount + x;
                     var currentAcre = _acres[acre];
-                    var acreImage = GetAcreImage(currentAcre, currentAcre.AcreId);
+                    var acreImage = GetAcreImage(currentAcre.AcreId);
 
                     _acreMap[acre] = new PictureBoxWithInterpolationMode()
                     {
@@ -2179,12 +2178,12 @@ namespace ACSE
                         if (SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus || SaveFile.SaveType == SaveType.AnimalForestEPlus)
                         {
                             _islandAcreMap[idx].Image = GenerateAcreItemsBitmap(_selectedIsland.Items[idx], idx, true);
-                            _islandAcreMap[idx].BackgroundImage = GetAcreImage(_acres[0x3C + idx], _acres[0x3C + idx].BaseAcreId);
+                            _islandAcreMap[idx].BackgroundImage = GetAcreImage(_acres[0x3C + idx].BaseAcreId);
                         }
                         else
                         {
                             _islandAcreMap[idx].Image = GenerateAcreItemsBitmap(IslandAcres[idx].AcreItems, IslandAcres[idx].Index, true);
-                            _islandAcreMap[idx].BackgroundImage = GetAcreImage(IslandAcres[idx], acreId);
+                            _islandAcreMap[idx].BackgroundImage = GetAcreImage(acreId);
                         }
                         _islandAcreMap[idx].MouseMove += (sender, e) => TownMove(sender, e, true);
                         _islandAcreMap[idx].MouseLeave += HideTownTip;
@@ -2200,7 +2199,7 @@ namespace ACSE
                         {
                             Size = new Size(_acreMapSize, _acreMapSize),
                             Location = new Point(x * _acreMapSize, _townMapTotalSize * 2 + 24 + y * _acreMapSize),
-                            BackgroundImage = GetAcreImage(IslandAcres[idx], IslandAcres[idx].AcreId),
+                            BackgroundImage = GetAcreImage(IslandAcres[idx].AcreId),
                             SizeMode = PictureBoxSizeMode.StretchImage,
                             BackgroundImageLayout = ImageLayout.Stretch,
                             UseInternalInterpolationSetting = true,
@@ -2218,8 +2217,8 @@ namespace ACSE
             if ((SaveFile.SaveType != SaveType.DoubutsuNoMoriEPlus && SaveFile.SaveType != SaveType.AnimalForestEPlus)
                 || _selectedIsland == null) return;
             var islandAcreIds = _selectedIsland.GetAcreIds();
-            _islandAcreMap[0].BackgroundImage = GetAcreImage(new WorldAcre(islandAcreIds[0], 0), islandAcreIds[0]);
-            _islandAcreMap[1].BackgroundImage = GetAcreImage(new WorldAcre(islandAcreIds[1], 0), islandAcreIds[1]);
+            _islandAcreMap[0].BackgroundImage = GetAcreImage(islandAcreIds[0]);
+            _islandAcreMap[1].BackgroundImage = GetAcreImage(islandAcreIds[1]);
         }
 
         #region Houses
@@ -4405,7 +4404,7 @@ namespace ACSE
                 for (var i = 0; i < _acres.Length; i++)
                 {
                     var oldImage = _acreMap[i].BackgroundImage;
-                    _acreMap[i].BackgroundImage = GetAcreImage(_acres[i], _acres[i].BaseAcreId);
+                    _acreMap[i].BackgroundImage = GetAcreImage(_acres[i].BaseAcreId);
                     AcreData.CheckReferencesAndDispose(oldImage, _acreMap, _selectedAcrePicturebox);
                 }
             }
@@ -4752,7 +4751,7 @@ namespace ACSE
                         _acres[i] = new WorldAcre(newAcreData[i], i);
                         _acres[i].LoadDefaultItems(SaveFile);
                         var oldImage = _acreMap[i].BackgroundImage;
-                        _acreMap[i].BackgroundImage = GetAcreImage(_acres[i], _acres[i].BaseAcreId);
+                        _acreMap[i].BackgroundImage = GetAcreImage(_acres[i].BaseAcreId);
                         AcreData.CheckReferencesAndDispose(oldImage, _acreMap, _selectedAcrePicturebox);
                         _acreMap[i].Refresh();
                         var x = i % CurrentSaveInfo.XAcreCount;
@@ -4834,6 +4833,17 @@ namespace ACSE
             }
 
             MessageBox.Show($"Watered {flowersWatered} flowers!", "Flowers Watered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void itemColorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var colorEditor = new ItemColorEditor())
+            {
+                MessageBox.Show(
+                    "After changing the settings, you'll need to reload your save file if you have one open!",
+                    "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                colorEditor.ShowDialog();
+            }
         }
 
         private void SetOrdinanceCheckBoxes()
@@ -4919,8 +4929,8 @@ namespace ACSE
             ReloadIslandItemPicture();
 
             var islandAcreIds = _selectedIsland.GetAcreIds();
-            _islandAcreMap[0].BackgroundImage = GetAcreImage(new WorldAcre(islandAcreIds[0], 0), islandAcreIds[0]);
-            _islandAcreMap[1].BackgroundImage = GetAcreImage(new WorldAcre(islandAcreIds[1], 0), islandAcreIds[1]);
+            _islandAcreMap[0].BackgroundImage = GetAcreImage(islandAcreIds[0]);
+            _islandAcreMap[1].BackgroundImage = GetAcreImage(islandAcreIds[1]);
 
             // Reload Island House Pictureboxes
             for (var i = 0; i < 4; i++)
