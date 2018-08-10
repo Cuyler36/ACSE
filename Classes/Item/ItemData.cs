@@ -883,12 +883,23 @@ namespace ACSE
 
         public static string GetItemName(ushort itemId)
         {
-            var found = ItemDatabase.Where(o => o.Key == itemId).Select(o => new { o.Key, o.Value }).FirstOrDefault();
-            if (found != null)
-                return found.Value;
-            var baseId = (ushort)(itemId & 0xFFFC);
-            var foundBase = ItemDatabase.Where(o => o.Key == baseId).Select(o => new { o.Key, o.Value }).FirstOrDefault();
-            return foundBase != null ? foundBase.Value : "Unknown";
+            switch (MainForm.SaveFile.SaveGeneration)
+            {
+                case SaveGeneration.N3DS:
+                    return ItemDatabase.Where(o => o.Key == itemId).Select(o => new { o.Key, o.Value })
+                               .FirstOrDefault()?.Value ?? "Unknown";
+                default:
+                    if (GetItemType(itemId, MainForm.SaveFile.SaveType) == "Furniture")
+                    {
+                        return ItemDatabase.Where(o => o.Key == (ushort)(itemId & 0xFFFC)).Select(o => new {o.Key, o.Value})
+                                   .FirstOrDefault()?.Value ?? "Unknown";
+                    }
+                    else
+                    {
+                        return ItemDatabase.Where(o => o.Key == itemId).Select(o => new { o.Key, o.Value })
+                                   .FirstOrDefault()?.Value ?? "Unknown";
+                    }
+            }
         }
 
         //Used for DataSource for ComboBoxes

@@ -71,7 +71,7 @@ namespace ACSE
         private int _selectedBuilding = -1;
         private ushort _lastSelectedItem;
         private readonly EventHandler _campsiteEventHandler;
-        private Item _currentItem = new Item();
+        private Item _currentItem;
         private readonly PictureBoxWithInterpolationMode _selectedAcrePicturebox;
         private int _lastMonth;
         private ushort _acreHeightModifier;
@@ -496,6 +496,7 @@ namespace ACSE
             townMapViewCheckbox.Enabled = save.SaveGeneration == SaveGeneration.N64 || save.SaveGeneration == SaveGeneration.GCN || save.SaveGeneration == SaveGeneration.iQue;
             acreHeightTrackBar.Enabled = save.SaveGeneration == SaveGeneration.N64 || save.SaveGeneration == SaveGeneration.GCN || save.SaveGeneration == SaveGeneration.iQue;
             SaveFile = save;
+            _currentItem = new Item();
             DebugManager.WriteLine("Save File Loaded");
             _acreHeightModifier = 0;
             _selectedAcreId = 0;
