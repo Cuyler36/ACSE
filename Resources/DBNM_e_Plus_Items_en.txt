@@ -3247,10 +3247,10 @@
 0xA012, Villager Signboard
 0xA013, Player (Laying on Side, Soft-locks Game, Seen in Wrong-warp)
 0xA016, Player (Standing, Soft-locks Game)
-0xFE1B, House Exit Flooring
-0xFE1D, Possible Bridge Location (/)
-0xFE1E, Possible Bridge Location (\)
-0xFE1F, Multispace Furniture Collision Box
-0xFE20, Custom Pattern
+0xFE1E, House Exit Flooring
+0xFE20, Possible Bridge Location (/)
+0xFE21, Possible Bridge Location (\)
+0xFE22, Multispace Furniture Collision Box
+0xFE23, Custom Pattern
 0xFFFE, House Wall
 0xFFFF, Occupied/Unavailable
