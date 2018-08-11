@@ -4,6 +4,8 @@ namespace ACSE
 {
     public class Item
     {
+        public ItemType Type;
+
         public Inventory.AcItemFlag ItemFlag;
         public ushort ItemId;
         public byte Flag1;
@@ -25,12 +27,14 @@ namespace ACSE
                     break;
             }
             Name = ItemData.GetItemName(ItemId);
+            Type = ItemData.GetItemType(ItemId, MainForm.SaveFile?.SaveType ?? SaveType.AnimalCrossing);
         }
 
         public Item(ushort itemId)
         {
             ItemId = itemId;
             Name = ItemData.GetItemName(ItemId);
+            Type = ItemData.GetItemType(ItemId, MainForm.SaveFile?.SaveType ?? SaveType.AnimalCrossing);
         }
 
         public Item(uint itemId)
@@ -39,6 +43,7 @@ namespace ACSE
             Flag1 = (byte)(itemId >> 24);
             Flag2 = (byte)(itemId >> 16);
             Name = ItemData.GetItemName(ItemId);
+            Type = ItemData.GetItemType(ItemId, MainForm.SaveFile?.SaveType ?? SaveType.AnimalCrossing);
         }
 
         public Item(Item cloningItem)
@@ -47,6 +52,7 @@ namespace ACSE
             Flag1 = cloningItem.Flag1;
             Flag2 = cloningItem.Flag2;
             Name = cloningItem.Name;
+            Type = cloningItem.Type;
         }
 
         public Item(ushort itemId, byte flag1, byte flag2)
@@ -55,6 +61,7 @@ namespace ACSE
             Flag1 = flag1;
             Flag2 = flag2;
             Name = ItemData.GetItemName(ItemId);
+            Type = ItemData.GetItemType(ItemId, MainForm.SaveFile?.SaveType ?? SaveType.AnimalCrossing);
         }
 
         public uint ToUInt32()
@@ -127,6 +134,7 @@ namespace ACSE
             Flag1 = cloningItem.Flag1;
             Flag2 = cloningItem.Flag2;
             Name = cloningItem.Name;
+            Type = cloningItem.Type;
             Index = cloningItem.Index;
             Location = new Point(Index % 16, Index / 16);
         }
@@ -191,7 +199,7 @@ namespace ACSE
                 if (ItemData.GetItemType(itemId, MainForm.SaveFile.SaveType) == ItemType.Furniture ||
                     ItemData.GetItemType(itemId, MainForm.SaveFile.SaveType) == ItemType.Gyroid)
                 {
-                    Rotation = (ItemId % 4) * 90;
+                    Rotation = ItemId & 3;
                 }
             }
         }
@@ -199,7 +207,7 @@ namespace ACSE
         public Furniture(uint item) : base(item)
         {
             BaseItemId = ItemId;
-            Rotation = ((Flag1 >> 4) / 4) * 90;
+            Rotation = (Flag1 >> 4) / 4;
         }
 
         public Furniture(ushort item, byte flag1, byte flag2) : base(item, flag1, flag2)
@@ -207,7 +215,7 @@ namespace ACSE
             if (MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
                 BaseItemId = ItemId;
-                Rotation = ((Flag1 >> 4) / 4) * 90;
+                Rotation = (Flag1 >> 4) / 4;
             }
             else
             {
@@ -215,7 +223,7 @@ namespace ACSE
                 if (ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == ItemType.Furniture ||
                     ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == ItemType.Gyroid)
                 {
-                    Rotation = (ItemId % 4) * 90;
+                    Rotation = ItemId & 3;
                 }
             }
         }
@@ -224,13 +232,14 @@ namespace ACSE
         {
             ItemId = item.ItemId;
             Name = item.Name;
+            Type = item.Type;
             Flag1 = item.Flag1;
             Flag2 = item.Flag2;
 
             if (MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
                 BaseItemId = ItemId;
-                Rotation = ((Flag1 >> 4) / 4) * 90;
+                Rotation = (Flag1 >> 4) / 4;
             }
             else
             {
@@ -238,16 +247,9 @@ namespace ACSE
                 if (ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == ItemType.Furniture ||
                     ItemData.GetItemType(ItemId, MainForm.SaveFile.SaveType) == ItemType.Gyroid)
                 {
-                    Rotation = (ItemId % 4) * 90;
+                    Rotation = ItemId & 3;
                 }
             }
-        }
-
-        public void SetRotation(int degrees)
-        {
-            if (degrees % 90 != 0) return;
-            Rotation = degrees;
-            ItemId = (ushort)(BaseItemId + (degrees / 90));
         }
 
         public override bool Equals(object obj)

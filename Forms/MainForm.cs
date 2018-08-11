@@ -26,6 +26,7 @@ namespace ACSE
         public static WorldAcre[] IslandAcres;
 
         internal static ModifiedHandler UndoRedoHandler;
+        private static readonly byte[] GridColor = BitConverter.GetBytes(0x56FFFFFF);
 
         private readonly TabPage[] _mainTabs;
         private readonly TabPage[] _playerTabs = new TabPage[4];
@@ -2195,7 +2196,8 @@ namespace ACSE
                             ? new Point(x * _townMapTotalSize, y * _townMapTotalSize) : new Point(((x - 1) % 4) * _townMapTotalSize, (y - 1) * _townMapTotalSize);
                         islandPanel.Controls.Add(_islandAcreMap[idx]);
                     }
-                    if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
+
+                    if (SaveFile.SaveGeneration != SaveGeneration.N3DS) continue;
                     {
                         _newLeafIslandAcreMap[idx] = new PictureBoxWithInterpolationMode
                         {
@@ -2621,8 +2623,8 @@ namespace ACSE
             for (var i = 0; i < 256; i++)
             {
                 var item = items[i];
-                if (item.Name == "Empty") continue;
-                var itemColor = ItemData.GetItemColor(ItemData.GetItemType(item.ItemId, SaveFile.SaveType));
+                if (item.Type == ItemType.Empty) continue;
+                var itemColor = ItemData.GetItemColor(item.Type);
                 // Draw Item Box
                 for (var x = 0; x < itemSize * itemSize; x++)
                     Buffer.BlockCopy(BitConverter.GetBytes(itemColor), 0, bitmapBuffer,
@@ -2632,7 +2634,7 @@ namespace ACSE
             //ImageGeneration.DrawGrid(acreBitmap, 8);
             for (var i = 0; i < (width * width); i++)
                 if ((i / itemSize > 0 && i % (itemSize * 16) > 0 && i % (itemSize) == 0) || (i / (itemSize * 16) > 0 && (i / (itemSize * 16)) % (itemSize) == 0))
-                    Buffer.BlockCopy(BitConverter.GetBytes(0x56FFFFFF), 0, bitmapBuffer,
+                    Buffer.BlockCopy(GridColor, 0, bitmapBuffer,
                         ((i / (itemSize * 16)) * width * 4) + ((i % (itemSize * 16)) * 4), 4);
 
             // Construct Bitmap

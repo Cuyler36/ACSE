@@ -51,25 +51,26 @@ namespace ACSE
             }
         }
 
-        public static void DrawBuriedIcons(Bitmap map, WorldItem[] items, int itemSize, bool useText = false)
+        public static void DrawBuriedIcons(Bitmap map, WorldItem[] items, int itemSize)
         {
-            var bitmapGraphics = Graphics.FromImage(map);
-            bitmapGraphics.SmoothingMode = SmoothingMode.AntiAlias;
-            bitmapGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            bitmapGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            foreach (var item in items)
+            using (var bitmapGraphics = Graphics.FromImage(map))
             {
-                if (!item.Buried || item.Name.Equals("Empty")) continue;
-                if (useText)
+                bitmapGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+                bitmapGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                bitmapGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (Image buriedIcon = Properties.Resources.Buried)
                 {
-                    bitmapGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                    bitmapGraphics.DrawString("X", new Font("Tahoma", itemSize), Brushes.White, new RectangleF(item.Location.X * itemSize, item.Location.Y * itemSize, itemSize, itemSize));
+                    foreach (var item in items)
+                    {
+                        if (!item.Buried || item.Type == ItemType.Empty) continue;
+                        bitmapGraphics.DrawImage(buriedIcon, item.Location.X * itemSize + 1,
+                            item.Location.Y * itemSize + 1, itemSize - 1, itemSize - 1);
+                    }
+
+                    bitmapGraphics.Flush();
                 }
-                else
-                    bitmapGraphics.DrawImage(Properties.Resources.Buried, item.Location.X * itemSize + 1, item.Location.Y * itemSize + 1, itemSize - 1, itemSize - 1);
             }
-            bitmapGraphics.Flush();
-            bitmapGraphics.Dispose();
         }
 
         public static Bitmap DrawGrid(Bitmap map, int itemSize, uint gridColor = 0xFFAAAAAA, int gridPixelSize = 1)
@@ -123,42 +124,45 @@ namespace ACSE
         public static Bitmap DrawAcreHighlight()
         {
             var acreHighlight = new Bitmap(64, 64);
-            var bitmapGraphics = Graphics.FromImage(acreHighlight);
-            var borderColor = new Pen(Color.FromArgb(0x80, Color.Gold))
+            using (var bitmapGraphics = Graphics.FromImage(acreHighlight))
             {
-                Width = 8
-            };
-            bitmapGraphics.DrawRectangle(borderColor, new Rectangle(0, 0, 64, 64));
-            bitmapGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0x80, Color.Yellow)), new Rectangle(4, 4, 56, 56));
-            bitmapGraphics.Flush();
-            bitmapGraphics.Dispose();
-            borderColor.Dispose();
+                using (var borderColor = new Pen(Color.FromArgb(0x80, Color.Gold)) {Width = 8})
+                {
+                    using (var fillColor = new SolidBrush(Color.FromArgb(0x80, Color.Yellow)))
+                    {
+                        bitmapGraphics.DrawRectangle(borderColor, new Rectangle(0, 0, 64, 64));
+                        bitmapGraphics.FillRectangle(fillColor, new Rectangle(4, 4, 56, 56));
+                        bitmapGraphics.Flush();
+                    }
+                }
+            }
+
             return acreHighlight;
         }
 
-        public static Bitmap DrawBuilding(Bitmap acreMap, Building buildingToDraw, int itemSize,  bool useText = false)
+        public static Bitmap DrawBuilding(Bitmap acreMap, Building buildingToDraw, int itemSize)
         {
-            var rectF = new RectangleF(buildingToDraw.XPos * itemSize, buildingToDraw.YPos * itemSize, itemSize, itemSize);
-            var bitmapGraphics = Graphics.FromImage(acreMap);
-            bitmapGraphics.SmoothingMode = SmoothingMode.AntiAlias;
-            bitmapGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            bitmapGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            if (useText)
+
+            using (var bitmapGraphics = Graphics.FromImage(acreMap))
             {
-                bitmapGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                bitmapGraphics.DrawString("B", new Font("Tahoma", itemSize), Brushes.White, rectF);
+                bitmapGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+                bitmapGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                bitmapGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (Image building = Properties.Resources.Building)
+                {
+                    bitmapGraphics.DrawImage(building, buildingToDraw.XPos * itemSize,
+                        buildingToDraw.YPos * itemSize, itemSize, itemSize);
+                    bitmapGraphics.Flush();
+                }
             }
-            else
-                bitmapGraphics.DrawImage(Properties.Resources.Building, buildingToDraw.XPos * itemSize, buildingToDraw.YPos * itemSize, itemSize, itemSize);
-            bitmapGraphics.Flush();
-            bitmapGraphics.Dispose();
+
             return acreMap;
         }
 
         public static Bitmap DrawBuildings(Bitmap acreMap, Building[] buildingList, int acre, int itemSize)
         {
-            if (buildingList == null)
-                return acreMap;
+            if (buildingList == null) return acreMap;
             foreach (var b in buildingList)
             {
                 if (b.Exists && b.AcreIndex == acre)
@@ -187,44 +191,47 @@ namespace ACSE
         {
             using (var g = Graphics.FromImage(itemBitmap))
             {
-                g.DrawImage(Properties.Resources.BoxGlow, x * itemSize, y * itemSize, itemSize, itemSize);
-                g.Flush();
+                using (Image highlight = Properties.Resources.BoxGlow)
+                {
+                    g.DrawImage(highlight, x * itemSize, y * itemSize, itemSize, itemSize);
+                    g.Flush();
+                }
             }
         }
 
         public static Bitmap DrawFurnitureArrows(Bitmap furnitureMap, Furniture[] furniture, int columns = 16)
         {
-            var bitmapGraphics = Graphics.FromImage(furnitureMap);
-            bitmapGraphics.SmoothingMode = SmoothingMode.AntiAlias;
-            bitmapGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            bitmapGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            for (var i = 0; i < furniture.Length; i++)
+            using (var bitmapGraphics = Graphics.FromImage(furnitureMap))
             {
-                var itemType = ItemData.GetItemType(furniture[i].ItemId, MainForm.SaveFile.SaveType);
-                if (furniture[i].Name == "Empty" || (itemType != ItemType.Furniture &&
-                    itemType != ItemType.Gyroid)) continue;
-                Image arrow = Properties.Resources.Arrow;
-
-                if (furniture[i].Rotation > 0)
+                bitmapGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+                bitmapGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                bitmapGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                for (var i = 0; i < furniture.Length; i++)
                 {
-                    switch (furniture[i].Rotation % 360)
+                    if (furniture[i].Type != ItemType.Furniture && furniture[i].Type != ItemType.Gyroid) continue;
+                    using (Image arrow = Properties.Resources.Arrow)
                     {
-                        case 90:
-                            arrow.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                            break;
-                        case 180:
-                            arrow.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                            break;
-                        case 270:
-                            arrow.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                            break;
+                        switch (furniture[i].Rotation)
+                        {
+                            case 1:
+                                arrow.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                                break;
+                            case 2:
+                                arrow.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                                break;
+                            case 3:
+                                arrow.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                                break;
+                        }
+
+                        bitmapGraphics.DrawImage(arrow, (i % columns) * (furnitureMap.Width / columns),
+                            (i / columns) * (furnitureMap.Width / columns));
                     }
                 }
-                bitmapGraphics.DrawImage(arrow, (i % columns) * (furnitureMap.Width / columns), (i / columns) * (furnitureMap.Width / columns));
+
+                bitmapGraphics.Flush();
+                return furnitureMap;
             }
-            bitmapGraphics.Flush();
-            bitmapGraphics.Dispose();
-            return furnitureMap;
         }
 
         public static readonly int[] GrassWearOffsetMap = {
@@ -279,12 +286,15 @@ namespace ACSE
         public static Bitmap DrawNewLeafGrassBg(PictureBox[] acreMap)
         {
             var bgBitmap = new Bitmap(64 * 7, 64 * 6);
-            var bgGraphics = Graphics.FromImage(bgBitmap);
-            for (var i = 0; i < acreMap.Length; i++)
-                if (acreMap[i].BackgroundImage != null)
-                    bgGraphics.DrawImage(MakeGrayscale((Bitmap)acreMap[i].BackgroundImage), 64 * (i % 7), 64 * (i / 7));
-            bgGraphics.Flush();
-            bgGraphics.Dispose();
+            using (var bgGraphics = Graphics.FromImage(bgBitmap))
+            {
+                for (var i = 0; i < acreMap.Length; i++)
+                    if (acreMap[i].BackgroundImage != null)
+                        bgGraphics.DrawImage(MakeGrayscale((Bitmap) acreMap[i].BackgroundImage), 64 * (i % 7),
+                            64 * (i / 7));
+                bgGraphics.Flush();
+            }
+
             return bgBitmap;
         }
 
@@ -295,26 +305,26 @@ namespace ACSE
             if (original == null)
                 return null;
             var newBitmap = new Bitmap(original.Width, original.Height);
-            var g = Graphics.FromImage(newBitmap);
+            using (var g = Graphics.FromImage(newBitmap))
+            {
+                //create the grayscale ColorMatrix
+                var colorMatrix = new ColorMatrix(
+                    new[]
+                    {
+                        new[] {0.3f, 0.3f, 0.3f, 0f, 0f},
+                        new[] {0.59f, 0.59f, 0.59f, 0f, 0f},
+                        new[] {0.11f, 0.11f, 0.11f, 0f, 0f},
+                        new[] {0f, 0f, 0f, 1f, 0f},
+                        new[] {0f, 0f, 0f, 0f, 1f}
+                    });
 
-            //create the grayscale ColorMatrix
-            var colorMatrix = new ColorMatrix(
-               new[]
-               {
-                 new[] {0.3f, 0.3f, 0.3f, 0f, 0f},
-                 new[] {0.59f, 0.59f, 0.59f, 0f, 0f},
-                 new[] {0.11f, 0.11f, 0.11f, 0f, 0f},
-                 new[] {0f, 0f, 0f, 1f, 0f},
-                 new[] {0f, 0f, 0f, 0f, 1f}
-               });
+                var attributes = new ImageAttributes();
+                attributes.SetColorMatrix(colorMatrix);
 
-            var attributes = new ImageAttributes();
-            attributes.SetColorMatrix(colorMatrix);
-
-            g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height),
-               0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
-            g.Dispose();
-            return newBitmap;
+                g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height),
+                    0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
+                return newBitmap;
+            }
         }
 
         public static byte[] GetTpcTrimmedBytes(byte[] tpcBytes)
@@ -479,38 +489,42 @@ namespace ACSE
 
         public static void DumpTownAcreBitmap(int acreCountX, int acreCountY, ref PictureBoxWithInterpolationMode[] pictureBoxes)
         {
-            var townAcrePreview = new Bitmap(acreCountX * pictureBoxes[0].BackgroundImage.Width, acreCountY * pictureBoxes[0].BackgroundImage.Height);
-
-            using (var g = Graphics.FromImage(townAcrePreview))
+            using (var townAcrePreview = new Bitmap(acreCountX * pictureBoxes[0].BackgroundImage.Width,
+                acreCountY * pictureBoxes[0].BackgroundImage.Height))
             {
-                for (var y = 0; y < acreCountY; y++)
+
+                using (var g = Graphics.FromImage(townAcrePreview))
                 {
-                    for (var x = 0; x < acreCountX; x++)
+                    for (var y = 0; y < acreCountY; y++)
                     {
-                        var locationX = x * pictureBoxes[0].BackgroundImage.Width;
-                        var locationY = y * pictureBoxes[0].BackgroundImage.Height;
+                        for (var x = 0; x < acreCountX; x++)
+                        {
+                            var locationX = x * pictureBoxes[0].BackgroundImage.Width;
+                            var locationY = y * pictureBoxes[0].BackgroundImage.Height;
 
-                        (pictureBoxes[y * acreCountX + x].BackgroundImage as Bitmap)?.SetResolution(96, 96);
+                            (pictureBoxes[y * acreCountX + x].BackgroundImage as Bitmap)?.SetResolution(96, 96);
 
-                        g.DrawImage(pictureBoxes[y * acreCountX + x].BackgroundImage, locationX, locationY);
+                            g.DrawImage(pictureBoxes[y * acreCountX + x].BackgroundImage, locationX, locationY);
+                        }
                     }
                 }
-            }
 
-            using (var saveDialog = new SaveFileDialog())
-            {
-                saveDialog.Filter = "Portable Network Graphic|*.png";
-                saveDialog.FileName = "";
+                using (var saveDialog = new SaveFileDialog())
+                {
+                    saveDialog.Filter = "Portable Network Graphic|*.png";
+                    saveDialog.FileName = "";
 
-                if (saveDialog.ShowDialog() != DialogResult.OK) return;
-                try
-                {
-                    townAcrePreview.Save(saveDialog.FileName, ImageFormat.Png);
-                }
-                catch
-                {
-                    MessageBox.Show("An error occured while saving your town acre preview!", "Acre Preview Image Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (saveDialog.ShowDialog() != DialogResult.OK) return;
+                    try
+                    {
+                        townAcrePreview.Save(saveDialog.FileName, ImageFormat.Png);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("An error occured while saving your town acre preview!",
+                            "Acre Preview Image Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -521,33 +535,33 @@ namespace ACSE
             var pixelsPerItemSlotX = pictureBoxSize.Width / 16;
             var pixelsPerItemSlotY = pictureBoxSize.Height / 16;
 
-            Console.WriteLine("X: " + pixelsPerItemSlotX + " | Y: " + pixelsPerItemSlotY);
-            var houseImage = Properties.Resources.VillagerHouse;
-            foreach (var villager in villagers)
+            using (var houseImage = Properties.Resources.VillagerHouse)
             {
-                if (!villager.Exists ||
-                    villager.Data.HouseCoordinates[0] < 1 || villager.Data.HouseCoordinates[0] > 5 ||
-                    villager.Data.HouseCoordinates[1] < 1 || villager.Data.HouseCoordinates[1] > 6 ||
-                    villager.Data.HouseCoordinates[2] > 15 || villager.Data.HouseCoordinates[3] > 15) continue;
-                var index = (villager.Data.HouseCoordinates[0]) + villager.Data.HouseCoordinates[1] * 7;
-                var position = new Point((villager.Data.HouseCoordinates[2] * pixelsPerItemSlotX) - houseImageSize / 2, 
-                    (villager.Data.HouseCoordinates[3] * pixelsPerItemSlotY) - houseImageSize / 2);
-
-                Image cloneImage;
-                if (pictureBoxes[index].BackgroundImage != null)
-                    cloneImage = (Image)pictureBoxes[index].BackgroundImage.Clone();
-                else
-                    cloneImage = new Bitmap(pictureBoxes[index].Size.Width, pictureBoxes[index].Size.Height);
-
-                using (var g = Graphics.FromImage(cloneImage))
+                foreach (var villager in villagers)
                 {
-                    g.DrawImage(houseImage, position.X, position.Y, 48, 48);
-                    g.Flush();
-                    pictureBoxes[index].BackgroundImage = cloneImage;
+                    if (!villager.Exists ||
+                        villager.Data.HouseCoordinates[0] < 1 || villager.Data.HouseCoordinates[0] > 5 ||
+                        villager.Data.HouseCoordinates[1] < 1 || villager.Data.HouseCoordinates[1] > 6 ||
+                        villager.Data.HouseCoordinates[2] > 15 || villager.Data.HouseCoordinates[3] > 15) continue;
+                    var index = (villager.Data.HouseCoordinates[0]) + villager.Data.HouseCoordinates[1] * 7;
+                    var position = new Point(
+                        (villager.Data.HouseCoordinates[2] * pixelsPerItemSlotX) - houseImageSize / 2,
+                        (villager.Data.HouseCoordinates[3] * pixelsPerItemSlotY) - houseImageSize / 2);
+
+                    Image cloneImage;
+                    if (pictureBoxes[index].BackgroundImage != null)
+                        cloneImage = (Image) pictureBoxes[index].BackgroundImage.Clone();
+                    else
+                        cloneImage = new Bitmap(pictureBoxes[index].Size.Width, pictureBoxes[index].Size.Height);
+
+                    using (var g = Graphics.FromImage(cloneImage))
+                    {
+                        g.DrawImage(houseImage, position.X, position.Y, 48, 48);
+                        g.Flush();
+                        pictureBoxes[index].BackgroundImage = cloneImage;
+                    }
                 }
             }
-
-            houseImage.Dispose();
         }
     }
 }
