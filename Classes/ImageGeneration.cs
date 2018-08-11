@@ -183,6 +183,15 @@ namespace ACSE
             return furnitureMap;
         }
 
+        public static void OverlayItemBoxGlow(Bitmap itemBitmap, int itemSize, int x, int y)
+        {
+            using (var g = Graphics.FromImage(itemBitmap))
+            {
+                g.DrawImage(Properties.Resources.BoxGlow, x * itemSize, y * itemSize, itemSize, itemSize);
+                g.Flush();
+            }
+        }
+
         public static Bitmap DrawFurnitureArrows(Bitmap furnitureMap, Furniture[] furniture, int columns = 16)
         {
             var bitmapGraphics = Graphics.FromImage(furnitureMap);
@@ -192,8 +201,8 @@ namespace ACSE
             for (var i = 0; i < furniture.Length; i++)
             {
                 var itemType = ItemData.GetItemType(furniture[i].ItemId, MainForm.SaveFile.SaveType);
-                if (furniture[i].Name == "Empty" ||
-                    (!itemType.Equals("Furniture") && !itemType.Equals("Gyroids"))) continue;
+                if (furniture[i].Name == "Empty" || (itemType != ItemType.Furniture &&
+                    itemType != ItemType.Gyroid)) continue;
                 Image arrow = Properties.Resources.Arrow;
 
                 if (furniture[i].Rotation > 0)

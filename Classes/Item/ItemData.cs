@@ -497,8 +497,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMori:
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriPlus:
-                case SaveType.DoubutsuNoMoriEPlus:
-                case SaveType.AnimalForestEPlus:
+                
                 // TODO: DnM+, and DnMe+ need their own cases
                 case SaveType.AnimalForest:
                     if (id == 0)
@@ -559,6 +558,71 @@ namespace ACSE
                         return ItemType.Furniture;
                     else
                         return ItemType.Invalid;
+
+                // Doubutsu no Mori e+ / Animal Forest e+
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
+                    if (id == 0)
+                        return ItemType.Empty;
+                    else if (id == 0xFFFF)
+                        return ItemType.Occupied;
+                    else if (id >= 0x8 && id <= 0xA)
+                        return ItemType.Weed;
+                    else if (id >= 0x845 && id <= 0x84D)
+                        return ItemType.Flower;
+                    else if ((id >= 0x2100 && id <= 0x2103) || id == 0x005C) //0x005C = Glowing 0x18/Shovel spot
+                        return ItemType.Money;
+                    else if (id >= 0x63 && id <= 0x68)
+                        return ItemType.Rock;
+                    else if ((id >= 0x6A && id <= 0x6F) || (id >= 0x83 && id <= 0x8C))
+                        return ItemType.MoneyRock;
+                    else if (id >= 0x900 && id <= 0x920)
+                        return ItemType.Signboard;
+                    else if (id >= 0x2514 && id <= 0x251B)
+                        return ItemType.Shell;
+                    else if (id >= 0x2A00 && id <= 0x2A8B)
+                        return ItemType.Song;
+                    else if (id >= 0x2B00 && id <= 0x2B0F)
+                        return ItemType.Diary;
+                    else if (id >= 0x2000 && id <= 0x20FF)
+                        return ItemType.Paper;
+                    else if (id >= 0x2F00 && id <= 0x2F03)
+                        return ItemType.Turnip;
+                    else if ((id >= 0x2800 && id <= 0x2804) || id == 0x2807)
+                        return ItemType.Fruit;
+                    else if ((id >= 0x2300 && id <= 0x232F) || (id >= 0x2D00 && id <= 0x2D2F))
+                        return ItemType.Catchable;
+                    else if (id >= 0x2503 && id <= 0x250C)
+                        return ItemType.QuestItem;
+                    else if (id >= 0x250E && id <= 0x2510)
+                        return ItemType.Trash;
+                    else if ((id >= 0x2523 && id <= 0x2530) || (id >= 0x2900 && id <= 0x290A) || (id >= 0x2805 && id <= 0x2806))
+                        return ItemType.Item;
+                    else if (id >= 0x2C00 && id <= 0x2C5F)
+                        return ItemType.RaffleTicket;
+                    else if ((id >= 0x2600 && id <= 0x2644) || (id >= 0x2700 && id <= 0x2744))
+                        return ItemType.WallpaperCarpet;
+                    else if (id >= 0x2400 && id <= 0x24FF)
+                        return ItemType.Clothes;
+                    else if (id >= 0x15B0 && id <= 0x17A8)
+                        return ItemType.Gyroid;
+                    else if (id == 0x2511)
+                        return ItemType.Fossil;
+                    else if ((id >= 0x2200 && id <= 0x2266) || id == 0x251E)
+                        return ItemType.Tool;  //0x251E = 0x17 (not a 'tool', but it's still classified as one)
+                    else if ((id >= 0x1 && id <= 0x4) || (id >= 0x005E && id <= 0x0060) || id == 0x69 || (id >= 0x0070 && id <= 0x0082) || (id >= 0x0800 && id <= 0x0869))
+                        return ItemType.Tree;
+                    else if (id >= 0x4000 && id < 0x5000)
+                        return ItemType.HouseObject;
+                    else if ((id >= 0x5 && id <= 0x7) || (id >= 0xB && id <= 0x10) || (id >= 0x5000 && id <= 0xB000) || (id >= 0xFE00 && id != 0xFE23))
+                        return ItemType.Building;
+                    else if ((id >= 0x1000 && id <= 0x15AC) || (id >= 0x17AC && id <= 0x1FFC) || (id >= 0x3000 && id <= 0x345C)) // || ID >= 0xFE20
+                        return ItemType.Furniture;
+                    else
+                        return ItemType.Invalid;
+
+                // Wild World
+
                 case SaveType.WildWorld when id == 0xFFF1:
                     return 0;
                 case SaveType.WildWorld when id == 0xF030:
@@ -615,6 +679,9 @@ namespace ACSE
                     return ItemType.Building;
                 case SaveType.WildWorld:
                     return ItemType.Invalid;
+
+                // City Folk
+
                 case SaveType.CityFolk when id == 0xFFF1:
                     return 0;
                 case SaveType.CityFolk when (id >= 0xB710 && id <= 0xCE50) || (id >= 0x93F0 && id <= 0x9414) || (id >= 0x9CC0 && id < 0x9EC0):
@@ -668,6 +735,9 @@ namespace ACSE
                     return ItemType.Building;
                 case SaveType.CityFolk:
                     return ItemType.Invalid;
+
+                // New Leaf
+                
                 case SaveType.NewLeaf when id == 0x7FFE:
                     return 0;
                 case SaveType.NewLeaf when id == 0x009D:
@@ -711,6 +781,9 @@ namespace ACSE
                     return ItemType.Occupied;
                 case SaveType.NewLeaf:
                     return ItemType.Furniture; //Just until I gather furniture offsets
+
+                // Welcome Amiibo
+
                 case SaveType.WelcomeAmiibo when id == 0x7FFE:
                     return 0;
                 case SaveType.WelcomeAmiibo when (id >= 0x0005 && id <= 0x007B) || (id >= 0x0080 && id <= 0x0097):

@@ -1178,7 +1178,7 @@ namespace ACSE
 
             if (_shirtEditor == null)
             {
-                _shirtEditor = new SingleItemEditor(this, _selectedPlayer.Data.Shirt, 16)
+                _shirtEditor = new SingleItemEditor(this, _selectedPlayer?.Data.Shirt, 16)
                 {
                     Location = new Point(98, 249)
                 };
@@ -1194,7 +1194,7 @@ namespace ACSE
                 playersTab.Controls.Add(_shirtEditor);
             }
 
-            _inventoryEditor = new ItemEditor(this, _selectedPlayer.Data.Pockets.Items, save.SaveGeneration == SaveGeneration.N3DS ? 4 : 5, 16)
+            _inventoryEditor = new ItemEditor(this, _selectedPlayer?.Data.Pockets.Items, save.SaveGeneration == SaveGeneration.N3DS ? 4 : 5, 16)
             {
                 Location = new Point(26, 340),
                 HoverText = "{0} ({2}) - [0x{1}]"
@@ -1215,7 +1215,7 @@ namespace ACSE
                         break;
                 }
 
-                _dresserEditor = new ItemEditor(this, _selectedPlayer.Data.Dressers, itemsPerRow, 16)
+                _dresserEditor = new ItemEditor(this, _selectedPlayer?.Data.Dressers, itemsPerRow, 16)
                 {
                     Location = new Point(202, 340)
                 };
@@ -1225,7 +1225,7 @@ namespace ACSE
 
             if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
-                _islandBoxEditor = new ItemEditor(this, _selectedPlayer.Data.IslandBox, 5, 16)
+                _islandBoxEditor = new ItemEditor(this, _selectedPlayer?.Data.IslandBox, 5, 16)
                 {
                     Location = new Point(114, 340)
                 };
@@ -2095,6 +2095,7 @@ namespace ACSE
                             BackgroundImageLayout = ImageLayout.Stretch,
                             SizeMode = PictureBoxSizeMode.StretchImage,
                             UseInternalInterpolationSetting = true,
+                            Tag = townAcre
                         };
                         townAcreCount++;
                         _townAcreMap[townAcre].MouseMove += (sender, e) => TownMove(sender, e);
@@ -2174,6 +2175,7 @@ namespace ACSE
                             BackgroundImageLayout = ImageLayout.Stretch,
                             InterpolationMode = InterpolationMode.HighQualityBicubic,
                             UseInternalInterpolationSetting = false,
+                            Tag = idx
                         };
                         if (SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus || SaveFile.SaveType == SaveType.AnimalForestEPlus)
                         {
@@ -2609,7 +2611,7 @@ namespace ACSE
 
         #endregion
 
-        private Bitmap GenerateAcreItemsBitmap(WorldItem[] items, int acre, bool islandAcre = false)
+        private Bitmap GenerateAcreItemsBitmap(WorldItem[] items, int acre, bool islandAcre = false, int hoveredAcre = -1, int xLoc = -1, int yLoc = -1)
         {
             var itemSize = _townMapCellSize;
             var acreSize = _townMapTotalSize;
@@ -2639,6 +2641,13 @@ namespace ACSE
             acreBitmap.UnlockBits(bitmapData);
             // Draw Buried X
             ImageGeneration.DrawBuriedIcons(acreBitmap, items, _townMapCellSize);
+
+            // Draw Current Cell Glow
+            if (hoveredAcre == acre && hoveredAcre > -1 && xLoc > -1 && yLoc > -1)
+            {
+                ImageGeneration.OverlayItemBoxGlow(acreBitmap, itemSize, xLoc, yLoc);
+            }
+
             // Draw Buildings (if needed)
             if (SaveFile.SaveGeneration == SaveGeneration.Wii || SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
@@ -3716,60 +3725,71 @@ namespace ACSE
             }
         }
 
-        private int _lastTownX, _lastTownY;
+        private int _lastTownAcre, _lastTownIndex;
         private void TownMove(object sender, MouseEventArgs e, bool island = false, bool forceOverride = false)
         {
-            if (!(sender is PictureBoxWithInterpolationMode box)) return;
-            box.Capture = false;
-            if ((!forceOverride && (e.X == _lastTownX && e.Y == _lastTownY)) || SaveFile == null) return;
-            townToolTip.Hide(this);
-            townToolTip.RemoveAll();
-            _lastTownX = e.X;
-            _lastTownY = e.Y;
-            var idx = island ? Array.IndexOf(_islandAcreMap, box) : Array.IndexOf(_townAcreMap, box);
+            if (SaveFile == null || !(sender is PictureBoxWithInterpolationMode box)) return;
             var x = e.X / _townMapCellSize;
             var y = e.Y / _townMapCellSize;
             var index = x + y * 16;
-            var acre = idx;
 
-            if (index > 255 || TownAcres?[acre] == null)
-                return;
+            if (!forceOverride && index == _lastTownIndex) return;
+            _lastTownIndex = index;
+
+            var acre = (int) box.Tag;
+            if (index > 255 || TownAcres?[acre] == null) return;
 
             // Set Info Label
             townInfoLabel.Text = $"X: {x} | Y: {y} | Index: {index}";
             townInfoLabel.Refresh();
 
             WorldItem item;
+            WorldItem[] items;
             if (island)
             {
+                items = _selectedIsland == null ? IslandAcres[acre].AcreItems : _selectedIsland.Items[acre];
                 item = _selectedIsland == null ? IslandAcres[acre].AcreItems[index] : _selectedIsland.Items[acre][index];
             }
             else
             {
+                items = TownAcres[acre].AcreItems;
                 item = TownAcres[acre].AcreItems[index];
             }
 
             if (_clicking && !forceOverride)
+            {
                 HandleTownClick(sender, item, acre, index, e, island);
+            }
+
+            // Draw ToolTip
             if (_buildings != null)
             {
                 var b = CheckBuildingIsHere(acre, x, y, island);
-                if (b != null)
-                    townToolTip.Show($"{b.Name} - [0x{b.Id:X2} - Building]", box, e.X + 15, e.Y + 10);
-                else if (item != null)
-                    townToolTip.Show(
-                        $"{item.Name}{(item.Buried ? " (Buried)" : (item.Watered ? " (Watered)" : (item.Flag1 == 1 ? " (Perfect Fruit)" : "")))} - [0x{item.ItemId:X4}]",
-                        box, e.X + 15, e.Y + 10);
+                townToolTip.Show(
+                    b != null
+                        ? $"{b.Name} - [0x{b.Id:X2} - Building]"
+                        : $"{item.Name}{(item.Buried ? " (Buried)" : (item.Watered ? " (Watered)" : (item.Flag1 == 1 ? " (Perfect Fruit)" : "")))} - [0x{item.ItemId:X4}]",
+                    box, e.X + 15, e.Y + 10, int.MaxValue);
             }
             else
-                townToolTip.Show($"{item.Name}{(item.Buried ? " (Buried)" : "")} - [0x{item.ItemId:X4}]", box, e.X + 15, e.Y + 10);
+            {
+                townToolTip.Show($"{item.Name}{(item.Buried ? " (Buried)" : "")} - [0x{item.ItemId:X4}]", box, e.X + 15,
+                    e.Y + 10, int.MaxValue);
+            }
+            
+            // Draw Cell Highlight
+            RefreshPictureBoxImage(box, GenerateAcreItemsBitmap(items, acre, island, acre, x, y));
+            box.Refresh();
+
+            if (acre == _lastTownAcre) return;
+            RefreshPictureBoxImage(_townAcreMap[_lastTownAcre], GenerateAcreItemsBitmap(TownAcres[_lastTownAcre].AcreItems, _lastTownAcre));
+            _townAcreMap[_lastTownAcre].Refresh();
+            _lastTownAcre = acre;
         }
 
         private void HideTownTip(object sender, EventArgs e)
         {
             townToolTip.Hide(this);
-            _lastTownX = 0;
-            _lastTownY = 0;
         }
 
         private void TownMouseDown(object sender, MouseEventArgs e, bool island = false)

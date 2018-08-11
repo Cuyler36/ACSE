@@ -93,6 +93,16 @@ namespace ACSE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BoxGlow {
+            get {
+                object obj = ResourceManager.GetObject("BoxGlow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Building {
             get {
                 object obj = ResourceManager.GetObject("Building", resourceCulture);

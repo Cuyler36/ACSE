@@ -82,6 +82,7 @@
     </None>
     <None Include="Resources\Animal_Crossing_NL_Badges_28x28.png" />
     <None Include="Resources\Animal_Crossing_NL_NoBadge_28x28.png" />
+    <None Include="Resources\BoxGlow.png" />
     <Content Include="Resources\CF_Acres_en.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
