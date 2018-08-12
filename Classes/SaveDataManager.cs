@@ -210,6 +210,7 @@ namespace ACSE
             Weather = 0x22B19,
             BuriedData = 0x22B1C,
             BuriedDataSize = 0x3C0,
+            // Town Flags? 0x23002 (0x80 = Bridge Placed)
             GrassType = 0x24484,
             // Shop update in progress byte (0x2E004 (Has to be 1B))
             TownNameSize = 6,

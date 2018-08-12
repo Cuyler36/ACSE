@@ -3737,9 +3737,10 @@ namespace ACSE
 
             if (!forceOverride && index == _lastTownIndex) return;
             _lastTownIndex = index;
+            box.Capture = false;
 
             var acre = (int) box.Tag;
-            if (index > 255 || TownAcres?[acre] == null) return;
+            if (index < 0 || index > 255 || TownAcres == null || acre >= TownAcres.Length) return;
 
             // Set Info Label
             townInfoLabel.Text = $"X: {x} | Y: {y} | Index: {index}";

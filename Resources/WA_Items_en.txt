@@ -1,4 +1,4 @@
-//Nothing
+ï»¿//Nothing
 0x7FFE, Empty
 //Patterns
 0x009D, Pattern
@@ -481,7 +481,7 @@
 0x212E, K.K. Swing
 0x212F, K.K. Jazz
 0x2130, K.K. Fusion
-0x2131, K.K. Étude
+0x2131, K.K. Ã‰tude
 0x2132, K.K. Lullaby
 0x2133, K.K. Aria
 0x2134, K.K. Samba
@@ -524,9 +524,9 @@
 0x2159, K.K. Dirge
 0x215A, K.K. Western
 0x215B, Mr. K.K.
-0x215C, Café K.K.
+0x215C, CafÃ© K.K.
 0x215D, K.K. Parade
-0x215E, Señor K.K.
+0x215E, SeÃ±or K.K.
 0x215F, K.K. Song
 0x2160, I Love You
 0x2161, Two Days Ago
@@ -856,7 +856,7 @@
 0x2357, Robo-Wall
 0x2358, Snowman Wall
 0x2359, Forest Wall
-0x235A, Pavé Wall
+0x235A, PavÃ© Wall
 0x235B, Egg Wall
 0x235C, Spooky Wall
 0x235D, Harvest Wall
@@ -982,7 +982,7 @@
 0x23D5, Train-Window Wall
 0x23D6, Waiting-Room Wall
 0x23D7, Steel-Frame Wall
-0x23D8, Café-Curtain Wall
+0x23D8, CafÃ©-Curtain Wall
 0x23D9, White Brick Wall
 0x23DA, Bamboo-Grove Wall
 0x23DB, Rice-Paddy Wall
@@ -1015,7 +1015,7 @@
 0x23F6, Robo-Floor
 0x23F7, Snowman Carpet
 0x23F8, Forest Floor
-0x23F9, Pavé Floor
+0x23F9, PavÃ© Floor
 0x23FA, Egg Floor
 0x23FB, Spooky Carpet
 0x23FC, Harvest Rug
@@ -1225,7 +1225,7 @@
 0x24C9, Blue Tie-Dye Tee
 0x24CA, Red Tie-Dye Tee
 0x24CB, Bold-Check Tee
-0x24CC, Café Tee
+0x24CC, CafÃ© Tee
 0x24CD, Checkered Tee
 0x24CE, Blue-Check Tee
 0x24CF, Red-Check Tee
@@ -1500,7 +1500,7 @@
 0x25DC, Blue Pj Shirt
 0x25DD, Canary Shirt
 0x25DE, Flight-Crew Shirt
-0x25DF, Café Uniform
+0x25DF, CafÃ© Uniform
 0x25E0, Peacoat
 0x25E1, Shearling Coat
 0x25E2, Mod Shirt
@@ -2693,17 +2693,17 @@
 0x2A81, Mush Wall Lamp
 0x2A82, Mush TV
 0x2A83, Mush Hanger
-0x2A84, Pavé Bed
-0x2A85, Pavé Chest
-0x2A86, Pavé Closet
-0x2A87, Pavé Sofa
-0x2A88, Pavé Chair
-0x2A89, Pavé Table
-0x2A8A, Pavé End Table
-0x2A8B, Pavé Bookshelf
-0x2A8C, Pavé Bureau
-0x2A8D, Pavé Lamp
-0x2A8E, Pavé Clock
+0x2A84, PavÃ© Bed
+0x2A85, PavÃ© Chest
+0x2A86, PavÃ© Closet
+0x2A87, PavÃ© Sofa
+0x2A88, PavÃ© Chair
+0x2A89, PavÃ© Table
+0x2A8A, PavÃ© End Table
+0x2A8B, PavÃ© Bookshelf
+0x2A8C, PavÃ© Bureau
+0x2A8D, PavÃ© Lamp
+0x2A8E, PavÃ© Clock
 0x2A8F, Egg Bed
 0x2A90, Egg Dresser
 0x2A91, Egg Wardrobe
@@ -3700,7 +3700,7 @@
 0x2E70, Sitar
 0x2E71, Ayers Rock
 0x2E72, Smoker
-0x2E73, Gaudí's Lizard
+0x2E73, GaudÃ­'s Lizard
 0x2E74, Songpyeon
 0x2E75, Bagpipes
 0x2E76, Big Ben
@@ -4790,7 +4790,7 @@
 0x32DD, Pic of Spike
 0x32DE, Pic of Hornsby
 0x32DF, Pic of Merengue
-0x32E0, Pic of Renée
+0x32E0, Pic of RenÃ©e
 0x32E1, Pic of Vesta
 0x32E2, Pic of Baabara
 0x32E3, Pic of Eunice
@@ -4803,7 +4803,7 @@
 0x32EA, Pic of Frita
 0x32EB, Pic of Muffy
 0x32EC, Pic of Pietro
-0x32ED, Pic of Étoile
+0x32ED, Pic of Ã‰toile
 0x32EE, Pic of Peanut
 0x32EF, Pic of Blaire
 0x32F0, Pic of Filbert
@@ -4823,7 +4823,7 @@
 0x32FE, Pic of Marshal
 0x32FF, Pic of Hazel
 0x3300, Pic of Cece
-0x3301, Pic of Viché
+0x3301, Pic of VichÃ©
 0x3302, Pic of Rolf
 0x3303, Pic of Rowan
 0x3304, Pic of Tybalt
@@ -4869,7 +4869,7 @@
 0x332D, Pic of Lyle
 0x332E, Pic of Blathers
 0x332F, Pic of Celeste
-0x3330, Pic of Pavé
+0x3330, Pic of PavÃ©
 0x3331, Pic of Pelly
 0x3332, Pic of Phyllis
 0x3333, Pic of Brewster

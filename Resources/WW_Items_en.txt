@@ -1,4 +1,4 @@
-//Flowers
+﻿//Flowers
 0x0000, Red Tulips
 0x0001, White Tulips
 0x0002, Yellow Tulips
@@ -1080,9 +1080,9 @@
 0x1351, K.K. Dirge
 0x1352, K.K. Western
 0x1353, Mr. K.K.
-0x1354, Caf� K.K.
+0x1354, Café K.K.
 0x1355, K.K. Parade
-0x1356, Senor K.K.
+0x1356, Señor K.K.
 0x1357, K.K. Song
 0x1358, I Love You
 0x1359, Two Days Ago

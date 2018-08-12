@@ -1,4 +1,4 @@
-0x0001, Dead Sapling
+ï»¿0x0001, Dead Sapling
 0x0002, Dead Sapling
 0x0003, Dead Cedar Sapling
 0x0004, Dead Palm Sapling
@@ -473,7 +473,7 @@
 0x94BC, K.K. Swing
 0x94C0, K.K. Jazz
 0x94C4, K.K. Fusion
-0x94C8, K.K. Étude
+0x94C8, K.K. Ã‰tude
 0x94CC, K.K. Lullaby
 0x94D0, K.K. Aria
 0x94D4, K.K. Samba
@@ -516,9 +516,9 @@
 0x9568, K.K. Dirge
 0x956C, K.K. Western
 0x9570, Mr. K.K.
-0x9574, Café K.K.
+0x9574, CafÃ© K.K.
 0x9578, K.K. Parade
-0x957C, Señor K.K.
+0x957C, SeÃ±or K.K.
 0x9580, K.K. Song
 0x9584, I Love You
 0x9588, Two Days Ago
@@ -1109,7 +1109,7 @@
 0x9FD0, Snowman Wall
 0x9FD4, Forest Wall
 0x9FD8, Egg Wall
-0x9FDC, Pavé Wall
+0x9FDC, PavÃ© Wall
 0x9FE0, Spooky Wall
 0x9FE4, Harvest Wall
 0x9FE8, Jingle Wall
@@ -1199,7 +1199,7 @@
 0xA2EC, Robo-floor
 0xA2F0, Snowman Carpet
 0xA2F4, Forest Floor
-0xA2F8, Pavé Floor
+0xA2F8, PavÃ© Floor
 0xA2FC, Egg Floor
 0xA300, Spooky Carpet
 0xA304, Harvest Rug
@@ -2132,16 +2132,16 @@
 0xB934, Mush Lamp
 0xB938, Mush Stand
 0xB93C, Mush TV
-0xB940, Pavé Bed
-0xB944, Pavé Chest
-0xB948, Pavé Closet
-0xB94C, Pavé Sofa
-0xB950, Pavé Chair
-0xB954, Pavé Table
-0xB958, Pavé End Table
-0xB95C, Pavé Bookshelf
-0xB960, Pavé Bureau
-0xB964, Pavé Lamp
+0xB940, PavÃ© Bed
+0xB944, PavÃ© Chest
+0xB948, PavÃ© Closet
+0xB94C, PavÃ© Sofa
+0xB950, PavÃ© Chair
+0xB954, PavÃ© Table
+0xB958, PavÃ© End Table
+0xB95C, PavÃ© Bookshelf
+0xB960, PavÃ© Bureau
+0xB964, PavÃ© Lamp
 0xB968, Egg Bed
 0xB96C, Egg Dresser
 0xB970, Egg Wardrobe

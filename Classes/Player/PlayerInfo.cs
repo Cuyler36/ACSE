@@ -313,6 +313,7 @@ namespace ACSE
             PocketsCount = 15,
             Bells = 0x94,
             Debt = 0x98,
+            // + 0x5C4 = Quest Data? 5 entries each 0x78 long.
             HeldItem = 0x874,
             InventoryBackground = 0xFF0,
             Shirt = 0xFF6,

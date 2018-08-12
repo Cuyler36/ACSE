@@ -1,4 +1,4 @@
-// Nothing
+ï»¿// Nothing
 0x7FFE, Empty
 // Pattern
 0x009D, Pattern
@@ -752,7 +752,7 @@
 0x2129, K.K. Swing
 0x212A, K.K. Jazz
 0x212B, K.K. Fusion
-0x212C, K.K. Étude
+0x212C, K.K. Ã‰tude
 0x212D, K.K. Lullaby
 0x212E, K.K. Aria
 0x212F, K.K. Samba
@@ -795,9 +795,9 @@
 0x2154, K.K. Dirge
 0x2155, K.K. Western
 0x2156, Mr. K.K.
-0x2157, Café K.K.
+0x2157, CafÃ© K.K.
 0x2158, K.K. Parade
-0x2159, Señor K.K.
+0x2159, SeÃ±or K.K.
 0x215A, K.K. Song
 0x215B, I Love You
 0x215C, Two Days Ago
@@ -843,7 +843,7 @@
 0x2187, K.K. Swing (1)
 0x2188, K.K. Jazz (1)
 0x2189, K.K. Fusion (1)
-0x218A, K.K. Étude (1)
+0x218A, K.K. Ã‰tude (1)
 0x218B, K.K. Lullaby (1)
 0x218C, K.K. Aria (1)
 0x218D, K.K. Samba (1)
@@ -886,9 +886,9 @@
 0x21B2, K.K. Dirge (1)
 0x21B3, K.K. Western (1)
 0x21B4, Mr. K.K. (1)
-0x21B5, Café K.K. (1)
+0x21B5, CafÃ© K.K. (1)
 0x21B6, K.K. Parade (1)
-0x21B7, Señor K.K. (1)
+0x21B7, SeÃ±or K.K. (1)
 0x21B8, K.K. Song (1)
 0x21B9, I Love You (1)
 0x21BA, Two Days Ago (1)
@@ -934,7 +934,7 @@
 0x21E2, K.K. Swing (2)
 0x21E3, K.K. Jazz (2)
 0x21E4, K.K. Fusion (2)
-0x21E5, K.K. Étude (2)
+0x21E5, K.K. Ã‰tude (2)
 0x21E6, K.K. Lullaby (2)
 0x21E7, K.K. Aria (2)
 0x21E8, K.K. Samba (2)
@@ -977,9 +977,9 @@
 0x220D, K.K. Dirge (2)
 0x220E, K.K. Western (2)
 0x220F, Mr. K.K. (2)
-0x2210, Café K.K. (2)
+0x2210, CafÃ© K.K. (2)
 0x2211, K.K. Parade (2)
-0x2212, Señor K.K. (2)
+0x2212, SeÃ±or K.K. (2)
 0x2213, K.K. Song (2)
 0x2214, I Love You (2)
 0x2215, Two Days Ago (2)
@@ -1377,7 +1377,7 @@
 0x3008, Pic Of Tank
 0x3009, Pic Of Rhonda
 0x300A, Pic Of Merengue
-0x300B, Pic Of Renée
+0x300B, Pic Of RenÃ©e
 0x300C, Pic Of Vesta
 0x300D, Pic Of Baabara
 0x300E, Pic Of Eunice
@@ -1810,7 +1810,7 @@
 0x234D, Robo-wall
 0x234E, Snowman Wall
 0x234F, Forest Wall
-0x2350, Pavé Wall
+0x2350, PavÃ© Wall
 0x2351, Egg Wall
 0x2352, Spooky Wall
 0x2353, Harvest Wall
@@ -1944,7 +1944,7 @@
 0x23D2, Robo-floor
 0x23D3, Snowman Carpet
 0x23D4, Forest Floor
-0x23D5, Pavé Floor
+0x23D5, PavÃ© Floor
 0x23D6, Egg Floor
 0x23D7, Spooky Carpet
 0x23D8, Harvest Rug
@@ -2112,7 +2112,7 @@
 0x247C, Blue Tie-dye Tee
 0x247D, Red Tie-dye Tee
 0x247E, Bold-check Tee
-0x247F, Café Tee
+0x247F, CafÃ© Tee
 0x2480, Checkered Tee
 0x2481, Blue-check Tee
 0x2482, Red-check Tee
@@ -2387,7 +2387,7 @@
 0x258F, Blue Pj Shirt
 0x2590, Canary Shirt
 0x2591, Flight-crew Shirt
-0x2592, Café Uniform
+0x2592, CafÃ© Uniform
 0x2593, Peacoat
 0x2594, Shearling Coat
 0x2595, Mod Shirt
@@ -3421,17 +3421,17 @@
 0x29D7, Mush Wall Lamp
 0x29D8, Mush TV
 0x29D9, Mush Hanger
-0x29DA, Pavé Bed
-0x29DB, Pavé Chest
-0x29DC, Pavé Closet
-0x29DD, Pavé Sofa
-0x29DE, Pavé Chair
-0x29DF, Pavé Table
-0x29E0, Pavé End Table
-0x29E1, Pavé Bookshelf
-0x29E2, Pavé Bureau
-0x29E3, Pavé Lamp
-0x29E4, Pavé Clock
+0x29DA, PavÃ© Bed
+0x29DB, PavÃ© Chest
+0x29DC, PavÃ© Closet
+0x29DD, PavÃ© Sofa
+0x29DE, PavÃ© Chair
+0x29DF, PavÃ© Table
+0x29E0, PavÃ© End Table
+0x29E1, PavÃ© Bookshelf
+0x29E2, PavÃ© Bureau
+0x29E3, PavÃ© Lamp
+0x29E4, PavÃ© Clock
 0x29E5, Egg Bed
 0x29E6, Egg Dresser
 0x29E7, Egg Wardrobe
@@ -4428,7 +4428,7 @@
 0x2DC6, Sitar
 0x2DC7, Ayers Rock
 0x2DC8, Smoker
-0x2DC9, Gaudí's Lizard
+0x2DC9, GaudÃ­'s Lizard
 0x2DCA, Songpyeon
 0x2DCB, Bagpipes
 0x2DCC, Big Ben
