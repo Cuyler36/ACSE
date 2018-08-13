@@ -4714,30 +4714,41 @@ namespace ACSE
                 !ushort.TryParse(_replaceItemBox.Text, NumberStyles.HexNumber, null, out var replaceId) ||
                 !ushort.TryParse(_replacingItemBox.Text, NumberStyles.HexNumber, null, out var replacingId)) return;
             var replacingName = ItemData.GetItemName(replacingId);
-            var unbury = replacingName.Equals("Empty");
+            var replacingType = ItemData.GetItemType(replacingId, SaveFile.SaveType);
+            var unbury = replacingType == ItemType.Empty;
+            var replacedItems = 0;
                 
             for (var i = 0; i < TownAcres.Length; i++)
             {
                 var changed = false;
                 var acre = TownAcres[i];
-                if (acre.AcreItems != null)
+                if (acre.AcreItems == null) continue;
+
+                foreach (var item in acre.AcreItems)
                 {
-                    foreach (var item in acre.AcreItems)
-                    {
-                        if (item.ItemId != replaceId) continue;
+                    if (item.ItemId != replaceId) continue;
 
-                        changed = true;
-                        item.ItemId = replacingId;
-                        item.Name = replacingName;
-                        if (!item.Buried || !unbury) continue;
+                    changed = true;
+                    replacedItems++;
+                    SaveFile.ChangesMade = true;
+                    item.ItemId = replacingId;
+                    item.Name = replacingName;
+                    item.Type = replacingType;
+                    if (!item.Buried || !unbury) continue;
 
-                        item.Buried = false;
-                        item.Flag1 &= 0x7F;
-                    }
+                    item.Buried = false;
+                    item.Flag1 &= 0x7F;
                 }
+
                 if (changed)
-                    RefreshPictureBoxImage(_townAcreMap[i], GenerateAcreItemsBitmap(acre.AcreItems, i)); // TODO: Make this work on island acres somehow.
+                {
+                    RefreshPictureBoxImage(_townAcreMap[i],
+                        GenerateAcreItemsBitmap(acre.AcreItems, i)); // TODO: Make this work on island acres somehow.
+                }
             }
+
+            MessageBox.Show($"Replaced {replacedItems} items were replaced with {replacingName}!", "Replace Info",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void SettingsToolStripMenuItemClick(object sender, EventArgs e)
