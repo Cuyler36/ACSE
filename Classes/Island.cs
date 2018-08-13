@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ACSE
 {
@@ -182,25 +183,27 @@ namespace ACSE
             return worldPosition / 8;
         }
 
-        private static void SetBuried(WorldItem item, int acre, IReadOnlyList<byte> burriedItemData, SaveType saveType)
+        private static void SetBuried(WorldItem item, int acre, IReadOnlyList<byte> buriedItemData, SaveType saveType)
         {
             var burriedDataOffset = GetBuriedDataLocation(item, acre, saveType);
-            if (burriedDataOffset > -1 && burriedDataOffset < burriedItemData.Count)
-                item.Buried = DataConverter.ToBit(burriedItemData[burriedDataOffset], item.Location.X % 8) == 1;
+            if (burriedDataOffset > -1 && burriedDataOffset < buriedItemData.Count)
+            {
+                item.Buried = buriedItemData[burriedDataOffset].GetBit(item.Location.X % 8) == 1;
+            }
         }
 
         // TODO: Make a toggle to enable/disable the island.
         private bool IsPurchased()
             => (_saveFile.ReadByte(_offset + IslandInfoFlag) & 0x80) == 0x80;
 
-        public void SetBuriedInMemory(WorldItem item, int acre, byte[] burriedItemData, bool buried, SaveType saveType)
+        public void SetBuriedInMemory(WorldItem item, int acre, byte[] buriedItemData, bool buried, SaveType saveType)
         {
             if (saveType == SaveType.NewLeaf || saveType == SaveType.WelcomeAmiibo) return;
             var buriedLocation = GetBuriedDataLocation(item, acre, saveType);
             if (buriedLocation > -1)
             {
-                DataConverter.SetBit(ref burriedItemData[buriedLocation], item.Location.X % 8, buried);
-                item.Buried = DataConverter.ToBit(burriedItemData[buriedLocation], item.Location.X % 8) == 1;
+                buriedItemData[buriedLocation].SetBit(item.Location.X % 8, buried);
+                item.Buried = buriedItemData[buriedLocation].GetBit(item.Location.X % 8) == 1;
             }
             else
                 item.Buried = false;

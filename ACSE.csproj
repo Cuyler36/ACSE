@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -7,7 +7,7 @@
     <OutputType>WinExe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>ACSE</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -41,6 +41,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <NoWarn>IDE1006</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -4860,6 +4861,7 @@
     <Compile Include="Classes\Emotion.cs" />
     <Compile Include="Classes\Extensions\ArrayExtensions.cs" />
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
+    <Compile Include="Classes\Extensions\DataExtensions.cs" />
     <Compile Include="Classes\Extensions\LinqExtensions.cs" />
     <Compile Include="Classes\Extensions\PointExtension.cs" />
     <Compile Include="Classes\Generators\Generator.cs" />
@@ -4949,7 +4951,6 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Checksum.cs" />
-    <Compile Include="Classes\DataConverter.cs" />
     <Compile Include="Classes\House\HouseData.cs" />
     <Compile Include="Classes\Inventory.cs" />
     <Compile Include="Classes\Item\ItemData.cs" />
@@ -5025,6 +5026,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".git\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

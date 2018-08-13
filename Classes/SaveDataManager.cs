@@ -1046,16 +1046,5 @@ namespace ACSE
 
             return filedList;
         }
-
-        public static void GetNibbles(byte byteToSplit, out byte lowerNibble, out byte upperNibble)
-        {
-            lowerNibble = (byte)(byteToSplit & 0x0F);
-            upperNibble = (byte)((byteToSplit & 0xF0) >> 4);
-        }
-
-        public static byte CondenseNibbles(byte lowerNibble, byte upperNibble)
-        {
-            return (byte)(((upperNibble & 0x0F) << 4) + lowerNibble & 0x0F);
-        }
     }
 }

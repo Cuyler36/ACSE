@@ -51,7 +51,7 @@ namespace ACSE
 
         public WorldAcre(ushort acreId, int position) : base(acreId, position) { }
 
-        public WorldAcre(ushort acreId, int position, uint[] items = null, byte[] burriedItemData = null, SaveType saveType = SaveType.AnimalCrossing)
+        public WorldAcre(ushort acreId, int position, uint[] items = null, byte[] buriedItemData = null, SaveType saveType = SaveType.AnimalCrossing)
             : this(acreId, position, null, null, saveType, items) { }
 
         public WorldAcre(ushort acreId, int position, WorldItem[] items, byte[] buriedItemData = null, SaveType saveType = SaveType.AnimalCrossing, int townPosition = -1) : base(acreId, position)
@@ -81,39 +81,26 @@ namespace ACSE
             return worldPosition / 8;
         }
 
-        public void SetBuriedInMemory(WorldItem item, int acre, byte[] burriedItemData, bool buried, SaveType saveType)
+        public void SetBuriedInMemory(WorldItem item, int acre, byte[] buriedItemData, bool buried, SaveType saveType)
         {
             if (saveType == SaveType.NewLeaf || saveType == SaveType.WelcomeAmiibo) return;
             var buriedLocation = GetBuriedDataLocation(item, acre, saveType);
             if (buriedLocation > -1)
             {
-                DataConverter.SetBit(ref burriedItemData[buriedLocation], item.Location.X % 8, buried);
-                item.Buried = DataConverter.ToBit(burriedItemData[buriedLocation], item.Location.X % 8) == 1;
-            }
-            else
-                item.Buried = false;
-        }
-        //Correct decoding/setting of buried items. Fixes the hacky SaveType case for AC/CF. (Don't forget to implement this!)
-        private void SetBuriedInMemoryFixed(WorldItem item, int acre, ushort[] buriedItemData, bool buried, SaveType saveType)
-        {
-            if (saveType == SaveType.NewLeaf || saveType == SaveType.WelcomeAmiibo) return;
-            var buriedLocation = (acre * 256 + item.Index) / 16;
-            if (buriedLocation > -1)
-            {
-                var buriedRowBytes = BitConverter.GetBytes(buriedItemData[buriedLocation]);
-                DataConverter.SetBit(ref buriedRowBytes[item.Location.X / 8], item.Location.X % 8, buried); //Should probably rewrite bit editing functions to take any data type
-                item.Buried = DataConverter.ToBit(buriedRowBytes[item.Location.X / 8], item.Location.X % 8) == 1;
-                buriedItemData[buriedLocation] = BitConverter.ToUInt16(buriedRowBytes, 0);
+                buriedItemData[buriedLocation].SetBit(item.Location.X % 8, buried);
+                item.Buried = buriedItemData[buriedLocation].GetBit(item.Location.X % 8) == 1;
             }
             else
                 item.Buried = false;
         }
 
-        private static void SetBuried(WorldItem item, int acre, byte[] burriedItemData, SaveType saveType)
+        private static void SetBuried(WorldItem item, int acre, byte[] buriedItemData, SaveType saveType)
         {
             var burriedDataOffset = GetBuriedDataLocation(item, acre, saveType);
-            if (burriedDataOffset > -1 && burriedDataOffset < burriedItemData.Length)
-                item.Buried = DataConverter.ToBit(burriedItemData[burriedDataOffset], item.Location.X % 8) == 1;
+            if (burriedDataOffset > -1 && burriedDataOffset < buriedItemData.Length)
+            {
+                item.Buried = buriedItemData[burriedDataOffset].GetBit(item.Location.X % 8) == 1;
+            }
         }
 
         /// <summary>

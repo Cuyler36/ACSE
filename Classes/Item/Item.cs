@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace ACSE
 {
@@ -307,8 +308,13 @@ namespace ACSE
             //Upper Nibble = Acre
             //Lower Nibble = Position in Acre
             //I say this, as a town hall in New Leaf with location bytes of X = 0x28, Y = 0x19 is positioned on the third X acre and second Y acre at 0x8, 0x9.
-            SaveDataManager.GetNibbles(x, out XPos, out AcreX);
-            SaveDataManager.GetNibbles(y, out YPos, out AcreY);
+            var (xpos, acrex) = x.GetNibbles();
+            var (ypos, acrey) = y.GetNibbles();
+            XPos = xpos;
+            AcreX = acrex;
+            YPos = ypos;
+            AcreY = acrey;
+
             AcreIndex = (byte)((AcreY - 1) * 5 + (AcreX - 1)); // * 5 works here because both CF and NL use 5 X acres
             if (AcreIndex > 24) //Works for NL too, since the dock is located in the 5th Y acre row.
                 AcreIndex = 0;
