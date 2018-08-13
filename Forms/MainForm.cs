@@ -820,9 +820,10 @@ namespace ACSE
             // Load islands if DnMe+
             _selectedIsland = null;
             _islands = null;
-            islandSelectionTab.Visible = save.SaveType == SaveType.DoubutsuNoMoriEPlus || save.SaveType == SaveType.AnimalForestEPlus;
+            
             if (save.SaveType == SaveType.DoubutsuNoMoriEPlus || save.SaveType == SaveType.AnimalForestEPlus)
             {
+                islandSelectionTab.Visible = true;
                 _islands = new Island[4];
 
                 for (var i = 0; i < 4; i++)
@@ -833,6 +834,10 @@ namespace ACSE
 
                 islandSelectionTab.SelectedIndex = 0;
                 _selectedIsland = _islands[0];
+            }
+            else
+            {
+                islandSelectionTab.Visible = false;
             }
 
             //Load Town Info
@@ -845,37 +850,51 @@ namespace ACSE
                 {
                     _acreInfo = SaveDataManager.GetAcreInfo(SaveType.WildWorld);
                     var x = 0;
-                    var acreData = save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData, 36);
-                    _buriedBuffer = save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData, CurrentSaveInfo.SaveOffsets.BuriedDataSize);
+                    var acreData = save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
+                        36);
+                    _buriedBuffer =
+                        save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
+                            CurrentSaveInfo.SaveOffsets.BuriedDataSize);
                     for (var i = 0; i < 36; i++)
                     {
                         if (i >= 7 && (i % 6 > 0 && i % 6 < 5) && i <= 28)
                         {
                             var itemsBuff = save.ReadUInt16Array(save.SaveDataStartOffset +
-                                CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256);
+                                                                 CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256);
                             TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.WildWorld);
                             x++;
                         }
+
                         _acres[i] = new WorldAcre(acreData[i], i);
                     }
                 }
-                else if (save.SaveGeneration == SaveGeneration.GCN || save.SaveGeneration == SaveGeneration.N64 || save.SaveGeneration == SaveGeneration.iQue)
+                else if (save.SaveGeneration == SaveGeneration.GCN || save.SaveGeneration == SaveGeneration.N64 ||
+                         save.SaveGeneration == SaveGeneration.iQue)
                 {
                     _uInt16AcreInfo = SaveDataManager.GetAcreInfoUInt16(save.SaveType);
                     var x = 0;
-                    var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData, CurrentSaveInfo.AcreCount, true);
-                    _buriedBuffer = save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData, CurrentSaveInfo.SaveOffsets.BuriedDataSize);
-                    _islandBuriedBuffer = save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandBuriedData, CurrentSaveInfo.SaveOffsets.IslandBuriedSize);
+                    var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
+                        CurrentSaveInfo.AcreCount, true);
+                    _buriedBuffer =
+                        save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
+                            CurrentSaveInfo.SaveOffsets.BuriedDataSize);
+                    _islandBuriedBuffer =
+                        save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandBuriedData,
+                            CurrentSaveInfo.SaveOffsets.IslandBuriedSize);
                     for (var i = 0; i < acreData.Length; i++)
                     {
                         if (i >= CurrentSaveInfo.XAcreCount + 1 && (i % CurrentSaveInfo.XAcreCount > 0
-                            && i % CurrentSaveInfo.XAcreCount < CurrentSaveInfo.XAcreCount - 1) && i <= 47)
+                                                                    && i % CurrentSaveInfo.XAcreCount <
+                                                                    CurrentSaveInfo.XAcreCount - 1) && i <= 47)
                         {
                             var itemsBuff = save.ReadUInt16Array(save.SaveDataStartOffset +
-                                CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256, true);
-                            TownAcres[x] = new WorldAcre(acreData[i], i, itemsBuff, _buriedBuffer, save.SaveType, null, x);
+                                                                 CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256,
+                                true);
+                            TownAcres[x] = new WorldAcre(acreData[i], i, itemsBuff, _buriedBuffer, save.SaveType, null,
+                                x);
                             x++;
                         }
+
                         _acres[i] = new WorldAcre(acreData[i], i);
                     }
                 }
@@ -884,18 +903,25 @@ namespace ACSE
                     _uInt16AcreInfo = SaveDataManager.GetAcreInfoUInt16(SaveType.CityFolk);
                     _buildings = ItemData.GetBuildings(save);
                     var x = 0;
-                    var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData, CurrentSaveInfo.AcreCount, true);
-                    _buriedBuffer = save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData, CurrentSaveInfo.SaveOffsets.BuriedDataSize);
+                    var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
+                        CurrentSaveInfo.AcreCount, true);
+                    _buriedBuffer =
+                        save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
+                            CurrentSaveInfo.SaveOffsets.BuriedDataSize);
                     for (var i = 0; i < acreData.Length; i++)
                     {
-                        if (i >= CurrentSaveInfo.XAcreCount + 1 && (i % CurrentSaveInfo.XAcreCount > 0
-                            && i % CurrentSaveInfo.XAcreCount < CurrentSaveInfo.XAcreCount - 1) && i <= 41)
+                        if (i >= CurrentSaveInfo.XAcreCount + 1
+                            && (i % CurrentSaveInfo.XAcreCount > 0
+                            && i % CurrentSaveInfo.XAcreCount < CurrentSaveInfo.XAcreCount - 1)
+                            && i <= 41)
                         {
-                            var itemsBuff = save.ReadUInt16Array(save.SaveDataStartOffset +
-                                CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256, true);
+                            var itemsBuff = save.ReadUInt16Array(
+                                save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256,
+                                true);
                             TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.CityFolk);
                             x++;
                         }
+
                         _acres[i] = new WorldAcre(acreData[i], i);
                     }
                 }
@@ -903,29 +929,35 @@ namespace ACSE
                 {
                     _uInt16AcreInfo = SaveDataManager.GetAcreInfoUInt16(SaveFile.SaveType);
 
-                //Load Past Villagers for NL/WA
-                _pastVillagers = new SimpleVillager[16];
+                    //Load Past Villagers for NL/WA
+                    _pastVillagers = new SimpleVillager[16];
                     for (var i = 0; i < 16; i++)
                     {
-                        var villagerId = save.ReadUInt16(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.PastVillagers + i * 2);
+                        var villagerId =
+                            save.ReadUInt16(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.PastVillagers +
+                                            i * 2);
                         _pastVillagers[i] = _villagerDatabase.Values.FirstOrDefault(o => o.VillagerId == villagerId);
                     }
 
-                //UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.New_Leaf);
-                _buildings = ItemData.GetBuildings(save);
+                    //UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.New_Leaf);
+                    _buildings = ItemData.GetBuildings(save);
                     _islandBuildings = ItemData.GetBuildings(save, true);
                     var x = 0;
-                    var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData, CurrentSaveInfo.AcreCount);
+                    var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
+                        CurrentSaveInfo.AcreCount);
                     for (var i = 0; i < acreData.Length; i++)
                     {
-                        if (i >= CurrentSaveInfo.XAcreCount + 1 && (i % CurrentSaveInfo.XAcreCount > 0
-                            && i % CurrentSaveInfo.XAcreCount < CurrentSaveInfo.XAcreCount - 1) && i <= 33)
+                        if (i >= CurrentSaveInfo.XAcreCount + 1
+                            && (i % CurrentSaveInfo.XAcreCount > 0
+                            && i % CurrentSaveInfo.XAcreCount < CurrentSaveInfo.XAcreCount - 1)
+                            && i <= 33)
                         {
                             var itemsBuff = save.ReadUInt32Array(save.SaveDataStartOffset +
-                                CurrentSaveInfo.SaveOffsets.TownData + x * 1024, 256);
+                                                                 CurrentSaveInfo.SaveOffsets.TownData + x * 1024, 256);
                             TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.NewLeaf);
                             x++;
                         }
+
                         _acres[i] = new WorldAcre(acreData[i], i);
                     }
                 }
@@ -4806,7 +4838,8 @@ namespace ACSE
                     SetStatusText("A new town layout was successfully generated with the seed: " + seed.Value);
                     break;
                 default:
-                    MessageBox.Show("Town Generation for this game hasn't been implemented yet!", "Generation Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Town Generation for this game hasn't been implemented yet!", "Generation Info",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     break;
             }
         }
