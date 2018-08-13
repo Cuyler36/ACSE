@@ -9,4 +9,3 @@ bin/
 obj/
 *.DotSettings
 *.user
-packages/
