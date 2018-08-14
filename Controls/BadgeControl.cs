@@ -6,6 +6,9 @@ namespace ACSE
 {
     public class BadgeControl : OffsetablePictureBox
     {
+        private static readonly Bitmap BadgeImage = Properties.Resources.Animal_Crossing_NL_Badges_28x28;
+        private static readonly Bitmap NoBadgeImage = Properties.Resources.Animal_Crossing_NL_NoBadge_28x28;
+
         private static readonly string[] BadgeNames = {
             "Fish Caught", "Insects Caught", "Marine Creatures Caught", "Fish Collection", "Insect Collection", "Marine Collection", "Balloons",
             "Towns Visited", "Town Visits", "Watering Flowers", "Savings", "Turnips", "Medals", "StreetPass", "Weeds Removed", "Shopping", "Letters",
@@ -91,12 +94,12 @@ namespace ACSE
             {
                 if (Stage == 0)
                 {
-                    Image = Properties.Resources.Animal_Crossing_NL_NoBadge_28x28;
+                    Image = NoBadgeImage;
                     Offset = new Point();
                 }
                 else
                 {
-                    Image = Properties.Resources.Animal_Crossing_NL_Badges_28x28;
+                    Image = BadgeImage;
                     Offset = new Point((Stage - 1) * 28, _index * 28);
                 }
             }

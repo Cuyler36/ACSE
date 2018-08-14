@@ -363,7 +363,7 @@ namespace ACSE
                 }
             }
             MainForm.DebugManager.WriteLine("Unable to find JPEG End-of-File marker. No TPC?", DebugLevel.Error);
-            return Properties.Resources.no_tpc;
+            return MainForm.NoTPC;
         }
 
         public static uint[] GetBitmapDataFromPng(string pngLocation)

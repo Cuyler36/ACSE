@@ -100,6 +100,14 @@ namespace ACSE
         private static int _acreMapSize = Properties.Settings.Default.AcreMapSize;
 
         #endregion
+
+        #region Static Resources
+
+        public static readonly Bitmap NoTPC = Properties.Resources.no_tpc;
+        public static readonly Bitmap ImageX = Properties.Resources.X;
+
+        #endregion
+
         #endregion
 
         public MainForm()
@@ -130,7 +138,7 @@ namespace ACSE
                 InterpolationMode = InterpolationMode.NearestNeighbor,
                 UseInternalInterpolationSetting = true,
                 SizeMode = PictureBoxSizeMode.StretchImage,
-                Image = Properties.Resources.no_tpc,
+                Image = NoTPC,
                 ContextMenuStrip = pictureContextMenu,
             };
 
@@ -513,7 +521,7 @@ namespace ACSE
             _buriedBuffer = null;
             _islandBuriedBuffer = null;
             _selectedHouse = null;
-            _tpcPicture.Image = Properties.Resources.no_tpc;
+            _tpcPicture.Image = NoTPC;
             _secureNandValueForm.Hide();
             _currentItem = new Item();
             itemFlag1.Text = "00";
@@ -1391,20 +1399,20 @@ namespace ACSE
                     playerHairColor.Enabled = false;
                     playerEyeColor.Enabled = false;
                     playerNookPoints.Enabled = false;
-                    bedPicturebox.Image = Properties.Resources.X;
+                    bedPicturebox.Image = ImageX;
                     bedPicturebox.Enabled = false;
-                    hatPicturebox.Image = Properties.Resources.X;
+                    hatPicturebox.Image = ImageX;
                     hatPicturebox.Enabled = false;
-                    pantsPicturebox.Image = Properties.Resources.X;
+                    pantsPicturebox.Image = ImageX;
                     pantsPicturebox.Enabled = false;
-                    facePicturebox.Image = Properties.Resources.X;
+                    facePicturebox.Image = ImageX;
                     facePicturebox.Enabled = false;
-                    socksPicturebox.Image = Properties.Resources.X;
+                    socksPicturebox.Image = ImageX;
                     socksPicturebox.Enabled = false;
-                    shoesPicturebox.Image = Properties.Resources.X;
+                    shoesPicturebox.Image = ImageX;
                     shoesPicturebox.Enabled = false;
                     playerWetsuit.Enabled = false;
-                    playerWetsuit.Image = Properties.Resources.X;
+                    playerWetsuit.Image = ImageX;
                     playerShoeColor.Enabled = false;
                     pocketsBackgroundPicturebox.Enabled = true;
                     playerIslandMedals.Enabled = false;
@@ -1429,15 +1437,15 @@ namespace ACSE
                     bedPicturebox.Enabled = true;
                     playerEyeColor.Enabled = false;
                     hatPicturebox.Enabled = true;
-                    pantsPicturebox.Image = Properties.Resources.X;
+                    pantsPicturebox.Image = ImageX;
                     pantsPicturebox.Enabled = false;
                     facePicturebox.Enabled = true;
-                    socksPicturebox.Image = Properties.Resources.X;
+                    socksPicturebox.Image = ImageX;
                     socksPicturebox.Enabled = false;
-                    shoesPicturebox.Image = Properties.Resources.X;
+                    shoesPicturebox.Image = ImageX;
                     shoesPicturebox.Enabled = false;
                     playerWetsuit.Enabled = false;
-                    playerWetsuit.Image = Properties.Resources.X;
+                    playerWetsuit.Image = ImageX;
                     playerShoeColor.Enabled = false;
                     pocketsBackgroundPicturebox.Enabled = true;
                     playerIslandMedals.Enabled = false;
@@ -1462,17 +1470,17 @@ namespace ACSE
                     playerEyeColor.Enabled = false;
                     bedPicturebox.Enabled = true;
                     hatPicturebox.Enabled = true;
-                    pantsPicturebox.Image = Properties.Resources.X;
+                    pantsPicturebox.Image = ImageX;
                     pantsPicturebox.Enabled = false;
                     facePicturebox.Enabled = true;
-                    socksPicturebox.Image = Properties.Resources.X;
+                    socksPicturebox.Image = ImageX;
                     socksPicturebox.Enabled = false;
-                    shoesPicturebox.Image = Properties.Resources.X;
+                    shoesPicturebox.Image = ImageX;
                     shoesPicturebox.Enabled = false;
                     playerWetsuit.Enabled = false;
-                    playerWetsuit.Image = Properties.Resources.X;
+                    playerWetsuit.Image = ImageX;
                     playerShoeColor.Enabled = true;
-                    pocketsBackgroundPicturebox.Image = Properties.Resources.X;
+                    pocketsBackgroundPicturebox.Image = ImageX;
                     pocketsBackgroundPicturebox.Enabled = false;
                     playerIslandMedals.Enabled = false;
                     playerMeowCoupons.Enabled = false;
@@ -1495,7 +1503,7 @@ namespace ACSE
                     playerHairType.Enabled = true;
                     playerHairColor.Enabled = true;
                     playerEyeColor.Enabled = true;
-                    bedPicturebox.Image = Properties.Resources.X;
+                    bedPicturebox.Image = ImageX;
                     bedPicturebox.Enabled = false;
                     playerNookPoints.Enabled = false;
                     hatPicturebox.Enabled = true;
@@ -1504,7 +1512,7 @@ namespace ACSE
                     socksPicturebox.Enabled = true;
                     shoesPicturebox.Enabled = true;
                     playerShoeColor.Enabled = false;
-                    pocketsBackgroundPicturebox.Image = Properties.Resources.X;
+                    pocketsBackgroundPicturebox.Image = ImageX;
                     pocketsBackgroundPicturebox.Enabled = false;
                     playerWetsuit.Enabled = true;
                     playerIslandMedals.Enabled = true;

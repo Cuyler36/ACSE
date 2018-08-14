@@ -32,7 +32,7 @@ namespace ACSE
                 _disabled = value;
 
                 var img = EditorPictureBox.Image;
-                EditorPictureBox.Image = Properties.Resources.X;
+                EditorPictureBox.Image = MainForm.ImageX;
 
                 img?.Dispose();
             }

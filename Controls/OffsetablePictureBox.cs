@@ -49,9 +49,10 @@ namespace ACSE
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
-            if (ImageMaskingType == MaskingType.Circular)
+            if (ImageMaskingType != MaskingType.Circular) return;
+            using (var crop = Properties.Resources.Villager_Crop)
             {
-                e.Graphics.DrawImage(Properties.Resources.Villager_Crop, PictureBox.Location.Negate());
+                e.Graphics.DrawImage(crop, PictureBox.Location.Negate());
             }
         }
     }
