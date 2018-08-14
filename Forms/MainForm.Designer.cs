@@ -68,6 +68,7 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secureValueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearWeedsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeAllItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -267,7 +268,6 @@
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.itemIdLabel = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.TextBox();
-            this.itemColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -663,16 +663,23 @@
             // 
             this.secureValueToolStripMenuItem.Enabled = false;
             this.secureValueToolStripMenuItem.Name = "secureValueToolStripMenuItem";
-            this.secureValueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.secureValueToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.secureValueToolStripMenuItem.Text = "Secure Value";
             this.secureValueToolStripMenuItem.Click += new System.EventHandler(this.SecureValueToolStripMenuItemClick);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItemClick);
+            // 
+            // itemColorsToolStripMenuItem
+            // 
+            this.itemColorsToolStripMenuItem.Name = "itemColorsToolStripMenuItem";
+            this.itemColorsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.itemColorsToolStripMenuItem.Text = "Item Colors";
+            this.itemColorsToolStripMenuItem.Click += new System.EventHandler(this.itemColorsToolStripMenuItem_Click);
             // 
             // tasksToolStripMenuItem
             // 
@@ -2784,13 +2791,6 @@
             this.StatusLabel.Size = new System.Drawing.Size(600, 13);
             this.StatusLabel.TabIndex = 16;
             this.StatusLabel.TabStop = false;
-            // 
-            // itemColorsToolStripMenuItem
-            // 
-            this.itemColorsToolStripMenuItem.Name = "itemColorsToolStripMenuItem";
-            this.itemColorsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.itemColorsToolStripMenuItem.Text = "Item Colors";
-            this.itemColorsToolStripMenuItem.Click += new System.EventHandler(this.itemColorsToolStripMenuItem_Click);
             // 
             // MainForm
             // 

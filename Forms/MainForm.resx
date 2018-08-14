@@ -145,7 +145,7 @@
     <value>558, 17</value>
   </metadata>
   <data name="openSaveFile.Filter" xml:space="preserve">
-    <value>All Supported Save Files|*.fla;*.gci;*.gcs;*.sta;*.raw;*.duc;*.dss;*.dsv;*.sav;*.dat;*.bin;|Nintendo 64 Save Files (*.fla, *.bin)|*.fla;*.bin;|Nintendo GameCube Save Files (*.gci, *.gcs, *.raw, *.bin)|*.gci;*.gcs;*.raw;*.bin;|iQue Player Save Files (*.sta, *.bin)|*.sta;*.bin;|Nintendo DS Save Files (*.sav, *.duc, *.dss, *.dsc, *.bin)|*.sav;*.duc;*.dss;*.dsc;*.bin;|Nintendo Wii Save Files (*.dat, *.bin)|*.dat;*.bin;|Nintendo 3DS Save Files (*.bin)|*.bin;|All Files (*.*)|*.*</value>
+    <value>All Supported Save Files|*.fla;*.gci;*.gcs;*.sta;*.raw;*.duc;*.dss;*.dsv;*.sav;*.dat;*.bin;|Nintendo 64 Save Files (*.fla, *.bin)|*.fla;*.bin;|Nintendo GameCube Save Files (*.gci, *.gcs, *.raw, *.bin)|*.gci;*.gcs;*.raw;*.bin;|iQue Player Save Files (*.sta, *.bin)|*.sta;*.bin;|Nintendo DS Save Files (*.sav, *.duc, *.dss, *.dsc, *.bin)|*.sav;*.duc;*.dss;*.dsc;*.bin;|Nintendo Wii Save Files (*.dat, *.bin)|*.dat;*.bin;|Nintendo 3DS Save Files (*.dat, *.bin)|*.dat;*.bin;|All Files (*.*)|*.*</value>
   </data>
   <metadata name="saveSaveFile.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>681, 17</value>
