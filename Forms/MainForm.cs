@@ -622,6 +622,8 @@ namespace ACSE
             }
             else
             {
+                caravan1ComboBox.DataSource = null;
+                caravan2ComboBox.DataSource = null;
                 caravan1ComboBox.Items.Clear();
                 caravan2ComboBox.Items.Clear();
             }
