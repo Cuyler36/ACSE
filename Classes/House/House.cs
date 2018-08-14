@@ -80,8 +80,7 @@ namespace ACSE
             Data = (HouseData)boxedData;
 
             // Load Rooms/Layers
-            const int itemsPerLayer = 256;
-            var itemDataSize = MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS ? 4 : 2;
+            var itemDataSize = saveData.SaveGeneration == SaveGeneration.N3DS ? 4 : 2;
             var count = roomCount > -1 ? roomCount : offsets.RoomCount;
             var start = roomStart > -1 ? roomStart : offsets.RoomStart;
 
@@ -99,19 +98,33 @@ namespace ACSE
                     Layers = new Layer[offsets.LayerCount]
                 };
 
-                if (saveData.SaveGeneration == SaveGeneration.N64 || saveData.SaveGeneration == SaveGeneration.GCN)
+                switch (saveData.SaveGeneration)
                 {
-                    room.Carpet = new Item((ushort)(0x2600 | saveData.ReadByte(roomOffset + offsets.RoomCarpet)));
-                    room.Wallpaper = new Item((ushort)(0x2700 | saveData.ReadByte(roomOffset + offsets.RoomWallpaper)));
-                }
-                else
-                {
-                    room.Carpet = new Item(saveData.ReadUInt16(roomOffset + offsets.RoomCarpet, saveData.IsBigEndian));
-                    room.Wallpaper = new Item(saveData.ReadUInt16(roomOffset + offsets.RoomWallpaper, saveData.IsBigEndian));
+                    case SaveGeneration.N64:
+                    case SaveGeneration.GCN:
+                    case SaveGeneration.iQue:
+                        room.Carpet = new Item((ushort)(0x2600 | saveData.ReadByte(roomOffset + offsets.RoomCarpet)));
+                        room.Wallpaper = new Item((ushort)(0x2700 | saveData.ReadByte(roomOffset + offsets.RoomWallpaper)));
+                        break;
+                    case SaveGeneration.NDS:
+                    case SaveGeneration.Wii:
+                        room.Carpet = new Item(saveData.ReadUInt16(roomOffset + offsets.RoomCarpet, saveData.IsBigEndian));
+                        room.Wallpaper = new Item(saveData.ReadUInt16(roomOffset + offsets.RoomWallpaper, saveData.IsBigEndian));
+                        break;
+                    case SaveGeneration.N3DS:
+                        room.Carpet = new Item(saveData.ReadUInt32(roomOffset + offsets.RoomCarpet));
+                        room.Wallpaper = new Item(saveData.ReadUInt32(roomOffset + offsets.RoomWallpaper));
+                        room.Song = new Item(saveData.ReadUInt32(roomOffset + offsets.Song));
+                        break;
                 }
 
                 for (var x = 0; x < offsets.LayerCount; x++)
                 {
+                    var itemsPerLayer = 256;
+                    if (saveData.SaveGeneration == SaveGeneration.N3DS)
+                    {
+                        itemsPerLayer = x == 0 ? 100 : 64;
+                    }
                     var layerOffset = roomOffset + offsets.LayerSize * x;
                     var layer = new Layer
                     {

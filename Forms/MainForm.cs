@@ -491,6 +491,10 @@ namespace ACSE
                 return;
             }
 
+            // Clear items
+            selectedItem.DataSource = null;
+            selectedItem.Items.Clear();
+
             SaveFile = null; //Set to null so we can set the checkbox to false without having the method run
             UndoRedoHandler = new ModifiedHandler();
             townMapViewCheckbox.Checked = false;
@@ -1485,7 +1489,7 @@ namespace ACSE
                     SetMainTabEnabled("islandTab", true);
                     SetMainTabEnabled("grassTab", true);
                     SetMainTabEnabled("patternsTab", true);
-                    SetMainTabEnabled("housesTab", false); // TEMP! Remove this once I get around to implementing 3DS house editing
+                    //SetMainTabEnabled("housesTab", false); // TEMP! Remove this once I get around to implementing 3DS house editing
                     playerHairType.Enabled = true;
                     playerHairColor.Enabled = true;
                     playerEyeColor.Enabled = true;
@@ -3670,10 +3674,7 @@ namespace ACSE
             // Save Houses
             foreach (var house in _houses)
             {
-                if (house != null && SaveFile.SaveGeneration != SaveGeneration.N3DS) // TODO: Finish 3DS House editing
-                {
-                    house.Write();
-                }
+                house?.Write();
             }
 
             //Save Acre & Town Data
@@ -4765,7 +4766,7 @@ namespace ACSE
             else // Welcome Amiibo
             {
                 SaveFile.Write(SaveFile.SaveDataStartOffset + 0x6214F,
-                    (byte)((SaveFile.SaveDataStartOffset + 0x6214F & (~0x1E)) | (ordinancesInEffect & 0x1E)));
+                    (byte)((SaveFile.ReadByte(SaveFile.SaveDataStartOffset + 0x6214F) & (~0x1E)) | (ordinancesInEffect & 0x1E)));
                 SaveFile.Write(SaveFile.SaveDataStartOffset + 0x62153, (byte)(ordinancesEnabled |
                                                                               (SaveFile.ReadByte(SaveFile.SaveDataStartOffset + 0x62153) & 0x0F)));
             }

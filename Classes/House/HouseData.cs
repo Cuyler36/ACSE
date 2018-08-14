@@ -22,6 +22,7 @@ namespace ACSE
         public int DesignSize;
         public int RoomWallpaper;
         public int RoomCarpet;
+        public int Song;
         public int Bed; //CF Exclusive
         public int RoofColor;
         // NL Exclusives
@@ -118,19 +119,45 @@ namespace ACSE
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
                 case SaveGeneration.iQue:
-                    if (offsets.RoomWallpaper != -1)
+                    if (offsets.RoomCarpet != -1)
                     {
                         saveFile.Write(Offset + offsets.RoomCarpet, (byte) Carpet.ItemId);
                     }
 
-                    if (offsets.RoomCarpet != -1)
+                    if (offsets.RoomWallpaper != -1)
                     {
                         saveFile.Write(Offset + offsets.RoomWallpaper, (byte) Wallpaper.ItemId);
                     }
                     break;
-            }
+                case SaveGeneration.NDS:
+                case SaveGeneration.Wii:
+                    if (offsets.RoomCarpet != -1)
+                    {
+                        saveFile.Write(Offset + offsets.RoomCarpet, Carpet.ItemId, saveFile.IsBigEndian);
+                    }
 
-            // TODO: Room_Song
+                    if (offsets.RoomWallpaper != -1)
+                    {
+                        saveFile.Write(Offset + offsets.RoomWallpaper, Wallpaper.ItemId, saveFile.IsBigEndian);
+                    }
+                    break;
+                case SaveGeneration.N3DS:
+                    if (offsets.RoomCarpet != -1)
+                    {
+                        saveFile.Write(Offset + offsets.RoomCarpet, Carpet.ToUInt32());
+                    }
+
+                    if (offsets.RoomWallpaper != -1)
+                    {
+                        saveFile.Write(Offset + offsets.RoomWallpaper, Wallpaper.ToUInt32());
+                    }
+
+                    if (offsets.Song != -1)
+                    {
+                        saveFile.Write(Offset + offsets.Song, Song.ToUInt32());
+                    }
+                    break;
+            }
         }
     }
 
@@ -155,6 +182,7 @@ namespace ACSE
             RoomWallpaper = -0x23,
             Bed = -1,
             RoofColor = -1,
+            Song = -1,
         };
 
         public static readonly HouseOffsets DoubutsuNoMoriPlusOffsets = new HouseOffsets
@@ -174,6 +202,7 @@ namespace ACSE
             RoomWallpaper = 0x8A1,
             RoofColor = 0x28,
             Bed = -1,
+            Song = -1,
         };
 
         public static readonly HouseOffsets AnimalCrossingHouseOffsets = new HouseOffsets
@@ -195,6 +224,7 @@ namespace ACSE
             RoomCarpet = 0x8A0,
             RoomWallpaper = 0x8A1,
             Bed = -1,
+            Song = -1,
         };
 
         public static readonly HouseOffsets DoubutsuNoMoriEPlusOffsets = new HouseOffsets
@@ -217,6 +247,7 @@ namespace ACSE
             RoomCarpet = 0x8A0,
             RoomWallpaper = 0x8A1,
             Bed = -1,
+            Song = -1,
             // 0x20 & 0x10 >> 4 == 1 is basement purchased
             // 0x26 bytes in = house upgrade process byte? & with 0xE0? (In AC, it's 0x2A & 0x2B)
         };
@@ -236,7 +267,8 @@ namespace ACSE
             OwningPlayerId = -1,
             TownId = -1,
             Bed = -1,
-            RoofColor = -1 // 
+            RoofColor = -1, // 
+            Song = -1, //
         };
 
         public static readonly HouseOffsets CityFolkOffsets = new HouseOffsets
@@ -257,7 +289,8 @@ namespace ACSE
             RoomCarpet = 0x450,
             HouseUpgradeSize = 0x15B4, //Also at 0x15B5
             Bed = 0x15B8,
-            RoofColor = -1 //
+            RoofColor = -1, //
+            Song = -1, //
         };
 
         public static readonly HouseOffsets NewLeafOffsets = new HouseOffsets //HouseData is duplicated starting at 0x9 (0x0 - 0x8)
@@ -274,10 +307,17 @@ namespace ACSE
             RoomStart = 0x44, //0x76,
             RoomCount = 6,
             RoomSize = 0x302,
-            LayerSize = 0x150,
+            RoomWallpaper = 0x290,
+            RoomCarpet = 0x294,
+            Song = 0x298,
+            LayerSize = 0x190,
             LayerCount = 2,
             Bed = -1,
-            RoofColor = -1
+            RoofColor = -1,
+            OwningPlayerId = -1,
+            OwningPlayerName = -1,
+            TownId = -1,
+            TownName = -1,
         };
 
         #region Room Names

@@ -48,7 +48,7 @@ namespace ACSE
                 {
                     AutoSize = true,
                     FlowDirection = FlowDirection.LeftToRight,
-                    MaximumSize = new Size(0, 32)
+                    MaximumSize = new Size(0, 28)
                 };
                 Controls.Add(infoFlowPanel);
 

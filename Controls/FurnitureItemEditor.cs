@@ -20,8 +20,9 @@ namespace ACSE
             if (Items != null)
             {
                 Size = new Size(ItemCellSize * ItemsPerRow + 3, ItemCellSize * (int)(Math.Ceiling((decimal)Items.Length / ItemsPerRow)) + 3);
-                EditorPictureBox.Image = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(ItemCellSize,
-                    ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[])Items);
+                EditorPictureBox.Image = ImageGeneration.DrawFurnitureArrows((Bitmap) Inventory.GetItemPic(ItemCellSize,
+                        ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[]) Items,
+                    ItemsPerRow);
             }
 
             img?.Dispose();
@@ -51,7 +52,7 @@ namespace ACSE
                         // Redraw Item Image
                         var img = EditorPictureBox.Image;
                         EditorPictureBox.Image = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(ItemCellSize,
-                            ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[])Items);
+                            ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[])Items, ItemsPerRow);
                         img?.Dispose();
 
                         // Update ToolTip
@@ -88,7 +89,7 @@ namespace ACSE
             Items[previousItemChange.Index] = (Furniture)previousItemChange.Item;
             var img = EditorPictureBox.Image;
             EditorPictureBox.Image = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(ItemCellSize,
-                ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[])Items);
+                ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[])Items, ItemsPerRow);
             img?.Dispose();
 
             OnItemChanged(selectedItem, Items[previousItemChange.Index], previousItemChange.Index);
@@ -109,7 +110,7 @@ namespace ACSE
             Items[previousItemChange.Index] = (Furniture)previousItemChange.Item;
             var img = EditorPictureBox.Image;
             EditorPictureBox.Image = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(ItemCellSize,
-                ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[])Items);
+                ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[])Items, ItemsPerRow);
             img?.Dispose();
 
             OnItemChanged(selectedItem, Items[previousItemChange.Index], previousItemChange.Index);
