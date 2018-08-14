@@ -38,6 +38,8 @@ namespace ACSE.Controls
         private readonly string[] _villagerNames;
         private readonly string[] _personalityTypes;
 
+        private static readonly Bitmap VillagerList = Properties.Resources.Villagers; // currently for GC only
+
         /// <inheritdoc/>
         /// <summary>
         /// Initializes a new VillagerControl object.
@@ -182,7 +184,7 @@ namespace ACSE.Controls
                     _villagerPreviewBox = new OffsetablePictureBox
                     {
                         Size = new Size(64, 64),
-                        Image = Properties.Resources.Villagers,
+                        Image = VillagerList,
                         Offset = (_villager.Data.VillagerId < 0xE000 || _villager.Data.VillagerId > 0xE0EB) ? new Point(64 * 6, 64 * 23)
                             : new Point(64 * ((_villager.Data.VillagerId & 0xFF) % 10), 64 * ((_villager.Data.VillagerId & 0xFF) / 10))
                     };
