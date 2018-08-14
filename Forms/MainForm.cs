@@ -2047,6 +2047,7 @@ namespace ACSE
 
         private void SetupMapPictureBoxes()
         {
+            _lastBoxEntered = null;
             if (_acreMap != null)
                 foreach (var map in _acreMap)
                     map.Dispose();
@@ -2541,47 +2542,61 @@ namespace ACSE
         #region Acres
 
         private readonly Bitmap _acreHighlightImage = ImageGeneration.DrawAcreHighlight();
+        private PictureBoxWithInterpolationMode _lastBoxEntered;
         private void AcreEditorMouseEnter(object sender, EventArgs e)
         {
-            ((Control) sender).Capture = false;
-            ((PictureBox) sender).Image = _acreHighlightImage;
-            ((PictureBox) sender)?.Refresh();
+            if (!(sender is PictureBoxWithInterpolationMode box)) return;
+            box.Capture = false;
+            box.Image = _acreHighlightImage;
+            box.Refresh();
+
+            if (_lastBoxEntered != null && _lastBoxEntered != box)
+            {
+                _lastBoxEntered.Image = null;
+            };
+            _lastBoxEntered = box;
         }
 
         private static void AcreEditorMouseLeave(object sender, EventArgs e)
         {
-            ((Control) sender).Capture = false;
-            ((PictureBox) sender).Image = null;
-            ((PictureBox) sender)?.Refresh();
+            if (!(sender is PictureBoxWithInterpolationMode box)) return;
+            box.Capture = false;
+            box.Image = null;
+            box.Refresh();
         }
 
         private int _lastAcreX = -1, _lastAcreY = -1;
         private void AcreEditorMouseMove(object sender, MouseEventArgs e, bool island = false, bool forceOverride = false)
         {
-            ((Control) sender).Capture = false;
-            ((PictureBox) sender).Image = _acreHighlightImage;
+            if (!(sender is PictureBoxWithInterpolationMode box)) return;
+            box.Capture = false;
+            box.Image = _acreHighlightImage;
             if (_loading || (!forceOverride && e.X == _lastAcreX && e.Y == _lastAcreY)) return;
             acreToolTip.Hide(this);
             acreToolTip.RemoveAll();
-            var acreIdx = Array.IndexOf(island ? _newLeafIslandAcreMap : _acreMap, sender as PictureBoxWithInterpolationMode);
+            var acreIdx = Array.IndexOf(island ? _newLeafIslandAcreMap : _acreMap, box);
             Acre hoveredAcre = island ? IslandAcres[acreIdx] : _acres[acreIdx];
             if (_acreInfo != null)
                 acreToolTip.Show(
                     $"{(_acreInfo.ContainsKey((byte) hoveredAcre.AcreId) ? _acreInfo[(byte) hoveredAcre.AcreId] + " - " : "")}0x{hoveredAcre.AcreId:X2}", 
-                    (Control) sender ?? throw new InvalidOperationException(), e.X + 15, e.Y + 10);
+                    box, e.X + 15, e.Y + 10);
             else if (_uInt16AcreInfo != null)
-                if (SaveFile.SaveType == SaveType.DoubutsuNoMori || SaveFile.SaveGeneration == SaveGeneration.GCN || SaveFile.SaveType == SaveType.AnimalForest)
+                if (SaveFile.SaveType == SaveType.DoubutsuNoMori || SaveFile.SaveGeneration == SaveGeneration.GCN ||
+                    SaveFile.SaveType == SaveType.AnimalForest)
                 {
-                    acreToolTip.Show(string.Format("{0}[{2}] - 0x{1:X4}", _uInt16AcreInfo.ContainsKey(hoveredAcre.BaseAcreId) ? _uInt16AcreInfo[hoveredAcre.BaseAcreId] + " "
-                        : (IsOcean(hoveredAcre.AcreId) ? "Ocean " : ""), hoveredAcre.AcreId, AcreData.AcreHeightIdentifiers[hoveredAcre.AcreId & 3]), 
-                        (Control) sender ?? throw new InvalidOperationException(), e.X + 15, e.Y + 10);
+                    acreToolTip.Show(string.Format("{0}[{2}] - 0x{1:X4}",
+                            _uInt16AcreInfo.ContainsKey(hoveredAcre.BaseAcreId)
+                                ? _uInt16AcreInfo[hoveredAcre.BaseAcreId] + " "
+                                : (IsOcean(hoveredAcre.AcreId) ? "Ocean " : ""), hoveredAcre.AcreId,
+                            AcreData.AcreHeightIdentifiers[hoveredAcre.AcreId & 3]),
+                        box, e.X + 15, e.Y + 10);
                 }
                 else
                     acreToolTip.Show(
                         $"{(_uInt16AcreInfo.ContainsKey(hoveredAcre.AcreId) ? _uInt16AcreInfo[hoveredAcre.AcreId] + " - " : "")}0x{hoveredAcre.AcreId:X4}",
-                        (Control) sender ?? throw new InvalidOperationException(), e.X + 15, e.Y + 10);
+                        box, e.X + 15, e.Y + 10);
             else
-                acreToolTip.Show("0x" + hoveredAcre.AcreId.ToString("X"), (Control) sender ?? throw new InvalidOperationException(), e.X + 15, e.Y + 10);
+                acreToolTip.Show("0x" + hoveredAcre.AcreId.ToString("X"), box, e.X + 15, e.Y + 10);
             _lastAcreX = e.X;
             _lastAcreY = e.Y;
         }
