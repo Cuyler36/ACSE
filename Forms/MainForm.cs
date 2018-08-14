@@ -3575,8 +3575,16 @@ namespace ACSE
             box.Refresh();
 
             if (acre == _lastTownAcre) return;
-            RefreshPictureBoxImage(_townAcreMap[_lastTownAcre], GenerateAcreItemsBitmap(TownAcres[_lastTownAcre].AcreItems, _lastTownAcre));
-            _townAcreMap[_lastTownAcre].Refresh();
+            RefreshPictureBoxImage(island ? _islandAcreMap[_lastTownAcre] : _townAcreMap[_lastTownAcre],
+                GenerateAcreItemsBitmap(island ? IslandAcres[_lastTownAcre].AcreItems : TownAcres[_lastTownAcre].AcreItems, _lastTownAcre));
+            if (island)
+            {
+                _islandAcreMap[_lastTownAcre].Refresh();
+            }
+            else
+            {
+                _townAcreMap[_lastTownAcre].Refresh();
+            }
             _lastTownAcre = acre;
         }
 
