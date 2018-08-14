@@ -40,8 +40,6 @@ namespace ACSE
         private PictureBoxWithInterpolationMode[] _newLeafIslandAcreMap;
         private PictureBoxWithInterpolationMode[] _grassMap;
         private PictureBoxWithInterpolationMode[] _patternBoxes;
-        private PictureBoxWithInterpolationMode[][] _houseBoxes;
-        private PictureBoxWithInterpolationMode[] _islandHouseBoxes;
         private readonly PictureBoxWithInterpolationMode _tpcPicture;
         private Image _selectedPattern;
         private int _selectedPaletteIndex;
@@ -79,7 +77,7 @@ namespace ACSE
         private Dictionary<ushort, byte> _acMapIconIndex;
         private Island[] _islands;
         private Island _selectedIsland;
-        private Room _islandRoom; // DnM+/AC
+        private House _islandCabana; // DnM+/AC
         private byte[] _buildingDb;
         private string[] _buildingNames;
         private PictureBoxWithInterpolationMode _newLeafGrassOverlay;
@@ -90,6 +88,8 @@ namespace ACSE
         private SingleItemEditor _shirtEditor;
         private ItemEditor _dresserEditor;
         private ItemEditor _islandBoxEditor;
+        private HouseControl _houseEditor;
+        private HouseControl _islandHouseEditor;
         private bool _loading;
 
         #region MapSizeVariables
@@ -998,6 +998,14 @@ namespace ACSE
             townNameBox.Text = new AcString(save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.TownName,
                 CurrentSaveInfo.SaveOffsets.TownNameSize), save.SaveType).Trim();
 
+            // Load island cabana if DnM+/AC
+            _islandCabana = null;
+            if (SaveFile.SaveType == SaveType.DoubutsuNoMoriPlus || SaveFile.SaveType == SaveType.AnimalCrossing)
+            {
+                _islandCabana = new House(-1, save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandHouse, 1, 0);
+                _islandCabana.Data.Rooms[0].Name = "Cabana";
+            }
+
             SetupAcreEditorTreeView();
             SetupMapPictureBoxes();
             SetupIslandHouseBoxes();
@@ -1131,6 +1139,7 @@ namespace ACSE
             }
 
             // Draw House PictureBoxes
+            houseTabSelect.SelectedIndex = 0; // Reset the house selected
             SetupHousePictureBoxes();
             if (roofColorComboBox.Enabled && _selectedHouse != null)
                 roofColorComboBox.SelectedIndex = Math.Min(roofColorComboBox.Items.Count - 1, _selectedHouse.Data.RoofColor);
@@ -1147,7 +1156,9 @@ namespace ACSE
             // Enable Tasks
             clearWeedsToolStripMenuItem.Enabled = true;
             removeAllItemsToolStripMenuItem.Enabled = true;
-            waterFlowersToolStripMenuItem.Enabled = SaveFile.SaveGeneration != SaveGeneration.GCN && SaveFile.SaveGeneration != SaveGeneration.N64 && save.SaveGeneration != SaveGeneration.iQue;
+            waterFlowersToolStripMenuItem.Enabled = SaveFile.SaveGeneration != SaveGeneration.GCN &&
+                                                    SaveFile.SaveGeneration != SaveGeneration.N64 &&
+                                                    save.SaveGeneration != SaveGeneration.iQue;
             makeFruitsPerfectToolStripMenuItem.Enabled = SaveFile.SaveGeneration == SaveGeneration.N3DS;
             replaceItemsToolStripMenuItem.Enabled = true;
             importTownToolStripMenuItem.Enabled = true;
@@ -1168,33 +1179,9 @@ namespace ACSE
             weatherComboBox.Items.Clear();
             weatherComboBox.Items.AddRange(Weather.GetWeatherTypesForGame(save.SaveGeneration));
             if (CurrentSaveInfo.SaveOffsets.Weather != -1)
-                weatherComboBox.SelectedIndex = Weather.GetWeatherIndex(save.ReadByte(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.Weather), save.SaveGeneration);
-
-            // Load islands if DnM+/AC
-            _islandRoom = null;
-            if (SaveFile.SaveType == SaveType.DoubutsuNoMoriPlus || SaveFile.SaveType == SaveType.AnimalCrossing)
-            {
-                _islandRoom = new Room
-                {
-                    Offset = save.SaveDataStartOffset + save.SaveInfo.SaveOffsets.IslandHouse,
-                    Layers = new Layer[4]
-                };
-
-                for (var y = 0; y < 4; y++)
-                {
-                    var l = new Layer
-                    {
-                        Items = new Furniture[256]
-                    };
-                    for (var x = 0; x < 256; x++)
-                    {
-                        l.Items[x] = new Furniture(save.ReadUInt16(_islandRoom.Offset + y * 0x200 + x * 2, true));
-                    }
-                    _islandRoom.Layers[y] = l;
-                    RefreshPictureBoxImage(_islandHouseBoxes[y],
-                        ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, l.Items, save.SaveType), l.Items));
-                }
-            }
+                weatherComboBox.SelectedIndex = Weather.GetWeatherIndex(
+                    save.ReadByte(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.Weather),
+                    save.SaveGeneration);
 
             // Set Default Item to "Empty"
             SetCurrentItem(new Item());
@@ -2258,20 +2245,18 @@ namespace ACSE
         }
 
         #region Houses
-        private int _houseX = -1;
-        private int _houseY = -1;
-        private byte _clickingHouse;
 
         private void SetupHousePictureBoxes()
         {
             if (SaveFile == null || _houses == null) return;
+
             // Cleanup any existing controls
+            _houseEditor?.Dispose();
             housePanel.Controls.Clear();
 
-            var houseOffsets = HouseInfo.GetHouseOffsets(SaveFile.SaveType);
-            var roomNames = HouseInfo.GetRoomNames(SaveFile.SaveGeneration);
-
-            if (_selectedHouse != null && (SaveFile.SaveGeneration == SaveGeneration.N64 || SaveFile.SaveGeneration == SaveGeneration.GCN || SaveFile.SaveGeneration == SaveGeneration.iQue))
+            if (_selectedHouse != null && (SaveFile.SaveGeneration == SaveGeneration.N64 ||
+                                           SaveFile.SaveGeneration == SaveGeneration.GCN ||
+                                           SaveFile.SaveGeneration == SaveGeneration.iQue))
             {
                 basementCheckBox.Checked = HouseInfo.HasBasement(_selectedHouse.Offset, SaveFile.SaveType);
                 StatueCheckBox.Checked = HouseInfo.HasStatue(_selectedHouse.Offset, SaveFile.SaveType);
@@ -2300,119 +2285,16 @@ namespace ACSE
                 }
             }
 
-            _houseBoxes = new PictureBoxWithInterpolationMode[houseOffsets.RoomCount][];
-
-            for (var x = 0; x < houseOffsets.RoomCount; x++)
-            {
-                _houseBoxes[x] = new PictureBoxWithInterpolationMode[houseOffsets.LayerCount];
-                var roomLabel = new Label
-                {
-                    Text = roomNames[x],
-                    Size = new Size(256, 30),
-                    Location = new Point(10 + x * 266, 20),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Microsoft Sans Serif", 18, FontStyle.Regular)
-                };
-                housePanel.Controls.Add(roomLabel);
-
-                for (var y = 0; y < houseOffsets.LayerCount; y++)
-                {
-                    var layerBox = new PictureBoxWithInterpolationMode
-                    {
-                        Size = new Size(256, 256),
-                        Location = new Point(10 + x * 266, 50 + y * 266),
-                        BorderStyle = BorderStyle.FixedSingle
-                    };
-
-                    _houseBoxes[x][y] = layerBox;
-
-                    if (_selectedHouse != null)
-                    {
-                        var roomIdx = x;
-                        var layerIdx = y;
-                        var currentLayer = _selectedHouse.Data.Rooms[x].Layers[y];
-                        var layerFurnitureMap = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, _selectedHouse.Data.Rooms[x].Layers[y].Items, SaveFile.SaveType),
-                            _selectedHouse.Data.Rooms[x].Layers[y].Items);
-                        layerBox.Image = layerFurnitureMap;
-
-                        layerBox.MouseMove += delegate (object sender, MouseEventArgs e)
-                        {
-                            if (e.X == _houseX && e.Y == _houseY) return;
-                            var itemIndex = (e.X / 16) + (e.Y / 16) * (((PictureBox) sender).Width / 16);
-
-                            currentLayer = _selectedHouse.Data.Rooms[roomIdx].Layers[layerIdx];
-                            if (itemIndex >= currentLayer.Items.Length) return;
-                            if (_clickingHouse > 0)
-                            {
-                                if (_clickingHouse == 1)
-                                {
-                                    currentLayer.Items[itemIndex] = new Furniture(GetCurrentItem());
-                                    RefreshPictureBoxImage(layerBox, ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, currentLayer.Items, SaveFile.SaveType),
-                                        currentLayer.Items));
-                                    layerBox.Refresh();
-                                }
-                                else if (_clickingHouse == 2)
-                                {
-                                    SetCurrentItem(currentLayer.Items[itemIndex]);
-                                }
-                            }
-
-                            Item item = currentLayer.Items[itemIndex];
-                            houseToolTip.Show($"{item.Name} - [0x{item.ItemId:X4}]", (Control) sender ?? throw new InvalidOperationException(), e.X + 15, e.Y + 10);
-                            _houseX = e.X;
-                            _houseY = e.Y;
-                        };
-
-                        layerBox.MouseLeave += delegate
-                        {
-                            houseToolTip.Hide(this);
-                            _clickingHouse = 0;
-                        };
-
-                        layerBox.MouseDown += delegate (object sender, MouseEventArgs e)
-                        {
-                            var itemIndex = (e.X / 16) + (e.Y / 16) * (((PictureBox) sender).Width / 16);
-                            switch (e.Button)
-                            {
-                                case MouseButtons.Right when itemIndex < currentLayer.Items.Length:
-                                    SetCurrentItem(currentLayer.Items[itemIndex]);
-                                    _clickingHouse = 2;
-                                    break;
-                                case MouseButtons.Left when itemIndex < currentLayer.Items.Length:
-                                    SaveFile.ChangesMade = true;
-                                    currentLayer.Items[itemIndex] = new Furniture(GetCurrentItem());
-                                    RefreshPictureBoxImage(layerBox, ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, currentLayer.Items, SaveFile.SaveType),
-                                        currentLayer.Items));
-                                    _clickingHouse = 1;
-                                    break;
-                                case MouseButtons.Middle:
-                                    SaveFile.ChangesMade = true;
-                                    _clickingHouse = 0;
-                                    Utility.FloodFillFurnitureArray(ref currentLayer.Items, 16, itemIndex, currentLayer.Items[itemIndex], new Furniture(GetCurrentItem()));
-                                    RefreshPictureBoxImage(layerBox, ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, currentLayer.Items, SaveFile.SaveType),
-                                        currentLayer.Items));
-                                    break;
-                            }
-                        };
-
-                        layerBox.MouseUp += delegate (object sender, MouseEventArgs e)
-                        {
-                            if ((e.Button == MouseButtons.Left && _clickingHouse == 1) || (e.Button == MouseButtons.Right && _clickingHouse == 2))
-                            {
-                                _clickingHouse = 0;
-                            }
-                        };
-                    }
-
-                    housePanel.Controls.Add(layerBox);
-                }
-            }
+            if (_selectedHouse == null) return;
+            _houseEditor = new HouseControl(this, SaveFile, _selectedHouse);
+            housePanel.Controls.Add(_houseEditor);
         }
 
         private void BasementCheckBoxCheckChanged(object sender, EventArgs e)
         {
             if (!_loading && SaveFile != null && (SaveFile.SaveGeneration == SaveGeneration.N64 ||
-                                                  SaveFile.SaveGeneration == SaveGeneration.GCN || SaveFile.SaveGeneration == SaveGeneration.iQue))
+                                                  SaveFile.SaveGeneration == SaveGeneration.GCN ||
+                                                  SaveFile.SaveGeneration == SaveGeneration.iQue))
                 HouseInfo.SetHasBasement(basementCheckBox.Checked, _selectedHouse);
         }
 
@@ -2429,7 +2311,9 @@ namespace ACSE
         {
             if (selectedHouse == null) return;
             _loading = true;
-            if (SaveFile.SaveGeneration == SaveGeneration.N64 || SaveFile.SaveGeneration == SaveGeneration.GCN || SaveFile.SaveGeneration == SaveGeneration.iQue)
+            if (SaveFile.SaveGeneration == SaveGeneration.N64 ||
+                SaveFile.SaveGeneration == SaveGeneration.GCN ||
+                SaveFile.SaveGeneration == SaveGeneration.iQue)
             {
                 basementCheckBox.Checked = HouseInfo.HasBasement(selectedHouse.Offset, SaveFile.SaveType);
                 StatueCheckBox.Checked = HouseInfo.HasStatue(_selectedHouse.Offset, SaveFile.SaveType);
@@ -2464,158 +2348,32 @@ namespace ACSE
             if (houseSizeComboBox.Enabled && _selectedHouse != null)
                 houseSizeComboBox.SelectedIndex = HouseInfo.GetHouseSize(_selectedHouse.Offset, SaveFile.SaveType);
 
-            for (var i = 0; i < _houseBoxes.Length; i++)
-            {
-                for (var x = 0; x < _houseBoxes[i].Length; x++)
-                {
-                    if (selectedHouse.Data.Rooms.Length <= i || selectedHouse.Data.Rooms[i].Layers.Length <= x)
-                        continue;
-                    var image = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, selectedHouse.Data.Rooms[i].Layers[x].Items, SaveFile.SaveType),
-                        selectedHouse.Data.Rooms[i].Layers[x].Items);
-                    RefreshPictureBoxImage(_houseBoxes[i][x], image);
-                }
-            }
-
+            _houseEditor.House = _selectedHouse;
             _loading = false;
         }
 
         #endregion
 
         #region Island Cottage
-        private int _islandHouseX = -1;
-        private int _islandHouseY = -1;
-        private byte _clickingIslandHouse;
 
         private void SetupIslandHouseBoxes()
         {
-            if (_islandHouseBoxes != null)
-            {
-                foreach (var c in _islandHouseBoxes)
-                    c.Dispose();
-            }
+            _islandHouseEditor?.Dispose();
 
             if (SaveFile.SaveGeneration != SaveGeneration.GCN) return;
-            _islandHouseBoxes = new PictureBoxWithInterpolationMode[4]; // Static size of four since the island house is only in DnM+, AC, and DnMe+
-
-            for (var i = 0; i < 4; i++)
+            switch (SaveFile.SaveType) // TODO: Add DnM+ & AC support.
             {
-                _islandHouseBoxes[i] = new PictureBoxWithInterpolationMode
-                {
-                    Size = new Size(256, 256),
-                    Location = new Point(40 + _townMapTotalSize * 2, i * 266),
-                    BorderStyle = BorderStyle.FixedSingle
-                };
-
-                if ((SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus || SaveFile.SaveType == SaveType.AnimalForestEPlus)
-                    && _selectedIsland != null) // Remove this after adding DnM+/AC support
-                {
-                    var layerFurnitureMap = ImageGeneration.DrawFurnitureArrows(
-                        (Bitmap)Inventory.GetItemPic(16, 16, _selectedIsland.Cabana.MainRoom.Layers[i].Items, SaveFile.SaveType),
-                        _selectedIsland.Cabana.MainRoom.Layers[i].Items);
-                    _islandHouseBoxes[i].Image = layerFurnitureMap;
-                }
-
-                var layerBox = _islandHouseBoxes[i];
-
-                layerBox.MouseMove += delegate (object sender, MouseEventArgs e)
-                {
-                    if (e.X == _islandHouseX && e.Y == _islandHouseY) return;
-                    Layer currentLayer = null;
-                    switch (SaveFile.SaveType)
-                    {
-                        // TODO: DnM+/AC support
-                        case SaveType.DoubutsuNoMoriEPlus when _selectedIsland != null:
-                        case SaveType.AnimalForestEPlus when _selectedIsland != null:
-                            currentLayer = _selectedIsland.Cabana.MainRoom.Layers[Array.IndexOf(_islandHouseBoxes, sender)];
-                            break;
-                        case SaveType.DoubutsuNoMoriPlus:
-                        case SaveType.AnimalCrossing:
-                            currentLayer = _islandRoom.Layers[Array.IndexOf(_islandHouseBoxes, sender)];
-                            break;
-                    }
-
-                    if (currentLayer == null) return;
-                    var itemIndex = (e.X / 16) + (e.Y / 16) * (((PictureBox) sender).Width / 16);
-
-                    if (itemIndex >= currentLayer.Items.Length) return;
-                    if (_clickingHouse > 0)
-                    {
-                        if (_clickingHouse == 1)
-                        {
-                            currentLayer.Items[itemIndex] = new Furniture(GetCurrentItem());
-                            RefreshPictureBoxImage(layerBox, ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, currentLayer.Items, SaveFile.SaveType),
-                                currentLayer.Items));
-                            layerBox.Refresh();
-                        }
-                        else if (_clickingHouse == 2)
-                        {
-                            SetCurrentItem(currentLayer.Items[itemIndex]);
-                        }
-                    }
-
-                    Item item = currentLayer.Items[itemIndex];
-                    houseToolTip.Show($"{selectedItem.Name} - [0x{item.ItemId:X4}]", (Control) sender ?? throw new InvalidOperationException(), e.X + 15, e.Y + 10);
-                    _islandHouseX = e.X;
-                    _islandHouseY = e.Y;
-                };
-
-                layerBox.MouseLeave += delegate
-                {
-                    houseToolTip.Hide(this);
-                    _clickingIslandHouse = 0;
-                };
-
-                layerBox.MouseDown += delegate (object sender, MouseEventArgs e)
-                {
-                    Layer currentLayer = null;
-                    switch (SaveFile.SaveType)
-                    {
-                        // TODO: DnM+/AC
-                        case SaveType.DoubutsuNoMoriEPlus when _selectedIsland != null:
-                        case SaveType.AnimalForestEPlus when _selectedIsland != null:
-                            currentLayer = _selectedIsland.Cabana.MainRoom.Layers[Array.IndexOf(_islandHouseBoxes, sender)];
-                            break;
-                        case SaveType.DoubutsuNoMoriPlus:
-                        case SaveType.AnimalCrossing:
-                            currentLayer = _islandRoom.Layers[Array.IndexOf(_islandHouseBoxes, sender)];
-                            break;
-                    }
-
-                    if (currentLayer == null) return;
-                    var itemIndex = (e.X / 16) + (e.Y / 16) * (((PictureBox) sender).Width / 16);
-                    switch (e.Button)
-                    {
-                        case MouseButtons.Right when itemIndex < currentLayer.Items.Length:
-                            SetCurrentItem(currentLayer.Items[itemIndex]);
-                            _clickingIslandHouse = 2;
-                            break;
-                        case MouseButtons.Left when itemIndex < currentLayer.Items.Length:
-                            SaveFile.ChangesMade = true;
-                            currentLayer.Items[itemIndex] = new Furniture(GetCurrentItem());
-                            RefreshPictureBoxImage(layerBox, ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, currentLayer.Items, SaveFile.SaveType),
-                                currentLayer.Items));
-                            _clickingIslandHouse = 1;
-                            break;
-                        case MouseButtons.Middle:
-                            SaveFile.ChangesMade = true;
-                            _clickingIslandHouse = 0;
-                            Utility.FloodFillFurnitureArray(ref currentLayer.Items, 16, itemIndex, currentLayer.Items[itemIndex], new Furniture(GetCurrentItem()));
-                            RefreshPictureBoxImage(layerBox, ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, currentLayer.Items, SaveFile.SaveType),
-                                currentLayer.Items));
-                            break;
-                    }
-                };
-
-                layerBox.MouseUp += delegate (object sender, MouseEventArgs e)
-                {
-                    if ((e.Button == MouseButtons.Left && _clickingIslandHouse == 1) || (e.Button == MouseButtons.Right && _clickingIslandHouse == 2))
-                    {
-                        _clickingIslandHouse = 0;
-                    }
-                };
-
-                islandPanel.Controls.Add(_islandHouseBoxes[i]);
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
+                    _islandHouseEditor = new HouseControl(this, SaveFile, _selectedIsland.Cabana);
+                    break;
+                default:
+                    _islandHouseEditor = new HouseControl(this, SaveFile, _islandCabana);
+                    break;
             }
+
+            _islandHouseEditor.Location = new Point(0, _townMapTotalSize + 20);
+            islandPanel.Controls.Add(_islandHouseEditor);
         }
 
         #endregion
@@ -3903,11 +3661,16 @@ namespace ACSE
 
             // Save Houses
             foreach (var house in _houses)
+            {
                 if (house != null && SaveFile.SaveGeneration != SaveGeneration.N3DS) // TODO: Finish 3DS House editing
+                {
                     house.Write();
+                }
+            }
 
             //Save Acre & Town Data
             for (var i = 0; i < _acres.Length; i++)
+            {
                 if (SaveFile.SaveGeneration == SaveGeneration.N64 || SaveFile.SaveGeneration == SaveGeneration.GCN ||
                     SaveFile.SaveGeneration == SaveGeneration.iQue || SaveFile.SaveType == SaveType.CityFolk)
                 {
@@ -3921,6 +3684,7 @@ namespace ACSE
                 {
                     SaveFile.Write(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData + i * 2, _acres[i].AcreId);
                 }
+            }
 
             if (CurrentSaveInfo.SaveOffsets.TownData != 0)
             {
@@ -3943,10 +3707,14 @@ namespace ACSE
             }
 
             if (SaveFile.SaveGeneration != SaveGeneration.N3DS && CurrentSaveInfo.SaveOffsets.BuriedData != 0)
+            {
                 SaveFile.Write(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData, _buriedBuffer);
+            }
 
             if (CurrentSaveInfo.SaveOffsets.GrassWear > 0)
+            {
                 SaveFile.Write(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.GrassWear, _grassWear);
+            }
 
             if (CurrentSaveInfo.SaveOffsets.Buildings > 0)
             {
@@ -4001,10 +3769,20 @@ namespace ACSE
             // Save Town Ordinances in New Leaf
             UpdateNewLeafOrdinances();
 
-            // Save DnMe+ Islands
+            // Save DnM+/AC Island Cabana
+            if (SaveFile.SaveType == SaveType.DoubutsuNoMoriPlus || SaveFile.SaveType == SaveType.AnimalCrossing)
+            {
+                _islandCabana.Data.Rooms[0].Write();
+            }
+
+            // Save DnMe+ Islands   
             if (_islands != null)
+            {
                 foreach (var isle in _islands)
+                {
                     isle.Write();
+                }
+            }
 
             // Update Checksums and save file
             SaveFile.Flush();
@@ -4999,13 +4777,10 @@ namespace ACSE
             _islandAcreMap[0].BackgroundImage = GetAcreImage(islandAcreIds[0]);
             _islandAcreMap[1].BackgroundImage = GetAcreImage(islandAcreIds[1]);
 
-            // Reload Island House Pictureboxes
-            for (var i = 0; i < 4; i++)
-            {
-                var layerFurnitureMap = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(16, 16, _selectedIsland.Cabana.MainRoom.Layers[i].Items, SaveFile.SaveType),
-                    _selectedIsland.Cabana.MainRoom.Layers[i].Items);
-                _islandHouseBoxes[i].Image = layerFurnitureMap;
-            }
+            // Reload Island Cabana
+            if (_islandHouseEditor == null) return;
+            _islandHouseEditor.House = _selectedIsland.Cabana;
+
         }
 
         private void ReloadIslandItemPicture()

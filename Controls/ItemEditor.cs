@@ -61,7 +61,7 @@ namespace ACSE
             }
         }
 
-        private void SetItemPicture()
+        protected virtual void SetItemPicture()
         {
             var img = EditorPictureBox.Image;
 
@@ -74,9 +74,9 @@ namespace ACSE
             img?.Dispose();
         }
 
-        private readonly MainForm _mainFormReference;
-        private int _lastX = -1, _lastY = -1;
-        private bool _isMouseDown;
+        protected readonly MainForm MainFormReference;
+        protected int LastX = -1, LastY = -1;
+        protected bool IsMouseDown;
 
         protected ItemEditor()
         {
@@ -96,7 +96,7 @@ namespace ACSE
 
         public ItemEditor(MainForm mainForm, Item[] items, int itemsPerRow, int itemCellSize = 8) : this()
         {
-            _mainFormReference = mainForm;
+            MainFormReference = mainForm;
             _items = items;
             _itemsPerRow = itemsPerRow;
             ItemCellSize = itemCellSize;
@@ -105,7 +105,7 @@ namespace ACSE
             EditorPictureBox.MouseLeave += (sender, e) => ItemToolTip.Hide(this);
 
             EditorPictureBox.MouseDown += OnEditorMouseDown;
-            EditorPictureBox.MouseUp += (sender, e) => _isMouseDown = false;
+            EditorPictureBox.MouseUp += (sender, e) => IsMouseDown = false;
         }
 
         protected virtual void OnItemChanged(Item previousItem, Item newItem, int index)
@@ -130,10 +130,10 @@ namespace ACSE
         protected virtual void OnEditorMouseMove(object sender, MouseEventArgs e)
         {
             if (_items == null || !GetXyPosition(e, out _, out _, out var index) ||
-                (e.X == _lastX && e.Y == _lastY)) return;
+                (e.X == LastX && e.Y == LastY)) return;
             // Update Last Hover Position
-            _lastX = e.X;
-            _lastY = e.Y;
+            LastX = e.X;
+            LastY = e.Y;
 
             var hoveredItem = _items[index];
 
@@ -141,19 +141,19 @@ namespace ACSE
             ItemToolTip.Show(string.Format(HoverText, hoveredItem.Name, hoveredItem.ItemId.ToString("X4"), hoveredItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
 
             // Check for MouseDown
-            if (_isMouseDown)
+            if (IsMouseDown)
                 OnEditorMouseDown(sender, e);
         }
 
         protected virtual void OnEditorMouseDown(object sender, MouseEventArgs e)
         {
-            _isMouseDown = true;
+            IsMouseDown = true;
             if (!GetXyPosition(e, out _, out _, out var index)) return;
             var selectedItem = _items[index];
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    var newItem = _mainFormReference.GetCurrentItem();
+                    var newItem = MainFormReference.GetCurrentItem();
 
                     if (selectedItem != newItem)
                     {
@@ -182,7 +182,7 @@ namespace ACSE
 
                     break;
                 case MouseButtons.Right:
-                    _mainFormReference.SetCurrentItem(selectedItem);
+                    MainFormReference.SetCurrentItem(selectedItem);
                     break;
             }
         }

@@ -4892,6 +4892,12 @@
     <Compile Include="Controls\BadgeControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\FurnitureItemEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\HouseControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\OffsetablePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>

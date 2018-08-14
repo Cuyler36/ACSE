@@ -17,5 +17,13 @@
             var margin = (int)(0.5f * (parent.Height - control.Height));
             control.Margin = new Padding(leftPadding, margin, rightPadding, margin);
         }
+
+        public static void SetCenterMargins(this Control control, int leftPadding = 0, int rightPadding = 0)
+        {
+            if (control.Parent != null)
+            {
+                SetCenterMargins(control, control.Parent, leftPadding, rightPadding);
+            }
+        }
     }
 }

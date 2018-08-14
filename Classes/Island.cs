@@ -25,51 +25,6 @@ namespace ACSE
 
         #endregion
 
-        public class Cottage
-        {
-
-            public Room MainRoom;
-
-            public Cottage(int offset, Save saveData)
-            {
-                MainRoom = new Room
-                {
-                    Offset = offset,
-                    Name = "Cabana",
-                    Layers = new Layer[4],
-
-                    Carpet = new Item((ushort)(0x2600 | saveData.ReadByte(offset + 0x8A0))),
-                    Wallpaper = new Item((ushort)(0x2700 | saveData.ReadByte(offset + 0x8A1)))
-                };
-
-                for (var x = 0; x < 4; x++)
-                {
-                    var layerOffset = offset + 0x228 * x;
-                    var layer = new Layer
-                    {
-                        Offset = layerOffset,
-                        Index = x,
-                        Items = new Furniture[256],
-                        Parent = MainRoom
-                    };
-
-                    // Load furniture for the layer
-                    for (var f = 0; f < 256; f++)
-                    {
-                        var furnitureOffset = layerOffset + f * 2;
-                        layer.Items[f] = new Furniture(saveData.ReadUInt16(furnitureOffset, saveData.IsBigEndian));
-                    }
-
-                    MainRoom.Layers[x] = layer;
-                }
-            }
-
-            public void Write()
-            {
-                MainRoom.Write();
-            }
-        }
-
         private readonly Save _saveFile;
         private readonly int _offset;
         public string Name;
@@ -78,7 +33,7 @@ namespace ACSE
         public ushort TownId;
         public Player Owner;
         public WorldItem[][] Items;
-        public Cottage Cabana;
+        public House Cabana;
         public Villager Islander;
         public Pattern FlagPattern;
         public byte[] BuriedDataArray;
@@ -120,7 +75,9 @@ namespace ACSE
                 }
             }
 
-            Cabana = new Cottage(offset + CottageData, saveFile);
+            Cabana = new House(-1, offset + CottageData, 1, 0);
+            Cabana.Data.Rooms[0].Name = "Cabana";
+            
             FlagPattern = new Pattern(offset + FlagData, 0, saveFile);
             Islander = new Villager(offset + IslanderData, 0, saveFile);
             Purchased = IsPurchased();
@@ -234,7 +191,7 @@ namespace ACSE
             }
 
             // Save Cottage
-            Cabana.Write();
+            Cabana.Data.Rooms[0].Write();
 
             // TODO: Save Islander
 

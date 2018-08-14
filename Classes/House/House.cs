@@ -10,7 +10,9 @@ namespace ACSE
         public HouseData Data;
         public Player Owner;
 
-        public House(int index, int offset)
+        public House() { }
+
+        public House(int index, int offset, int roomCount = -1, int roomStart = -1)
         {
             Index = index;
             Offset = offset;
@@ -78,14 +80,17 @@ namespace ACSE
             Data = (HouseData)boxedData;
 
             // Load Rooms/Layers
+            const int itemsPerLayer = 256;
             var itemDataSize = MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS ? 4 : 2;
-            const int itemsPerLayer = 256; //Offsets.Layer_Size / ItemDataSize;
-            Data.Rooms = new Room[offsets.RoomCount];
+            var count = roomCount > -1 ? roomCount : offsets.RoomCount;
+            var start = roomStart > -1 ? roomStart : offsets.RoomStart;
+
+            Data.Rooms = new Room[count];
             var roomNames = HouseInfo.GetRoomNames(saveData.SaveGeneration);
 
-            for (var i = 0; i < offsets.RoomCount; i++)
+            for (var i = 0; i < count; i++)
             {
-                var roomOffset = offset + offsets.RoomStart + i * offsets.RoomSize;
+                var roomOffset = offset + start + i * offsets.RoomSize;
                 var room = new Room
                 {
                     Index = i,
@@ -136,28 +141,37 @@ namespace ACSE
             }
         }
 
-        public void Write()
+        public virtual void Write()
         {
             var saveData = MainForm.SaveFile;
             var offsets = HouseInfo.GetHouseOffsets(saveData.SaveType);
 
             // Set House TownID & Name
-            if (offsets.OwningPlayerName != -1 && Owner != null && offsets.TownId != -1)
+            if (Owner != null)
             {
-                Data.TownId = saveData.ReadUInt16(saveData.SaveDataStartOffset + MainForm.CurrentSaveInfo.SaveOffsets.TownId, saveData.IsBigEndian); // Might not be UInt16 in all games
-            }
-            if (offsets.OwningPlayerName != -1 && Owner != null && offsets.TownName != -1)
-            {
-                Data.TownName = saveData.ReadString(saveData.SaveDataStartOffset + MainForm.CurrentSaveInfo.SaveOffsets.TownName,
-                    MainForm.CurrentSaveInfo.SaveOffsets.TownNameSize);
-            }
-            if (offsets.OwningPlayerName != -1 && Owner != null)
-            {
-                Data.OwningPlayerName = Owner.Data.Name;
-            }
-            if (offsets.OwningPlayerId != -1 && Owner != null)
-            {
-                Data.OwningPlayerId = Owner.Data.Identifier;
+                if (offsets.OwningPlayerName != -1 && offsets.TownId != -1)
+                {
+                    Data.TownId =
+                        saveData.ReadUInt16(saveData.SaveDataStartOffset + MainForm.CurrentSaveInfo.SaveOffsets.TownId,
+                            saveData.IsBigEndian); // Might not be UInt16 in all games
+                }
+
+                if (offsets.OwningPlayerName != -1 && offsets.TownName != -1)
+                {
+                    Data.TownName = saveData.ReadString(
+                        saveData.SaveDataStartOffset + MainForm.CurrentSaveInfo.SaveOffsets.TownName,
+                        MainForm.CurrentSaveInfo.SaveOffsets.TownNameSize);
+                }
+
+                if (offsets.OwningPlayerName != -1)
+                {
+                    Data.OwningPlayerName = Owner.Data.Name;
+                }
+
+                if (offsets.OwningPlayerId != -1)
+                {
+                    Data.OwningPlayerId = Owner.Data.Identifier;
+                }
             }
 
             var houseOffsetData = typeof(HouseOffsets);
@@ -202,7 +216,9 @@ namespace ACSE
             }
 
             foreach (var r in Data.Rooms)
+            {
                 r.Write();
+            }
         }
     }
 }

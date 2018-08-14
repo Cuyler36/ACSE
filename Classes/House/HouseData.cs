@@ -113,13 +113,22 @@ namespace ACSE
 
             var offsets = HouseInfo.GetHouseOffsets(saveFile.SaveType);
 
-            if (offsets.RoomCarpet != -1)
-                if (saveFile.SaveGeneration == SaveGeneration.N64 || saveFile.SaveGeneration == SaveGeneration.GCN) // TODO: Non-Original titles
-                    saveFile.Write(Offset + offsets.RoomCarpet, (byte)(Carpet.ItemId));
+            switch (saveFile.SaveGeneration) // TODO: Non-Original titles
+            {
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                case SaveGeneration.iQue:
+                    if (offsets.RoomWallpaper != -1)
+                    {
+                        saveFile.Write(Offset + offsets.RoomCarpet, (byte) Carpet.ItemId);
+                    }
 
-            if (offsets.RoomWallpaper == -1) return;
-            if (saveFile.SaveGeneration == SaveGeneration.N64 || saveFile.SaveGeneration == SaveGeneration.GCN) // TODO: Non-Original titles
-                saveFile.Write(Offset + offsets.RoomWallpaper, (byte)(Wallpaper.ItemId));
+                    if (offsets.RoomCarpet != -1)
+                    {
+                        saveFile.Write(Offset + offsets.RoomWallpaper, (byte) Wallpaper.ItemId);
+                    }
+                    break;
+            }
 
             // TODO: Room_Song
         }
