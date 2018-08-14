@@ -2553,7 +2553,8 @@ namespace ACSE
             if (_lastBoxEntered != null && _lastBoxEntered != box)
             {
                 _lastBoxEntered.Image = null;
-            };
+            }
+
             _lastBoxEntered = box;
         }
 
