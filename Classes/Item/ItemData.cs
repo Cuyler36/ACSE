@@ -506,7 +506,7 @@ namespace ACSE
                         return ItemType.Occupied;
                     else if (id >= 0x8 && id <= 0xA)
                         return ItemType.Weed;
-                    else if (id >= 0x845 && id <= 0x84D)
+                    else if ((id >= 0x83C && id <= 0x84D) || (id >= 0xBF && id <= 0xD0))
                         return ItemType.Flower;
                     else if ((id >= 0x2100 && id <= 0x2103) || id == 0x005C) //0x005C = Glowing 0x18/Shovel spot
                         return ItemType.Money;
@@ -534,7 +534,7 @@ namespace ACSE
                         return ItemType.QuestItem;
                     else if (id >= 0x250E && id <= 0x2510)
                         return ItemType.Trash;
-                    else if ((id >= 0x2523 && id <= 0x2530) || (id >= 0x2900 && id <= 0x290A) || (id >= 0x2805 && id <= 0x2806))
+                    else if ((id >= 0x2523 && id <= 0x2530) || (id >= 0x2900 && id <= 0x290A) || (id >= 0x2805 && id <= 0x2806) || (id >= 0x2E00 && id <= 0x2E01))
                         return ItemType.Item;
                     else if (id >= 0x2C00 && id <= 0x2C5F)
                         return ItemType.RaffleTicket;
@@ -548,7 +548,8 @@ namespace ACSE
                         return ItemType.Fossil;
                     else if ((id >= 0x2200 && id <= 0x225B) || id == 0x251E)
                         return ItemType.Tool;  //0x251E = 0x17 (not a 'tool', but it's still classified as one)
-                    else if ((id >= 0x1 && id <= 0x4) || (id >= 0x005E && id <= 0x0060) || id == 0x69 || (id >= 0x0070 && id <= 0x0082) || (id >= 0x0800 && id <= 0x0869))
+                    else if ((id >= 0x1 && id <= 0x4) || (id >= 0x005E && id <= 0x0060) || id == 0x69 || (id >= 0x0070 && id <= 0x00BE) ||
+                             (id >= 0xD1 && id <= 0xEC) || (id >= 0x0800 && id <= 0x0869))
                         return ItemType.Tree;
                     else if (id >= 0x4000 && id < 0x5000)
                         return ItemType.HouseObject;
@@ -562,21 +563,21 @@ namespace ACSE
                 // Doubutsu no Mori e+ / Animal Forest e+
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                    if (id == 0)
+                    if (id == 0x0000)
                         return ItemType.Empty;
                     else if (id == 0xFFFF)
                         return ItemType.Occupied;
-                    else if (id >= 0x8 && id <= 0xA)
+                    else if (id >= 0x0008 && id <= 0x000A)
                         return ItemType.Weed;
-                    else if (id >= 0x845 && id <= 0x84D)
+                    else if (id == 0x0092 || (id >= 0x00CF && id <= 0x00E0) || (id >= 0x0845 && id <= 0x084D))
                         return ItemType.Flower;
                     else if ((id >= 0x2100 && id <= 0x2103) || id == 0x005C) //0x005C = Glowing 0x18/Shovel spot
                         return ItemType.Money;
-                    else if (id >= 0x63 && id <= 0x68)
+                    else if (id >= 0x0063 && id <= 0x0068)
                         return ItemType.Rock;
-                    else if ((id >= 0x6A && id <= 0x6F) || (id >= 0x83 && id <= 0x8C))
+                    else if ((id >= 0x006A && id <= 0x006F) || (id >= 0x0083 && id <= 0x008C))
                         return ItemType.MoneyRock;
-                    else if (id >= 0x900 && id <= 0x920)
+                    else if (id >= 0x0900 && id <= 0x0920)
                         return ItemType.Signboard;
                     else if (id >= 0x2514 && id <= 0x251B)
                         return ItemType.Shell;
@@ -596,7 +597,9 @@ namespace ACSE
                         return ItemType.QuestItem;
                     else if (id >= 0x250E && id <= 0x2510)
                         return ItemType.Trash;
-                    else if ((id >= 0x2523 && id <= 0x2530) || (id >= 0x2900 && id <= 0x290A) || (id >= 0x2805 && id <= 0x2806))
+                    else if ((id >= 0x2523 && id <= 0x2530) || (id >= 0x2900 && id <= 0x290A) ||
+                             (id >= 0x2805 && id <= 0x2806) || (id >= 0x2E00 && id <= 0x2E01) ||
+                             (id >= 0x2E00 && id <= 0x2E01))
                         return ItemType.Item;
                     else if (id >= 0x2C00 && id <= 0x2C5F)
                         return ItemType.RaffleTicket;
@@ -610,13 +613,18 @@ namespace ACSE
                         return ItemType.Fossil;
                     else if ((id >= 0x2200 && id <= 0x2266) || id == 0x251E)
                         return ItemType.Tool;  //0x251E = 0x17 (not a 'tool', but it's still classified as one)
-                    else if ((id >= 0x1 && id <= 0x4) || (id >= 0x005E && id <= 0x0060) || id == 0x69 || (id >= 0x0070 && id <= 0x0082) || (id >= 0x0800 && id <= 0x0869))
+                    else if ((id >= 0x0001 && id <= 0x0004) || (id >= 0x005E && id <= 0x0060) || id == 0x0069 ||
+                             (id >= 0x0070 && id <= 0x0082) || (id >= 0x0093 && id <= 0x00CE) ||
+                             (id >= 0x00E1 && id <= 0x00FC) || (id >= 0x0800 && id <= 0x0869))
                         return ItemType.Tree;
                     else if (id >= 0x4000 && id < 0x5000)
                         return ItemType.HouseObject;
-                    else if ((id >= 0x5 && id <= 0x7) || (id >= 0xB && id <= 0x10) || (id >= 0x5000 && id <= 0xB000) || (id >= 0xFE00 && id != 0xFE23))
+                    else if ((id >= 0x0005 && id <= 0x0007) || (id >= 0x000B && id <= 0x0010) ||
+                             (id >= 0x008D && id <= 0x0091) || (id >= 0x5000 && id <= 0xB000) ||
+                             (id >= 0xFE00 && id != 0xFE23))
                         return ItemType.Building;
-                    else if ((id >= 0x1000 && id <= 0x15AC) || (id >= 0x17AC && id <= 0x1FFC) || (id >= 0x3000 && id <= 0x345C)) // || ID >= 0xFE20
+                    else if ((id >= 0x1000 && id <= 0x15AC) || (id >= 0x17AC && id <= 0x1FFC) ||
+                             (id >= 0x3000 && id <= 0x345C)) // || ID >= 0xFE20
                         return ItemType.Furniture;
                     else
                         return ItemType.Invalid;
