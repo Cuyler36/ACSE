@@ -517,15 +517,15 @@ namespace ACSE
         };
         #endregion
 
-        public static byte[] ByteSwap(byte[] saveBuff)
+        public static byte[] ByteSwap(in byte[] saveData)
         {
-            var swappedBuffer = new byte[saveBuff.Length];
-            for (var i = 0; i < saveBuff.Length; i += 4)
+            var swappedBuffer = new byte[saveData.Length];
+            for (var i = 0; i < saveData.Length; i += 4)
             {
-                var a = saveBuff[i];
-                var b = saveBuff[i + 1];
-                var c = saveBuff[i + 2];
-                var d = saveBuff[i + 3];
+                var a = saveData[i];
+                var b = saveData[i + 1];
+                var c = saveData[i + 2];
+                var d = saveData[i + 3];
                 swappedBuffer[i] = d;
                 swappedBuffer[i + 1] = c;
                 swappedBuffer[i + 2] = b;
@@ -534,12 +534,19 @@ namespace ACSE
             return swappedBuffer;
         }
 
-        public static SaveType? GetSaveType(byte[] saveData)
+        /// <summary>
+        /// Checks if the Doubutsu no Mori file is byteswapped or not
+        /// </summary>
+        /// <param name="saveData">The save data</param>
+        /// <returns>Is byteswapped</returns>
+        public static bool IsByteSwapped(in byte[] saveData) => Encoding.ASCII.GetString(saveData, 4, 4) == "JFAN";
+
+        public static SaveType GetSaveType(in byte[] saveData)
         {
-            switch (saveData.Length)
+            switch (saveData.Length) // TODO: look for a better way to differentiate the iQue version from the N64 version.
             {
                 case 0x20000:
-                    return null; // Return null for this since we set it in the save constructor 
+                    return saveData[0xFFFF] == 0 ? SaveType.DoubutsuNoMori : SaveType.AnimalForest;
                 case 0x72040:
                 case 0x72150:
                     {
@@ -692,7 +699,6 @@ namespace ACSE
                             return "Unknown Save Type";
                     }
 
-                case Region.NTSC:
                 default:
                     switch (saveType)
                     {
@@ -716,7 +722,6 @@ namespace ACSE
                             return "New Leaf";
                         case SaveType.WelcomeAmiibo:
                             return "Welcome Amiibo";
-                        case SaveType.Unknown:
                         default:
                             return "Unknown Save Type";
                     }

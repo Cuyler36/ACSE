@@ -64,6 +64,7 @@ namespace ACSE
         private readonly BinaryReader _saveReader;
         private BinaryWriter _saveWriter;
         private readonly Backup _backup;
+        private readonly bool _byteswap = false;
 
         public Save(string filePath)
         {
@@ -93,37 +94,25 @@ namespace ACSE
 
                 _saveReader = new BinaryReader(_saveFile);
 
-                if (_saveFile.Length == 0x20000)
+                OriginalSaveData = _saveReader.ReadBytes((int)_saveFile.Length);
+                
+                _byteswap = SaveDataManager.IsByteSwapped(OriginalSaveData);
+                if (_byteswap)
                 {
-                    var data = _saveReader.ReadBytes(0x20000);
-                    if (Encoding.ASCII.GetString(data, 4, 4) == "JFAN") // Check for DnM which is byteswapped
-                    {
-                        OriginalSaveData = SaveDataManager.ByteSwap(data);
-                        SaveType = SaveType.DoubutsuNoMori;
-                    }
-                    else
-                    {
-                        OriginalSaveData = data;
-                        SaveType = SaveType.AnimalForest;
-                    }
-                }
-                else
-                {
-                    OriginalSaveData = _saveReader.ReadBytes((int)_saveFile.Length);
+                    OriginalSaveData = SaveDataManager.ByteSwap(OriginalSaveData);
                 }
 
-                
                 WorkingSaveData = new byte[OriginalSaveData.Length];
                 Buffer.BlockCopy(OriginalSaveData, 0, WorkingSaveData, 0, OriginalSaveData.Length);
 
-                SaveType = SaveDataManager.GetSaveType(OriginalSaveData) ?? SaveType;
+                SaveType = SaveDataManager.GetSaveType(OriginalSaveData);
                 SaveGeneration = SaveDataManager.GetSaveGeneration(SaveType);
                 FullSavePath = filePath;
                 SaveName = Path.GetFileNameWithoutExtension(filePath);
                 SavePath = Path.GetDirectoryName(filePath) + Path.DirectorySeparatorChar;
                 SaveExtension = Path.GetExtension(filePath);
                 SaveId = SaveDataManager.GetGameId(SaveType);
-                SaveDataStartOffset = SaveDataManager.GetSaveDataOffset(SaveId.ToLower(), SaveExtension.Replace(".", "").ToLower());
+                SaveDataStartOffset = SaveDataManager.GetSaveDataOffset(SaveId.ToLower(), SaveExtension?.Replace(".", "").ToLower());
                 SaveInfo = SaveDataManager.GetSaveInfo(SaveType);
 
                 if (SaveType == SaveType.WildWorld || SaveGeneration == SaveGeneration.N3DS)
@@ -219,7 +208,10 @@ namespace ACSE
                     Write(SaveDataStartOffset + 0x7248C, NewLeaftCrc32.Calculate_CRC32Type2(WorkingSaveData.Skip(SaveDataStartOffset + 0x7248C + 4).Take(0x1444).ToArray()));
                     break;
             }
-            _saveWriter.Write(SaveType == SaveType.DoubutsuNoMori ? SaveDataManager.ByteSwap(WorkingSaveData) : WorkingSaveData); //Doubutsu no Mori is dword byteswapped
+
+            _saveWriter.Write(SaveType == SaveType.DoubutsuNoMori && _byteswap
+                ? SaveDataManager.ByteSwap(WorkingSaveData)
+                : WorkingSaveData); // Doubutsu no Mori is dword byteswapped
             _saveWriter.Flush();
             _saveFile.Flush();
 
