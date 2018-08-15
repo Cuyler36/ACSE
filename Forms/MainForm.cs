@@ -2136,6 +2136,7 @@ namespace ACSE
                         _townAcreMap[townAcre].MouseMove += (sender, e) => TownMove(sender, e);
                         _townAcreMap[townAcre].MouseLeave += HideTownTip;
                         _townAcreMap[townAcre].MouseDown += (sender, e) => TownMouseDown(sender, e);
+                        _townAcreMap[townAcre].MouseEnter += (sender, e) => TownEnter(sender);
                         _townAcreMap[townAcre].MouseUp += TownMouseUp;
                         townPanel.Controls.Add(_townAcreMap[townAcre]);
                         if (_grassMap == null || _grassMap.Length != _townAcreMap.Length) continue;
@@ -2225,6 +2226,7 @@ namespace ACSE
                         _islandAcreMap[idx].MouseMove += (sender, e) => TownMove(sender, e, true);
                         _islandAcreMap[idx].MouseLeave += HideTownTip;
                         _islandAcreMap[idx].MouseDown += (sender, e) => TownMouseDown(sender, e, true);
+                        _islandAcreMap[idx].MouseEnter += (sender, e) => TownEnter(sender);
                         _islandAcreMap[idx].MouseUp += TownMouseUp;
                         _islandAcreMap[idx].Location = (SaveFile.SaveGeneration == SaveGeneration.GCN)
                             ? new Point(x * _townMapTotalSize, y * _townMapTotalSize) : new Point(((x - 1) % 4) * _townMapTotalSize, (y - 1) * _townMapTotalSize);
@@ -3336,6 +3338,12 @@ namespace ACSE
             SaveFile.Write(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.Buildings - 4, count);
         }
 
+        private void TownEnter(object sender)
+        {
+            if (!(sender is PictureBoxWithInterpolationMode)) return;
+            _lastTownIndex = -1;
+        }
+
         private void HandleTownClick(object sender, WorldItem item, int acre, int index, MouseEventArgs e, bool island = false)
         {
             if (!(sender is PictureBoxWithInterpolationMode box)) return;
@@ -3554,13 +3562,15 @@ namespace ACSE
             var x = e.X / _townMapCellSize;
             var y = e.Y / _townMapCellSize;
             var index = x + y * 16;
+            var acre = (int) box.Tag;
 
-            if (!forceOverride && index == _lastTownIndex) return;
+            if (index < 0 || index > 255 || TownAcres == null || acre >= TownAcres.Length) return;
+            if (index == _lastTownIndex && !forceOverride) return;
+
             _lastTownIndex = index;
             box.Capture = false;
-
-            var acre = (int) box.Tag;
-            if (index < 0 || index > 255 || TownAcres == null || acre >= TownAcres.Length) return;
+            townToolTip.Hide(box);
+            townToolTip.RemoveAll();
 
             // Set Info Label
             townInfoLabel.Text = $"X: {x} | Y: {y} | Index: {index}";
@@ -3584,6 +3594,8 @@ namespace ACSE
                 HandleTownClick(sender, item, acre, index, e, island);
             }
 
+            //Console.WriteLine($"Index: {index} | ItemId: {item.ItemId:X4} | Name: {item.Name}");
+
             // Draw ToolTip
             if (_buildings != null)
             {
@@ -3592,12 +3604,12 @@ namespace ACSE
                     b != null
                         ? $"{b.Name} - [0x{b.Id:X2} - Building]"
                         : $"{item.Name}{(item.Buried ? " (Buried)" : (item.Watered ? " (Watered)" : (item.Flag1 == 1 ? " (Perfect Fruit)" : "")))} - [0x{item.ItemId:X4}]",
-                    box, e.X + 15, e.Y + 10, int.MaxValue);
+                    box, e.X + 15, e.Y + 10, 100000);
             }
             else
             {
                 townToolTip.Show($"{item.Name}{(item.Buried ? " (Buried)" : "")} - [0x{item.ItemId:X4}]", box, e.X + 15,
-                    e.Y + 10, int.MaxValue);
+                    e.Y + 10, 100000);
             }
             
             // Draw Cell Highlight
