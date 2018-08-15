@@ -1,48 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ACSE
 {
-    //Used in Doubutsu no Mori, Doubutsu no Mori+, Animal Crossing, Doubutsu no Mori e+, and Wild World
+    /// <summary>
+    /// UInt16 additive checksum is used in several Animal Crossing games.
+    /// </summary>
     public static class Checksum
     {
-        //Checksum Calculation Method:
-        //The checksum is located at 0x26052, and is an Unsigned Short
-        //The checksum is an offset value, so that the final additive of the save + the checksum is equal to 0
-        //The checksum offset is calculated by iterating through 0x26040 - 0x26051 and 0x26053 - 0x4C03F inclusively and adding every two bytes as a 16 bit ushort
-        //The checksum offset can then be verfied by adding 0x26040 - 0x4C03F in two byte intervals. If your sum is 0, then the checksum offset value is correct!
-        //Important to note that the gamecube used Big Endian notation, so you will likely have to convert between Little & Big Endian values to get a correct chksum
-
-        public static ushort Calculate(byte[] buffer, int checksumOffset, bool littleEndian = false)
+        /// <summary>
+        /// Calculates a 16-bit additive checksum for a given array.
+        /// </summary>
+        /// <param name="buffer">The array to checksum</param>
+        /// <param name="checksumOffset">The offset of the addendum in the array</param>
+        /// <param name="littleEndian">Is the data bit endian or little endian</param>
+        /// <returns>The calculated 16-bit checksum addendum. When added with the sum of all the other values, the result will be 0.</returns>
+        public static ushort Calculate(in IList<byte> buffer, int checksumOffset, bool littleEndian = false)
         {
             ushort checksum = 0;
-            if (littleEndian) //WW case
+            if (littleEndian)
             {
                 for (var i = 0; i < checksumOffset; i += 2)
                     checksum += (ushort)((buffer[i + 1] << 8) | buffer[i]);
-                for (var i = checksumOffset + 2; i < buffer.Length - 1; i += 2)
+                for (var i = checksumOffset + 2; i < buffer.Count - 1; i += 2)
                     checksum += (ushort)((buffer[i + 1] << 8) | buffer[i]);
             }
             else
             {
                 for (var i = 0; i < checksumOffset; i += 2)
                     checksum += (ushort)((buffer[i] << 8) | buffer[i + 1]);
-                for (var i = checksumOffset + 2; i < buffer.Length - 1; i += 2)
+                for (var i = checksumOffset + 2; i < buffer.Count - 1; i += 2)
                     checksum += (ushort)((buffer[i] << 8) | buffer[i + 1]);
             }
             return (ushort)-checksum;
         }
 
-        public static bool Verify(byte[] buffer, int checksumOffset)
+        /// <summary>
+        /// Checks whether or not the supplied buffer has a correct checksum.
+        /// </summary>
+        /// <param name="buffer">The array to check</param>
+        /// <param name="checksumOffset">The offset of the checksum in the array</param>
+        /// <returns></returns>
+        public static bool Verify(in IList<byte> buffer, int checksumOffset)
         {
             ushort checksum = 0;
-            for (var i = 0; i < buffer.Length; i += 2)
-                checksum += (ushort)((buffer[i] << 8) + buffer[i + 1]);
+            for (var i = 0; i < buffer.Count; i += 2)
+                checksum += (ushort)((buffer[i] << 8) | buffer[i + 1]);
             return checksum == 0;
         }
     }
 
-    //Used in City Folk
+    /// <summary>
+    /// Generic CRC32 checksum used in Animal Crossing: City Folk.
+    /// </summary>
     public static class Crc32
     {
         // Table of CRC-32's of all single byte values
@@ -101,10 +112,16 @@ namespace ACSE
             0x2D02EF8D
         };
 
-        public static uint CalculateCrc32(byte[] pBuf, uint initial = 0xFFFFFFFF)
+        /// <summary>
+        /// Calculates a CRC32 checksum for an IList of bytes.
+        /// </summary>
+        /// <param name="pBuf">The IList array of bytes</param>
+        /// <param name="initial">The initial CRC value. Defaults to 0xFFFFFFFF.</param>
+        /// <returns>The calculated CRC32 checksum.</returns>
+        public static uint CalculateCrc32(in IList<byte> pBuf, uint initial = 0xFFFFFFFF)
         {
             var c = initial;
-            int i, n = pBuf.Length;
+            int i, n = pBuf.Count;
             for (i = 0; i < n; i++)
             {
                 var index = (byte)((c & 0xFF) ^ pBuf[i]);
@@ -114,7 +131,9 @@ namespace ACSE
         }
     }
 
-    //Used in New Leaf + Welcome Amiibo
+    /// <summary>
+    /// CRC32 used in Animal Crossing: New Leaf & Animal Crossing: New Leaf - Welcome Amiibo.
+    /// </summary>
     public static class NewLeaftCrc32
     {
         public static uint[] NewLeafCrcTableType1 = {
@@ -227,9 +246,14 @@ namespace ACSE
             0xB1F740B4
         };
 
-        public static uint Calculate_CRC32Type1(byte[] data)
+        /// <summary>
+        /// Calculates a type 1 CRC32 for a given IList of bytes.
+        /// </summary>
+        /// <param name="data">The IList of bytes</param>
+        /// <returns>The calculated CRC32 checksum.</returns>
+        public static uint Calculate_CRC32Type1(in IList<byte> data)
         {
-            var size = data.Length;
+            var size = data.Count;
             var crc = 0xFFFFFFFF;
             var p = 0;
             while (size-- != 0)
@@ -238,9 +262,14 @@ namespace ACSE
             return ~crc;
         }
 
-        public static uint Calculate_CRC32Type2(byte[] data)
+        /// <summary>
+        /// Calculates a type 2 CRC32 for a given IList of bytes.
+        /// </summary>
+        /// <param name="data">The IList of bytes</param>
+        /// <returns>The calculated CRC32 checksum.</returns>
+        public static uint Calculate_CRC32Type2(in IList<byte> data)
         {
-            var size = data.Length;
+            var size = data.Count;
             uint crc = 0x00000000;
             var p = 0;
             while (size-- != 0)
@@ -249,14 +278,28 @@ namespace ACSE
             return ~crc;
         }
 
-        public static uint Get_CRC32(byte[] data, int offset, int length)
+        /// <summary>
+        /// Gets a type 1 CRC32 checksum for an IList of bytes, given an offset and size.
+        /// </summary>
+        /// <param name="data">IList of bytes that contains the desired data to be checksummed.</param>
+        /// <param name="offset">The offset to the beginning of the checksum region.</param>
+        /// <param name="length">The size of the checksum region.</param>
+        /// <returns>The calculated CRC32 checksum for the given offset & size.</returns>
+        public static uint Get_CRC32(in IList<byte> data, int offset, int length)
         {
-            return Calculate_CRC32Type1(data.Skip(offset).Take(length).ToArray());
+            return Calculate_CRC32Type1((IList<byte>) data.Skip(offset).Take(length));
         }
 
-        public static bool Verify_CRC32(byte[] data, int offset, int length)
+        /// <summary>
+        /// Verifies region of data has a correct CRC32 checksum.
+        /// </summary>
+        /// <param name="data">IList of bytes that contains the desired data to be checksummed.</param>
+        /// <param name="offset">The offset to the beginning of the checksum region.</param>
+        /// <param name="length">The size of the checksum region.</param>
+        /// <returns>True/False does the region have a valid CRC32 checksum.</returns>
+        public static bool Verify_CRC32(in IList<byte> data, int offset, int length)
         {
-            return Get_CRC32(data, offset + 4, length - 4) == BitConverter.ToUInt32(data, offset);
+            return Get_CRC32(data, offset + 4, length - 4) == BitConverter.ToUInt32(data as byte[] ?? data.ToArray(), offset);
         }
     }
 }
