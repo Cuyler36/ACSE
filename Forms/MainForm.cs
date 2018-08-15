@@ -3617,8 +3617,24 @@ namespace ACSE
             box.Refresh();
 
             if (acre == _lastTownAcre) return;
+            if (island && _lastTownAcre >= _islandAcreMap.Length)
+            {
+                _lastTownAcre = 0;
+                return;
+            }
+
+            WorldItem[] lastAcreItems;
+            if (island)
+            {
+                lastAcreItems = _selectedIsland == null ? IslandAcres[_lastTownAcre].AcreItems : _selectedIsland.Items[_lastTownAcre];
+            }
+            else
+            {
+                lastAcreItems = TownAcres[_lastTownAcre].AcreItems;
+            }
+
             RefreshPictureBoxImage(island ? _islandAcreMap[_lastTownAcre] : _townAcreMap[_lastTownAcre],
-                GenerateAcreItemsBitmap(island ? IslandAcres[_lastTownAcre].AcreItems : TownAcres[_lastTownAcre].AcreItems, _lastTownAcre));
+                GenerateAcreItemsBitmap(lastAcreItems, _lastTownAcre, island));
             if (island)
             {
                 _islandAcreMap[_lastTownAcre].Refresh();
@@ -3638,11 +3654,10 @@ namespace ACSE
         private void TownMouseDown(object sender, MouseEventArgs e, bool island = false)
         {
             if (!(sender is PictureBoxWithInterpolationMode box)) return;
-            var idx = island ? Array.IndexOf(_islandAcreMap, box) : Array.IndexOf(_townAcreMap, box);
+            var acre = island ? Array.IndexOf(_islandAcreMap, box) : Array.IndexOf(_townAcreMap, box);
             var x = e.X / _townMapCellSize;
             var y = e.Y / _townMapCellSize;
             var index = x + y * 16;
-            var acre = idx;
             if (index > 255)
                 return;
             WorldItem item;
