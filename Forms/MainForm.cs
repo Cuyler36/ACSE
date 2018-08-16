@@ -3126,8 +3126,9 @@ namespace ACSE
                 {
                     _selectedPatternObject = _selectedPlayer.Data.Patterns[Array.IndexOf(_patternBoxes, patternBox)];
                     _selectedPattern = _selectedPatternObject.PatternBitmap;
-                    paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(_selectedPatternObject.PaletteData, _selectedPaletteIndex,
-                        (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
+                    paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(
+                        _selectedPatternObject.PaletteData, _selectedPaletteIndex,
+                        (uint) paletteSelectionPictureBox.Size.Width, (uint) paletteSelectionPictureBox.Size.Height);
                     patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(_selectedPattern, 0x10, new Size(513, 513));
                     patternNameTextBox.Text = _selectedPatternObject.Name;
                     paletteIndexLabel.Text = "Palette: " + (_selectedPatternObject.Palette + 1);
@@ -3142,8 +3143,9 @@ namespace ACSE
         {
             if (_selectedPatternObject == null) return;
             _selectedPaletteIndex = e.Y / (paletteSelectionPictureBox.Height / 15);
-            paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(_selectedPatternObject.PaletteData, _selectedPaletteIndex,
-                (uint)paletteSelectionPictureBox.Size.Width, (uint)paletteSelectionPictureBox.Size.Height);
+            paletteSelectionPictureBox.Image = PatternUtility.GeneratePalettePreview(_selectedPatternObject.PaletteData,
+                _selectedPaletteIndex,
+                (uint) paletteSelectionPictureBox.Size.Width, (uint) paletteSelectionPictureBox.Size.Height);
 
             // Set Color Selected Arrow
             paletteColorSelectedPictureBox.Location = new Point(paletteSelectionPictureBox.Location.X - 16,
@@ -3160,15 +3162,38 @@ namespace ACSE
             var cellY = e.Y / (patternEditorPictureBox.Height / 32);
             var pixelPosition = cellY * 32 + cellX;
 
-            if (_lastPatternPixel == pixelPosition || pixelPosition <= -1 ||
-                pixelPosition >= _selectedPatternObject.DecodedData.Length || cellX >= 32) return;
-            _lastPatternPixel = pixelPosition;
-            _selectedPatternObject.DecodedData[pixelPosition] = SaveFile.SaveGeneration == SaveGeneration.N3DS ? (byte)_selectedPaletteIndex : (byte)(_selectedPaletteIndex + 1);
-            _selectedPatternObject.RedrawBitmap();
-            _selectedPattern = _selectedPatternObject.PatternBitmap;
-            _patternBoxes[_selectedPatternObject.Index].Image = _selectedPattern;
-            patternEditorPictureBox.Image = ImageGeneration.DrawGrid2(_selectedPattern, 0x10, new Size(513, 513));
-            patternEditorPictureBox.Refresh();
+            if (pixelPosition <= -1 || pixelPosition >= _selectedPatternObject.DecodedData.Length ||
+                cellX >= 32) return;
+
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    if (_lastPatternPixel == pixelPosition) return;
+                    _lastPatternPixel = pixelPosition;
+                    _selectedPatternObject.DecodedData[pixelPosition] = SaveFile.SaveGeneration == SaveGeneration.N3DS
+                        ? (byte) _selectedPaletteIndex
+                        : (byte) (_selectedPaletteIndex + 1);
+                    _selectedPatternObject.RedrawBitmap();
+                    _selectedPattern = _selectedPatternObject.PatternBitmap;
+                    _patternBoxes[_selectedPatternObject.Index].Image = _selectedPattern;
+                    patternEditorPictureBox.Image =
+                        ImageGeneration.DrawGrid2(_selectedPattern, 0x10, new Size(513, 513));
+                    patternEditorPictureBox.Refresh();
+                    return;
+                case MouseButtons.Right:
+                    var prevIndex = _selectedPaletteIndex;
+                    _selectedPaletteIndex = SaveFile.SaveGeneration == SaveGeneration.N3DS
+                        ? _selectedPatternObject.DecodedData[pixelPosition]
+                        : Math.Max(0, _selectedPatternObject.DecodedData[pixelPosition] - 1);
+                    if (_selectedPaletteIndex == prevIndex) return;
+
+                    paletteColorSelectedPictureBox.Location = new Point(paletteSelectionPictureBox.Location.X - 16,
+                        paletteSelectionPictureBox.Location.Y + _selectedPaletteIndex * 32);
+                    return;
+                case MouseButtons.Middle:
+                    // TODO: Implement flood fill
+                    return;
+            }
         }
 
         private void PatternEditorBoxMouseLeave(object sender, EventArgs e)
@@ -3218,7 +3243,8 @@ namespace ACSE
             editedBuilding.Id = _buildingDb[Array.IndexOf(_buildingNames, senderBox.Text)];
             editedBuilding.Name = senderBox.Text;
             editedBuilding.Exists = SaveFile.SaveType == SaveType.NewLeaf ? editedBuilding.Id != 0xF8 : editedBuilding.Id != 0xFC;
-            _townAcreMap[editedBuilding.AcreIndex].Image = GenerateAcreItemsBitmap(TownAcres[editedBuilding.AcreIndex].AcreItems, editedBuilding.AcreIndex);
+            _townAcreMap[editedBuilding.AcreIndex].Image =
+                GenerateAcreItemsBitmap(TownAcres[editedBuilding.AcreIndex].AcreItems, editedBuilding.AcreIndex);
         }
 
         //TODO: Update textboxes on change with mouse
@@ -3229,7 +3255,7 @@ namespace ACSE
             var buildingIdx = Array.IndexOf(_buildingListPanels, parentPanel);
             var editedBuilding = _buildings[buildingIdx];
             if ((SaveFile.SaveType == SaveType.CityFolk && newPosition < 16 * 5) ||
-                ((SaveFile.SaveType == SaveType.NewLeaf || SaveFile.SaveType == SaveType.WelcomeAmiibo) && newPosition < 16 * (isY ? 4 : 5)))
+                (SaveFile.SaveGeneration == SaveGeneration.N3DS && newPosition < 16 * (isY ? 4 : 5)))
             {
                 int oldAcre = editedBuilding.AcreIndex;
                 var newAcre = newPosition / 16;
