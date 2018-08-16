@@ -4859,6 +4859,12 @@
     <Compile Include="Classes\AlertToggledEventArgs.cs" />
     <Compile Include="Classes\Backup.cs" />
     <Compile Include="Classes\Catalog.cs" />
+    <Compile Include="Classes\Checksums\CRC32.cs" />
+    <Compile Include="Classes\Checksums\IChecksum.cs" />
+    <Compile Include="Classes\Checksums\NewLeafCRC32Type1.cs" />
+    <Compile Include="Classes\Checksums\NewLeafCRC32Type2.cs" />
+    <Compile Include="Classes\Checksums\UInt16LEChecksum.cs" />
+    <Compile Include="Classes\Checksums\UInt16BEChecksum.cs" />
     <Compile Include="Classes\Emotion.cs" />
     <Compile Include="Classes\Extensions\ArrayExtensions.cs" />
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
@@ -4957,7 +4963,6 @@
     <Compile Include="Forms\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Checksum.cs" />
     <Compile Include="Classes\House\HouseData.cs" />
     <Compile Include="Classes\Inventory.cs" />
     <Compile Include="Classes\Item\ItemData.cs" />

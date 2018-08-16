@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using ACSE.Checksums;
 using ACSE.Utilities;
 
 namespace ACSE
@@ -136,76 +136,145 @@ namespace ACSE
             var fullSaveName = SavePath + Path.DirectorySeparatorChar + SaveName + SaveExtension;
             _saveFile = new FileStream(fullSaveName, FileMode.OpenOrCreate);
             _saveWriter = new BinaryWriter(_saveFile);
-            if (SaveGeneration == SaveGeneration.N64 || SaveGeneration == SaveGeneration.GCN || SaveGeneration == SaveGeneration.NDS)
+            switch (SaveType)
             {
-                Write(SaveDataStartOffset + SaveInfo.SaveOffsets.Checksum,
-                    Checksum.Calculate(WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray(),
-                    SaveInfo.SaveOffsets.Checksum, !IsBigEndian), IsBigEndian);
-                WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray().CopyTo(WorkingSaveData,
-                    SaveDataStartOffset + SaveInfo.SaveOffsets.SaveSize); //Update second save copy
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DoubutsuNoMoriPlus:
+                case SaveType.AnimalCrossing:
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
+                    Write(SaveDataStartOffset + SaveInfo.SaveOffsets.Checksum,
+                        new UInt16BEChecksum().Calculate(
+                            WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray(),
+                            (uint) SaveInfo.SaveOffsets.Checksum), IsBigEndian);
 
-                var checksum =
-                    Checksum.Calculate(
-                        WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray(),
-                        SaveInfo.SaveOffsets.Checksum, !IsBigEndian);
-                Console.WriteLine(
-                    $"Save file checksum calculated is: 0x{checksum:X4}");
-            }
-            else switch (SaveType)
-            {
+                    WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray().CopyTo(
+                        WorkingSaveData,
+                        SaveDataStartOffset + SaveInfo.SaveOffsets.SaveSize);
+                    break;
+                case SaveType.WildWorld:
+                    Write(SaveDataStartOffset + SaveInfo.SaveOffsets.Checksum,
+                        new UInt16LEChecksum().Calculate(
+                            WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray(),
+                            (uint) SaveInfo.SaveOffsets.Checksum), IsBigEndian);
+
+                    WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray().CopyTo(
+                        WorkingSaveData,
+                        SaveDataStartOffset + SaveInfo.SaveOffsets.SaveSize);
+                    break;
                 case SaveType.AnimalForest:
                     Write(SaveDataStartOffset + SaveInfo.SaveOffsets.Checksum,
-                        Checksum.Calculate(WorkingSaveData.Skip(SaveDataStartOffset).Take(0xF980).ToArray(), SaveInfo.SaveOffsets.Checksum, !IsBigEndian), IsBigEndian);
-                    WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray().CopyTo(WorkingSaveData,
-                    SaveDataStartOffset + SaveInfo.SaveOffsets.SaveSize); //Update second save copy
+                        new UInt16BEChecksum().Calculate(
+                            WorkingSaveData.Skip(SaveDataStartOffset).Take(0xF980).ToArray(),
+                            (uint) SaveInfo.SaveOffsets.Checksum), IsBigEndian);
+
+                    WorkingSaveData.Skip(SaveDataStartOffset).Take(SaveInfo.SaveOffsets.SaveSize).ToArray().CopyTo(
+                        WorkingSaveData,
+                        SaveDataStartOffset + SaveInfo.SaveOffsets.SaveSize);
                     break;
                 case SaveType.CityFolk:
+                    var crc32 = new CRC32();
                     for (var i = 0; i < 4; i++)
                     {
                         var playerDataOffset = SaveDataStartOffset + i * 0x86C0 + 0x1140;
-                        var playerCrc32 = Crc32.CalculateCrc32(WorkingSaveData.Skip(playerDataOffset + 4).Take(0x759C).ToArray());
+                        var playerCrc32 =
+                            crc32.Calculate(WorkingSaveData.Skip(playerDataOffset + 4).Take(0x759C).ToArray());
                         Write(playerDataOffset, playerCrc32, true);
                     }
-                    Write(SaveDataStartOffset + 0x5EC60, Crc32.CalculateCrc32(WorkingSaveData.Skip(SaveDataStartOffset + 0x5EC64).Take(0x1497C).ToArray()), true);
-                    Write(SaveDataStartOffset + 0x5EB04, Crc32.CalculateCrc32(WorkingSaveData.Skip(SaveDataStartOffset + 0x5EB08).Take(0x152).ToArray(), 0x12141018), true);
-                    Write(SaveDataStartOffset + 0x73600, Crc32.CalculateCrc32(WorkingSaveData.Skip(SaveDataStartOffset + 0x73604).Take(0x19BD1C).ToArray()), true);
-                    Write(SaveDataStartOffset, Crc32.CalculateCrc32(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()), true);
-                    Write(SaveDataStartOffset + 0x20, Crc32.CalculateCrc32(WorkingSaveData.Skip(SaveDataStartOffset + 0x24).Take(0x111C).ToArray()), true);
+
+                    Write(SaveDataStartOffset + 0x5EC60,
+                        crc32.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x5EC64).Take(0x1497C).ToArray()),
+                        true);
+                    Write(SaveDataStartOffset + 0x5EB04,
+                        crc32.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x5EB08).Take(0x152).ToArray(),
+                            0x12141018), true);
+                    Write(SaveDataStartOffset + 0x73600,
+                        crc32.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x73604).Take(0x19BD1C).ToArray()),
+                        true);
+                    Write(SaveDataStartOffset,
+                        crc32.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()), true);
+                    Write(SaveDataStartOffset + 0x20,
+                        crc32.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x24).Take(0x111C).ToArray()), true);
                     break;
                 case SaveType.NewLeaf:
-                    Write(SaveDataStartOffset, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
+                    var crc32Type1 = new NewLeafCRC32Type1();
+
+                    Write(SaveDataStartOffset,
+                        crc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
                     for (var i = 0; i < 4; i++)
                     {
                         var dataOffset = SaveDataStartOffset + 0x20 + i * 0x9F10;
-                        Write(dataOffset, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset + 4).Take(0x6B64).ToArray()));
+                        Write(dataOffset,
+                            crc32Type1.Calculate(WorkingSaveData.Skip(dataOffset + 4).Take(0x6B64).ToArray()));
+
                         var dataOffset2 = SaveDataStartOffset + 0x20 + 0x6B68 + i * 0x9F10;
-                        Write(dataOffset2, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset2 + 4).Take(0x33A4).ToArray()));
+                        Write(dataOffset2,
+                            crc32Type1.Calculate(WorkingSaveData.Skip(dataOffset2 + 4).Take(0x33A4).ToArray()));
                     }
-                    Write(SaveDataStartOffset + 0x27C60, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x27C60 + 4).Take(0x218B0).ToArray()));
-                    Write(SaveDataStartOffset + 0x49520, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x49520 + 4).Take(0x44B8).ToArray()));
-                    Write(SaveDataStartOffset + 0x4D9DC, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x4D9DC + 4).Take(0x1E420).ToArray()));
-                    Write(SaveDataStartOffset + 0x6BE00, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x6BE00 + 4).Take(0x20).ToArray()));
-                    Write(SaveDataStartOffset + 0x6BE24, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x6BE24 + 4).Take(0x13AF8).ToArray()));
+
+                    Write(SaveDataStartOffset + 0x27C60,
+                        crc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x27C60 + 4).Take(0x218B0)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x49520,
+                        crc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x49520 + 4).Take(0x44B8)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x4D9DC,
+                        crc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x4D9DC + 4).Take(0x1E420)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x6BE00,
+                        crc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x6BE00 + 4).Take(0x20)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x6BE24,
+                        crc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x6BE24 + 4).Take(0x13AF8)
+                            .ToArray()));
                     break;
                 case SaveType.WelcomeAmiibo:
-                    Write(SaveDataStartOffset, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
+                    var waCrc32Type1 = new NewLeafCRC32Type1();
+                    var waCrc32Type2 = new NewLeafCRC32Type2();
+
+                    // CRC32 Implementation Type 1 Checksums
+                    Write(SaveDataStartOffset,
+                        waCrc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
                     for (var i = 0; i < 4; i++)
                     {
                         var dataOffset = SaveDataStartOffset + 0x20 + i * 0xA480;
-                        Write(dataOffset, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset + 4).Take(0x6B84).ToArray()));
-                        var dataOffset2 = SaveDataStartOffset + 0x20 + 0x6B88 + i * 0xA480;
-                        Write(dataOffset2, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(dataOffset2 + 4).Take(0x38F4).ToArray()));
-                    }
-                    Write(SaveDataStartOffset + 0x29220, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x29220 + 4).Take(0x22BC8).ToArray()));
-                    Write(SaveDataStartOffset + 0x4BE00, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x4BE00 + 4).Take(0x44B8).ToArray()));
-                    Write(SaveDataStartOffset + 0x533A4, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x533A4 + 4).Take(0x1E4D8).ToArray()));
-                    Write(SaveDataStartOffset + 0x71880, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x71880 + 4).Take(0x20).ToArray()));
-                    Write(SaveDataStartOffset + 0x718A4, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x718A4 + 4).Take(0xBE4).ToArray()));
-                    Write(SaveDataStartOffset + 0x738D4, NewLeaftCrc32.Calculate_CRC32Type1(WorkingSaveData.Skip(SaveDataStartOffset + 0x738D4 + 4).Take(0x16188).ToArray()));
+                        Write(dataOffset,
+                            waCrc32Type1.Calculate(WorkingSaveData.Skip(dataOffset + 4).Take(0x6B84).ToArray()));
 
-                    Write(SaveDataStartOffset + 0x502BC, NewLeaftCrc32.Calculate_CRC32Type2(WorkingSaveData.Skip(SaveDataStartOffset + 0x502BC + 4).Take(0x28F0).ToArray()));
-                    Write(SaveDataStartOffset + 0x52BB0, NewLeaftCrc32.Calculate_CRC32Type2(WorkingSaveData.Skip(SaveDataStartOffset + 0x52BB0 + 4).Take(0x7F0).ToArray()));
-                    Write(SaveDataStartOffset + 0x7248C, NewLeaftCrc32.Calculate_CRC32Type2(WorkingSaveData.Skip(SaveDataStartOffset + 0x7248C + 4).Take(0x1444).ToArray()));
+                        var dataOffset2 = SaveDataStartOffset + 0x20 + 0x6B88 + i * 0xA480;
+                        Write(dataOffset2,
+                            waCrc32Type1.Calculate(WorkingSaveData.Skip(dataOffset2 + 4).Take(0x38F4).ToArray()));
+                    }
+
+                    Write(SaveDataStartOffset + 0x29220,
+                        waCrc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x29220 + 4).Take(0x22BC8)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x4BE00,
+                        waCrc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x4BE00 + 4).Take(0x44B8)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x533A4,
+                        waCrc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x533A4 + 4).Take(0x1E4D8)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x71880,
+                        waCrc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x71880 + 4).Take(0x20)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x718A4,
+                        waCrc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x718A4 + 4).Take(0xBE4)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x738D4,
+                        waCrc32Type1.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x738D4 + 4).Take(0x16188)
+                            .ToArray()));
+
+                    // CRC32 Implementation Type 2 Checksums
+                    Write(SaveDataStartOffset + 0x502BC,
+                        waCrc32Type2.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x502BC + 4).Take(0x28F0)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x52BB0,
+                        waCrc32Type2.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x52BB0 + 4).Take(0x7F0)
+                            .ToArray()));
+                    Write(SaveDataStartOffset + 0x7248C,
+                        waCrc32Type2.Calculate(WorkingSaveData.Skip(SaveDataStartOffset + 0x7248C + 4).Take(0x1444)
+                            .ToArray()));
                     break;
             }
 
