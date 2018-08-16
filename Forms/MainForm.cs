@@ -4619,7 +4619,7 @@ namespace ACSE
                 }
             }
 
-            MessageBox.Show($"Replaced {replacedItems} items were replaced with {replacingName}!", "Replace Info",
+            MessageBox.Show($"{replacedItems} items were replaced with {replacingName}!", "Replace Info",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
