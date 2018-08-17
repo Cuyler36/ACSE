@@ -4858,6 +4858,7 @@
     <Compile Include="Classes\Acre\AcreData.cs" />
     <Compile Include="Classes\AlertToggledEventArgs.cs" />
     <Compile Include="Classes\Backup.cs" />
+    <Compile Include="Classes\Building.cs" />
     <Compile Include="Classes\Catalog.cs" />
     <Compile Include="Classes\Checksums\CRC32.cs" />
     <Compile Include="Classes\Checksums\IChecksum.cs" />

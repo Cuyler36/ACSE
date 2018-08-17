@@ -915,7 +915,7 @@ namespace ACSE
                 else if (save.SaveType == SaveType.CityFolk)
                 {
                     _uInt16AcreInfo = SaveDataManager.GetAcreInfoUInt16(SaveType.CityFolk);
-                    _buildings = ItemData.GetBuildings(save);
+                    _buildings = Building.GetBuildings(save);
                     var x = 0;
                     var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
                         CurrentSaveInfo.AcreCount, true);
@@ -954,8 +954,8 @@ namespace ACSE
                     }
 
                     //UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.New_Leaf);
-                    _buildings = ItemData.GetBuildings(save);
-                    _islandBuildings = ItemData.GetBuildings(save, true);
+                    _buildings = Building.GetBuildings(save);
+                    _islandBuildings = Building.GetBuildings(save, true);
                     var x = 0;
                     var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
                         CurrentSaveInfo.AcreCount);
@@ -3293,12 +3293,12 @@ namespace ACSE
             switch (SaveFile.SaveType)
             {
                 case SaveType.NewLeaf:
-                    _buildingDb = ItemData.NlBuildingNames.Keys.ToArray();
-                    _buildingNames = ItemData.NlBuildingNames.Values.ToArray();
+                    _buildingDb = Building.NewLeafBuildingNames.Keys.ToArray();
+                    _buildingNames = Building.NewLeafBuildingNames.Values.ToArray();
                     break;
                 case SaveType.WelcomeAmiibo:
-                    _buildingDb = ItemData.WaBuildingNames.Keys.ToArray();
-                    _buildingNames = ItemData.WaBuildingNames.Values.ToArray();
+                    _buildingDb = Building.WelcomeAmiiboBuildingNames.Keys.ToArray();
+                    _buildingNames = Building.WelcomeAmiiboBuildingNames.Values.ToArray();
                     break;
             }
             _buildingListPanels = new Panel[_buildings.Length];
