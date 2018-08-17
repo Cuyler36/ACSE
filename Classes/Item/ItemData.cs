@@ -82,7 +82,7 @@ namespace ACSE
             "Invalid"
         };
 
-        public static int GetBuildingCount(Building[] buildings, SaveType saveType)
+        public static int GetBuildingCount(in Building[] buildings, SaveType saveType)
         {
             var noBuildingId = saveType == SaveType.NewLeaf ? 0xF8 : 0xFC;
             return buildings.Count(b => b.Exists && b.Id != noBuildingId);
@@ -652,15 +652,6 @@ namespace ACSE
                         return ItemDatabase.FirstOrDefault(o => o.Key == itemId).Value ?? "Unknown";
                     }
             }
-        }
-
-        //Used for DataSource for ComboBoxes
-        public static Item[] ToItemArray(Dictionary<ushort, string> itemDict)
-        {
-            var itemArray = new Item[itemDict.Count];
-            for (var i = 0; i < itemDict.Count; i++)
-                itemArray[i] = new Item(itemDict.ElementAt(i).Key);
-            return itemArray;
         }
 
         //New Leaf Item Decoding
