@@ -147,6 +147,7 @@ namespace ACSE
             switch (e.Button)
             {
                 case MouseButtons.Left:
+                case MouseButtons.Middle:
                     var newItem = _mainFormReference.GetCurrentItem();
                     var previousItem = _item;
 
@@ -161,7 +162,7 @@ namespace ACSE
 
                         // Update ToolTip
                         ItemToolTip.Show($"{newItem.Name} - [0x{newItem.ItemId:X4}]", this, e.X + 10, e.Y + 10, 100000);
-
+                        MainForm.SaveFile.ChangesMade = true;
                         Modified = true;
                     }
 

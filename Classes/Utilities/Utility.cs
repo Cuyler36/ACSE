@@ -97,11 +97,11 @@ namespace ACSE.Utilities
                 if (villagerHouse != null)
                 {
                     return new Tuple<byte[], bool>(
-                        new byte[4] { (byte)(acre.Index % 7), (byte)(acre.Index / 7), (byte)(villagerHouse.Location.X), (byte)(villagerHouse.Location.Y + 1) },
+                        new[] { (byte)(acre.Index % 7), (byte)(acre.Index / 7), (byte)(villagerHouse.Location.X), (byte)(villagerHouse.Location.Y + 1) },
                         true);
                 }
             }
-            return new Tuple<byte[], bool>(new byte[4] { 0xFF, 0xFF, 0xFF, 0xFF }, false);
+            return new Tuple<byte[], bool>(new byte[] { 0xFF, 0xFF, 0xFF, 0xFF }, false);
         }
 
         public static Villager GetVillagerFromHouse(ushort houseId, Villager[] villagers)
@@ -111,13 +111,13 @@ namespace ACSE.Utilities
         }
 
 
-        public static bool[] Check_Perfect_Town_Requirements(WorldAcre[] Acres, bool Make_Perfect = false)
+        public static bool[] Check_Perfect_Town_Requirements(WorldAcre[] acres, bool makePerfect = false)
         {
-            var acreResults = new bool[Acres.Length];
+            var acreResults = new bool[acres.Length];
             var points = 0;
             for (var i = 0; i < acreResults.Length; i++)
             {
-                var acre = Acres[i];
+                var acre = acres[i];
                 switch (MainForm.SaveFile.SaveGeneration)
                 {
                     case SaveGeneration.N64:
@@ -132,7 +132,7 @@ namespace ACSE.Utilities
                             if (item.Name == "Weed")
                             {
                                 weedCount++;
-                                if (Make_Perfect)
+                                if (makePerfect)
                                 {
                                     acre.AcreItems[o] = new WorldItem(0, o);
                                 }
@@ -142,7 +142,7 @@ namespace ACSE.Utilities
                                 treeCount++;
                             }
                         }
-                        if (Make_Perfect)
+                        if (makePerfect)
                         {
                             if (treeCount > 14)
                             {
@@ -175,11 +175,14 @@ namespace ACSE.Utilities
                                 }
                             }
                         }
-                        acreResults[i] = Make_Perfect || ((treeCount > 11 && treeCount < 15) && weedCount < 4);
+                        acreResults[i] = makePerfect || ((treeCount > 11 && treeCount < 15) && weedCount < 4);
                         if (acreResults[i])
                         {
                             points++;
                         }
+
+                        if (points > 14)
+                            return acreResults;
                         break;
                     case SaveGeneration.NDS:
                     case SaveGeneration.Wii:
@@ -244,6 +247,7 @@ namespace ACSE.Utilities
                     var i = items[idx];
                     if (i.Equals(originalItem))
                     {
+                        MainForm.SaveFile.ChangesMade = true;
                         items[idx] = new Item(newItem);
                         if (p.X - 1 > -1)
                             locationStack.Push(new Point(p.X - 1, p.Y));
@@ -282,6 +286,7 @@ namespace ACSE.Utilities
                     var i = items[idx];
                     if (i.Equals(originalItem))
                     {
+                        MainForm.SaveFile.ChangesMade = true;
                         items[idx] = new WorldItem(newItem.ItemId, newItem.Flag1, newItem.Flag2, i.Index);
                         if (p.X - 1 > -1)
                             locationStack.Push(new Point(p.X - 1, p.Y));
@@ -320,6 +325,7 @@ namespace ACSE.Utilities
                     var i = items[idx];
                     if (i.Equals(originalItem))
                     {
+                        MainForm.SaveFile.ChangesMade = true;
                         items[idx] = new Furniture(newItem);
                         if (p.X - 1 > -1)
                             locationStack.Push(new Point(p.X - 1, p.Y));

@@ -59,6 +59,7 @@ namespace ACSE
 
                         // Fire ItemChanged Event
                         OnItemChanged(selectedItem, newItem, index);
+                        MainForm.SaveFile.ChangesMade = true;
 
                         Modified = true;
                     }

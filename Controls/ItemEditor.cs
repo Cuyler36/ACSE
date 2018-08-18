@@ -176,13 +176,18 @@ namespace ACSE
 
                         // Fire ItemChanged Event
                         OnItemChanged(selectedItem, newItem, index);
-
+                        MainForm.SaveFile.ChangesMade = true;
                         Modified = true;
                     }
 
                     break;
                 case MouseButtons.Right:
                     MainFormReference.SetCurrentItem(selectedItem);
+                    break;
+                case MouseButtons.Middle:
+                    Utilities.Utility.FloodFillItemArray(ref _items, ItemsPerRow, index, _items[index],
+                        MainFormReference.GetCurrentItem());
+                    SetItemPicture();
                     break;
             }
         }
