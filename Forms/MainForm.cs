@@ -1555,6 +1555,19 @@ namespace ACSE
             stationPictureBox.Image = TrainStation.GetStationImage(stationType);
         }
 
+        private void UpdatePlayerItemPictureBox(PictureBox box, Image image)
+        {
+            if (box == null) return;
+            if (box.Image == ImageX)
+            {
+                box.Image = image;
+            }
+            else
+            {
+                RefreshPictureBoxImage(box, image);
+            }
+        }
+
         private void ReloadPlayer(Player player)
         {
             //TODO: Hook up face swap on gender change for New Leaf
@@ -1602,27 +1615,27 @@ namespace ACSE
             if (playerNookPoints.Enabled)
                 playerNookPoints.Text = player.Data.NookPoints.ToString();
             if (bedPicturebox.Enabled)
-                RefreshPictureBoxImage(bedPicturebox, Inventory.GetItemPic(16, player.Data.Bed, SaveFile.SaveType));
+                UpdatePlayerItemPictureBox(bedPicturebox, Inventory.GetItemPic(16, player.Data.Bed, SaveFile.SaveType));
             if (hatPicturebox.Enabled)
-                RefreshPictureBoxImage(hatPicturebox, Inventory.GetItemPic(16, player.Data.Hat, SaveFile.SaveType));
+                UpdatePlayerItemPictureBox(hatPicturebox, Inventory.GetItemPic(16, player.Data.Hat, SaveFile.SaveType));
             if (facePicturebox.Enabled)
-                RefreshPictureBoxImage(facePicturebox, Inventory.GetItemPic(16, player.Data.FaceItem, SaveFile.SaveType));
+                UpdatePlayerItemPictureBox(facePicturebox, Inventory.GetItemPic(16, player.Data.FaceItem, SaveFile.SaveType));
             if (pocketsBackgroundPicturebox.Enabled)
-                RefreshPictureBoxImage(pocketsBackgroundPicturebox, Inventory.GetItemPic(16, player.Data.InventoryBackground, SaveFile.SaveType));
+                UpdatePlayerItemPictureBox(pocketsBackgroundPicturebox, Inventory.GetItemPic(16, player.Data.InventoryBackground, SaveFile.SaveType));
             //City Folk only
             if (playerShoeColor.Enabled)
                 playerShoeColor.SelectedIndex = player.Data.ShoeColor;
             //New Leaf only
             if (pantsPicturebox.Enabled)
-                RefreshPictureBoxImage(pantsPicturebox, Inventory.GetItemPic(16, player.Data.Pants, SaveFile.SaveType));
+                UpdatePlayerItemPictureBox(pantsPicturebox, Inventory.GetItemPic(16, player.Data.Pants, SaveFile.SaveType));
             if (socksPicturebox.Enabled)
-                RefreshPictureBoxImage(socksPicturebox, Inventory.GetItemPic(16, player.Data.Socks, SaveFile.SaveType));
+                UpdatePlayerItemPictureBox(socksPicturebox, Inventory.GetItemPic(16, player.Data.Socks, SaveFile.SaveType));
             if (shoesPicturebox.Enabled)
-                RefreshPictureBoxImage(shoesPicturebox, Inventory.GetItemPic(16, player.Data.Shoes, SaveFile.SaveType));
+                UpdatePlayerItemPictureBox(shoesPicturebox, Inventory.GetItemPic(16, player.Data.Shoes, SaveFile.SaveType));
             if (playerEyeColor.Enabled && playerEyeColor.Items.Count > 0)
                 playerEyeColor.SelectedIndex = player.Data.EyeColor; // Is this good now?
             if (playerWetsuit.Enabled)
-                RefreshPictureBoxImage(playerWetsuit, Inventory.GetItemPic(16, player.Data.Wetsuit, SaveFile.SaveType));
+                UpdatePlayerItemPictureBox(playerWetsuit, Inventory.GetItemPic(16, player.Data.Wetsuit, SaveFile.SaveType));
 
             if (player.Data.Tan <= tanTrackbar.Maximum)
                 tanTrackbar.Value = player.Data.Tan + 1;
@@ -1652,7 +1665,15 @@ namespace ACSE
 
             if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
-                RefreshPictureBoxImage(_tpcPicture, player.Data.TownPassCardImage, false, false);
+                if (_tpcPicture.Image == NoTPC)
+                {
+                    _tpcPicture.Image = player.Data.TownPassCardImage;
+                }
+                else
+                {
+                    RefreshPictureBoxImage(_tpcPicture, player.Data.TownPassCardImage, false, false);
+                }
+
                 playerWallet.Text = player.Data.NewLeafWallet.Value.ToString();
                 playerSavings.Text = player.Data.NewLeafSavings.Value.ToString();
                 playerDebt.Text = player.Data.NewLeafDebt.Value.ToString();
