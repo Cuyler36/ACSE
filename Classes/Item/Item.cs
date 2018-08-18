@@ -3,15 +3,15 @@ using System.Drawing;
 
 namespace ACSE
 {
-    public class Item
+    public class Item : IEquatable<Item>, IEquatable<ushort>
     {
-        public ItemType Type;
+        public readonly ItemType Type;
 
         public Inventory.AcItemFlag ItemFlag;
-        public ushort ItemId;
+        public readonly ushort ItemId;
         public byte Flag1;
         public byte Flag2;
-        public string Name;
+        public readonly string Name;
 
         public Item()
         {
@@ -70,18 +70,39 @@ namespace ACSE
             return (uint)((Flag1 << 24) + (Flag2 << 16) + ItemId);
         }
 
+        public bool Equals(Item other)
+        {
+            if (ReferenceEquals(other, null)) return false;
+            if (ReferenceEquals(other, this)) return true;
+            return other.ItemId == ItemId &&
+                   other.Flag1 == Flag1 &&
+                   other.Flag2 == Flag2;
+        }
+
+        public bool Equals(ushort other) => ItemId == other;
+
         public override bool Equals(object obj)
         {
             switch (obj)
             {
                 case Item _:
-                    var comparingItem = obj as Item;
-                    return comparingItem != null && (comparingItem.ItemId == ItemId && comparingItem.Flag1 == Flag1 && comparingItem.Flag2 == Flag2);
+                    return Equals((Item) obj);
                 case ushort _:
-                    return (ushort)obj == ItemId;
+                    return Equals((ushort) obj);
+                default:
+                    return false;
             }
+        }
 
-            return false;
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (int)Type;
+                hashCode = (hashCode * 397) ^ ItemId.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                return hashCode;
+            }
         }
 
         public static bool operator ==(Item obj1, Item obj2)
@@ -93,35 +114,24 @@ namespace ACSE
         {
             return !Equals(obj1, obj2);
         }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
     }
 
-    public class WorldItem : Item
+    public class WorldItem : Item, IEquatable<WorldItem>
     {
-        public Point Location;
-        public int Index;
+        public readonly Point Location;
+        public readonly int Index;
         public bool Buried;
         public bool Watered;
 
-        public WorldItem(ushort itemId, int position) : base(itemId)
+        public WorldItem(ushort itemId, byte flag1, byte flag2, int position) : base(itemId, flag1, flag2)
         {
             Location = new Point(position % 16, position / 16);
             Index = position;
-        }
-
-        public WorldItem(ushort itemId, byte flag1, byte flag2, int position) : base(itemId)
-        {
-            Flag1 = flag1;
-            Flag2 = flag2;
             Buried = Flag1 == 0x80;
             Watered = Flag1 == 0x40;
-            Location = new Point(position % 16, position / 16);
-            Index = position;
         }
+
+        public WorldItem(ushort itemId, int position) : this(itemId, 0, 0, position) { }
 
         public WorldItem(int position)
         {
@@ -129,27 +139,19 @@ namespace ACSE
             Index = position;
         }
 
-        public WorldItem(WorldItem cloningItem)
+        public WorldItem(Item cloningItem, int position) : base(cloningItem)
         {
-            ItemId = cloningItem.ItemId;
-            Flag1 = cloningItem.Flag1;
-            Flag2 = cloningItem.Flag2;
-            Name = cloningItem.Name;
-            Type = cloningItem.Type;
-            Index = cloningItem.Index;
+            Index = position;
             Location = new Point(Index % 16, Index / 16);
         }
 
-        public WorldItem(uint itemId, int position) : base(itemId)
+        public WorldItem(uint itemId, int position) : this((ushort) itemId, (byte) (itemId >> 24),
+            (byte) (itemId >> 16), position) { }
+
+        public bool Equals(WorldItem item)
         {
-            Index = position;
-            Location = new Point(position % 16, position / 16);
-            ItemId = (ushort)itemId;
-            Flag1 = (byte)(itemId >> 24);
-            Flag2 = (byte)(itemId >> 16);
-            Name = ItemData.GetItemName(ItemId);
-            Buried = Flag1 == 0x80;
-            Watered = Flag1 == 0x40;
+            if (ReferenceEquals(item, null)) return false;
+            return ReferenceEquals(item, this) || base.Equals(item);
         }
 
         public override bool Equals(object obj)
@@ -157,13 +159,14 @@ namespace ACSE
             switch (obj)
             {
                 case WorldItem _:
-                    var comparingItem = obj as WorldItem;
-                    return comparingItem != null && (comparingItem.ItemId == ItemId && comparingItem.Flag1 == Flag1 && comparingItem.Flag2 == Flag2);
+                    return Equals((WorldItem) obj);
+                case Item _:
+                    return Equals((Item) obj);
                 case ushort _:
-                    return (ushort)obj == ItemId;
+                    return Equals((ushort) obj);
+                default:
+                    return false;
             }
-
-            return false;
         }
 
         public static bool operator ==(WorldItem obj1, WorldItem obj2)
@@ -178,14 +181,20 @@ namespace ACSE
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            unchecked
+            {
+                var hashCode = base.GetHashCode();
+                hashCode = (hashCode * 397) ^ Location.GetHashCode();
+                hashCode = (hashCode * 397) ^ Index;
+                return hashCode;
+            }
         }
     }
 
     public class Furniture : Item
     {
-        public ushort BaseItemId;
-        public int Rotation;
+        public readonly ushort BaseItemId;
+        public readonly int Rotation;
 
         public Furniture(ushort itemId) : base(itemId)
         {
@@ -229,14 +238,8 @@ namespace ACSE
             }
         }
 
-        public Furniture(Item item)
+        public Furniture(Item item) : base (item)
         {
-            ItemId = item.ItemId;
-            Name = item.Name;
-            Type = item.Type;
-            Flag1 = item.Flag1;
-            Flag2 = item.Flag2;
-
             if (MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
                 BaseItemId = ItemId;

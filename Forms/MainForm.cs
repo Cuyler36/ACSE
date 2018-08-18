@@ -439,10 +439,7 @@ namespace ACSE
             if (newItem is Furniture furniture && (SaveFile.SaveGeneration == SaveGeneration.N64 || SaveFile.SaveGeneration == SaveGeneration.GCN
                 || SaveFile.SaveGeneration == SaveGeneration.iQue))
             {
-                _currentItem = new Item(furniture)
-                {
-                    ItemId = furniture.BaseItemId
-                };
+                _currentItem = new Item(furniture);
             }
             else
             {
@@ -4611,31 +4608,24 @@ namespace ACSE
             if (TownAcres == null ||
                 !ushort.TryParse(_replaceItemBox.Text, NumberStyles.HexNumber, null, out var replaceId) ||
                 !ushort.TryParse(_replacingItemBox.Text, NumberStyles.HexNumber, null, out var replacingId)) return;
-            var replacingName = ItemData.GetItemName(replacingId);
-            var replacingType = ItemData.GetItemType(replacingId, SaveFile.SaveType);
-            var unbury = replacingType == ItemType.Empty;
             var replacedItems = 0;
-                
+            var replacingItem = new WorldItem(replacingId, 0, 0, 0);
+
             for (var i = 0; i < TownAcres.Length; i++)
             {
                 var changed = false;
                 var acre = TownAcres[i];
                 if (acre.AcreItems == null) continue;
 
-                foreach (var item in acre.AcreItems)
+                for (var index = 0; index < acre.AcreItems.Length; index++)
                 {
-                    if (item.ItemId != replaceId) continue;
+                    if (acre.AcreItems[index].ItemId != replaceId) continue;
 
                     changed = true;
                     replacedItems++;
                     SaveFile.ChangesMade = true;
-                    item.ItemId = replacingId;
-                    item.Name = replacingName;
-                    item.Type = replacingType;
-                    if (!item.Buried || !unbury) continue;
+                    acre.AcreItems[index] = new WorldItem(replacingItem, index);
 
-                    item.Buried = false;
-                    item.Flag1 &= 0x7F;
                 }
 
                 if (changed)
@@ -4645,7 +4635,7 @@ namespace ACSE
                 }
             }
 
-            MessageBox.Show($"{replacedItems} items were replaced with {replacingName}!", "Replace Info",
+            MessageBox.Show($"{replacedItems} items were replaced with {replacingItem.Name}!", "Replace Info",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
