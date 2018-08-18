@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.Remoting.Messaging;
 
 namespace ACSE
 {
@@ -191,7 +192,7 @@ namespace ACSE
         }
     }
 
-    public class Furniture : Item
+    public class Furniture : Item, IEquatable<Furniture>
     {
         public readonly ushort BaseItemId;
         public readonly int Rotation;
@@ -256,16 +257,19 @@ namespace ACSE
             }
         }
 
+        public bool Equals(Furniture other)
+        {
+            if (ReferenceEquals(other, null)) return false;
+            if (ReferenceEquals(other, this)) return true;
+            return Rotation == other.Rotation && base.Equals(other);
+        }
+
         public override bool Equals(object obj)
         {
             switch (obj)
             {
                 case Furniture _:
-                    var comparingItem = obj as Furniture;
-                    if (MainForm.SaveFile.SaveGeneration == SaveGeneration.N3DS)
-                        return comparingItem != null && (comparingItem.ItemId == ItemId && comparingItem.Flag1 == Flag1 && comparingItem.Flag2 == Flag2);
-                    else
-                        return comparingItem != null && comparingItem.BaseItemId == BaseItemId;
+                    return Equals((Furniture) obj);
                 case ushort _:
                     return (ushort)obj == ItemId;
             }

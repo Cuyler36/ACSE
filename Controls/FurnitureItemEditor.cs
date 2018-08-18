@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ACSE
@@ -70,7 +67,12 @@ namespace ACSE
                 case MouseButtons.Right:
                     MainFormReference.SetCurrentItem(selectedItem);
                     break;
-                // TODO: Flood fill with middle mouse click
+                case MouseButtons.Middle:
+                    var tempItems = (Furniture[]) Items;
+                    Utilities.Utility.FloodFillFurnitureArray(ref tempItems, ItemsPerRow, index,
+                        (Furniture) Items[index], new Furniture(MainFormReference.GetCurrentItem()));
+                    Items = tempItems;
+                    break;
             }
         }
 
