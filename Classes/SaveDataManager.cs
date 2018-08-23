@@ -327,7 +327,7 @@ namespace ACSE
             TownDataSize = 0x5000,
             BuriedData = -1,
             TownName = 0x5C73A,
-            TownNameSize = 16,
+            TownNameSize = 8,
             GrassWear = 0x53E80,
             HouseData = 0x57F7A,
             HouseDataSize = 0x1228,
@@ -358,7 +358,7 @@ namespace ACSE
             TownDataSize = 0x5000,
             BuriedData = -1,
             TownName = 0x6213A,
-            TownNameSize = 16,
+            TownNameSize = 8,
             GrassWear = 0x59880,
             GrassWearSize = 0x3000, //Extra row of "Invisible" X Acres
             GrassType = 0x53401,

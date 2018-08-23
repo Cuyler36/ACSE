@@ -1317,8 +1317,13 @@ namespace ACSE
             for (var i = 0; i < 4; i++)
             {
                 if (_players[i] == null) continue;
-                if (_players[i].Exists && playerEditorSelect.TabPages.IndexOf(_playerTabs[i]) < 0)
+
+                if (_players[i].Exists)
                 {
+                    _players[i].Data.Name = _players[i].Data.Name?.Replace("\0", "");
+                    SetPlayerSelectionTabText(_selectedPlayer);
+                    if (playerEditorSelect.TabPages.IndexOf(_playerTabs[i]) >= 0) continue;
+
                     if (i >= playerEditorSelect.TabCount)
                     {
                         playerEditorSelect.TabPages.Add(_playerTabs[i]);
@@ -1330,8 +1335,10 @@ namespace ACSE
                         patternGroupTabControl.TabPages.Insert(i, _playerPatternTabs[i]);
                     }
                 }
-                else if (!_players[i].Exists && playerEditorSelect.TabPages.IndexOf(_playerTabs[i]) > -1)
+                else
                 {
+                    if (playerEditorSelect.TabPages.IndexOf(_playerTabs[i]) <= -1) continue;
+
                     playerEditorSelect.TabPages.Remove(_playerTabs[i]);
                     patternGroupTabControl.TabPages.Remove(_playerPatternTabs[i]);
                 }
@@ -4133,6 +4140,19 @@ namespace ACSE
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void SetPlayerSelectionTabText(Player player)
+        {
+            if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
+            {
+                _playerTabs[player.Index].Text =
+                    player.Data.Name + $" {(player.Index == 0 ? "[Mayor]" : "[Resident]")}";
+            }
+            else
+            {
+                _playerTabs[player.Index].Text = playerName.Text + $" [Player {player.Index + 1}]";
+            }
+        }
+
         private void PlayerNameTextChanged(object sender, EventArgs e)
         {
             if (SaveFile == null || _loading || playerName.Text.Length <= 0) return;
@@ -4150,6 +4170,7 @@ namespace ACSE
             }
 
             _selectedPlayer.Data.Name = playerName.Text;
+            SetPlayerSelectionTabText(_selectedPlayer);
         }
 
         private void SecureValueToolStripMenuItemClick(object sender, EventArgs e)
