@@ -4871,6 +4871,7 @@
     <Compile Include="Classes\Extensions\ControlExtensions.cs" />
     <Compile Include="Classes\Extensions\DataExtensions.cs" />
     <Compile Include="Classes\Extensions\LinqExtensions.cs" />
+    <Compile Include="Classes\Extensions\MathExtensions.cs" />
     <Compile Include="Classes\Extensions\PointExtension.cs" />
     <Compile Include="Classes\Generators\Generator.cs" />
     <Compile Include="Classes\Generators\IGenerator.cs" />
@@ -4893,6 +4894,7 @@
     <Compile Include="Classes\Saves\SaveBase.cs" />
     <Compile Include="Classes\Saves\WiiSave.cs" />
     <Compile Include="Classes\TrainStation.cs" />
+    <Compile Include="Classes\Utilities\ImageUtility.cs" />
     <Compile Include="Classes\Villagers\SimpleVillager.cs" />
     <Compile Include="Classes\Villagers\Villager.cs" />
     <Compile Include="Classes\Yaz0.cs" />
