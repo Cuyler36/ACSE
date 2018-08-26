@@ -249,28 +249,52 @@ namespace ACSE.Controls
             _villager.Data.VillagerId = kvPair.Value.VillagerId;
             _villager.Exists = _villager.Data.VillagerId != 0 && _villager.Data.VillagerId != 0xFFFF;
 
+            switch (_saveFile.SaveGeneration)
+            {
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                case SaveGeneration.iQue:
+                    if (!_villager.Exists)
+                    {
+                        _villager.Data.HouseCoordinates = new byte[] {0xFF, 0xFF, 0xFF, 0xFF};
+                    }
+                    else
+                    {
+                        var houseCoordinatesInfo = Utility.Find_Villager_House(_villager.Data.VillagerId);
+                        _villager.Data.HouseCoordinates = houseCoordinatesInfo.Item1;
+                        if (!houseCoordinatesInfo.Item2)
+                        {
+                            MessageBox.Show(
+                                $"Couldn't find a valid house for {_villager.Name}!\nThey will have a random sign chosen as their house location if you don't place one.",
+                                "Villager House Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    break;
+                case SaveGeneration.NDS:
+                    if (!_villager.Exists)
+                    {
+                        _villager.Data.HouseCoordinates = new byte[] { 0xFF, 0xFF };
+                    }
+                    else
+                    {
+                        var (houseCoordinates, found) = Utility.FindVillagerHouseWildWorld(_villager.Index);
+                        _villager.Data.HouseCoordinates = houseCoordinates;
+                        if (!found)
+                        {
+                            MessageBox.Show(
+                                $"Couldn't find a valid house for Villager #{_villager.Index}!\nThey will have a random sign chosen as their house location if you don't place one.",
+                                "Villager House Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    break;
+            }
+
             if (_saveFile.SaveGeneration != SaveGeneration.N64 && _saveFile.SaveGeneration != SaveGeneration.GCN &&
                 _saveFile.SaveGeneration != SaveGeneration.iQue) return;
 
             if (_saveFile.SaveType != SaveType.DoubutsuNoMoriEPlus && _saveFile.SaveType != SaveType.AnimalForestEPlus)
             {
                 _villager.Data.NameId = _villager.Index == 15 ? (byte) 0xFF : (byte) _villager.Data.VillagerId;
-            }
-
-            if (!_villager.Exists)
-            {
-                _villager.Data.HouseCoordinates = new byte[] {0xFF, 0xFF, 0xFF, 0xFF};
-            }
-            else
-            {
-                var houseCoordinatesInfo = Utility.Find_Villager_House(_villager.Data.VillagerId);
-                _villager.Data.HouseCoordinates = houseCoordinatesInfo.Item1;
-                if (!houseCoordinatesInfo.Item2)
-                {
-                    MessageBox.Show(
-                        $"Couldn't find a valid house for {_villager.Name}!\nThey will have a random sign chosen as their house location if you don't place one.",
-                        "Villager House Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
             }
 
             if (_villagerPreviewBox != null)

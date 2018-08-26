@@ -3482,16 +3482,25 @@ namespace ACSE
                             else
                                 TownAcres[acre].AcreItems[index] = new WorldItem(_currentItem.ItemId, index);
 
-                            // Update Villager House Coordinates if a valid villager exists for the selected house
-                            if ((SaveFile.SaveGeneration == SaveGeneration.N64 || SaveFile.SaveGeneration == SaveGeneration.GCN || SaveFile.SaveGeneration == SaveGeneration.iQue) && 
-                                _currentItem.ItemId >= 0x5000 && _currentItem.ItemId <= 0x50FF) // TODO: WW Support
+                            Villager villager;
+                            switch (SaveFile.SaveGeneration)
                             {
-                                var villager = Utility.GetVillagerFromHouse(_currentItem.ItemId, _villagers);
-                                if (villager != null)
-                                {
-                                    var houseCoordinatesInfo = Utility.Find_Villager_House(villager.Data.VillagerId);
-                                    villager.Data.HouseCoordinates = houseCoordinatesInfo.Item1;
-                                }
+                                // Update Villager House Coordinates if a valid villager exists for the selected house
+                                case SaveGeneration.N64 when _currentItem.ItemId >= 0x5000 && _currentItem.ItemId <= 0x50FF:
+                                case SaveGeneration.GCN when _currentItem.ItemId >= 0x5000 && _currentItem.ItemId <= 0x50FF:
+                                case SaveGeneration.iQue when _currentItem.ItemId >= 0x5000 && _currentItem.ItemId <= 0x50FF:
+                                    villager = Utility.GetVillagerFromHouse(_currentItem.ItemId, _villagers);
+                                    if (villager != null)
+                                    {
+                                        var houseCoordinatesInfo = Utility.Find_Villager_House(villager.Data.VillagerId);
+                                        villager.Data.HouseCoordinates = houseCoordinatesInfo.Item1;
+                                    }
+                                    break;
+                                case SaveGeneration.NDS when _currentItem.ItemId >= 0x5001 && _currentItem.ItemId <= 0x5008:
+                                    villager = _villagers[(_currentItem.ItemId - 1) % 8];
+                                    var (houseCoordinates, found) = Utility.FindVillagerHouseWildWorld(villager.Index);
+                                    villager.Data.HouseCoordinates = houseCoordinates;
+                                    break;
                             }
                         }
 
@@ -3757,11 +3766,18 @@ namespace ACSE
                 foreach (var villager in _villagers)
                 {
                     if (villager == null) continue;
-                    if (SaveFile.SaveGeneration == SaveGeneration.N64 || SaveFile.SaveGeneration == SaveGeneration.GCN || SaveFile.SaveGeneration == SaveGeneration.iQue)
+                    switch (SaveFile.SaveGeneration)
                     {
-                        // Save House Coordinates (TOOD: Wild World)
-                        var houseCoordinatesInfo = Utility.Find_Villager_House(villager.Data.VillagerId);
-                        villager.Data.HouseCoordinates = houseCoordinatesInfo.Item1;
+                        case SaveGeneration.N64:
+                        case SaveGeneration.GCN:
+                        case SaveGeneration.iQue:
+                            var houseCoordinatesInfo = Utility.Find_Villager_House(villager.Data.VillagerId);
+                            villager.Data.HouseCoordinates = houseCoordinatesInfo.Item1;
+                            break;
+                        case SaveGeneration.NDS:
+                            var (houseCoordinates, found) = Utility.FindVillagerHouseWildWorld(villager.Index);
+                            villager.Data.HouseCoordinates = houseCoordinates;
+                            break;
                     }
 
                     villager.Write();

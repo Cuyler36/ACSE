@@ -350,6 +350,10 @@ namespace ACSE
             "Small Room", "Medium Room", "Large Room", "Basement", "Second Floor", "Second Floor w/o Statue" // The basement is a separate flag
         };
 
+        private static readonly string[] WildWorldHouseSizes = {
+            "Small Room", "Medium Room", "Large Room", "Second Floor", "West Room", "East Room", "Mansion"
+        };
+
         #endregion
 
         private static readonly string[] AcRoofColors = {
@@ -432,6 +436,8 @@ namespace ACSE
                     return DnMHouseSizes;
                 case SaveGeneration.GCN:
                     return AcHouseSizes;
+                case SaveGeneration.NDS:
+                    return WildWorldHouseSizes;
                 default:
                     return new string[0];
             }
@@ -472,7 +478,7 @@ namespace ACSE
                 case SaveType.AnimalForestEPlus:
                     return (MainForm.SaveFile.WorkingSaveData[offset + 0x26] >> 5) & 7;
                 case SaveType.WildWorld:
-                    return MainForm.SaveFile.ReadByte(0xFAF8) & 7; // Not sure about this
+                    return MainForm.SaveFile.ReadByte(MainForm.SaveFile.SaveDataStartOffset + 0xFAF8) & 7; // Not sure about this
                 default:
                     return 0;
             }
@@ -483,15 +489,18 @@ namespace ACSE
             switch (saveType)
             {
                 case SaveType.AnimalCrossing: // NOTE: N64 & GameCube titles don't include Basement in the size
-                    MainForm.SaveFile.Write(offset + 0x2A, (byte)(MainForm.SaveFile.ReadByte(offset + 0x2A) & ~(7 << 5) | ((value & 7) << 5)));
+                    MainForm.SaveFile.Write(offset + 0x2A,
+                        (byte) (MainForm.SaveFile.ReadByte(offset + 0x2A) & ~(7 << 5) | ((value & 7) << 5)));
                     break;
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                    MainForm.SaveFile.Write(offset + 0x26, (byte)(MainForm.SaveFile.ReadByte(offset + 0x26) & ~(7 << 5) | ((value & 7) << 5)));
+                    MainForm.SaveFile.Write(offset + 0x26,
+                        (byte) (MainForm.SaveFile.ReadByte(offset + 0x26) & ~(7 << 5) | ((value & 7) << 5)));
                     break;
                 case SaveType.WildWorld:
-                    MainForm.SaveFile.Write(0xFAF8, (byte)((MainForm.SaveFile.ReadByte(0xFAF8) & ~7) | (value & 7))); // Not sure about this
+                    offset = MainForm.SaveFile.SaveDataStartOffset + 0xFAF8;
+                    MainForm.SaveFile.Write(offset, (byte) ((MainForm.SaveFile.ReadByte(offset) & ~7) | (value & 7))); // Not sure about this
                     break;
             }
         }

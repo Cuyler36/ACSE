@@ -206,18 +206,35 @@
 0x00C5, Pattern #7 - Player #4
 0x00C6, Pattern #8 - Player #4
 //Palm Trees
-0x00C7, Palm Sapling
-0x00C8, Small Palm Tree
-0x00C9, Medium Palm Tree
-0x00CA, Large Palm Sapling
-0x00CB, Palm Tree [Fruit]
-0x00CC, Palm Tree [No Fruit] #1
-0x00CD, Palm Tree [No Fruit] #2
-0x00CE, Palm Tree [No Fruit] #3
-0x00CF, Small Palm Stump
-0x00D0, Medium Palm Stump
-0x00D1, Large Palm Stump
-0x00D2, Fully Grown Palm Stump
+0x00C7, Dead Palm Sapling
+0x00C8, Palm Sapling
+0x00C9, Small Palm Tree
+0x00CA, Medium Palm Tree
+0x00CB, Large Palm Sapling
+0x00CC, Palm Tree [Fruit]
+0x00CD, Palm Tree [No Fruit] #1
+0x00CE, Palm Tree [No Fruit] #2
+0x00CF, Palm Tree [No Fruit] #3
+0x00D0, Small Palm Stump
+0x00D1, Medium Palm Stump
+0x00D2, Large Palm Stump
+0x00D3, Fully Grown Palm Stump
+// Buried Turnips
+0x00D4, Red Turnip (Buried) #1
+0x00D5, Red Turnip (Buried) #2
+0x00D6, Red Turnip (Buried) #3
+0x00D7, Red Turnip (Buried) #4
+0x00D8, Red Turnip (Buried) #5
+0x00D9, Red Turnip (Buried) #6
+0x00DA, Red Turnip (Buried) #7
+0x00DB, Red Turnip (Buried) #8
+0x00DC, Red Turnip (Buried) #9
+0x00DD, Red Turnip (Buried) #10
+0x00DE, Red Turnip (Buried) #11
+0x00DF, Red Turnip (Buried) #12
+0x00E0, Red Turnip (Buried) #13
+0x00E1, Red Turnip (Buried) #14
+0x00E2, Dead Red Turnip (Buried)
 //Rocks
 0x00E3, Rock #1
 0x00E4, Rock #2
@@ -252,6 +269,7 @@
 0x0100, Special Medium Stump
 0x0101, Special Large Stump
 0x0102, Special Stump
+//0x0103 = nothing
 //Stationary
 0x1000, Butterfly Paper (1)
 0x1001, Butterfly Paper (2)
@@ -574,10 +592,10 @@
 0x113D, Cityscape Wall
 0x113E, Common Wall
 0x113F, Mushroom Mural
-0x1140, Secret Nook Wallpaper 1
-0x1141, Secret Nook Wallpaper 2
-0x1142, Secret Nook Wallpaper 3
-0x1143, Secret Nook Wallpaper 4
+0x1140, Nook's Cranny Wallpaper
+0x1141, Nook 'n' Go Wallpaper
+0x1142, Nookway Wallpaper
+0x1143, Nookington's Wallpaper
 //Carpets
 0x1144, Exotic Rug
 0x1145, Lovely Carpet
@@ -643,10 +661,42 @@
 0x1181, Cloud Flooring
 0x1182, Common Floor
 0x1183, Block Floor
-0x1184, Secret Nook Flooring 1
-0x1185, Secret Nook Flooring 2
-0x1186, Secret Nook Flooring 3
-0x1187, Secret Nook Flooring 4
+0x1184, Nook's Cranny Flooring
+0x1185, Nook 'n' Go Flooring
+0x1186, Nookway Flooring
+0x1187, Nookington's Flooring
+0x1188, Custom Wall Paper (Player 1) #1
+0x1189, Custom Wall Paper (Player 1) #2
+0x118A, Custom Wall Paper (Player 1) #3
+0x118B, Custom Wall Paper (Player 1) #4
+0x118C, Custom Wall Paper (Player 1) #5
+0x118D, Custom Wall Paper (Player 1) #6
+0x118E, Custom Wall Paper (Player 1) #7
+0x118F, Custom Wall Paper (Player 1) #8
+0x1190, Custom Wall Paper (Player 2) #1
+0x1191, Custom Wall Paper (Player 2) #2
+0x1192, Custom Wall Paper (Player 2) #3
+0x1193, Custom Wall Paper (Player 2) #4
+0x1194, Custom Wall Paper (Player 2) #5
+0x1195, Custom Wall Paper (Player 2) #6
+0x1196, Custom Wall Paper (Player 2) #7
+0x1197, Custom Wall Paper (Player 2) #8
+0x1198, Custom Wall Paper (Player 3) #1
+0x1199, Custom Wall Paper (Player 3) #2
+0x119A, Custom Wall Paper (Player 3) #3
+0x119B, Custom Wall Paper (Player 3) #4
+0x119C, Custom Wall Paper (Player 3) #5
+0x119D, Custom Wall Paper (Player 3) #6
+0x119E, Custom Wall Paper (Player 3) #7
+0x119F, Custom Wall Paper (Player 3) #8
+0x11A0, Custom Wall Paper (Player 4) #1
+0x11A1, Custom Wall Paper (Player 4) #2
+0x11A2, Custom Wall Paper (Player 4) #3
+0x11A3, Custom Wall Paper (Player 4) #4
+0x11A4, Custom Wall Paper (Player 4) #5
+0x11A5, Custom Wall Paper (Player 4) #6
+0x11A6, Custom Wall Paper (Player 4) #7
+0x11A7, Custom Wall Paper (Player 4) #8
 //Shirts
 0x11A8, Work Uniform
 0x11A9, One-ball Shirt
@@ -1100,6 +1150,7 @@
 0x1365, K.K. Rockabilly
 0x1366, Agent K.K.
 0x1367, K.K. Rally
+0x1368, K.K. Metal
 //Tools
 0x1369, Shovel
 0x136A, Golden Shovel
@@ -1158,6 +1209,14 @@
 0x139D, Flame Umbrella
 0x139E, Camo Umbrella
 0x139F, Spider Umbrella
+0x13A0, Custom Umbrella #1
+0x13A1, Custom Umbrella #2
+0x13A2, Custom Umbrella #3
+0x13A3, Custom Umbrella #4
+0x13A4, Custom Umbrella #5
+0x13A5, Custom Umbrella #6
+0x13A6, Custom Umbrella #7
+0x13A7, Custom Umbrella #8
 //Hats
 0x13A8, Pilot's Cap
 0x13A9, Fireman's Hat
@@ -1322,7 +1381,65 @@
 0x1454, King's Beard
 0x1455, Mask
 0x1456, Pacifier
-0x1457, Mini-Mustache
+0x1457, Mini-Mustache #1
+0x1458, Mini-Mustache #2
+0x1459, Mini-Mustache #3
+0x145A, Mini-Mustache #4
+0x145B, Mini-Mustache #5
+0x145C, Mini-Mustache #6
+0x145D, Mini-Mustache #7
+0x145E, Mini-Mustache #8
+0x145F, Mini-Mustache #9
+0x1460, Mini-Mustache #10
+0x1461, Mini-Mustache #11
+0x1462, Mini-Mustache #12
+0x1463, Mini-Mustache #13
+0x1464, Mini-Mustache #14
+0x1465, Mini-Mustache #15
+0x1466, Mini-Mustache #16
+0x1467, Mini-Mustache #17
+0x1468, Mini-Mustache #18
+0x1469, Mini-Mustache #19
+0x146A, Mini-Mustache #20
+0x146B, Mini-Mustache #21
+0x146C, Mini-Mustache #22
+0x146D, Mini-Mustache #23
+0x146E, Mini-Mustache #24
+0x146F, Mini-Mustache #25
+0x1470, Mini-Mustache #26
+0x1471, Red Tulips (Unused)
+0x1472, White Tulips (Unused)
+0x1473, Yellow Tulips (Unused)
+0x1474, Pink Tulips (Unused)
+0x1475, Purple Tulips (Unused)
+0x1476, Black Tulips (Unused)
+0x1477, White Pansies (Unused)
+0x1478, Yellow Pansies (Unused)
+0x1479, Red Pansies (Unused)
+0x147A, Purple Pansies (Unused)
+0x147B, Orange Pansies (Unused)
+0x147C, Blue Pansies (Unused)
+0x147D, White Cosmos (Unused)
+0x147E, Red Cosmos (Unused)
+0x147F, Yellow Cosmos (Unused)
+0x1480, Pink Cosmos (Unused)
+0x1481, Orange Cosmos (Unused)
+0x1482, Black Cosmos (Unused)
+0x1483, Red Roses (Unused)
+0x1484, White Roses (Unused)
+0x1485, Yellow Roses (Unused)
+0x1486, Pink Roses (Unused)
+0x1487, Orange Roses (Unused)
+0x1488, Purple Roses (Unused)
+0x1489, Black Roses (Unused)
+0x148A, Blue Roses (Unused)
+0x148B, Jacob's Ladder (Unused)
+0x148C, Rafflesia (Unused)
+0x148D, Gold Roses (Unused)
+0x148E, Dandelions (Unused)
+0x148F, Dandelion Puffs (Unused)
+0x1490, Cardboard Box (Unused)
+0x1491, Four Leaf Clover (Unused)
 //Bells
 0x1492, 100 Bells
 0x1493, 200 Bells
@@ -1557,7 +1674,7 @@
 0x156A, Four Leaf Clover (Unused)
 0x156B, Present
 0x156C, Timer
-0x156D, Garbage
+// 0x156D - 0x1FFF = Pitfall Seed (Garbage) (Item placeholder?)
 //Furniture
 0x3000, Exotic Bed
 0x3004, Exotic Bureau
@@ -2472,14 +2589,134 @@
 0x3EB8, Custom Umbrella #6
 0x3EBC, Custom Umbrella #7
 0x3EC0, Custom Umbrella #8
-0x3F24, Custom Easel #1
-0x3F28, Custom Easel #2
-0x3F2C, Custom Easel #3
-0x3F30, Custom Easel #4
-0x3F34, Custom Easel #5
-0x3F38, Custom Easel #6
-0x3F3C, Custom Easel #7
-0x3F40, Custom Easel #8
+0x3F24, Custom Easel (Player 1) #1
+0x3F28, Custom Easel (Player 1) #2
+0x3F2C, Custom Easel (Player 1) #3
+0x3F30, Custom Easel (Player 1) #4
+0x3F34, Custom Easel (Player 1) #5
+0x3F38, Custom Easel (Player 1) #6
+0x3F3C, Custom Easel (Player 1) #7
+0x3F40, Custom Easel (Player 1) #8
+0x3F44, Custom Easel (Player 2) #1
+0x3F48, Custom Easel (Player 2) #2
+0x3F4C, Custom Easel (Player 2) #3
+0x3F50, Custom Easel (Player 2) #4
+0x3F54, Custom Easel (Player 2) #5
+0x3F58, Custom Easel (Player 2) #6
+0x3F5C, Custom Easel (Player 2) #7
+0x3F60, Custom Easel (Player 2) #8
+0x3F64, Custom Easel (Player 3) #1
+0x3F68, Custom Easel (Player 3) #2
+0x3F6C, Custom Easel (Player 3) #3
+0x3F70, Custom Easel (Player 3) #4
+0x3F74, Custom Easel (Player 3) #5
+0x3F78, Custom Easel (Player 3) #6
+0x3F7C, Custom Easel (Player 3) #7
+0x3F80, Custom Easel (Player 3) #8
+0x3F84, Custom Easel (Player 4) #1
+0x3F88, Custom Easel (Player 4) #2
+0x3F8C, Custom Easel (Player 4) #3
+0x3F90, Custom Easel (Player 4) #4
+0x3F94, Custom Easel (Player 4) #5
+0x3F98, Custom Easel (Player 4) #6
+0x3F9C, Custom Easel (Player 4) #7
+0x3FA0, Custom Easel (Player 4) #8
+0x3FA4, White Cap
+0x3FA8, Red Cap
+0x3FAC, Yellow Cap
+0x3FB0, Light Blue Cap
+0x3FB4, Green Cap
+0x3FB8, Star Cap
+0x3FBC, 1-Up Cap
+0x3FC0, Purple Cap
+0x3FC4, Blue Knit Hat
+0x3FC8, Green Knit Hat
+0x3FCC, Orange Knit Hat
+0x3FD0, Pink Knit Hat
+0x3FD4, Purple Knit Hat
+0x3FD8, Red Pom-pom Hat
+0x3FDC, Badge Hat
+0x3FE0, Straw Hat
+0x3FE4, Grandpa Hat
+0x3FE8, Paperboy Cap
+0x3FEC, Beret
+0x3FF0, Dandy Hat
+0x3FF4, Hunter's Cap
+0x3FF8, Detective Hat
+0x3FFC, Top Hat
+0x4000, Puffy Hat
+0x4004, Bandana
+0x4008, Swimming Cap
+0x400C, Wizard's Cap
+0x4010, Big Bro's Hat
+0x4014, Li'l Bro's Hat
+0x4018, Bicycle Helmet
+0x401C, Chef's Hat
+0x4020, Combat Helmet
+0x4024, Scholar's Hat
+0x4028, Safety Helmet
+0x402C, Police Cap
+0x4030, Explorer's Hat
+0x4034, Captain's Hat
+0x4038, Sailor's Hat
+0x403C, Silk Hat
+0x4040, Outback Hat
+0x4044, Dutch Hat
+0x4048, Sombrero
+0x404C, Tyrolean Hat
+0x4050, Viking Helmet
+0x4054, Cavalier Hat
+0x4058, Pirate's Hat
+0x405C, Jester's Cap
+0x4060, Witch's Hat
+0x4064, Red Ribbon
+0x4068, Blue Ribbon
+0x406C, Yellow Ribbon
+0x4070, Heart Hairpin
+0x4074, Star Hairpin
+0x4078, Moon Hairpin
+0x407C, Green Feather
+0x4080, Blue Feather
+0x4084, Yellow Feather
+0x4088, Red Feather
+0x408C, Purple Feather
+0x4090, White Feather
+0x4094, Rainbow Feather
+0x4098, Halo
+0x409C, Royal Crown
+0x40A0, Crown
+0x40A4, Pilot's Cap
+0x40A8, Fireman's Hat
+0x40AC, Baby's Hat
+0x40B0, White Veil
+0x40B4, Turban
+0x40B8, Warbonnet
+0x40BC, Kaffiyeh
+0x40C0, Cow Bone
+0x40C4, Samurai Wig
+0x40C8, Geisha Wig
+0x40CC, Ninja Hood
+0x40D0, Powdered Wig
+0x40D4, Afro Wig
+0x40D8, Regent Wig
+0x40DC, Mohawk Wig
+0x40E0, Pigtail
+0x40E4, Bunny Hood
+0x40E8, Racing Helmet
+0x40EC, Motocross Helmet
+0x40F0, Football Helmet
+0x40F4, Knight's Helmet
+0x40F8, Roman Helmet
+0x40FC, Diving Mask
+0x4100, Space Helmet
+0x4104, Ski Mask
+0x4108, Wrestling Mask
+0x410C, Dressing
+0x4110, King Tut Wig
+0x4114, White Veil #1
+0x4118, White Veil #2
+0x411C, White Veil #3
+0x4120, White Veil #4
 0x4124, Blue Frames
 0x4128, Red Glasses
 0x412C, Yellow Glasses
@@ -2658,11 +2895,11 @@
 0x44C4, Black Roses
 0x44C8, Blue Roses
 0x44CC, Jacob's Ladder
-0x44D0, Garbage
+0x44D0, Flower Seed
 0x44D4, Gold Roses
 0x44D8, Dandelions
 0x44DC, Dandelion Puffs
-0x44E0, Garbage
+0x44E0, Flower Seed #2
 0x44E4, Lucky Clovers
 0x44E8, Spoiled Turnips
 0x44EC, Conch
@@ -3030,7 +3267,7 @@
 0x4B94, Fire Bar
 0x4B98, Pikmin
 0x4B9C, Blue Falcon
-0x4BA0, Garbage
+0x4BA0, Cardboard Box (Garbage)
 //Buildings
 0x5000, Town Hall
 0x5001, Neighbor House #1
@@ -3045,7 +3282,7 @@
 0x500B, Gate House
 0x500C, Able Sister's
 0x500D, Nook's Cranny
-0x500E, Nook 'n Go
+0x500E, Nook 'n' Go
 0x500F, Nookway
 0x5010, Nookington's
 0x5011, Museum

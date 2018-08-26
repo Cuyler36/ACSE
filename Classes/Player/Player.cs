@@ -82,10 +82,10 @@ namespace ACSE
                                         switch (_saveData.SaveGeneration)
                                         {
                                             case SaveGeneration.NDS:
-                                                dataOffset = 0x15430 + 0xB4 * Index; // Terrible hack
+                                                dataOffset = _saveData.SaveDataStartOffset + 0x15430 + 0xB4 * Index; // Terrible hack
                                                 break;
                                             case SaveGeneration.Wii:
-                                                dataOffset = 0x1F3038 + 0x140 * Index;
+                                                dataOffset = _saveData.SaveDataStartOffset + 0x1F3038 + 0x140 * Index;
                                                 break;
                                         }
                                     }
@@ -312,10 +312,10 @@ namespace ACSE
                                 switch (_saveData.SaveGeneration)
                                 {
                                     case SaveGeneration.NDS:
-                                        dataOffset = 0x15430 + 0xB4 * Index; // Terrible hack
+                                        dataOffset = _saveData.SaveDataStartOffset + 0x15430 + 0xB4 * Index; // Terrible hack
                                         break;
                                     case SaveGeneration.Wii:
-                                        dataOffset = 0x1F3038 + 0x140 * Index;
+                                        dataOffset = _saveData.SaveDataStartOffset + 0x1F3038 + 0x140 * Index;
                                         break;
                                 }
                             }

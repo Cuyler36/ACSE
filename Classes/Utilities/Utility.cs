@@ -104,6 +104,28 @@ namespace ACSE.Utilities
             return new Tuple<byte[], bool>(new byte[] { 0xFF, 0xFF, 0xFF, 0xFF }, false);
         }
 
+        public static (byte[], bool) FindVillagerHouseWildWorld(int villagerIndex)
+        {
+            if (MainForm.SaveFile == null) return (new byte[] {0xFF, 0xFF}, false);
+
+            var houseId = 0x5001 + villagerIndex;
+            foreach (var acre in MainForm.TownAcres)
+            {
+                var villagerHouse = acre.AcreItems.FirstOrDefault(o => o.ItemId == houseId);
+                if (villagerHouse != null)
+                {
+                    return (
+                        new[]
+                        {
+                            (byte) (((acre.Index % 4 + 1) << 4) | (villagerHouse.Location.X % 16)),
+                            (byte) (((acre.Index / 4 + 1) << 4) | (villagerHouse.Location.Y % 16))
+                        }, true);
+                }
+            }
+
+            return (new byte[] { 0xFF, 0xFF }, false);
+        }
+
         public static Villager GetVillagerFromHouse(ushort houseId, Villager[] villagers)
         {
             var villagerId = (ushort)(0xE000 | (houseId & 0x00FF));
