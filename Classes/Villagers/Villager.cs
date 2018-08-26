@@ -43,7 +43,7 @@ namespace ACSE
                 var fieldType = structType.GetField(field.Name).FieldType;
                 var dataOffset = Offset + (int)field.GetValue(Offsets);
 
-                if (field.Name == "Villager_ID" && save.SaveType == SaveType.WildWorld) // Villager IDs are only a byte in WW
+                if (field.Name == "VillagerId" && save.SaveType == SaveType.WildWorld) // Villager IDs are only a byte in WW
                     structType.GetField(field.Name).SetValue(boxedData, _saveData.ReadByte(dataOffset));
                 else if (fieldType == typeof(byte))
                     structType.GetField(field.Name).SetValue(boxedData, _saveData.ReadByte(dataOffset));
@@ -191,11 +191,11 @@ namespace ACSE
 
                 switch (field.Name)
                 {
-                    case "Villager_ID" when _saveData.SaveType == SaveType.WildWorld:
+                    case "VillagerId" when _saveData.SaveType == SaveType.WildWorld:
                         _saveData.Write(dataOffset, Convert.ToByte(dataObject));
                         break;
                     //Might not encompass City Folk
-                    case "Villager_ID":
+                    case "VillagerId":
                         _saveData.Write(dataOffset, dataObject, _saveData.IsBigEndian);
                         break;
                     default:

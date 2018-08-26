@@ -180,7 +180,7 @@ namespace ACSE.Utilities
                     return new[] { (byte)Month, (byte)Day };
 
                 case SaveGeneration.NDS:
-                    return new[] { (byte)Month, (byte)Day };
+                    return new[] { (byte)Day, (byte)Month };
 
                 default:
                     return new byte[0];

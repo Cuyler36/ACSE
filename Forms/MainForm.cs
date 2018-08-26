@@ -4373,42 +4373,44 @@ namespace ACSE
         private void ResettiCheckBoxCheckedChanged(object sender, EventArgs e)
         {
             if (_loading || SaveFile == null || _selectedPlayer == null) return;
-            if (SaveFile.SaveType == SaveType.CityFolk)
+            switch (SaveFile.SaveType)
             {
-                if (resettiCheckBox.Checked)
-                {
-                    SaveFile.Write(_selectedPlayer.Offset + 0x8670, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x8670) | 0x02));
-                }
-                else
-                {
-                    SaveFile.Write(_selectedPlayer.Offset + 0x8670, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x8670) & 0xFD));
-                }
-            }
-            else if (SaveFile.SaveType == SaveType.NewLeaf)
-            {
-                if (resettiCheckBox.Checked)
-                {
-                    SaveFile.Write(_selectedPlayer.Offset + 0x5702, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x5702) | 0x02));
-                }
-                else
-                {
-                    SaveFile.Write(_selectedPlayer.Offset + 0x5702, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x5702) & 0xFD));
-                }
-            }
-            else if (SaveFile.SaveType == SaveType.WelcomeAmiibo)
-            {
-                if (resettiCheckBox.Checked)
-                {
-                    SaveFile.Write(_selectedPlayer.Offset + 0x570A, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x570A) | 0x02));
-                }
-                else
-                {
-                    SaveFile.Write(_selectedPlayer.Offset + 0x570A, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x570A) & 0xFD));
-                }
-            }
-            else
-            {
-                _selectedPlayer.Data.Reset = resettiCheckBox.Checked;
+                case SaveType.CityFolk:
+                    if (resettiCheckBox.Checked)
+                    {
+                        SaveFile.Write(_selectedPlayer.Offset + 0x8670, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x8670) | 0x02));
+                    }
+                    else
+                    {
+                        SaveFile.Write(_selectedPlayer.Offset + 0x8670, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x8670) & 0xFD));
+                    }
+
+                    break;
+                case SaveType.NewLeaf:
+                    if (resettiCheckBox.Checked)
+                    {
+                        SaveFile.Write(_selectedPlayer.Offset + 0x5702, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x5702) | 0x02));
+                    }
+                    else
+                    {
+                        SaveFile.Write(_selectedPlayer.Offset + 0x5702, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x5702) & 0xFD));
+                    }
+
+                    break;
+                case SaveType.WelcomeAmiibo:
+                    if (resettiCheckBox.Checked)
+                    {
+                        SaveFile.Write(_selectedPlayer.Offset + 0x570A, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x570A) | 0x02));
+                    }
+                    else
+                    {
+                        SaveFile.Write(_selectedPlayer.Offset + 0x570A, (byte)(SaveFile.ReadByte(_selectedPlayer.Offset + 0x570A) & 0xFD));
+                    }
+
+                    break;
+                default:
+                    _selectedPlayer.Data.Reset = resettiCheckBox.Checked;
+                    break;
             }
         }
 
