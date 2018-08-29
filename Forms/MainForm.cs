@@ -90,6 +90,7 @@ namespace ACSE
         private ItemEditor _islandBoxEditor;
         private HouseControl _houseEditor;
         private HouseControl _islandHouseEditor;
+        private StalkMarketEditor _stalkMarketEditor;
         private bool _loading;
 
         #region MapSizeVariables
@@ -1278,6 +1279,19 @@ namespace ACSE
 
             // Town Ordinances for New Leaf
             SetOrdinanceCheckBoxes();
+
+            // Create Stalk Market Editor
+            if (_stalkMarketEditor != null)
+            {
+                _stalkMarketEditor.Dispose();
+            }
+
+            _stalkMarketEditor = new StalkMarketEditor(SaveFile)
+            {
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Location = new Point(740, 14)
+            };
+            townMisc.Controls.Add(_stalkMarketEditor);
 
             progressBar1.Value = 100;
             _loading = false;

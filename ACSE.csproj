@@ -4932,6 +4932,9 @@
     <Compile Include="Controls\ItemEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\RegexTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ShopEditorControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -4940,6 +4943,9 @@
     </Compile>
     <Compile Include="Controls\SingleItemEditor.Designer.cs">
       <DependentUpon>SingleItemEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StalkMarketEditor.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\VillagerControl.cs">
       <SubType>Component</SubType>

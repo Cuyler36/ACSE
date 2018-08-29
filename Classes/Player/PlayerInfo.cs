@@ -266,6 +266,7 @@ namespace ACSE
             Patterns = 0x1240,
             PatternCount = 8,
             PatternSize = 0x220, //Actual Size is 0x200, with the first 0x20 bytes for Name, then for palette & padding?
+            // Tan "Renew Time", Year-Month-Day
             Tan = 0x23C8,
             TownPassCardImage = -1,
             HairType = -1,
