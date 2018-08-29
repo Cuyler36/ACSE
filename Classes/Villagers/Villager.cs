@@ -158,7 +158,7 @@ namespace ACSE
             _saveData.Write(offset, dlcData);
         }
 
-        public void Write()
+        public void Write(string townName)
         {
             // Set Villager TownID & Name when villager exists.
             if (Exists && _saveData.SaveGeneration != SaveGeneration.iQue) // TODO: Once iQue text is implemented, remove this.
@@ -167,10 +167,9 @@ namespace ACSE
                 {
                     Data.TownId = _saveData.ReadUInt16(_saveData.SaveDataStartOffset + MainForm.CurrentSaveInfo.SaveOffsets.TownId, _saveData.IsBigEndian); // Might not be UInt16 in all games
                 }
-                if (Offsets.TownName != -1)
+                if (!string.IsNullOrWhiteSpace(townName) && Offsets.TownName != -1)
                 {
-                    Data.TownName = _saveData.ReadString(_saveData.SaveDataStartOffset + MainForm.CurrentSaveInfo.SaveOffsets.TownName,
-                        MainForm.CurrentSaveInfo.SaveOffsets.TownNameSize);
+                    Data.TownName = townName;
                 }
             }
 

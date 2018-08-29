@@ -1007,9 +1007,17 @@ namespace ACSE
             progressBar1.Value = 75;
 
             townNameBox.MaxLength = CurrentSaveInfo.SaveOffsets.TownNameSize;
-            townNameBox.Text = new AcString(save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.TownName,
-                CurrentSaveInfo.SaveOffsets.TownNameSize), save.SaveType).Trim();
-
+            if (save.SaveGeneration == SaveGeneration.N3DS)
+            {
+                townNameBox.Text = new AcString(save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.TownName,
+                    CurrentSaveInfo.SaveOffsets.TownNameSize * 2), save.SaveType).Trim();
+            }
+            else
+            {
+                townNameBox.Text = new AcString(save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.TownName,
+                    CurrentSaveInfo.SaveOffsets.TownNameSize), save.SaveType).Trim();
+            }
+            
             // Load island cabana if DnM+/AC
             _islandCabana = null;
             if (SaveFile.SaveType == SaveType.DoubutsuNoMoriPlus || SaveFile.SaveType == SaveType.AnimalCrossing)
@@ -1281,17 +1289,18 @@ namespace ACSE
             SetOrdinanceCheckBoxes();
 
             // Create Stalk Market Editor
-            if (_stalkMarketEditor != null)
-            {
-                _stalkMarketEditor.Dispose();
-            }
+            _stalkMarketEditor?.Dispose();
 
             _stalkMarketEditor = new StalkMarketEditor(SaveFile)
             {
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 Location = new Point(740, 14)
             };
-            townMisc.Controls.Add(_stalkMarketEditor);
+
+            if (!_stalkMarketEditor.IsDisposed)
+            {
+                townMisc.Controls.Add(_stalkMarketEditor);
+            }
 
             progressBar1.Value = 100;
             _loading = false;
@@ -3794,7 +3803,7 @@ namespace ACSE
                             break;
                     }
 
-                    villager.Write();
+                    villager.Write(townNameBox.Text.Length < 1 ? null : townNameBox.Text);
                 }
                     
                 // Update Villager Count in N64/GCN (Possibly others too?)
@@ -4197,6 +4206,22 @@ namespace ACSE
                         relation.PlayerName = playerName.Text;
                     }
                 }
+            }
+            
+            // Find and update all name references
+            switch (SaveFile.SaveGeneration)
+            {
+                case SaveGeneration.N3DS:
+                    var searchData = new byte[0x12 + 0x02 + 0x02];
+                    BitConverter.GetBytes(_selectedPlayer.Data.Identifier).CopyTo(searchData, 0);
+                    AcString.GetBytes(_selectedPlayer.Data.Name, 16).CopyTo(searchData, 2);
+                    searchData[0x14] = 0x01;
+
+                    var replaceData = (byte[]) searchData.Clone();
+                    AcString.GetBytes(playerName.Text, 16).CopyTo(replaceData, 2);
+
+                    SaveFile.FindAndReplaceByteArray(searchData, replaceData);
+                    break;
             }
 
             _selectedPlayer.Data.Name = playerName.Text;

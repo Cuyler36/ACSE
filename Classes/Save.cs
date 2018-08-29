@@ -346,13 +346,20 @@ namespace ACSE
             }
         }
 
-        public void FindAndReplaceByteArray(int end, byte[] oldarr, byte[] newarr)
+        public void FindAndReplaceByteArray(in byte[] oldarr, in byte[] newarr, int end = -1, bool reverse = false)
         {
-            for (var i = SaveDataStartOffset; i < SaveDataStartOffset + end; i += 2)
+            if (end < 0)
             {
+                end = WorkingSaveData.Length;
+            }
+
+            for (var i = SaveDataStartOffset; i < SaveDataStartOffset + end - oldarr.Length; i += 2)
+            {
+                if (i + oldarr.Length >= WorkingSaveData.Length) break;
+
                 if (ReadByteArray(i, oldarr.Length).SequenceEqual(oldarr))
                 {
-                    Write(i, newarr, IsBigEndian);
+                    Write(i, newarr, reverse);
                 }
             }
         }
