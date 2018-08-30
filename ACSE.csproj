@@ -54,6 +54,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -82,6 +85,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>ItemColorSettings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
     <None Include="Resources\Animal_Crossing_NL_Badges_28x28.png" />
     <None Include="Resources\Animal_Crossing_NL_NoBadge_28x28.png" />
     <None Include="Resources\BoxGlow.png" />
@@ -4894,6 +4898,7 @@
     <Compile Include="Classes\Saves\SaveBase.cs" />
     <Compile Include="Classes\Saves\WiiSave.cs" />
     <Compile Include="Classes\TrainStation.cs" />
+    <Compile Include="Classes\Updater.cs" />
     <Compile Include="Classes\Utilities\ImageUtility.cs" />
     <Compile Include="Classes\Villagers\SimpleVillager.cs" />
     <Compile Include="Classes\Villagers\Villager.cs" />

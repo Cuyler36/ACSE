@@ -260,6 +260,16 @@ namespace ACSE
             // Palette Change Buttons
             paletteNextButton.MouseClick += (sender, e) => ChangePatternPalette(1);
             palettePreviousButton.MouseClick += (sender, e) => ChangePatternPalette(-1);
+
+            // Check for updates
+            var updater = new Updater();
+            if (updater.HasUpdate() &&
+                MessageBox.Show(
+                    "An updated version of ACSE is available! Would you like to be taken to the download page?",
+                    "ACSE Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start(updater.UpdateUrl);
+            }
         }
 
         #region Settings Changing Functions
