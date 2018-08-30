@@ -31,7 +31,6 @@ namespace ACSE
 
         private (bool, string) CheckForUpdate(string url)
         {
-            // Check the "latest" release first.
             var request = (HttpWebRequest) WebRequest.Create(url);
             request.Credentials = CredentialCache.DefaultCredentials;
             request.ContentType = "application/json";
@@ -92,10 +91,12 @@ namespace ACSE
 
         public bool HasUpdate()
         {
+            // Check the "latest" release first.
             var (latestResult, latestUrl) = CheckForUpdate(@"https://api.github.com/repos/cuyler36/ACSE/releases/latest");
             UpdateUrl = latestUrl;
             if (latestResult) return true;
 
+            // Now check all releases to see if the most recent version is newer.
             var (releasesResult, releaseUrl) = CheckForUpdate(@"https://api.github.com/repos/cuyler36/ACSE/releases");
             UpdateUrl = releaseUrl;
             return releasesResult;
