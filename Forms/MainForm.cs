@@ -1304,7 +1304,7 @@ namespace ACSE
             _stalkMarketEditor = new StalkMarketEditor(SaveFile)
             {
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
-                Location = new Point(740, 14)
+                Location = new Point(720, 14)
             };
 
             if (!_stalkMarketEditor.IsDisposed)

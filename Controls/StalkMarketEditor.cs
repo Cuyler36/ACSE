@@ -12,7 +12,7 @@ namespace ACSE
             Spike, Random, Falling
         }
 
-        public const int Days = 7;
+        public int Days = 7;
         public int[] Prices;
         public int Trend;
 
@@ -38,12 +38,20 @@ namespace ACSE
             _priceBoxes = new NumericTextBox[Days];
             _panels = new List<FlowLayoutPanel>();
 
-            _offset = -1;
+            _offset = _trendOffset = -1;
             switch (_saveData.SaveType)
             {
                 case SaveType.AnimalCrossing:
                     _offset = saveData.SaveDataStartOffset + 0x20480;
                     _trendOffset = _offset + 0xE;
+                    break;
+                case SaveType.NewLeaf:
+                    Days = 6;
+                    _offset = saveData.SaveDataStartOffset + 0x6535C;
+                    break;
+                case SaveType.WelcomeAmiibo:
+                    Days = 6;
+                    _offset = saveData.SaveDataStartOffset + 0x6AD60;
                     break;
             }
 
@@ -61,40 +69,43 @@ namespace ACSE
             });
 
             // Trend
-            var trendPanel = new FlowLayoutPanel
+            if (_trendOffset > -1)
             {
-                AutoSize = true,
-                FlowDirection = FlowDirection.LeftToRight
-            };
+                var trendPanel = new FlowLayoutPanel
+                {
+                    AutoSize = true,
+                    FlowDirection = FlowDirection.LeftToRight
+                };
 
-            var trendLabel = new Label
-            {
-                AutoSize = false,
-                Size = new Size(110, 22),
-                TextAlign = ContentAlignment.MiddleRight,
-                Text = "Trend:"
-            };
-            trendPanel.Controls.Add(trendLabel);
+                var trendLabel = new Label
+                {
+                    AutoSize = false,
+                    Size = new Size(130, 22),
+                    TextAlign = ContentAlignment.MiddleRight,
+                    Text = "Trend:"
+                };
+                trendPanel.Controls.Add(trendLabel);
 
-            Trend = saveData.ReadUInt16(_trendOffset, saveData.IsBigEndian);
+                Trend = saveData.ReadUInt16(_trendOffset, saveData.IsBigEndian);
 
-            _trendComboBox = new ComboBox
-            {
-                AutoSize = false,
-                Size = new Size(60, 20)
-            };
+                _trendComboBox = new ComboBox
+                {
+                    AutoSize = false,
+                    Size = new Size(60, 20)
+                };
 
-            foreach (var trend in Enum.GetNames(typeof(GameCubeStalkMarketTrend)))
-            {
-                _trendComboBox.Items.Add(trend);
+                foreach (var trend in Enum.GetNames(typeof(GameCubeStalkMarketTrend)))
+                {
+                    _trendComboBox.Items.Add(trend);
+                }
+
+                _trendComboBox.SelectedIndex = Trend;
+                _trendComboBox.SelectedIndexChanged += (s, e) => TrendChanged(_trendComboBox.SelectedIndex);
+                trendPanel.Controls.Add(_trendComboBox);
+
+                _panels.Add(trendPanel);
+                Controls.Add(trendPanel);
             }
-
-            _trendComboBox.SelectedIndex = Trend;
-            _trendComboBox.SelectedIndexChanged += (s, e) => TrendChanged(_trendComboBox.SelectedIndex);
-            trendPanel.Controls.Add(_trendComboBox);
-
-            _panels.Add(trendPanel);
-            Controls.Add(trendPanel);
 
             // Prices
             var offset = _offset;
@@ -105,6 +116,7 @@ namespace ACSE
                     case SaveGeneration.N64:
                     case SaveGeneration.GCN:
                     case SaveGeneration.iQue:
+                    {
                         Prices[day] = saveData.ReadUInt16(offset, saveData.IsBigEndian);
                         offset += 2;
 
@@ -117,7 +129,7 @@ namespace ACSE
                         var priceLabel = new Label
                         {
                             AutoSize = false,
-                            Size = new Size(110, 22),
+                            Size = new Size(130, 22),
                             TextAlign = ContentAlignment.MiddleRight,
                             Text = $"{DayNames[day]}'s Price:"
                         };
@@ -133,16 +145,60 @@ namespace ACSE
                         };
 
                         var currentDay = day;
-                        _priceBoxes[day].TextChanged += (s, e) => PriceChanged(currentDay, int.Parse(_priceBoxes[currentDay].Text));
+                        _priceBoxes[day].TextChanged += (s, e) =>
+                            PriceChanged(currentDay, int.Parse(_priceBoxes[currentDay].Text));
                         pricePanel.Controls.Add(_priceBoxes[day]);
                         _panels.Add(pricePanel);
                         Controls.Add(pricePanel);
                         break;
+                    }
+                    case SaveGeneration.N3DS:
+                    {
+                        var amPrice = new NewLeafInt32(saveData.ReadUInt32(offset), saveData.ReadUInt32(offset + 4)).Value;
+                        var pmPrice = new NewLeafInt32(saveData.ReadUInt32(offset + 8), saveData.ReadUInt32(offset + 0xC)).Value;
+                        offset += 0x10;
+
+                        for (var i = 0; i < 2; i++)
+                        {
+                            var pricePanel = new FlowLayoutPanel
+                            {
+                                AutoSize = true,
+                                FlowDirection = FlowDirection.LeftToRight
+                            };
+
+                            var priceLabel = new Label
+                            {
+                                AutoSize = false,
+                                Size = new Size(130, 22),
+                                TextAlign = ContentAlignment.MiddleRight,
+                                Text = $"{DayNames[day + 1]}'s Price [{(i == 0 ? "AM" : "PM")}]:"
+                            };
+                            pricePanel.Controls.Add(priceLabel);
+
+                            var priceBox = new NumericTextBox
+                            {
+                                AutoSize = false,
+                                Size = new Size(60, 20),
+                                Location = new Point(5, day * 24),
+                                Text = (i == 0 ? amPrice : pmPrice).ToString(),
+                                MaxLength = 9
+                            };
+
+                            var currentDay = day;
+                            priceBox.TextChanged += (s, e) =>
+                                PriceChanged(currentDay, int.Parse(priceBox.Text));
+                            pricePanel.Controls.Add(priceBox);
+                            _panels.Add(pricePanel);
+                            Controls.Add(pricePanel);
+                        }
+
+                        break;
+                    }
                 }
             }
         }
 
-        private void PriceChanged(int index, int newPrice)
+        private void PriceChanged(int index, int newPrice, bool pm = false)
         {
             if (_saveData == null) return;
 
@@ -155,6 +211,12 @@ namespace ACSE
                 case SaveGeneration.GCN:
                 case SaveGeneration.iQue:
                     _saveData.Write(_offset + index * 2, (ushort) newPrice, _saveData.IsBigEndian);
+                    break;
+                case SaveGeneration.N3DS:
+                    var writeOffset = _offset + index * 0x10 + (pm ? 8 : 0);
+                    var encryptedValue = new NewLeafInt32((uint) newPrice);
+                    _saveData.Write(writeOffset, encryptedValue.Int1);
+                    _saveData.Write(writeOffset + 4, encryptedValue.Int2);
                     break;
             }
         }
