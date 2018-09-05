@@ -4205,19 +4205,24 @@ namespace ACSE
         private void PlayerNameTextChanged(object sender, EventArgs e)
         {
             if (SaveFile == null || _loading || playerName.Text.Length <= 0) return;
-            foreach (var villager in _villagers)
+
+            if (_villagers != null)
             {
-                if (villager.PlayerRelations == null) continue;
-                foreach (var relation in villager.PlayerRelations)
+                foreach (var villager in _villagers)
                 {
-                    if (relation.Exists && (relation.Player == _selectedPlayer ||
-                        relation.PlayerId == _selectedPlayer.Data.Identifier && relation.PlayerName.Equals(_selectedPlayer.Data.Name)))
+                    if (villager.PlayerRelations == null) continue;
+                    foreach (var relation in villager.PlayerRelations)
                     {
-                        relation.PlayerName = playerName.Text;
+                        if (relation.Exists && (relation.Player == _selectedPlayer ||
+                                                relation.PlayerId == _selectedPlayer.Data.Identifier &&
+                                                relation.PlayerName.Equals(_selectedPlayer.Data.Name)))
+                        {
+                            relation.PlayerName = playerName.Text;
+                        }
                     }
                 }
             }
-            
+
             // Find and update all name references
             switch (SaveFile.SaveGeneration)
             {
