@@ -995,8 +995,24 @@ namespace ACSE
                     {
                         playerFace.Items.Clear();
                         foreach (var faceName in _selectedPlayer.Data.Gender == 0 ? PlayerInfo.NlMaleFaces : PlayerInfo.NlFemaleFaces)
+                        {
                             playerFace.Items.Add(faceName);
-                        playerFace.SelectedIndex = _selectedPlayer.Data.FaceType;
+                        }
+
+                        switch (SaveFile.SaveGeneration)
+                        {
+                            case SaveGeneration.N64:
+                            case SaveGeneration.GCN:
+                            case SaveGeneration.iQue:
+                                playerFace.SelectedIndex =
+                                    (_selectedPlayer.Data.Gender == 1
+                                        ? (byte)(_selectedPlayer.Data.FaceType + 8)
+                                        : _selectedPlayer.Data.FaceType);
+                                break;
+                            default:
+                                playerFace.SelectedIndex = _selectedPlayer.Data.FaceType;
+                                break;
+                        }
                     }
 
                     break;
@@ -1647,7 +1663,21 @@ namespace ACSE
 
             //These vary game to game
             if (playerFace.Items.Count > 0)
-                playerFace.SelectedIndex = player.Data.FaceType;
+            {
+                switch (SaveFile.SaveGeneration)
+                {
+                    case SaveGeneration.N64:
+                    case SaveGeneration.GCN:
+                    case SaveGeneration.iQue:
+                        playerFace.SelectedIndex =
+                            (player.Data.Gender == 1 ? (byte)(player.Data.FaceType + 8) : player.Data.FaceType);
+                        break;
+                    default:
+                        playerFace.SelectedIndex = player.Data.FaceType;
+                        break;
+                }
+            }
+
             if (playerHairType.Items.Count > 0)
                 playerHairType.SelectedIndex = player.Data.HairType;
             if (playerHairColor.Enabled && playerHairColor.Items.Count > 0)
@@ -1721,9 +1751,6 @@ namespace ACSE
                 if (SaveFile.SaveType == SaveType.WelcomeAmiibo)
                     playerMeowCoupons.Text = player.Data.MeowCoupons.Value.ToString();
             }
-
-            // Set Face Image
-            RefreshPictureBoxImage(facePreviewPictureBox, ImageGeneration.GetFaceImage(SaveFile.SaveGeneration, player.Data.FaceType, player.Data.Gender));
 
             // Refresh Inventory
             if (_inventoryEditor != null && !_inventoryEditor.IsDisposed)
@@ -1804,8 +1831,8 @@ namespace ACSE
 
         private void Gender_Changed()
         {
-            if (SaveFile == null)
-                return;
+            if (SaveFile == null || _loading) return;
+
             //New Leaf face swap on gender change
             if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
@@ -1814,13 +1841,39 @@ namespace ACSE
                 playerFace.SelectedIndex = _selectedPlayer.Data.FaceType;
             }
             _selectedPlayer.Data.Gender = playerGender.Text == "Female" ? (byte)1 : (byte)0;
+            SetFace(playerFace.SelectedIndex);
+        }
+
+        private void SetFace(int faceType)
+        {
+            switch (SaveFile.SaveGeneration)
+            {
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                case SaveGeneration.iQue:
+                    _selectedPlayer.Data.FaceType = (byte) (_selectedPlayer.Data.Gender == 1
+                        ? faceType - 8
+                        : faceType);
+                    break;
+                default:
+                    _selectedPlayer.Data.FaceType = (byte) faceType;
+                    break;
+            }
+
         }
 
         private void Face_Changed()
         {
             if (SaveFile == null || _selectedPlayer == null || playerFace.SelectedIndex <= -1) return;
-            _selectedPlayer.Data.FaceType = (byte)playerFace.SelectedIndex;
-            RefreshPictureBoxImage(facePreviewPictureBox, ImageGeneration.GetFaceImage(SaveFile.SaveGeneration, _selectedPlayer.Data.FaceType, _selectedPlayer.Data.Gender));
+
+            if (!_loading)
+            {
+                SetFace(playerFace.SelectedIndex);
+            }
+
+            RefreshPictureBoxImage(facePreviewPictureBox,
+                ImageGeneration.GetFaceImage(SaveFile.SaveGeneration, playerFace.SelectedIndex,
+                    _selectedPlayer.Data.Gender));
         }
 
         private void Hair_Changed()
@@ -4350,42 +4403,6 @@ namespace ACSE
             {
                 playerNookPoints.Text = _selectedPlayer.Data.NookPoints.ToString();
             }
-        }
-
-        private void PlayerShoeColorSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (SaveFile != null && playerShoeColor.SelectedIndex > -1)
-                _selectedPlayer.Data.ShoeColor = (byte)playerShoeColor.SelectedIndex;
-        }
-
-        private void PlayerEyeColorSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (SaveFile != null && playerEyeColor.SelectedIndex > -1)
-                _selectedPlayer.Data.EyeColor = (byte)playerEyeColor.SelectedIndex;
-        }
-
-        private void PlayerHairColorSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (SaveFile != null && playerHairColor.SelectedIndex > -1)
-                _selectedPlayer.Data.HairColor = (byte)playerHairColor.SelectedIndex;
-        }
-
-        private void PlayerHairTypeSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (SaveFile != null && playerHairType.SelectedIndex > -1)
-                _selectedPlayer.Data.HairType = (byte)playerHairType.SelectedIndex;
-        }
-
-        private void PlayerFaceSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (SaveFile != null && playerFace.SelectedIndex > -1)
-                _selectedPlayer.Data.FaceType = (byte)playerFace.SelectedIndex;
-        }
-
-        private void PlayerGenderSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (SaveFile != null && playerGender.SelectedIndex > -1)
-                _selectedPlayer.Data.Gender = (byte)playerGender.SelectedIndex;
         }
 
         private void AcreHeightTrackBarScroll(object sender, EventArgs e)

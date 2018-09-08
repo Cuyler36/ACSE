@@ -1239,7 +1239,6 @@
             this.playerShoeColor.Name = "playerShoeColor";
             this.playerShoeColor.Size = new System.Drawing.Size(121, 21);
             this.playerShoeColor.TabIndex = 53;
-            this.playerShoeColor.SelectedIndexChanged += new System.EventHandler(this.PlayerShoeColorSelectedIndexChanged);
             // 
             // label20
             // 
@@ -1537,7 +1536,6 @@
             this.playerGender.Name = "playerGender";
             this.playerGender.Size = new System.Drawing.Size(121, 21);
             this.playerGender.TabIndex = 17;
-            this.playerGender.SelectedIndexChanged += new System.EventHandler(this.PlayerGenderSelectedIndexChanged);
             // 
             // playerEyeColor
             // 
@@ -1548,7 +1546,6 @@
             this.playerEyeColor.Name = "playerEyeColor";
             this.playerEyeColor.Size = new System.Drawing.Size(121, 21);
             this.playerEyeColor.TabIndex = 15;
-            this.playerEyeColor.SelectedIndexChanged += new System.EventHandler(this.PlayerEyeColorSelectedIndexChanged);
             // 
             // playerHairColor
             // 
@@ -1559,7 +1556,6 @@
             this.playerHairColor.Name = "playerHairColor";
             this.playerHairColor.Size = new System.Drawing.Size(121, 21);
             this.playerHairColor.TabIndex = 14;
-            this.playerHairColor.SelectedIndexChanged += new System.EventHandler(this.PlayerHairColorSelectedIndexChanged);
             // 
             // playerHairType
             // 
@@ -1571,7 +1567,6 @@
             this.playerHairType.Name = "playerHairType";
             this.playerHairType.Size = new System.Drawing.Size(121, 21);
             this.playerHairType.TabIndex = 13;
-            this.playerHairType.SelectedIndexChanged += new System.EventHandler(this.PlayerHairTypeSelectedIndexChanged);
             // 
             // playerFace
             // 
@@ -1583,7 +1578,6 @@
             this.playerFace.Name = "playerFace";
             this.playerFace.Size = new System.Drawing.Size(121, 21);
             this.playerFace.TabIndex = 12;
-            this.playerFace.SelectedIndexChanged += new System.EventHandler(this.PlayerFaceSelectedIndexChanged);
             // 
             // playerSavings
             // 
