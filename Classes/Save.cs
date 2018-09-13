@@ -20,7 +20,8 @@ namespace ACSE
         WildWorld,
         CityFolk,
         NewLeaf,
-        WelcomeAmiibo
+        WelcomeAmiibo,
+        ACSwitch
     }
 
     public enum SaveGeneration : byte
@@ -31,7 +32,8 @@ namespace ACSE
         GCN,
         NDS,
         Wii,
-        N3DS
+        N3DS,
+        Switch
     }
 
     public enum Region : byte
