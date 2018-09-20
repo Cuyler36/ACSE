@@ -3,7 +3,7 @@
 namespace ACSE.Saves
 {
     /// <summary>
-    /// Nintendo 3DS Save File
+    /// Nintendo Switch Save File
     /// </summary>
     class SwitchSave : SaveBase
     {

@@ -537,68 +537,70 @@ namespace ACSE
         /// <summary>
         /// Checks if the Doubutsu no Mori file is byteswapped or not
         /// </summary>
-        /// <param name="saveData">The save data</param>
+        /// <param name="save">The save data</param>
         /// <returns>Is byteswapped</returns>
-        public static bool IsByteSwapped(in byte[] saveData) => Encoding.ASCII.GetString(saveData, 4, 4) == "JFAN";
+        public static bool IsByteSwapped(this Save save) => save.ReadAsciiString(4, 4) == "JFAN";
 
-        public static SaveType GetSaveType(in byte[] saveData)
+        public static SaveType GetSaveType(this Save save)
         {
-            switch (saveData.Length) // TODO: look for a better way to differentiate the iQue version from the N64 version.
+            switch (save.WorkingSaveData.Length) // TODO: look for a better way to differentiate the iQue version from the N64 version.
             {
                 case 0x20000:
-                    return saveData[0xFFFF] == 0 ? SaveType.DoubutsuNoMori : SaveType.AnimalForest;
+                    return save.ReadUInt16(0xF980, true) == 0x0001 ? SaveType.AnimalForest : SaveType.DoubutsuNoMori;
                 case 0x72040:
                 case 0x72150:
+                {
+                    var gameId = Encoding.ASCII.GetString(save.WorkingSaveData,
+                        save.WorkingSaveData.Length == 0x72150 ? 0x110 : 0, 4);
+                    switch (gameId)
                     {
-                        var gameId = Encoding.ASCII.GetString(saveData, saveData.Length == 0x72150 ? 0x110 : 0, 4);
-                        switch (gameId)
-                        {
-                            case "GAFE":
-                            case "GAFP":
-                            case "GAFU": // GAFP is PAL, GAFU is Australian.
-                                return SaveType.AnimalCrossing;
-                            case "GAFJ":
-                                return SaveType.DoubutsuNoMoriPlus;
-                            case "GAEJ":
-                                return SaveType.DoubutsuNoMoriEPlus;
-                            case "GAEE":
-                                return SaveType.AnimalForestEPlus;
-                        }
-                        break;
+                        case "GAFE":
+                        case "GAFP":
+                        case "GAFU": // GAFP is PAL, GAFU is Australian.
+                            return SaveType.AnimalCrossing;
+                        case "GAFJ":
+                            return SaveType.DoubutsuNoMoriPlus;
+                        case "GAEJ":
+                            return SaveType.DoubutsuNoMoriEPlus;
+                        case "GAEE":
+                            return SaveType.AnimalForestEPlus;
                     }
+                    break;
+                }
                 // Nintendont RAW file length
                 case 0x200000:
+                {
+                    var gameId = save.ReadAsciiString(0x2000, 4);
+                    switch (gameId)
                     {
-                        var gameId = Encoding.ASCII.GetString(saveData, 0x2000, 4);
-                        switch (gameId)
-                        {
-                            case "GAFE":
-                            case "GAFP":
-                            case "GAFU":
-                                return SaveType.AnimalCrossing;
-                            case "GAFJ":
-                                return SaveType.DoubutsuNoMoriPlus;
-                            case "GAEJ":
-                                return SaveType.DoubutsuNoMoriEPlus;
-                            case "GAEE":
-                                return SaveType.AnimalForestEPlus;
-                        }
-                        break;
+                        case "GAFE":
+                        case "GAFP":
+                        case "GAFU":
+                            return SaveType.AnimalCrossing;
+                        case "GAFJ":
+                            return SaveType.DoubutsuNoMoriPlus;
+                        case "GAEJ":
+                            return SaveType.DoubutsuNoMoriEPlus;
+                        case "GAEE":
+                            return SaveType.AnimalForestEPlus;
                     }
+                    break;
+                }
                 default:
-                    if (Encoding.ASCII.GetString(saveData, 0x1E40, 4) == "EMDA" || saveData.Length == 0x4007A || saveData.Length == 0x401F4 || saveData.Length == 0x40000)
+                    if (save.ReadAsciiString(0x1E40, 4) == "EMDA" || save.WorkingSaveData.Length == 0x4007A ||
+                        save.WorkingSaveData.Length == 0x401F4 || save.WorkingSaveData.Length == 0x40000)
                         return SaveType.WildWorld;
-                    else switch (saveData.Length)
-                        {
-                            case 0x40F340:
-                            case 0x47A0DA:
-                                return SaveType.CityFolk;
-                            case 0x7FA00:
-                            case 0x80000:
-                                return SaveType.NewLeaf;
-                            case 0x89B00:
-                                return SaveType.WelcomeAmiibo;
-                        }
+                    else switch (save.WorkingSaveData.Length)
+                    {
+                        case 0x40F340:
+                        case 0x47A0DA:
+                            return SaveType.CityFolk;
+                        case 0x7FA00:
+                        case 0x80000:
+                            return SaveType.NewLeaf;
+                        case 0x89B00:
+                            return SaveType.WelcomeAmiibo;
+                    }
                     break;
             }
 

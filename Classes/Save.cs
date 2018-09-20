@@ -3,6 +3,7 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Text;
 using ACSE.Checksums;
 using ACSE.Utilities;
 
@@ -97,17 +98,16 @@ namespace ACSE
                 _saveReader = new BinaryReader(_saveFile);
 
                 OriginalSaveData = _saveReader.ReadBytes((int)_saveFile.Length);
-                
-                _byteswap = SaveDataManager.IsByteSwapped(OriginalSaveData);
-                if (_byteswap)
-                {
-                    OriginalSaveData = SaveDataManager.ByteSwap(OriginalSaveData);
-                }
-
                 WorkingSaveData = new byte[OriginalSaveData.Length];
                 Buffer.BlockCopy(OriginalSaveData, 0, WorkingSaveData, 0, OriginalSaveData.Length);
 
-                SaveType = SaveDataManager.GetSaveType(OriginalSaveData);
+                _byteswap = this.IsByteSwapped();
+                if (_byteswap)
+                {
+                    WorkingSaveData = SaveDataManager.ByteSwap(WorkingSaveData); // Only byteswap the working data.
+                }
+
+                SaveType = this.GetSaveType();
                 SaveGeneration = SaveDataManager.GetSaveGeneration(SaveType);
                 FullSavePath = filePath;
                 SaveName = Path.GetFileNameWithoutExtension(filePath);
@@ -140,7 +140,6 @@ namespace ACSE
             _saveWriter = new BinaryWriter(_saveFile);
             switch (SaveType)
             {
-                case SaveType.DoubutsuNoMori:
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
@@ -164,6 +163,7 @@ namespace ACSE
                         WorkingSaveData,
                         SaveDataStartOffset + SaveInfo.SaveOffsets.SaveSize);
                     break;
+                case SaveType.DoubutsuNoMori:
                 case SaveType.AnimalForest:
                     Write(SaveDataStartOffset + SaveInfo.SaveOffsets.Checksum,
                         new UInt16BEChecksum().Calculate(
@@ -431,9 +431,23 @@ namespace ACSE
             return value;
         }
 
-        public string ReadString(int offset, int length)
+        public string ReadString(int offset, int length) =>
+            new AcString(ReadByteArray(offset, length), SaveType).Trim();
+
+        public string ReadAsciiString(int offset, int length = -1)
         {
-             return new AcString(ReadByteArray(offset, length), SaveType).Trim();
+            if (length >= 0) return Encoding.ASCII.GetString(WorkingSaveData, offset, length);
+
+            var outString = "";
+            while (offset < WorkingSaveData.Length)
+            {
+                var data = WorkingSaveData[offset++];
+                if (data == 0) break;
+
+                outString += (char) data;
+            }
+
+            return outString;
         }
 
         public string[] ReadStringArray(int offset, int length, int count)

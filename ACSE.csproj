@@ -4901,6 +4901,7 @@
     <Compile Include="Classes\Saves\N64Save.cs" />
     <Compile Include="Classes\Saves\NDSSave.cs" />
     <Compile Include="Classes\Saves\SaveBase.cs" />
+    <Compile Include="Classes\Saves\SwitchSave.cs" />
     <Compile Include="Classes\Saves\WiiSave.cs" />
     <Compile Include="Classes\TrainStation.cs" />
     <Compile Include="Classes\Updater.cs" />
