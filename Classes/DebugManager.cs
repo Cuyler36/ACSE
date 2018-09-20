@@ -37,18 +37,8 @@ namespace ACSE
 
         public void CloseDebugLogWriter()
         {
-            if (_logWriter != null)
-            {
-                _logWriter.Close();
-                _logWriter.Dispose();
-            }
-
-            if (_logFile != null)
-            {
-                _logFile.Close();
-                _logFile.Dispose();
-            }
-
+            _logWriter?.Close();
+            _logFile?.Close();
             Enabled = false;
         }
 
@@ -103,6 +93,7 @@ namespace ACSE
                 DeleteLogFile(GetLogFilePath());
                 InitializeDebugLogWriter();
             }
+
             _logWriter.WriteLine(
                 $"[{level}] - ({(MainForm.SaveFile != null ? MainForm.SaveFile.SaveType.ToString().Replace("_", " ") : "No Save")}) - {DateTime.Now} => {contents}");
             _logWriter.Flush();
