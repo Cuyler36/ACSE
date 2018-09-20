@@ -4900,6 +4900,22 @@ namespace ACSE
             }
         }
 
+        private void openBackupFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(Properties.Settings.Default.BackupLocation))
+            {
+                System.Diagnostics.Process.Start(Properties.Settings.Default.BackupLocation);
+            }
+            else
+            {
+                MessageBox.Show(
+                    !string.IsNullOrWhiteSpace(Properties.Settings.Default.BackupLocation)
+                        ? $"The backup folder located at \"{Properties.Settings.Default.BackupLocation}\" couldn't be accessed!"
+                        : "The backup folder hasn't been set yet.\nPlease set it first!",
+                    "Backup Folder Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
         private void SetOrdinanceCheckBoxes()
         {
             if (SaveFile == null || SaveFile.SaveGeneration != SaveGeneration.N3DS) return;

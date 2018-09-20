@@ -268,6 +268,7 @@
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.itemIdLabel = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.TextBox();
+            this.openBackupFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -508,6 +509,7 @@
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator1,
             this.saveTownMapToolStripMenuItem,
+            this.openBackupFolderToolStripMenuItem,
             this.toolStripSeparator2,
             this.aboutToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -517,7 +519,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
             // 
@@ -527,7 +529,7 @@
             this.newLeafToolStripMenuItem,
             this.welcomeAmiiboToolStripMenuItem});
             this.openCitraSaveFileToolStripMenuItem.Name = "openCitraSaveFileToolStripMenuItem";
-            this.openCitraSaveFileToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.openCitraSaveFileToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.openCitraSaveFileToolStripMenuItem.Text = "Open Citra Save File";
             // 
             // newLeafToolStripMenuItem
@@ -612,7 +614,7 @@
             // 
             this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItemClick);
             // 
@@ -620,32 +622,32 @@
             // 
             this.saveAsToolStripMenuItem.Enabled = false;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItemClick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
             // 
             // saveTownMapToolStripMenuItem
             // 
             this.saveTownMapToolStripMenuItem.Enabled = false;
             this.saveTownMapToolStripMenuItem.Name = "saveTownMapToolStripMenuItem";
-            this.saveTownMapToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.saveTownMapToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.saveTownMapToolStripMenuItem.Text = "Save Town Map";
             this.saveTownMapToolStripMenuItem.Click += new System.EventHandler(this.SaveTownMapToolStripMenuItemClick);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(176, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(178, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
@@ -2786,6 +2788,13 @@
             this.StatusLabel.TabIndex = 16;
             this.StatusLabel.TabStop = false;
             // 
+            // openBackupFolderToolStripMenuItem
+            // 
+            this.openBackupFolderToolStripMenuItem.Name = "openBackupFolderToolStripMenuItem";
+            this.openBackupFolderToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.openBackupFolderToolStripMenuItem.Text = "Open Backup Folder";
+            this.openBackupFolderToolStripMenuItem.Click += new System.EventHandler(this.openBackupFolderToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3108,5 +3117,6 @@
         private System.Windows.Forms.ToolStripMenuItem generateToolStripMenuItem;
         private System.Windows.Forms.TextBox StatusLabel;
         private System.Windows.Forms.ToolStripMenuItem itemColorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openBackupFolderToolStripMenuItem;
     }
 }

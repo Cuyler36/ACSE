@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -7,16 +8,45 @@ namespace ACSE
 {
     public class Backup
     {
+        private readonly Save _save;
+
         public static string[] GetBackups()
         {
             var backupsDirectory = GetBackupDirectory();
             return backupsDirectory.Exists ? backupsDirectory.GetFiles().Select(x => x.FullName).ToArray() : new string[0];
         }
 
-        internal static string GetBackupLocation()
-            => MainForm.AssemblyLocation + Path.DirectorySeparatorChar + "ACSE Backups";
+        private static string GetBackupLocation()
+        {
+            // TODO: Should we check if the path is on an invalid drive?
+            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.BackupLocation))
+            {
+                Properties.Settings.Default.BackupLocation =
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ACSE",
+                        "Backups");
+                Properties.Settings.Default.Save();
+            }
 
-        internal static DirectoryInfo GetBackupDirectory()
+            // Attempt to create the full path to the backup directory. Reset to default path if failed.
+            // TODO: Should this be switched to throw an exception and disable backups? User would need to be notified.
+            try
+            {
+                Directory.CreateDirectory(Properties.Settings.Default.BackupLocation);
+            }
+            catch
+            {
+                MainForm.DebugManager.WriteLine(
+                    $"The requested backup path {Properties.Settings.Default.BackupLocation} couldn't be accessed!\n" +
+                    "The backup folder was reset to the default in ApplicationData/ACSE/Backups/!");
+                Properties.Settings.Default.BackupLocation = "";
+                Properties.Settings.Default.Save();
+                return GetBackupLocation();
+            }
+
+            return Properties.Settings.Default.BackupLocation;
+        }
+
+        private static DirectoryInfo GetBackupDirectory()
             => Directory.CreateDirectory(GetBackupLocation());
 
         private static string GetSaveHash(in byte[] data)
@@ -53,28 +83,40 @@ namespace ACSE
             return (saveFileName, File.Exists(saveFileName));
         }
 
-        public Backup(Save saveFile)
+        public bool CreateBackup()
         {
+            // TODO: Do we want to store the date-time in the backup name?
             var backupsDirectory = GetBackupDirectory();
-            if (!backupsDirectory.Exists) return;
-            var backupLocation = GetBackupFileName(saveFile);
+            if (!backupsDirectory.Exists) return false;
+            var backupLocation = GetBackupFileName(_save);
             try
             {
-                var (saveLocation, fileExists) = GetBackupFileName(saveFile);
-                if (fileExists) return;
+                var (saveLocation, fileExists) = GetBackupFileName(_save);
+                if (fileExists) return false;
 
                 using (var backupFile = File.Create(saveLocation))
                 {
-                    backupFile.Write(saveFile.SaveData, 0, saveFile.SaveData.Length);
+                    backupFile.Write(_save.SaveData, 0, _save.SaveData.Length);
                     MainForm.DebugManager.WriteLine(
-                        $"Save File {saveFile.SaveName} was backuped to {backupLocation}");
+                        $"Save File {_save.SaveName} was backuped to {backupLocation}");
                 }
             }
             catch
             {
                 MainForm.DebugManager.WriteLine(
-                    $"Failed to create backup for save {saveFile.SaveName} at {backupLocation}", DebugLevel.Error);
+                    $"Failed to create backup for save {_save.SaveName} at {backupLocation}", DebugLevel.Error);
+                return false;
             }
+
+            return true;
+        }
+
+        public Backup(Save saveFile)
+        {
+            _save = saveFile;
+
+            // Attempt to create an initial backup
+            CreateBackup();
         }
     }
 }
