@@ -69,11 +69,7 @@ namespace ACSE
             }
         }
 
-        private bool CheckLogSizeOk()
-        {
-            var info = new FileInfo(GetLogFilePath());
-            return info.Length <= MaxLogSize;
-        }
+        private static bool CheckLogSizeOk() => new FileInfo(GetLogFilePath()).Length <= MaxLogSize;
 
         public void DeleteLogFile(string filePath)
         {
@@ -94,10 +90,9 @@ namespace ACSE
             }
         }
 
-        public string GetLogFilePath()
-        {
-            return MainForm.AssemblyLocation + $"\\{LogFileName}.txt";
-        }
+        public static string GetLogFilePath() =>
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ACSE",
+                $"{LogFileName}.txt");
 
         public void WriteLine(string contents, DebugLevel level = DebugLevel.Info)
         {
