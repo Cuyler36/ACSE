@@ -472,11 +472,11 @@ namespace ACSE
             switch (saveType)
             {
                 case SaveType.AnimalCrossing: // NOTE: N64 & GameCube titles don't include Basement in the size
-                    return (MainForm.SaveFile.WorkingSaveData[offset + 0x2A] >> 5) & 7;
+                    return (MainForm.SaveFile.SaveData[offset + 0x2A] >> 5) & 7;
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                    return (MainForm.SaveFile.WorkingSaveData[offset + 0x26] >> 5) & 7;
+                    return (MainForm.SaveFile.SaveData[offset + 0x26] >> 5) & 7;
                 case SaveType.WildWorld:
                     return MainForm.SaveFile.ReadByte(MainForm.SaveFile.SaveDataStartOffset + 0xFAF8) & 7; // Not sure about this
                 default:
@@ -548,7 +548,7 @@ namespace ACSE
             {
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                    return (MainForm.SaveFile.WorkingSaveData[offset + 0x26] >> 2) & 7;
+                    return (MainForm.SaveFile.SaveData[offset + 0x26] >> 2) & 7;
                 default:
                     return 0;
             }
@@ -564,10 +564,10 @@ namespace ACSE
             switch (saveType)
             {
                 case SaveType.AnimalCrossing:
-                    return (MainForm.SaveFile.WorkingSaveData[offset + 0x24] & 0x10) == 0x10;
+                    return (MainForm.SaveFile.SaveData[offset + 0x24] & 0x10) == 0x10;
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                    return (MainForm.SaveFile.WorkingSaveData[offset + 0x20] & 0x10) == 0x10;
+                    return (MainForm.SaveFile.SaveData[offset + 0x20] & 0x10) == 0x10;
                 default:
                     return false;
             }

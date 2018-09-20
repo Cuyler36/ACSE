@@ -62,7 +62,7 @@ namespace ACSE.Utilities
             if (MainForm.SaveFile == null || MainForm.SaveFile.SaveGeneration != SaveGeneration.N3DS) return;
             using (var int32Stream = File.CreateText(MainForm.AssemblyLocation + "\\" +
                                                                (MainForm.SaveFile.SaveType == SaveType.WelcomeAmiibo ? "WA_" : "") + "NL_Int32_Database.txt"))
-                for (var i = 0; i < MainForm.SaveFile.WorkingSaveData.Length - 4; i += 4)
+                for (var i = 0; i < MainForm.SaveFile.SaveData.Length - 4; i += 4)
                 {
                     var possibleNlInt32 = new NewLeafInt32(MainForm.SaveFile.ReadUInt32(i), MainForm.SaveFile.ReadUInt32(i + 4));
                     if (possibleNlInt32.Valid)

@@ -543,15 +543,15 @@ namespace ACSE
 
         public static SaveType GetSaveType(this Save save)
         {
-            switch (save.WorkingSaveData.Length) // TODO: look for a better way to differentiate the iQue version from the N64 version.
+            switch (save.SaveData.Length) // TODO: look for a better way to differentiate the iQue version from the N64 version.
             {
                 case 0x20000:
                     return save.ReadUInt16(0xF980, true) == 0x0001 ? SaveType.AnimalForest : SaveType.DoubutsuNoMori;
                 case 0x72040:
                 case 0x72150:
                 {
-                    var gameId = Encoding.ASCII.GetString(save.WorkingSaveData,
-                        save.WorkingSaveData.Length == 0x72150 ? 0x110 : 0, 4);
+                    var gameId = Encoding.ASCII.GetString(save.SaveData,
+                        save.SaveData.Length == 0x72150 ? 0x110 : 0, 4);
                     switch (gameId)
                     {
                         case "GAFE":
@@ -587,10 +587,10 @@ namespace ACSE
                     break;
                 }
                 default:
-                    if (save.ReadAsciiString(0x1E40, 4) == "EMDA" || save.WorkingSaveData.Length == 0x4007A ||
-                        save.WorkingSaveData.Length == 0x401F4 || save.WorkingSaveData.Length == 0x40000)
+                    if (save.ReadAsciiString(0x1E40, 4) == "EMDA" || save.SaveData.Length == 0x4007A ||
+                        save.SaveData.Length == 0x401F4 || save.SaveData.Length == 0x40000)
                         return SaveType.WildWorld;
-                    else switch (save.WorkingSaveData.Length)
+                    else switch (save.SaveData.Length)
                     {
                         case 0x40F340:
                         case 0x47A0DA:

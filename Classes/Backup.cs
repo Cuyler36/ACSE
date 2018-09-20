@@ -37,7 +37,7 @@ namespace ACSE
             {
                 using (var backupFile = File.Create(backupLocation))
                 {
-                    backupFile.Write(saveFile.OriginalSaveData, 0, saveFile.OriginalSaveData.Length);
+                    backupFile.Write(saveFile.SaveData, 0, saveFile.SaveData.Length);
                     MainForm.DebugManager.WriteLine($"Save File {saveFile.SaveName} was backuped to {backupLocation}");
                 }
             }
