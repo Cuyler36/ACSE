@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ACSE
 {
@@ -17,15 +19,38 @@ namespace ACSE
         internal static DirectoryInfo GetBackupDirectory()
             => Directory.CreateDirectory(GetBackupLocation());
 
-        internal string GetBackupFileName(Save saveFile)
+        private static string GetSaveHash(in byte[] data)
         {
-            var saveFileName = saveFile.SaveName + "_Backup_";
-            var backupsLocation = GetBackupLocation();
-            var backupNumber = 0;
-            while (File.Exists(backupsLocation + Path.DirectorySeparatorChar + saveFileName + backupNumber + saveFile.SaveExtension))
-                backupNumber++;
+            using (var hash = SHA256.Create())
+            {
+                var hashData = hash.ComputeHash(data);
 
-            return backupsLocation + Path.DirectorySeparatorChar + saveFileName + backupNumber + saveFile.SaveExtension;
+                var stringBuilder = new StringBuilder();
+                foreach (var b in hashData)
+                {
+                    stringBuilder.Append(b.ToString("x2"));
+                }
+
+                return stringBuilder.ToString();
+            }
+        }
+
+        private static string GetHashFromFileName(string name)
+        {
+            var hashStartIndex = name?.LastIndexOf("_hash_");
+            if (hashStartIndex.HasValue && hashStartIndex.Value > -1)
+            {
+                return name.Substring(hashStartIndex.Value + 6);
+            }
+
+            return "";
+        }
+
+        internal static (string, bool) GetBackupFileName(Save saveFile)
+        {
+            var saveFileName = GetBackupLocation() + Path.DirectorySeparatorChar + saveFile.SaveName + "_Backup" +
+                               $"_hash_{GetSaveHash(saveFile.SaveData)}" + saveFile.SaveExtension;
+            return (saveFileName, File.Exists(saveFileName));
         }
 
         public Backup(Save saveFile)
@@ -35,10 +60,14 @@ namespace ACSE
             var backupLocation = GetBackupFileName(saveFile);
             try
             {
-                using (var backupFile = File.Create(backupLocation))
+                var (saveLocation, fileExists) = GetBackupFileName(saveFile);
+                if (fileExists) return;
+
+                using (var backupFile = File.Create(saveLocation))
                 {
                     backupFile.Write(saveFile.SaveData, 0, saveFile.SaveData.Length);
-                    MainForm.DebugManager.WriteLine($"Save File {saveFile.SaveName} was backuped to {backupLocation}");
+                    MainForm.DebugManager.WriteLine(
+                        $"Save File {saveFile.SaveName} was backuped to {backupLocation}");
                 }
             }
             catch
