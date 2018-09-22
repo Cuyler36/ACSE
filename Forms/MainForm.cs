@@ -1370,7 +1370,7 @@ namespace ACSE
                 if (_players[i].Exists)
                 {
                     _players[i].Data.Name = _players[i].Data.Name?.Replace("\0", "");
-                    SetPlayerSelectionTabText(_selectedPlayer);
+                    SetPlayerSelectionTabText(_players[i]);
                     if (playerEditorSelect.TabPages.IndexOf(_playerTabs[i]) >= 0) continue;
 
                     if (i >= playerEditorSelect.TabCount)
@@ -4251,7 +4251,7 @@ namespace ACSE
             }
             else
             {
-                _playerTabs[player.Index].Text = playerName.Text + $" [Player {player.Index + 1}]";
+                _playerTabs[player.Index].Text = player.Data.Name + $" [Player {player.Index + 1}]";
             }
         }
 
