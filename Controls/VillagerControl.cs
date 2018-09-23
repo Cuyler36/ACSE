@@ -74,7 +74,7 @@ namespace ACSE.Controls
                 AutoSize = false,
                 Size = new Size(45, 32),
                 TextAlign = ContentAlignment.MiddleCenter,
-                Text = index == 16 ? "Islander" : (index + 1).ToString()
+                Text = index == 15 ? "Islander" : (index + 1).ToString()
             };
 
             var margin = CalculateControlVerticalMargin(_indexLabel);
@@ -260,13 +260,17 @@ namespace ACSE.Controls
                     }
                     else
                     {
-                        var houseCoordinatesInfo = Utility.Find_Villager_House(_villager.Data.VillagerId);
-                        _villager.Data.HouseCoordinates = houseCoordinatesInfo.Item1;
-                        if (!houseCoordinatesInfo.Item2)
+                        // TODO: Update islander house location. In e+, update all four islander house locations.
+                        if (_saveFile.SaveGeneration != SaveGeneration.GCN || _villager.Index < 15)
                         {
-                            MessageBox.Show(
-                                $"Couldn't find a valid house for {_villager.Name}!\nThey will have a random sign chosen as their house location if you don't place one.",
-                                "Villager House Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            var houseCoordinatesInfo = Utility.Find_Villager_House(_villager.Data.VillagerId);
+                            _villager.Data.HouseCoordinates = houseCoordinatesInfo.Item1;
+                            if (!houseCoordinatesInfo.Item2)
+                            {
+                                MessageBox.Show(
+                                    $"Couldn't find a valid house for {_villager.Name}!\nThey will have a random sign chosen as their house location if you don't place one.",
+                                    "Villager House Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                     }
                     break;

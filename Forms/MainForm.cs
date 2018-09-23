@@ -3857,8 +3857,13 @@ namespace ACSE
                         case SaveGeneration.N64:
                         case SaveGeneration.GCN:
                         case SaveGeneration.iQue:
-                            var houseCoordinatesInfo = Utility.Find_Villager_House(villager.Data.VillagerId);
-                            villager.Data.HouseCoordinates = houseCoordinatesInfo.Item1;
+                            // TODO: Update islander house location. In e+, update all four islander house locations.
+                            if (SaveFile.SaveGeneration != SaveGeneration.GCN || villager.Index < 15)
+                            {
+                                var houseCoordinatesInfo = Utility.Find_Villager_House(villager.Data.VillagerId);
+                                villager.Data.HouseCoordinates = houseCoordinatesInfo.Item1;
+                            }
+
                             break;
                         case SaveGeneration.NDS:
                             var (houseCoordinates, found) = Utility.FindVillagerHouseWildWorld(villager.Index);

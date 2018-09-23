@@ -267,10 +267,10 @@ namespace ACSE
                     _saveData.Write(Offset + Offsets.NameId, Index == 15 ? (byte)0xFF : (byte)Data.VillagerId);
                     break;
                 case SaveType.DoubutsuNoMoriEPlus: // e+ doesn't set this byte, as they changed the SetNameID function
-                    _saveData.Write(Offset + 0xC, AcString.GetBytes(Name, 6), false, 6);
+                    _saveData.Write(Offset + 0xC, AcString.GetBytes(Name, 6), false);
                     break;
                 case SaveType.AnimalForestEPlus:
-                    _saveData.Write(Offset + 0xC, AcString.GetBytes(Name, 8), false, 8);
+                    _saveData.Write(Offset + 0xC, AcString.GetBytes(Name, 8), false);
                     break;
                 default:
                     _saveData.Write(Offset + Offsets.NameId, (byte)Data.VillagerId);

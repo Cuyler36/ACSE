@@ -300,47 +300,99 @@ namespace ACSE
             _saveFile?.Dispose();
         }
 
-        public void Write(int offset, dynamic data, bool reversed = false, int stringLength = 0)
+        public void Write(int offset, byte value, bool includeStartOffset = false)
         {
-            if (data == null) return;
-            ChangesMade = true;
-            Type dataType = data.GetType();
-            MainForm.DebugManager.WriteLine(string.Format("Writing Data {2} of type {0} to offset 0x{1:X}", dataType.Name, offset, //recasting a value shows it as original type?
-                dataType.IsArray ? "" : " with value 0x" + (data.ToString("X"))), DebugLevel.Debug);
-            if (!dataType.IsArray)
+            if (includeStartOffset) offset += SaveDataStartOffset;
+            SaveData[offset] = value;
+        }
+
+        public void Write(int offset, sbyte value, bool includeStartOffset = false) =>
+            Write(offset, (byte) value, includeStartOffset);
+
+        public void Write(int offset, byte[] value, bool includeStartOffset = false)
+        {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+            Buffer.BlockCopy(value, 0, SaveData, offset, value.Length);
+        }
+
+        public void Write(int offset, sbyte[] value, bool includeStartOffset = false) =>
+            Write(offset, (byte[])(Array) value, includeStartOffset);
+
+        public void Write(int offset, ushort value, bool? reversed = false, bool includeStartOffset = false)
+        {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+            if (reversed == null && IsBigEndian || reversed != null && reversed.Value) value = value.Reverse();
+
+            Write(offset, BitConverter.GetBytes(value));
+        }
+
+        public void Write(int offset, short value, bool? reversed = false, bool includeStartOffset = false) =>
+            Write(offset, (ushort) value, reversed, includeStartOffset);
+
+        public void Write(int offset, uint value, bool? reversed = false, bool includeStartOffset = false)
+        {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+            if (reversed == null && IsBigEndian || reversed != null && reversed.Value) value = value.Reverse();
+
+            Write(offset, BitConverter.GetBytes(value));
+        }
+
+        public void Write(int offset, int value, bool? reversed = false, bool includeStartOffset = false) =>
+            Write(offset, (uint) value, reversed, includeStartOffset);
+
+        public void Write(int offset, ulong value, bool? reversed = false, bool includeStartOffset = false)
+        {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+            if (reversed == null && IsBigEndian || reversed != null && reversed.Value) value = value.Reverse();
+
+            Write(offset, BitConverter.GetBytes(value));
+        }
+
+        public void Write(int offset, long value, bool? reversed = false, bool includeStartOffset = false) =>
+            Write(offset, (ulong)value, reversed, includeStartOffset);
+
+        public void Write(int offset, ushort[] value, bool? reversed = false, bool includeStartOffset = false)
+        {
+            foreach (var data in value)
             {
-                if (dataType == typeof(byte))
-                    SaveData[offset] = (byte)data;
-                else if (dataType == typeof(string))
-                {
-                    var stringByteBuff = AcString.GetBytes((string)data, stringLength);
-                    Buffer.BlockCopy(stringByteBuff, 0, SaveData, offset, stringByteBuff.Length);
-                }
-                else
-                {
-                    byte[] byteArray = BitConverter.GetBytes(data);
-                    if (reversed)
-                        Array.Reverse(byteArray);
-                    Buffer.BlockCopy(byteArray, 0, SaveData, offset, byteArray.Length);
-                }
+                Write(offset, data, reversed, includeStartOffset);
+                offset += 2;
             }
-            else
+        }
+
+        public void Write(int offset, short[] value, bool? reversed = false, bool includeStartOffset = false) =>
+            Write(offset, (ushort[]) (Array) value, reversed, includeStartOffset);
+
+        public void Write(int offset, uint[] value, bool? reversed = false, bool includeStartOffset = false)
+        {
+            foreach (var data in value)
             {
-                if (dataType == typeof(byte[]))
-                    for (var i = 0; i < data.Length; i++)
-                        SaveData[offset + i] = data[i];
-                else
-                {
-                    int dataSize = Marshal.SizeOf(data[0]);
-                    for (var i = 0; i < data.Length; i++)
-                    {
-                        byte[] byteArray = BitConverter.GetBytes(data[i]);
-                        if (reversed)
-                            Array.Reverse(byteArray);
-                        byteArray.CopyTo(SaveData, offset + i * dataSize);
-                    }
-                }
+                Write(offset, data, reversed, includeStartOffset);
+                offset += 4;
             }
+        }
+
+        public void Write(int offset, int[] value, bool? reversed = false, bool includeStartOffset = false) =>
+            Write(offset, (uint[])(Array)value, reversed, includeStartOffset);
+
+        public void Write(int offset, ulong[] value, bool? reversed = false, bool includeStartOffset = false)
+        {
+            foreach (var data in value)
+            {
+                Write(offset, data, reversed, includeStartOffset);
+                offset += 8;
+            }
+        }
+
+        public void Write(int offset, long[] value, bool? reversed = false, bool includeStartOffset = false) =>
+            Write(offset, (ulong[])(Array)value, reversed, includeStartOffset);
+
+        public void Write(int offset, string value, int maxLength = 0, bool includeStartOffset = false)
+        {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+
+            var stringByteBuff = AcString.GetBytes(value, maxLength);
+            Buffer.BlockCopy(stringByteBuff, 0, SaveData, offset, stringByteBuff.Length);
         }
 
         public void FindAndReplaceByteArray(in byte[] oldarr, in byte[] newarr, int end = -1, bool reverse = false)
@@ -361,13 +413,17 @@ namespace ACSE
             }
         }
 
-        public byte ReadByte(int offset)
+        public byte ReadByte(int offset, bool includeStartOffset = false)
         {
+            if (includeStartOffset) offset += SaveDataStartOffset;
             return SaveData[offset];
         }
 
-        public byte[] ReadByteArray(int offset, int count, bool reversed = false)
+        public byte[] ReadByteArray(int offset, int count, bool reversed = false,
+            bool includeStartOffset = false)
         {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+
             var data = new byte[count];
             if (reversed)
             {
@@ -386,40 +442,52 @@ namespace ACSE
             return data;
         }
 
-        public ushort ReadUInt16(int offset, bool reversed = false)
+        public ushort ReadUInt16(int offset, bool reversed = false, bool includeStartOffset = false)
         {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+
             var value = BitConverter.ToUInt16(SaveData, offset);
             if (reversed)
                 value = value.Reverse();
             return value;
         }
 
-        public ushort[] ReadUInt16Array(int offset, int count, bool reversed = false)
+        public ushort[] ReadUInt16Array(int offset, int count, bool reversed = false,
+            bool includeStartOffset = false)
         {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+
             var returnedValues = new ushort[count];
             for (var i = 0; i < count; i++)
                 returnedValues[i] = ReadUInt16(offset + i * 2, reversed);
             return returnedValues;
         }
 
-        public uint ReadUInt32(int offset, bool reversed = false)
+        public uint ReadUInt32(int offset, bool reversed = false, bool includeStartOffset = false)
         {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+
             var value = BitConverter.ToUInt32(SaveData, offset);
             if (reversed)
                 value = value.Reverse();
             return value;
         }
 
-        public uint[] ReadUInt32Array(int offset, int count, bool reversed = false)
+        public uint[] ReadUInt32Array(int offset, int count, bool reversed = false,
+            bool includeStartOffset = false)
         {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+
             var returnedValues = new uint[count];
             for (var i = 0; i < count; i++)
                 returnedValues[i] = ReadUInt32(offset + i * 4, reversed);
             return returnedValues;
         }
 
-        public ulong ReadUInt64(int offset, bool reversed = false)
+        public ulong ReadUInt64(int offset, bool reversed = false, bool includeStartOffset = false)
         {
+            if (includeStartOffset) offset += SaveDataStartOffset;
+
             var value = BitConverter.ToUInt64(SaveData, offset);
             if (reversed)
                 value = value.Reverse();
@@ -429,8 +497,9 @@ namespace ACSE
         public string ReadString(int offset, int length) =>
             new AcString(ReadByteArray(offset, length), SaveType).Trim();
 
-        public string ReadAsciiString(int offset, int length = -1)
+        public string ReadAsciiString(int offset, int length = -1, bool includeStartOffset = false)
         {
+            if (includeStartOffset) offset += SaveDataStartOffset;
             if (length >= 0) return Encoding.ASCII.GetString(SaveData, offset, length);
 
             var outString = "";
@@ -445,16 +514,19 @@ namespace ACSE
             return outString;
         }
 
-        public string[] ReadStringArray(int offset, int length, int count)
+        public string[] ReadStringArray(int offset, int length, int count, bool includeStartOffset = false)
         {
+            if (includeStartOffset) offset += SaveDataStartOffset;
             var stringArray = new string[count];
             for (var i = 0; i < count; i++)
                 stringArray[i] = ReadString(offset + i * length, length);
             return stringArray;
         }
 
-        public string[] ReadStringArrayWithVariedLengths(int offset, int count, byte endCharByte, int maxLength = 10)
+        public string[] ReadStringArrayWithVariedLengths(int offset, int count, byte endCharByte, int maxLength = 10,
+            bool includeStartOffset = false)
         {
+            if (includeStartOffset) offset += SaveDataStartOffset;
             var stringArray = new string[count];
             var lastOffset = 0;
             for (var i = 0; i < count; i++)
