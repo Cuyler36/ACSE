@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.IO;
 
 namespace ACSE
 {
@@ -22,12 +23,14 @@ namespace ACSE
             debugLevelComboBox.SelectedIndex = (int)Properties.Settings.Default.DebugLevel;
             scanForInt32Checkbox.Checked = Properties.Settings.Default.OutputInt32s;
             BackupCheckBox.Checked = Properties.Settings.Default.BackupFiles;
+            backupFolderTextBox.Text = Properties.Settings.Default.BackupLocation;
             townMapSizeTrackBar.Value = Math.Max(0, (Properties.Settings.Default.TownMapSize - 128) / 16);
             acreMapSizeTrackBar.Value = Math.Max(0, (Properties.Settings.Default.AcreMapSize - 64) / 8);
 
             imageSizeModeComboBox.SelectedIndexChanged += (o, e) => ImageResizeMode_Changed();
             debugLevelComboBox.SelectedIndexChanged += (o, e) => DebugLevel_Changed();
             BackupCheckBox.CheckedChanged += BackupCheckBox_CheckedChanged;
+            backupFolderTextBox.TextChanged += (_, __) => SetBackupLocation(backupFolderTextBox.Text);
             _loaded = true;
         }
 
@@ -87,6 +90,33 @@ namespace ACSE
         private void BackupCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.BackupFiles = BackupCheckBox.Checked;
+        }
+
+        private void dataFolderBrowseButton_Click(object sender, EventArgs e)
+        {
+            using (var folderDialog =
+                new FolderBrowserDialog {SelectedPath = Properties.Settings.Default.BackupLocation})
+            {
+                if (folderDialog.ShowDialog() != DialogResult.OK) return;
+                SetBackupLocation(folderDialog.SelectedPath);
+            }
+        }
+
+        private void SetBackupLocation(string location)
+        {
+            if (!Directory.Exists(location) || location == Properties.Settings.Default.BackupLocation)
+            {
+                backupFolderTextBox.Text = Properties.Settings.Default.BackupLocation;
+                MessageBox.Show(
+                    $"The folder at {location} doesn't appear to exist, or is already the current backup folder!",
+                    "Backup Folder Change Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                backupFolderTextBox.Text = location;
+                Properties.Settings.Default.BackupLocation = location;
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }

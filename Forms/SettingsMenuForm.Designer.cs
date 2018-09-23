@@ -39,6 +39,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.acreMapSizeTrackBar = new System.Windows.Forms.TrackBar();
             this.BackupCheckBox = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.backupFolderTextBox = new System.Windows.Forms.TextBox();
+            this.dataFolderBrowseButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.townMapSizeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.acreMapSizeTrackBar)).BeginInit();
             this.SuspendLayout();
@@ -62,9 +65,9 @@
             // 
             // doneButton
             // 
-            this.doneButton.Location = new System.Drawing.Point(269, 134);
+            this.doneButton.Location = new System.Drawing.Point(326, 164);
             this.doneButton.Name = "doneButton";
-            this.doneButton.Size = new System.Drawing.Size(75, 23);
+            this.doneButton.Size = new System.Drawing.Size(75, 22);
             this.doneButton.TabIndex = 2;
             this.doneButton.Text = "Done";
             this.doneButton.UseVisualStyleBackColor = true;
@@ -96,7 +99,7 @@
             // 
             this.scanForInt32Checkbox.AutoSize = true;
             this.scanForInt32Checkbox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.scanForInt32Checkbox.Location = new System.Drawing.Point(8, 139);
+            this.scanForInt32Checkbox.Location = new System.Drawing.Point(10, 168);
             this.scanForInt32Checkbox.Name = "scanForInt32Checkbox";
             this.scanForInt32Checkbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.scanForInt32Checkbox.Size = new System.Drawing.Size(190, 17);
@@ -161,11 +164,40 @@
             this.BackupCheckBox.Text = ":Create Backups";
             this.BackupCheckBox.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(40, 141);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Backup Folder:";
+            // 
+            // backupFolderTextBox
+            // 
+            this.backupFolderTextBox.Location = new System.Drawing.Point(125, 137);
+            this.backupFolderTextBox.Name = "backupFolderTextBox";
+            this.backupFolderTextBox.Size = new System.Drawing.Size(195, 20);
+            this.backupFolderTextBox.TabIndex = 14;
+            // 
+            // dataFolderBrowseButton
+            // 
+            this.dataFolderBrowseButton.Location = new System.Drawing.Point(326, 136);
+            this.dataFolderBrowseButton.Name = "dataFolderBrowseButton";
+            this.dataFolderBrowseButton.Size = new System.Drawing.Size(75, 22);
+            this.dataFolderBrowseButton.TabIndex = 15;
+            this.dataFolderBrowseButton.Text = "Browse";
+            this.dataFolderBrowseButton.UseVisualStyleBackColor = true;
+            this.dataFolderBrowseButton.Click += new System.EventHandler(this.dataFolderBrowseButton_Click);
+            // 
             // SettingsMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(358, 170);
+            this.ClientSize = new System.Drawing.Size(413, 197);
+            this.Controls.Add(this.dataFolderBrowseButton);
+            this.Controls.Add(this.backupFolderTextBox);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.BackupCheckBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.acreMapSizeTrackBar);
@@ -200,5 +232,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TrackBar acreMapSizeTrackBar;
         private System.Windows.Forms.CheckBox BackupCheckBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox backupFolderTextBox;
+        private System.Windows.Forms.Button dataFolderBrowseButton;
     }
 }
