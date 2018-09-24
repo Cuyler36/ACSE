@@ -46,6 +46,7 @@ namespace ACSE.Utilities
                 case SaveType.AnimalForestEPlus:
                 case SaveType.AnimalCrossing:
                 case SaveType.AnimalForest:
+                case SaveType.CityFolk: // TODO: Determine if cases 4 and 8 are correct.
                     switch (dateData.Length)
                     {
                         case 2:
@@ -176,6 +177,7 @@ namespace ACSE.Utilities
             {
                 case SaveGeneration.N64:
                 case SaveGeneration.GCN:
+                case SaveGeneration.Wii:
                 case SaveGeneration.N3DS:
                     return new[] { (byte)Month, (byte)Day };
 

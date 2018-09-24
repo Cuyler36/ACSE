@@ -446,6 +446,8 @@ namespace ACSE
             Pockets = 0x7F42,
             PocketsCount = 15,
             NookPoints = 0x7FC0, //7FC4 gets written to if 7FC0 is greater
+            Birthday = 0x8406,
+            BirthdaySize = 2,
             FaceType = 0x840A,
             HairType = 0x840B,
             HairColor = 0x840C,
@@ -465,7 +467,6 @@ namespace ACSE
             Encyclopedia = -1, //Research
             FriendCode = -1,
             Bed = -1,
-            Birthday = -1, //Research
             LastPlayDate = -1, //Research
             Emotions = -1, //Research
             Catalog = -1,

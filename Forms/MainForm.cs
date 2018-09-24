@@ -380,11 +380,14 @@ namespace ACSE
             StatusLabel.Text = text;
         }
 
-        private void Birthday_Month_SelectedIndexChanged()
+        private void UpdateBirthdayDays(int month, Player newPlayer = null)
         {
-            if (_lastMonth != birthdayMonth.SelectedIndex)
+            var currentSelectedIndex =
+                newPlayer != null ? (int)newPlayer.Data.Birthday.Day : birthdayDay.SelectedIndex;
+
+            if (_lastMonth != month)
             {
-                var currentSelectedIndex = birthdayDay.SelectedIndex;
+
                 birthdayDay.Items.Clear();
                 birthdayDay.Items.Add("Not Set");
                 if (birthdayMonth.SelectedIndex > 1 && birthdayMonth.SelectedIndex < 13)
@@ -394,9 +397,15 @@ namespace ACSE
                         birthdayDay.Items.Add(i.ToString());
                     }
                 }
-                birthdayDay.SelectedIndex = currentSelectedIndex >= birthdayDay.Items.Count ? 0 : currentSelectedIndex;
-                _lastMonth = birthdayMonth.SelectedIndex;
             }
+
+            birthdayDay.SelectedIndex = currentSelectedIndex >= birthdayDay.Items.Count ? 0 : currentSelectedIndex;
+            _lastMonth = birthdayMonth.SelectedIndex;
+        }
+
+        private void Birthday_Month_SelectedIndexChanged(Player newPlayer = null)
+        {
+            UpdateBirthdayDays(birthdayMonth.SelectedIndex, newPlayer);
 
             if (_loading || _selectedPlayer?.Data.Birthday == null) return;
             if (birthdayMonth.SelectedIndex < 1 || birthdayMonth.SelectedIndex > 12)
@@ -405,7 +414,9 @@ namespace ACSE
             }
             else
             {
-                _selectedPlayer.Data.Birthday.Month = (uint)birthdayMonth.SelectedIndex;
+                _selectedPlayer.Data.Birthday.Month = SaveFile.SaveGeneration == SaveGeneration.Wii
+                    ? (uint) (birthdayMonth.SelectedIndex - 1) // For some reason in City Folk the month doesn't go by 1-12. It's 0-11.
+                    : (uint) birthdayMonth.SelectedIndex;
             }
         }
 
@@ -1627,6 +1638,11 @@ namespace ACSE
         private void ReloadPlayer(Player player)
         {
             //TODO: Hook up face swap on gender change for New Leaf
+
+            // Hack: Set _loading to true to stop data from changing
+            var wasLoading = _loading;
+            _loading = true;
+
             if (SaveFile.SaveGeneration != SaveGeneration.N3DS)
             {
                 playerWallet.Text = player.Data.Bells.ToString();
@@ -1641,15 +1657,31 @@ namespace ACSE
             //Birthday
             if (player.Data.Birthday != null)
             {
-                if (player.Data.Birthday.Month < 1 || player.Data.Birthday.Month > 12)
+                switch (SaveFile.SaveGeneration)
                 {
-                    birthdayMonth.SelectedIndex = 0;
+                    case SaveGeneration.Wii:
+                        if (player.Data.Birthday.Month > 11)
+                        {
+                            birthdayMonth.SelectedIndex = 0;
+                        }
+                        else
+                        {
+                            birthdayMonth.SelectedIndex = (int)player.Data.Birthday.Month + 1;
+                        }
+
+                        break;
+                    default:
+                        if (player.Data.Birthday.Month < 1 || player.Data.Birthday.Month > 12)
+                        {
+                            birthdayMonth.SelectedIndex = 0;
+                        }
+                        else
+                        {
+                            birthdayMonth.SelectedIndex = (int)player.Data.Birthday.Month;
+                        }
+
+                        break;
                 }
-                else
-                {
-                    birthdayMonth.SelectedIndex = (int)player.Data.Birthday.Month;
-                }
-                Birthday_Month_SelectedIndexChanged(); // Update days
 
                 try
                 {
@@ -1775,6 +1807,8 @@ namespace ACSE
             {
                 _islandBoxEditor.Items = player.Data.IslandBox;
             }
+
+            _loading = wasLoading;
 
             // Refresh Badges (New Leaf)
             if (SaveFile.SaveGeneration != SaveGeneration.N3DS) return;

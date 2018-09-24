@@ -337,7 +337,9 @@ namespace ACSE
                                 _saveData.Write(dataOffset + 4, encryptedInt.Int2);
                             }
                         }
-                        else if (fieldType == typeof(AcDate) && (_saveData.SaveGeneration == SaveGeneration.GCN || _saveData.SaveGeneration == SaveGeneration.NDS))
+                        else if (fieldType == typeof(AcDate) && (_saveData.SaveGeneration == SaveGeneration.GCN ||
+                                                                 _saveData.SaveGeneration == SaveGeneration.NDS ||
+                                                                 _saveData.SaveGeneration == SaveGeneration.Wii))
                         {
                             if (field.Name.Equals("Birthday"))
                             {
