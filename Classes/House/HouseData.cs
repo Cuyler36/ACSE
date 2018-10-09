@@ -239,6 +239,7 @@ namespace ACSE
             // 0x20 = Basement
             HouseUpgradeSize = 0x26, // Island is included in house upgrade size (size of 4)
             RoofColor = 0x28, // 0x29 = Roof color on next house upgrade?
+            // DoorPattern = 0x2B,
             RoomStart = 0x30,
             RoomCount = 3,
             RoomSize = 0x8A8,
