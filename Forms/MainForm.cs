@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,7 +19,7 @@ namespace ACSE
     public sealed partial class MainForm : Form
     {
         #region Variables
-        public static readonly string AssemblyLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+        public static readonly string AssemblyLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         public static DebugManager DebugManager = new DebugManager();
         public static Save SaveFile;
         public static SaveInfo CurrentSaveInfo;
@@ -60,7 +61,7 @@ namespace ACSE
         private string[] _personalityDatabase;
         private string[] _villagerNames;
         private byte[] _grassWear;
-        private AboutBox1 _aboutBox = new AboutBox1();
+        private AboutBox _aboutBox = new AboutBox();
         private readonly SecureValueForm _secureNandValueForm = new SecureValueForm();
         private readonly SettingsMenuForm _settingsMenu;
         private bool _clicking;
@@ -114,6 +115,9 @@ namespace ACSE
         public MainForm()
         {
             InitializeComponent();
+
+            // Set initial title to include version
+            SetProgramTitle();
 
             // Setup Drag-n-Drop Connection
             AllowDrop = true;
@@ -1429,9 +1433,27 @@ namespace ACSE
             }
         }
 
+        private void SetProgramTitle()
+        {
+            var version = Assembly.GetEntryAssembly().GetName().Version;
+            var versionString = $"{version.Major}.{version.Minor}";
+            if (version.Build != 0)
+            {
+                versionString += $".{version.Build}";
+                if (version.Revision != 0)
+                {
+                    versionString += $".{version.Revision}";
+                }
+            }
+
+            Text = SaveFile != null
+                ? $"ACSE {versionString} - {SaveFile.SaveName} - [{SaveDataManager.GetGameTitle(SaveFile.SaveType)}]"
+                : $"ACSE {versionString}";
+        }
+
         private void SetEnabledControls(SaveType currentSaveType)
         {
-            Text = string.Format("ACSE - {1} - [{0}]", SaveDataManager.GetGameTitle(currentSaveType), SaveFile.SaveName);
+            SetProgramTitle();
             itemFlag1.Text = "00";
             itemFlag2.Text = "00";
 
@@ -4142,7 +4164,7 @@ namespace ACSE
         private void AboutToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (_aboutBox == null || _aboutBox.IsDisposed)
-                _aboutBox = new AboutBox1();
+                _aboutBox = new AboutBox();
             _aboutBox.Show();
         }
 
