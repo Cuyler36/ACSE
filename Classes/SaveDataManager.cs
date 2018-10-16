@@ -786,7 +786,6 @@ namespace ACSE
 
         public static Dictionary<ushort, string> GetItemInfo(SaveType saveType, string language = "en")
         {
-            StreamReader contents;
             var itemDbLocation = MainForm.AssemblyLocation + "\\Resources\\";
             switch (saveType)
             {
@@ -818,33 +817,19 @@ namespace ACSE
                     break;
             }
 
-            try { contents = File.OpenText(itemDbLocation); }
+            try
+            {
+                using (var contents = File.OpenText(itemDbLocation))
+                {
+                    return ItemData.LoadItemDatabase(contents);
+                }
+            }
             catch (Exception e)
             {
                 MainForm.DebugManager.WriteLine(
                     $"An error occured opening item database file:\n\"{itemDbLocation}\"\nError Info:\n{e.Message}", DebugLevel.Error);
                 return null;
             }
-            var itemDictionary = new Dictionary<ushort, string>();
-            string line;
-            while ((line = contents.ReadLine()) != null)
-            {
-                if (!Properties.Settings.Default.DebuggingEnabled && line.Contains("//"))
-                    MessageBox.Show("Now loading item type: " + line.Replace("//", ""));
-                else if (!line.Contains("//") && line.Contains("0x"))
-                {
-                    string itemIdString = line.Substring(0, 6), itemName = line.Substring(7).Trim();
-                    if (ushort.TryParse(itemIdString.Replace("0x", ""), NumberStyles.AllowHexSpecifier, null, out var itemId))
-                        itemDictionary.Add(itemId, itemName);
-                    else
-                        MainForm.DebugManager.WriteLine("Unable to add item: " + itemIdString + " | " + itemName, DebugLevel.Error);
-                }
-            }
-
-            contents.Close();
-            contents.Dispose();
-
-            return itemDictionary;
         }
 
         public static Dictionary<byte, string> GetAcreInfo(SaveType saveType, string language = "en")

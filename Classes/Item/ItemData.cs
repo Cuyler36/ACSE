@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 
 namespace ACSE
@@ -652,6 +655,31 @@ namespace ACSE
                         return ItemDatabase.FirstOrDefault(o => o.Key == itemId).Value ?? "Unknown";
                     }
             }
+        }
+
+        public static Dictionary<ushort, string> LoadItemDatabase(StreamReader reader)
+        {
+            var itemDatabase = new Dictionary<ushort, string>();
+
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine()?.Trim() ?? "";
+                if (line.StartsWith("//")) continue;
+
+                var itemId = line.Substring(0, 6);
+                if (!itemId.StartsWith("0x")) continue;
+
+                try
+                {
+                    itemDatabase.Add(ushort.Parse(itemId.Replace("0x", ""), NumberStyles.HexNumber), line.Substring(8));
+                }
+                catch
+                {
+                    Debug.WriteLine($"Error in loading item: {line}");
+                }
+            }
+
+            return itemDatabase;
         }
 
         //New Leaf Item Decoding
