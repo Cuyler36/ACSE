@@ -915,9 +915,14 @@ namespace ACSE
                     _buriedBuffer =
                         save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
                             CurrentSaveInfo.SaveOffsets.BuriedDataSize);
-                    _islandBuriedBuffer =
-                        save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandBuriedData,
-                            CurrentSaveInfo.SaveOffsets.IslandBuriedSize);
+
+                    if (save.SaveGeneration == SaveGeneration.GCN)
+                    {
+                        _islandBuriedBuffer =
+                            save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandBuriedData,
+                                CurrentSaveInfo.SaveOffsets.IslandBuriedSize);
+                    }
+
                     for (var i = 0; i < acreData.Length; i++)
                     {
                         if (i >= CurrentSaveInfo.XAcreCount + 1 && (i % CurrentSaveInfo.XAcreCount > 0
@@ -2277,7 +2282,10 @@ namespace ACSE
                     
                     _acreMap[acre].MouseMove += (s, e) => AcreEditorMouseMove(s, e);
                     _acreMap[acre].MouseLeave += HideAcreTip;
-                    _acreMap[acre].MouseClick += (s, e) => AcreClick(s, e);
+                    _acreMap[acre].MouseClick += (s, e) => AcreClick(s, e,
+                        SaveFile.SaveGeneration == SaveGeneration.GCN
+                            ? Array.IndexOf(_acreMap, s) == 0x3C || Array.IndexOf(_acreMap, s) == 0x3D
+                            : false);
                     _acreMap[acre].MouseEnter += AcreEditorMouseEnter;
                     _acreMap[acre].MouseLeave += AcreEditorMouseLeave;
                     acrePanel.Controls.Add(_acreMap[acre]);
@@ -2739,13 +2747,21 @@ namespace ACSE
         private void AcreEditorMouseMove(object sender, MouseEventArgs e, bool island = false, bool forceOverride = false)
         {
             if (!(sender is PictureBoxWithInterpolationMode box)) return;
+
             box.Capture = false;
             box.Image = _acreHighlightImage;
             if (_loading || (!forceOverride && e.X == _lastAcreX && e.Y == _lastAcreY)) return;
+
             acreToolTip.Hide(this);
             acreToolTip.RemoveAll();
-            var acreIdx = Array.IndexOf(island ? _newLeafIslandAcreMap : _acreMap, box);
-            Acre hoveredAcre = island ? IslandAcres[acreIdx] : _acres[acreIdx];
+            var acreIdx = SaveFile.SaveGeneration == SaveGeneration.N3DS
+                ? Array.IndexOf(island ? _newLeafIslandAcreMap : _acreMap, box)
+                : Array.IndexOf(_acreMap, box);
+
+            Acre hoveredAcre = island && SaveFile.SaveGeneration == SaveGeneration.N3DS
+                ? IslandAcres[acreIdx]
+                : _acres[acreIdx];
+
             if (_acreInfo != null)
                 acreToolTip.Show(
                     $"{(_acreInfo.ContainsKey((byte) hoveredAcre.AcreId) ? _acreInfo[(byte) hoveredAcre.AcreId] + " - " : "")}0x{hoveredAcre.AcreId:X2}", 
@@ -2781,8 +2797,43 @@ namespace ACSE
         private void AcreClick(object sender, MouseEventArgs e, bool island = false)
         {
             var acreBox = sender as PictureBoxWithInterpolationMode;
-            var acreIndex = Array.IndexOf(island ? _newLeafIslandAcreMap : _acreMap, acreBox);
+            var acreIndex = SaveFile.SaveGeneration == SaveGeneration.N3DS
+                ? Array.IndexOf(island ? _newLeafIslandAcreMap : _acreMap, acreBox)
+                : Array.IndexOf(_acreMap, acreBox);
+
+            int acreX, acreY;
+
+            switch (SaveFile.SaveGeneration)
+            {
+                case SaveGeneration.GCN:
+                    acreX = acreIndex % CurrentSaveInfo.XAcreCount;
+                    acreY = acreIndex / CurrentSaveInfo.XAcreCount;
+
+                    if (island)
+                    {
+                        acreIndex -= 0x3C;
+                    }
+
+                    break;
+
+                case SaveGeneration.N3DS when !island:
+                    acreX = acreIndex % CurrentSaveInfo.XAcreCount;
+                    acreY = acreIndex / CurrentSaveInfo.XAcreCount;
+                    break;
+
+                case SaveGeneration.N3DS when island:
+                    acreX = acreIndex % CurrentSaveInfo.IslandXAcreCount;
+                    acreY = acreIndex / CurrentSaveInfo.IslandXAcreCount;
+                    break;
+
+                default:
+                    acreX = acreIndex % CurrentSaveInfo.XAcreCount;
+                    acreY = acreIndex / CurrentSaveInfo.XAcreCount;
+                    break;
+            }
+
             if (acreIndex <= -1) return;
+
             switch (e.Button)
             {
                 case MouseButtons.Left:
@@ -2805,15 +2856,18 @@ namespace ACSE
                         acreBox.BackgroundImage = _selectedAcrePicturebox.Image;
                         AcreData.CheckReferencesAndDispose(oldImage, _acreMap, _selectedAcrePicturebox);
 
-                        var acreX = acreIndex % (island ? CurrentSaveInfo.IslandXAcreCount : CurrentSaveInfo.XAcreCount);
-                        var acreY = acreIndex / (island ? CurrentSaveInfo.IslandXAcreCount : CurrentSaveInfo.XAcreCount);
-
                         if (!island && _grassMap != null && _grassMap.Length == _acreMap.Length)
                             _grassMap[acreIndex].BackgroundImage = acreBox.BackgroundImage;
 
-                        var isTownAcre = acreY >= CurrentSaveInfo.TownYAcreStart && acreX > 0 && acreX < CurrentSaveInfo.XAcreCount - 1;
-                        var isIslandAcre = acreY > 0 && acreX > 0 && acreY < 3 && acreX < 3;
+                        var isTownAcre = acreY >= CurrentSaveInfo.TownYAcreStart &&
+                                         acreY < CurrentSaveInfo.TownYAcreCount + CurrentSaveInfo.TownYAcreStart &&
+                                         acreX > 0 && acreX < CurrentSaveInfo.XAcreCount - 1;
+
+                        var isIslandAcre = SaveFile.SaveGeneration == SaveGeneration.GCN
+                            ? acreY == 8 && acreX == 4 || acreX == 5
+                            : acreY > 0 && acreX > 0 && acreY < 3 && acreX < 3;
                         var loadDefaultItems = false;
+
                         if (SaveFile.SaveGeneration == SaveGeneration.GCN && (isTownAcre || isIslandAcre))
                         {
                             loadDefaultItems = MessageBox.Show("Would you like to load the default items for this acre?", "Load Default Items?",
@@ -2847,7 +2901,10 @@ namespace ACSE
                                 _newLeafGrassOverlay.BackgroundImage = ImageGeneration.DrawNewLeafGrassBg(_acreMap);
                             }
                         }
-                        else if (island && isIslandAcre)
+
+                        // TODO: Support default item loading for Animal Forest e+'s islands.
+                        else if (SaveFile.SaveType != SaveType.DoubutsuNoMoriEPlus &&
+                                 SaveFile.SaveType != SaveType.AnimalForestEPlus && island && isIslandAcre)
                         {
                             oldImage = _islandAcreMap[acreIndex].BackgroundImage;
                             _islandAcreMap[acreIndex].BackgroundImage = _selectedAcrePicturebox.Image;
@@ -2856,7 +2913,9 @@ namespace ACSE
                             {
                                 IslandAcres[acreIndex].LoadDefaultItems(SaveFile);
                             }
-                            RefreshPictureBoxImage(_islandAcreMap[acreIndex], GenerateAcreItemsBitmap(IslandAcres[acreIndex].AcreItems, acreIndex, true));
+
+                            RefreshPictureBoxImage(_islandAcreMap[acreIndex],
+                                GenerateAcreItemsBitmap(IslandAcres[acreIndex].AcreItems, acreIndex));
                         }
                     }
 
@@ -3784,6 +3843,12 @@ namespace ACSE
             {
                 items = _selectedIsland == null ? IslandAcres[acre].AcreItems : _selectedIsland.Items[acre];
                 item = _selectedIsland == null ? IslandAcres[acre].AcreItems[index] : _selectedIsland.Items[acre][index];
+
+                // Set the 
+                if (SaveFile.SaveGeneration == SaveGeneration.N3DS && _lastTownAcre < 5 || _lastTownAcre > 10) // TODO: This doesn't handle the ocean acres to the left & right.
+                {
+                    _lastTownAcre = 5;
+                }
             }
             else
             {

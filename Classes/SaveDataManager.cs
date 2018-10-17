@@ -60,6 +60,7 @@ namespace ACSE
         public int XAcreCount;
         public int TownAcreCount;
         public int TownYAcreStart;
+        public int TownYAcreCount;
         public int IslandAcreCount;
         public int IslandXAcreCount;
         public int VillagerCount;
@@ -387,6 +388,7 @@ namespace ACSE
             XAcreCount = 7,
             TownAcreCount = 30,
             TownYAcreStart = 1,
+            TownYAcreCount = 6,
             IslandAcreCount = 0,
             IslandXAcreCount = 0,
             VillagerCount = 15
@@ -405,6 +407,7 @@ namespace ACSE
             IslandAcreCount = 2,
             IslandXAcreCount = 2,
             TownYAcreStart = 1,
+            TownYAcreCount = 6,
             VillagerCount = 16
         };
 
@@ -421,6 +424,7 @@ namespace ACSE
             IslandAcreCount = 2,
             IslandXAcreCount = 2,
             TownYAcreStart = 1,
+            TownYAcreCount = 6,
             VillagerCount = 16
         };
 
@@ -437,6 +441,7 @@ namespace ACSE
             IslandAcreCount = 2,
             IslandXAcreCount = 2,
             TownYAcreStart = 1,
+            TownYAcreCount = 6,
             VillagerCount = 15 // Has an islander for every player
         };
 
@@ -451,6 +456,7 @@ namespace ACSE
             XAcreCount = 7,
             TownAcreCount = 30,
             TownYAcreStart = 1,
+            TownYAcreCount = 6,
             IslandAcreCount = 0,
             IslandXAcreCount = 0,
             VillagerCount = 15
@@ -467,6 +473,7 @@ namespace ACSE
             XAcreCount = 6,
             TownAcreCount = 16,
             TownYAcreStart = 1,
+            TownYAcreCount = 4,
             VillagerCount = 8
         };
 
@@ -481,6 +488,7 @@ namespace ACSE
             XAcreCount = 7,
             TownAcreCount = 25,
             TownYAcreStart = 1,
+            TownYAcreCount = 5,
             VillagerCount = 10
         };
 
@@ -495,6 +503,7 @@ namespace ACSE
             XAcreCount = 7,
             TownAcreCount = 20,
             TownYAcreStart = 1,
+            TownYAcreCount = 4,
             VillagerCount = 10,
             IslandAcreCount = 16,
             IslandXAcreCount = 4
@@ -511,6 +520,7 @@ namespace ACSE
             XAcreCount = 7,
             TownAcreCount = 20,
             TownYAcreStart = 1,
+            TownYAcreCount = 4,
             VillagerCount = 10,
             IslandAcreCount = 16,
             IslandXAcreCount = 4
