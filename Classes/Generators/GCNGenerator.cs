@@ -21,8 +21,6 @@ namespace ACSE.Generators
             Any = 2
         }
 
-        private Random Rand;
-
         private struct data_combi
         {
             public ushort BlockType;
@@ -853,11 +851,11 @@ namespace ACSE.Generators
             startSeed *= 0x19660D;
             startSeed += 0x3C6EF35F;
             _randomSeed = startSeed;
-            startSeed = 0x3F800000 | (startSeed >> 9);
+            startSeed = 0x3F800000 | ((startSeed >> 9) & 0x7FFFFF);
             return BitConverter.ToSingle(BitConverter.GetBytes(startSeed), 0) - 1.0f;
         }
 
-        private int GetRandom(int maxValue, int? seed) // NOTE: seed isn't a parameter in the actual function.
+        private int GetRandom(int maxValue, int? seed = null) // NOTE: seed isn't a parameter in the actual function.
             => (int)(fqrand(seed) * maxValue);
 
         /// <summary>
@@ -866,7 +864,7 @@ namespace ACSE.Generators
         /// <returns>Step Mode</returns>
         private int GetRandomStepMode()
         {
-            int RNG = Rand.Next(0, 64);
+            int RNG = GetRandom(64);
             int Temp = 0xF ^ RNG;
             int ShiftedValue = Temp >> 1;
             Temp &= 0xF;
@@ -947,9 +945,9 @@ namespace ACSE.Generators
         // Cliff code
         private bool DecideBaseCliff(ref byte[] AcreData)
         {
-            int CliffStartTableIndex = Rand.Next(4);
+            int CliffStartTableIndex = GetRandom(4);
             byte[] CliffStartTable = cliff_start_table[CliffStartTableIndex];
-            byte CliffStartAcreType = CliffStartTable[Rand.Next(CliffStartTable.Length)];
+            byte CliffStartAcreType = CliffStartTable[GetRandom(CliffStartTable.Length)];
 
             // Set the first in-town cliff acre
             int CliffStartAcre = D2toD1(1, CliffStartTableIndex + 2);
@@ -980,7 +978,7 @@ namespace ACSE.Generators
             while (TraceState == 0)
             {
                 byte[] CliffNext = cliff_next_data[CliffSubtractionValue];
-                byte CliffAcreType = CliffNext[Rand.Next(CliffNext.Length)];
+                byte CliffAcreType = CliffNext[GetRandom(CliffNext.Length)];
                 byte CliffAdjustValue = cliff_next_direct[CliffSubtractionValue];
 
                 Direct2BlockNo(out X, out Y, AcreX, AcreY, CliffAdjustValue);
@@ -1145,9 +1143,9 @@ namespace ACSE.Generators
             AcreY = 0;
             while (RiverTraceState == 0)
             {
-                int RiverXStartAcre = startX_table[Rand.Next(4)];
+                int RiverXStartAcre = startX_table[GetRandom(4)];
                 byte[] RiverStartData = river_next_data[0];
-                byte RiverStartType = RiverStartData[Rand.Next(RiverStartData.Length)];
+                byte RiverStartType = RiverStartData[GetRandom(RiverStartData.Length)];
 
                 Direct2BlockNo(out int X, out int Y, RiverXStartAcre, 1, 2);
                 int RiverAbsoluteStartAcre = D2toD1(X, Y);
@@ -1210,7 +1208,7 @@ namespace ACSE.Generators
             while (RiverTraceState == 0)
             {
                 byte[] river_next_set = river_next_data[RiverStartAcreType - 0x28];
-                byte NextRiverType = river_next_set[Rand.Next(river_next_set.Length)];
+                byte NextRiverType = river_next_set[GetRandom(river_next_set.Length)];
                 int NextRiverDirection = RiverIdx2NextDirect((byte)(NextRiverType - 0x28));
 
                 Direct2BlockNo(out X, out Y, AcreX, AcreY, RiverDirection);
@@ -1385,7 +1383,7 @@ namespace ACSE.Generators
 
         private byte[] MakeBaseLandformStep3()
         {
-            return step3_blockss[Rand.Next(10)].Copy();
+            return step3_blockss[GetRandom(10)].Copy();
         }
 
         private byte[] MakeBaseLandform(int StepMode)
@@ -1509,7 +1507,7 @@ namespace ACSE.Generators
 
         private int SetBridgeBlock(ref byte[] AcreData, bool ThreeLayeredTown)
         {
-            bool PlaceUpperBridge = (Rand.Next(10) & 1) == 1;
+            bool PlaceUpperBridge = (GetRandom(10) & 1) == 1;
             GetRiverCrossCliffInfo(out int AcreX, out int AcreY, AcreData);
             int AcreIdx = 0;
             int ValidBridgePlaceUpper = 0;
@@ -1538,7 +1536,7 @@ namespace ACSE.Generators
             // Lower area first
             if (ValidBridgePlaceLower != 0)
             {
-                int BridgeLowerLocation = Rand.Next(ValidBridgePlaceLower);
+                int BridgeLowerLocation = GetRandom(ValidBridgePlaceLower);
                 AcreIdx = 0;
                 int Count = 0;
 
@@ -1566,7 +1564,7 @@ namespace ACSE.Generators
             // Upper area next
             if (ValidBridgePlaceUpper != 0 && ThreeLayeredTown == false && PlaceUpperBridge == true)
             {
-                int BridgeUpperLocation = Rand.Next(ValidBridgePlaceUpper);
+                int BridgeUpperLocation = GetRandom(ValidBridgePlaceUpper);
                 AcreIdx = 0;
                 int Count = 0;
 
@@ -1691,7 +1689,7 @@ namespace ACSE.Generators
                     int Count = CountDirectedInfoCliff(AcreData, 0, Y, 0);
                     if (Count > 0)
                     {
-                        int SlopeIndex = Rand.Next(Count);
+                        int SlopeIndex = GetRandom(Count);
                         if (SetSlopeDirectedInfoCliff(ref AcreData, 0, Y, 0, SlopeIndex))
                         {
                             SlopeBit |= (1 << 0); // 1
@@ -1701,7 +1699,7 @@ namespace ACSE.Generators
                     Count = CountDirectedInfoCliff(AcreData, 0, Y, 1);
                     if (Count > 0)
                     {
-                        int SlopeIndex = Rand.Next(Count);
+                        int SlopeIndex = GetRandom(Count);
                         if (SetSlopeDirectedInfoCliff(ref AcreData, 0, Y, 1, SlopeIndex))
                         {
                             SlopeBit |= (1 << 1); // 2
@@ -1722,7 +1720,7 @@ namespace ACSE.Generators
         {
             int WorkBit = 0;
             int CurrentNeedleworkCheckIdx = 0;
-            int NeedleworkXAcre = Rand.Next(3);
+            int NeedleworkXAcre = GetRandom(3);
             int WharfBlockIdx = D2toD1(5, 6);
             if (AcreData[WharfBlockIdx] == 0x3F)
             {
@@ -1837,7 +1835,7 @@ namespace ACSE.Generators
             int FlatBlocks = CountFlatBlock(AcreData, RiverDirection, CliffDirection, cliff_up_down_info, river_left_right_info);
             if (FlatBlocks > 0)
             {
-                if (RewriteFlatType(ref AcreData, Rand.Next(FlatBlocks), NewFlatBlockType, RiverDirection, CliffDirection, cliff_up_down_info, river_left_right_info) != -1)
+                if (RewriteFlatType(ref AcreData, GetRandom(FlatBlocks), NewFlatBlockType, RiverDirection, CliffDirection, cliff_up_down_info, river_left_right_info) != -1)
                 {
                     return true;
                 }
@@ -1849,7 +1847,7 @@ namespace ACSE.Generators
         {
             int FlatBit = 0;
 
-            var RiverSide = (RiverSide)(Rand.Next(100) & 1);
+            var RiverSide = (RiverSide) (GetRandom(100) & 1);
             var OppositeRiverSide = (RiverSide)(((int)RiverSide ^ 1) & 1);
             if (FlatBlock2Unique(ref AcreData, 0x42, RiverSide, CliffSide.Down, cliff_up_down_info, river_left_right_info) == true)
             {
@@ -1918,7 +1916,7 @@ namespace ACSE.Generators
             int RiverAcres = CountPureRiver(AcreData);
             if (RiverAcres > 0)
             {
-                int LakeAcre = Rand.Next(RiverAcres);
+                int LakeAcre = GetRandom(RiverAcres);
                 if (SetPoolDirectedRiverBlock(ref AcreData, LakeAcre) == true)
                 {
                     return 0x80;
@@ -1977,7 +1975,7 @@ namespace ACSE.Generators
             if (Matches > 0)
             {
                 int CurrentMatch = 0;
-                int RandomlySelectedMatch = Rand.Next(0); // Silly Animal Crossing Devs. This isn't random.
+                int RandomlySelectedMatch = GetRandom(0); // Silly Animal Crossing Devs. This isn't random.
                 for (int i = 0; i < data_combi_table_number; i++)
                 {
                     if (data_combi_table[i].BlockType == ExceptionalValue && data_combi_table[i].ValidCombiCount != 0xFF)
@@ -2001,7 +1999,7 @@ namespace ACSE.Generators
         {
             if (TownAcrePool.ContainsKey(AcreType) && TownAcrePool[AcreType].Length > 0)
             {
-                int RandomlyChosenAcreIdx = Rand.Next(TownAcrePool[AcreType].Length);
+                int RandomlyChosenAcreIdx = GetRandom(TownAcrePool[AcreType].Length);
                 return TownAcrePool[AcreType][RandomlyChosenAcreIdx];
             }
             else
@@ -2015,7 +2013,7 @@ namespace ACSE.Generators
             byte A = 0, B = 0;
             bool ASet = false, BSet = false;
 
-            if ((Rand.Next(1000) & 1) == 0)
+            if ((GetRandom(1000) & 1) == 0)
             {
                 A = 0x43;
                 B = 0x41;
@@ -2029,7 +2027,7 @@ namespace ACSE.Generators
             // Set A
             while (!ASet)
             {
-                int ALocation = Rand.Next(2);
+                int ALocation = GetRandom(2);
                 if (Data[8 + ALocation] == 0x0C)
                 {
                     Data[8 + ALocation] = A;
@@ -2040,7 +2038,7 @@ namespace ACSE.Generators
             // Set B
             while (!BSet)
             {
-                int BLocation = Rand.Next(2);
+                int BLocation = GetRandom(2);
                 if (Data[11 + BLocation] == 0x0C)
                 {
                     Data[11 + BLocation] = B;
@@ -2112,14 +2110,7 @@ namespace ACSE.Generators
 
         public ushort[] Generate(int? Seed = null)
         {
-            if (Seed.HasValue)
-            {
-                Rand = new Random(Seed.Value);
-            }
-            else
-            {
-                Rand = new Random();
-            }
+            _randomSeed = Seed ?? Environment.TickCount;
 
             var RandomFieldData = MakeRandomField_ovl();
             byte[] Data = RandomFieldData.Item1;
