@@ -2595,7 +2595,7 @@
 0x2D25, Spider
 0x2D26, Ant
 0x2D27, Mosquito
-0x2D28, Birdwing Bufferfly
+0x2D28, Birdwing Butterfly
 0x2D29, Dung Beetle
 0x2D2A, Diving Beetle
 0x2D2B, Hercules Beetle
