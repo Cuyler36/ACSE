@@ -292,7 +292,7 @@ namespace ACSE
             return (byte)(Array.IndexOf(paletteData, closestColor) + 1);
         }
 
-        public static byte ClosestColorRgb(uint color, uint[] paletteData)
+        public static byte ClosestColorRgb(uint color, uint[] paletteData, bool gen1 = false)
         {
             var distance = double.MaxValue;
             byte closestPaletteIndex = 0;
@@ -311,12 +311,13 @@ namespace ACSE
                 if (Math.Abs(thisDistance) < double.Epsilon)
                 {
                     // Perfect match
-                    return (byte)(i + 1);
+                    return gen1 ? (byte)(i + 1) : (byte) i;
                 }
 
                 if (!(thisDistance < distance)) continue;
+
                 distance = thisDistance;
-                closestPaletteIndex = (byte)(i + 1);
+                closestPaletteIndex = gen1 ? (byte)(i + 1) : (byte)i;
             }
 
             return closestPaletteIndex;
@@ -517,7 +518,8 @@ namespace ACSE
                 for (var i = 0; i < patternBuffer.Length; i++)
                 {
                     var idx = i * 2;
-                    patternBuffer[i] = (byte)((PatternData.ClosestColorRgb(bitmapBuffer[idx + 1], PaletteData) << 4) | PatternData.ClosestColorRgb(bitmapBuffer[idx], PaletteData)); // these are reversed
+                    patternBuffer[i] = (byte) ((PatternData.ClosestColorRgb(bitmapBuffer[idx + 1], PaletteData) << 4) |
+                                               PatternData.ClosestColorRgb(bitmapBuffer[idx], PaletteData));
                 }
             }
             else
@@ -525,7 +527,8 @@ namespace ACSE
                 var convertedBuffer = new byte[bitmapBuffer.Length];
                 for (var i = 0; i < convertedBuffer.Length; i++)
                 {
-                    convertedBuffer[i] = PatternData.ClosestColorRgb(bitmapBuffer[i], PaletteData);
+                    convertedBuffer[i] = PatternData.ClosestColorRgb(bitmapBuffer[i], PaletteData,
+                        _saveFile.SaveGeneration == SaveGeneration.GCN);
                 }
                 patternBuffer = PatternUtility.EncodeC4(convertedBuffer);
             }

@@ -5464,6 +5464,7 @@
     <Compile Include="Classes\ItemChange.cs" />
     <Compile Include="Classes\ItemChangedEventArgs.cs" />
     <Compile Include="Classes\Item\Item.cs" />
+    <Compile Include="Classes\Messages\Mail\AnimalMail.cs" />
     <Compile Include="Classes\Messages\Mail\GCNPlayerMail.cs" />
     <Compile Include="Classes\Messages\Mail\MailBase.cs" />
     <Compile Include="Classes\Messages\Mail\PlayerMailBase.cs" />
