@@ -374,7 +374,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
                     return DoubutsuNoMoriEPlusOffsets;
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     return DoubutsuNoMoriHouseOffsets; // TEMP
                 case SaveType.WildWorld:
                     return WildWorldOffsets;
@@ -397,7 +397,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     return AcRoofColors;
 
                 default:
@@ -453,7 +453,7 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                 case SaveType.CityFolk:
                     for (var i = 0; i < 4; i++)
                     {

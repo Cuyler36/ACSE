@@ -100,7 +100,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriPlus:
                 
                 // TODO: DnM+, and DnMe+ need their own cases
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     if (id == 0)
                         return ItemType.Empty;
                     else if (id == 0xFFFF)

@@ -43,7 +43,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
                 // TODO: DnM needs its own set?
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     imageDir += "Acre_Images";
                     break;
                 case SaveType.WildWorld:
@@ -179,7 +179,7 @@ namespace ACSE
             {
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DoubutsuNoMoriPlus:
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     indexFile += "\\Resources\\DnM_Map_Icon_Index.txt";
                     break;
                 case SaveType.AnimalCrossing:

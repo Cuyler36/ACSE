@@ -16,7 +16,7 @@ namespace ACSE
         AnimalCrossing,
         DoubutsuNoMoriEPlus,
         AnimalForestEPlus, // Fan translated version of Doubutsu no Mori e+
-        AnimalForest, // iQue version
+        DongwuSenlin, // iQue version
         WildWorld,
         CityFolk,
         NewLeaf,
@@ -158,7 +158,7 @@ namespace ACSE
                         SaveDataStartOffset + SaveInfo.SaveOffsets.SaveSize);
                     break;
                 case SaveType.DoubutsuNoMori:
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     Write(SaveDataStartOffset + SaveInfo.SaveOffsets.Checksum,
                         new UInt16BEChecksum().Calculate(
                             SaveData.Skip(SaveDataStartOffset).Take(0xF980).ToArray(),

@@ -45,7 +45,7 @@ namespace ACSE.Utilities
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
                 case SaveType.AnimalCrossing:
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                 case SaveType.CityFolk: // TODO: Determine if cases 4 and 8 are correct.
                     switch (dateData.Length)
                     {

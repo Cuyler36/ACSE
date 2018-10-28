@@ -1472,8 +1472,8 @@ namespace ACSE
             SetMainTabEnabled("grassTab", true);
             SetMainTabEnabled("patternsTab", true);
 
-            playerSavings.Enabled = currentSaveType != SaveType.DoubutsuNoMori && currentSaveType != SaveType.AnimalForest;
-            tanTrackbar.Enabled = currentSaveType != SaveType.DoubutsuNoMori && currentSaveType != SaveType.AnimalForest;
+            playerSavings.Enabled = currentSaveType != SaveType.DoubutsuNoMori && currentSaveType != SaveType.DongwuSenlin;
+            tanTrackbar.Enabled = currentSaveType != SaveType.DoubutsuNoMori && currentSaveType != SaveType.DongwuSenlin;
 
             switch (currentSaveType)
             {
@@ -1482,9 +1482,9 @@ namespace ACSE
                 case SaveType.AnimalCrossing:
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                case SaveType.AnimalForest:
-                    SetMainTabEnabled("islandTab", currentSaveType != SaveType.DoubutsuNoMori && currentSaveType != SaveType.AnimalForest);
-                    SetMainTabEnabled("patternsTab", currentSaveType != SaveType.DoubutsuNoMori && currentSaveType != SaveType.AnimalForest);
+                case SaveType.DongwuSenlin:
+                    SetMainTabEnabled("islandTab", currentSaveType != SaveType.DoubutsuNoMori && currentSaveType != SaveType.DongwuSenlin);
+                    SetMainTabEnabled("patternsTab", currentSaveType != SaveType.DoubutsuNoMori && currentSaveType != SaveType.DongwuSenlin);
                     SetMainTabEnabled("grassTab", false);
                     playerHairType.Enabled = false;
                     playerHairColor.Enabled = false;
@@ -2182,7 +2182,7 @@ namespace ACSE
 
         private static bool IsOcean(ushort id)
         {
-            return ((SaveFile.SaveGeneration == SaveGeneration.GCN || SaveFile.SaveType == SaveType.DoubutsuNoMori || SaveFile.SaveType == SaveType.AnimalForest)
+            return ((SaveFile.SaveGeneration == SaveGeneration.GCN || SaveFile.SaveType == SaveType.DoubutsuNoMori || SaveFile.SaveType == SaveType.DongwuSenlin)
                 && (id >= 0x03DC && id <= 0x03EC) || id == 0x49C || (id >= 0x04A8 && id <= 0x058C) || (id >= 0x05B4 && id <= 0x05B8));
         }
 
@@ -2768,7 +2768,7 @@ namespace ACSE
                     box, e.X + 15, e.Y + 10);
             else if (_uInt16AcreInfo != null)
                 if (SaveFile.SaveType == SaveType.DoubutsuNoMori || SaveFile.SaveGeneration == SaveGeneration.GCN ||
-                    SaveFile.SaveType == SaveType.AnimalForest)
+                    SaveFile.SaveType == SaveType.DongwuSenlin)
                 {
                     acreToolTip.Show(string.Format("{0}[{2}] - 0x{1:X4}",
                             _uInt16AcreInfo.ContainsKey(hoveredAcre.BaseAcreId)

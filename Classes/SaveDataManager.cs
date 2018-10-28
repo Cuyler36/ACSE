@@ -556,7 +556,7 @@ namespace ACSE
             switch (save.SaveData.Length) // TODO: look for a better way to differentiate the iQue version from the N64 version.
             {
                 case 0x20000:
-                    return save.ReadUInt16(0xF980, true) == 0x0001 ? SaveType.AnimalForest : SaveType.DoubutsuNoMori;
+                    return save.ReadUInt16(0xF980, true) == 0x0001 ? SaveType.DongwuSenlin : SaveType.DoubutsuNoMori;
                 case 0x72040:
                 case 0x72150:
                 {
@@ -638,7 +638,7 @@ namespace ACSE
                     return "GAEJ";
                 case SaveType.AnimalForestEPlus:
                     return "GAEE";
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     return "NAFJ"; // internally still has NAFJ code
                 case SaveType.WildWorld: //Currently only supporting the English versions of WW+
                     return "ADME";
@@ -670,7 +670,7 @@ namespace ACSE
                             return "どうぶつの森e+";
                         case SaveType.AnimalForestEPlus:
                             return "Animal Forest e+";
-                        case SaveType.AnimalForest:
+                        case SaveType.DongwuSenlin:
                             return "どうぶつの森 iQue";
                         case SaveType.WildWorld:
                             return "おいでよどうぶつの森";
@@ -697,8 +697,8 @@ namespace ACSE
                             return "Dōbutsu no Mori e+";
                         case SaveType.AnimalForestEPlus:
                             return "Animal Forest e+";
-                        case SaveType.AnimalForest:
-                            return "Animal Forest";
+                        case SaveType.DongwuSenlin:
+                            return "Dòngwù Sēnlín";
                         case SaveType.WildWorld:
                             return "Wild World";
                         case SaveType.CityFolk:
@@ -724,8 +724,8 @@ namespace ACSE
                             return "Dōbutsu no Mori e+";
                         case SaveType.AnimalForestEPlus:
                             return "Animal Forest e+";
-                        case SaveType.AnimalForest:
-                            return "Animal Forest";
+                        case SaveType.DongwuSenlin:
+                            return "Dòngwù Sēnlín";
                         case SaveType.WildWorld:
                             return "Wild World";
                         case SaveType.CityFolk:
@@ -752,7 +752,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
                     return SaveGeneration.GCN;
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     return SaveGeneration.iQue;
                 case SaveType.WildWorld:
                     return SaveGeneration.NDS;
@@ -779,7 +779,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus: // TODO: Change this?
                     return DoubutsuNoMoriEPlus;
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     return AnimalForest;
                 case SaveType.WildWorld:
                     return WildWorld;
@@ -800,7 +800,7 @@ namespace ACSE
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     itemDbLocation += "DnM_Items_" + language + ".txt";
                     break;
                 case SaveType.DoubutsuNoMoriPlus:
@@ -884,7 +884,7 @@ namespace ACSE
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                 case SaveType.AnimalCrossing: // TODO: DnM needs to have a custom list, since the docks/islands don't exist
                     acreDbLocation += "AC_Acres_" + language + ".txt";
                     break;
@@ -988,7 +988,7 @@ namespace ACSE
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                 case SaveType.AnimalCrossing: // TODO: DnM needs to have a custom list, since the docks/islands don't exist
                     acreDbLocation += "AC_Acres_" + language + ".txt";
                     break;

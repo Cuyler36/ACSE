@@ -600,7 +600,7 @@ namespace ACSE
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
                     return DoubutsuNoMoriEPlus;
-                case SaveType.AnimalForest:
+                case SaveType.DongwuSenlin:
                     return DoubutsuNoMori; // TEMP
                 case SaveType.WildWorld:
                     return WildWorld;
