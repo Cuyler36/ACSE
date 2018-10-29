@@ -671,7 +671,7 @@ namespace ACSE
                         case SaveType.AnimalForestEPlus:
                             return "Animal Forest e+";
                         case SaveType.DongwuSenlin:
-                            return "どうぶつの森 iQue";
+                            return "动物森林";
                         case SaveType.WildWorld:
                             return "おいでよどうぶつの森";
                         case SaveType.CityFolk:
