@@ -5482,6 +5482,7 @@
     <Compile Include="Classes\TrainStation.cs" />
     <Compile Include="Classes\Updater.cs" />
     <Compile Include="Classes\Utilities\ImageUtility.cs" />
+    <Compile Include="Classes\Villagers\Quests\GCNQuests.cs" />
     <Compile Include="Classes\Villagers\SimpleVillager.cs" />
     <Compile Include="Classes\Villagers\Villager.cs" />
     <Compile Include="Classes\Yaz0.cs" />

@@ -1358,14 +1358,13 @@ namespace ACSE
         private void AddBadges()
         {
             if (SaveFile == null || _selectedPlayer == null || !_selectedPlayer.Exists) return;
-            var badge11ValueOffset = SaveFile.SaveType == SaveType.NewLeaf ? 0x6B84 : 0x6BA4;
             const int badgeValueOffset = 0x55DC; // These are the same for each version.
             const int badgeLevelOffset = 0x569C; // These are also the same.
 
             for (var i = 0; i < 24; i++)
             {
                 var badgeControl = new BadgeControl(SaveFile, i, _selectedPlayer.Offset + badgeLevelOffset + i,
-                    _selectedPlayer.Offset + (i == 11 ? badge11ValueOffset : badgeValueOffset + i * 8));
+                    _selectedPlayer.Offset + badgeValueOffset + i * 8);
                 badgeGroupBox.Controls.Add(badgeControl);
                 badgeControl.Location = new Point(10 + (i % 6) * 30, 16 + (i / 6) * 30);
             }
