@@ -1,0 +1,102 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ACSE" GeneratedClassName="ItemColorSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="FurnitureColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3359432240</Value>
+    </Setting>
+    <Setting Name="GyroidColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3369370404</Value>
+    </Setting>
+    <Setting Name="DiaryColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3372155007</Value>
+    </Setting>
+    <Setting Name="ClothesColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3358094506</Value>
+    </Setting>
+    <Setting Name="SongColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3366251704</Value>
+    </Setting>
+    <Setting Name="PaperColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3366251752</Value>
+    </Setting>
+    <Setting Name="TrashColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3361041199</Value>
+    </Setting>
+    <Setting Name="ShellColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3372204235</Value>
+    </Setting>
+    <Setting Name="FruitColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3369967837</Value>
+    </Setting>
+    <Setting Name="TurnipColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3367742621</Value>
+    </Setting>
+    <Setting Name="CatchableColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3367691070</Value>
+    </Setting>
+    <Setting Name="QuestItemColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3367876459</Value>
+    </Setting>
+    <Setting Name="ItemColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3372197120</Value>
+    </Setting>
+    <Setting Name="RaffleTicketColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3357446399</Value>
+    </Setting>
+    <Setting Name="WallpaperCarpetColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3365486656</Value>
+    </Setting>
+    <Setting Name="FossilColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3360767279</Value>
+    </Setting>
+    <Setting Name="ToolColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3363930497</Value>
+    </Setting>
+    <Setting Name="TreeColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3364570387</Value>
+    </Setting>
+    <Setting Name="WeedColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3355475968</Value>
+    </Setting>
+    <Setting Name="FlowerColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3370936248</Value>
+    </Setting>
+    <Setting Name="RockColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3355443200</Value>
+    </Setting>
+    <Setting Name="MoneyRockColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3366137647</Value>
+    </Setting>
+    <Setting Name="SignboardColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3362140928</Value>
+    </Setting>
+    <Setting Name="MoneyColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3372220160</Value>
+    </Setting>
+    <Setting Name="HouseObjectColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3366295701</Value>
+    </Setting>
+    <Setting Name="BuildingColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">4286019447</Value>
+    </Setting>
+    <Setting Name="ParchedFlowerColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3366151936</Value>
+    </Setting>
+    <Setting Name="WateredFlowerColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3355484320</Value>
+    </Setting>
+    <Setting Name="PatternColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3365509631</Value>
+    </Setting>
+    <Setting Name="WiltedFlowerColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3360509235</Value>
+    </Setting>
+    <Setting Name="OccupiedColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3717831065</Value>
+    </Setting>
+    <Setting Name="InvalidColor" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3372154880</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

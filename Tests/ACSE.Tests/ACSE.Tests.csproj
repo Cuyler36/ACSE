@@ -58,9 +58,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ACSE.csproj">
-      <Project>{078ba400-42dd-432a-9844-32213157a29d}</Project>
-      <Name>ACSE</Name>
+    <ProjectReference Include="..\..\ACSE.Core\ACSE.Core.csproj">
+      <Project>{c4cc8c38-85d7-44eb-ae3a-14407c3184b5}</Project>
+      <Name>ACSE.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ACSE.WinForms\ACSE.WinForms.csproj">
+      <Project>{b4a73545-0177-4159-8602-648aa3058650}</Project>
+      <Name>ACSE.WinForms</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

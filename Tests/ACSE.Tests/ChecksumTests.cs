@@ -1,4 +1,4 @@
-﻿using ACSE.Checksums;
+﻿using ACSE.Core.Saves.Checksums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ACSE.Tests
