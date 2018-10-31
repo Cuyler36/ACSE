@@ -8,7 +8,7 @@ build:
   project: ACSE.sln
   verbosity: minimal
 after_build:
-- cmd: 7z a -tzip "bin/Release/ACSE.zip" "bin/Release/*"
+- cmd: 7z a -tzip "ACSE.WinForms/bin/Release/ACSE.zip" "ACSE.WinForms/bin/Release/*"
 artifacts:
-- path: bin/Release/ACSE.zip
+- path: ACSE.WinForms/bin/Release/ACSE.zip
   name: build
