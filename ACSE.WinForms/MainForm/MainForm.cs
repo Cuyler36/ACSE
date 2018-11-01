@@ -695,8 +695,8 @@ namespace ACSE.WinForms
             {
                 if (caravan1ComboBox.DataSource == null)
                 {
-                    caravan1ComboBox.DataSource = VillagerData.GetCaravanBindingSource();
-                    caravan2ComboBox.DataSource = VillagerData.GetCaravanBindingSource();
+                    caravan1ComboBox.DataSource = new BindingSource(VillagerData.GetCaravanBindingSource(), null);
+                    caravan2ComboBox.DataSource = new BindingSource(VillagerData.GetCaravanBindingSource(), null);
                     caravan1ComboBox.ValueMember = "Key";
                     caravan1ComboBox.DisplayMember = "Value";
                     caravan2ComboBox.ValueMember = "Key";

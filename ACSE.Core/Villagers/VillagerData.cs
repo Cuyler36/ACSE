@@ -191,10 +191,12 @@ namespace ACSE.Core.Villagers
             TownNameSize = 6,
             NameId = 0xA, // Goes unused??
             Personality = 0xB,
-            HouseCoordinates = 0x591, // Confirm
+            HouseCoordinates = 0x591,
             HouseCoordinatesCount = 4,
-            Catchphrase = 0x595, // Confirm
+            Catchphrase = 0x595,
             CatchphraseSize = 0x4,
+            // Space (3) ?
+            // QuestData = 0x59C, // 0xC in size (total struct is 0x24)
             Shirt = 0x5DA,
             Status = -1, //Research
             Umbrella = -1, //Research this as well
