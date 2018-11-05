@@ -39,7 +39,7 @@ namespace ACSE.WinForms
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
             this.patternEditorPanel = new System.Windows.Forms.Panel();
-            this.patternEditorPictureBox = new PictureBoxWithInterpolationMode();
+            this.patternEditorPictureBox = new ACSE.WinForms.Controls.PictureBoxWithInterpolationMode();
             this.patternEditorPreviewPanel = new System.Windows.Forms.Panel();
             this.patternGroupTabControl = new System.Windows.Forms.TabControl();
             this.player1Tab = new System.Windows.Forms.TabPage();
@@ -65,6 +65,7 @@ namespace ACSE.WinForms
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveTownMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openBackupFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -270,7 +271,9 @@ namespace ACSE.WinForms
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.itemIdLabel = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.TextBox();
-            this.openBackupFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.townGateComboBox = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.townGatePictureBox = new System.Windows.Forms.PictureBox();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -311,6 +314,7 @@ namespace ACSE.WinForms
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.townGatePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // patternsTab
@@ -640,6 +644,13 @@ namespace ACSE.WinForms
             this.saveTownMapToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.saveTownMapToolStripMenuItem.Text = "Save Town Map";
             this.saveTownMapToolStripMenuItem.Click += new System.EventHandler(this.SaveTownMapToolStripMenuItemClick);
+            // 
+            // openBackupFolderToolStripMenuItem
+            // 
+            this.openBackupFolderToolStripMenuItem.Name = "openBackupFolderToolStripMenuItem";
+            this.openBackupFolderToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.openBackupFolderToolStripMenuItem.Text = "Open Backup Folder";
+            this.openBackupFolderToolStripMenuItem.Click += new System.EventHandler(this.openBackupFolderToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -1852,6 +1863,9 @@ namespace ACSE.WinForms
             // 
             // townMisc
             // 
+            this.townMisc.Controls.Add(this.townGateComboBox);
+            this.townMisc.Controls.Add(this.label25);
+            this.townMisc.Controls.Add(this.townGatePictureBox);
             this.townMisc.Controls.Add(this.groupBox2);
             this.townMisc.Controls.Add(this.stationTypeComboBox);
             this.townMisc.Controls.Add(this.label47);
@@ -2790,12 +2804,34 @@ namespace ACSE.WinForms
             this.StatusLabel.TabIndex = 16;
             this.StatusLabel.TabStop = false;
             // 
-            // openBackupFolderToolStripMenuItem
+            // townGateComboBox
             // 
-            this.openBackupFolderToolStripMenuItem.Name = "openBackupFolderToolStripMenuItem";
-            this.openBackupFolderToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.openBackupFolderToolStripMenuItem.Text = "Open Backup Folder";
-            this.openBackupFolderToolStripMenuItem.Click += new System.EventHandler(this.openBackupFolderToolStripMenuItem_Click);
+            this.townGateComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.townGateComboBox.Enabled = false;
+            this.townGateComboBox.FormattingEnabled = true;
+            this.townGateComboBox.Location = new System.Drawing.Point(254, 48);
+            this.townGateComboBox.Name = "townGateComboBox";
+            this.townGateComboBox.Size = new System.Drawing.Size(130, 21);
+            this.townGateComboBox.TabIndex = 34;
+            this.townToolTip.SetToolTip(this.townGateComboBox, "Sets the town\'s train station type.");
+            this.townGateComboBox.SelectedIndexChanged += new System.EventHandler(this.townGateComboBox_SelectedIndexChanged);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(188, 51);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(60, 13);
+            this.label25.TabIndex = 33;
+            this.label25.Text = "Gate Type:";
+            // 
+            // townGatePictureBox
+            // 
+            this.townGatePictureBox.Location = new System.Drawing.Point(390, 43);
+            this.townGatePictureBox.Name = "townGatePictureBox";
+            this.townGatePictureBox.Size = new System.Drawing.Size(32, 32);
+            this.townGatePictureBox.TabIndex = 32;
+            this.townGatePictureBox.TabStop = false;
             // 
             // MainForm
             // 
@@ -2875,6 +2911,7 @@ namespace ACSE.WinForms
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.townGatePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3120,5 +3157,8 @@ namespace ACSE.WinForms
         private System.Windows.Forms.TextBox StatusLabel;
         private System.Windows.Forms.ToolStripMenuItem itemColorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openBackupFolderToolStripMenuItem;
+        private System.Windows.Forms.ComboBox townGateComboBox;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.PictureBox townGatePictureBox;
     }
 }

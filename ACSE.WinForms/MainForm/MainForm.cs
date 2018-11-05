@@ -687,6 +687,21 @@ namespace ACSE.WinForms
                                          SaveFile.SaveGeneration != SaveGeneration.GCN &&
                                          save.SaveGeneration != SaveGeneration.iQue;
             clearEmotionsButton.Enabled = fillEmotionsButton.Enabled;
+            townGateComboBox.Enabled = SaveFile.SaveGeneration == SaveGeneration.NDS ||
+                                       SaveFile.SaveGeneration == SaveGeneration.Wii;
+
+            townGateComboBox.Items.Clear();
+
+            if (townGateComboBox.Enabled)
+            {
+                townGateComboBox.Items.AddRange(TownGate.GetTownGateTypeNames(SaveFile.SaveGeneration));
+                
+                var selectedIndex = TownGate.GetTownGateType(SaveFile);
+                townGateComboBox.SelectedIndex = selectedIndex > -1 && selectedIndex < townGateComboBox.Items.Count
+                    ? selectedIndex
+                    : 0;
+                // TODO: Set gate image
+            }
 
             SetTrainStationImage();
 
@@ -5257,6 +5272,15 @@ namespace ACSE.WinForms
                         ? $"The backup folder located at \"{Properties.Settings.Default.BackupLocation}\" couldn't be accessed!"
                         : "The backup folder hasn't been set yet.\nPlease set it first!",
                     "Backup Folder Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void townGateComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!_loading && SaveFile != null && townGateComboBox.Enabled && townGateComboBox.SelectedIndex > -1 &&
+                townGateComboBox.SelectedIndex < 3)
+            {
+                TownGate.SetTownGateType(SaveFile, townGateComboBox.SelectedIndex);
             }
         }
 
