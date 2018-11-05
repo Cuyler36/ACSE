@@ -6,11 +6,11 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using ACSE.Core.Buildings;
 using ACSE.Core.Debug;
 using ACSE.Core.Items;
 using ACSE.Core.Players;
 using ACSE.Core.Saves;
+using ACSE.Core.Town.Buildings;
 using ACSE.Core.Villagers;
 using ACSE.WinForms.Controls;
 

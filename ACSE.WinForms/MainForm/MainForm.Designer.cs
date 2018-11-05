@@ -179,6 +179,9 @@ namespace ACSE.WinForms
             this.townPanel = new System.Windows.Forms.Panel();
             this.buriedCheckbox = new System.Windows.Forms.CheckBox();
             this.townMisc = new System.Windows.Forms.TabPage();
+            this.townGateComboBox = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.townGatePictureBox = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.keepTownBeautifulCheckBox = new System.Windows.Forms.CheckBox();
             this.bellBoomCheckBox = new System.Windows.Forms.CheckBox();
@@ -271,9 +274,6 @@ namespace ACSE.WinForms
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.itemIdLabel = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.TextBox();
-            this.townGateComboBox = new System.Windows.Forms.ComboBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.townGatePictureBox = new System.Windows.Forms.PictureBox();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
@@ -301,6 +301,7 @@ namespace ACSE.WinForms
             this.acresTab.SuspendLayout();
             this.townTab.SuspendLayout();
             this.townMisc.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.townGatePictureBox)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stationPictureBox)).BeginInit();
             this.villagerTab.SuspendLayout();
@@ -314,7 +315,6 @@ namespace ACSE.WinForms
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.townGatePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // patternsTab
@@ -1886,6 +1886,35 @@ namespace ACSE.WinForms
             this.townMisc.Text = "Town Misc.";
             this.townMisc.UseVisualStyleBackColor = true;
             // 
+            // townGateComboBox
+            // 
+            this.townGateComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.townGateComboBox.Enabled = false;
+            this.townGateComboBox.FormattingEnabled = true;
+            this.townGateComboBox.Location = new System.Drawing.Point(254, 48);
+            this.townGateComboBox.Name = "townGateComboBox";
+            this.townGateComboBox.Size = new System.Drawing.Size(130, 21);
+            this.townGateComboBox.TabIndex = 34;
+            this.townToolTip.SetToolTip(this.townGateComboBox, "Sets the town\'s train station type.");
+            this.townGateComboBox.SelectedIndexChanged += new System.EventHandler(this.townGateComboBox_SelectedIndexChanged);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(188, 51);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(60, 13);
+            this.label25.TabIndex = 33;
+            this.label25.Text = "Gate Type:";
+            // 
+            // townGatePictureBox
+            // 
+            this.townGatePictureBox.Location = new System.Drawing.Point(390, 43);
+            this.townGatePictureBox.Name = "townGatePictureBox";
+            this.townGatePictureBox.Size = new System.Drawing.Size(32, 32);
+            this.townGatePictureBox.TabIndex = 32;
+            this.townGatePictureBox.TabStop = false;
+            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1991,6 +2020,7 @@ namespace ACSE.WinForms
             this.nativeFruitBox.TabIndex = 27;
             this.townToolTip.SetToolTip(this.nativeFruitBox, "Sets the weather. Note that this will only work if you set it the same in-game da" +
         "y as you dumped it.");
+            this.nativeFruitBox.SelectedIndexChanged += new System.EventHandler(this.nativeFruitBox_SelectedIndexChanged);
             // 
             // label41
             // 
@@ -2804,35 +2834,6 @@ namespace ACSE.WinForms
             this.StatusLabel.TabIndex = 16;
             this.StatusLabel.TabStop = false;
             // 
-            // townGateComboBox
-            // 
-            this.townGateComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.townGateComboBox.Enabled = false;
-            this.townGateComboBox.FormattingEnabled = true;
-            this.townGateComboBox.Location = new System.Drawing.Point(254, 48);
-            this.townGateComboBox.Name = "townGateComboBox";
-            this.townGateComboBox.Size = new System.Drawing.Size(130, 21);
-            this.townGateComboBox.TabIndex = 34;
-            this.townToolTip.SetToolTip(this.townGateComboBox, "Sets the town\'s train station type.");
-            this.townGateComboBox.SelectedIndexChanged += new System.EventHandler(this.townGateComboBox_SelectedIndexChanged);
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(188, 51);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(60, 13);
-            this.label25.TabIndex = 33;
-            this.label25.Text = "Gate Type:";
-            // 
-            // townGatePictureBox
-            // 
-            this.townGatePictureBox.Location = new System.Drawing.Point(390, 43);
-            this.townGatePictureBox.Name = "townGatePictureBox";
-            this.townGatePictureBox.Size = new System.Drawing.Size(32, 32);
-            this.townGatePictureBox.TabIndex = 32;
-            this.townGatePictureBox.TabStop = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2892,6 +2893,7 @@ namespace ACSE.WinForms
             this.townTab.PerformLayout();
             this.townMisc.ResumeLayout(false);
             this.townMisc.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.townGatePictureBox)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stationPictureBox)).EndInit();
@@ -2911,7 +2913,6 @@ namespace ACSE.WinForms
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.townGatePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

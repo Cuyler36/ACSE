@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ACSE.Core.Saves;
 
-namespace ACSE.Core.Buildings
+namespace ACSE.Core.Town.Buildings
 {
     /// <summary>
     /// Building class for editing buildings in City Folk & New Leaf.

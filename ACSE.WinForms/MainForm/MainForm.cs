@@ -10,25 +10,26 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ACSE.Core.Acres;
 using ACSE.Core.BitFields.Catalog;
 using ACSE.Core.BitFields.Encyclopedia;
 using ACSE.Core.BitFields.Museum;
 using ACSE.Core.BitFields.SongLibrary;
-using ACSE.Core.Buildings;
 using ACSE.Core.Debug;
 using ACSE.Core.Emotions;
 using ACSE.Core.Encryption;
 using ACSE.Core.Enums;
 using ACSE.Core.Generators;
 using ACSE.Core.Housing;
-using ACSE.Core.Island;
 using ACSE.Core.Items;
 using ACSE.Core.Modifiable;
 using ACSE.Core.Patterns;
 using ACSE.Core.Players;
 using ACSE.Core.Saves;
-using ACSE.Core.TownBuildings;
+using ACSE.Core.Town;
+using ACSE.Core.Town.Acres;
+using ACSE.Core.Town.Buildings;
+using ACSE.Core.Town.Island;
+using ACSE.Core.Town.TownBuildings;
 using ACSE.Core.Updater;
 using ACSE.Core.Utilities;
 using ACSE.Core.Villagers;
@@ -665,7 +666,6 @@ namespace ACSE.WinForms
             grassTypeBox.Enabled =
                 save.SaveGeneration != SaveGeneration.N64 && save.SaveGeneration != SaveGeneration.iQue;
             weatherComboBox.Enabled = true;
-            nativeFruitBox.Enabled = true;
             stationTypeComboBox.Enabled = TrainStation.HasModifiableTrainStation(save.SaveGeneration);
             houseOwnerComboBox.Enabled = save.SaveGeneration != SaveGeneration.NDS;
             houseTabSelect.Visible = save.SaveGeneration != SaveGeneration.NDS;
@@ -2125,21 +2125,15 @@ namespace ACSE.WinForms
         {
 
             nativeFruitBox.Items.Clear();
-            nativeFruitBox.Enabled = false;
-            if (CurrentSaveInfo.SaveOffsets.NativeFruit <= 0) return;
-            nativeFruitBox.Enabled = true;
-            if (saveGeneration != SaveGeneration.N64 && saveGeneration != SaveGeneration.GCN &&
-                saveGeneration != SaveGeneration.iQue) return;
-            nativeFruitBox.Items.Add("Apple");
-            nativeFruitBox.Items.Add("Cherry");
-            nativeFruitBox.Items.Add("Pear");
-            nativeFruitBox.Items.Add("Peach");
-            nativeFruitBox.Items.Add("Orange");
+            nativeFruitBox.Enabled = saveGeneration != SaveGeneration.NDS;
+            nativeFruitBox.Items.AddRange(NativeFruit.GetNativeFruitTypes(saveGeneration));
 
-            var fruitIndex = SaveFile.ReadUInt16(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.NativeFruit, true) - 0x2800;
+            var fruitIndex = NativeFruit.GetNativeFruit(SaveFile);
 
             if (fruitIndex > -1 && fruitIndex < nativeFruitBox.Items.Count)
+            {
                 nativeFruitBox.SelectedIndex = fruitIndex;
+            }
         }
 
         private void ItemSelectedIndexChanged(object sender, EventArgs e)
@@ -4179,7 +4173,7 @@ namespace ACSE.WinForms
             }
 
             //Save Villagers
-            if (_villagers != null)
+            if (_villagers != null && SaveFile.SaveGeneration != SaveGeneration.Wii)
             {
                 foreach (var villager in _villagers)
                 {
@@ -5281,6 +5275,14 @@ namespace ACSE.WinForms
                 townGateComboBox.SelectedIndex < 3)
             {
                 TownGate.SetTownGateType(SaveFile, townGateComboBox.SelectedIndex);
+            }
+        }
+
+        private void nativeFruitBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!_loading && SaveFile != null && nativeFruitBox.SelectedIndex > -1 && nativeFruitBox.SelectedIndex < 5)
+            {
+                NativeFruit.SetNativeFruit(SaveFile, nativeFruitBox.SelectedIndex);
             }
         }
 

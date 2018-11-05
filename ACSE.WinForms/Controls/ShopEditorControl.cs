@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Forms;
 using ACSE.Core.Items;
-using ACSE.Core.Shops;
+using ACSE.Core.Town.Shops;
 
 namespace ACSE.WinForms.Controls
 {

@@ -3,7 +3,7 @@ using ACSE.Core.Items;
 using ACSE.Core.Patterns;
 using ACSE.Core.Saves;
 
-namespace ACSE.Core.Shops
+namespace ACSE.Core.Town.Shops
 {
     public enum ShopType
     {

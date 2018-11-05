@@ -7,7 +7,7 @@ using ACSE.Core.Players;
 using ACSE.Core.Saves;
 using ACSE.Core.Villagers;
 
-namespace ACSE.Core.Island
+namespace ACSE.Core.Town.Island
 {
     /// <summary>
     /// Island class for Doubutsu no Mori e+

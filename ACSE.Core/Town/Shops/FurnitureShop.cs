@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ACSE.Core.Items;
+﻿using ACSE.Core.Items;
 using ACSE.Core.Saves;
 
-namespace ACSE.Core.Shops
+namespace ACSE.Core.Town.Shops
 {
     public sealed class FurnitureShop : Shop
     {

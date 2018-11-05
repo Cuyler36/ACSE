@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using ACSE.Core.Buildings;
 using ACSE.Core.Debug;
 using ACSE.Core.Saves;
+using ACSE.Core.Town.Buildings;
 using ACSE.Core.Utilities;
 
 namespace ACSE.Core.Items

@@ -4,7 +4,7 @@ using ACSE.Core.Debug;
 using ACSE.Core.Saves;
 using ACSE.Core.Utilities;
 
-namespace ACSE.Core.TownBuildings
+namespace ACSE.Core.Town.TownBuildings
 {
     public static class TrainStation
     {

@@ -5,7 +5,7 @@ using ACSE.Core.Items;
 using ACSE.Core.Saves;
 using ACSE.Core.Utilities;
 
-namespace ACSE.Core.Acres
+namespace ACSE.Core.Town.Acres
 {
     public class Acre
     {

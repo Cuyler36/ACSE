@@ -3,7 +3,7 @@ using System.IO;
 using ACSE.Core.Saves;
 using ACSE.Core.Utilities;
 
-namespace ACSE.Core.TownBuildings
+namespace ACSE.Core.Town.TownBuildings
 {
     /// <summary>
     /// Handles Town Gate related operations.
