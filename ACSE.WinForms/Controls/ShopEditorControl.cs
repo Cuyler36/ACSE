@@ -1,5 +1,7 @@
-﻿using System.Windows.Forms;
+﻿using System.Globalization;
+using System.Windows.Forms;
 using ACSE.Core.Items;
+using ACSE.Core.Shops;
 
 namespace ACSE.WinForms.Controls
 {
@@ -7,18 +9,48 @@ namespace ACSE.WinForms.Controls
     {
         protected ItemEditor ShopEditor;
         protected Label ShopLabel;
+        protected NumericTextBox BellsSumTextBox;
 
-        public Item[] Items { get => ShopEditor.Items; set => ShopEditor.Items = value; }
+        public Shop Shop;
 
-        public ShopEditorControl(MainForm mainWindow, string shopName, Item[] shopItems, int itemsPerRow)
+        public Item[] Items
         {
+            get => Shop.Stock;
+            set
+            {
+                ShopEditor.Items = value;
+                Shop.Stock = value;
+            }
+        }
+
+        public ShopEditorControl(MainForm mainWindow, Shop shop, int itemsPerRow, bool hasBellsSum = false)
+        {
+            Shop = shop;
+
             ShopLabel = new Label
             {
-                Text = shopName,
+                Text = shop.Name,
                 Dock = DockStyle.Top
             };
 
-            ShopEditor = new ItemEditor(mainWindow, shopItems, itemsPerRow, 16);
+            if (hasBellsSum)
+            {
+                BellsSumTextBox = new NumericTextBox
+                {
+                    Text = shop.BellsSum.ToString(),
+                    MaxLength = 10
+                };
+
+                BellsSumTextBox.TextChanged += delegate
+                {
+                    if (uint.TryParse(BellsSumTextBox.Text, NumberStyles.HexNumber, null, out var value))
+                    {
+                        shop.BellsSum = value;
+                    }
+                };
+            }
+
+            ShopEditor = new ItemEditor(mainWindow, shop.Stock, itemsPerRow, 16);
 
             var width = ShopLabel.Size.Width > ShopEditor.Size.Width ? ShopLabel.Size.Width : ShopEditor.Size.Width;
             Size = new System.Drawing.Size(width, ShopLabel.Size.Height + ShopEditor.Size.Height);

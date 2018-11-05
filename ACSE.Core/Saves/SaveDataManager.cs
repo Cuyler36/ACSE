@@ -803,36 +803,36 @@ namespace ACSE.Core.Saves
             {
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DongwuSenlin:
-                    itemDbLocation = Path.Combine(PathUtility.GetExeDirectory(), "Resources",
+                    itemDbLocation = Path.Combine(PathUtility.GetResourcesDirectory(),
                         $"DnM_Items_{language}.txt");
                     break;
                 case SaveType.DoubutsuNoMoriPlus:
-                    itemDbLocation = Path.Combine(PathUtility.GetExeDirectory(), "Resources",
+                    itemDbLocation = Path.Combine(PathUtility.GetResourcesDirectory(),
                         $"DBNM_Plus_Items_{language}.txt");
                     break;
                 case SaveType.AnimalCrossing:
-                    itemDbLocation = Path.Combine(PathUtility.GetExeDirectory(), "Resources",
+                    itemDbLocation = Path.Combine(PathUtility.GetResourcesDirectory(),
                         $"AC_Items_{language}.txt");
                     break;
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                    itemDbLocation = Path.Combine(PathUtility.GetExeDirectory(), "Resources",
+                    itemDbLocation = Path.Combine(PathUtility.GetResourcesDirectory(),
                         $"DBNM_e_Plus_Items_{language}.txt");
                     break;
                 case SaveType.WildWorld:
-                    itemDbLocation = Path.Combine(PathUtility.GetExeDirectory(), "Resources",
+                    itemDbLocation = Path.Combine(PathUtility.GetResourcesDirectory(),
                         $"WW_Items_{language}.txt");
                     break;
                 case SaveType.CityFolk:
-                    itemDbLocation = Path.Combine(PathUtility.GetExeDirectory(), "Resources",
+                    itemDbLocation = Path.Combine(PathUtility.GetResourcesDirectory(),
                         $"CF_Items_{language}.txt");
                     break;
                 case SaveType.NewLeaf:
-                    itemDbLocation = Path.Combine(PathUtility.GetExeDirectory(), "Resources",
+                    itemDbLocation = Path.Combine(PathUtility.GetResourcesDirectory(),
                         $"NL_Items_{language}.txt");
                     break;
                 case SaveType.WelcomeAmiibo:
-                    itemDbLocation = Path.Combine(PathUtility.GetExeDirectory(), "Resources",
+                    itemDbLocation = Path.Combine(PathUtility.GetResourcesDirectory(),
                         $"WA_Items_{language}.txt");
                     break;
             }
@@ -857,7 +857,7 @@ namespace ACSE.Core.Saves
             if (saveType != SaveType.WildWorld) return null;
 
             var (result, database) =
-                DatabaseUtility.LoadDatabaseByte(Path.Combine(PathUtility.GetExeDirectory(),
+                DatabaseUtility.LoadDatabaseByte(Path.Combine(PathUtility.GetResourcesDirectory(),
                     $"WW_Acres_{language}.txt"));
 
             switch (result)
@@ -905,7 +905,7 @@ namespace ACSE.Core.Saves
             }
 
             var (result, database) =
-                DatabaseUtility.LoadDatabase(Path.Combine(PathUtility.GetExeDirectory(), databaseName));
+                DatabaseUtility.LoadDatabase(Path.Combine(PathUtility.GetResourcesDirectory(), databaseName));
 
             switch (result)
             {
@@ -927,7 +927,7 @@ namespace ACSE.Core.Saves
         public static Dictionary<string, List<byte>> GetFiledAcreData(SaveType saveType, string language = "en")
         {
             StreamReader contents;
-            var acreDbLocation = PathUtility.GetExeDirectory();
+            var acreDbLocation = PathUtility.GetResourcesDirectory();
             if (saveType == SaveType.WildWorld)
                 acreDbLocation += "WW_Acres_" + language + ".txt";
             try { contents = File.OpenText(acreDbLocation); }
@@ -974,29 +974,29 @@ namespace ACSE.Core.Saves
         public static Dictionary<string, Dictionary<ushort, string>> GetFiledAcreDataUInt16(SaveType saveType, string language = "en")
         {
             StreamReader contents;
-            var acreDbLocation = PathUtility.GetExeDirectory();
+            var acreDbLocation = PathUtility.GetResourcesDirectory();
             switch (saveType)
             {
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DongwuSenlin:
                 case SaveType.AnimalCrossing: // TODO: DnM needs to have a custom list, since the docks/islands don't exist
-                    acreDbLocation += "AC_Acres_" + language + ".txt";
+                    acreDbLocation = Path.Combine(acreDbLocation, $"AC_Acres_{language}.txt");
                     break;
                 case SaveType.DoubutsuNoMoriPlus:
-                    acreDbLocation += "DBNM_Plus_Acres_" + language + ".txt";
+                    acreDbLocation = Path.Combine(acreDbLocation, $"DBNM_Plus_Acres_{language}.txt");
                     break;
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                    acreDbLocation += "DBNM_e_Plus_Acres_" + language + ".txt";
+                    acreDbLocation = Path.Combine(acreDbLocation, $"DBNM_e_Plus_Acres_{language}.txt");
                     break;
                 case SaveType.CityFolk:
-                    acreDbLocation += "CF_Acres_" + language + ".txt";
+                    acreDbLocation = Path.Combine(acreDbLocation, $"CF_Acres_{language}.txt");
                     break;
                 case SaveType.NewLeaf:
-                    acreDbLocation += "NL_Acres_" + language + ".txt";
+                    acreDbLocation = Path.Combine(acreDbLocation, $"NL_Acres_{language}.txt");
                     break;
                 case SaveType.WelcomeAmiibo:
-                    acreDbLocation += "WA_Acres_" + language + ".txt";
+                    acreDbLocation = Path.Combine(acreDbLocation, $"WA_Acres_{language}.txt");
                     break;
             }
 

@@ -1,9 +1,23 @@
-﻿using ACSE.Core.Items;
+﻿using System;
+using ACSE.Core.Items;
 using ACSE.Core.Patterns;
 using ACSE.Core.Saves;
 
 namespace ACSE.Core.Shops
 {
+    public enum ShopType
+    {
+        FurnitureShop,
+        AbleSisters,
+        LostAndFound,
+        BlackMarket,
+        GardenShop,
+        ShoeShop,
+        GracieGrace,
+        ReTail,
+        MuseumShop,
+    }
+
     public class ShopOffsets
     {
         public int FurnitureShop = -1;
@@ -27,6 +41,9 @@ namespace ACSE.Core.Shops
         public int TailorShopSize = 0;
         public int BlackMarketSize = 0;
         public int LostAndFoundSize = 0;
+
+        public int FurnitureShopBells = -1;
+        public int FurnitureVisitorShopBells = -1;
     }
 
     public static class ShopInfo
@@ -34,6 +51,14 @@ namespace ACSE.Core.Shops
         private static readonly ShopOffsets AnimalCrossingShopOffsets = new ShopOffsets
         {
             FurnitureShopUpgrade = 0x20466
+        };
+
+        private static readonly ShopOffsets AnimalForestEPlusShopOffsets = new ShopOffsets
+        {
+            FurnitureShop = 0x22302,
+            FurnitureShopSize = 0x223A8,
+            FurnitureShopBells = 0x223AC,
+            FurnitureVisitorShopBells = 0x223C0,
         };
 
         private static readonly ShopOffsets WelcomeAmiiboShopOffsets = new ShopOffsets
@@ -56,6 +81,9 @@ namespace ACSE.Core.Shops
             {
                 case SaveType.AnimalCrossing:
                     return AnimalCrossingShopOffsets;
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
+                    return AnimalForestEPlusShopOffsets;
                 case SaveType.WelcomeAmiibo:
                     return WelcomeAmiiboShopOffsets;
                 default:
@@ -63,31 +91,45 @@ namespace ACSE.Core.Shops
             }
         }
 
-        public static string GetShopName(SaveGeneration generation, byte shopSize)
+        public static string GetShopName(SaveGeneration generation, ShopType shopType, byte shopSize = 0)
         {
-            if (generation == SaveGeneration.N3DS)
+            switch (shopType)
             {
-                if (shopSize > 4)
-                    shopSize = 4;
-                return NewLeafNookShopNames[shopSize];
+                case ShopType.FurnitureShop:
+                    if (generation == SaveGeneration.N3DS)
+                    {
+                        if (shopSize > 4)
+                            shopSize = 4;
+                        return NewLeafNookShopNames[shopSize];
+                    }
+
+                    if (shopSize > 3)
+                        shopSize = 3;
+                    return NookShopNames[shopSize];
             }
 
-            if (shopSize > 3)
-                shopSize = 3;
-            return NookShopNames[shopSize];
+            throw new NotImplementedException("Shop type is unimplemented!");
         }
     }
 
     public abstract class Shop
     {
-        public Item[] Stock;
         public string Name;
+        public Item[] Stock;
+
+        public uint BellsSum
+        {
+            get => SaveFile.ReadUInt32(BellsSumOffset, SaveFile.IsBigEndian, true);
+            set => SaveFile.Write(BellsSumOffset, value, SaveFile.IsBigEndian, true);
+        }
 
         protected Save SaveFile;
         protected int Offset;
         protected ShopOffsets ShopOffsets;
 
-        public Shop(Save saveFile, int offset)
+        protected int BellsSumOffset = -1;
+
+        protected Shop(Save saveFile, int offset)
         {
             SaveFile = saveFile;
             Offset = offset;
@@ -95,91 +137,6 @@ namespace ACSE.Core.Shops
         }
 
         public abstract void Write();
-    }
-
-    public class FurnitureShop : Shop
-    {
-        public uint PurchaseSum;
-        public byte Size;
-
-        public FurnitureShop(Save saveFile, int offset) : base(saveFile, offset)
-        {
-            Size = GetSize(saveFile.SaveGeneration);
-            Name = ShopInfo.GetShopName(saveFile.SaveGeneration, Size);
-            var itemCount = 0;
-
-            switch (saveFile.SaveGeneration)
-            {
-                case SaveGeneration.N64:
-                case SaveGeneration.GCN:
-                    if (Size == 0)
-                        itemCount = 0;
-                    else if (Size == 1)
-                        itemCount = 0;
-                    else if (Size == 2)
-                        itemCount = 0;
-                    else
-                        itemCount = 35;
-                    break;
-                case SaveGeneration.N3DS:
-                    break;
-            }
-
-            var items = new Item[itemCount];
-            for (var i = 0; i < itemCount; i++)
-            {
-                if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
-                {
-                    items[i] = new Item(SaveFile.ReadUInt32(Offset + ShopOffsets.FurnitureShop + i * 4));
-                }
-                else
-                {
-                    items[i] = new Item(SaveFile.ReadUInt16(Offset + ShopOffsets.FurnitureShop + i * 2));
-                }
-            }
-
-            Stock = items;
-        }
-
-        public byte GetSize(SaveGeneration generation)
-        {
-            var saveFile = Save.SaveInstance;
-            var shopOffsets = ShopInfo.GetShopOffsets(saveFile.SaveType);
-            if (shopOffsets == null) return 0;
-            switch (generation)
-            {
-                case SaveGeneration.N64:
-                case SaveGeneration.GCN:
-                    return (byte)(saveFile.ReadByte(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade) >> 6);
-                case SaveGeneration.N3DS:
-                    return saveFile.ReadByte(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade);
-                default:
-                    return 0;
-            }
-        }
-
-        public void SetSize(byte size)
-        {
-            var saveFile = Save.SaveInstance;
-            var shopOffsets = ShopInfo.GetShopOffsets(saveFile.SaveType);
-            if (shopOffsets == null) return;
-            switch (saveFile.SaveGeneration)
-            {
-                case SaveGeneration.N64:
-                case SaveGeneration.GCN:
-                    saveFile.Write(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade,
-                        (byte)((saveFile.ReadByte(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade) & 0x3F) | ((size & 3) << 6)));
-                    break;
-                case SaveGeneration.N3DS:
-                    saveFile.Write(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade, size);
-                    break;
-            }
-        }
-
-        public override void Write()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 
     public class TailorShop : Shop

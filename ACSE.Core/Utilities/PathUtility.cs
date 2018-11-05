@@ -22,5 +22,17 @@ namespace ACSE.Core.Utilities
         /// </summary>
         /// <returns>The path string of the Resources folder.</returns>
         public static string GetResourcesDirectory() => Path.Combine(GetExeDirectory(), "Resources");
+
+        /// <summary>
+        /// Gets the directory of the Images folder.
+        /// </summary>
+        /// <returns>The path string of the Images folder.</returns>
+        public static string GetImagesDirectory() => Path.Combine(GetResourcesDirectory(), "Images");
+
+        /// <summary>
+        /// Gets the directory of the Icons folder.
+        /// </summary>
+        /// <returns>The path string of the Icons folder.</returns>
+        public static string GetIconsDirectory() => Path.Combine(GetImagesDirectory(), "Icons");
     }
 }
