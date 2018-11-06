@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using ACSE.Core.Items;
 using ACSE.Core.Modifiable;
 using ACSE.Core.Utilities;
+using ACSE.WinForms.Imaging;
 
 namespace ACSE.WinForms.Controls
 {
@@ -26,6 +27,9 @@ namespace ACSE.WinForms.Controls
         public readonly Stack<ItemChange> RedoStack = new Stack<ItemChange>();
         public bool Modified { get; protected set; }
         public string HoverText = "{0} - [0x{1}]";
+        public bool ShowHoveredItemCellHighlight = true;
+
+        protected Image CurrentItemImage;
 
         private int _itemsPerRow;
         public int ItemsPerRow
@@ -66,20 +70,22 @@ namespace ACSE.WinForms.Controls
 
         protected virtual void SetItemPicture()
         {
-            var img = EditorPictureBox.Image;
+            if (_items == null) return;
 
-            if (_items != null)
-            {
-                Size = new Size(_itemCellSize * _itemsPerRow + 3, _itemCellSize * (int)(Math.Ceiling((decimal)_items.Length / _itemsPerRow)) + 3);
-                EditorPictureBox.Image = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items, MainForm.SaveFile.SaveType, EditorPictureBox.Size);
-            }
+            Size = new Size(_itemCellSize * _itemsPerRow + 3,
+                _itemCellSize * (int) (Math.Ceiling((decimal) _items.Length / _itemsPerRow)) + 3);
 
-            img?.Dispose();
+            CurrentItemImage?.Dispose();
+            EditorPictureBox.Image?.Dispose();
+
+            CurrentItemImage = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items, MainForm.SaveFile.SaveType,
+                EditorPictureBox.Size);
+            EditorPictureBox.Image = (Image) CurrentItemImage.Clone();
+            EditorPictureBox.Refresh();
         }
 
         protected readonly MainForm MainFormReference;
         protected int LastX = -1, LastY = -1;
-        protected bool IsMouseDown;
 
         protected ItemEditor()
         {
@@ -105,15 +111,21 @@ namespace ACSE.WinForms.Controls
             ItemCellSize = itemCellSize;
 
             EditorPictureBox.MouseMove += OnEditorMouseMove;
-            EditorPictureBox.MouseLeave += (sender, e) => ItemToolTip.Hide(this);
+            EditorPictureBox.MouseLeave += delegate
+            {
+                ItemToolTip.Hide(this);
+                EditorPictureBox.Image?.Dispose();
+                EditorPictureBox.Image = (Image) CurrentItemImage.Clone();
+                EditorPictureBox.Refresh();
+            };
 
             EditorPictureBox.MouseDown += OnEditorMouseDown;
-            EditorPictureBox.MouseUp += (sender, e) => IsMouseDown = false;
         }
 
         protected virtual void OnItemChanged(Item previousItem, Item newItem, int index)
         {
-            ItemChanged?.Invoke(this, new IndexedItemChangedEventArgs { PreviousItem = previousItem, NewItem = newItem, Index = index });
+            ItemChanged?.Invoke(this,
+                new IndexedItemChangedEventArgs {PreviousItem = previousItem, NewItem = newItem, Index = index});
         }
 
         protected virtual void PushNewItemChange(Item oldItem, int itemIndex, Stack<ItemChange> stack)
@@ -132,26 +144,37 @@ namespace ACSE.WinForms.Controls
 
         protected virtual void OnEditorMouseMove(object sender, MouseEventArgs e)
         {
-            if (_items == null || !GetXyPosition(e, out _, out _, out var index) ||
+            if (_items == null || !GetXyPosition(e, out var x, out var y, out var index) ||
                 (e.X == LastX && e.Y == LastY)) return;
+            
             // Update Last Hover Position
             LastX = e.X;
             LastY = e.Y;
 
+            // Draw the item highlight if necessary.
+            if (ShowHoveredItemCellHighlight)
+            {
+                EditorPictureBox.Image?.Dispose();
+                EditorPictureBox.Image = (Bitmap) CurrentItemImage.Clone();
+                ImageGeneration.OverlayItemBoxGlow((Bitmap) EditorPictureBox.Image, _itemCellSize, x, y);
+                EditorPictureBox.Refresh();
+            }
+
             var hoveredItem = _items[index];
 
             // Refresh ToolTip
-            ItemToolTip.Show(string.Format(HoverText, hoveredItem.Name, hoveredItem.ItemId.ToString("X4"), hoveredItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
+            ItemToolTip.Show(
+                string.Format(HoverText, hoveredItem.Name, hoveredItem.ItemId.ToString("X4"),
+                    hoveredItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
 
             // Check for MouseDown
-            if (IsMouseDown)
+            if (e.Button != MouseButtons.None)
                 OnEditorMouseDown(sender, e);
         }
 
         protected virtual void OnEditorMouseDown(object sender, MouseEventArgs e)
         {
-            IsMouseDown = true;
-            if (!GetXyPosition(e, out _, out _, out var index)) return;
+            if (!GetXyPosition(e, out var x, out var y, out var index)) return;
             var selectedItem = _items[index];
             switch (e.Button)
             {
@@ -170,12 +193,19 @@ namespace ACSE.WinForms.Controls
                         _items[index] = newItem;
 
                         // Redraw Item Image
-                        var img = EditorPictureBox.Image;
-                        EditorPictureBox.Image = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items, MainForm.SaveFile.SaveType, EditorPictureBox.Size);
-                        img?.Dispose();
+                        CurrentItemImage?.Dispose();
+                        EditorPictureBox.Image?.Dispose();
+
+                        CurrentItemImage = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items, MainForm.SaveFile.SaveType,
+                            EditorPictureBox.Size);
+                        EditorPictureBox.Image = (Image)CurrentItemImage.Clone();
+                        ImageGeneration.OverlayItemBoxGlow((Bitmap) EditorPictureBox.Image, _itemCellSize, x, y);
+                        EditorPictureBox.Refresh();
 
                         // Update ToolTip
-                        ItemToolTip.Show(string.Format(HoverText, newItem.Name, newItem.ItemId.ToString("X4"), newItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
+                        ItemToolTip.Show(
+                            string.Format(HoverText, newItem.Name, newItem.ItemId.ToString("X4"),
+                                newItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
 
                         // Fire ItemChanged Event
                         OnItemChanged(selectedItem, newItem, index);
@@ -209,7 +239,8 @@ namespace ACSE.WinForms.Controls
             // Undo
             _items[previousItemChange.Index] = previousItemChange.Item;
             var img = EditorPictureBox.Image;
-            EditorPictureBox.Image = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items, MainForm.SaveFile.SaveType, EditorPictureBox.Size);
+            EditorPictureBox.Image = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items,
+                MainForm.SaveFile.SaveType, EditorPictureBox.Size);
             img?.Dispose();
 
             OnItemChanged(selectedItem, Items[previousItemChange.Index], previousItemChange.Index);
@@ -229,7 +260,8 @@ namespace ACSE.WinForms.Controls
             // Redo
             _items[previousItemChange.Index] = previousItemChange.Item;
             var img = EditorPictureBox.Image;
-            EditorPictureBox.Image = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items, MainForm.SaveFile.SaveType, EditorPictureBox.Size);
+            EditorPictureBox.Image = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items,
+                MainForm.SaveFile.SaveType, EditorPictureBox.Size);
             img?.Dispose();
 
             OnItemChanged(selectedItem, Items[previousItemChange.Index], previousItemChange.Index);
@@ -242,12 +274,12 @@ namespace ACSE.WinForms.Controls
             UndoStack.Push(newItem);
         }
 
-        protected virtual void Dipose()
+        protected new virtual void Dispose()
         {
             ItemToolTip.Dispose();
             EditorPictureBox.Image?.Dispose();
             EditorPictureBox.Dispose();
-            Dispose();
+            base.Dispose();
         }
     }
 }

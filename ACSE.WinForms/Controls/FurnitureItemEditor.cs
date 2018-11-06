@@ -15,23 +15,22 @@ namespace ACSE.WinForms.Controls
 
         protected override void SetItemPicture()
         {
-            var img = EditorPictureBox.Image;
+            if (Items == null) return;
 
-            if (Items != null)
-            {
-                Size = new Size(ItemCellSize * ItemsPerRow + 3, ItemCellSize * (int)(Math.Ceiling((decimal)Items.Length / ItemsPerRow)) + 3);
-                EditorPictureBox.Image = ImageGeneration.DrawFurnitureArrows((Bitmap) Inventory.GetItemPic(ItemCellSize,
-                        ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[]) Items,
-                    ItemsPerRow);
-            }
+            Size = new Size(ItemCellSize * ItemsPerRow + 3, ItemCellSize * (int)(Math.Ceiling((decimal)Items.Length / ItemsPerRow)) + 3);
 
-            img?.Dispose();
+            CurrentItemImage?.Dispose();
+            CurrentItemImage = ImageGeneration.DrawFurnitureArrows((Bitmap) Inventory.GetItemPic(ItemCellSize,
+                    ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[]) Items,
+                ItemsPerRow);
+
+            EditorPictureBox.Image?.Dispose();
+            EditorPictureBox.Image = (Image) CurrentItemImage.Clone();
         }
 
         protected override void OnEditorMouseDown(object sender, MouseEventArgs e)
         {
-            IsMouseDown = true;
-            if (!GetXyPosition(e, out _, out _, out var index)) return;
+            if (!GetXyPosition(e, out var x, out var y, out var index)) return;
             var selectedItem = Items[index];
             switch (e.Button)
             {
@@ -50,10 +49,16 @@ namespace ACSE.WinForms.Controls
                         Items[index] = newItem;
 
                         // Redraw Item Image
-                        var img = EditorPictureBox.Image;
-                        EditorPictureBox.Image = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(ItemCellSize,
-                            ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[])Items, ItemsPerRow);
-                        img?.Dispose();
+                        CurrentItemImage?.Dispose();
+                        CurrentItemImage = ImageGeneration.DrawFurnitureArrows((Bitmap) Inventory.GetItemPic(
+                                ItemCellSize,
+                                ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size),
+                            (Furniture[]) Items,
+                            ItemsPerRow);
+
+                        EditorPictureBox.Image?.Dispose();
+                        EditorPictureBox.Image = (Image)CurrentItemImage.Clone();
+                        ImageGeneration.OverlayItemBoxGlow((Bitmap) EditorPictureBox.Image, ItemCellSize, x, y);
 
                         // Update ToolTip
                         ItemToolTip.Show(
