@@ -29,13 +29,13 @@ namespace ACSE.Tests
         [TestMethod]
         public void TestNewLeafCRC32Type1()
         {
-            Assert.AreEqual(new NewLeafCRC32Type1().Calculate(TestBuffer), 0xE764E245);
+            Assert.AreEqual(new NewLeafCRC32Reflected().Calculate(TestBuffer), 0xE764E245);
         }
 
         [TestMethod]
         public void TestNewLeafCRC32Type2()
         {
-            Assert.AreEqual(new NewLeafCRC32Type2().Calculate(TestBuffer), 0xDC89E85C);
+            Assert.AreEqual(new NewLeafCRC32Normal().Calculate(TestBuffer), 0xDC89E85C);
         }
     }
 }

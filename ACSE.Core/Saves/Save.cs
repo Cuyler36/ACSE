@@ -194,83 +194,83 @@ namespace ACSE.Core.Saves
                         crc32.Calculate(SaveData.Skip(SaveDataStartOffset + 0x24).Take(0x111C).ToArray()), true);
                     break;
                 case SaveType.NewLeaf:
-                    var crc32Type1 = new NewLeafCRC32Type1();
+                    var crc32Reflected = new NewLeafCRC32Reflected();
 
                     Write(SaveDataStartOffset,
-                        crc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
+                        crc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
                     for (var i = 0; i < 4; i++)
                     {
                         var dataOffset = SaveDataStartOffset + 0x20 + i * 0x9F10;
                         Write(dataOffset,
-                            crc32Type1.Calculate(SaveData.Skip(dataOffset + 4).Take(0x6B64).ToArray()));
+                            crc32Reflected.Calculate(SaveData.Skip(dataOffset + 4).Take(0x6B64).ToArray()));
 
                         var dataOffset2 = SaveDataStartOffset + 0x20 + 0x6B68 + i * 0x9F10;
                         Write(dataOffset2,
-                            crc32Type1.Calculate(SaveData.Skip(dataOffset2 + 4).Take(0x33A4).ToArray()));
+                            crc32Reflected.Calculate(SaveData.Skip(dataOffset2 + 4).Take(0x33A4).ToArray()));
                     }
 
                     Write(SaveDataStartOffset + 0x27C60,
-                        crc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x27C60 + 4).Take(0x218B0)
+                        crc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x27C60 + 4).Take(0x218B0)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x49520,
-                        crc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x49520 + 4).Take(0x44B8)
+                        crc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x49520 + 4).Take(0x44B8)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x4D9DC,
-                        crc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x4D9DC + 4).Take(0x1E420)
+                        crc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x4D9DC + 4).Take(0x1E420)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x6BE00,
-                        crc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x6BE00 + 4).Take(0x20)
+                        crc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x6BE00 + 4).Take(0x20)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x6BE24,
-                        crc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x6BE24 + 4).Take(0x13AF8)
+                        crc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x6BE24 + 4).Take(0x13AF8)
                             .ToArray()));
                     break;
                 case SaveType.WelcomeAmiibo:
-                    var waCrc32Type1 = new NewLeafCRC32Type1();
-                    var waCrc32Type2 = new NewLeafCRC32Type2();
+                    var wCrc32Reflected = new NewLeafCRC32Reflected();
+                    var wCrc32Normal = new NewLeafCRC32Normal();
 
-                    // CRC32 Implementation Type 1 Checksums
+                    // Reflected CRC32 Implementation Checksums
                     Write(SaveDataStartOffset,
-                        waCrc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
+                        wCrc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 4).Take(0x1C).ToArray()));
                     for (var i = 0; i < 4; i++)
                     {
                         var dataOffset = SaveDataStartOffset + 0x20 + i * 0xA480;
                         Write(dataOffset,
-                            waCrc32Type1.Calculate(SaveData.Skip(dataOffset + 4).Take(0x6B84).ToArray()));
+                            wCrc32Reflected.Calculate(SaveData.Skip(dataOffset + 4).Take(0x6B84).ToArray()));
 
                         var dataOffset2 = SaveDataStartOffset + 0x20 + 0x6B88 + i * 0xA480;
                         Write(dataOffset2,
-                            waCrc32Type1.Calculate(SaveData.Skip(dataOffset2 + 4).Take(0x38F4).ToArray()));
+                            wCrc32Reflected.Calculate(SaveData.Skip(dataOffset2 + 4).Take(0x38F4).ToArray()));
                     }
 
                     Write(SaveDataStartOffset + 0x29220,
-                        waCrc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x29220 + 4).Take(0x22BC8)
+                        wCrc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x29220 + 4).Take(0x22BC8)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x4BE00,
-                        waCrc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x4BE00 + 4).Take(0x44B8)
+                        wCrc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x4BE00 + 4).Take(0x44B8)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x533A4,
-                        waCrc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x533A4 + 4).Take(0x1E4D8)
+                        wCrc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x533A4 + 4).Take(0x1E4D8)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x71880,
-                        waCrc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x71880 + 4).Take(0x20)
+                        wCrc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x71880 + 4).Take(0x20)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x718A4,
-                        waCrc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x718A4 + 4).Take(0xBE4)
+                        wCrc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x718A4 + 4).Take(0xBE4)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x738D4,
-                        waCrc32Type1.Calculate(SaveData.Skip(SaveDataStartOffset + 0x738D4 + 4).Take(0x16188)
+                        wCrc32Reflected.Calculate(SaveData.Skip(SaveDataStartOffset + 0x738D4 + 4).Take(0x16188)
                             .ToArray()));
 
-                    // CRC32 Implementation Type 2 Checksums
+                    // Normal CRC32 Implementation Checksums
                     Write(SaveDataStartOffset + 0x502BC,
-                        waCrc32Type2.Calculate(SaveData.Skip(SaveDataStartOffset + 0x502BC + 4).Take(0x28F0)
+                        wCrc32Normal.Calculate(SaveData.Skip(SaveDataStartOffset + 0x502BC + 4).Take(0x28F0)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x52BB0,
-                        waCrc32Type2.Calculate(SaveData.Skip(SaveDataStartOffset + 0x52BB0 + 4).Take(0x7F0)
+                        wCrc32Normal.Calculate(SaveData.Skip(SaveDataStartOffset + 0x52BB0 + 4).Take(0x7F0)
                             .ToArray()));
                     Write(SaveDataStartOffset + 0x7248C,
-                        waCrc32Type2.Calculate(SaveData.Skip(SaveDataStartOffset + 0x7248C + 4).Take(0x1444)
+                        wCrc32Normal.Calculate(SaveData.Skip(SaveDataStartOffset + 0x7248C + 4).Take(0x1444)
                             .ToArray()));
                     break;
             }
