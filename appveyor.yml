@@ -4,11 +4,24 @@ configuration: Release
 platform: Any CPU
 before_build:
 - nuget restore
+
 build:
   project: ACSE.sln
   verbosity: minimal
+ 
 after_build:
 - cmd: 7z a -tzip "ACSE.WinForms/bin/Release/ACSE.zip" "ACSE.WinForms/bin/Release/*"
+
 artifacts:
 - path: ACSE.WinForms/bin/Release/ACSE.zip
-  name: build
+  name: DevBuild
+
+deploy:
+    provider: GitHub
+    auth_token:
+        secure: GL5JqofZHzmr6ztb9df5FKEPSJmvzPrH2saGy+leFyeIrc8C7qkJmbQZ7PpH2NOl
+        artifact: ACSE.WinForms/bin/Release/*
+        draft: false
+        prerelease: true
+        on:
+            appveyor_repo_tag: true
