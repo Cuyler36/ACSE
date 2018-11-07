@@ -18,7 +18,7 @@ artifacts:
   name: DevBuild
 
 deploy:
-    - provider: GitHub
+  - provider: GitHub
     name: Development Release {build}
     auth_token:
         secure: GL5JqofZHzmr6ztb9df5FKEPSJmvzPrH2saGy+leFyeIrc8C7qkJmbQZ7PpH2NOl
