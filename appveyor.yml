@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 0.4.1.{build}
 image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
@@ -11,17 +11,19 @@ build:
  
 after_build:
 - cmd: 7z a -tzip "ACSE.WinForms/bin/Release/ACSE.zip" "ACSE.WinForms/bin/Release/*"
+- remove_files:
 
 artifacts:
 - path: ACSE.WinForms/bin/Release/ACSE.zip
   name: DevBuild
 
 deploy:
-    provider: GitHub
+    - provider: GitHub
+    name: Development Release {build}
     auth_token:
         secure: GL5JqofZHzmr6ztb9df5FKEPSJmvzPrH2saGy+leFyeIrc8C7qkJmbQZ7PpH2NOl
-        artifact: ACSE.WinForms/bin/Release/*
-        draft: false
-        prerelease: true
-        on:
-            appveyor_repo_tag: true
+    artifact: ACSE.WinForms/bin/Release/*
+    draft: false
+    prerelease: true
+    on:
+        APPVEYOR_REPO_TAG: true

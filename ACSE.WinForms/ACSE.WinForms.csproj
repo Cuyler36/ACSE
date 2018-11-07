@@ -8,7 +8,7 @@
     <ProjectGuid>{B4A73545-0177-4159-8602-648AA3058650}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ACSE.WinForms</RootNamespace>
-    <AssemblyName>ACSE.WinForms</AssemblyName>
+    <AssemblyName>ACSE</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -5644,4 +5644,9 @@
     <Error Condition="!Exists('..\packages\Fody.3.2.16\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.2.16\build\Fody.targets'))" />
   </Target>
   <Import Project="..\packages\Fody.3.2.16\build\Fody.targets" Condition="Exists('..\packages\Fody.3.2.16\build\Fody.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>del $(TargetDir)Newtonsoft.Json.xml
+del $(TargetDir)$(TargetName).pdb
+del $(TargetDir)$(TargetName).exe.config</PostBuildEvent>
+  </PropertyGroup>
 </Project>
