@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ACSE.Core.Saves.Checksums
 {
-    public sealed class NewLeafCRC32Type2 : IChecksum<uint>
+    public sealed class NewLeafCRC32Normal : IChecksum<uint>
     {
         private static readonly uint[] NewLeafCrcTableType2 = {
             0x00000000, 0x04C11DB7, 0x09823B6E, 0x0D4326D9, 0x130476DC,
