@@ -17,13 +17,14 @@ artifacts:
   name: DevBuild
 
 deploy:
-  - provider: GitHub
-    name: Development Release {build}
+    provider: GitHub
+    release: Development Release {build}
+    description: ACSE Development Release {build}. Some features may or may not work. Your milage will vary. Use at your own risk.
     auth_token:
         secure: GL5JqofZHzmr6ztb9df5FKEPSJmvzPrH2saGy+leFyeIrc8C7qkJmbQZ7PpH2NOl
-    artifact: ACSE.WinForms/bin/Release/*
+    artifact: /.*\.zip/
     draft: false
     prerelease: true
+    tag: $(APPVEYOR_REPO_TAG_NAME)
     on:
-        branch: master
         appveyor_repo_tag: true
