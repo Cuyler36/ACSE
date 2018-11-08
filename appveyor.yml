@@ -25,5 +25,6 @@ deploy:
     artifact: /.*\.zip/
     draft: false
     prerelease: true
-    tag: Development Build
-    appveyor_repo_tag: true
+    tag: $(APPVEYOR_REPO_TAG_NAME)
+    on:
+        APPVEYOR_REPO_TAG: true
