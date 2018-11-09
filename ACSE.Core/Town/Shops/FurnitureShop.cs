@@ -100,6 +100,12 @@ namespace ACSE.Core.Town.Shops
                 case SaveGeneration.GCN:
                     saveFile.Write(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade,
                         (byte)((saveFile.ReadByte(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade) & 0x3F) | ((size & 3) << 6)));
+
+                    if (size == 3 && VisitorBellsSum < 1)
+                    {
+                        VisitorBellsSum = int.MaxValue;
+                    }
+
                     break;
                 case SaveGeneration.N3DS:
                     saveFile.Write(saveFile.SaveDataStartOffset + shopOffsets.FurnitureShopUpgrade, size);

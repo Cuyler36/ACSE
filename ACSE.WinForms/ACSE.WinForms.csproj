@@ -94,7 +94,10 @@
     <Compile Include="Controls\RegexTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\ShopEditorControl.cs">
+    <Compile Include="Controls\ShopControls\FurnitureShopEditorControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ShopControls\ShopEditorControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\SingleItemEditor.cs">

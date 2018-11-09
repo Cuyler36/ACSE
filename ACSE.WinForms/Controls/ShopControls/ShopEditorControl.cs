@@ -1,15 +1,17 @@
 ﻿using System.Globalization;
 using System.Windows.Forms;
 using ACSE.Core.Items;
+using ACSE.Core.Patterns;
 using ACSE.Core.Town.Shops;
 
-namespace ACSE.WinForms.Controls
+namespace ACSE.WinForms.Controls.ShopControls
 {
     public class ShopEditorControl : Panel
     {
         protected ItemEditor ShopEditor;
         protected Label ShopLabel;
         protected NumericTextBox BellsSumTextBox;
+        protected Pattern[] Patterns;
 
         public Shop Shop;
 
@@ -48,6 +50,8 @@ namespace ACSE.WinForms.Controls
                         shop.BellsSum = value;
                     }
                 };
+
+                Controls.Add(BellsSumTextBox);
             }
 
             ShopEditor = new ItemEditor(mainWindow, shop.Stock, itemsPerRow, 16);
