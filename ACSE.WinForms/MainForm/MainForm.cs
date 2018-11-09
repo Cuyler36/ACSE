@@ -524,54 +524,8 @@ namespace ACSE.WinForms
             }
         }
 
-        private async Task SetupEditor(Save save)
+        private void EnableEditorControls(Save save)
         {
-            // Set the debug manager's save reference
-            DebugUtility.DebugManagerInstance.SaveFile = save;
-
-            // Create a backup if backups are enabled
-            if (Properties.Settings.Default.BackupFiles)
-                new Backup(save);
-
-            progressBar1.Value = 0;
-            loadingPanel.BringToFront();
-            loadingPanel.Visible = true;
-            loadingPanel.Enabled = true;
-            _loading = true;
-            if (save.SuccessfullyLoaded && save.SaveType == SaveType.Unknown)
-            {
-                MessageBox.Show(
-                    $"The file [{save.SaveName + save.SaveExtension}] could not be identified as a valid Animal Crossing save file.\n" +
-                    "Please ensure you have a valid save file.",
-                    "Save File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                loadingPanel.SendToBack();
-                loadingPanel.Visible = false;
-                loadingPanel.Enabled = false;
-                _loading = false;
-                progressBar1.Value = 0;
-                return;
-            }
-
-            if (!save.SuccessfullyLoaded)
-            {
-                loadingPanel.SendToBack();
-                loadingPanel.Visible = false;
-                loadingPanel.Enabled = false;
-                _loading = false;
-                progressBar1.Value = 0;
-                return;
-            }
-
-            // Clear items
-            selectedItem.DataSource = null;
-            selectedItem.Items.Clear();
-
-            // Initialize item colors
-            ItemColorEditor.UpdateItemColors(); // TODO: Move this logic to ACSE.Core
-
-            SaveFile = null; //Set to null so we can set the checkbox to false without having the method run
-            UndoRedoHandler = new ModifiedHandler();
-            townMapViewCheckbox.Checked = false;
             townMapViewCheckbox.Enabled = save.SaveGeneration == SaveGeneration.N64 ||
                                           save.SaveGeneration == SaveGeneration.GCN ||
                                           save.SaveGeneration == SaveGeneration.iQue;
@@ -579,61 +533,6 @@ namespace ACSE.WinForms
             acreHeightTrackBar.Enabled = save.SaveGeneration == SaveGeneration.N64 ||
                                          save.SaveGeneration == SaveGeneration.GCN ||
                                          save.SaveGeneration == SaveGeneration.iQue;
-            SaveFile = save;
-            _currentItem = new Item();
-            DebugManager.WriteLine("Save File Loaded");
-            _acreHeightModifier = 0;
-            _selectedAcreId = 0;
-            _selectedAcrePicturebox.Image = null;
-            _selectedAcrePicturebox.BackgroundImage = null;
-            _buildings = null;
-            _islandBuildings = null;
-            _selectedPatternObject = null;
-            _buriedBuffer = null;
-            _islandBuriedBuffer = null;
-            _selectedHouse = null;
-            _tpcPicture.Image = NoTPC;
-            _secureNandValueForm.Hide();
-            _currentItem = new Item();
-            itemFlag1.Text = "00";
-            itemFlag2.Text = "00";
-
-            await Task.Run(() =>
-            {
-                _itemList = SaveDataManager.GetItemInfo(save.SaveType).ToList();
-                _itemList.Sort((x, y) => x.Key.CompareTo(y.Key));
-                ItemData.ItemDatabase = _itemList;
-            });
-
-            selectedItem.DataSource = new BindingSource(_itemList, null);
-            selectedItem.DisplayMember = "Value";
-            selectedItem.ValueMember = "Key";
-
-            progressBar1.Value = 5;
-
-            CurrentSaveInfo = SaveDataManager.GetSaveInfo(SaveFile.SaveType);
-            if (save.SaveType == SaveType.WildWorld)
-            {
-                await Task.Run(() =>
-                {
-                    _filedAcreData = SaveDataManager.GetFiledAcreData(SaveFile.SaveType);
-                    _uInt16FiledAcreData = null;
-                    _uInt16AcreInfo = null;
-                });
-                progressBar1.Value = 7;
-            }
-            else
-            {
-                await Task.Run(() =>
-                {
-                    _uInt16FiledAcreData = SaveDataManager.GetFiledAcreDataUInt16(SaveFile.SaveType);
-                    _filedAcreData = null;
-                    _acreInfo = null;
-                });
-                progressBar1.Value = 7;
-            }
-
-            // Enable Controls
             playerName.Enabled = true;
             playerWallet.Enabled = true;
             playerDebt.Enabled = true;
@@ -689,6 +588,449 @@ namespace ACSE.WinForms
             clearEmotionsButton.Enabled = fillEmotionsButton.Enabled;
             townGateComboBox.Enabled = SaveFile.SaveGeneration == SaveGeneration.NDS ||
                                        SaveFile.SaveGeneration == SaveGeneration.Wii;
+        }
+
+        private void LoadAcres(Save save)
+        {
+            _acres = new WorldAcre[CurrentSaveInfo.AcreCount];
+            TownAcres = new WorldAcre[CurrentSaveInfo.TownAcreCount];
+
+            switch (save.SaveGeneration)
+            {
+                case SaveGeneration.GCN:
+                case SaveGeneration.N64:
+                case SaveGeneration.iQue:
+                    {
+                        _uInt16AcreInfo = SaveDataManager.GetAcreInfoUInt16(save.SaveType);
+                        var x = 0;
+                        var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
+                            CurrentSaveInfo.AcreCount, true);
+                        _buriedBuffer =
+                            save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
+                                CurrentSaveInfo.SaveOffsets.BuriedDataSize);
+
+                        if (save.SaveGeneration == SaveGeneration.GCN)
+                        {
+                            _islandBuriedBuffer =
+                                save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandBuriedData,
+                                    CurrentSaveInfo.SaveOffsets.IslandBuriedSize);
+                        }
+
+                        for (var i = 0; i < acreData.Length; i++)
+                        {
+                            if (i >= CurrentSaveInfo.XAcreCount + 1 && (i % CurrentSaveInfo.XAcreCount > 0
+                                                                        && i % CurrentSaveInfo.XAcreCount <
+                                                                        CurrentSaveInfo.XAcreCount - 1) && i <= 47)
+                            {
+                                var itemsBuff = save.ReadUInt16Array(save.SaveDataStartOffset +
+                                                                     CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256,
+                                    true);
+                                TownAcres[x] = new WorldAcre(acreData[i], i, itemsBuff, _buriedBuffer, save.SaveType, null,
+                                    x);
+                                x++;
+                            }
+
+                            _acres[i] = new WorldAcre(acreData[i], i);
+                        }
+
+                        break;
+                    }
+
+                case SaveGeneration.NDS:
+                    {
+                        _acreInfo = SaveDataManager.GetAcreInfo(SaveType.WildWorld);
+                        var x = 0;
+                        var acreData = save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
+                            36);
+                        _buriedBuffer =
+                            save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
+                                CurrentSaveInfo.SaveOffsets.BuriedDataSize);
+                        for (var i = 0; i < 36; i++)
+                        {
+                            if (i >= 7 && (i % 6 > 0 && i % 6 < 5) && i <= 28)
+                            {
+                                var itemsBuff = save.ReadUInt16Array(save.SaveDataStartOffset +
+                                                                     CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256);
+                                TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.WildWorld);
+                                x++;
+                            }
+
+                            _acres[i] = new WorldAcre(acreData[i], i);
+                        }
+
+                        break;
+                    }
+
+                case SaveGeneration.Wii:
+                    {
+                        _uInt16AcreInfo = SaveDataManager.GetAcreInfoUInt16(SaveType.CityFolk);
+                        _buildings = Building.GetBuildings(save);
+                        var x = 0;
+                        var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
+                            CurrentSaveInfo.AcreCount, true);
+                        _buriedBuffer =
+                            save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
+                                CurrentSaveInfo.SaveOffsets.BuriedDataSize);
+                        for (var i = 0; i < acreData.Length; i++)
+                        {
+                            if (i >= CurrentSaveInfo.XAcreCount + 1
+                                && (i % CurrentSaveInfo.XAcreCount > 0
+                                && i % CurrentSaveInfo.XAcreCount < CurrentSaveInfo.XAcreCount - 1)
+                                && i <= 41)
+                            {
+                                var itemsBuff = save.ReadUInt16Array(
+                                    save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256,
+                                    true);
+                                TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.CityFolk);
+                                x++;
+                            }
+
+                            _acres[i] = new WorldAcre(acreData[i], i);
+                        }
+
+                        break;
+                    }
+
+                case SaveGeneration.N3DS:
+                    {
+                        _uInt16AcreInfo = SaveDataManager.GetAcreInfoUInt16(SaveFile.SaveType);
+
+                        //Load Past Villagers for NL/WA
+                        _pastVillagers = new SimpleVillager[16];
+                        for (var i = 0; i < 16; i++)
+                        {
+                            var villagerId =
+                                save.ReadUInt16(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.PastVillagers +
+                                                i * 2);
+                            _pastVillagers[i] = _villagerDatabase.Values.FirstOrDefault(o => o.VillagerId == villagerId);
+                        }
+
+                        //UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.New_Leaf);
+                        _buildings = Building.GetBuildings(save);
+                        _islandBuildings = Building.GetBuildings(save, true);
+                        var x = 0;
+                        var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
+                            CurrentSaveInfo.AcreCount);
+                        for (var i = 0; i < acreData.Length; i++)
+                        {
+                            if (i >= CurrentSaveInfo.XAcreCount + 1
+                                && (i % CurrentSaveInfo.XAcreCount > 0
+                                && i % CurrentSaveInfo.XAcreCount < CurrentSaveInfo.XAcreCount - 1)
+                                && i <= 33)
+                            {
+                                var itemsBuff = save.ReadUInt32Array(save.SaveDataStartOffset +
+                                                                     CurrentSaveInfo.SaveOffsets.TownData + x * 1024, 256);
+                                TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.NewLeaf);
+                                x++;
+                            }
+
+                            _acres[i] = new WorldAcre(acreData[i], i);
+                        }
+
+                        break;
+                    }
+            }
+        }
+
+        private void LoadVillagers(Save save)
+        {
+            _villagers = new Villager[CurrentSaveInfo.VillagerCount];
+            for (var i = 0; i < _villagers.Length; i++)
+            {
+                if (SaveFile.SaveType == SaveType.AnimalCrossing || SaveFile.SaveType == SaveType.DoubutsuNoMoriPlus)
+                {
+                    if (i < 15)
+                    {
+                        _villagers[i] =
+                            new Villager(
+                                save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.VillagerData +
+                                CurrentSaveInfo.SaveOffsets.VillagerSize * i, i, save);
+                    }
+                    else
+                    {
+                        _villagers[i] = new Villager(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslanderData, i, save);
+                    }
+                }
+                else
+                {
+                    _villagers[i] =
+                        new Villager(
+                            save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.VillagerData +
+                            CurrentSaveInfo.SaveOffsets.VillagerSize * i, i, save);
+                }
+            }
+
+            try
+            {
+                foreach (var villager in _villagers)
+                {
+                    if (!villager.Exists || villager.AnimalMemories == null) continue;
+                    foreach (var memory in villager.AnimalMemories)
+                    {
+                        if (memory.Exists)
+                        {
+                            memory.Player = _players.FirstOrNull(p =>
+                                p.Data.Identifier.Equals(memory.PlayerId) &&
+                                p.Data.Name.Equals(memory.PlayerName));
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+        }
+
+        private void CreateVillagerPanelControls()
+        {
+            // Set labels for the villager panel
+            villagerPanel.Controls.DisposeChildren();
+            var labelFlowPanel = new FlowLayoutPanel
+            {
+                AutoSize = true,
+                MaximumSize = new Size(0, 20),
+                FlowDirection = FlowDirection.LeftToRight
+            };
+
+            // Add common labels
+            var indexLabel = new Label
+            {
+                Text = "Index",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Size = new Size(45, 20)
+            };
+            indexLabel.SetCenterMargins(labelFlowPanel);
+
+            var villagerLabel = new Label
+            {
+                Text = "Villager",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Size = new Size(120, 20)
+            };
+            villagerLabel.SetCenterMargins(labelFlowPanel, 0, 10);
+
+            var personalityLabel = new Label
+            {
+                Text = "Personality",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Size = new Size(80, 20)
+            };
+            personalityLabel.SetCenterMargins(labelFlowPanel, 0, 10);
+
+            var catchphraseLabel = new Label
+            {
+                Text = "Catchphrase",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Size = new Size(100, 20)
+            };
+            catchphraseLabel.SetCenterMargins(labelFlowPanel, 0, 10);
+
+            var itemsLabel = new Label
+            {
+                Text = "Items",
+                TextAlign = ContentAlignment.MiddleLeft,
+                Size = new Size(80, 20)
+            };
+            itemsLabel.SetCenterMargins(labelFlowPanel, 0, 10);
+
+            labelFlowPanel.Controls.Add(indexLabel);
+            labelFlowPanel.Controls.Add(villagerLabel);
+            labelFlowPanel.Controls.Add(personalityLabel);
+            labelFlowPanel.Controls.Add(catchphraseLabel);
+            labelFlowPanel.Controls.Add(itemsLabel);
+            villagerPanel.Controls.Add(labelFlowPanel);
+
+            foreach (var v in _villagers)
+            {
+                GenerateVillagerPanel(v);
+            }
+
+            if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
+            {
+                GeneratePastVillagersPanel();
+            }
+        }
+
+        private void CreateItemEditorControls(Save save)
+        {
+            // Create Item Editor Controls
+            if (_dresserEditor != null && !_dresserEditor.IsDisposed)
+                _dresserEditor.Dispose();
+
+            if (_islandBoxEditor != null && !_islandBoxEditor.IsDisposed)
+                _islandBoxEditor.Dispose();
+
+            if (_inventoryEditor != null && !_inventoryEditor.IsDisposed)
+                _inventoryEditor.Dispose();
+
+            if (_shirtEditor == null)
+            {
+                _shirtEditor = new SingleItemEditor(this, _selectedPlayer?.Data.Shirt, 16)
+                {
+                    Location = new Point(98, 249)
+                };
+
+                _shirtEditor.ItemChanged += delegate (object sender, ItemChangedEventArgs e)
+                {
+                    if (_selectedPlayer != null && !_loading)
+                    {
+                        _selectedPlayer.Data.Shirt = e.NewItem;
+                    }
+                };
+
+                playersTab.Controls.Add(_shirtEditor);
+            }
+
+            _inventoryEditor = new ItemEditor(this, _selectedPlayer?.Data.Pockets.Items,
+                save.SaveGeneration == SaveGeneration.N3DS ? 4 : 5, 16)
+            {
+                Location = new Point(26, 340),
+                HoverText = "{0} ({2}) - [0x{1}]"
+            };
+
+            playersTab.Controls.Add(_inventoryEditor);
+
+            if (SaveFile.SaveGeneration != SaveGeneration.N64 && SaveFile.SaveGeneration != SaveGeneration.GCN &&
+                save.SaveGeneration != SaveGeneration.iQue)
+            {
+                var itemsPerRow = 9;
+                switch (SaveFile.SaveGeneration)
+                {
+                    case SaveGeneration.Wii:
+                        itemsPerRow = 16;
+                        break;
+                    case SaveGeneration.N3DS:
+                        itemsPerRow = 18;
+                        break;
+                }
+
+                _dresserEditor = new ItemEditor(this, _selectedPlayer?.Data.Dressers, itemsPerRow, 16)
+                {
+                    Location = new Point(202, 340)
+                };
+
+                playersTab.Controls.Add(_dresserEditor);
+            }
+
+            if (SaveFile.SaveGeneration != SaveGeneration.N3DS) return;
+
+            _islandBoxEditor = new ItemEditor(this, _selectedPlayer?.Data.IslandBox, 5, 16)
+            {
+                Location = new Point(114, 340)
+            };
+
+            playersTab.Controls.Add(_islandBoxEditor);
+        }
+
+        private async Task SetupEditor(Save save)
+        {
+            // Set the debug manager's save reference
+            DebugUtility.DebugManagerInstance.SaveFile = save;
+
+            // Create a backup if backups are enabled
+            if (Properties.Settings.Default.BackupFiles)
+            {
+                new Backup(save);
+            }
+
+            progressBar1.Value = 0;
+            loadingPanel.BringToFront();
+            loadingPanel.Visible = true;
+            loadingPanel.Enabled = true;
+            _loading = true;
+
+            if (save.SuccessfullyLoaded && save.SaveType == SaveType.Unknown)
+            {
+                MessageBox.Show(
+                    $"The file [{save.SaveName + save.SaveExtension}] could not be identified as a valid Animal Crossing save file.\n" +
+                    "Please ensure you have a valid save file.",
+                    "Save File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                loadingPanel.SendToBack();
+                loadingPanel.Visible = false;
+                loadingPanel.Enabled = false;
+                _loading = false;
+                progressBar1.Value = 0;
+                return;
+            }
+
+            if (!save.SuccessfullyLoaded)
+            {
+                loadingPanel.SendToBack();
+                loadingPanel.Visible = false;
+                loadingPanel.Enabled = false;
+                _loading = false;
+                progressBar1.Value = 0;
+                return;
+            }
+
+            // Clear items
+            selectedItem.DataSource = null;
+            selectedItem.Items.Clear();
+
+            // Initialize item colors
+            ItemColorEditor.UpdateItemColors(); // TODO: Move this logic to ACSE.Core
+
+            SaveFile = null; //Set to null so we can set the checkbox to false without having the method run
+            UndoRedoHandler = new ModifiedHandler();
+            townMapViewCheckbox.Checked = false;
+            SaveFile = save;
+            _currentItem = new Item();
+            DebugManager.WriteLine("Save File Loaded");
+            _acreHeightModifier = 0;
+            _selectedAcreId = 0;
+            _selectedAcrePicturebox.Image = null;
+            _selectedAcrePicturebox.BackgroundImage = null;
+            _buildings = null;
+            _islandBuildings = null;
+            _selectedPatternObject = null;
+            _buriedBuffer = null;
+            _islandBuriedBuffer = null;
+            _selectedHouse = null;
+            _tpcPicture.Image = NoTPC;
+            _secureNandValueForm.Hide();
+            itemFlag1.Text = "00";
+            itemFlag2.Text = "00";
+
+            await Task.Run(() =>
+            {
+                _itemList = SaveDataManager.GetItemInfo(save.SaveType).ToList();
+                _itemList.Sort((x, y) => x.Key.CompareTo(y.Key));
+                ItemData.ItemDatabase = _itemList;
+            });
+
+            selectedItem.DataSource = new BindingSource(_itemList, null);
+            selectedItem.DisplayMember = "Value";
+            selectedItem.ValueMember = "Key";
+
+            progressBar1.Value = 5;
+
+            CurrentSaveInfo = SaveDataManager.GetSaveInfo(SaveFile.SaveType);
+
+            // Load the correct acre database
+            if (save.SaveType == SaveType.WildWorld)
+            {
+                await Task.Run(() =>
+                {
+                    _filedAcreData = SaveDataManager.GetFiledAcreData(SaveFile.SaveType);
+                    _uInt16FiledAcreData = null;
+                    _uInt16AcreInfo = null;
+                });
+            }
+            else
+            {
+                await Task.Run(() =>
+                {
+                    _uInt16FiledAcreData = SaveDataManager.GetFiledAcreDataUInt16(SaveFile.SaveType);
+                    _filedAcreData = null;
+                    _acreInfo = null;
+                });
+            }
+
+            progressBar1.Value = 7;
+
+            // Enable Controls
+            EnableEditorControls(save);
 
             townGateComboBox.Items.Clear();
 
@@ -726,23 +1068,8 @@ namespace ACSE.WinForms
                 caravan2ComboBox.Items.Clear();
             }
 
-            //Clear Acre Images
-            if (_acreMap != null)
-                foreach (var box in _acreMap)
-                    box.BackgroundImage = null;
-            if (_townAcreMap != null)
-                foreach (var box in _townAcreMap)
-                    box.BackgroundImage = null;
-
-            //Clear Acre TreeView (Hopefully .Remove doesn't cause a Memory Leak)
-            while (acreTreeView.Nodes.Count > 0)
-            {
-                while (acreTreeView.Nodes[0].Nodes.Count > 0)
-                {
-                    acreTreeView.Nodes[0].Nodes[0].Remove();
-                }
-                acreTreeView.Nodes[0].Remove();
-            }
+            // Clear Acre TreeView
+            acreTreeView.Nodes.Clear();
 
             // Load Houses
             _houses = HouseInfo.LoadHouses(save);
@@ -820,7 +1147,8 @@ namespace ACSE.WinForms
                               save.SaveType == SaveType.WelcomeAmiibo);
             buildingsPanel.Visible = visibility;
             buildingsLabel.Visible = visibility;
-            townPanel.Size = new Size(visibility ? townTab.Size.Width - 213 : townTab.Size.Width - 9, townPanel.Size.Height);
+            townPanel.Size = new Size(visibility ? townTab.Size.Width - 213 : townTab.Size.Width - 9,
+                townPanel.Size.Height);
 
             //Cleanup old dictionary
             AcreImageManager.DisposeLoadedImages();
@@ -904,26 +1232,38 @@ namespace ACSE.WinForms
             progressBar1.Value = 20;
             _selectedPlayer = null;
 
+            // Load players
             await Task.Run(() =>
             {
                 for (var i = 0; i < 4; i++)
                 {
                     _players[i] = new Player(SaveFile.SaveDataStartOffset
-                        + CurrentSaveInfo.SaveOffsets.PlayerStart + i * CurrentSaveInfo.SaveOffsets.PlayerSize, i, SaveFile);
+                                             + CurrentSaveInfo.SaveOffsets.PlayerStart +
+                                             i * CurrentSaveInfo.SaveOffsets.PlayerSize, i, SaveFile);
                 }
 
                 _selectedPlayer = _players.FirstOrNull(o => o.Exists);
             });
+
             progressBar1.Value = 40;
 
-            //Temp
-            if (_selectedPlayer == null)
-                MessageBox.Show("No Player was found on the file!", "Player Find Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else
+            // Display the selected player's information
+            if (_selectedPlayer != null)
+            {
                 ReloadPlayer(_selectedPlayer);
+            }
+            else
+            {
+                MessageBox.Show("No Player was found on the file!", "Player Find Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+
             SetPlayersEnabled();
+
             if (_selectedPlayer != null && _selectedPlayer.Exists)
+            {
                 playerEditorSelect.SelectedIndex = Array.IndexOf(_players, _selectedPlayer);
+            }
 
             // Grass Type Stuff
             grassTypeBox.Items.Clear();
@@ -952,133 +1292,8 @@ namespace ACSE.WinForms
                 islandSelectionTab.Visible = false;
             }
 
-            //Load Town Info
-            await Task.Run(() =>
-            {
-                _acres = new WorldAcre[CurrentSaveInfo.AcreCount];
-                TownAcres = new WorldAcre[CurrentSaveInfo.TownAcreCount];
-
-                if (save.SaveType == SaveType.WildWorld)
-                {
-                    _acreInfo = SaveDataManager.GetAcreInfo(SaveType.WildWorld);
-                    var x = 0;
-                    var acreData = save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
-                        36);
-                    _buriedBuffer =
-                        save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
-                            CurrentSaveInfo.SaveOffsets.BuriedDataSize);
-                    for (var i = 0; i < 36; i++)
-                    {
-                        if (i >= 7 && (i % 6 > 0 && i % 6 < 5) && i <= 28)
-                        {
-                            var itemsBuff = save.ReadUInt16Array(save.SaveDataStartOffset +
-                                                                 CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256);
-                            TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.WildWorld);
-                            x++;
-                        }
-
-                        _acres[i] = new WorldAcre(acreData[i], i);
-                    }
-                }
-                else if (save.SaveGeneration == SaveGeneration.GCN || save.SaveGeneration == SaveGeneration.N64 ||
-                         save.SaveGeneration == SaveGeneration.iQue)
-                {
-                    _uInt16AcreInfo = SaveDataManager.GetAcreInfoUInt16(save.SaveType);
-                    var x = 0;
-                    var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
-                        CurrentSaveInfo.AcreCount, true);
-                    _buriedBuffer =
-                        save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
-                            CurrentSaveInfo.SaveOffsets.BuriedDataSize);
-
-                    if (save.SaveGeneration == SaveGeneration.GCN)
-                    {
-                        _islandBuriedBuffer =
-                            save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandBuriedData,
-                                CurrentSaveInfo.SaveOffsets.IslandBuriedSize);
-                    }
-
-                    for (var i = 0; i < acreData.Length; i++)
-                    {
-                        if (i >= CurrentSaveInfo.XAcreCount + 1 && (i % CurrentSaveInfo.XAcreCount > 0
-                                                                    && i % CurrentSaveInfo.XAcreCount <
-                                                                    CurrentSaveInfo.XAcreCount - 1) && i <= 47)
-                        {
-                            var itemsBuff = save.ReadUInt16Array(save.SaveDataStartOffset +
-                                                                 CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256,
-                                true);
-                            TownAcres[x] = new WorldAcre(acreData[i], i, itemsBuff, _buriedBuffer, save.SaveType, null,
-                                x);
-                            x++;
-                        }
-
-                        _acres[i] = new WorldAcre(acreData[i], i);
-                    }
-                }
-                else if (save.SaveType == SaveType.CityFolk)
-                {
-                    _uInt16AcreInfo = SaveDataManager.GetAcreInfoUInt16(SaveType.CityFolk);
-                    _buildings = Building.GetBuildings(save);
-                    var x = 0;
-                    var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
-                        CurrentSaveInfo.AcreCount, true);
-                    _buriedBuffer =
-                        save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
-                            CurrentSaveInfo.SaveOffsets.BuriedDataSize);
-                    for (var i = 0; i < acreData.Length; i++)
-                    {
-                        if (i >= CurrentSaveInfo.XAcreCount + 1
-                            && (i % CurrentSaveInfo.XAcreCount > 0
-                            && i % CurrentSaveInfo.XAcreCount < CurrentSaveInfo.XAcreCount - 1)
-                            && i <= 41)
-                        {
-                            var itemsBuff = save.ReadUInt16Array(
-                                save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256,
-                                true);
-                            TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.CityFolk);
-                            x++;
-                        }
-
-                        _acres[i] = new WorldAcre(acreData[i], i);
-                    }
-                }
-                else if (save.SaveGeneration == SaveGeneration.N3DS)
-                {
-                    _uInt16AcreInfo = SaveDataManager.GetAcreInfoUInt16(SaveFile.SaveType);
-
-                    //Load Past Villagers for NL/WA
-                    _pastVillagers = new SimpleVillager[16];
-                    for (var i = 0; i < 16; i++)
-                    {
-                        var villagerId =
-                            save.ReadUInt16(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.PastVillagers +
-                                            i * 2);
-                        _pastVillagers[i] = _villagerDatabase.Values.FirstOrDefault(o => o.VillagerId == villagerId);
-                    }
-
-                    //UInt16_Acre_Info = SaveDataManager.GetAcreInfoUInt16(SaveType.New_Leaf);
-                    _buildings = Building.GetBuildings(save);
-                    _islandBuildings = Building.GetBuildings(save, true);
-                    var x = 0;
-                    var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
-                        CurrentSaveInfo.AcreCount);
-                    for (var i = 0; i < acreData.Length; i++)
-                    {
-                        if (i >= CurrentSaveInfo.XAcreCount + 1
-                            && (i % CurrentSaveInfo.XAcreCount > 0
-                            && i % CurrentSaveInfo.XAcreCount < CurrentSaveInfo.XAcreCount - 1)
-                            && i <= 33)
-                        {
-                            var itemsBuff = save.ReadUInt32Array(save.SaveDataStartOffset +
-                                                                 CurrentSaveInfo.SaveOffsets.TownData + x * 1024, 256);
-                            TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.NewLeaf);
-                            x++;
-                        }
-
-                        _acres[i] = new WorldAcre(acreData[i], i);
-                    }
-                }
-            });
+            // Load acre & town item data
+            await Task.Run(() => { LoadAcres(save); });
 
             switch (SaveFile.SaveGeneration)
             {
@@ -1147,131 +1362,24 @@ namespace ACSE.WinForms
                 _islandCabana.Data.Rooms[0].Name = "Cabana";
             }
 
+            // Load acre editor controls
             SetupAcreEditorTreeView();
             SetupMapPictureBoxes();
             SetupIslandHouseBoxes();
 
             if (_buildings != null)
+            {
                 SetupBuildingList();
+            }
 
-            //Load Villagers
+            // Load villagers
             if (SaveFile.SaveType != SaveType.CityFolk)
             {
-                await Task.Run(() =>
-                {
-                    _villagers = new Villager[CurrentSaveInfo.VillagerCount];
-                    for (var i = 0; i < _villagers.Length; i++)
-                    {
-                        if (SaveFile.SaveType == SaveType.AnimalCrossing || SaveFile.SaveType == SaveType.DoubutsuNoMoriPlus)
-                        {
-                            if (i < 15)
-                            {
-                                _villagers[i] =
-                                    new Villager(
-                                        save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.VillagerData +
-                                        CurrentSaveInfo.SaveOffsets.VillagerSize * i, i, save);
-                            }
-                            else
-                            {
-                                _villagers[i] = new Villager(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslanderData, i, save);
-                            }
-                        }
-                        else
-                        {
-                            _villagers[i] =
-                                new Villager(
-                                    save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.VillagerData +
-                                    CurrentSaveInfo.SaveOffsets.VillagerSize * i, i, save);
-                        }
-                    }
-
-                    try
-                    {
-                        foreach (var villager in _villagers)
-                        {
-                            if (!villager.Exists || villager.AnimalMemories == null) continue;
-                            foreach (var memory in villager.AnimalMemories)
-                            {
-                                if (memory.Exists)
-                                {
-                                    memory.Player = _players.FirstOrNull(p =>
-                                        p.Data.Identifier.Equals(memory.PlayerId) &&
-                                        p.Data.Name.Equals(memory.PlayerName));
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine(exc.Message);
-                    }
-                });
-
-                // Set labels for the villager panel
-                villagerPanel.Controls.DisposeChildren();
-                var labelFlowPanel = new FlowLayoutPanel
-                {
-                    AutoSize = true,
-                    MaximumSize = new Size(0, 20),
-                    FlowDirection = FlowDirection.LeftToRight
-                };
-
-                // Add common labels
-                var indexLabel = new Label
-                {
-                    Text = "Index",
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Size = new Size(45, 20)
-                };
-                indexLabel.SetCenterMargins(labelFlowPanel);
-
-                var villagerLabel = new Label
-                {
-                    Text = "Villager",
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Size = new Size(120, 20)
-                };
-                villagerLabel.SetCenterMargins(labelFlowPanel, 0, 10);
-
-                var personalityLabel = new Label
-                {
-                    Text = "Personality",
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Size = new Size(80, 20)
-                };
-                personalityLabel.SetCenterMargins(labelFlowPanel, 0, 10);
-
-                var catchphraseLabel = new Label
-                {
-                    Text = "Catchphrase",
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Size = new Size(100, 20)
-                };
-                catchphraseLabel.SetCenterMargins(labelFlowPanel, 0, 10);
-
-                var itemsLabel = new Label
-                {
-                    Text = "Items",
-                    TextAlign = ContentAlignment.MiddleLeft,
-                    Size = new Size(80, 20)
-                };
-                itemsLabel.SetCenterMargins(labelFlowPanel, 0, 10);
-
-                labelFlowPanel.Controls.Add(indexLabel);
-                labelFlowPanel.Controls.Add(villagerLabel);
-                labelFlowPanel.Controls.Add(personalityLabel);
-                labelFlowPanel.Controls.Add(catchphraseLabel);
-                labelFlowPanel.Controls.Add(itemsLabel);
-                villagerPanel.Controls.Add(labelFlowPanel);
-
-                foreach (var v in _villagers)
-                    GenerateVillagerPanel(v);
-
-                if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
-                    GeneratePastVillagersPanel();
-
-                progressBar1.Value = 90;
+                await Task.Run(() => { LoadVillagers(save); });
+                CreateVillagerPanelControls();
             }
+
+            progressBar1.Value = 90;
 
             // Set House Owner ComboBox List
             houseOwnerComboBox.Items.Clear();
@@ -1291,10 +1399,15 @@ namespace ACSE.WinForms
             houseTabSelect.SelectedIndex = 0; // Reset the house selected
             SetupHousePictureBoxes();
             if (roofColorComboBox.Enabled && _selectedHouse != null)
-                roofColorComboBox.SelectedIndex = Math.Min(roofColorComboBox.Items.Count - 1, _selectedHouse.Data.RoofColor);
+            {
+                roofColorComboBox.SelectedIndex =
+                    Math.Min(roofColorComboBox.Items.Count - 1, _selectedHouse.Data.RoofColor);
+            }
 
             if (houseSizeComboBox.Enabled && _selectedHouse != null)
+            {
                 houseSizeComboBox.SelectedIndex = HouseInfo.GetHouseSize(_selectedHouse.Offset, save.SaveType);
+            }
 
             // Set TextBox max values
             playerName.MaxLength = CurrentSaveInfo.SaveOffsets.TownNameSize; // As far as I know, town name and player name are always the same size
@@ -1334,74 +1447,8 @@ namespace ACSE.WinForms
             // Set Default Item to "Empty"
             SetCurrentItem(new Item());
 
-            // Create Item Editor Controls
-            if (_dresserEditor != null && !_dresserEditor.IsDisposed)
-                _dresserEditor.Dispose();
-
-            if (_islandBoxEditor != null && !_islandBoxEditor.IsDisposed)
-                _islandBoxEditor.Dispose();
-
-            if (_inventoryEditor != null && !_inventoryEditor.IsDisposed)
-                _inventoryEditor.Dispose();
-
-            if (_shirtEditor == null)
-            {
-                _shirtEditor = new SingleItemEditor(this, _selectedPlayer?.Data.Shirt, 16)
-                {
-                    Location = new Point(98, 249)
-                };
-
-                _shirtEditor.ItemChanged += delegate (object sender, ItemChangedEventArgs e)
-                {
-                    if (_selectedPlayer != null && !_loading)
-                    {
-                        _selectedPlayer.Data.Shirt = e.NewItem;
-                    }
-                };
-
-                playersTab.Controls.Add(_shirtEditor);
-            }
-
-            _inventoryEditor = new ItemEditor(this, _selectedPlayer?.Data.Pockets.Items,
-                save.SaveGeneration == SaveGeneration.N3DS ? 4 : 5, 16)
-            {
-                Location = new Point(26, 340),
-                HoverText = "{0} ({2}) - [0x{1}]"
-            };
-
-            playersTab.Controls.Add(_inventoryEditor);
-
-            if (SaveFile.SaveGeneration != SaveGeneration.N64 && SaveFile.SaveGeneration != SaveGeneration.GCN &&
-                save.SaveGeneration != SaveGeneration.iQue)
-            {
-                var itemsPerRow = 9;
-                switch (SaveFile.SaveGeneration)
-                {
-                    case SaveGeneration.Wii:
-                        itemsPerRow = 16;
-                        break;
-                    case SaveGeneration.N3DS:
-                        itemsPerRow = 18;
-                        break;
-                }
-
-                _dresserEditor = new ItemEditor(this, _selectedPlayer?.Data.Dressers, itemsPerRow, 16)
-                {
-                    Location = new Point(202, 340)
-                };
-
-                playersTab.Controls.Add(_dresserEditor);
-            }
-
-            if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
-            {
-                _islandBoxEditor = new ItemEditor(this, _selectedPlayer?.Data.IslandBox, 5, 16)
-                {
-                    Location = new Point(114, 340)
-                };
-
-                playersTab.Controls.Add(_islandBoxEditor);
-            }
+            // Create the necessary item editor controls.
+            CreateItemEditorControls(save);
 
             // Badges (for New Leaf)
             badgeGroupBox.Visible = save.SaveGeneration == SaveGeneration.N3DS;
