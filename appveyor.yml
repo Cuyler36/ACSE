@@ -19,7 +19,7 @@ artifacts:
 deploy:
     provider: GitHub
     release: Development Release
-    description: ACSE Development Release {build}. Some features may or may not work. Your milage will vary. Use at your own risk.
+    description: ACSE Development Release $(appveyor_build_version). Some features may or may not work. Your milage will vary. Use at your own risk.
     auth_token:
         secure: GL5JqofZHzmr6ztb9df5FKEPSJmvzPrH2saGy+leFyeIrc8C7qkJmbQZ7PpH2NOl
     artifact: /.*\.zip/
