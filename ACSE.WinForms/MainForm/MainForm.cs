@@ -2120,9 +2120,11 @@ namespace ACSE.WinForms
 
         private void SetupAcreEditorTreeView()
         {
+            acreTreeView.Nodes.Clear();
+            acreTreeView.BeginUpdate();
+
             if (_filedAcreData != null)
             {
-                acreTreeView.Nodes.Clear();
                 foreach (var acreGroup in _filedAcreData)
                 {
                     var acreType = new TreeNode
@@ -2145,7 +2147,6 @@ namespace ACSE.WinForms
             }
             else if (_uInt16FiledAcreData != null)
             {
-                acreTreeView.Nodes.Clear();
                 foreach (var acreGroup in _uInt16FiledAcreData)
                 {
                     var acreType = new TreeNode
@@ -2166,6 +2167,8 @@ namespace ACSE.WinForms
                     }
                 }
             }
+
+            acreTreeView.EndUpdate();
         }
 
         private void SetPossibleNativeFruits(SaveGeneration saveGeneration)
@@ -2382,6 +2385,11 @@ namespace ACSE.WinForms
 
         private void SetupMapPictureBoxes()
         {
+            acrePanel.SuspendLayout();
+            townPanel.SuspendLayout();
+            islandPanel.SuspendLayout();
+            grassPanel.SuspendLayout();
+
             _lastBoxEntered = null;
             if (_acreMap != null)
                 foreach (var map in _acreMap)
@@ -2608,6 +2616,11 @@ namespace ACSE.WinForms
                     }
                 }
             }
+
+            acrePanel.ResumeLayout();
+            townPanel.ResumeLayout();
+            islandPanel.ResumeLayout();
+            grassPanel.ResumeLayout();
 
             if ((SaveFile.SaveType != SaveType.DoubutsuNoMoriEPlus && SaveFile.SaveType != SaveType.AnimalForestEPlus)
                 || _selectedIsland == null) return;
@@ -3750,7 +3763,10 @@ namespace ACSE.WinForms
                     _buildingNames = Building.WelcomeAmiiboBuildingNames.Values.ToArray();
                     break;
             }
+
+            buildingsPanel.SuspendLayout();
             _buildingListPanels = new Panel[_buildings.Length];
+
             for (var i = 0; i < _buildings.Length; i++)
             {
                 var buildingPanel = new Panel
@@ -3803,6 +3819,7 @@ namespace ACSE.WinForms
             }
 
             buildingsPanel.Controls.AddRange(_buildingListPanels);
+            buildingsPanel.ResumeLayout();
         }
 
         private void UpdateBuildingCount()
