@@ -18,6 +18,10 @@
 * [Animal Crossing: New Leaf](https://animalcrossing.fandom.com/wiki/Animal_Crossing%3A_New_Leaf)
 * [Animal Crossing: New Leaf - Welcome Amiibo](https://animalcrossing.fandom.com/wiki/Welcome_amiibo)
 
+## Partially Supported Games
+### ![iQP](https://i.imgur.com/kwQLeUJ.png) iQue Player
+* [Dòngwù Sēnlín](http://www.iquebrew.org/index.php?title=Animal_Crossing)
+
 ## Features
 * Player Editing
 	* Name
