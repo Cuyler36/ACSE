@@ -92,7 +92,6 @@ namespace ACSE.WinForms
         private readonly SecureValueForm _secureNandValueForm = new SecureValueForm();
         private readonly SettingsMenuForm _settingsMenu;
         private bool _clicking;
-        private byte[] _buriedBuffer;
         private byte[] _islandBuriedBuffer;
         private ushort _selectedAcreId;
         private int _selectedBuilding = -1;
@@ -605,9 +604,6 @@ namespace ACSE.WinForms
                         var x = 0;
                         var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
                             CurrentSaveInfo.AcreCount, true);
-                        _buriedBuffer =
-                            save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
-                                CurrentSaveInfo.SaveOffsets.BuriedDataSize);
 
                         if (save.SaveGeneration == SaveGeneration.GCN)
                         {
@@ -619,14 +615,13 @@ namespace ACSE.WinForms
                         for (var i = 0; i < acreData.Length; i++)
                         {
                             if (i >= CurrentSaveInfo.XAcreCount + 1 && (i % CurrentSaveInfo.XAcreCount > 0
-                                                                        && i % CurrentSaveInfo.XAcreCount <
+                                                                    &&  i % CurrentSaveInfo.XAcreCount <
                                                                         CurrentSaveInfo.XAcreCount - 1) && i <= 47)
                             {
                                 var itemsBuff = save.ReadUInt16Array(save.SaveDataStartOffset +
                                                                      CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256,
                                     true);
-                                TownAcres[x] = new WorldAcre(acreData[i], i, itemsBuff, _buriedBuffer, save.SaveType, null,
-                                    x);
+                                TownAcres[x] = new WorldAcre(acreData[i], i, itemsBuff, null, x);
                                 x++;
                             }
 
@@ -642,16 +637,14 @@ namespace ACSE.WinForms
                         var x = 0;
                         var acreData = save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
                             36);
-                        _buriedBuffer =
-                            save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
-                                CurrentSaveInfo.SaveOffsets.BuriedDataSize);
+
                         for (var i = 0; i < 36; i++)
                         {
                             if (i >= 7 && (i % 6 > 0 && i % 6 < 5) && i <= 28)
                             {
                                 var itemsBuff = save.ReadUInt16Array(save.SaveDataStartOffset +
                                                                      CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256);
-                                TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.WildWorld);
+                                TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, null, x);
                                 x++;
                             }
 
@@ -668,9 +661,7 @@ namespace ACSE.WinForms
                         var x = 0;
                         var acreData = save.ReadUInt16Array(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.AcreData,
                             CurrentSaveInfo.AcreCount, true);
-                        _buriedBuffer =
-                            save.ReadByteArray(save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData,
-                                CurrentSaveInfo.SaveOffsets.BuriedDataSize);
+
                         for (var i = 0; i < acreData.Length; i++)
                         {
                             if (i >= CurrentSaveInfo.XAcreCount + 1
@@ -681,7 +672,7 @@ namespace ACSE.WinForms
                                 var itemsBuff = save.ReadUInt16Array(
                                     save.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.TownData + x * 512, 256,
                                     true);
-                                TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.CityFolk);
+                                TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, null, x);
                                 x++;
                             }
 
@@ -720,7 +711,7 @@ namespace ACSE.WinForms
                             {
                                 var itemsBuff = save.ReadUInt32Array(save.SaveDataStartOffset +
                                                                      CurrentSaveInfo.SaveOffsets.TownData + x * 1024, 256);
-                                TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff, _buriedBuffer, SaveType.NewLeaf);
+                                TownAcres[x] = new WorldAcre(acreData[i], x, itemsBuff);
                                 x++;
                             }
 
@@ -980,11 +971,11 @@ namespace ACSE.WinForms
             _acreHeightModifier = 0;
             _selectedAcreId = 0;
             _selectedAcrePicturebox.Image = null;
+            _lastTownAcre = -1;
             _selectedAcrePicturebox.BackgroundImage = null;
             _buildings = null;
             _islandBuildings = null;
             _selectedPatternObject = null;
-            _buriedBuffer = null;
             _islandBuriedBuffer = null;
             _selectedHouse = null;
             _tpcPicture.Image = NoTPC;
@@ -1143,8 +1134,7 @@ namespace ACSE.WinForms
                 buildingsPanel.Controls[i].Dispose();
 
             //Set building panel visibility
-            var visibility = (save.SaveType == SaveType.CityFolk || save.SaveType == SaveType.NewLeaf ||
-                              save.SaveType == SaveType.WelcomeAmiibo);
+            var visibility = save.SaveGeneration == SaveGeneration.Wii || save.SaveGeneration == SaveGeneration.N3DS;
             buildingsPanel.Visible = visibility;
             buildingsLabel.Visible = visibility;
             townPanel.Size = new Size(visibility ? townTab.Size.Width - 213 : townTab.Size.Width - 9,
@@ -2527,92 +2517,100 @@ namespace ACSE.WinForms
                 //Add events here
             }
 
-            if (!CurrentSaveInfo.ContainsIsland) return;
-            IslandAcres = new WorldAcre[CurrentSaveInfo.IslandAcreCount];
-            _islandAcreMap = new PictureBoxWithInterpolationMode[IslandAcres.Length];
-            _newLeafIslandAcreMap = new PictureBoxWithInterpolationMode[16];
-
-            for (var y = 0; y < CurrentSaveInfo.IslandAcreCount / CurrentSaveInfo.IslandXAcreCount; y++)
+            if (CurrentSaveInfo.ContainsIsland)
             {
-                for (var x = 0; x < CurrentSaveInfo.IslandXAcreCount; x++)
+                IslandAcres = new WorldAcre[CurrentSaveInfo.IslandAcreCount];
+                _islandAcreMap = new PictureBoxWithInterpolationMode[IslandAcres.Length];
+                _newLeafIslandAcreMap = new PictureBoxWithInterpolationMode[16];
+
+                for (var y = 0; y < CurrentSaveInfo.IslandAcreCount / CurrentSaveInfo.IslandXAcreCount; y++)
                 {
-                    var idx = y * CurrentSaveInfo.IslandXAcreCount + x;
-                    var acreId =
-                        SaveFile.ReadUInt16(
-                            SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandAcreData + idx * 2,
-                            SaveFile.IsBigEndian);
-
-                    var acreItems = new WorldItem[256];
-                    for (var i = 0; i < 256; i++)
-                        if (SaveFile.SaveGeneration == SaveGeneration.GCN)
-                        {
-                            acreItems[i] =
-                                new WorldItem(
-                                    SaveFile.ReadUInt16(
-                                        SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandWorldData +
-                                        idx * 512 + i * 2, true), i);
-                        }
-                        else if ((idx > 4 && idx < 7) || (idx > 8 && idx < 11)) //Other acres are water acres
-                        {
-                            var worldIdx = (y - 1) * 2 + ((x - 1) % 4);
-                            acreItems[i] =
-                                new WorldItem(
-                                    SaveFile.ReadUInt32(SaveFile.SaveDataStartOffset +
-                                                        CurrentSaveInfo.SaveOffsets.IslandWorldData + worldIdx * 1024 +
-                                                        i * 4), i);
-                        }
-                    IslandAcres[idx] = new WorldAcre(acreId, idx, acreItems, _islandBuriedBuffer); //Add buried item data for Animal Crossing
-
-                    if (SaveFile.SaveGeneration == SaveGeneration.GCN || ((idx > 4 && idx < 7) || (idx > 8 && idx < 11)))
+                    for (var x = 0; x < CurrentSaveInfo.IslandXAcreCount; x++)
                     {
-                        _islandAcreMap[idx] = new PictureBoxWithInterpolationMode
-                        {
-                            Size = new Size(_townMapTotalSize, _townMapTotalSize),
-                            SizeMode = PictureBoxSizeMode.StretchImage,
-                            BackgroundImageLayout = ImageLayout.Stretch,
-                            InterpolationMode = InterpolationMode.HighQualityBicubic,
-                            UseInternalInterpolationSetting = false,
-                            Tag = idx
-                        };
-                        if (SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus || SaveFile.SaveType == SaveType.AnimalForestEPlus)
-                        {
-                            _islandAcreMap[idx].Image = GenerateAcreItemsBitmap(_selectedIsland.Items[idx], idx, true);
-                            _islandAcreMap[idx].BackgroundImage = GetAcreImage(_acres[0x3C + idx].BaseAcreId);
-                        }
-                        else
-                        {
-                            _islandAcreMap[idx].Image = GenerateAcreItemsBitmap(IslandAcres[idx].AcreItems,
-                                IslandAcres[idx].Index, true);
-                            _islandAcreMap[idx].BackgroundImage = GetAcreImage(acreId);
-                        }
-                        _islandAcreMap[idx].MouseMove += (sender, e) => TownMove(sender, e, true);
-                        _islandAcreMap[idx].MouseLeave += HideTownTip;
-                        _islandAcreMap[idx].MouseDown += (sender, e) => TownMouseDown(sender, e, true);
-                        _islandAcreMap[idx].MouseEnter += (sender, e) => TownEnter(sender);
-                        _islandAcreMap[idx].MouseUp += TownMouseUp;
-                        _islandAcreMap[idx].Location = (SaveFile.SaveGeneration == SaveGeneration.GCN)
-                            ? new Point(x * _townMapTotalSize, y * _townMapTotalSize)
-                            : new Point(((x - 1) % 4) * _townMapTotalSize, (y - 1) * _townMapTotalSize);
-                        islandPanel.Controls.Add(_islandAcreMap[idx]);
-                    }
+                        var idx = y * CurrentSaveInfo.IslandXAcreCount + x;
+                        var acreId =
+                            SaveFile.ReadUInt16(
+                                SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandAcreData + idx * 2,
+                                SaveFile.IsBigEndian);
 
-                    if (SaveFile.SaveGeneration != SaveGeneration.N3DS) continue;
-                    {
-                        _newLeafIslandAcreMap[idx] = new PictureBoxWithInterpolationMode
+                        var acreItems = new WorldItem[256];
+                        for (var i = 0; i < 256; i++)
+                            if (SaveFile.SaveGeneration == SaveGeneration.GCN)
+                            {
+                                acreItems[i] =
+                                    new WorldItem(
+                                        SaveFile.ReadUInt16(
+                                            SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandWorldData +
+                                            idx * 512 + i * 2, true), i);
+                            }
+                            else if ((idx > 4 && idx < 7) || (idx > 8 && idx < 11)) //Other acres are water acres
+                            {
+                                var worldIdx = (y - 1) * 2 + ((x - 1) % 4);
+                                acreItems[i] =
+                                    new WorldItem(
+                                        SaveFile.ReadUInt32(SaveFile.SaveDataStartOffset +
+                                                            CurrentSaveInfo.SaveOffsets.IslandWorldData +
+                                                            worldIdx * 1024 +
+                                                            i * 4), i);
+                            }
+
+                        IslandAcres[idx] = new WorldAcre(acreId, idx, acreItems);
+
+                        if (SaveFile.SaveGeneration == SaveGeneration.GCN ||
+                            ((idx > 4 && idx < 7) || (idx > 8 && idx < 11)))
                         {
-                            Size = new Size(_acreMapSize, _acreMapSize),
-                            Location = new Point(x * _acreMapSize, _townMapTotalSize * 2 + 24 + y * _acreMapSize),
-                            BackgroundImage = GetAcreImage(IslandAcres[idx].AcreId),
-                            SizeMode = PictureBoxSizeMode.StretchImage,
-                            BackgroundImageLayout = ImageLayout.Stretch,
-                            UseInternalInterpolationSetting = true,
-                        };
-                        _newLeafIslandAcreMap[idx].MouseMove += (s, e) => AcreEditorMouseMove(s, e, true);
-                        _newLeafIslandAcreMap[idx].MouseLeave += HideAcreTip;
-                        _newLeafIslandAcreMap[idx].MouseClick += (s, e) => AcreClick(s, e, true);
-                        _newLeafIslandAcreMap[idx].MouseEnter += AcreEditorMouseEnter;
-                        _newLeafIslandAcreMap[idx].MouseLeave += AcreEditorMouseLeave;
-                        islandPanel.Controls.Add(_newLeafIslandAcreMap[idx]);
+                            _islandAcreMap[idx] = new PictureBoxWithInterpolationMode
+                            {
+                                Size = new Size(_townMapTotalSize, _townMapTotalSize),
+                                SizeMode = PictureBoxSizeMode.StretchImage,
+                                BackgroundImageLayout = ImageLayout.Stretch,
+                                InterpolationMode = InterpolationMode.HighQualityBicubic,
+                                UseInternalInterpolationSetting = false,
+                                Tag = idx
+                            };
+                            if (SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus ||
+                                SaveFile.SaveType == SaveType.AnimalForestEPlus)
+                            {
+                                _islandAcreMap[idx].Image =
+                                    GenerateAcreItemsBitmap(_selectedIsland.Items[idx], idx, true);
+                                _islandAcreMap[idx].BackgroundImage = GetAcreImage(_acres[0x3C + idx].BaseAcreId);
+                            }
+                            else
+                            {
+                                _islandAcreMap[idx].Image = GenerateAcreItemsBitmap(IslandAcres[idx].AcreItems,
+                                    IslandAcres[idx].Index, true);
+                                _islandAcreMap[idx].BackgroundImage = GetAcreImage(acreId);
+                            }
+
+                            _islandAcreMap[idx].MouseMove += (sender, e) => TownMove(sender, e, true);
+                            _islandAcreMap[idx].MouseLeave += HideTownTip;
+                            _islandAcreMap[idx].MouseDown += (sender, e) => TownMouseDown(sender, e, true);
+                            _islandAcreMap[idx].MouseEnter += (sender, e) => TownEnter(sender);
+                            _islandAcreMap[idx].MouseUp += TownMouseUp;
+                            _islandAcreMap[idx].Location = (SaveFile.SaveGeneration == SaveGeneration.GCN)
+                                ? new Point(x * _townMapTotalSize, y * _townMapTotalSize)
+                                : new Point(((x - 1) % 4) * _townMapTotalSize, (y - 1) * _townMapTotalSize);
+                            islandPanel.Controls.Add(_islandAcreMap[idx]);
+                        }
+
+                        if (SaveFile.SaveGeneration != SaveGeneration.N3DS) continue;
+                        {
+                            _newLeafIslandAcreMap[idx] = new PictureBoxWithInterpolationMode
+                            {
+                                Size = new Size(_acreMapSize, _acreMapSize),
+                                Location = new Point(x * _acreMapSize, _townMapTotalSize * 2 + 24 + y * _acreMapSize),
+                                BackgroundImage = GetAcreImage(IslandAcres[idx].AcreId),
+                                SizeMode = PictureBoxSizeMode.StretchImage,
+                                BackgroundImageLayout = ImageLayout.Stretch,
+                                UseInternalInterpolationSetting = true,
+                            };
+                            _newLeafIslandAcreMap[idx].MouseMove += (s, e) => AcreEditorMouseMove(s, e, true);
+                            _newLeafIslandAcreMap[idx].MouseLeave += HideAcreTip;
+                            _newLeafIslandAcreMap[idx].MouseClick += (s, e) => AcreClick(s, e, true);
+                            _newLeafIslandAcreMap[idx].MouseEnter += AcreEditorMouseEnter;
+                            _newLeafIslandAcreMap[idx].MouseLeave += AcreEditorMouseLeave;
+                            islandPanel.Controls.Add(_newLeafIslandAcreMap[idx]);
+                        }
                     }
                 }
             }
@@ -2622,8 +2620,14 @@ namespace ACSE.WinForms
             islandPanel.ResumeLayout();
             grassPanel.ResumeLayout();
 
+            acrePanel.Refresh();
+            townPanel.Refresh();
+            islandPanel.Refresh();
+            grassPanel.Refresh();
+
             if ((SaveFile.SaveType != SaveType.DoubutsuNoMoriEPlus && SaveFile.SaveType != SaveType.AnimalForestEPlus)
-                || _selectedIsland == null) return;
+                || _selectedIsland == null || _islandAcreMap == null) return;
+
             var islandAcreIds = _selectedIsland.GetAcreIds();
             _islandAcreMap[0].BackgroundImage = GetAcreImage(islandAcreIds[0]);
             _islandAcreMap[1].BackgroundImage = GetAcreImage(islandAcreIds[1]);
@@ -3082,7 +3086,7 @@ namespace ACSE.WinForms
                             {
                                 var currentTownAcre = TownAcres[townAcre];
                                 TownAcres[townAcre] = new WorldAcre((ushort)(_selectedAcreId + _acreHeightModifier),
-                                    townAcre, currentTownAcre.AcreItems, _buriedBuffer, SaveFile.SaveType);
+                                    townAcre, currentTownAcre.AcreItems);
                                 if (loadDefaultItems)
                                 {
                                     TownAcres[townAcre].LoadDefaultItems(SaveFile);
@@ -4000,12 +4004,18 @@ namespace ACSE.WinForms
                                             // TODO: Island buried items
                                         }
                                         else
-                                            IslandAcres[acre].SetBuriedInMemory(IslandAcres[acre].AcreItems[index],
-                                                acre, _islandBuriedBuffer, true, SaveFile.SaveType);
+                                        {
+                                            IslandAcres[acre].AcreItems[index].Buried = IslandAcres[acre].SetItemBuried(
+                                                IslandAcres[acre].AcreItems[index], true,
+                                                SaveFile.SaveGeneration);
+                                        }
                                     }
                                     else
-                                        TownAcres[acre].SetBuriedInMemory(TownAcres[acre].AcreItems[index], acre,
-                                            _buriedBuffer, true, SaveFile.SaveType);
+                                    {
+                                        TownAcres[acre].AcreItems[index].Buried = TownAcres[acre].SetItemBuried(
+                                            TownAcres[acre].AcreItems[index], true,
+                                            SaveFile.SaveGeneration);
+                                    }
 
                                     break;
                             }
@@ -4157,6 +4167,11 @@ namespace ACSE.WinForms
             {
                 _lastTownAcre = 0;
                 return;
+            }
+
+            if (_lastTownAcre < 0)
+            {
+                _lastTownAcre = 0;
             }
 
             WorldItem[] lastAcreItems;
@@ -4319,11 +4334,6 @@ namespace ACSE.WinForms
                         }
                     }
                 }
-            }
-
-            if (SaveFile.SaveGeneration != SaveGeneration.N3DS && CurrentSaveInfo.SaveOffsets.BuriedData != 0)
-            {
-                SaveFile.Write(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.BuriedData, _buriedBuffer);
             }
 
             if (CurrentSaveInfo.SaveOffsets.GrassWear > 0)
@@ -5204,12 +5214,6 @@ namespace ACSE.WinForms
                 case SaveGeneration.GCN:
                     var newAcreData = Generator.GetGenerator(SaveFile.SaveGeneration).Generate(seed);
 
-                    // Clear Buried Items Bitmap if it exists
-                    if (_buriedBuffer != null)
-                    {
-                        _buriedBuffer = new byte[_buriedBuffer.Length];
-                    }
-
                     for (var i = 0; i < newAcreData.Length; i++)
                     {
                         _acres[i] = new WorldAcre(newAcreData[i], i);
@@ -5226,8 +5230,7 @@ namespace ACSE.WinForms
                         var townAcre = (y - CurrentSaveInfo.TownYAcreStart) * (CurrentSaveInfo.XAcreCount - 2) + (x - 1);
                         if (townAcre >= CurrentSaveInfo.TownAcreCount) continue;
 
-                        TownAcres[townAcre] = new WorldAcre(_acres[i].AcreId, townAcre, _acres[i].AcreItems,
-                            _buriedBuffer, SaveFile.SaveType);
+                        TownAcres[townAcre] = new WorldAcre(_acres[i].AcreId, townAcre, _acres[i].AcreItems);
                         RefreshPictureBoxImage(_townAcreMap[townAcre],
                             GenerateAcreItemsBitmap(TownAcres[townAcre].AcreItems, townAcre));
                         _townAcreMap[townAcre].BackgroundImage = _acreMap[i].BackgroundImage;

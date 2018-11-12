@@ -47,6 +47,11 @@ namespace ACSE.WinForms.Controls
                     _offset = saveData.SaveDataStartOffset + 0x20480;
                     _trendOffset = _offset + 0xE;
                     break;
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
+                    _offset = saveData.SaveDataStartOffset + 0x223C8;
+                    _trendOffset = _offset + 0xE;
+                    break;
                 case SaveType.NewLeaf:
                     Days = 6;
                     _offset = saveData.SaveDataStartOffset + 0x6535C;

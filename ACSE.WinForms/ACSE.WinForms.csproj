@@ -70,6 +70,9 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Backups\Backup.cs" />
+    <Compile Include="Controls\AcreItemEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\BadgeControl.cs">
       <SubType>Component</SubType>
     </Compile>

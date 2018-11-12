@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using ACSE.Core.Debug;
 using ACSE.Core.Items;
 using ACSE.Core.Saves;
@@ -31,18 +32,19 @@ namespace ACSE.Core.Town.Acres
     public class WorldAcre : Acre
     {
         public WorldItem[] AcreItems = new WorldItem[16 * 16];
+        public int TownIndex;
 
-        public WorldAcre(ushort acreId, int position, ushort[] items = null, byte[] buriedItemData = null,
-            SaveType saveType = SaveType.AnimalCrossing, uint[] nlItems = null, int townPosition = -1) : base(acreId,
-            position)
+        public WorldAcre(ushort acreId, int position, ushort[] items = null, uint[] nlItems = null,
+            int townPosition = -1) : base(acreId, position)
         {
+            TownIndex = townPosition;
+
             if (items != null)
             {
                 for (var i = 0; i < 256; i++)
                 {
                     AcreItems[i] = new WorldItem(items[i], i);
-                    if (buriedItemData != null)
-                        SetBuried(AcreItems[i], townPosition == -1 ? position : townPosition, buriedItemData, saveType);
+                    AcreItems[i].Buried = IsItemBuried(AcreItems[i], Save.SaveInstance.SaveGeneration);
                 }
             }
             else if (nlItems != null)
@@ -50,66 +52,84 @@ namespace ACSE.Core.Town.Acres
                 for (var i = 0; i < 256; i++)
                 {
                     AcreItems[i] = new WorldItem(nlItems[i], i);
-                    //add buried logic
                 }
             }
         }
 
         public WorldAcre(ushort acreId, int position) : base(acreId, position) { }
 
-        public WorldAcre(ushort acreId, int position, uint[] items = null, byte[] buriedItemData = null, SaveType saveType = SaveType.AnimalCrossing)
-            : this(acreId, position, null, null, saveType, items) { }
+        public WorldAcre(ushort acreId, int position, uint[] items = null) : this(acreId, position, null, items)
+        { }
 
-        public WorldAcre(ushort acreId, int position, WorldItem[] items, byte[] buriedItemData = null,
-            SaveType saveType = SaveType.AnimalCrossing, int townPosition = -1) : base(acreId, position)
+        public WorldAcre(ushort acreId, int position, WorldItem[] items, int townPosition = -1) : base(acreId, position)
         {
             AcreItems = items;
-            if (buriedItemData == null || townPosition <= -1) return;
+            if (townPosition <= -1) return;
             for (var i = 0; i < 256; i++)
-                SetBuried(AcreItems[i], townPosition, buriedItemData, saveType);
+            {
+                AcreItems[i].Buried = IsItemBuried(AcreItems[i], Save.SaveInstance.SaveGeneration);
+            }
         }
 
-        //TODO: Change BuriedData from byte[] to ushort[] and use updated code
-        private static int GetBuriedDataLocation(WorldItem item, int acre, SaveType saveType)
+        public bool IsItemBuried(Item item, SaveGeneration generation)
         {
-            if (item == null) return -1;
-            var worldPosition = 0;
-            switch (saveType)
+            if (item == null || !AcreItems.Contains(item)) return false;
+
+            var itemIdx = Array.IndexOf(AcreItems, item);
+            if (itemIdx < 0 || itemIdx > 255) return false;
+
+            int offset;
+            switch (generation)
             {
-                //15 - item.Location.X because it's stored as a ushort in memory w/ reversed endianess
-                case SaveType.AnimalCrossing:
-                case SaveType.DoubutsuNoMoriEPlus:
-                case SaveType.AnimalForestEPlus:
-                case SaveType.CityFolk:
-                    worldPosition = (acre * 256) + (15 - item.Location.X) + item.Location.Y * 16;
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                case SaveGeneration.iQue:
+                case SaveGeneration.Wii:
+                    offset = Save.SaveInstance.SaveInfo.SaveOffsets.BuriedData + (TownIndex * 16 + itemIdx / 16) * 2;
+                    return Save.SaveInstance.ReadUInt16(offset, true, true).GetBit(itemIdx % 16) == 1;
+
+                case SaveGeneration.NDS:
+                    offset = Save.SaveInstance.SaveInfo.SaveOffsets.BuriedData + (Index * 256 + itemIdx) / 8;
+                    return Save.SaveInstance.ReadByte(offset, true).GetBit(itemIdx % 8) == 1;
+
+                case SaveGeneration.N3DS:
+                    return (item.Flag1 & 0x80) == 0x80;
+            }
+
+            return false;
+        }
+
+        public bool SetItemBuried(Item item, bool buried, SaveGeneration generation)
+        {
+            if (item == null || !AcreItems.Contains(item)) return false;
+
+            var itemIdx = Array.IndexOf(AcreItems, item);
+            if (itemIdx < 0 || itemIdx > 255) return false;
+
+            int offset;
+            switch (generation)
+            {
+                case SaveGeneration.N64:
+                case SaveGeneration.GCN:
+                case SaveGeneration.iQue:
+                case SaveGeneration.Wii:
+                    offset = Save.SaveInstance.SaveInfo.SaveOffsets.BuriedData + (TownIndex * 16 + itemIdx / 16) * 2;
+                    Save.SaveInstance.Write(offset,
+                        Save.SaveInstance.ReadUInt16(offset, true, true).SetBit(itemIdx % 16, buried), true, true);
                     break;
-                case SaveType.WildWorld:
-                    worldPosition = (acre * 256) + item.Index;
+
+                case SaveGeneration.NDS:
+                    offset = Save.SaveInstance.SaveInfo.SaveOffsets.BuriedData + (Index * 256 + itemIdx) / 8;
+                    Save.SaveInstance.Write(offset,
+                        Save.SaveInstance.ReadByte(offset, true).SetBit(itemIdx % 8, buried), true);
+                    break;
+
+                case SaveGeneration.N3DS:
+                    item.Flag1 &= 0x7F;
                     break;
             }
-            return worldPosition / 8;
-        }
 
-        public void SetBuriedInMemory(WorldItem item, int acre, byte[] buriedItemData, bool buried, SaveType saveType)
-        {
-            if (saveType == SaveType.NewLeaf || saveType == SaveType.WelcomeAmiibo) return;
-            var buriedLocation = GetBuriedDataLocation(item, acre, saveType);
-            if (buriedLocation > -1)
-            {
-                buriedItemData[buriedLocation].SetBit(item.Location.X % 8, buried);
-                item.Buried = buriedItemData[buriedLocation].GetBit(item.Location.X % 8) == 1;
-            }
-            else
-                item.Buried = false;
-        }
-
-        private static void SetBuried(WorldItem item, int acre, byte[] buriedItemData, SaveType saveType)
-        {
-            var burriedDataOffset = GetBuriedDataLocation(item, acre, saveType);
-            if (burriedDataOffset > -1 && burriedDataOffset < buriedItemData.Length)
-            {
-                item.Buried = buriedItemData[burriedDataOffset].GetBit(item.Location.X % 8) == 1;
-            }
+            return IsItemBuried(item, generation);
         }
 
         /// <summary>

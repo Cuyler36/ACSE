@@ -165,7 +165,7 @@ namespace ACSE.Core.Town.Island
             var buriedLocation = GetBuriedDataLocation(item, acre, saveType);
             if (buriedLocation > -1)
             {
-                buriedItemData[buriedLocation].SetBit(item.Location.X % 8, buried);
+                buriedItemData[buriedLocation] = buriedItemData[buriedLocation].SetBit(item.Location.X % 8, buried);
                 item.Buried = buriedItemData[buriedLocation].GetBit(item.Location.X % 8) == 1;
             }
             else

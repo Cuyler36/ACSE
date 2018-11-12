@@ -17,16 +17,23 @@ namespace System
         }
 
         /// <summary>
-        /// Returns the bit from a specified index of a byte.
+        /// Returns the bit from a specified index of a <see cref="ValueType"/>.
         /// </summary>
-        /// <param name="b">The input byte</param>
+        /// <param name="input">The input <see cref="ValueType"/></param>
         /// <param name="index">The bit to retrieve</param>
         /// <param name="reverse">Sets if the index should be reversed</param>
         /// <returns>The requested bit</returns>
-        public static byte GetBit(this byte b, int index, bool reverse = false)
+        public static T GetBit<T>(this T input, int index, bool reverse = false)
         {
-            if (index < 0 || index > 7) throw new ArgumentException("Index is expected to be in the range of 0 - 7!");
-            return (byte)((reverse ? b >> (7 - index) : b >> index) & 1);
+            if (!(input is ValueType))
+                throw new ArgumentException($"{nameof(input)} must be a ValueType!");
+
+            var highBit = Marshal.SizeOf(input) * 8 - 1;
+            if (index < 0 || index > highBit)
+                throw new ArgumentException($"Bit index was out of range! Expected range: 0 - {highBit}");
+
+            dynamic obj = input;
+            return (T) ((reverse ? obj >> (highBit - index) : obj >> index) & 1);
         }
 
         /// <summary>
@@ -52,22 +59,32 @@ namespace System
         /// <summary>
         /// Sets a specified bit of a byte.
         /// </summary>
-        /// <param name="b">The byte to modify</param>
+        /// <param name="input">The byte to modify</param>
         /// <param name="index">The index of the bit to set</param>
         /// <param name="set">Should the bit be set or not</param>
         /// <param name="reverse">Is the index reversed (e.g. 0 = topmost bit)</param>
-        public static void SetBit(ref this byte b, int index, bool set, bool reverse = false)
+        public static T SetBit<T>(this T input, int index, bool set, bool reverse = false)
         {
-            if (index < 0 || index > 7) throw new ArgumentException("Index is expected to be in the range of 0 - 7!");
-            var bitmask = 1 << (reverse ? 7 - index : index);
+            if (!(input is ValueType))
+                throw new ArgumentException($"{nameof(input)} must be a ValueType!");
+
+            var highBit = Marshal.SizeOf(input) * 8 - 1;
+            if (index < 0 || index > highBit)
+                throw new ArgumentException($"Bit index was out of range! Expected range: 0 - {highBit}");
+
+            var bitmask = 1 << (reverse ? highBit - index : index);
+            dynamic obj = input;
+
             if (set)
             {
-                b |= (byte) bitmask;
+                obj |= bitmask;
             }
             else
             {
-                b &= (byte) ~bitmask;
+                obj &= ~bitmask;
             }
+
+            return (T) obj;
         }
 
         /// <summary>

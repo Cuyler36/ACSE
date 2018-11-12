@@ -929,14 +929,21 @@ namespace ACSE.Core.Saves
             StreamReader contents;
             var acreDbLocation = PathUtility.GetResourcesDirectory();
             if (saveType == SaveType.WildWorld)
-                acreDbLocation += "WW_Acres_" + language + ".txt";
-            try { contents = File.OpenText(acreDbLocation); }
+            {
+                acreDbLocation = Path.Combine(acreDbLocation, $"WW_Acres_{language}.txt");
+            }
+
+            try
+            {
+                contents = File.OpenText(acreDbLocation);
+            }
             catch (Exception e)
             {
                 DebugUtility.DebugManagerInstance.WriteLine(
                     $"An error occured opening acre database file:\n\"{acreDbLocation}\"\nError Info:\n{e.Message}", DebugLevel.Error);
                 return null;
             }
+
             var filedList = new Dictionary<string, List<byte>>();
             string line;
             var currentAcreType = "Unsorted";
