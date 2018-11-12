@@ -10,9 +10,9 @@ namespace ACSE.Tests.UtilityTests
         [TestMethod]
         public void TestSetBit()
         {
-            byte test = 0xF;
-            test.SetBit(4, true);
-            Assert.AreEqual(test, 0x1F);
+            const byte test = 0xF;
+            var result = test.SetBit(4, true);
+            Assert.AreEqual(result, 0x1F);
         }
 
         [TestMethod]
