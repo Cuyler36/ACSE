@@ -31,27 +31,29 @@ namespace ACSE.Core.Town.Acres
 
     public class WorldAcre : Acre
     {
-        public WorldItem[] AcreItems = new WorldItem[16 * 16];
+        public Item[] Items = new Item[16 * 16];
         public int TownIndex;
+        public bool IsIslandAcre;
 
         public WorldAcre(ushort acreId, int position, ushort[] items = null, uint[] nlItems = null,
-            int townPosition = -1) : base(acreId, position)
+            int townPosition = -1, bool isIslandAcre = false) : base(acreId, position)
         {
             TownIndex = townPosition;
+            IsIslandAcre = isIslandAcre;
 
             if (items != null)
             {
                 for (var i = 0; i < 256; i++)
                 {
-                    AcreItems[i] = new WorldItem(items[i], i);
-                    AcreItems[i].Buried = IsItemBuried(AcreItems[i], Save.SaveInstance.SaveGeneration);
+                    Items[i] = new Item(items[i]);
+                    //Items[i].Buried = IsItemBuried(Items[i], Save.SaveInstance.SaveGeneration);
                 }
             }
             else if (nlItems != null)
             {
                 for (var i = 0; i < 256; i++)
                 {
-                    AcreItems[i] = new WorldItem(nlItems[i], i);
+                    Items[i] = new Item(nlItems[i]);
                 }
             }
         }
@@ -61,21 +63,21 @@ namespace ACSE.Core.Town.Acres
         public WorldAcre(ushort acreId, int position, uint[] items = null) : this(acreId, position, null, items)
         { }
 
-        public WorldAcre(ushort acreId, int position, WorldItem[] items, int townPosition = -1) : base(acreId, position)
+        public WorldAcre(ushort acreId, int position, Item[] items, int townPosition = -1) : base(acreId, position)
         {
-            AcreItems = items;
+            Items = items;
             if (townPosition <= -1) return;
             for (var i = 0; i < 256; i++)
             {
-                AcreItems[i].Buried = IsItemBuried(AcreItems[i], Save.SaveInstance.SaveGeneration);
+                //Items[i].Buried = IsItemBuried(Items[i], Save.SaveInstance.SaveGeneration);
             }
         }
 
         public bool IsItemBuried(Item item, SaveGeneration generation)
         {
-            if (item == null || !AcreItems.Contains(item)) return false;
+            if (item == null || !Items.Contains(item)) return false;
 
-            var itemIdx = Array.IndexOf(AcreItems, item);
+            var itemIdx = Array.IndexOf(Items, item);
             if (itemIdx < 0 || itemIdx > 255) return false;
 
             int offset;
@@ -99,11 +101,13 @@ namespace ACSE.Core.Town.Acres
             return false;
         }
 
+        public bool IsItemBuried(Item item) => IsItemBuried(item, Save.SaveInstance.SaveGeneration);
+
         public bool SetItemBuried(Item item, bool buried, SaveGeneration generation)
         {
-            if (item == null || !AcreItems.Contains(item)) return false;
+            if (item == null || !Items.Contains(item)) return false;
 
-            var itemIdx = Array.IndexOf(AcreItems, item);
+            var itemIdx = Array.IndexOf(Items, item);
             if (itemIdx < 0 || itemIdx > 255) return false;
 
             int offset;
@@ -161,7 +165,7 @@ namespace ACSE.Core.Town.Acres
                         {
                             if (i >= 0x100) // Don't read past the maximum item slot.
                                 break;
-                            AcreItems[i] = new WorldItem(reader.ReadUInt16().Reverse(), i);
+                            Items[i] = new Item(reader.ReadUInt16().Reverse());
                         }
                     }
                 }

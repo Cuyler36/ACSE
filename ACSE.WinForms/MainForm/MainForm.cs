@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using ACSE.Core.BitFields.Catalog;
 using ACSE.Core.BitFields.Encyclopedia;
 using ACSE.Core.BitFields.Museum;
@@ -39,6 +40,7 @@ using ACSE.WinForms.Controls;
 using ACSE.WinForms.Imaging;
 using ACSE.WinForms.Managers;
 using ACSE.WinForms.Utilities;
+using ContentAlignment = System.Drawing.ContentAlignment;
 using ItemChangedEventArgs = ACSE.Core.Items.ItemChangedEventArgs;
 
 namespace ACSE.WinForms
@@ -2454,7 +2456,7 @@ namespace ACSE.WinForms
                     var townAcre = (y - CurrentSaveInfo.TownYAcreStart) * (CurrentSaveInfo.XAcreCount - 2) + (x - 1);
                     if (townAcre >= CurrentSaveInfo.TownAcreCount) continue;
                     {
-                        var townAcreBitmap = GenerateAcreItemsBitmap(TownAcres[townAcreCount].AcreItems, townAcre);
+                        var townAcreBitmap = GenerateAcreItemsBitmap(TownAcres[townAcreCount]);
                         if (townAcre >= CurrentSaveInfo.TownAcreCount) continue;
                         _townAcreMap[townAcre] = new PictureBoxWithInterpolationMode
                         {
@@ -2533,25 +2535,25 @@ namespace ACSE.WinForms
                                 SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandAcreData + idx * 2,
                                 SaveFile.IsBigEndian);
 
-                        var acreItems = new WorldItem[256];
+                        var acreItems = new Item[256];
                         for (var i = 0; i < 256; i++)
                             if (SaveFile.SaveGeneration == SaveGeneration.GCN)
                             {
                                 acreItems[i] =
-                                    new WorldItem(
+                                    new Item(
                                         SaveFile.ReadUInt16(
                                             SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.IslandWorldData +
-                                            idx * 512 + i * 2, true), i);
+                                            idx * 512 + i * 2, true));
                             }
                             else if ((idx > 4 && idx < 7) || (idx > 8 && idx < 11)) //Other acres are water acres
                             {
                                 var worldIdx = (y - 1) * 2 + ((x - 1) % 4);
                                 acreItems[i] =
-                                    new WorldItem(
+                                    new Item(
                                         SaveFile.ReadUInt32(SaveFile.SaveDataStartOffset +
                                                             CurrentSaveInfo.SaveOffsets.IslandWorldData +
                                                             worldIdx * 1024 +
-                                                            i * 4), i);
+                                                            i * 4));
                             }
 
                         IslandAcres[idx] = new WorldAcre(acreId, idx, acreItems);
@@ -2572,13 +2574,12 @@ namespace ACSE.WinForms
                                 SaveFile.SaveType == SaveType.AnimalForestEPlus)
                             {
                                 _islandAcreMap[idx].Image =
-                                    GenerateAcreItemsBitmap(_selectedIsland.Items[idx], idx, true);
+                                    GenerateAcreItemsBitmap(_selectedIsland.Acres[idx], true);
                                 _islandAcreMap[idx].BackgroundImage = GetAcreImage(_acres[0x3C + idx].BaseAcreId);
                             }
                             else
                             {
-                                _islandAcreMap[idx].Image = GenerateAcreItemsBitmap(IslandAcres[idx].AcreItems,
-                                    IslandAcres[idx].Index, true);
+                                _islandAcreMap[idx].Image = GenerateAcreItemsBitmap(IslandAcres[idx], true);
                                 _islandAcreMap[idx].BackgroundImage = GetAcreImage(acreId);
                             }
 
@@ -2792,7 +2793,7 @@ namespace ACSE.WinForms
 
         #endregion
 
-        private Bitmap GenerateAcreItemsBitmap(WorldItem[] items, int acre, bool islandAcre = false,
+        private Bitmap GenerateAcreItemsBitmap(WorldAcre acre, bool islandAcre = false,
             int hoveredAcre = -1, int xLoc = -1, int yLoc = -1)
         {
             var itemSize = _townMapCellSize;
@@ -2802,14 +2803,16 @@ namespace ACSE.WinForms
             var bitmapBuffer = new byte[4 * (acreSize * acreSize)];
             for (var i = 0; i < 256; i++)
             {
-                var item = items[i];
+                var item = acre.Items[i];
+                var xLocation = i % 16;
+                var yLocation = i / 16;
                 if (item.Type == ItemType.Empty) continue;
                 var itemColor = ItemData.GetItemColor(item.Type);
                 // Draw Item Box
                 for (var x = 0; x < itemSize * itemSize; x++)
                     Buffer.BlockCopy(BitConverter.GetBytes(itemColor), 0, bitmapBuffer,
-                        ((item.Location.Y * itemSize + x / itemSize) * acreSize * 4) +
-                        ((item.Location.X * itemSize + x % itemSize) * 4), 4);
+                        ((yLocation * itemSize + x / itemSize) * acreSize * 4) +
+                        ((xLocation * itemSize + x % itemSize) * 4), 4);
             }
 
             // Draw Border
@@ -2826,10 +2829,10 @@ namespace ACSE.WinForms
             Marshal.Copy(bitmapBuffer, 0, bitmapData.Scan0, bitmapBuffer.Length);
             acreBitmap.UnlockBits(bitmapData);
             // Draw Buried X
-            ImageGeneration.DrawBuriedIcons(acreBitmap, items, _townMapCellSize);
+            ImageGeneration.DrawBuriedIcons(acreBitmap, acre, _townMapCellSize);
 
             // Draw Current Cell Glow
-            if (hoveredAcre == acre && hoveredAcre > -1 && xLoc > -1 && yLoc > -1)
+            if (hoveredAcre == acre.Index && hoveredAcre > -1 && xLoc > -1 && yLoc > -1)
             {
                 ImageGeneration.OverlayItemBoxGlow(acreBitmap, itemSize, xLoc, yLoc);
             }
@@ -2839,9 +2842,9 @@ namespace ACSE.WinForms
             {
                 return islandAcre
                     ? ((SaveFile.SaveGeneration == SaveGeneration.N3DS)
-                        ? ImageGeneration.DrawBuildings(acreBitmap, _islandBuildings, acre - 5, _townMapCellSize)
+                        ? ImageGeneration.DrawBuildings(acreBitmap, _islandBuildings, acre.Index - 5, _townMapCellSize)
                         : acreBitmap)
-                    : ImageGeneration.DrawBuildings(acreBitmap, _buildings, acre, _townMapCellSize);
+                    : ImageGeneration.DrawBuildings(acreBitmap, _buildings, acre.Index, _townMapCellSize);
             }
 
             return acreBitmap;
@@ -3047,7 +3050,7 @@ namespace ACSE.WinForms
                     if (island)
                     {
                         IslandAcres[acreIndex] = new WorldAcre((ushort)(_selectedAcreId + _acreHeightModifier), acreIndex,
-                            IslandAcres[acreIndex].AcreItems);
+                            IslandAcres[acreIndex].Items);
                     }
                     else
                     {
@@ -3086,14 +3089,14 @@ namespace ACSE.WinForms
                             {
                                 var currentTownAcre = TownAcres[townAcre];
                                 TownAcres[townAcre] = new WorldAcre((ushort)(_selectedAcreId + _acreHeightModifier),
-                                    townAcre, currentTownAcre.AcreItems);
+                                    townAcre, currentTownAcre.Items);
                                 if (loadDefaultItems)
                                 {
                                     TownAcres[townAcre].LoadDefaultItems(SaveFile);
-                                    _acres[acreIndex].AcreItems = TownAcres[townAcre].AcreItems;
+                                    _acres[acreIndex].Items = TownAcres[townAcre].Items;
                                 }
                                 _townAcreMap[townAcre].BackgroundImage = acreBox.BackgroundImage;
-                                RefreshPictureBoxImage(_townAcreMap[townAcre], GenerateAcreItemsBitmap(currentTownAcre.AcreItems, acreIndex));
+                                RefreshPictureBoxImage(_townAcreMap[townAcre], GenerateAcreItemsBitmap(currentTownAcre));
                             }
 
                             if (_grassMap != null && _grassMap.Length == _townAcreMap.Length)
@@ -3119,7 +3122,7 @@ namespace ACSE.WinForms
                             }
 
                             RefreshPictureBoxImage(_islandAcreMap[acreIndex],
-                                GenerateAcreItemsBitmap(IslandAcres[acreIndex].AcreItems, acreIndex));
+                                GenerateAcreItemsBitmap(IslandAcres[acreIndex]));
                         }
                     }
 
@@ -3710,7 +3713,7 @@ namespace ACSE.WinForms
                 : editedBuilding.Id != 0xFC;
 
             _townAcreMap[editedBuilding.AcreIndex].Image =
-                GenerateAcreItemsBitmap(TownAcres[editedBuilding.AcreIndex].AcreItems, editedBuilding.AcreIndex);
+                GenerateAcreItemsBitmap(TownAcres[editedBuilding.AcreIndex]);
         }
 
         //TODO: Update textboxes on change with mouse
@@ -3736,9 +3739,9 @@ namespace ACSE.WinForms
                     editedBuilding.YPos = (byte)(newPosition % 16);
                 }
                 editedBuilding.AcreIndex = (byte)((editedBuilding.AcreY - 1) * 5 + (editedBuilding.AcreX - 1));
-                _townAcreMap[oldAcre].Image = GenerateAcreItemsBitmap(TownAcres[oldAcre].AcreItems, oldAcre);
+                _townAcreMap[oldAcre].Image = GenerateAcreItemsBitmap(TownAcres[oldAcre]);
                 if (oldAcre != newAcre)
-                    _townAcreMap[newAcre].Image = GenerateAcreItemsBitmap(TownAcres[newAcre].AcreItems, newAcre);
+                    _townAcreMap[newAcre].Image = GenerateAcreItemsBitmap(TownAcres[newAcre]);
             }
             else //Return text to original position
             {
@@ -3840,7 +3843,7 @@ namespace ACSE.WinForms
             _lastTownIndex = -1;
         }
 
-        private void HandleTownClick(object sender, WorldItem item, int acre, int index, MouseEventArgs e, bool island = false)
+        private void HandleTownClick(object sender, Item item, WorldAcre acre, int index, MouseEventArgs e, bool island = false)
         {
             if (!(sender is PictureBoxWithInterpolationMode box)) return;
             Building b;
@@ -3854,7 +3857,7 @@ namespace ACSE.WinForms
                     {
                         b = island ? _islandBuildings[_selectedBuilding] : _buildings[_selectedBuilding];
                         int oldAcre = b.AcreIndex;
-                        var adjustedAcre = island ? acre - 5 : acre;
+                        var adjustedAcre = island ? acre.Index - 5 : acre.Index;
                         if (CheckBuildingIsHere(adjustedAcre, index % 16, index / 16, island) != null)
                             return; //Don't place buildings on top of each other
                         b.AcreIndex = (byte)adjustedAcre;
@@ -3873,34 +3876,25 @@ namespace ACSE.WinForms
                         //These two items has "actor" items at their location
                         if (b.Name != "Sign" && b.Name != "Bus Stop")
                         {
-                            if (island)
-                            {
-                                IslandAcres[acre].AcreItems[index] = new WorldItem(index);
-                            }
-                            else
-                            {
-                                TownAcres[acre].AcreItems[index] =
-                                    new WorldItem(index); //Clear any item at the new building position
-                            }
+                            acre.Items[index] = new Item();
                         }
                         else
                         {
-                            TownAcres[acre].AcreItems[index] =
-                                new WorldItem(b.Name == "Sign" ? (ushort) 0xD000 : (ushort) 0x7003, index);
+                            acre.Items[index] = new Item(b.Name == "Sign" ? (ushort) 0xD000 : (ushort) 0x7003);
                         }
 
-                        if ((!island && oldAcre != acre) || (island && oldAcre != adjustedAcre))
+                        if ((!island && oldAcre != acre.Index) || (island && oldAcre != adjustedAcre))
                         {
                             var oldImage = island ? _islandAcreMap[oldAcre + 5].Image : _townAcreMap[oldAcre].Image;
                             if (island)
                             {
                                 _islandAcreMap[oldAcre + 5].Image =
-                                    GenerateAcreItemsBitmap(IslandAcres[oldAcre + 5].AcreItems, oldAcre + 5, true);
+                                    GenerateAcreItemsBitmap(IslandAcres[oldAcre + 5], true);
                                 _islandAcreMap[oldAcre + 5].Refresh();
                             }
                             else
                             {
-                                _townAcreMap[oldAcre].Image = GenerateAcreItemsBitmap(TownAcres[oldAcre].AcreItems, oldAcre);
+                                _townAcreMap[oldAcre].Image = GenerateAcreItemsBitmap(TownAcres[oldAcre]);
                                 _townAcreMap[oldAcre].Refresh();
                             }
                             oldImage?.Dispose();
@@ -3921,8 +3915,8 @@ namespace ACSE.WinForms
 
                         if (itemFlag1.Enabled)
                         {
-                            var newItem = new WorldItem(_currentItem.ItemId, index);
-                            byte.TryParse(itemFlag1.Text, NumberStyles.AllowHexSpecifier, null, out newItem.Flag1);
+                            var newItem = new Item(_currentItem.ItemId);
+                            /*byte.TryParse(itemFlag1.Text, NumberStyles.AllowHexSpecifier, null, out newItem.Flag1);
                             byte.TryParse(itemFlag2.Text, NumberStyles.AllowHexSpecifier, null, out newItem.Flag2);
                             switch (newItem.Flag1)
                             {
@@ -3934,23 +3928,12 @@ namespace ACSE.WinForms
                                     newItem.Watered = false;
                                     newItem.Buried = true;
                                     break;
-                            }
-                            if (island)
-                                IslandAcres[acre].AcreItems[index] = newItem;
-                            else
-                                TownAcres[acre].AcreItems[index] = newItem;
+                            }*/
+                            acre.Items[index] = newItem;
                         }
                         else
                         {
-                            if (island)
-                            {
-                                if (_selectedIsland == null)
-                                    IslandAcres[acre].AcreItems[index] = new WorldItem(_currentItem.ItemId, index);
-                                else
-                                    _selectedIsland.Items[acre][index] = new WorldItem(_currentItem.ItemId, index);
-                            }
-                            else
-                                TownAcres[acre].AcreItems[index] = new WorldItem(_currentItem.ItemId, index);
+                            acre.Items[index] = new Item(_currentItem.ItemId);
 
                             Villager villager;
                             switch (SaveFile.SaveGeneration)
@@ -3980,66 +3963,39 @@ namespace ACSE.WinForms
                         {
                             switch (SaveFile.SaveGeneration)
                             {
-                                case SaveGeneration.N3DS when island:
-                                    if (IslandAcres[acre].AcreItems[index].ItemId != 0x7FFE)
-                                    {
-                                        IslandAcres[acre].AcreItems[index].Flag1 = 0x80;
-                                        IslandAcres[acre].AcreItems[index].Buried = true;
-                                    }
-
-                                    break;
                                 case SaveGeneration.N3DS:
-                                    if (TownAcres[acre].AcreItems[index].ItemId != 0x7FFE)
+                                    if (acre.Items[index].ItemId != 0x7FFE)
                                     {
-                                        TownAcres[acre].AcreItems[index].Flag1 = 0x80;
-                                        TownAcres[acre].AcreItems[index].Buried = true;
+                                        acre.Items[index].Flag1 = 0x80;
+                                        //TownAcres[acre].Items[index].Buried = true;
                                     }
 
                                     break;
                                 default:
-                                    if (island)
+                                    if (island && _selectedIsland != null)
                                     {
-                                        if (_selectedIsland != null)
-                                        {
                                             // TODO: Island buried items
-                                        }
-                                        else
-                                        {
-                                            IslandAcres[acre].AcreItems[index].Buried = IslandAcres[acre].SetItemBuried(
-                                                IslandAcres[acre].AcreItems[index], true,
-                                                SaveFile.SaveGeneration);
-                                        }
                                     }
                                     else
                                     {
-                                        TownAcres[acre].AcreItems[index].Buried = TownAcres[acre].SetItemBuried(
-                                            TownAcres[acre].AcreItems[index], true,
-                                            SaveFile.SaveGeneration);
+                                        //TownAcres[acre].Items[index].Buried =
+                                        acre.SetItemBuried(acre.Items[index], true, SaveFile.SaveGeneration);
                                     }
 
                                     break;
                             }
                         }
                     }
-                    var img = box.Image;
-                    WorldItem[] items;
-                    if (island)
-                    {
-                        items = _selectedIsland == null ? IslandAcres[acre].AcreItems : _selectedIsland.Items[acre];
-                    }
-                    else
-                    {
-                        items = TownAcres[acre].AcreItems;
-                    }
 
-                    RefreshPictureBoxImage(box, GenerateAcreItemsBitmap(items, acre, island));
+                    var img = box.Image;
+                    RefreshPictureBoxImage(box, GenerateAcreItemsBitmap(acre, island));
                     box.Refresh();
                     img?.Dispose();
                     TownMove(sender, e, island, true); // Force ToolTip update
                     break;
                 }
                 case MouseButtons.Right:
-                    b = CheckBuildingIsHere(acre, index % 16, index / 16, island);
+                    b = CheckBuildingIsHere(acre.Index, index % 16, index / 16, island);
                     if (b != null)
                     {
                         if (_selectedBuilding == -1)
@@ -4062,7 +4018,7 @@ namespace ACSE.WinForms
                             selectedItem.SelectedValue = oldSelectedItemId;
                         else
                         {
-                            buriedCheckbox.Checked = item.Buried || item.Flag1 == 0x80;
+                            buriedCheckbox.Checked = acre.IsItemBuried(item) || item.Flag1 == 0x80;
                             if (itemFlag1.Enabled)
                             {
                                 itemFlag1.Text = item.Flag1.ToString("X2");
@@ -4078,18 +4034,9 @@ namespace ACSE.WinForms
                 case MouseButtons.Middle:
                 {
                     box.Capture = false;
-                    WorldItem[] items;
-                    if (island)
-                    {
-                        items = _selectedIsland == null ? IslandAcres[acre].AcreItems : _selectedIsland.Items[acre];
-                    }
-                    else
-                    {
-                        items = TownAcres[acre].AcreItems;
-                    }
-                    Utility.FloodFillWorldItemArray(ref items, 16, index, items[index], new WorldItem(_currentItem.ItemId, byte.Parse(itemFlag1.Text),
-                        byte.Parse(itemFlag2.Text), items[index].Index));
-                    RefreshPictureBoxImage(box, GenerateAcreItemsBitmap(items, acre, island));
+                    Utility.FloodFillItemArray(ref acre.Items, 16, index, acre.Items[index],
+                        new Item(_currentItem.ItemId, byte.Parse(itemFlag1.Text), byte.Parse(itemFlag2.Text)));
+                    RefreshPictureBoxImage(box, GenerateAcreItemsBitmap(acre, island));
                     break;
                 }
             }
@@ -4116,12 +4063,12 @@ namespace ACSE.WinForms
             townInfoLabel.Text = $"X: {x} | Y: {y} | Index: {index}";
             townInfoLabel.Refresh();
 
-            WorldItem item;
-            WorldItem[] items;
+            Item item;
+            WorldAcre wAcre;
             if (island)
             {
-                items = _selectedIsland == null ? IslandAcres[acre].AcreItems : _selectedIsland.Items[acre];
-                item = _selectedIsland == null ? IslandAcres[acre].AcreItems[index] : _selectedIsland.Items[acre][index];
+                wAcre = _selectedIsland == null ? IslandAcres[acre] : _selectedIsland.Acres[acre];
+                item = _selectedIsland == null ? IslandAcres[acre].Items[index] : _selectedIsland.Acres[acre].Items[index];
 
                 // TODO: This doesn't handle the ocean acres to the left & right.
                 if (SaveFile.SaveGeneration == SaveGeneration.N3DS && _lastTownAcre < 5 || _lastTownAcre > 10)
@@ -4131,13 +4078,13 @@ namespace ACSE.WinForms
             }
             else
             {
-                items = TownAcres[acre].AcreItems;
-                item = TownAcres[acre].AcreItems[index];
+                wAcre = TownAcres[acre];
+                item = TownAcres[acre].Items[index];
             }
 
             if (_clicking && !forceOverride)
             {
-                HandleTownClick(sender, item, acre, index, e, island);
+                HandleTownClick(sender, item, wAcre, index, e, island);
             }
 
             //Console.WriteLine($"Index: {index} | ItemId: {item.ItemId:X4} | Name: {item.Name}");
@@ -4149,17 +4096,17 @@ namespace ACSE.WinForms
                 townToolTip.Show(
                     b != null
                         ? $"{b.Name} - [0x{b.Id:X2} - Building]"
-                        : $"{item.Name}{(item.Buried ? " (Buried)" : (item.Watered ? " (Watered)" : (item.Flag1 == 1 ? " (Perfect Fruit)" : "")))} - [0x{item.ItemId:X4}]",
+                        : $"{item.Name}{(wAcre.IsItemBuried(item) ? " (Buried)" : ((item.Flag1 & 0x40) != 0 ? " (Watered)" : (item.Flag1 == 1 ? " (Perfect Fruit)" : "")))} - [0x{item.ItemId:X4}]",
                     box, e.X + 15, e.Y + 10, 100000);
             }
             else
             {
-                townToolTip.Show($"{item.Name}{(item.Buried ? " (Buried)" : "")} - [0x{item.ItemId:X4}]", box, e.X + 15,
+                townToolTip.Show($"{item.Name}{(wAcre.IsItemBuried(item) ? " (Buried)" : "")} - [0x{item.ItemId:X4}]", box, e.X + 15,
                     e.Y + 10, 100000);
             }
             
             // Draw Cell Highlight
-            RefreshPictureBoxImage(box, GenerateAcreItemsBitmap(items, acre, island, acre, x, y));
+            RefreshPictureBoxImage(box, GenerateAcreItemsBitmap(wAcre, island, acre, x, y));
             box.Refresh();
 
             if (acre == _lastTownAcre) return;
@@ -4174,18 +4121,18 @@ namespace ACSE.WinForms
                 _lastTownAcre = 0;
             }
 
-            WorldItem[] lastAcreItems;
+            WorldAcre lastWorldAcre;
             if (island)
             {
-                lastAcreItems = _selectedIsland == null ? IslandAcres[_lastTownAcre].AcreItems : _selectedIsland.Items[_lastTownAcre];
+                lastWorldAcre = _selectedIsland == null ? IslandAcres[_lastTownAcre] : _selectedIsland.Acres[_lastTownAcre];
             }
             else
             {
-                lastAcreItems = TownAcres[_lastTownAcre].AcreItems;
+                lastWorldAcre = TownAcres[_lastTownAcre];
             }
 
             RefreshPictureBoxImage(island ? _islandAcreMap[_lastTownAcre] : _townAcreMap[_lastTownAcre],
-                GenerateAcreItemsBitmap(lastAcreItems, _lastTownAcre, island));
+                GenerateAcreItemsBitmap(lastWorldAcre, island));
             if (island)
             {
                 _islandAcreMap[_lastTownAcre].Refresh();
@@ -4209,18 +4156,19 @@ namespace ACSE.WinForms
             var x = e.X / _townMapCellSize;
             var y = e.Y / _townMapCellSize;
             var index = x + y * 16;
-            if (index > 255)
-                return;
-            WorldItem item;
+            if (index > 255) return;
+
+            WorldAcre wAcre;
             if (island)
             {
-                item = _selectedIsland == null ? IslandAcres[acre].AcreItems[index] : _selectedIsland.Items[acre][index];
+                wAcre = _selectedIsland == null ? IslandAcres[acre] : _selectedIsland.Acres[acre];
             }
             else
             {
-                item = TownAcres[acre].AcreItems[index];
+                wAcre = TownAcres[acre];
             }
-            HandleTownClick(sender, item, acre, index, e, island);
+
+            HandleTownClick(sender, wAcre.Items[index], wAcre, index, e, island);
             _clicking = true;
         }
 
@@ -4323,13 +4271,13 @@ namespace ACSE.WinForms
                         if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
                         {
                             SaveFile.Write(SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.TownData + i * 1024 + x * 4,
-                                ItemData.EncodeItem(TownAcres[i].AcreItems[x]));
+                                ItemData.EncodeItem(TownAcres[i].Items[x]));
                         }
                         else
                         {
                             SaveFile.Write(
                                 SaveFile.SaveDataStartOffset + CurrentSaveInfo.SaveOffsets.TownData + i * 512 + x * 2,
-                                TownAcres[i].AcreItems[x].ItemId,
+                                TownAcres[i].Items[x].ItemId,
                                 SaveFile.IsBigEndian);
                         }
                     }
@@ -4491,26 +4439,26 @@ namespace ACSE.WinForms
                 var idx = Array.IndexOf(_townAcreMap, box);
                 var acreIdx = idx;
                 var acre = TownAcres[acreIdx];
-                if (acre.AcreItems == null) continue;
+                if (acre.Items == null) continue;
                 for (var i = 0; i < 256; i++)
                 {
-                    if (ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType) != ItemType.Weed) continue; // Weed
+                    if (ItemData.GetItemType(acre.Items[i].ItemId, SaveFile.SaveType) != ItemType.Weed) continue; // Weed
                     switch (SaveFile.SaveGeneration)
                     {
                         case SaveGeneration.NDS:
                         case SaveGeneration.Wii:
-                            acre.AcreItems[i] = new WorldItem(0xFFF1, acre.AcreItems[i].Index);
+                            acre.Items[i] = new Item(0xFFF1);
                             break;
                         case SaveGeneration.N3DS:
-                            acre.AcreItems[i] = new WorldItem(0x7FFE, acre.AcreItems[i].Index);
+                            acre.Items[i] = new Item(0x7FFE);
                             break;
                         default:
-                            acre.AcreItems[i] = new WorldItem(0, acre.AcreItems[i].Index);
+                            acre.Items[i] = new Item(0);
                             break;
                     }
                     weedsCleared++;
                 }
-                RefreshPictureBoxImage(box, GenerateAcreItemsBitmap(acre.AcreItems, acreIdx));
+                RefreshPictureBoxImage(box, GenerateAcreItemsBitmap(acre));
             }
             MessageBox.Show($"{weedsCleared} weeds {(weedsCleared == 1 ? "was" : "were")} removed!",
                 "Weeds Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -4648,8 +4596,8 @@ namespace ACSE.WinForms
             foreach (var box in _townAcreMap)
             {
                 var acre = TownAcres[Array.IndexOf(_townAcreMap, box)];
-                if (acre.AcreItems == null) continue;
-                foreach (var fruitTree in acre.AcreItems.Where(i =>
+                if (acre.Items == null) continue;
+                foreach (var fruitTree in acre.Items.Where(i =>
                     i.ItemId >= 0x3A && i.ItemId <= 0x52 && i.Flag1 == 0 && i.Flag2 == 0))
                 {
                     fruitTree.Flag1 = 1;
@@ -4935,11 +4883,11 @@ namespace ACSE.WinForms
         {
             for (var i = 0; i < TownAcres.Length; i++)
             {
-                for (var x = 0; x < TownAcres[i].AcreItems.Length; x++)
+                for (var x = 0; x < TownAcres[i].Items.Length; x++)
                 {
-                    TownAcres[i].AcreItems[x] = new WorldItem(TownAcres[i].AcreItems[x].Index);
+                    TownAcres[i].Items[x] = new Item(TownAcres[i].Items[x]);
                 }
-                _townAcreMap[i].Image = GenerateAcreItemsBitmap(TownAcres[i].AcreItems, i);
+                _townAcreMap[i].Image = GenerateAcreItemsBitmap(TownAcres[i]);
             }
         }
 
@@ -5161,29 +5109,29 @@ namespace ACSE.WinForms
                 !ushort.TryParse(_replaceItemBox.Text, NumberStyles.HexNumber, null, out var replaceId) ||
                 !ushort.TryParse(_replacingItemBox.Text, NumberStyles.HexNumber, null, out var replacingId)) return;
             var replacedItems = 0;
-            var replacingItem = new WorldItem(replacingId, 0, 0, 0);
+            var replacingItem = new Item(replacingId, 0, 0);
 
             for (var i = 0; i < TownAcres.Length; i++)
             {
                 var changed = false;
                 var acre = TownAcres[i];
-                if (acre.AcreItems == null) continue;
+                if (acre.Items == null) continue;
 
-                for (var index = 0; index < acre.AcreItems.Length; index++)
+                for (var index = 0; index < acre.Items.Length; index++)
                 {
-                    if (acre.AcreItems[index].ItemId != replaceId) continue;
+                    if (acre.Items[index].ItemId != replaceId) continue;
 
                     changed = true;
                     replacedItems++;
                     SaveFile.ChangesMade = true;
-                    acre.AcreItems[index] = new WorldItem(replacingItem, index);
+                    acre.Items[index] = new Item(replacingItem);
 
                 }
 
                 if (changed)
                 {
                     RefreshPictureBoxImage(_townAcreMap[i],
-                        GenerateAcreItemsBitmap(acre.AcreItems, i)); // TODO: Make this work on island acres somehow.
+                        GenerateAcreItemsBitmap(acre)); // TODO: Make this work on island acres somehow.
                 }
             }
 
@@ -5230,9 +5178,9 @@ namespace ACSE.WinForms
                         var townAcre = (y - CurrentSaveInfo.TownYAcreStart) * (CurrentSaveInfo.XAcreCount - 2) + (x - 1);
                         if (townAcre >= CurrentSaveInfo.TownAcreCount) continue;
 
-                        TownAcres[townAcre] = new WorldAcre(_acres[i].AcreId, townAcre, _acres[i].AcreItems);
+                        TownAcres[townAcre] = new WorldAcre(_acres[i].AcreId, townAcre, _acres[i].Items);
                         RefreshPictureBoxImage(_townAcreMap[townAcre],
-                            GenerateAcreItemsBitmap(TownAcres[townAcre].AcreItems, townAcre));
+                            GenerateAcreItemsBitmap(TownAcres[townAcre]));
                         _townAcreMap[townAcre].BackgroundImage = _acreMap[i].BackgroundImage;
                         _townAcreMap[townAcre].Refresh();
 
@@ -5254,23 +5202,21 @@ namespace ACSE.WinForms
             {
                 var acreIdx = Array.IndexOf(_townAcreMap, box);
                 var acre = TownAcres[acreIdx];
-                if (acre.AcreItems == null) continue;
+                if (acre.Items == null) continue;
                 switch (SaveFile.SaveGeneration)
                 {
                     case SaveGeneration.NDS:
                         for (var i = 0; i < 256; i++)
                         {
-                            var itemType = ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType);
+                            var itemType = ItemData.GetItemType(acre.Items[i].ItemId, SaveFile.SaveType);
                             switch (itemType)
                             {
                                 case ItemType.ParchedFlower:
-                                    acre.AcreItems[i] = new WorldItem((ushort) (acre.AcreItems[i].ItemId + 0x1C),
-                                        acre.AcreItems[i].Index);
+                                    acre.Items[i] = new Item((ushort) (acre.Items[i].ItemId + 0x1C));
                                     flowersWatered++;
                                     break;
                                 case ItemType.Flower:
-                                    acre.AcreItems[i] = new WorldItem((ushort) (acre.AcreItems[i].ItemId + 0x8A),
-                                        acre.AcreItems[i].Index);
+                                    acre.Items[i] = new Item((ushort) (acre.Items[i].ItemId + 0x8A));
                                     flowersWatered++;
                                     break;
                             }
@@ -5280,10 +5226,9 @@ namespace ACSE.WinForms
                     case SaveGeneration.Wii:
                         for (var i = 0; i < 256; i++)
                         {
-                            if (ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType) != ItemType.ParchedFlower)
+                            if (ItemData.GetItemType(acre.Items[i].ItemId, SaveFile.SaveType) != ItemType.ParchedFlower)
                                 continue;
-                            acre.AcreItems[i] = new WorldItem((ushort) (acre.AcreItems[i].ItemId - 0x20),
-                                acre.AcreItems[i].Index);
+                            acre.Items[i] = new Item((ushort) (acre.Items[i].ItemId - 0x20));
                             flowersWatered++;
                         }
 
@@ -5291,17 +5236,17 @@ namespace ACSE.WinForms
                     case SaveGeneration.N3DS:
                         for (var i = 0; i < 256; i++)
                         {
-                            if (ItemData.GetItemType(acre.AcreItems[i].ItemId, SaveFile.SaveType) != ItemType.Flower)
+                            if (ItemData.GetItemType(acre.Items[i].ItemId, SaveFile.SaveType) != ItemType.Flower)
                                 continue;
-                            acre.AcreItems[i].Flag1 = 0x40;
-                            acre.AcreItems[i].Watered = true;
+                            acre.Items[i].Flag1 = 0x40;
+                            //acre.Items[i].Watered = true;
                             flowersWatered++;
                         }
 
                         break;
                 }
                 var oldImage = box.Image;
-                box.Image = GenerateAcreItemsBitmap(acre.AcreItems, acreIdx);
+                box.Image = GenerateAcreItemsBitmap(acre);
                 oldImage?.Dispose();
             }
 
@@ -5452,10 +5397,10 @@ namespace ACSE.WinForms
 
         private void ReloadIslandItemPicture()
         {
-            if (_selectedIsland?.Items == null) return;
+            if (_selectedIsland?.Acres == null) return;
             for (var i = 0; i < 2; i++)
             {
-                RefreshPictureBoxImage(_islandAcreMap[i], GenerateAcreItemsBitmap(_selectedIsland.Items[i], i, true));
+                RefreshPictureBoxImage(_islandAcreMap[i], GenerateAcreItemsBitmap(_selectedIsland.Acres[i], true));
             }
         }
 

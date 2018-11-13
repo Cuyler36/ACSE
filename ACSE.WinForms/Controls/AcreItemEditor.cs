@@ -18,10 +18,10 @@ namespace ACSE.WinForms.Controls
         /// <summary>
         /// The <see cref="WorldItem"/>s associated with the acre.
         /// </summary>
-        public new WorldItem[] Items => Acre?.AcreItems;
+        public new Item[] Items => Acre?.Items;
 
 
-        public AcreItemEditor(MainForm form, WorldItem Items, int itemsPerRow)
+        public AcreItemEditor(MainForm form, Item items, int itemsPerRow)
         {
 
         }

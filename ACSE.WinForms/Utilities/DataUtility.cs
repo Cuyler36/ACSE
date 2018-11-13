@@ -101,7 +101,7 @@ namespace ACSE.WinForms.Utilities
                             {
                                 foreach (var acre in acres)
                                 {
-                                    foreach (var item in acre.AcreItems)
+                                    foreach (var item in acre.Items)
                                     {
                                         writer.Write(BitConverter.GetBytes(item.ToUInt32()));
                                     }
@@ -111,7 +111,7 @@ namespace ACSE.WinForms.Utilities
                             {
                                 foreach (var acre in acres)
                                 {
-                                    foreach (var item in acre.AcreItems)
+                                    foreach (var item in acre.Items)
                                     {
                                         writer.Write(BitConverter.GetBytes(item.ItemId));
                                     }
@@ -152,9 +152,9 @@ namespace ACSE.WinForms.Utilities
                             {
                                 foreach (var acre in acres)
                                 {
-                                    for (var x = 0; x < acre.AcreItems.Length; x++)
+                                    for (var x = 0; x < acre.Items.Length; x++)
                                     {
-                                        acre.AcreItems[x] = new WorldItem(reader.ReadUInt32(), acre.AcreItems[x].Index);
+                                        acre.Items[x] = new Item(reader.ReadUInt32());
                                     }
                                 }
                             }
@@ -162,9 +162,9 @@ namespace ACSE.WinForms.Utilities
                             {
                                 foreach (var acre in acres)
                                 {
-                                    for (var x = 0; x < acre.AcreItems.Length; x++)
+                                    for (var x = 0; x < acre.Items.Length; x++)
                                     {
-                                        acre.AcreItems[x] = new WorldItem(reader.ReadUInt16(), acre.AcreItems[x].Index);
+                                        acre.Items[x] = new Item(reader.ReadUInt16());
                                     }
                                 }
                             }

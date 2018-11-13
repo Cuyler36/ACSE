@@ -68,11 +68,17 @@ namespace ACSE.Core.Utilities
             var villagerHouseId = (ushort)(0x5000 + (villagerId & 0xFF));
             foreach (var acre in townAcres)
             {
-                var villagerHouse = acre.AcreItems.FirstOrDefault(o => o.ItemId == villagerHouseId);
+                var villagerHouse = acre.Items.FirstOrDefault(o => o.ItemId == villagerHouseId);
                 if (villagerHouse != null)
                 {
+                    var idx = Array.IndexOf(acre.Items, villagerHouse);
+
                     return new Tuple<byte[], bool>(
-                        new[] { (byte)(acre.Index % 7), (byte)(acre.Index / 7), (byte)(villagerHouse.Location.X), (byte)(villagerHouse.Location.Y + 1) },
+                        new[]
+                        {
+                            (byte) (acre.Index % 7), (byte) (acre.Index / 7), (byte) (idx % 16),
+                            (byte) (idx / 16 + 1)
+                        },
                         true);
                 }
             }
@@ -86,14 +92,16 @@ namespace ACSE.Core.Utilities
             var houseId = 0x5001 + villagerIndex;
             foreach (var acre in townAcres)
             {
-                var villagerHouse = acre.AcreItems.FirstOrDefault(o => o.ItemId == houseId);
+                var villagerHouse = acre.Items.FirstOrDefault(o => o.ItemId == houseId);
                 if (villagerHouse != null)
                 {
+                    var idx = Array.IndexOf(acre.Items, villagerHouse);
+
                     return (
                         new[]
                         {
-                            (byte) (((acre.Index % 4 + 1) << 4) | (villagerHouse.Location.X % 16)),
-                            (byte) (((acre.Index / 4 + 1) << 4) | (villagerHouse.Location.Y % 16))
+                            (byte) (((acre.Index % 4 + 1) << 4) | (idx % 16)),
+                            (byte) (((acre.Index / 4 + 1) << 4) | (idx / 16))
                         }, true);
                 }
             }
@@ -125,13 +133,13 @@ namespace ACSE.Core.Utilities
                         var weedCount = 0;
                         for (var o = 0; o < 256; o++)
                         {
-                            var item = acre.AcreItems[o];
+                            var item = acre.Items[o];
                             if (item.Name == "Weed")
                             {
                                 weedCount++;
                                 if (makePerfect)
                                 {
-                                    acre.AcreItems[o] = new WorldItem(0, o);
+                                    acre.Items[o] = new Item(0);
                                 }
                             }
                             else if (ItemData.GetItemType(item.ItemId, Save.SaveInstance.SaveType) == ItemType.Tree)
@@ -147,9 +155,9 @@ namespace ACSE.Core.Utilities
                                 {
                                     for (var x = 0; x < 256; x++)
                                     {
-                                        if (ItemData.GetItemType(acre.AcreItems[x].ItemId,
+                                        if (ItemData.GetItemType(acre.Items[x].ItemId,
                                                 Save.SaveInstance.SaveType) != ItemType.Tree) continue;
-                                        acre.AcreItems[x] = new WorldItem(0, x);
+                                        acre.Items[x] = new Item(0);
                                         break;
                                     }
                                 }
@@ -161,12 +169,12 @@ namespace ACSE.Core.Utilities
                                     for (var x = 0; x < 256; x++)
                                     {
                                         // Check to make sure the item directly above, below, and to the left and right isn't already occupied.
-                                        if (acre.AcreItems[x].ItemId != 0 ||
-                                            (x >= 16 && acre.AcreItems[x - 16].ItemId != 0) ||
-                                            (x <= 239 && acre.AcreItems[x + 16].ItemId != 0) ||
-                                            (x != 0 && acre.AcreItems[x - 1].ItemId != 0) ||
-                                            (x != 255 && acre.AcreItems[x + 1].ItemId != 0)) continue;
-                                        acre.AcreItems[x] = new WorldItem(0x0804, x);
+                                        if (acre.Items[x].ItemId != 0 ||
+                                            (x >= 16 && acre.Items[x - 16].ItemId != 0) ||
+                                            (x <= 239 && acre.Items[x + 16].ItemId != 0) ||
+                                            (x != 0 && acre.Items[x - 1].ItemId != 0) ||
+                                            (x != 255 && acre.Items[x + 1].ItemId != 0)) continue;
+                                        acre.Items[x] = new Item(0x0804);
                                         break;
                                     }
                                 }
@@ -205,10 +213,10 @@ namespace ACSE.Core.Utilities
                         case 0: // Just for alignment
                             break;
                         case 1:
-                            acre.AcreItems[index] = new WorldItem(0xFFFF, index);
+                            acre.Items[index] = new Item(0xFFFF);
                             break;
                         default:
-                            acre.AcreItems[index] = new WorldItem(structureInfo[y][x], index);
+                            acre.Items[index] = new Item(structureInfo[y][x]);
                             break;
                     }
                 }
@@ -246,45 +254,6 @@ namespace ACSE.Core.Utilities
                     {
                         Save.SaveInstance.ChangesMade = true;
                         items[idx] = new Item(newItem);
-                        if (p.X - 1 > -1)
-                            locationStack.Push(new Point(p.X - 1, p.Y));
-                        if (p.X + 1 < itemsPerRow)
-                            locationStack.Push(new Point(p.X + 1, p.Y));
-                        if (p.Y - 1 > -1)
-                            locationStack.Push(new Point(p.X, p.Y - 1));
-                        if (p.Y + 1 < rows)
-                            locationStack.Push(new Point(p.X, p.Y + 1));
-                    }
-                }
-                previousPoints[idx] = 1;
-            }
-        }
-
-        public static void FloodFillWorldItemArray(ref WorldItem[] items, int itemsPerRow, int startIndex, WorldItem originalItem, WorldItem newItem)
-        {
-            var rows = items.Length / itemsPerRow;
-            var locationStack = new Stack<Point>();
-            var previousPoints = new int[items.Length];
-
-            var x = startIndex % itemsPerRow;
-            var y = startIndex / itemsPerRow;
-
-            locationStack.Push(new Point(x, y));
-
-            while (locationStack.Count > 0)
-            {
-                var p = locationStack.Pop();
-
-                var idx = p.X + p.Y * itemsPerRow;
-
-                if (p.X < itemsPerRow && p.X > -1 &&
-                        p.Y < rows && p.Y > -1 && previousPoints[idx] == 0) // Make sure we stay within bounds
-                {
-                    var i = items[idx];
-                    if (i.Equals(originalItem))
-                    {
-                        Save.SaveInstance.ChangesMade = true;
-                        items[idx] = new WorldItem(newItem.ItemId, newItem.Flag1, newItem.Flag2, i.Index);
                         if (p.X - 1 > -1)
                             locationStack.Push(new Point(p.X - 1, p.Y));
                         if (p.X + 1 < itemsPerRow)

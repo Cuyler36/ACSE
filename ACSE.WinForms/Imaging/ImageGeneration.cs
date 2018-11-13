@@ -10,6 +10,7 @@ using ACSE.Core.Debug;
 using ACSE.Core.Items;
 using ACSE.Core.Players;
 using ACSE.Core.Saves;
+using ACSE.Core.Town.Acres;
 using ACSE.Core.Town.Buildings;
 using ACSE.Core.Villagers;
 using ACSE.WinForms.Controls;
@@ -74,7 +75,7 @@ namespace ACSE.WinForms.Imaging
             }
         }
 
-        public static void DrawBuriedIcons(Bitmap map, WorldItem[] items, int itemSize)
+        public static void DrawBuriedIcons(Bitmap map, WorldAcre acre, int itemSize)
         {
             using (var bitmapGraphics = Graphics.FromImage(map))
             {
@@ -84,11 +85,13 @@ namespace ACSE.WinForms.Imaging
 
                 using (Image buriedIcon = Properties.Resources.Buried)
                 {
-                    foreach (var item in items)
+                    for (var i = 0; i < acre.Items.Length; i++)
                     {
-                        if (!item.Buried || item.Type == ItemType.Empty) continue;
-                        bitmapGraphics.DrawImage(buriedIcon, item.Location.X * itemSize + 1,
-                            item.Location.Y * itemSize + 1, itemSize - 1, itemSize - 1);
+                        var item = acre.Items[i];
+                        if (!acre.IsItemBuried(item, Save.SaveInstance.SaveGeneration) ||
+                            item.Type == ItemType.Empty) continue;
+                        bitmapGraphics.DrawImage(buriedIcon, (i % 16) * itemSize + 1,
+                            (i / 16) * itemSize + 1, itemSize - 1, itemSize - 1);
                     }
 
                     bitmapGraphics.Flush();
