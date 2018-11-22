@@ -1,11 +1,15 @@
 ﻿using System;
-using System.Drawing;
 using ACSE.Core.Saves;
 
 namespace ACSE.Core.Items
 {
     public class Item : IEquatable<Item>, IEquatable<ushort>
     {
+        /// <summary>
+        /// The currently selected <see cref="Item"/>.
+        /// </summary>
+        public static Item SelectedItem;
+
         public readonly ItemType Type;
 
         public Inventory.AcItemFlag ItemFlag;

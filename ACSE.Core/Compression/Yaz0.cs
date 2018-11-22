@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ACSE.Core.Utilities;
 
-namespace ACSE.Core
+namespace ACSE.Core.Compression
 {
     public static class Yaz0
     {

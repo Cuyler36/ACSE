@@ -14,6 +14,11 @@ namespace ACSE.WinForms.Controls
             Spike, Random, Falling
         }
 
+        internal enum CityFolkStalkMarketTrend
+        {
+            Trend0, Trend1, Trend2, Trend3
+        }
+
         public int Days = 7;
         public int[] Prices;
         public int Trend;
@@ -47,15 +52,23 @@ namespace ACSE.WinForms.Controls
                     _offset = saveData.SaveDataStartOffset + 0x20480;
                     _trendOffset = _offset + 0xE;
                     break;
+
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
                     _offset = saveData.SaveDataStartOffset + 0x223C8;
                     _trendOffset = _offset + 0xE;
                     break;
+
+                case SaveType.CityFolk:
+                    _offset = saveData.SaveDataStartOffset + 0x63200;
+                    _trendOffset = _offset + 0x3C;
+                    break;
+
                 case SaveType.NewLeaf:
                     Days = 6;
                     _offset = saveData.SaveDataStartOffset + 0x6535C;
                     break;
+
                 case SaveType.WelcomeAmiibo:
                     Days = 6;
                     _offset = saveData.SaveDataStartOffset + 0x6AD60;
@@ -93,17 +106,35 @@ namespace ACSE.WinForms.Controls
                 };
                 trendPanel.Controls.Add(trendLabel);
 
-                Trend = saveData.ReadUInt16(_trendOffset, saveData.IsBigEndian);
-
                 _trendComboBox = new ComboBox
                 {
                     AutoSize = false,
                     Size = new Size(60, 20)
                 };
 
-                foreach (var trend in Enum.GetNames(typeof(GameCubeStalkMarketTrend)))
+                switch (saveData.SaveGeneration)
                 {
-                    _trendComboBox.Items.Add(trend);
+                    case SaveGeneration.N64:
+                    case SaveGeneration.GCN:
+                    case SaveGeneration.iQue:
+                        Trend = saveData.ReadUInt16(_trendOffset, saveData.IsBigEndian);
+
+                        foreach (var trend in Enum.GetNames(typeof(GameCubeStalkMarketTrend)))
+                        {
+                            _trendComboBox.Items.Add(trend);
+                        }
+
+                        break;
+
+                    case SaveGeneration.Wii:
+                        Trend = (int) saveData.ReadUInt32(_trendOffset, saveData.IsBigEndian);
+
+                        foreach (var trend in Enum.GetNames(typeof(CityFolkStalkMarketTrend)))
+                        {
+                            _trendComboBox.Items.Add(trend);
+                        }
+
+                        break;
                 }
 
                 _trendComboBox.SelectedIndex = Trend;
@@ -116,6 +147,15 @@ namespace ACSE.WinForms.Controls
 
             // Prices
             var offset = _offset;
+
+            // City Folk has a Sunday buy price that differs from the Sunday AM/PM prices.
+            if (saveData.SaveGeneration == SaveGeneration.Wii)
+            {
+                // TODO: Do we want to offer a way to change the buy price?
+                var buyPriceFromJoan = saveData.ReadUInt32(offset, true);
+                offset += 4;
+            }
+
             for (var day = 0; day < Days; day++)
             {
                 switch (_saveData.SaveGeneration)
@@ -159,6 +199,50 @@ namespace ACSE.WinForms.Controls
                         Controls.Add(pricePanel);
                         break;
                     }
+
+                    case SaveGeneration.Wii:
+                    {
+                        var amPrice = saveData.ReadUInt32(offset, true);
+                        var pmPrice = saveData.ReadUInt32(offset + 4, true);
+                        offset += 8;
+
+                        for (var i = 0; i < 2; i++)
+                        {
+                            var pricePanel = new FlowLayoutPanel
+                            {
+                                AutoSize = true,
+                                FlowDirection = FlowDirection.LeftToRight
+                            };
+
+                            var priceLabel = new Label
+                            {
+                                AutoSize = false,
+                                Size = new Size(130, 22),
+                                TextAlign = ContentAlignment.MiddleRight,
+                                Text = $"{DayNames[day]}'s Price [{(i == 0 ? "AM" : "PM")}]:"
+                            };
+                            pricePanel.Controls.Add(priceLabel);
+
+                            var priceBox = new NumericTextBox
+                            {
+                                AutoSize = false,
+                                Size = new Size(60, 20),
+                                Location = new Point(5, day * 24),
+                                Text = (i == 0 ? amPrice : pmPrice).ToString(),
+                                MaxLength = 9
+                            };
+
+                            var currentDay = day;
+                            priceBox.TextChanged += (s, e) =>
+                                PriceChanged(currentDay, int.Parse(priceBox.Text));
+                            pricePanel.Controls.Add(priceBox);
+                            _panels.Add(pricePanel);
+                            Controls.Add(pricePanel);
+                        }
+
+                        break;
+                    }
+
                     case SaveGeneration.N3DS:
                     {
                         var amPrice = new NewLeafInt32(saveData.ReadUInt32(offset), saveData.ReadUInt32(offset + 4)).Value;

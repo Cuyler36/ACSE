@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ACSE.Core.Saves;
 
 namespace ACSE.Core.Town.Buildings
@@ -9,6 +10,21 @@ namespace ACSE.Core.Town.Buildings
     /// </summary>
     public sealed class Building
     {
+        /// <summary>
+        /// The currently selected <see cref="Building"/>.
+        /// </summary>
+        public static Building SelectedBuilding;
+
+        /// <summary>
+        /// The current list of buildings in town.
+        /// </summary>
+        public static Building[] Buildings { get; private set; }
+
+        /// <summary>
+        /// The current list of buildings in the island.
+        /// </summary>
+        public static Building[] IslandBuildings { get; private set; }
+
         #region Building Names
 
         public static readonly string[] CityFolkBuildingNames = {
@@ -459,12 +475,20 @@ namespace ACSE.Core.Town.Buildings
             }
         }
 
-        public static Building[] GetBuildings(Save save, bool islandBuildings = false)
+        /// <summary>
+        /// Loads any buildings that exist in a specific <see cref="SaveGeneration"/>.
+        /// </summary>
+        /// <param name="save">The current <see cref="Save"/> file.</param>
+        /// <param name="islandBuildings">Load regular buildings or island buildings?</param>
+        /// <returns></returns>
+        public static Building[] LoadBuildings(Save save, bool islandBuildings = false)
         {
             var buildings = new List<Building>();
             switch (save.SaveGeneration)
             {
                 case SaveGeneration.Wii:
+                    IslandBuildings = null;
+
                     for (var i = 0; i < 33; i++)
                     {
                         var dataOffset = save.SaveDataStartOffset + SaveDataManager.CityFolkOffsets.Buildings + i * 2;
@@ -477,11 +501,13 @@ namespace ACSE.Core.Town.Buildings
                     var paveTable = new Building(0x21, save.ReadByte(paveOffset), save.ReadByte(paveOffset + 1),
                         SaveType.CityFolk);
                     buildings.Add(paveTable);
+
                     //Add Bus Stop
                     var busStopOffset = save.SaveDataStartOffset + 0x5EB8A;
                     var busStop = new Building(0x22, save.ReadByte(busStopOffset), save.ReadByte(busStopOffset + 1),
                         SaveType.CityFolk);
                     buildings.Add(busStop);
+
                     //Add Signs
                     for (var i = 0; i < 100; i++)
                     {
@@ -495,6 +521,7 @@ namespace ACSE.Core.Town.Buildings
 
                 case SaveGeneration.N3DS:
                     if (islandBuildings == false)
+                    {
                         for (var i = 0; i < 58; i++)
                         {
                             var dataOffset = save.SaveDataStartOffset + Save.SaveInstance.SaveInfo.SaveOffsets.Buildings +
@@ -503,7 +530,9 @@ namespace ACSE.Core.Town.Buildings
                                 save.ReadByte(dataOffset + 3), save.SaveType));
                             //Technically, Building IDs are shorts, but since they only use the lower byte, we'll just ignore that
                         }
+                    }
                     else
+                    {
                         for (var i = 0; i < 2; i++)
                         {
                             var dataOffset = save.SaveDataStartOffset +
@@ -511,10 +540,33 @@ namespace ACSE.Core.Town.Buildings
                             buildings.Add(new Building(save.ReadByte(dataOffset), save.ReadByte(dataOffset + 2),
                                 save.ReadByte(dataOffset + 3), save.SaveType));
                         }
+                    }
 
                     break;
+
+                default:
+                    IslandBuildings = null;
+                    return Buildings = null;
             }
-            return buildings.ToArray();
+
+            if (islandBuildings)
+            {
+                return IslandBuildings = buildings.ToArray();
+            }
+
+            return Buildings = buildings.ToArray();
         }
+
+        /// <summary>
+        /// Queries whether or not a <see cref="Building"/> is at the specified acre and location.
+        /// </summary>
+        /// <param name="acre">The acre to check.</param>
+        /// <param name="x">The desired x-coordinate to check.</param>
+        /// <param name="y">The desired y-coordinate to check.</param>
+        /// <param name="islandAcre">Is the acre an island acre, or a regular town acre? Defaults to false.</param>
+        /// <returns>Building buildingFound (can be null)</returns>
+        public static Building IsBuildingHere(int acre, int x, int y, bool islandAcre = false) => islandAcre
+            ? IslandBuildings?.FirstOrNull(b => b.Exists && b.AcreIndex == acre && b.XPos == x && b.YPos == y)
+            : Buildings?.FirstOrNull(b => b.Exists && b.AcreIndex == acre && b.XPos == x && b.YPos == y);
     }
 }

@@ -28,6 +28,10 @@ namespace ACSE.Core.Updater
             SetCurrentVersionInfo();
         }
 
+        /// <summary>
+        /// Gets the current version string.
+        /// </summary>
+        /// <returns>The current version string.</returns>
         public string GetVersion() => $"{_versionMajor}.{_versionMinor}.{_versionRevision}";
 
         private (bool, string) CheckForUpdate(string url)

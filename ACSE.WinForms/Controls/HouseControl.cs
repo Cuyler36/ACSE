@@ -83,7 +83,7 @@ namespace ACSE.WinForms.Controls
                         layerSize = editors.Count == 0 ? 10 : 8;
                     }
 
-                    var editor = new FurnitureItemEditor(mainFormReference, layer.Items, layerSize, 16);
+                    var editor = new FurnitureItemEditor(layer.Items, layerSize, 16);
                     roomPanel.Controls.Add(editor);
 
                     if (roomPanel.MaximumSize.Height == 0)
@@ -101,7 +101,7 @@ namespace ACSE.WinForms.Controls
                 roomEditors.Add(editors.ToArray());
 
                 // Add the wallpaper, carpet, & song editors
-                var wallpaperEditor = new SingleItemEditor(mainFormReference, room.Wallpaper, 16);
+                var wallpaperEditor = new SingleItemEditor(room.Wallpaper, 16);
                 infoFlowPanel.Controls.Add(wallpaperEditor);
                 wallpaperEditor.SetCenterMargins(5, 5);
                 wallpaperEditors.Add(wallpaperEditor);
@@ -110,7 +110,7 @@ namespace ACSE.WinForms.Controls
                     room.Wallpaper = e.NewItem;
                 };
 
-                var carpetEditor = new SingleItemEditor(mainFormReference, room.Carpet, 16);
+                var carpetEditor = new SingleItemEditor(room.Carpet, 16);
                 infoFlowPanel.Controls.Add(carpetEditor);
                 carpetEditor.SetCenterMargins(5, 5);
                 carpetEditors.Add(carpetEditor);
@@ -120,7 +120,7 @@ namespace ACSE.WinForms.Controls
                 };
 
                 if (saveFile.SaveGeneration != SaveGeneration.N3DS) continue;
-                var songEditor = new SingleItemEditor(mainFormReference, room.Song, 16);
+                var songEditor = new SingleItemEditor(room.Song, 16);
                 infoFlowPanel.Controls.Add(songEditor);
                 songEditor.SetCenterMargins(5, 5);
                 songEditors.Add(songEditor);

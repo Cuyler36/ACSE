@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ACSE.Core.Items;
 using ACSE.Core.Modifiable;
+using ACSE.WinForms.Utilities;
 using ItemChangedEventArgs = ACSE.Core.Items.ItemChangedEventArgs;
 
 namespace ACSE.WinForms.Controls
@@ -19,6 +20,15 @@ namespace ACSE.WinForms.Controls
         /// This event fires when the item is set or changed. PreviousItem will be null if it is the first time setting the item.
         /// </summary>
         public event EventHandler<ItemChangedEventArgs> ItemChanged;
+
+        /// <summary>
+        /// This event fires when a new item is selected.
+        /// </summary>
+        public event ItemSelectedHandler ItemSelected;
+
+
+        // Delegates
+        public delegate void ItemSelectedHandler(Item selectedItem, bool buried);
 
         public readonly PictureBox EditorPictureBox;
         public readonly ToolTip ItemToolTip;
@@ -84,16 +94,12 @@ namespace ACSE.WinForms.Controls
             img?.Dispose();
         }
 
-        private readonly MainForm _mainFormReference;
         private int _lastX = -1, _lastY = -1;
         private bool _isMouseDown;
 
         protected SingleItemEditor()
         {
-            ItemToolTip = new ToolTip
-            {
-                ShowAlways = true
-            };
+            ItemToolTip = ToolTipManager.GetSharedToolTip();
 
             EditorPictureBox = new PictureBox
             {
@@ -105,9 +111,8 @@ namespace ACSE.WinForms.Controls
             Controls.Add(EditorPictureBox);
         }
 
-        public SingleItemEditor(MainForm mainForm, Item item, int itemCellSize = 8) : this()
+        public SingleItemEditor(Item item, int itemCellSize = 8) : this()
         {
-            _mainFormReference = mainForm;
             _item = item;
             ItemCellSize = itemCellSize;
 
@@ -151,7 +156,7 @@ namespace ACSE.WinForms.Controls
             {
                 case MouseButtons.Left:
                 case MouseButtons.Middle:
-                    var newItem = _mainFormReference.GetCurrentItem();
+                    var newItem = Item.SelectedItem;
                     var previousItem = _item;
 
                     if (previousItem != newItem)
@@ -171,7 +176,7 @@ namespace ACSE.WinForms.Controls
 
                     break;
                 case MouseButtons.Right:
-                    _mainFormReference.SetCurrentItem(_item);
+                    ItemSelected?.Invoke(_item, false);
                     break;
             }
         }
@@ -215,7 +220,6 @@ namespace ACSE.WinForms.Controls
 
         protected virtual void Dipose()
         {
-            ItemToolTip.Dispose();
             EditorPictureBox.Image?.Dispose();
             EditorPictureBox.Dispose();
             Dispose();

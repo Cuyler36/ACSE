@@ -54,7 +54,7 @@ namespace ACSE.WinForms.Controls.ShopControls
                 Controls.Add(BellsSumTextBox);
             }
 
-            ShopEditor = new ItemEditor(mainWindow, shop.Stock, itemsPerRow, 16);
+            ShopEditor = new ItemEditor(shop.Stock, itemsPerRow, 16);
 
             var width = ShopLabel.Size.Width > ShopEditor.Size.Width ? ShopLabel.Size.Width : ShopEditor.Size.Width;
             Size = new System.Drawing.Size(width, ShopLabel.Size.Height + ShopEditor.Size.Height);

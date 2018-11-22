@@ -10,8 +10,8 @@ namespace ACSE.WinForms.Controls
 {
     internal sealed class FurnitureItemEditor : ItemEditor
     {
-        public FurnitureItemEditor(MainForm mainForm, Furniture[] furniture, int itemsPerRow, int itemCellSize = 8) :
-            base(mainForm, furniture, itemsPerRow, itemCellSize) { }
+        public FurnitureItemEditor(Furniture[] furniture, int itemsPerRow, int itemCellSize = 8) :
+            base(furniture, itemsPerRow, itemCellSize) { }
 
         protected override void SetItemPicture()
         {
@@ -21,11 +21,11 @@ namespace ACSE.WinForms.Controls
 
             CurrentItemImage?.Dispose();
             CurrentItemImage = ImageGeneration.DrawFurnitureArrows((Bitmap) Inventory.GetItemPic(ItemCellSize,
-                    ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[]) Items,
+                    ItemsPerRow, Items, MainForm.SaveFile.SaveType, Size), (Furniture[]) Items,
                 ItemsPerRow);
 
-            EditorPictureBox.Image?.Dispose();
-            EditorPictureBox.Image = (Image) CurrentItemImage.Clone();
+            Image?.Dispose();
+            Image = (Image) CurrentItemImage.Clone();
         }
 
         protected override void OnEditorMouseDown(object sender, MouseEventArgs e)
@@ -35,7 +35,7 @@ namespace ACSE.WinForms.Controls
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    var newItem = new Furniture(MainFormReference.GetCurrentItem());
+                    var newItem = new Furniture(Item.SelectedItem);
 
                     if (selectedItem != newItem)
                     {
@@ -52,13 +52,13 @@ namespace ACSE.WinForms.Controls
                         CurrentItemImage?.Dispose();
                         CurrentItemImage = ImageGeneration.DrawFurnitureArrows((Bitmap) Inventory.GetItemPic(
                                 ItemCellSize,
-                                ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size),
+                                ItemsPerRow, Items, MainForm.SaveFile.SaveType, Size),
                             (Furniture[]) Items,
                             ItemsPerRow);
 
-                        EditorPictureBox.Image?.Dispose();
-                        EditorPictureBox.Image = (Image)CurrentItemImage.Clone();
-                        ImageGeneration.OverlayItemBoxGlow((Bitmap) EditorPictureBox.Image, ItemCellSize, x, y);
+                        Image?.Dispose();
+                        Image = (Image)CurrentItemImage.Clone();
+                        ImageGeneration.OverlayItemBoxGlow((Bitmap) Image, ItemCellSize, x, y);
 
                         // Update ToolTip
                         ItemToolTip.Show(
@@ -74,12 +74,12 @@ namespace ACSE.WinForms.Controls
 
                     break;
                 case MouseButtons.Right:
-                    MainFormReference.SetCurrentItem(selectedItem);
+                    base.OnEditorMouseDown(sender, e); // Just invoke the default bevavior here.
                     break;
                 case MouseButtons.Middle:
                     var tempItems = (Furniture[]) Items;
                     Utility.FloodFillFurnitureArray(ref tempItems, ItemsPerRow, index,
-                        (Furniture) Items[index], new Furniture(MainFormReference.GetCurrentItem()));
+                        (Furniture) Items[index], new Furniture(Item.SelectedItem));
                     Items = tempItems;
                     break;
             }
@@ -98,9 +98,9 @@ namespace ACSE.WinForms.Controls
 
             // Undo
             Items[previousItemChange.Index] = (Furniture)previousItemChange.Item;
-            var img = EditorPictureBox.Image;
-            EditorPictureBox.Image = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(ItemCellSize,
-                ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[])Items, ItemsPerRow);
+            var img = Image;
+            Image = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(ItemCellSize,
+                ItemsPerRow, Items, MainForm.SaveFile.SaveType, Size), (Furniture[])Items, ItemsPerRow);
             img?.Dispose();
 
             OnItemChanged(selectedItem, Items[previousItemChange.Index], previousItemChange.Index);
@@ -119,9 +119,9 @@ namespace ACSE.WinForms.Controls
 
             // Redo
             Items[previousItemChange.Index] = (Furniture)previousItemChange.Item;
-            var img = EditorPictureBox.Image;
-            EditorPictureBox.Image = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(ItemCellSize,
-                ItemsPerRow, Items, MainForm.SaveFile.SaveType, EditorPictureBox.Size), (Furniture[])Items, ItemsPerRow);
+            var img = Image;
+            Image = ImageGeneration.DrawFurnitureArrows((Bitmap)Inventory.GetItemPic(ItemCellSize,
+                ItemsPerRow, Items, MainForm.SaveFile.SaveType, Size), (Furniture[])Items, ItemsPerRow);
             img?.Dispose();
 
             OnItemChanged(selectedItem, Items[previousItemChange.Index], previousItemChange.Index);

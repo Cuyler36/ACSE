@@ -137,7 +137,7 @@ namespace ACSE.WinForms.Managers
         }
 
         public static void CheckReferencesAndDispose(Image referencedImage,
-            PictureBoxWithInterpolationMode[] pictureBoxes, PictureBoxWithInterpolationMode selectedAcreBox)
+            IList<PictureBoxWithInterpolationMode> pictureBoxes, PictureBoxWithInterpolationMode selectedAcreBox)
         {
             if (referencedImage == null || selectedAcreBox.Image == referencedImage
                                         || pictureBoxes.Any(

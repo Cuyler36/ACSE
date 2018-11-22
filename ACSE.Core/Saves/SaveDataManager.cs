@@ -128,6 +128,7 @@ namespace ACSE.Core.Saves
             HouseDataSize = 0x2128,
             IslandAcreData = 0x13F60,
             IslandWorldData = 0x1B450,
+            IslandHouse = 0x1B858,
             IslandWorldSize = 0x400,
             IslandBuriedData = 0x1C908,
             IslandBuriedSize = 0x40,

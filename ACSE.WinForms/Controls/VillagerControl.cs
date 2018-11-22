@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using ACSE.Core;
+using ACSE.Core.Compression;
 using ACSE.Core.Items;
 using ACSE.Core.Saves;
 using ACSE.Core.Utilities;
@@ -127,7 +127,7 @@ namespace ACSE.WinForms.Controls
             _catchphraseBox.Margin = new Padding(0, margin, 10, margin);
             _catchphraseBox.TextChanged += (s, e) => CatchphraseChanged();
 
-            _shirtEditor = new SingleItemEditor(mainFormReference, _villager.Data.Shirt, 16);
+            _shirtEditor = new SingleItemEditor(_villager.Data.Shirt, 16);
             margin = CalculateControlVerticalMargin(_shirtEditor);
             _shirtEditor.Margin = new Padding(0, margin, 10, margin);
             _shirtEditor.ItemChanged += delegate(object sender, ItemChangedEventArgs e)
@@ -137,7 +137,7 @@ namespace ACSE.WinForms.Controls
 
             if (_villager.Data.Umbrella != null)
             {
-                _umbrellaEditor = new SingleItemEditor(mainFormReference, _villager.Data.Umbrella, 16);
+                _umbrellaEditor = new SingleItemEditor(_villager.Data.Umbrella, 16);
                 margin = CalculateControlVerticalMargin(_umbrellaEditor);
                 _umbrellaEditor.Margin = new Padding(0, margin, 10, margin);
             }
@@ -199,16 +199,16 @@ namespace ACSE.WinForms.Controls
                 case SaveGeneration.NDS:
                 case SaveGeneration.Wii:
                 case SaveGeneration.N3DS:
-                    _carpetWallpaperEditor = new ItemEditor(mainFormReference,
-                        new[] {_villager.Data.Carpet, _villager.Data.Wallpaper}, 2, 16);
+                    _carpetWallpaperEditor =
+                        new ItemEditor(new[] {_villager.Data.Carpet, _villager.Data.Wallpaper}, 2, 16);
                     margin = CalculateControlVerticalMargin(_carpetWallpaperEditor);
                     _carpetWallpaperEditor.Margin = new Padding(0, margin, 10, margin);
 
-                    _musicEditor = new SingleItemEditor(mainFormReference, _villager.Data.Song, 16);
+                    _musicEditor = new SingleItemEditor(_villager.Data.Song, 16);
                     margin = CalculateControlVerticalMargin(_musicEditor);
                     _musicEditor.Margin = new Padding(0, margin, 10, margin);
 
-                    _furnitureEditor = new ItemEditor(mainFormReference, _villager.Data.Furniture,
+                    _furnitureEditor = new ItemEditor(_villager.Data.Furniture,
                         _villager.Data.Furniture.Length, 16);
                     margin = CalculateControlVerticalMargin(_furnitureEditor);
                     _furnitureEditor.Margin = new Padding(0, margin, 10, margin);

@@ -5,8 +5,10 @@ using System.Linq;
 using System.Windows.Forms;
 using ACSE.Core.Items;
 using ACSE.Core.Modifiable;
+using ACSE.Core.Saves;
 using ACSE.Core.Utilities;
 using ACSE.WinForms.Imaging;
+using ACSE.WinForms.Utilities;
 
 namespace ACSE.WinForms.Controls
 {
@@ -14,14 +16,23 @@ namespace ACSE.WinForms.Controls
     /// <summary>
     /// An all-in-one control for editing items.
     /// </summary>
-    public class ItemEditor : UserControl, IModifiable
+    public class ItemEditor : PictureBoxWithInterpolationMode, IModifiable
     {
         /// <summary>
         /// This event fires when an item is set or changed. PreviousItem will be null if it is the first time setting the item.
         /// </summary>
         public event EventHandler<IndexedItemChangedEventArgs> ItemChanged;
 
-        public readonly PictureBox EditorPictureBox;
+        /// <summary>
+        /// This event fires when a new item is selected.
+        /// </summary>
+        public event ItemSelectedHandler ItemSelected;
+        
+        
+        // Delegates
+        public delegate void ItemSelectedHandler(Item selectedItem, bool buried);
+
+
         public readonly ToolTip ItemToolTip;
         public readonly Stack<ItemChange> UndoStack = new Stack<ItemChange>();
         public readonly Stack<ItemChange> RedoStack = new Stack<ItemChange>();
@@ -29,7 +40,18 @@ namespace ACSE.WinForms.Controls
         public string HoverText = "{0} - [0x{1}]";
         public bool ShowHoveredItemCellHighlight = true;
 
-        protected Image CurrentItemImage;
+        protected bool DrawBaseImage = true;
+
+        private Image _currentItemImage;
+        protected Image CurrentItemImage
+        {
+            get => _currentItemImage;
+            set
+            {
+                _currentItemImage?.Dispose();
+                _currentItemImage = value;
+            }
+        }
 
         private int _itemsPerRow;
         public int ItemsPerRow
@@ -38,10 +60,7 @@ namespace ACSE.WinForms.Controls
             set
             {
                 _itemsPerRow = value;
-                if (EditorPictureBox != null)
-                {
-                    SetItemPicture();
-                }
+                SetItemPicture();
             }
         }
 
@@ -52,10 +71,7 @@ namespace ACSE.WinForms.Controls
             set
             {
                 _itemCellSize = value;
-                if (EditorPictureBox != null)
-                {
-                    SetItemPicture();
-                }
+                SetItemPicture();
             }
         }
 
@@ -75,51 +91,39 @@ namespace ACSE.WinForms.Controls
             Size = new Size(_itemCellSize * _itemsPerRow + 3,
                 _itemCellSize * (int) (Math.Ceiling((decimal) _items.Length / _itemsPerRow)) + 3);
 
-            CurrentItemImage?.Dispose();
-            EditorPictureBox.Image?.Dispose();
+            Image?.Dispose();
 
-            CurrentItemImage = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items, MainForm.SaveFile.SaveType,
-                EditorPictureBox.Size);
-            EditorPictureBox.Image = (Image) CurrentItemImage.Clone();
-            EditorPictureBox.Refresh();
+            CurrentItemImage =
+                Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items, Save.SaveInstance.SaveType, Size);
+            Image = (Image) CurrentItemImage.Clone();
+            Refresh();
         }
 
-        protected readonly MainForm MainFormReference;
         protected int LastX = -1, LastY = -1;
 
         protected ItemEditor()
         {
-            ItemToolTip = new ToolTip
-            {
-                ShowAlways = true
-            };
-
-            EditorPictureBox = new PictureBox
-            {
-                Dock = DockStyle.Fill
-            };
-
+            ItemToolTip = ToolTipManager.GetSharedToolTip();
             BorderStyle = BorderStyle.FixedSingle;
-            Controls.Add(EditorPictureBox);
+            BackgroundImageLayout = ImageLayout.Stretch;
         }
 
-        public ItemEditor(MainForm mainForm, Item[] items, int itemsPerRow, int itemCellSize = 8) : this()
+        public ItemEditor(Item[] items, int itemsPerRow, int itemCellSize = 8) : this()
         {
-            MainFormReference = mainForm;
             _items = items;
             _itemsPerRow = itemsPerRow;
             ItemCellSize = itemCellSize;
 
-            EditorPictureBox.MouseMove += OnEditorMouseMove;
-            EditorPictureBox.MouseLeave += delegate
+            MouseMove += OnEditorMouseMove;
+            MouseLeave += delegate
             {
                 ItemToolTip.Hide(this);
-                EditorPictureBox.Image?.Dispose();
-                EditorPictureBox.Image = (Image) CurrentItemImage.Clone();
-                EditorPictureBox.Refresh();
+                Image.Dispose();
+                Image = (Image) CurrentItemImage.Clone();
+                Refresh();
             };
 
-            EditorPictureBox.MouseDown += OnEditorMouseDown;
+            MouseDown += OnEditorMouseDown;
         }
 
         protected virtual void OnItemChanged(Item previousItem, Item newItem, int index)
@@ -145,7 +149,7 @@ namespace ACSE.WinForms.Controls
         protected virtual void OnEditorMouseMove(object sender, MouseEventArgs e)
         {
             if (_items == null || !GetXyPosition(e, out var x, out var y, out var index) ||
-                (e.X == LastX && e.Y == LastY)) return;
+                (e.X == LastX && e.Y == LastY) || x < 0 || x > 15 || y < 0 || y > 15) return;
             
             // Update Last Hover Position
             LastX = e.X;
@@ -154,18 +158,16 @@ namespace ACSE.WinForms.Controls
             // Draw the item highlight if necessary.
             if (ShowHoveredItemCellHighlight)
             {
-                EditorPictureBox.Image?.Dispose();
-                EditorPictureBox.Image = (Bitmap) CurrentItemImage.Clone();
-                ImageGeneration.OverlayItemBoxGlow((Bitmap) EditorPictureBox.Image, _itemCellSize, x, y);
-                EditorPictureBox.Refresh();
+                Image?.Dispose();
+                Image = (Bitmap) CurrentItemImage.Clone();
+                ImageGeneration.OverlayItemBoxGlow((Bitmap) Image, _itemCellSize, x, y);
+                Refresh();
             }
 
             var hoveredItem = _items[index];
 
             // Refresh ToolTip
-            ItemToolTip.Show(
-                string.Format(HoverText, hoveredItem.Name, hoveredItem.ItemId.ToString("X4"),
-                    hoveredItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
+            ShowToolTip(GetToolTipString(x, y, hoveredItem), e.X, e.Y);
 
             // Check for MouseDown
             if (e.Button != MouseButtons.None)
@@ -175,11 +177,12 @@ namespace ACSE.WinForms.Controls
         protected virtual void OnEditorMouseDown(object sender, MouseEventArgs e)
         {
             if (!GetXyPosition(e, out var x, out var y, out var index)) return;
+
             var selectedItem = _items[index];
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    var newItem = MainFormReference.GetCurrentItem();
+                    var newItem = Item.SelectedItem;
 
                     if (selectedItem != newItem)
                     {
@@ -190,38 +193,51 @@ namespace ACSE.WinForms.Controls
                         NewChange(null);
 
                         // Set New Item
-                        _items[index] = newItem;
+                        _items[index] = new Item(newItem); // Ensure we create a copy of the item.
 
                         // Redraw Item Image
-                        CurrentItemImage?.Dispose();
-                        EditorPictureBox.Image?.Dispose();
+                        if (DrawBaseImage)
+                        {
+                            Image?.Dispose();
 
-                        CurrentItemImage = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items, MainForm.SaveFile.SaveType,
-                            EditorPictureBox.Size);
-                        EditorPictureBox.Image = (Image)CurrentItemImage.Clone();
-                        ImageGeneration.OverlayItemBoxGlow((Bitmap) EditorPictureBox.Image, _itemCellSize, x, y);
-                        EditorPictureBox.Refresh();
+                            CurrentItemImage = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items,
+                                Save.SaveInstance.SaveType, Size);
+                            Image = (Image) CurrentItemImage.Clone();
+                            ImageGeneration.OverlayItemBoxGlow((Bitmap) Image, _itemCellSize, x, y);
+                            Refresh();
+                        }
 
                         // Update ToolTip
-                        ItemToolTip.Show(
-                            string.Format(HoverText, newItem.Name, newItem.ItemId.ToString("X4"),
-                                newItem.ItemFlag.ToString()), this, e.X + 10, e.Y + 10, 100000);
+                        ShowToolTip(GetToolTipString(x, y, newItem), e.X, e.Y);
 
                         // Fire ItemChanged Event
                         OnItemChanged(selectedItem, newItem, index);
-                        MainForm.SaveFile.ChangesMade = true;
+                        Save.SaveInstance.ChangesMade = true;
                         Modified = true;
                     }
 
                     break;
                 case MouseButtons.Right:
-                    MainFormReference.SetCurrentItem(selectedItem);
+                    ItemSelected?.Invoke(selectedItem, false);
                     break;
                 case MouseButtons.Middle:
-                    Utility.FloodFillItemArray(ref _items, ItemsPerRow, index, _items[index],
-                        MainFormReference.GetCurrentItem());
+                    Utility.FloodFillItemArray(ref _items, ItemsPerRow, index, _items[index], Item.SelectedItem);
                     SetItemPicture();
                     break;
+            }
+        }
+
+        protected virtual string GetToolTipString(int x, int y, params object[] parameters)
+        {
+            var item = (Item) parameters[0];
+            return $"{item.Name} - [0x{item.ItemId:X4}]";
+        }
+
+        public virtual void ShowToolTip(string text, int x, int y)
+        {
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                ItemToolTip.Show(text, this, x + 10, y + 10, 100000);
             }
         }
 
@@ -238,9 +254,9 @@ namespace ACSE.WinForms.Controls
 
             // Undo
             _items[previousItemChange.Index] = previousItemChange.Item;
-            var img = EditorPictureBox.Image;
-            EditorPictureBox.Image = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items,
-                MainForm.SaveFile.SaveType, EditorPictureBox.Size);
+            var img = Image;
+            Image = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items,
+                Save.SaveInstance.SaveType, Size);
             img?.Dispose();
 
             OnItemChanged(selectedItem, Items[previousItemChange.Index], previousItemChange.Index);
@@ -259,9 +275,9 @@ namespace ACSE.WinForms.Controls
 
             // Redo
             _items[previousItemChange.Index] = previousItemChange.Item;
-            var img = EditorPictureBox.Image;
-            EditorPictureBox.Image = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items,
-                MainForm.SaveFile.SaveType, EditorPictureBox.Size);
+            var img = Image;
+            Image = Inventory.GetItemPic(_itemCellSize, _itemsPerRow, _items,
+                Save.SaveInstance.SaveType, Size);
             img?.Dispose();
 
             OnItemChanged(selectedItem, Items[previousItemChange.Index], previousItemChange.Index);
@@ -276,9 +292,7 @@ namespace ACSE.WinForms.Controls
 
         protected new virtual void Dispose()
         {
-            ItemToolTip.Dispose();
-            EditorPictureBox.Image?.Dispose();
-            EditorPictureBox.Dispose();
+            Image?.Dispose();
             base.Dispose();
         }
     }

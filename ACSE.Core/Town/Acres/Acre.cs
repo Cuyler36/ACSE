@@ -27,6 +27,16 @@ namespace ACSE.Core.Town.Acres
             AcreId = acreId;
             Index = position;
         }
+
+        /// <summary>
+        /// Sets the acre's id number.
+        /// </summary>
+        /// <param name="acreId">The desired acre id.</param>
+        public void SetId(ushort acreId)
+        {
+            AcreId = acreId;
+            BaseAcreId = (ushort) (AcreId & 0xFFFC);
+        }
     }
 
     public class WorldAcre : Acre
@@ -46,7 +56,6 @@ namespace ACSE.Core.Town.Acres
                 for (var i = 0; i < 256; i++)
                 {
                     Items[i] = new Item(items[i]);
-                    //Items[i].Buried = IsItemBuried(Items[i], Save.SaveInstance.SaveGeneration);
                 }
             }
             else if (nlItems != null)
@@ -63,14 +72,9 @@ namespace ACSE.Core.Town.Acres
         public WorldAcre(ushort acreId, int position, uint[] items = null) : this(acreId, position, null, items)
         { }
 
-        public WorldAcre(ushort acreId, int position, Item[] items, int townPosition = -1) : base(acreId, position)
+        public WorldAcre(ushort acreId, int position, Item[] items) : base(acreId, position)
         {
             Items = items;
-            if (townPosition <= -1) return;
-            for (var i = 0; i < 256; i++)
-            {
-                //Items[i].Buried = IsItemBuried(Items[i], Save.SaveInstance.SaveGeneration);
-            }
         }
 
         public bool IsItemBuried(Item item, SaveGeneration generation)

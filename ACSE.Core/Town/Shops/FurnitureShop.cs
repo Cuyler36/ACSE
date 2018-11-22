@@ -7,6 +7,7 @@ namespace ACSE.Core.Town.Shops
     {
         public uint VisitorBellsSum;
         public byte Size;
+        public Item[] LotteryItems;
 
         public FurnitureShop(Save saveFile, int offset) : base(saveFile, offset)
         {
@@ -65,11 +66,44 @@ namespace ACSE.Core.Town.Shops
                 }
                 else
                 {
-                    items[i] = new Item(SaveFile.ReadUInt16(Offset + ShopOffsets.FurnitureShop + i * 2, SaveFile.IsBigEndian));
+                    items[i] = new Item(SaveFile.ReadUInt16(Offset + ShopOffsets.FurnitureShop + i * 2,
+                        SaveFile.IsBigEndian));
                 }
             }
 
             Stock = items;
+
+            // Lottery
+            if (SaveFile.SaveGeneration != SaveGeneration.N64 && SaveFile.SaveGeneration != SaveGeneration.iQue &&
+                SaveFile.SaveGeneration != SaveGeneration.GCN) return;
+
+            LotteryItems = new Item[3];
+            var lotteryOffset = -1;
+
+            switch (SaveFile.SaveType)
+            {
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DongwuSenlin:
+                    break;
+
+                case SaveType.DoubutsuNoMoriPlus:
+                    lotteryOffset = 0x19732;
+                    break;
+
+                case SaveType.AnimalCrossing:
+                    lotteryOffset = 0x2045E;
+                    break;
+
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
+                    lotteryOffset = 0x223A0;
+                    break;
+            }
+
+            for (var i = 0; i < 3; i++)
+            {
+                LotteryItems[i] = new Item(SaveFile.ReadByte(lotteryOffset + i, true));
+            }
         }
 
         public byte GetSize(SaveGeneration generation)

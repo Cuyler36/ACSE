@@ -845,6 +845,11 @@ namespace ACSE.Core.Generators
             return Index;
         }
 
+        /// <summary>
+        /// Returns a randomly generated float between 0.0f and 1.0f. The inclusivity is [0.0f - 1.0f).
+        /// </summary>
+        /// <param name="seed">The optional seed used to generate the random number.</param>
+        /// <returns>A random float [0.0f - 1.0f).</returns>
         private float fqrand(int? seed = null) // NOTE: seed isn't a parameter in the actual function.
         {
             var startSeed = seed ?? _randomSeed;
@@ -855,6 +860,12 @@ namespace ACSE.Core.Generators
             return BitConverter.ToSingle(BitConverter.GetBytes(startSeed), 0) - 1.0f;
         }
 
+        /// <summary>
+        /// Returns a random integer between [0 - <param name="maxValue"/>).
+        /// </summary>
+        /// <param name="maxValue">The exclusive upper limit of the random number to be generated.</param>
+        /// <param name="seed">The optional seed parameter used to geenrate the random number.</param>
+        /// <returns></returns>
         private int GetRandom(int maxValue, int? seed = null) // NOTE: seed isn't a parameter in the actual function.
             => (int)(fqrand(seed) * maxValue);
 
@@ -864,7 +875,7 @@ namespace ACSE.Core.Generators
         /// <returns>Step Mode</returns>
         private int GetRandomStepMode()
         {
-            int RNG = GetRandom(64);
+            int RNG = GetRandom(100);
             int Temp = 0xF ^ RNG;
             int ShiftedValue = Temp >> 1;
             Temp &= 0xF;
