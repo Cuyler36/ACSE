@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -4734,18 +4735,28 @@ namespace ACSE.WinForms
             if (SaveFile == null || _loading || SaveFile.SaveType != SaveType.WelcomeAmiibo) return;
             var hhdOffset = SaveFile.SaveDataStartOffset + 0x6215C;
             SaveFile.Write(hhdOffset, (byte)(SaveFile.ReadByte(hhdOffset) | 0x04));
-            MessageBox.Show("Happy Home Designer Content is now unlocked!", "HHD Content", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Happy Home Designer Content is now unlocked!", "HHD Content", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         private void WeatherComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
             if (SaveFile == null || _loading || weatherComboBox.SelectedIndex <= -1) return;
-            if (!Weather.UpdateWeather(SaveFile, (byte)weatherComboBox.SelectedIndex) && SaveFile.SaveGeneration == SaveGeneration.GCN)
+            if (!Weather.UpdateWeather(SaveFile, (byte) weatherComboBox.SelectedIndex) &&
+                SaveFile.SaveGeneration == SaveGeneration.GCN)
             {
-                weatherComboBox.SelectedIndex = Weather.GetWeatherIndex(SaveFile.ReadByte(SaveFile.SaveDataStartOffset + SaveFile.SaveInfo.SaveOffsets.Weather),
+                weatherComboBox.SelectedIndex = Weather.GetWeatherIndex(
+                    SaveFile.ReadByte(SaveFile.SaveDataStartOffset + SaveFile.SaveInfo.SaveOffsets.Weather),
                     SaveFile.SaveGeneration);
             }
         }
+
+        private readonly string DolphinCityFolkSavePath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Dolphin Emulator", "Wii", "title",
+            "00010000", Encoding.ASCII.GetBytes("RUUE").Aggregate("", (current, b) => current + $"{b:X2}"), "data",
+            "rvforest.dat");
+
+        private void OpenDolphinSaveFileClick(object sender, EventArgs e) => OpenSave(DolphinCityFolkSavePath);
 
         private readonly string CitraNewLeafSavePath = Path.Combine(Environment.GetEnvironmentVariable("appdata"),
             "Citra", "sdmc", "Nintendo 3DS", "00000000000000000000000000000000", "00000000000000000000000000000000",

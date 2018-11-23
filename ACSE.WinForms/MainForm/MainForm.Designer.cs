@@ -33,13 +33,11 @@ namespace ACSE.WinForms
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TabPage patternsTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.paletteColorSelectedPictureBox = new System.Windows.Forms.PictureBox();
             this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
             this.patternEditorPanel = new System.Windows.Forms.Panel();
-            this.patternEditorPictureBox = new ACSE.WinForms.Controls.PictureBoxWithInterpolationMode();
             this.patternEditorPreviewPanel = new System.Windows.Forms.Panel();
             this.patternGroupTabControl = new System.Windows.Forms.TabControl();
             this.player1Tab = new System.Windows.Forms.TabPage();
@@ -271,14 +269,17 @@ namespace ACSE.WinForms
             this.loadingPanel = new System.Windows.Forms.Panel();
             this.label45 = new System.Windows.Forms.Label();
             this.infoTip = new System.Windows.Forms.ToolTip(this.components);
-            this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.itemIdLabel = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.TextBox();
+            this.openDolphinSaveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
+            this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
+            this.patternEditorPictureBox = new ACSE.WinForms.Controls.PictureBoxWithInterpolationMode();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
             this.patternEditorPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.patternGroupTabControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -315,6 +316,7 @@ namespace ACSE.WinForms
             this.pictureContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).BeginInit();
             this.loadingPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // patternsTab
@@ -334,18 +336,6 @@ namespace ACSE.WinForms
             patternsTab.TabIndex = 8;
             patternsTab.Text = "Patterns";
             patternsTab.UseVisualStyleBackColor = true;
-            // 
-            // patternNameTextBox
-            // 
-            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
-            this.patternNameTextBox.MaxLength = 16;
-            this.patternNameTextBox.Name = "patternNameTextBox";
-            this.patternNameTextBox.PlaceholderText = "Pattern Name";
-            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
-            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.patternNameTextBox.TabIndex = 0;
-            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
             // 
             // paletteColorSelectedPictureBox
             // 
@@ -398,23 +388,6 @@ namespace ACSE.WinForms
             this.patternEditorPanel.Name = "patternEditorPanel";
             this.patternEditorPanel.Size = new System.Drawing.Size(513, 513);
             this.patternEditorPanel.TabIndex = 16;
-            // 
-            // patternEditorPictureBox
-            // 
-            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
-            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
-            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.patternEditorPictureBox.TabIndex = 0;
-            this.patternEditorPictureBox.TabStop = false;
-            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
-            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBoxMouseDown);
-            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBoxMouseLeave);
-            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBoxMouseMove);
-            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBoxMouseUp);
             // 
             // patternEditorPreviewPanel
             // 
@@ -510,7 +483,9 @@ namespace ACSE.WinForms
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
+            this.openDolphinSaveFileToolStripMenuItem,
             this.openCitraSaveFileToolStripMenuItem,
+            this.toolStripSeparator3,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator1,
@@ -525,7 +500,7 @@ namespace ACSE.WinForms
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
             // 
@@ -535,7 +510,7 @@ namespace ACSE.WinForms
             this.newLeafToolStripMenuItem,
             this.welcomeAmiiboToolStripMenuItem});
             this.openCitraSaveFileToolStripMenuItem.Name = "openCitraSaveFileToolStripMenuItem";
-            this.openCitraSaveFileToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.openCitraSaveFileToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.openCitraSaveFileToolStripMenuItem.Text = "Open Citra Save File";
             // 
             // newLeafToolStripMenuItem
@@ -620,7 +595,7 @@ namespace ACSE.WinForms
             // 
             this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItemClick);
             // 
@@ -628,39 +603,39 @@ namespace ACSE.WinForms
             // 
             this.saveAsToolStripMenuItem.Enabled = false;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItemClick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
             // 
             // saveTownMapToolStripMenuItem
             // 
             this.saveTownMapToolStripMenuItem.Enabled = false;
             this.saveTownMapToolStripMenuItem.Name = "saveTownMapToolStripMenuItem";
-            this.saveTownMapToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.saveTownMapToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.saveTownMapToolStripMenuItem.Text = "Save Town Map";
             this.saveTownMapToolStripMenuItem.Click += new System.EventHandler(this.SaveTownMapToolStripMenuItemClick);
             // 
             // openBackupFolderToolStripMenuItem
             // 
             this.openBackupFolderToolStripMenuItem.Name = "openBackupFolderToolStripMenuItem";
-            this.openBackupFolderToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.openBackupFolderToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.openBackupFolderToolStripMenuItem.Text = "Open Backup Folder";
             this.openBackupFolderToolStripMenuItem.Click += new System.EventHandler(this.openBackupFolderToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(193, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
@@ -2798,21 +2773,6 @@ namespace ACSE.WinForms
             this.label45.TabIndex = 15;
             this.label45.Text = "Loading...";
             // 
-            // itemIdTextBox
-            // 
-            this.itemIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.itemIdTextBox.Enabled = false;
-            this.itemIdTextBox.Location = new System.Drawing.Point(132, 620);
-            this.itemIdTextBox.Name = "itemIdTextBox";
-            this.itemIdTextBox.PlaceholderText = "Item ID";
-            this.itemIdTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
-            this.itemIdTextBox.Size = new System.Drawing.Size(46, 20);
-            this.itemIdTextBox.TabIndex = 78;
-            this.itemIdTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.infoTip.SetToolTip(this.itemIdTextBox, "The hexadecimal Item ID. Example: A31C");
-            this.itemIdTextBox.TextChanged += new System.EventHandler(this.CurrentItemIdTextChanged);
-            this.itemIdTextBox.Leave += new System.EventHandler(this.CurrentItemIdLostFocus);
-            // 
             // itemIdLabel
             // 
             this.itemIdLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -2834,6 +2794,62 @@ namespace ACSE.WinForms
             this.StatusLabel.Size = new System.Drawing.Size(600, 13);
             this.StatusLabel.TabIndex = 16;
             this.StatusLabel.TabStop = false;
+            // 
+            // openDolphinSaveFileToolStripMenuItem
+            // 
+            this.openDolphinSaveFileToolStripMenuItem.Name = "openDolphinSaveFileToolStripMenuItem";
+            this.openDolphinSaveFileToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.openDolphinSaveFileToolStripMenuItem.Text = "Open Dolphin Save File";
+            this.openDolphinSaveFileToolStripMenuItem.Click += new System.EventHandler(this.OpenDolphinSaveFileClick);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(193, 6);
+            // 
+            // itemIdTextBox
+            // 
+            this.itemIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.itemIdTextBox.Enabled = false;
+            this.itemIdTextBox.Location = new System.Drawing.Point(132, 620);
+            this.itemIdTextBox.Name = "itemIdTextBox";
+            this.itemIdTextBox.PlaceholderText = "Item ID";
+            this.itemIdTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.itemIdTextBox.Size = new System.Drawing.Size(46, 20);
+            this.itemIdTextBox.TabIndex = 78;
+            this.itemIdTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.infoTip.SetToolTip(this.itemIdTextBox, "The hexadecimal Item ID. Example: A31C");
+            this.itemIdTextBox.TextChanged += new System.EventHandler(this.CurrentItemIdTextChanged);
+            this.itemIdTextBox.Leave += new System.EventHandler(this.CurrentItemIdLostFocus);
+            // 
+            // patternNameTextBox
+            // 
+            this.patternNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.patternNameTextBox.Location = new System.Drawing.Point(415, 538);
+            this.patternNameTextBox.MaxLength = 16;
+            this.patternNameTextBox.Name = "patternNameTextBox";
+            this.patternNameTextBox.PlaceholderText = "Pattern Name";
+            this.patternNameTextBox.PlaceholderTextColor = System.Drawing.Color.Gray;
+            this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.patternNameTextBox.TabIndex = 0;
+            this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
+            // 
+            // patternEditorPictureBox
+            // 
+            this.patternEditorPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.patternEditorPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.patternEditorPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.patternEditorPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.patternEditorPictureBox.Name = "patternEditorPictureBox";
+            this.patternEditorPictureBox.Size = new System.Drawing.Size(513, 513);
+            this.patternEditorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.patternEditorPictureBox.TabIndex = 0;
+            this.patternEditorPictureBox.TabStop = false;
+            this.patternEditorPictureBox.UseInternalInterpolationSetting = false;
+            this.patternEditorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBoxMouseDown);
+            this.patternEditorPictureBox.MouseLeave += new System.EventHandler(this.PatternEditorBoxMouseLeave);
+            this.patternEditorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBoxMouseMove);
+            this.patternEditorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PatternEditorBoxMouseUp);
             // 
             // MainForm
             // 
@@ -2866,7 +2882,6 @@ namespace ACSE.WinForms
             patternsTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).EndInit();
             this.patternEditorPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.patternGroupTabControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -2914,6 +2929,7 @@ namespace ACSE.WinForms
             ((System.ComponentModel.ISupportInitialize)(this.acreHeightTrackBar)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3162,5 +3178,7 @@ namespace ACSE.WinForms
         private System.Windows.Forms.ComboBox townGateComboBox;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.PictureBox townGatePictureBox;
+        private System.Windows.Forms.ToolStripMenuItem openDolphinSaveFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
