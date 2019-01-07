@@ -1,374 +1,374 @@
-//Transition Acres
-0x0000, 0
-0x0001, 1
-0x0002, 2
-0x0003, 3
-0x0004, 4
-0x0005, 5
-0x0006, 6 (River EW)
-0x0007, 7 (River EW)
-0x0008, 8 (Ramp)
-0x0009, 9 (Ramp)
-0x000A, 10 (Ramp)
-0x000B, 11 (Ramp)
-0x000C, 12
-0x000D, 13
-0x000E, 14
-0x000F, 15
-0x0010, 16
-0x0011, 17
-0x0012, 18
-0x0013, 19
-0x0014, 20 (River NS)
-0x0015, 21 (River NS)
-0x0016, 22 (Ramp)
-0x0017, 23 (Ramp)
-0x0018, 24 (Ramp)
-0x0019, 25 (Ramp)
-0x001A, 26
-0x001B, 27
-0x001C, 28
-0x001D, 29
-0x001E, 30
-0x001F, 31
-0x0020, 32
-0x0021, 33
-0x0022, 34 (River NS)
-0x0023, 35 (River NS)
-0x0024, 36 (River NS)
-0x0025, 37 (River NS)
-0x0026, 38 (Ramp)
-0x0027, 39 (Ramp)
-0x0028, 40 (Ramp)
-0x0029, 41 (Ramp)
-0x002A, 42
-0x002B, 43
-0x002C, 44
-0x002D, 45
-0x002E, 46
-0x002F, 47
-0x0030, 48
-0x0031, 49
-0x0032, 50 (River NS)
-0x0033, 51 (River NS)
-0x0034, 52 (Ramp)
-0x0035, 53 (Ramp)
-0x0036, 54 (Ramp)
-0x0037, 55 (Ramp)
-0x0038, 56
-0x0039, 57
-0x003A, 58
-0x003B, 59
-0x003C, 60
-0x003D, 61
-0x003E, 62
-0x003F, 63
-0x0040, 64 (River NS)
-0x0041, 65 (River NS)
-0x0042, 66 (Ramp)
-0x0043, 67 (Ramp)
-0x0044, 68 (Ramp)
-0x0045, 69 (Ramp)
-0x0046, 70
-0x0047, 71
-0x0048, 72
-0x0049, 73
-0x004A, 74
-0x004B, 75
-0x004C, 76 (Ramp)
-0x004D, 77 (Ramp)
-0x004E, 78 (Ramp)
-0x004F, 79 (Ramp)
-0x0050, 80
-0x0051, 81
-0x0052, 82
-0x0053, 83
-0x0054, 84
-0x0055, 85
-0x0056, 86
-0x0057, 87
-0x0058, 88 (River NS)
-0x0059, 89 (River NS)
-0x005A, 90 (Ramp)
-0x005B, 91 (Ramp)
-0x005C, 92 (Ramp)
-0x005D, 93 (Ramp)
-0x005E, 94 (River EW)
-0x005F, 95 (River EW)
+//Cliff Acres
+0x0000, S-N Cliff #1
+0x0001, S-N Cliff #1 (Height 2)
+0x0002, S-N Cliff #2
+0x0003, S-N Cliff #2 (Height 2)
+0x0004, S-N Cliff #3
+0x0005, S-N Cliff #3 (Height 2)
+0x0006, S-N Cliff w/ W-E Waterfall #1
+0x0007, S-N Cliff w/ W-E Waterfall #1 (Height 2)
+0x0008, S-N Cliff w/ Ramp #1
+0x0009, S-N Cliff w/ Ramp #1 (Height 2)
+0x000A, S-N Cliff w/ Ramp #2
+0x000B, S-N Cliff w/ Ramp #2 (Height 2)
+0x000C, W-N Cliff #1
+0x000D, W-N Cliff #1 (Height 2)
+0x000E, W-N Cliff #2
+0x000F, W-N Cliff #2 (Height 2)
+0x0010, W-N Cliff #3
+0x0011, W-N Cliff #3 (Height 2)
+0x0012, W-N Cliff #4
+0x0013, W-N Cliff #4 (Height 2)
+0x0014, W-N Cliff w/ N-S Waterfall #1
+0x0015, W-N Cliff w/ N-S Waterfall #1 (Height 2)
+0x0016, W-N Cliff w/ Ramp #1
+0x0017, W-N Cliff w/ Ramp #1 (Height 2)
+0x0018, W-N Cliff w/ Ramp #2
+0x0019, W-N Cliff w/ Ramp #2 (Height 2)
+0x001A, W-E Cliff #1
+0x001B, W-E Cliff #1 (Height 2)
+0x001C, W-E Cliff #2
+0x001D, W-E Cliff #2 (Height 2)
+0x001E, W-E Cliff #3
+0x001F, W-E Cliff #3 (Height 2)
+0x0020, W-E Cliff #4
+0x0021, W-E Cliff #4 (Height 2)
+0x0022, W-E Cliff w/ N-S Waterfall #1
+0x0023, W-E Cliff w/ N-S Waterfall #1 (Height 2)
+0x0024, W-E Cliff w/ N-S Waterfall #2
+0x0025, W-E Cliff w/ N-S Waterfall #2 (Height 2)
+0x0026, W-E Cliff w/ Ramp #1
+0x0027, W-E Cliff w/ Ramp #1 (Height 2)
+0x0028, W-E Cliff w/ Ramp #2
+0x0029, W-E Cliff w/ Ramp #2 (Height 2)
+0x002A, N-E Cliff #1
+0x002B, N-E Cliff #1 (Height 2)
+0x002C, N-E Cliff #2
+0x002D, N-E Cliff #2 (Height 2)
+0x002E, N-E Cliff #3
+0x002F, N-E Cliff #3 (Height 2)
+0x0030, N-E Cliff #4
+0x0031, N-E Cliff #4 (Height 2)
+0x0032, N-E Cliff w/ N-S River #1
+0x0033, N-E Cliff w/ N-S River #1 (Height 2)
+0x0034, N-E Cliff w/ N-S Ramp #1
+0x0035, N-E Cliff w/ N-S Ramp #1 (Height 2)
+0x0036, N-E Cliff w/ N-S Ramp #2
+0x0037, N-E Cliff w/ N-S Ramp #2 (Height 2)
+0x0038, E-S Cliff #1
+0x0039, E-S Cliff #1 (Height 2)
+0x003A, E-S Cliff #2
+0x003B, E-S Cliff #2 (Height 2)
+0x003C, E-S Cliff #3
+0x003D, E-S Cliff #3 (Height 2)
+0x003E, E-S Cliff #4
+0x003F, E-S Cliff #4 (Height 2)
+0x0040, E-S Cliff w/ N-S Waterfall #1
+0x0041, E-S Cliff w/ N-S Waterfall #1 (Height 2)
+0x0042, E-S Cliff w/ Ramp #1
+0x0043, E-S Cliff w/ Ramp #1 (Height 2)
+0x0044, E-S Cliff w/ Ramp #2
+0x0045, E-S Cliff w/ Ramp #2 (Height 2)
+0x0046, N-S Cliff #1
+0x0047, N-S Cliff #1 (Height 2)
+0x0048, N-S Cliff #2
+0x0049, N-S Cliff #2 (Height 2)
+0x004A, N-S Cliff #3
+0x004B, N-S Cliff #3 (Height 2)
+0x004C, N-S Cliff w/ Ramp #1
+0x004D, N-S Cliff w/ Ramp #1 (Height 2)
+0x004E, N-S Cliff w/ Ramp #2
+0x004F, N-S Cliff w/ Ramp #2 (Height 2)
+0x0050, S-W Cliff #1
+0x0051, S-W Cliff #1 (Height 2)
+0x0052, S-W Cliff #2
+0x0053, S-W Cliff #2 (Height 2)
+0x0054, S-W Cliff #3
+0x0055, S-W Cliff #3 (Height 2)
+0x0056, S-W Cliff #4
+0x0057, S-W Cliff #4 (Height 2)
+0x0058, S-W Cliff w/ N-S River #1
+0x0059, S-W Cliff w/ N-S River #1 (Height 2)
+0x005A, S-W Cliff w/ Ramp #1
+0x005B, S-W Cliff w/ Ramp #1 (Height 2)
+0x005C, S-W Cliff w/ Ramp #2
+0x005D, S-W Cliff w/ Ramp #2 (Height 2)
+0x005E, N-S Cliff w/ E-W Waterfall #1
+0x005F, N-S Cliff w/ E-W Waterfall #1 (Height 2)
 //Grass Acres
-0x0060, 0
-0x0061, 1
-0x0062, 2
-0x0063, 3
-0x0064, 4
-0x0065, 5
-0x0066, 6 (Pond)
-0x0067, 7 (Pond)
-0x0068, 8 (Pond)
-0x0069, 9 (Pond)
-0x006A, 10 (Pond)
-0x006B, 11 (Pond)
+0x0060, Grass Acre #1
+0x0061, Grass Acre #1 (Height 2)
+0x0062, Grass Acre #2
+0x0063, Grass Acre #2 (Height 2)
+0x0064, Grass Acre #3
+0x0065, Grass Acre #3 (Height 2)
+0x0066, Grass Acre w/ Pond #1
+0x0067, Grass Acre w/ Pond #1 (Height 2)
+0x0068, Grass Acre w/ Pond #2
+0x0069, Grass Acre w/ Pond #2 (Height 2)
+0x006A, Grass Acre w/ Pond #3
+0x006B, Grass Acre w/ Pond #3 (Height 2)
 //Building Acres
-0x006C, 12 (Gate)
-0x006D, 13 (Gate)
-0x006E, 14 (Gate)
-0x006F, 15 (Gate)
-0x0070, 16 (Gate + Pond)
-0x0071, 17 (Gate + Pond)
-0x0072, 18 (Museum)
-0x0073, 19 (Museum)
-0x0074, 20 (Museum + Pond)
-0x0075, 21 (Museum + Pond)
-0x0076, 22 (Museum + Pond)
-0x0077, 23 (Museum + Pond)
-0x0078, 24 (Nook's)
-0x0079, 25 (Nook's)
-0x007A, 26 (Nook's)
-0x007B, 27 (Nook's)
-0x007C, 28 (Nook's + Pond)
-0x007D, 29 (Nook's + Pond)
-0x007E, 30 (Townhall)
-0x007F, 31 (Townhall)
-0x0080, 32 (Townhall)
-0x0081, 33 (Townhall)
-0x0082, 34 (Townhall)
-0x0083, 35 (Townhall)
-0x0084, 36 (Tailor)
-0x0085, 37 (Tailor)
-0x0086, 38 (Tailor + Pond)
-0x0087, 39 (Tailor + Pond)
-0x0088, 40 (Tailor + Pond)
-0x0089, 41 (Tailor + Pond)
+0x006C, Gate #1
+0x006D, Gate #1 (Height 2)
+0x006E, Gate #2
+0x006F, Gate #2 (Height 2)
+0x0070, Gate w/ Pond #1
+0x0071, Gate w/ Pond #1 (Height 2)
+0x0072, Museum #1
+0x0073, Museum #1 (Height 2)
+0x0074, Museum w/ Pond #1
+0x0075, Museum w/ Pond #1 (Height 2)
+0x0076, Museum w/ Pond #2
+0x0077, Museum w/ Pond #2 (Height 2)
+0x0078, Shop #1
+0x0079, Shop #1 (Height 2)
+0x007A, Shop #2
+0x007B, Shop #2 (Height 2)
+0x007C, Shop w/ Pond #1
+0x007D, Shop w/ Pond #1 (Height 2)
+0x007E, Town Hall #1
+0x007F, Town Hall #1 (Height 2)
+0x0080, Town Hall #2
+0x0081, Town Hall #2 (Height 2)
+0x0082, Town Hall #3
+0x0083, Town Hall #3 (Height 2)
+0x0084, Tailor's #1
+0x0085, Tailor's #1 (Height 2)
+0x0086, Tailor's w/ Pond #1
+0x0087, Tailor's w/ Pond #1 (Height 2)
+0x0088, Tailor's w/ Pond #2
+0x0089, Tailor's w/ Pond #2 (Height 2)
 //Beachfront Acres
-0x008A, 0
-0x008B, 1
-0x008C, 2
-0x008D, 3
-0x008E, 4
-0x008F, 5
-0x0090, 6
-0x0091, 7
-0x0092, 8
-0x0093, 9
-0x0094, 10
-0x0095, 11
-0x0096, 12 (River W)
-0x0097, 13 (River W)
-0x0098, 14 (River W)
-0x0099, 15 (River W)
-0x009A, 16 (River W + Bridge)
-0x009B, 17 (River W + Bridge)
-0x009C, 18 (River W + Bridge)
-0x009D, 19 (River W + Bridge)
-0x009E, 20 (River N)
-0x009F, 21 (River N)
-0x00A0, 22 (River N)
-0x00A1, 23 (River N)
-0x00A2, 24 (River N)
-0x00A3, 25 (River N)
-0x00A4, 26 (River N + Bridge)
-0x00A5, 27 (River N + Bridge)
-0x00A6, 28 (River N + Bridge)
-0x00A7, 29 (River N + Bridge)
-0x00A8, 30 (River N + Bridge)
-0x00A9, 31 (River N + Bridge)
-0x00AA, 32 (River NE)
-0x00AB, 33 (River NE)
-0x00AC, 34 (River NE)
-0x00AD, 35 (River NE)
-0x00AE, 36 (River NE + Bridge)
-0x00AF, 37 (River NE + Bridge)
-0x00B0, 38 (River NE + Bridge)
-0x00B1, 39 (River NE + Bridge)
-0x00B2, 40 (River NW)
-0x00B3, 41 (River NW)
-0x00B4, 42 (River NW)
-0x00B5, 43 (River NW)
-0x00B6, 44 (River NW + Bridge)
-0x00B7, 45 (River NW + Bridge)
-0x00B8, 46 (River NW + Bridge)
-0x00B9, 47 (River NW + Bridge)
-0x00BA, 48 (River E)
-0x00BB, 49 (River E)
-0x00BC, 50 (River E)
-0x00BD, 51 (River E)
-0x00BE, 52 (River E + Bridge)
-0x00BF, 53 (River E + Bridge)
-0x00C0, 54 (River E + Bridge)
-0x00C1, 55 (River E + Bridge)
+0x008A, Beachfront #1
+0x008B, Beachfront #1 (Height 2)
+0x008C, Beachfront #2
+0x008D, Beachfront #2 (Height 2)
+0x008E, Beachfront #3
+0x008F, Beachfront #3 (Height 2)
+0x0090, Beachfront #4
+0x0091, Beachfront #4 (Height 2)
+0x0092, Beachfront #5
+0x0093, Beachfront #5 (Height 2)
+0x0094, Beachfront #6
+0x0095, Beachfront #6 (Height 2)
+0x0096, Beachfront w/ River (E-S) #1
+0x0097, Beachfront w/ River (E-S) #1 (Height 2)
+0x0098, Beachfront w/ River (E-S) #2
+0x0099, Beachfront w/ River (E-S) #2 (Height 2)
+0x009A, Beachfront w/ River (E-S) & Bridge #1
+0x009B, Beachfront w/ River (E-S) & Bridge #1 (Height 2)
+0x009C, Beachfront w/ River (E-S) & Bridge #2
+0x009D, Beachfront w/ River (E-S) & Bridge #2 (Height 2)
+0x009E, Beachfront w/ River (N-S) #1
+0x009F, Beachfront w/ River (N-S) #1 (Height 2)
+0x00A0, Beachfront w/ River (N-S) #2
+0x00A1, Beachfront w/ River (N-S) #2 (Height 2)
+0x00A2, Beachfront w/ River (N-S) #3
+0x00A3, Beachfront w/ River (N-S) #3 (Height 2)
+0x00A4, Beachfront w/ River (N-S) & Bridge #1
+0x00A5, Beachfront w/ River (N-S) & Bridge #1 (Height 2)
+0x00A6, Beachfront w/ River (N-S) & Bridge #2
+0x00A7, Beachfront w/ River (N-S) & Bridge #2 (Height 2)
+0x00A8, Beachfront w/ River (N-S) & Bridge #3
+0x00A9, Beachfront w/ River (N-S) & Bridge #3 (Height 2)
+0x00AA, Beachfront w/ River (S-E) #1
+0x00AB, Beachfront w/ River (S-E) #1 (Height 2)
+0x00AC, Beachfront w/ River (S-E) #2
+0x00AD, Beachfront w/ River (S-E) #2 (Height 2)
+0x00AE, Beachfront w/ River (S-E) & Bridge #1
+0x00AF, Beachfront w/ River (S-E) & Bridge #1 (Height 2)
+0x00B0, Beachfront w/ River (S-E) & Bridge #2
+0x00B1, Beachfront w/ River (S-E) & Bridge #2 (Height 2)
+0x00B2, Beachfront w/ River (S-W) #1
+0x00B3, Beachfront w/ River (S-W) #1 (Height 2)
+0x00B4, Beachfront w/ River (S-W) #2
+0x00B5, Beachfront w/ River (S-W) #2 (Height 2)
+0x00B6, Beachfront w/ River (S-W) & Bridge #1
+0x00B7, Beachfront w/ River (S-W) & Bridge #1 (Height 2)
+0x00B8, Beachfront w/ River (S-W) & Bridge #2
+0x00B9, Beachfront w/ River (S-W) & Bridge #2 (Height 2)
+0x00BA, Beachfront w/ River (W-S) #1
+0x00BB, Beachfront w/ River (W-S) #1 (Height 2)
+0x00BC, Beachfront w/ River (W-S) #2
+0x00BD, Beachfront w/ River (W-S) #2 (Height 2)
+0x00BE, Beachfront w/ River (W-S) & Bridge #1
+0x00BF, Beachfront w/ River (W-S) & Bridge #1 (Height 2)
+0x00C0, Beachfront w/ River (W-S) & Bridge #2
+0x00C1, Beachfront w/ River (W-S) & Bridge #2 (Height 2)
 //Border Acres
-0x00C2, 0 (Left)
-0x00C3, 1 (Left)
-0x00C4, 2 (Transition)
-0x00C5, 3 (Transition)
-0x00C6, 4 (Ocean Transition)
-0x00C7, 5 (Ocean Transition)
-0x00C8, 6 (Top)
-0x00C9, 7 (Top)
-0x00CA, 8 (Gate)
-0x00CB, 9 (Gate)
-0x00CC, 10 (Waterfall)
-0x00CD, 11 (Waterfall)
-0x00CE, 12 (Top Left)
-0x00CF, 13 (Top Left)
-0x00D0, 14 (Top Right)
-0x00D1, 15 (Top Right)
-0x00D2, 16 (Right)
-0x00D3, 17 (Right)
-0x00D4, 18 (Transition)
-0x00D5, 19 (Transition)
-0x00D6, 20 (Ocean Transition)
-0x00D7, 21 (Ocean Transition)
-0x00D8, 22 (Open Ocean)
-0x00D9, 23 (Open Ocean)
+0x00C2, Left Border Cliff
+0x00C3, Left Border Cliff (Height 2)
+0x00C4, Left Border Cliff Transition
+0x00C5, Left Border Cliff Transition (Height 2)
+0x00C6, Left Border Cliff Ocean Transition
+0x00C7, Left Border Cliff Ocean Transition (Height 2)
+0x00C8, Top Border Cliff
+0x00C9, Top Border Cliff (Height 2)
+0x00CA, Top Border Cliff Gate Exit
+0x00CB, Top Border Cliff Gate Exit (Height 2)
+0x00CC, Top Border Cliff w/ Waterfall
+0x00CD, Top Border Cliff w/ Waterfall (Height 2)
+0x00CE, Top Left Border Cliff
+0x00CF, Top Left Border Cliff (Height 2)
+0x00D0, Top Right Border Cliff
+0x00D1, Top Right Border Cliff (Height 2)
+0x00D2, Right Border Cliff
+0x00D3, Right Border Cliff (Height 2)
+0x00D4, Right Border Cliff Transition
+0x00D5, Right Border Cliff Transition (Height 2)
+0x00D6, Right Border Cliff Ocean Transition
+0x00D7, Right Border Cliff Ocean Transition (Height 2)
+0x00D8, Ocean
+0x00D9, Ocean (Height 2)
 //River Acres
-0x00DA, 0 (EW)
-0x00DB, 1 (EW)
-0x00DC, 2 (EW)
-0x00DD, 3 (EW)
-0x00DE, 4 (EW)
-0x00DF, 5 (EW)
-0x00E0, 6 (EW + Bridge)
-0x00E1, 7 (EW + Bridge)
-0x00E2, 8 (EW + Bridge)
-0x00E3, 9 (EW + Bridge)
-0x00E4, 10 (EW + Bridge)
-0x00E5, 11 (EW + Bridge)
-0x00E6, 12 (EW + Lake)
-0x00E7, 13 (EW + Lake)
-0x00E8, 14 (EW + Lake)
-0x00E9, 15 (EW + Lake)
-0x00EA, 16 (SW)
-0x00EB, 17 (SW)
-0x00EC, 18 (SW)
-0x00ED, 19 (SW)
-0x00EE, 20 (SW)
-0x00EF, 21 (SW)
-0x00F0, 22 (SW)
-0x00F1, 23 (SW)
-0x00F2, 24 (SW + Bridge)
-0x00F3, 25 (SW + Bridge)
-0x00F4, 26 (SW)
-0x00F5, 27 (SW + Bridge)
-0x00F6, 28 (SW + Bridge)
-0x00F7, 29 (SW + Bridge)
-0x00F8, 30 (SW + Bridge)
-0x00F9, 31 (SW + Bridge)
-0x00FA, 32 (SW + Lake)
-0x00FB, 33 (SW + Lake)
-0x00FC, 34 (SW + Lake)
-0x00FD, 35 (SW + Lake)
-0x00FE, 36 (EWS)
-0x00FF, 37 (EWS)
-0x0100, 38 (NS)
-0x0101, 39 (NS)
-0x0102, 40 (NS)
-0x0103, 41 (NS)
-0x0104, 42 (NS)
-0x0105, 43 (NS)
-0x0106, 44 (NS + Bridge)
-0x0107, 45 (NS + Bridge)
-0x0108, 46 (NS + Bridge)
-0x0109, 47 (NS + Bridge)
-0x010A, 48 (NS + Bridge)
-0x010B, 49 (NS + Bridge)
-0x010C, 50 (Waterfall)
-0x010D, 51 (Waterfall)
-0x010E, 52 (Waterfall)
-0x010F, 53 (Waterfall)
-0x0110, 54 (Waterfall)
-0x0111, 55 (Waterfall)
-0x0112, 56 (NS + Lake)
-0x0113, 57 (NS + Lake)
-0x0114, 58 (NS + Lake)
-0x0115, 59 (NS + Lake)
-0x0116, 60 (NE)
-0x0117, 61 (NE)
-0x0118, 62 (NE)
-0x0119, 63 (NE)
-0x011A, 64 (NE)
-0x011B, 65 (NE)
-0x011C, 66 (NE)
-0x011D, 67 (NE)
-0x011E, 68 (NE + Bridge)
-0x011F, 69 (NE + Bridge)
-0x0120, 70 (NE + Bridge)
-0x0121, 71 (NE + Bridge)
-0x0122, 72 (NE + Bridge)
-0x0123, 73 (NE + Bridge)
-0x0124, 74 (NE + Bridge)
-0x0125, 75 (NE + Bridge)
-0x0126, 76 (NE + Lake)
-0x0127, 77 (NE + Lake)
-0x0128, 78 (NE + Lake)
-0x0129, 79 (NE + Lake)
-0x012A, 80 (NSE)
-0x012B, 81 (NSE)
-0x012C, 82 (NSE)
-0x012D, 83 (NSE)
-0x012E, 84 (NW)
-0x012F, 85 (NW)
-0x0130, 86 (NW)
-0x0131, 87 (NW)
-0x0132, 88 (NW)
-0x0133, 89 (NW)
-0x0134, 90 (NW)
-0x0135, 91 (NW)
-0x0136, 92 (NW + Bridge)
-0x0137, 93 (NW + Bridge)
-0x0138, 94 (NW + Bridge)
-0x0139, 95 (NW + Bridge)
-0x013A, 96 (NW + Bridge)
-0x013B, 97 (NW + Bridge)
-0x013C, 98 (NW + Bridge)
-0x013D, 99 (NW + Bridge)
-0x013E, 100 (NW + Lake)
-0x013F, 101 (NW + Lake)
-0x0140, 102 (NW + Lake)
-0x0141, 103 (NW + Lake)
-0x0142, 104 (EWN)
-0x0143, 105 (EWN)
-0x0144, 106 (EWN)
-0x0145, 107 (EWN)
-0x0146, 108 (NSW)
-0x0147, 109 (NSW)
-0x0148, 110 (NSW)
-0x0149, 111 (NSW)
-0x014A, 112 (EW)
-0x014B, 113 (EW)
-0x014C, 114 (EW)
-0x014D, 115 (EW)
-0x014E, 116 (EW)
-0x014F, 117 (EW)
-0x0150, 118 (EW + Bridge)
-0x0151, 119 (EW + Bridge)
-0x0152, 120 (EW + Bridge)
-0x0153, 121 (EW + Bridge)
-0x0154, 122 (EW + Bridge)
-0x0155, 123 (EW + Bridge)
-0x0156, 124 (EW + Lake)
-0x0157, 125 (EW + Lake)
-0x0158, 126 (EW + Lake)
-0x0159, 127 (EW + Lake)
-0x015A, 128 (SE)
-0x015B, 129 (SE)
-0x015C, 130 (SE)
-0x015D, 131 (SE)
-0x015E, 132 (SE)
-0x015F, 133 (SE)
-0x0160, 134 (SE)
-0x0161, 135 (SE)
-0x0162, 136 (SE + Bridge)
-0x0163, 137 (SE + Bridge)
-0x0164, 138 (SE + Bridge)
-0x0165, 139 (SE + Bridge)
-0x0166, 140 (SE + Bridge)
-0x0167, 141 (SE + Bridge)
-0x0168, 142 (SE + Bridge)
-0x0169, 143 (SE + Bridge)
-0x016A, 144 (SE + Lake)
-0x016B, 145 (SE + Lake)
-0x016C, 146 (SE + Lake)
-0x016D, 147 (SE + Lake)
-0x016E, 148 (EWS)
-0x016F, 149 (EWS)
+0x00DA, River (W-E) #1
+0x00DB, River (W-E) #1 (Height 2)
+0x00DC, River (W-E) #2
+0x00DD, River (W-E) #2 (Height 2)
+0x00DE, River (W-E) #3
+0x00DF, River (W-E) #3 (Height 2)
+0x00E0, River (W-E) w/ Bridge #1
+0x00E1, River (W-E) w/ Bridge #1 (Height 2)
+0x00E2, River (W-E) w/ Bridge #2
+0x00E3, River (W-E) w/ Bridge #2 (Height 2)
+0x00E4, River (W-E) w/ Bridge #3
+0x00E5, River (W-E) w/ Bridge #3 (Height 2)
+0x00E6, River (W-E) w/ Lake #1
+0x00E7, River (W-E) w/ Lake #1 (Height 2)
+0x00E8, River (W-E) w/ Lake #2
+0x00E9, River (W-E) w/ Lake #2 (Height 2)
+0x00EA, River (S-W) #1
+0x00EB, River (S-W) #1 (Height 2)
+0x00EC, River (S-W) #2
+0x00ED, River (S-W) #2 (Height 2)
+0x00EE, River (S-W) #3
+0x00EF, River (S-W) #3 (Height 2)
+0x00F0, River (S-W) #4
+0x00F1, River (S-W) #4 (Height 2)
+0x00F2, River (S-W) w/ Bridge #1
+0x00F3, River (S-W) w/ Bridge #1 (Height 2)
+0x00F4, River (S-W) w/ Bridge #2
+0x00F5, River (S-W) w/ Bridge #2 (Height 2)
+0x00F6, River (S-W) w/ Bridge #3
+0x00F7, River (S-W) w/ Bridge #3 (Height 2)
+0x00F8, River (S-W) w/ Bridge #4
+0x00F9, River (S-W) w/ Bridge #4 (Height 2)
+0x00FA, River (S-W) w/ Lake #1
+0x00FB, River (S-W) w/ Lake #1 (Height 2)
+0x00FC, River (S-W) w/ Lake #2
+0x00FD, River (S-W) w/ Lake #2 (Height 2)
+0x00FE, River Fork (E-S-W) #1
+0x00FF, River Fork (E-S-W) #1 (Height 2)
+0x0100, River (N-S) #1
+0x0101, River (N-S) #1 (Height 2)
+0x0102, River (N-S) #2
+0x0103, River (N-S) #2 (Height 2)
+0x0104, River (N-S) #3
+0x0105, River (N-S) #3 (Height 2)
+0x0106, River (N-S) w/ Bridge #1
+0x0107, River (N-S) w/ Bridge #1 (Height 2)
+0x0108, River (N-S) w/ Bridge #2
+0x0109, River (N-S) w/ Bridge #2 (Height 2)
+0x010A, River (N-S) w/ Bridge #3
+0x010B, River (N-S) w/ Bridge #3 (Height 2)
+0x010C, River (N-S) w/ Waterfall #1
+0x010D, River (N-S) w/ Waterfall #1 (Height 2)
+0x010E, River (N-S) w/ Waterfall #2
+0x010F, River (N-S) w/ Waterfall #2 (Height 2)
+0x0110, River (N-S) w/ Waterfall #3
+0x0111, River (N-S) w/ Waterfall #3 (Height 2)
+0x0112, River (N-S) w/ Lake #1
+0x0113, River (N-S) w/ Lake #1 (Height 2)
+0x0114, River (N-S) w/ Lake #2
+0x0115, River (N-S) w/ Lake #2 (Height 2)
+0x0116, River (S-E) #1
+0x0117, River (S-E) #1 (Height 2)
+0x0118, River (S-E) #2
+0x0119, River (S-E) #2 (Height 2)
+0x011A, River (S-E) #3
+0x011B, River (S-E) #3 (Height 2)
+0x011C, River (S-E) #4
+0x011D, River (S-E) #4 (Height 2)
+0x011E, River (S-E) w/ Bridge #1
+0x011F, River (S-E) w/ Bridge #1 (Height 2)
+0x0120, River (S-E) w/ Bridge #2
+0x0121, River (S-E) w/ Bridge #2 (Height 2)
+0x0122, River (S-E) w/ Bridge #3
+0x0123, River (S-E) w/ Bridge #3 (Height 2)
+0x0124, River (S-E) w/ Bridge #4
+0x0125, River (S-E) w/ Bridge #4 (Height 2)
+0x0126, River (S-E) w/ Lake #1
+0x0127, River (S-E) w/ Lake #1 (Height 2)
+0x0128, River (S-E) w/ Lake #2
+0x0129, River (S-E) w/ Lake #2 (Height 2)
+0x012A, River Fork (S-E-S) #1
+0x012B, River Fork (S-E-S) #1 (Height 2)
+0x012C, River Fork (S-E-S) #2
+0x012D, River Fork (S-E-S) #2 (Height 2)
+0x012E, River (S-W) #1
+0x012F, River (S-W) #1 (Height 2)
+0x0130, River (S-W) #2
+0x0131, River (S-W) #2 (Height 2)
+0x0132, River (S-W) #3
+0x0133, River (S-W) #3 (Height 2)
+0x0134, River (S-W) #4
+0x0135, River (S-W) #4 (Height 2)
+0x0136, River (S-W) w/ Bridge #1
+0x0137, River (S-W) w/ Bridge #1 (Height 2)
+0x0138, River (S-W) w/ Bridge #2
+0x0139, River (S-W) w/ Bridge #2 (Height 2)
+0x013A, River (S-W) w/ Bridge #3
+0x013B, River (S-W) w/ Bridge #3 (Height 2)
+0x013C, River (S-W) w/ Bridge #4
+0x013D, River (S-W) w/ Bridge #4 (Height 2)
+0x013E, River (S-W) w/ Lake #1
+0x013F, River (S-W) w/ Lake #1 (Height 2)
+0x0140, River (S-W) w/ Lake #2
+0x0141, River (S-W) w/ Lake #2 (Height 2)
+0x0142, River Fork (S-W-E) #1
+0x0143, River Fork (S-W-E) #1 (Height 2)
+0x0144, River Fork (S-W-E) #2
+0x0145, River Fork (S-W-E) #2 (Height 2)
+0x0146, River Fork (S-W-S) #1
+0x0147, River Fork (S-W-S) #1 (Height 2)
+0x0148, River Fork (S-W-S) #2
+0x0149, River Fork (S-W-S) #2 (Height 2)
+0x014A, River (E-W) #1
+0x014B, River (E-W) #1 (Height)
+0x014C, River (E-W) #2
+0x014D, River (E-W) #2 (Height)
+0x014E, River (E-W) #3
+0x014F, River (E-W) #3 (Height)
+0x0150, River (E-W) w/ Bridge #1
+0x0151, River (E-W) w/ Bridge #1 (Height)
+0x0152, River (E-W) w/ Bridge #2
+0x0153, River (E-W) w/ Bridge #2 (Height)
+0x0154, River (E-W) w/ Bridge #3
+0x0155, River (E-W) w/ Bridge #3 (Height)
+0x0156, River (E-W) w/ Lake #1
+0x0157, River (E-W) w/ Lake #1 (Height)
+0x0158, River (E-W) w/ Lake #2
+0x0159, River (E-W) w/ Lake #2 (Height)
+0x015A, River (W-S) #1
+0x015B, River (W-S) #1 (Height)
+0x015C, River (W-S) #2
+0x015D, River (W-S) #2 (Height)
+0x015E, River (W-S) #3
+0x015F, River (W-S) #3 (Height)
+0x0160, River (W-S) #4
+0x0161, River (W-S) #4 (Height)
+0x0162, River (W-S) w/ Bridge #1
+0x0163, River (W-S) w/ Bridge #1 (Height)
+0x0164, River (W-S) w/ Bridge #2
+0x0165, River (W-S) w/ Bridge #2 (Height)
+0x0166, River (W-S) w/ Bridge #3
+0x0167, River (W-S) w/ Bridge #3 (Height)
+0x0168, River (W-S) w/ Bridge #4
+0x0169, River (W-S) w/ Bridge #4 (Height)
+0x016A, River (W-S) w/ Lake #1
+0x016B, River (W-S) w/ Lake #1 (Height)
+0x016C, River (W-S) w/ Lake #2
+0x016D, River (W-S) w/ Lake #2 (Height)
+0x016E, River Fork (W-S-W) #1
+0x016F, River Fork (W-S-W) #1 (Height 2)
