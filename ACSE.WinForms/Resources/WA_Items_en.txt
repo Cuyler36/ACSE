@@ -1,85 +1,12 @@
-﻿//Nothing
 0x7FFE, Empty
-//Patterns
-0x009D, Pattern
-//Outside flowers
-0x009F, Red Tulips
-0x00A0, White Tulips
-0x00A1, Yellow Tulips
-0x00A2, Pink Tulips
-0x00A3, Purple Tulips
-0x00A4, Black Tulips
-0x00A5, Orange Tulips
-0x00A6, White Pansies
-0x00A7, Yellow Pansies
-0x00A8, Red Pansies
-0x00A9, Purple Pansies
-0x00AA, Orange Pansies
-0x00AB, Blue Pansies
-0x00AC, White Cosmos
-0x00AD, Red Cosmos
-0x00AE, Yellow Cosmos
-0x00AF, Pink Cosmos
-0x00B0, Orange Cosmos
-0x00B1, Black Cosmos
-0x00B2, Red Roses
-0x00B3, White Roses
-0x00B4, Yellow Roses
-0x00B5, Pink Roses
-0x00B6, Orange Roses
-0x00B7, Purple Roses
-0x00B8, Black Roses
-0x00B9, Blue Roses
-0x00BA, Gold Roses
-0x00BB, Red Carnations
-0x00BC, Pink Carnations
-0x00BD, White Carnations
-0x00BE, White Lilies
-0x00BF, Yellow Lilies
-0x00C0, Red Lilies
-0x00C1, Orange Lilies
-0x00C2, Pink Lilies
-0x00C3, Black Lilies
-0x00C4, Purple Violets
-0x00C5, Blue Violets
-0x00C6, White Violets
-0x00C7, Yellow Violets
-0x00C8, Jacob's Ladder
-0x00C9, Lucky Clovers
-0x00CA, Dandelions
-0x00CB, Dandelion Puffs
-0x00CC, Clovers (Weed)
-0x00CD, Rafflesia
-//Outside flowers (wilted)
-//Fruit trees
-0x003A, Apple Tree (Growing 1)
-0x003B, Apple Tree (Growing 2)
-0x003C, Apple Tree (Growing 3)
-0x003D, Apple Tree (Growing 4)
-0x003E, Apple Tree
-0x003F, Orange Tree (Growing 1)
-0x0040, Orange Tree (Growing 2)
-0x0041, Orange Tree (Growing 3)
-0x0042, Orange Tree (Growing 4)
-0x0043, Orange Tree
-0x0044, Pear Tree (Growing 1)
-0x0045, Pear Tree (Growing 2)
-0x0046, Pear Tree (Growing 3)
-0x0047, Pear Tree (Growing 4)
-0x0048, Pear Tree
-0x0049, Peaches Tree (Growing 1)
-0x004A, Peaches Tree (Growing 2)
-0x004B, Peaches Tree (Growing 3)
-0x004C, Peaches Tree (Growing 4)
-0x004D, Peaches Tree
-0x004E, Cherry Tree (Growing 1)
-0x004F, Cherry Tree (Growing 2)
-0x0050, Cherry Tree (Growing 3)
-0x0051, Cherry Tree (Growing 4)
-0x0052, Cherry Tree
-//More trees
-0x0005, Dead Bamboo
-0x0006, Dead Tree
+//Enviromental Items
+//Normal Trees:
+0x0001, Wilted Bush
+0x0002, Wilted Tree
+0x0003, Wilted Cedar Tree
+0x0004, Wilted Palm Tree
+0x0005, Wilted Bamboo
+0x0006, Dead Perfect Tree
 0x0007, Cut Tree (Growing 1)
 0x0008, Cut Tree (Growing 2)
 0x0009, Cut Tree (Growing 3)
@@ -131,7 +58,32 @@
 0x0037, Bamboo (Growing 2)
 0x0038, Bamboo (Growing 3)
 0x0039, Bamboo
-//More trees (2)
+//Fruit Trees:
+0x003A, Apple Tree (Growing 1)
+0x003B, Apple Tree (Growing 2)
+0x003C, Apple Tree (Growing 3)
+0x003D, Apple Tree (Growing 4)
+0x003E, Apple Tree
+0x003F, Orange Tree (Growing 1)
+0x0040, Orange Tree (Growing 2)
+0x0041, Orange Tree (Growing 3)
+0x0042, Orange Tree (Growing 4)
+0x0043, Orange Tree
+0x0044, Pear Tree (Growing 1)
+0x0045, Pear Tree (Growing 2)
+0x0046, Pear Tree (Growing 3)
+0x0047, Pear Tree (Growing 4)
+0x0048, Pear Tree
+0x0049, Peaches Tree (Growing 1)
+0x004A, Peaches Tree (Growing 2)
+0x004B, Peaches Tree (Growing 3)
+0x004C, Peaches Tree (Growing 4)
+0x004D, Peaches Tree
+0x004E, Cherry Tree (Growing 1)
+0x004F, Cherry Tree (Growing 2)
+0x0050, Cherry Tree (Growing 3)
+0x0051, Cherry Tree (Growing 4)
+0x0052, Cherry Tree
 0x0053, Durian Tree (Growing 1)
 0x0054, Durian Tree (Growing 2)
 0x0055, Durian Tree (Growing 3)
@@ -171,8 +123,14 @@
 0x0077, Cedar (Bees)
 0x0078, Cedar (Money 1)
 0x0079, Cedar (Money 2)
-0x007A, Cedar (Festive Lights)
-//Bushes
+0x007A, Cedar (Egg)
+0x007B, Cedar (Xmas)
+//Weeds:
+0x007C, Weed (A)
+0x007D, Weed (B)
+0x007E, Weed (C)
+0x007F, Weed (D)
+//Bushes:
 0x0080, Holly Bush (Growing 1)
 0x0081, Holly Bush (Growing 2)
 0x0082, Holly Bush
@@ -197,21 +155,113 @@
 0x0095, Sweet Olive Bush (Growing 1)
 0x0096, Sweet Olive Bush (Growing 2)
 0x0097, Sweet Olive Bush
-//Weeds
-0x007C, Weed
-0x007D, Weed (2)
-0x007E, Weed (3)
-0x007F, Weed (4)
-//Weeds (2)
-0x00F8, Rafflesia (Wilted)
-//Rocks
-0x0098, Rock
-0x0099, Rock (2)
-0x009A, Rock (3)
-0x009B, Rock (4)
-0x009C, Rock (5)
-//Uncategorized
+//Rocks:
+0x0098, Rock (A)
+0x0099, Rock (B)
+0x009A, Rock (C)
+0x009B, Rock (D)
+0x009C, Rock (E)
+//Misc:
+0x009D, Pattern
 0x009E, Hole
+//Outside Flowers:
+0x009F, Red Tulips
+0x00A0, White Tulips
+0x00A1, Yellow Tulips
+0x00A2, Pink Tulips
+0x00A3, Purple Tulips
+0x00A4, Black Tulips
+0x00A5, Orange Tulips
+0x00A6, White Pansies
+0x00A7, Yellow Pansies
+0x00A8, Red Pansies
+0x00A9, Purple Pansies
+0x00AA, Orange Pansies
+0x00AB, Blue Pansies
+0x00AC, White Cosmos
+0x00AD, Red Cosmos
+0x00AE, Yellow Cosmos
+0x00AF, Pink Cosmos
+0x00B0, Orange Cosmos
+0x00B1, Black Cosmos
+0x00B2, Red Roses
+0x00B3, White Roses
+0x00B4, Yellow Roses
+0x00B5, Pink Roses
+0x00B6, Orange Roses
+0x00B7, Purple Roses
+0x00B8, Black Roses
+0x00B9, Blue Roses
+0x00BA, Gold Roses
+0x00BB, Red Carnations
+0x00BC, Pink Carnations
+0x00BD, White Carnations
+0x00BE, White Lilies
+0x00BF, Yellow Lilies
+0x00C0, Red Lilies
+0x00C1, Orange Lilies
+0x00C2, Pink Lilies
+0x00C3, Black Lilies
+0x00C4, Purple Violets
+0x00C5, Blue Violets
+0x00C6, White Violets
+0x00C7, Yellow Violets
+0x00C8, Jacob's Ladder
+0x00C9, Lucky Clovers
+0x00CA, Dandelions
+0x00CB, Dandelion Puffs
+0x00CC, Clovers (Weed)
+0x00CD, Rafflesia
+//Outside Flowers (Wilted):
+0x00CE, Red Tulips (Wilted)
+0x00CF, White Tulips (Wilted)
+0x00D0, Yellow Tulips (Wilted)
+0x00D1, Pink Tulips (Wilted)
+0x00D2, Purple Tulips (Wilted)
+0x00D3, Black Tulips (Wilted)
+0x00D4, Orange Tulips (Wilted)
+0x00D5, White Pansies (Wilted)
+0x00D6, Yellow Pansies (Wilted)
+0x00D7, Red Pansies (Wilted)
+0x00D8, Purple Pansies (Wilted)
+0x00D9, Orange Pansies (Wilted)
+0x00DA, Blue Pansies (Wilted)
+0x00DB, White Cosmos (Wilted)
+0x00DC, Red Cosmos (Wilted)
+0x00DD, Yellow Cosmos (Wilted)
+0x00DE, Pink Cosmos (Wilted)
+0x00DF, Orange Cosmos (Wilted)
+0x00E0, Black Cosmos (Wilted)
+0x00E1, Red Roses (Wilted)
+0x00E2, White Roses (Wilted)
+0x00E3, Yellow Roses (Wilted)
+0x00E4, Pink Roses (Wilted)
+0x00E5, Orange Roses (Wilted)
+0x00E6, Purple Roses (Wilted)
+0x00E7, Black Roses (Wilted)
+0x00E8, Blue Roses (Wilted)
+0x00E9, Gold Roses (Wilted)
+0x00EA, Red Carnations (Wilted)
+0x00EB, Pink Carnations (Wilted)
+0x00EC, White Carnations (Wilted)
+0x00ED, White Lilies (Wilted)
+0x00EE, Yellow Lilies (Wilted)
+0x00EF, Red Lilies (Wilted)
+0x00F0, Orange Lilies (Wilted)
+0x00F1, Pink Lilies (Wilted)
+0x00F2, Black Lilies (Wilted)
+0x00F3, Purple Violets (Wilted)
+0x00F4, Blue Violets (Wilted)
+0x00F5, White Violets (Wilted)
+0x00F6, Yellow Violets (Wilted)
+0x00F7, Jacob's Ladder (Wilted)
+0x00F8, Rafflesia (Wilted)
+0x00F9, Weird Seed Item
+0x00FA, Fake Red Rose
+0x00FB, Island Tour Holly Bush
+0x00FC, Fake Jacob's Ladder (Wilted)
+0x00FD, Fake Hole
+0x2000, Mii Mask
 //Fruit
 0x2001, Apple
 0x2002, Orange
@@ -269,48 +319,83 @@
 0x2034, Y. Hibiscus Shoot
 0x2035, Sweet Olive Shoot
 0x2036, Present
-0x2037, Red-Tulip Bag
-0x2038, White-Tulip Bag
-0x2039, Yellow-Tulip Bag
-0x203A, Pink-Tulip Bag
-0x203B, Purple-Tulip Bag
-0x203C, Black-Tulip Bag
-0x203D, Orange-Tulip Bag
-0x203E, White-Pansy Bag
-0x203F, Yellow-Pansy Bag
-0x2040, Red-Pansy Bag
-0x2041, Purple-Pansy Bag
-0x2042, Orange-Pansy Bag
-0x2043, Blue-Pansy Bag
-0x2044, White-Cosmos Bag
-0x2045, Red-Cosmos Bag
-0x2046, Sun-Cosmos Bag
-0x2047, Pink-Cosmos Bag
-0x2048, Orange-Cosmos Bag
-0x2049, Black-Cosmos Bag
-0x204A, Red-Rose Bag
-0x204B, White-Rose Bag
-0x204C, Yellow-Rose Bag
-0x204D, Pink-Rose Bag
-0x204E, Orange-Rose Bag
-0x204F, Purple-Rose Bag
-0x2050, Black-Rose Bag
-0x2051, Blue-Rose Bag
-0x2052, Gold-Rose Bag
-0x2053, Red-Carnation Bag
-0x2054, Pink-Carnation Bag
-0x2055, White-Carnation Bag
-0x2056, White-Lily Bag
-0x2057, Yellow-Lily Bag
-0x2058, Red-Lily Bag
-0x2059, Orange-Lily Bag
-0x205A, Pink-Lily Bag
-0x205B, Black-Lily Bag
-0x205C, Purple-Violet Bag
-0x205D, Blue-Violet Bag
-0x205E, White-Violet Bag
-0x205F, Yellow-Violet Bag
-//Items
+0x2037, Present For Another Villager (Sprite)
+//Garden (2)
+0x2038, Red-Tulip Bag
+0x2039, White-Tulip Bag
+0x203A, Yellow-Tulip Bag
+0x203B, Pink-Tulip Bag
+0x203C, Purple-Tulip Bag
+0x203D, Black-Tulip Bag
+0x203E, Orange-Tulip Bag
+0x203F, White-Pansy Bag
+0x2040, Yellow-Pansy Bag
+0x2041, Red-Pansy Bag
+0x2042, Purple-Pansy Bag
+0x2043, Orange-Pansy Bag
+0x2044, Blue-Pansy Bag
+0x2045, White-Cosmos Bag
+0x2046, Red-Cosmos Bag
+0x2047, Sun-Cosmos Bag
+0x2048, Pink-Cosmos Bag
+0x2049, Orange-Cosmos Bag
+0x204A, Black-Cosmos Bag
+0x204B, Red-Rose Bag
+0x204C, White-Rose Bag
+0x204D, Yellow-Rose Bag
+0x204E, Pink-Rose Bag
+0x204F, Orange-Rose Bag
+0x2050, Purple-Rose Bag
+0x2051, Black-Rose Bag
+0x2052, Blue-Rose Bag
+0x2053, Gold-Rose Bag
+0x2054, Red-Carnation Bag
+0x2055, Pink-Carnation Bag
+0x2056, White-Carnation Bag
+0x2057, White-Lily Bag
+0x2058, Yellow-Lily Bag
+0x2059, Red-Lily Bag
+0x205A, Orange-Lily Bag
+0x205B, Pink-Lily Bag
+0x205C, Black-Lily Bag
+0x205D, Purple-Violet Bag
+0x205E, Blue-Violet Bag
+0x205F, White-Violet Bag
+0x2060, Yellow-Violet Bag
+//NPC Building's Items:
+0x2061, Uni-Directional Chair (Invisible)
+0x2062, Café Dining Chair (Invisible)
+0x2063, Town Hall Chair (Invisible)
+0x2066, Campsite Log Seat (Invisible)
+0x2067, RV Right Chair (Invisible)
+0x2068, RV Left Chair (Invisible)
+0x206A, Campsite Tree Stump (Invisible)
+0x206B, Campsite Hammock (Invisible)
+0x206C, Dream Suite Bed (Invisible)
+0x206D, Dream Suite Couch (Invisible)
+0x206F, Museum Cushion Chair (Invisible)
+0x2073, RV Radio (Invisible)
+0x2074, DJ K.K. Table
+0x2075, 1x1 Museum Item Podium (Fossils)
+0x2076, 1x2 Museum Item Stand (Dinosaurs)
+0x2077, 2x2 Museum Item Stand (Dinosaurs)
+0x2079, 1x1 Shops Item Hangup
+0x207A, 1x2 Shops Item Hangup
+0x207B, Retail Chair (Invisible)
+0x207C, Island Hut Chair (Invisible)
+0x207D, Harvey's Chair (Invisible)
+0x207E, Moving Boxes
+0x207F, Moving Boxes Medium
+0x2080, Moving Boxes Large
+0x2081, Train Station Locker
+0x2082, Museum Locker
+0x2083, General Sold-Out Sign
+0x2084, Gracie Sold-Out Sign
+0x2085, Retail Sold-Out Sign
+0x2086, Nooklings Sold-Out Sign (Wall)
+0x2087, Gracie Sold-Out Sign (Wall)
+0x2088, Redd Sold-Out Sign
+//Garden (3)
 0x2089, Wrapping Paper
 0x208A, Medicine
 0x208B, Chocolate Heart
@@ -460,7 +545,7 @@
 0x211B, Sky Egg
 0x211C, Winning Ticket
 0x211D, Grand-Prize Ticket
-//Mushroomized furniture
+//Mushroomized Furniture
 0x211E, Forest Wall (Mushroomized)
 0x211F, Forest Floor (Mushroomized)
 0x2120, Mush Bed (Mushroomized)
@@ -566,8 +651,190 @@
 0x2183, K.K. Synth
 0x2184, K.K. Disco
 0x2185, K.K. Birthday
-//Songs (2)
-//Songs (seashell player)
+//Songs (Wall Variants)
+0x2189, K.K. Chorale (Wall)
+0x218A, K.K. March (Wall)
+0x218B, K.K. Waltz (Wall)
+0x218C, K.K. Swing (Wall)
+0x218D, K.K. Jazz (Wall)
+0x218E, K.K. Fusion (Wall)
+0x218F, K.K. Étude (Wall)
+0x2190, K.K. Lullaby (Wall)
+0x2191, K.K. Aria (Wall)
+0x2192, K.K. Samba (Wall)
+0x2193, K.K. Bossa (Wall)
+0x2194, K.K. Calypso (Wall)
+0x2195, K.K. Salsa (Wall)
+0x2196, K.K. Mambo (Wall)
+0x2197, K.K. Reggae (Wall)
+0x2198, K.K. Ska (Wall)
+0x2199, K.K. Tango (Wall)
+0x219A, K.K. Faire (Wall)
+0x219B, Aloha K.K. (Wall)
+0x219C, Lucky K.K. (Wall)
+0x219D, K.K. Condor (Wall)
+0x219E, K.K. Steppe (Wall)
+0x219F, Imperial K.K. (Wall)
+0x21A0, K.K. Casbah (Wall)
+0x21A1, K.K. Safari (Wall)
+0x21A2, K.K. Folk (Wall)
+0x21A3, K.K. Rock (Wall)
+0x21A4, Rockin' K.K. (Wall)
+0x21A5, K.K. Ragtime (Wall)
+0x21A6, K.K. Gumbo (Wall)
+0x21A7, The K. Funk (Wall)
+0x21A8, K.K. Blues (Wall)
+0x21A9, Soulful K.K. (Wall)
+0x21AA, K.K. Soul (Wall)
+0x21AB, K.K. Cruisin' (Wall)
+0x21AC, K.K. Love Song (Wall)
+0x21AD, K.K. D&B (Wall)
+0x21AE, K.K. Technopop (Wall)
+0x21AF, DJ K.K. (Wall)
+0x21B0, Only Me (Wall)
+0x21B1, K.K. Country (Wall)
+0x21B2, Surfin' K.K. (Wall)
+0x21B3, K.K. Ballad (Wall)
+0x21B4, Comrade K.K. (Wall)
+0x21B5, K.K. Lament (Wall)
+0x21B6, Go K.K. Rider (Wall)
+0x21B7, K.K. Dirge (Wall)
+0x21B8, K.K. Western (Wall)
+0x21B9, Mr. K.K. (Wall)
+0x21BA, Café K.K. (Wall)
+0x21BB, K.K. Parade (Wall)
+0x21BC, Señor K.K. (Wall)
+0x21BD, K.K. Song (Wall)
+0x21BE, I Love You (Wall)
+0x21BF, Two Days Ago (Wall)
+0x21C0, My Place (Wall)
+0x21C1, Forest Life (Wall)
+0x21C2, To The Edge (Wall)
+0x21C3, Pondering (Wall)
+0x21C4, K.K. Dixie (Wall)
+0x21C5, K.K. Marathon (Wall)
+0x21C6, King K.K. (Wall)
+0x21C7, Mountain Song (Wall)
+0x21C8, Marine Song 2001 (Wall)
+0x21C9, Neapolitan (Wall)
+0x21CA, Steep Hill (Wall)
+0x21CB, K.K. Rockabilly (Wall)
+0x21CC, Agent K.K. (Wall)
+0x21CD, K.K. Rally (Wall)
+0x21CE, K.K. Metal (Wall)
+0x21CF, Stale Cupcakes (Wall)
+0x21D0, Spring Blossoms (Wall)
+0x21D1, Wandering (Wall)
+0x21D2, K.K. House (Wall)
+0x21D3, K.K. Sonata (Wall)
+0x21D4, Hypno K.K. (Wall)
+0x21D5, K.K. Stroll (Wall)
+0x21D6, K.K. Island (Wall)
+0x21D7, Space K.K. (Wall)
+0x21D8, K.K. Adventure (Wall)
+0x21D9, K.K. Oasis (Wall)
+0x21DA, K.K. Bazaar (Wall)
+0x21DB, K.K. Milonga (Wall)
+0x21DC, K.K. Groove (Wall)
+0x21DD, K.K. Jongara (Wall)
+0x21DE, K.K. Flamenco (Wall)
+0x21DF, K.K. Moody (Wall)
+0x21E0, Bubblegum K.K. (Wall)
+0x21E1, K.K. Synth (Wall)
+0x21E2, K.K. Disco (Wall)
+0x21E3, K.K. Birthday (Wall)
+//Songs (Music Boxes)
+0x21E4, K.K. Chorale (Music Box)
+0x21E5, K.K. March (Music Box)
+0x21E6, K.K. Waltz (Music Box)
+0x21E7, K.K. Swing (Music Box)
+0x21E8, K.K. Jazz (Music Box)
+0x21E9, K.K. Fusion (Music Box)
+0x21EA, K.K. Étude (Music Box)
+0x21EB, K.K. Lullaby (Music Box)
+0x21EC, K.K. Aria (Music Box)
+0x21ED, K.K. Samba (Music Box)
+0x21EE, K.K. Bossa (Music Box)
+0x21EF, K.K. Calypso (Music Box)
+0x21F0, K.K. Salsa (Music Box)
+0x21F1, K.K. Mambo (Music Box)
+0x21F2, K.K. Reggae (Music Box)
+0x21F3, K.K. Ska (Music Box)
+0x21F4, K.K. Tango (Music Box)
+0x21F5, K.K. Faire (Music Box)
+0x21F6, Aloha K.K. (Music Box)
+0x21F7, Lucky K.K. (Music Box)
+0x21F8, K.K. Condor (Music Box)
+0x21F9, K.K. Steppe (Music Box)
+0x21FA, Imperial K.K. (Music Box)
+0x21FB, K.K. Casbah (Music Box)
+0x21FC, K.K. Safari (Music Box)
+0x21FD, K.K. Folk (Music Box)
+0x21FE, K.K. Rock (Music Box)
+0x21FF, Rockin' K.K. (Music Box)
+0x2200, K.K. Ragtime (Music Box)
+0x2201, K.K. Gumbo (Music Box)
+0x2202, The K. Funk (Music Box)
+0x2203, K.K. Blues (Music Box)
+0x2204, Soulful K.K. (Music Box)
+0x2205, K.K. Soul (Music Box)
+0x2206, K.K. Cruisin' (Music Box)
+0x2207, K.K. Love Song (Music Box)
+0x2208, K.K. D&B (Music Box)
+0x2209, K.K. Technopop (Music Box)
+0x220A, DJ K.K. (Music Box)
+0x220B, Only Me (Music Box)
+0x220C, K.K. Country (Music Box)
+0x220D, Surfin' K.K. (Music Box)
+0x220E, K.K. Ballad (Music Box)
+0x220F, Comrade K.K. (Music Box)
+0x2210, K.K. Lament (Music Box)
+0x2211, Go K.K. Rider (Music Box)
+0x2212, K.K. Dirge (Music Box)
+0x2213, K.K. Western (Music Box)
+0x2214, Mr. K.K. (Music Box)
+0x2215, Café K.K. (Music Box)
+0x2216, K.K. Parade (Music Box)
+0x2217, Señor K.K. (Music Box)
+0x2218, K.K. Song (Music Box)
+0x2219, I Love You (Music Box)
+0x221A, Two Days Ago (Music Box)
+0x221B, My Place (Music Box)
+0x221C, Forest Life (Music Box)
+0x221D, To The Edge (Music Box)
+0x221E, Pondering (Music Box)
+0x221F, K.K. Dixie (Music Box)
+0x2220, K.K. Marathon (Music Box)
+0x2221, King K.K. (Music Box)
+0x2222, Mountain Song (Music Box)
+0x2223, Marine Song 2001 (Music Box)
+0x2224, Neapolitan (Music Box)
+0x2225, Steep Hill (Music Box)
+0x2226, K.K. Rockabilly (Music Box)
+0x2227, Agent K.K. (Music Box)
+0x2228, K.K. Rally (Music Box)
+0x2229, K.K. Metal (Music Box)
+0x222A, Stale Cupcakes (Music Box)
+0x222B, Spring Blossoms (Music Box)
+0x222C, Wandering (Music Box)
+0x222D, K.K. House (Music Box)
+0x222E, K.K. Sonata (Music Box)
+0x222F, Hypno K.K. (Music Box)
+0x2230, K.K. Stroll (Music Box)
+0x2231, K.K. Island (Music Box)
+0x2232, Space K.K. (Music Box)
+0x2233, K.K. Adventure (Music Box)
+0x2234, K.K. Oasis (Music Box)
+0x2235, K.K. Bazaar (Music Box)
+0x2236, K.K. Milonga (Music Box)
+0x2237, K.K. Groove (Music Box)
+0x2238, K.K. Jongara (Music Box)
+0x2239, K.K. Flamenco (Music Box)
+0x223A, K.K. Moody (Music Box)
+0x223B, Bubblegum K.K. (Music Box)
+0x223C, K.K. Synth (Music Box)
+0x223D, K.K. Disco (Music Box)
+0x223E, K.K. Birthday (Music Box)
 //Paper
 0x223F, Butterfly Paper
 0x2240, Airmail Paper
@@ -632,7 +899,7 @@
 0x227B, Halloween Paper
 0x227C, Gallery Paper
 0x227D, Museum Paper
-0x227E, Post-office Paper
+0x227E, Post-Office Paper
 0x227F, Campground Paper
 0x2280, Nook's Homes Paper
 0x2281, Nintendo Paper
@@ -809,7 +1076,7 @@
 0x232A, Boot
 0x232B, Old Tire
 0x232C, Water Egg
-//Marine creatures
+//Marine Creatures
 0x232D, Seaweed
 0x232E, Sea Grapes
 0x232F, Sea Urchin
@@ -904,7 +1171,7 @@
 0x2387, Kitchen Wall
 0x2388, Music-Room Wall
 0x2389, Manor Wall
-0x238A, office Wall
+0x238A, Office Wall
 0x238B, Plaza Wall
 0x238C, Lattice Wall
 0x238D, Stately Wall
@@ -982,7 +1249,7 @@
 0x23D5, Train-Window Wall
 0x23D6, Waiting-Room Wall
 0x23D7, Steel-Frame Wall
-0x23D8, Café-Curtain Wall
+0x23D8, Café-curtain Wall
 0x23D9, White Brick Wall
 0x23DA, Bamboo-Grove Wall
 0x23DB, Rice-Paddy Wall
@@ -1059,7 +1326,7 @@
 0x2422, Old Board Floor
 0x2423, Kitchen Flooring
 0x2424, Music-Room Floor
-0x2425, office Flooring
+0x2425, Office Flooring
 0x2426, Opulent Rug
 0x2427, Plush Carpet
 0x2428, Ornate Rug
@@ -1170,6 +1437,8 @@
 0x2491, Gallery Floor
 0x2492, Observatory Floor
 //Shirts
+0x2493, Male Vest (Unused)
+0x2494, Female Vest (Unused)
 0x2495, One-Ball Tee
 0x2496, Two-Ball Tee
 0x2497, Three-Ball Tee
@@ -1209,7 +1478,7 @@
 0x24B9, No. 23 Shirt
 0x24BA, No. 67 Shirt
 0x24BB, Big Bro's Tee
-0x24BC, Li'L Bro's Tee
+0x24BC, Li'l Bro's Tee
 0x24BD, Cloudy Tee
 0x24BE, Fresh Tee
 0x24BF, Dawn Tee
@@ -1513,7 +1782,7 @@
 0x25E9, HHA Tee
 0x25EA, HHA Jacket
 0x25EB, Dr. Shrunk's Jacket
-0x25EC, 24-Hour-Shop Uniform
+0x25EC, 24-hour-Shop Uniform
 0x25ED, Swell Tee
 0x25EE, Blue Diamond Tee
 0x25EF, Raglan Tee
@@ -1626,7 +1895,7 @@
 0x265A, Women's Recruit Suit
 0x265B, Stylish Suit
 0x265C, Polo Shirt
-0x265D, Women's office Suit
+0x265D, Women's Office Suit
 0x265E, Blue Nurse's Uniform
 0x265F, Flashy Suit
 0x2660, Sushi Chef's Outfit
@@ -1660,7 +1929,7 @@
 0x267C, Town-Hall Spring Top
 0x267D, Town-Hall Winter Top
 0x267E, Jacquard Fleece
-0x267F, Sheik Outfit
+0x2680, Sheik Outfit
 //Dresses
 0x2682, Festive Dress
 0x2683, Muumuu
@@ -1769,7 +2038,7 @@
 0x26EA, Kiki And Lala Dress
 0x26EB, Pompompurin Dress
 0x26EC, Flower Fairy Dress
-//Wet suits
+//Wet Suits
 0x26ED, Rental Wet Suit
 0x26EE, Black Wet Suit
 0x26EF, Pink Wet Suit
@@ -2093,7 +2362,7 @@
 0x282A, Newsprint Helmet
 0x282B, Santa Hat
 0x282C, Big Bro's Hat
-0x282D, Li'L Bro's Hat
+0x282D, Li'l Bro's Hat
 0x282E, Wario Hat
 0x282F, Bicycle Helmet
 0x2830, Chef's Hat
@@ -2183,114 +2452,114 @@
 0x2884, High-Spirits Hat
 0x2885, Celeste Ribbon
 0x2886, Driver's Hat
-0x2887, Stripe Knit Cap
-0x2888, Pilot's Cap
-0x2889, Fireman's Hat
-0x288A, Baby's Hat
-0x288B, Turban
-0x288C, Warbonnet
-0x288D, Kaffiyeh
-0x288E, Cow Bone
-0x288F, Samurai Wig
-0x2890, Geisha Wig
-0x2891, Ninja Hood
-0x2892, Powdered Wig
-0x2893, Afro Wig
-0x2894, Regent Wig
-0x2895, Mohawk Wig
-0x2896, Pigtail
-0x2897, Bun Wig
-0x2898, Tiara Hair
-0x2899, Bridal Veil
-0x289A, Headband
-0x289B, Bunny Hood
-0x289C, Cat Cap
-0x289D, Bear Cap
-0x289E, Frog Cap
-0x289F, Kappa Cap
-0x28A0, Samurai Helmet
-0x28A1, Hero's Cap
-0x28A2, Racing Helmet
-0x28A3, Motocross Helmet
-0x28A4, Football Helmet
-0x28A5, Knight's Helmet
-0x28A6, Roman Helmet
-0x28A7, Diving Mask
-0x28A8, Space Helmet
-0x28A9, Ski Mask
-0x28AA, Wrestling Mask
-0x28AB, Retro Helmet
-0x28AC, Red-Zap Helmet
-0x28AD, Blue-Zap Helmet
-0x28AE, Green-Zap Helmet
-0x28AF, Pink-Zap Helmet
-0x28B0, Red Ogre Mask
-0x28B1, Blue Ogre Mask
-0x28B2, Majora's Mask
-0x28B3, Samus Mask
-0x28B4, Midna's Mask
-0x28B5, Toad Hat
-0x28B6, Pumpkin Head
-0x28B7, King Tut Mask
-0x28B8, Ghost Mask
-0x28B9, Monster Mask
-0x28BA, Bug Mask
-0x28BB, Mummy Mask
-0x28BC, Red Pikmin
-0x28BD, Blue Pikmin
-0x28BE, Yellow Pikmin
-0x28BF, Girl's Day Updo
-0x28C0, Green Headgear
-0x28C1, Red Headgear
-0x28C2, Snowman Head
-0x28C3, Tsunokakushi
-0x28C4, Kintaro Wig
-0x28C5, Tam-O'-Shanter
-0x28C6, Red-Horned Hat
-0x28C7, Red Hood
-0x28C8, Funky Wig
-0x28C9, Makar's Mask
-0x28CA, Fencing Mask
-0x28CB, Topknot Wig
-0x28CC, DJ Cap
-0x28CD, Lion-Dance Mask
-0x28CE, Hair-Bow Wig
-0x28CF, Tingle Hood
-0x28D0, Purple-Imp Hood
-0x28D1, Stagehand Hat
-0x28D2, Matronly Bun
-0x28D3, Skeleton Hood
-0x28D4, Black Veil
-0x28D5, Afro Cap
-0x28D6, Werewolf Hood
-0x28D7, Ogre's Wig
-0x28D8, Diver's Hood
-0x28D9, Headkerchief
-0x28DA, Fi Mask
-0x28DB, Coin Headpiece
-0x28DC, Batter's Helmet
-0x28DD, Jockey's Helmet
-0x28DE, Catcher's Mask
-0x28DF, Blue Headgear
-0x28E0, Braided Wig
-0x28E1, Purple-Pumpkin Head
-0x28E2, Yellow-Pumpkin Head
-0x28E3, Green-Pumpkin Head
-0x28E4, Red-Pumpkin Head
-0x28E5, Birthday Shades
-0x28E6, Link Hat
-0x28E7, Ganondorf Wig
-0x28E8, Sheik Mask
-0x28E9, Zelda Wig
-0x28EA, New Hero Wig
-0x28EB, Callie Wig
-0x28EC, Marie Wig
-0x28ED, Pilot Goggles
-0x28EE, Studio Headphones
-0x28EF, Flower Fairy Wig
-0x28F0, Nabiru Mask
-0x28F1, Pompompurin Hat
-0x28F2, Lottie's Bun
+0x2888, Stripe Knit Cap
+0x2889, Pilot's Cap
+0x288A, Fireman's Hat
+0x288B, Baby's Hat
+0x288C, Turban
+0x288D, Warbonnet
+0x288E, Kaffiyeh
+0x288F, Cow Bone
+0x2890, Samurai Wig
+0x2891, Geisha Wig
+0x2892, Ninja Hood
+0x2893, Powdered Wig
+0x2894, Afro Wig
+0x2895, Regent Wig
+0x2896, Mohawk Wig
+0x2897, Pigtail
+0x2898, Bun Wig
+0x2899, Tiara Hair
+0x289A, Bridal Veil
+0x289B, Headband
+0x289C, Bunny Hood
+0x289D, Cat Cap
+0x289E, Bear Cap
+0x289F, Frog Cap
+0x28A0, Kappa Cap
+0x28A1, Samurai Helmet
+0x28A2, Hero's Cap
+0x28A3, Racing Helmet
+0x28A4, Motocross Helmet
+0x28A5, Football Helmet
+0x28A6, Knight's Helmet
+0x28A7, Roman Helmet
+0x28A8, Diving Mask
+0x28A9, Space Helmet
+0x28AA, Ski Mask
+0x28AB, Wrestling Mask
+0x28AC, Retro Helmet
+0x28AD, Red-Zap Helmet
+0x28AE, Blue-Zap Helmet
+0x28AF, Green-Zap Helmet
+0x28B0, Pink-Zap Helmet
+0x28B1, Red Ogre Mask
+0x28B2, Blue Ogre Mask
+0x28B3, Majora's Mask
+0x28B4, Samus Mask
+0x28B5, Midna's Mask
+0x28B6, Toad Hat
+0x28B7, Pumpkin Head
+0x28B8, King Tut Mask
+0x28B9, Ghost Mask
+0x28BA, Monster Mask
+0x28BB, Bug Mask
+0x28BC, Mummy Mask
+0x28BD, Red Pikmin
+0x28BE, Blue Pikmin
+0x28BF, Yellow Pikmin
+0x28C0, Girl's Day Updo
+0x28C1, Green Headgear
+0x28C2, Red Headgear
+0x28C3, Snowman Head
+0x28C4, Tsunokakushi
+0x28C5, Kintaro Wig
+0x28C6, Tam-O'-shanter
+0x28C7, Red-Horned Hat
+0x28C8, Red Hood
+0x28C9, Funky Wig
+0x28CA, Makar's Mask
+0x28CB, Fencing Mask
+0x28CC, Topknot Wig
+0x28CD, DJ Cap
+0x28CE, Lion-Dance Mask
+0x28CF, Hair-Bow Wig
+0x28D0, Tingle Hood
+0x28D1, Purple-Imp Hood
+0x28D2, Stagehand Hat
+0x28D3, Matronly Bun
+0x28D4, Skeleton Hood
+0x28D5, Black Veil
+0x28D6, Afro Cap
+0x28D7, Werewolf Hood
+0x28D8, Ogre's Wig
+0x28D9, Diver's Hood
+0x28DA, Headkerchief
+0x28DB, Fi Mask
+0x28DC, Coin Headpiece
+0x28DD, Batter's Helmet
+0x28DE, Jockey's Helmet
+0x28DF, Catcher's Mask
+0x28E0, Blue Headgear
+0x28E1, Braided Wig
+0x28E2, Purple-Pumpkin Head
+0x28E3, Yellow-Pumpkin Head
+0x28E4, Green-Pumpkin Head
+0x28E5, Red-Pumpkin Head
+0x28E6, Birthday Shades
+0x28E7, Link Hat
+0x28E8, Ganondorf Wig
+0x28E9, Sheik Mask
+0x28EA, Zelda Wig
+0x28EB, New Hero Wig
+0x28EC, Callie Wig
+0x28ED, Marie Wig
+0x28EE, Pilot Goggles
+0x28EF, Studio Headphones
+0x28F0, Flower Fairy Wig
+0x28F1, Nabiru Mask
+0x28F2, Pompompurin Hat
+0x28F3, Lottie's Bun
 //Accesories
 0x28F5, Blue Frames
 0x28F6, Red Glasses
@@ -2941,9 +3210,9 @@
 0x2B79, Writing Desk
 0x2B7A, Writing Chair
 0x2B7B, Globe
-0x2B7C, office Desk
-0x2B7D, office Chair
-0x2B7E, office Locker
+0x2B7C, Office Desk
+0x2B7D, Office Chair
+0x2B7E, Office Locker
 0x2B7F, Coffeemaker
 0x2B80, Checkout Counter
 0x2B81, Cash Register
@@ -3089,9 +3358,9 @@
 0x2C0D, Go Board
 0x2C0E, Arc De Triomphe
 0x2C0F, Plate Armor
-0x2C10, Tower of Pisa
+0x2C10, Tower Of Pisa
 0x2C11, Compass
-0x2C12, Box of Chocolates
+0x2C12, Box Of Chocolates
 0x2C13, Backpack
 0x2C14, Mountain Bike
 0x2C15, Propane Stove
@@ -3138,7 +3407,7 @@
 0x2C3E, Safe
 0x2C3F, Deluxe Washer
 0x2C40, Automatic Washer
-0x2C41, Washer/Dryer
+0x2C41, Washer/dryer
 0x2C42, Potbelly Stove
 0x2C43, Space Heater
 0x2C44, Fireplace
@@ -3235,7 +3504,7 @@
 0x2C9F, Festive Flag
 0x2CA0, Festive Candle
 0x2CA1, Lovely Phone
-0x2CA2, Box of Tissues
+0x2CA2, Box Of Tissues
 0x2CA3, Piggy Bank
 0x2CA4, Bellpoint
 0x2CA5, Aluminum Briefcase
@@ -3263,7 +3532,7 @@
 0x2CBB, Carp Banner
 0x2CBC, Eggplant Cow
 0x2CBD, Morning Glory
-0x2CBE, Pile of Leaves
+0x2CBE, Pile Of Leaves
 0x2CBF, Sand Castle
 0x2CC0, Shopping Cart
 0x2CC1, Hagoita
@@ -3625,11 +3894,11 @@
 0x2E25, Genie's Lamp
 0x2E26, Boomerang
 0x2E27, Neon Sign
-0x2E28, Rooster of Barcelos
+0x2E28, Rooster Of Barcelos
 0x2E29, Dala Horse
 0x2E2A, Dream Catcher
 0x2E2B, Skeleton Figurine
-0x2E2C, Post-office Poster
+0x2E2C, Post-Office Poster
 0x2E2D, Shamrock Clock
 0x2E2E, Red-Tasseled Lantern
 0x2E2F, Hula Doll
@@ -3638,7 +3907,7 @@
 0x2E32, Merlion
 0x2E33, Pagoda
 0x2E34, Mermaid Statue
-0x2E35, Mouth of Truth
+0x2E35, Mouth Of Truth
 0x2E36, Manneken Pis
 0x2E37, Matryoshka
 0x2E38, Samgyetang
@@ -3713,7 +3982,7 @@
 0x2E7D, Berliner
 0x2E7E, Snowmobile
 0x2E7F, Love Tester
-0x2E80, Statue of Liberty
+0x2E80, Statue Of Liberty
 0x2E81, Patchwork Chair
 0x2E82, Patchwork Dresser
 0x2E83, Patchwork Lamp
@@ -3786,12 +4055,12 @@
 0x2EC6, Kitchen Scale
 0x2EC7, Sushi Platter
 0x2EC8, Kokeshi Doll
-0x2EC9, 24-Hour-Shop Model
+0x2EC9, 24-hour-Shop Model
 0x2ECA, In-Store Bellpoint
 0x2ECB, Soft-Drink Display
 0x2ECC, Sandwich Display
-0x2ECD, 24-Hour-Shop Sign
-0x2ECE, 24-Hour-Shop Counter
+0x2ECD, 24-hour-Shop Sign
+0x2ECE, 24-hour-Shop Counter
 0x2ECF, Barbecue Bed
 0x2ED0, Notebook Wardrobe
 0x2ED1, Eraser Sofa
@@ -3801,7 +4070,7 @@
 0x2ED5, Set Square Table
 0x2ED6, Toy Piano
 0x2ED7, Exam Table
-0x2ED8, office Phone
+0x2ED8, Office Phone
 0x2ED9, Desk Bell
 0x2EDA, Wooden Bucket
 0x2EDB, Coconut Juice
@@ -3840,7 +4109,7 @@
 0x2EFC, Antique Shelf
 0x2EFD, Conveyor Belt
 0x2EFE, Air Pump
-0x2EFF, Stack of Books
+0x2EFF, Stack Of Books
 0x2F00, Bread Basket
 0x2F01, Light Breakfast
 0x2F02, Hearty Breakfast
@@ -3850,7 +4119,7 @@
 0x2F06, First-Aid Kit
 0x2F07, Milk Canister
 0x2F08, Rice Balls
-0x2F09, Pile of Cash
+0x2F09, Pile Of Cash
 0x2F0A, Silver Teapot
 0x2F0B, Sushi Container
 0x2F0C, Rice Bales
@@ -3920,7 +4189,7 @@
 0x2F4C, Book Stands
 0x2F4D, Operating-Room Cart
 0x2F4E, Modern Hospital Bed
-0x2F4F, Modern office Chair
+0x2F4F, Modern Office Chair
 0x2F50, Trash Bags
 0x2F51, Lecture-Hall Bench
 0x2F52, Lecture-Hall Desk
@@ -3929,12 +4198,12 @@
 0x2F55, Worktable
 0x2F56, Minifridge
 0x2F57, Stretcher
-0x2F58, office Cabinet
+0x2F58, Office Cabinet
 0x2F59, Crayons
 0x2F5A, Black Phone
 0x2F5B, Cable Spool
 0x2F5C, Baseball Set
-0x2F5D, office Clock
+0x2F5D, Office Clock
 0x2F5E, Flower Wreath
 0x2F5F, Succulent Plant
 0x2F60, Meeting-Room Chair
@@ -3973,7 +4242,7 @@
 0x2F81, Wall-Mounted TV
 0x2F82, Billboard
 0x2F83, Water Pot
-0x2F84, Stack of Clothes
+0x2F84, Stack Of Clothes
 0x2F85, Snack Machine
 0x2F86, Alto Saxophone
 0x2F87, Retro Sink
@@ -4025,7 +4294,7 @@
 0x2FB5, Lunch Pack
 0x2FB6, Set Lunch
 0x2FB7, Skateboard Rack
-0x2FB8, White office Desk
+0x2FB8, White Office Desk
 0x2FB9, Basic Trash Can
 0x2FBA, Salon Chair
 0x2FBB, Daimyo's Tray
@@ -4066,7 +4335,7 @@
 0x2FDE, Tacos
 0x2FDF, Kaiseki Meal
 0x2FE0, Ivy Partition
-0x2FE1, Cup of Tea
+0x2FE1, Cup Of Tea
 0x2FE2, Donburi
 0x2FE3, Simple Panel
 0x2FE4, Cutting-Board Set
@@ -4139,8 +4408,8 @@
 0x3027, Hunter's Hive
 0x3028, Sushi Bench
 0x3029, Shop Ice-Cream Case
-0x302A, 24-Hour-Shop Baskets
-0x302B, 24-Hour-Shop Banner
+0x302A, 24-hour-Shop Baskets
+0x302B, 24-hour-Shop Banner
 0x302C, Hot-Snack Case
 0x302D, Shop Coffee Machine
 0x302E, Massive Cake
@@ -4150,7 +4419,7 @@
 0x3032, Mountain
 0x3033, Iceberg
 0x3034, Sun
-0x3035, Mountain of Money
+0x3035, Mountain Of Money
 0x3036, Giant Stew Pot
 0x3037, Carriage
 0x3038, Teacup Ride
@@ -4232,11 +4501,11 @@
 0x3084, Gossip Stone
 0x3085, Heart
 0x3086, Heart Container
-0x3087, Piece of Heart
+0x3087, Piece Of Heart
 0x3088, Lon Lon Milk
 0x3089, Termina's Moon
 0x308A, Hylian Shield
-0x308B, Hero of Time Scroll
+0x308B, Hero Of Time Scroll
 0x308C, Rupee
 0x308D, Model Bus
 0x308E, Model Sailor
@@ -4250,7 +4519,7 @@
 0x3096, NDS Lite Bench
 0x3097, Nintendo DSi Bench
 0x3098, Lotus Pond
-0x3099, 24-Hour-Shop Clock
+0x3099, 24-hour-Shop Clock
 0x309A, Donut Cushion
 0x309B, Otomon Egg
 0x309C, Nabiru Ornament
@@ -4260,45 +4529,52 @@
 0x30A0, Fueki Stereo
 0x30A1, Fueki Table
 0x30A2, Fruit-Panel Cushion
-0x30A3, Sewing Kit
-0x30A4, Quilted Tapestry
-0x30A5, Durian Flower Basket
-0x30A6, Banana Flower Basket
-0x30A7, Retro Sign
-0x30A8, Cart Return
-0x30A9, Box With Helmet
-0x30AA, Half-Eaten Pizza
-0x30AB, Overflowing Trash
-0x30AC, Rover Suitcase
-0x30AD, 2017 Cake
-0x30AE, White Festive Tree
-0x30AF, Heavy Tome
-0x30B0, Museum Clock
-0x30B1, Gadget Shelf
-0x30B2, Sacks of Money
-0x30B3, Sales Graph
-0x30B4, Nook's Homes Mat
-0x30B5, Re-Tail Clock
-0x30B6, Re-Tail Mat
-0x30B7, Carpentry Set
-0x30B8, Tool Stand
-0x30B9, Kicks Mat
-0x30BA, Shoe Boxes
-0x30BB, Shoe-Polishing Set
-0x30BC, PA System
-0x30BD, Blueprints
-0x30BE, DJ K.K. Booth
-0x30BF, Guitar Case
-0x30C0, Shop Mat
-0x30C1, Museum Mat
-0x30C2, Nook's Homes Model
-0x30C3, Wendell's Painting
-0x30C4, Instruction Manual
+0x30A3, Cow Skull (Unused)
+0x30A4, Cow Skull (Unused 2)
+0x30A5, Nook Homes Mat
+0x30A6, K.K. Guitar Case
+0x30A7, Cow Skull (Unused 3)
+0x30A8, Sewing Kit
+0x30A9, Quilted Tapestry
+0x30AA, Durian Flower Basket
+0x30AB, Banana Flower Basket
+0x30AC, Retro Sign
+0x30AD, Cart Return
+0x30AE, Box With Helmet
+0x30AF, Half-Eaten Pizza
+0x30B0, Overflowing Trash
+0x30B1, Rover Suitcase
+0x30B4, 2017 Cake
+0x30B5, White Festive Tree
+0x30B6, Heavy Tome
+0x30B7, Museum Clock
+0x30B8, Gadget Shelf
+0x30B9, Sacks Of Money
+0x30BA, Sales Graph
+0x30BB, Nook's Homes Mat
+0x30BC, Re-Tail Clock
+0x30BD, Re-Tail Mat
+0x30BE, Carpentry Set
+0x30BF, Tool Stand
+0x30C0, Kicks Mat
+0x30C1, Shoe Boxes
+0x30C2, Shoe-Polishing Set
+0x30C3, PA System
+0x30C4, Blueprints
+0x30C5, DJ K.K. Booth
+0x30C6, Guitar Case
+0x30C7, Shop Mat
+0x30C8, Museum Mat
+0x30C9, Nook's Homes Model
+0x30CA, Wendell's Painting
+0x30CB, Instruction Manual
 //Mannequins
-0x30CC, Mannequin 1
-0x30CD, Mannequin 2
-0x30CE, Mannequin 3
-0x30CF, Mannequin 4
+0x30CC, Mannequin #1
+0x30CD, Mannequin #2
+0x30CE, Mannequin #3
+0x30CF, Mannequin #4
+0x30D0, Gracie Display Mannequin #1
+0x30D1, Gracie Display Mannequin #2
 //Art
 0x30D2, Dynamic Painting
 0x30D3, Solemn Painting
@@ -4355,7 +4631,46 @@
 0x3106, Mystic Statue (Fake)
 0x3107, Ancient Statue (Fake)
 0x3108, Motherly Statue (Fake)
-//Art (2?)
+//Art (Wall Variants)
+0x3109, Dynamic Painting (Wall)
+0x310A, Solemn Painting (Wall)
+0x310B, Quaint Painting (Wall)
+0x310C, Basic Painting (Wall)
+0x310D, Famous Painting (Wall)
+0x310E, Perfect Painting (Wall)
+0x310F, Amazing Painting (Wall)
+0x3110, Nice Painting (Wall)
+0x3111, Moving Painting (Wall)
+0x3112, Common Painting (Wall)
+0x3113, Flowery Painting (Wall)
+0x3114, Warm Painting (Wall)
+0x3115, Jolly Painting (Wall)
+0x3116, Fine Painting (Wall)
+0x3117, Scary Painting (Wall)
+0x3118, Proper Painting (Wall)
+0x3119, Neutral Painting (Wall)
+0x311A, Worthy Painting (Wall)
+0x311B, Calm Painting (Wall)
+0x311C, Moody Painting (Wall)
+0x311D, Wistful Painting (Wall)
+0x311E, Serene Painting (Wall)
+0x311F, Scenic Painting (Wall)
+0x3120, Wild Painting (Wall)
+0x3121, Graceful Painting (Wall)
+0x3122, Dynamic Painting (Fake) (Wall)
+0x3123, Solemn Painting (Fake) (Wall)
+0x3124, Quaint Painting (Fake) (Wall)
+0x3125, Basic Painting (Fake) (Wall)
+0x3126, Famous Painting (Fake) (Wall)
+0x3127, Amazing Painting (Fake) (Wall)
+0x3128, Moving Painting (Fake) (Wall)
+0x3129, Jolly Painting (Fake) (Wall)
+0x312A, Scary Painting (Fake) (Wall)
+0x312B, Neutral Painting (Fake) (Wall)
+0x312C, Wistful Painting (Fake) (Wall)
+0x312D, Serene Painting (Fake) (Wall)
+0x312E, Wild Painting (Fake) (Wall)
+0x312F, Graceful Painting (Fake) (Wall)
 //Fossils
 0x3130, Amber
 0x3131, Ammonite
@@ -4445,459 +4760,461 @@
 0x3185, Megacero Model
 0x3186, Archelon Model
 //Pics
-0x3187, Pic of Cyrano
-0x3188, Pic of Antonio
-0x3189, Pic of Pango
-0x318A, Pic of Anabelle
-0x318B, Pic of Snooty
-0x318C, Pic of Annalisa
-0x318D, Pic of Olaf
-0x318E, Pic of Teddy
-0x318F, Pic of Pinky
-0x3190, Pic of Curt
-0x3191, Pic of Chow
-0x3192, Pic of Nate
-0x3193, Pic of Groucho
-0x3194, Pic of Tutu
-0x3195, Pic of Ursala
-0x3196, Pic of Grizzly
-0x3197, Pic of Paula
-0x3198, Pic of Ike
-0x3199, Pic of Charlise
-0x319A, Pic of Beardo
-0x319B, Pic of Klaus
-0x319C, Pic of Jay
-0x319D, Pic of Robin
-0x319E, Pic of Anchovy
-0x319F, Pic of Twiggy
-0x31A0, Pic of Jitters
-0x31A1, Pic of Piper
-0x31A2, Pic of Admiral
-0x31A3, Pic of Midge
-0x31A4, Pic of Jakey
-0x31A5, Pic of Lucha
-0x31A6, Pic of Jacques
-0x31A7, Pic of Peck
-0x31A8, Pic of Sparro
-0x31A9, Pic of Medli
-0x31AA, Pic of Angus
-0x31AB, Pic of Rodeo
-0x31AC, Pic of Stu
-0x31AD, Pic of T-Bone
-0x31AE, Pic of Coach
-0x31AF, Pic of Vic
-0x31B0, Pic of Bob
-0x31B1, Pic of Mitzi
-0x31B2, Pic of Rosie
-0x31B3, Pic of Olivia
-0x31B4, Pic of Kiki
-0x31B5, Pic of Tangy
-0x31B6, Pic of Punchy
-0x31B7, Pic of Purrl
-0x31B8, Pic of Moe
-0x31B9, Pic of Kabuki
-0x31BA, Pic of Kid Cat
-0x31BB, Pic of Monique
-0x31BC, Pic of Tabby
-0x31BD, Pic of Stinky
-0x31BE, Pic of Kitty
-0x31BF, Pic of Tom
-0x31C0, Pic of Merry
-0x31C1, Pic of Felicity
-0x31C2, Pic of Lolly
-0x31C3, Pic of Ankha
-0x31C4, Pic of Rudy
-0x31C5, Pic of Katt
-0x31C6, Pic of Felyne
-0x31C7, Pic of Bluebear
-0x31C8, Pic of Maple
-0x31C9, Pic of Poncho
-0x31CA, Pic of Pudge
-0x31CB, Pic of Kody
-0x31CC, Pic of Stitches
-0x31CD, Pic of Vladimir
-0x31CE, Pic of Murphy
-0x31CF, Pic of Olive
-0x31D0, Pic of Cheri
-0x31D1, Pic of June
-0x31D2, Pic of Pekoe
-0x31D3, Pic of Chester
-0x31D4, Pic of Barold
-0x31D5, Pic of Tammy
-0x31D6, Pic of Marty
-0x31D7, Pic of Goose
-0x31D8, Pic of Benedict
-0x31D9, Pic of Egbert
-0x31DA, Pic of Ava
-0x31DB, Pic of Becky
-0x31DC, Pic of Plucky
-0x31DD, Pic of Knox
-0x31DE, Pic of Broffina
-0x31DF, Pic of Ken
-0x31E0, Pic of Patty
-0x31E1, Pic of Tipper
-0x31E2, Pic of Norma
-0x31E3, Pic of Naomi
-0x31E4, Pic of Alfonso
-0x31E5, Pic of Alli
-0x31E6, Pic of Boots
-0x31E7, Pic of Del
-0x31E8, Pic of Sly
-0x31E9, Pic of Gayle
-0x31EA, Pic of Drago
-0x31EB, Pic of Fauna
-0x31EC, Pic of Bam
-0x31ED, Pic of Zell
-0x31EE, Pic of Bruce
-0x31EF, Pic of Deirdre
-0x31F0, Pic of Lopez
-0x31F1, Pic of Fuchsia
-0x31F2, Pic of Beau
-0x31F3, Pic of Diana
-0x31F4, Pic of Erik
-0x31F5, Pic of Chelsea
-0x31F6, Pic of Goldie
-0x31F7, Pic of Butch
-0x31F8, Pic of Lucky
-0x31F9, Pic of Biskit
-0x31FA, Pic of Bones
-0x31FB, Pic of Portia
-0x31FC, Pic of Walker
-0x31FD, Pic of Daisy
-0x31FE, Pic of Cookie
-0x31FF, Pic of Maddie
-0x3200, Pic of Bea
-0x3201, Pic of Mac
-0x3202, Pic of Marcel
-0x3203, Pic of Benjamin
-0x3204, Pic of Cherry
-0x3205, Pic of Shep
-0x3206, Pic of Bill
-0x3207, Pic of Joey
-0x3208, Pic of Pate
-0x3209, Pic of Maelle
-0x320A, Pic of Deena
-0x320B, Pic of Pompom
-0x320C, Pic of Mallary
-0x320D, Pic of Freckles
-0x320E, Pic of Derwin
-0x320F, Pic of Drake
-0x3210, Pic of Scoot
-0x3211, Pic of Weber
-0x3212, Pic of Miranda
-0x3213, Pic of Ketchup
-0x3214, Pic of Gloria
-0x3215, Pic of Molly
-0x3216, Pic of Quillson
-0x3217, Pic of Opal
-0x3218, Pic of Dizzy
-0x3219, Pic of Big Top
-0x321A, Pic of Eloise
-0x321B, Pic of Margie
-0x321C, Pic of Paolo
-0x321D, Pic of Axel
-0x321E, Pic of Ellie
-0x321F, Pic of Tucker
-0x3220, Pic of Tia
-0x3221, Pic of Chai
-0x3222, Pic of Lily
-0x3223, Pic of Ribbot
-0x3224, Pic of Frobert
-0x3225, Pic of Camofrog
-0x3226, Pic of Drift
-0x3227, Pic of Wart Jr.
-0x3228, Pic of Puddles
-0x3229, Pic of Jeremiah
-0x322A, Pic of Tad
-0x322B, Pic of Cousteau
-0x322C, Pic of Huck
-0x322D, Pic of Prince
-0x322E, Pic of Jambette
-0x322F, Pic of Raddle
-0x3230, Pic of Gigi
-0x3231, Pic of Croque
-0x3232, Pic of Diva
-0x3233, Pic of Henry
-0x3234, Pic of Chevre
-0x3235, Pic of Nan
-0x3236, Pic of Billy
-0x3237, Pic of Gruff
-0x3238, Pic of Velma
-0x3239, Pic of Kidd
-0x323A, Pic of Pashmina
-0x323B, Pic of Cesar
-0x323C, Pic of Peewee
-0x323D, Pic of Boone
-0x323E, Pic of Louie
-0x323F, Pic of Boyd
-0x3240, Pic of Violet
-0x3241, Pic of Al
-0x3242, Pic of Rocket
-0x3243, Pic of Hans
-0x3244, Pic of Rilla
-0x3245, Pic of Hamlet
-0x3246, Pic of Apple
-0x3247, Pic of Graham
-0x3248, Pic of Rodney
-0x3249, Pic of Soleil
-0x324A, Pic of Clay
-0x324B, Pic of Flurry
-0x324C, Pic of Hamphrey
-0x324D, Pic of Rocco
-0x324E, Pic of Bubbles
-0x324F, Pic of Bertha
-0x3250, Pic of Biff
-0x3251, Pic of Bitty
-0x3252, Pic of Harry
-0x3253, Pic of Hippeux
-0x3254, Pic of Buck
-0x3255, Pic of Victoria
-0x3256, Pic of Savannah
-0x3257, Pic of Elmer
-0x3258, Pic of Roscoe
-0x3259, Pic of Winnie
-0x325A, Pic of Ed
-0x325B, Pic of Cleo
-0x325C, Pic of Peaches
-0x325D, Pic of Annalise
-0x325E, Pic of Clyde
-0x325F, Pic of Colton
-0x3260, Pic of Papi
-0x3261, Pic of Julian
-0x3262, Pic of Epona
-0x3263, Pic of Yuka
-0x3264, Pic of Alice
-0x3265, Pic of Melba
-0x3266, Pic of Sydney
-0x3267, Pic of Gonzo
-0x3268, Pic of Ozzie
-0x3269, Pic of Canberra
-0x326A, Pic of Lyman
-0x326B, Pic of Eugene
-0x326C, Pic of Kitt
-0x326D, Pic of Mathilda
-0x326E, Pic of Carrie
-0x326F, Pic of Astrid
-0x3270, Pic of Sylvia
-0x3271, Pic of Walt
-0x3272, Pic of Rooney
-0x3273, Pic of Marcie
-0x3274, Pic of Bud
-0x3275, Pic of Elvis
-0x3276, Pic of Rex
-0x3277, Pic of Leopold
-0x3278, Pic of Mott
-0x3279, Pic of Rory
-0x327A, Pic of Lionel
-0x327B, Pic of Nana
-0x327C, Pic of Simon
-0x327D, Pic of Tammi
-0x327E, Pic of Monty
-0x327F, Pic of Elise
-0x3280, Pic of Flip
-0x3281, Pic of Shari
-0x3282, Pic of Deli
-0x3283, Pic of Dora
-0x3284, Pic of Limberg
-0x3285, Pic of Bella
-0x3286, Pic of Bree
-0x3287, Pic of Samson
-0x3288, Pic of Rod
-0x3289, Pic of Candi
-0x328A, Pic of Rizzo
-0x328B, Pic of Anicotti
-0x328C, Pic of Broccolo
-0x328D, Pic of Moose
-0x328E, Pic of Bettina
-0x328F, Pic of Greta
-0x3290, Pic of Penelope
-0x3291, Pic of Chadder
-0x3292, Pic of Octavian
-0x3293, Pic of Marina
-0x3294, Pic of Zucker
-0x3295, Pic of Inkwell
-0x3296, Pic of Queenie
-0x3297, Pic of Gladys
-0x3298, Pic of Sandy
-0x3299, Pic of Sprocket
-0x329A, Pic of Julia
-0x329B, Pic of Cranston
-0x329C, Pic of Phil
-0x329D, Pic of Blanche
-0x329E, Pic of Flora
-0x329F, Pic of Phoebe
-0x32A0, Pic of Apollo
-0x32A1, Pic of Amelia
-0x32A2, Pic of Pierce
-0x32A3, Pic of Buzz
-0x32A4, Pic of Avery
-0x32A5, Pic of Frank
-0x32A6, Pic of Sterling
-0x32A7, Pic of Keaton
-0x32A8, Pic of Celia
-0x32A9, Pic of Aurora
-0x32AA, Pic of Roald
-0x32AB, Pic of Cube
-0x32AC, Pic of Hopper
-0x32AD, Pic of Friga
-0x32AE, Pic of Gwen
-0x32AF, Pic of Puck
-0x32B0, Pic of Wade
-0x32B1, Pic of Boomer
-0x32B2, Pic of Iggly
-0x32B3, Pic of Tex
-0x32B4, Pic of Flo
-0x32B5, Pic of Sprinkles
-0x32B6, Pic of Curly
-0x32B7, Pic of Truffles
-0x32B8, Pic of Rasher
-0x32B9, Pic of Hugh
-0x32BA, Pic of Lucy
-0x32BB, Pic of Crackle
-0x32BC, Pic of Cobb
-0x32BD, Pic of Boris
-0x32BE, Pic of Maggie
-0x32BF, Pic of Peggy
-0x32C0, Pic of Gala
-0x32C1, Pic of Chops
-0x32C2, Pic of Kevin
-0x32C3, Pic of Pancetti
-0x32C4, Pic of Agnes
-0x32C5, Pic of Ganon
-0x32C6, Pic of Bunnie
-0x32C7, Pic of Dotty
-0x32C8, Pic of Coco
-0x32C9, Pic of Snake
-0x32CA, Pic of Gaston
-0x32CB, Pic of Gabi
-0x32CC, Pic of Pippy
-0x32CD, Pic of Tiffany
-0x32CE, Pic of Genji
-0x32CF, Pic of Ruby
-0x32D0, Pic of Doc
-0x32D1, Pic of Claude
-0x32D2, Pic of Francine
-0x32D3, Pic of Chrissy
-0x32D4, Pic of Hopkins
-0x32D5, Pic of O'Hare
-0x32D6, Pic of Carmen
-0x32D7, Pic of Bonbon
-0x32D8, Pic of Cole
-0x32D9, Pic of Mira
-0x32DA, Pic of Toby
-0x32DB, Pic of Tank
-0x32DC, Pic of Rhonda
-0x32DD, Pic of Spike
-0x32DE, Pic of Hornsby
-0x32DF, Pic of Merengue
-0x32E0, Pic of Renée
-0x32E1, Pic of Vesta
-0x32E2, Pic of Baabara
-0x32E3, Pic of Eunice
-0x32E4, Pic of Stella
-0x32E5, Pic of Cashmere
-0x32E6, Pic of Willow
-0x32E7, Pic of Curlos
-0x32E8, Pic of Wendy
-0x32E9, Pic of Timbra
-0x32EA, Pic of Frita
-0x32EB, Pic of Muffy
-0x32EC, Pic of Pietro
-0x32ED, Pic of Étoile
-0x32EE, Pic of Peanut
-0x32EF, Pic of Blaire
-0x32F0, Pic of Filbert
-0x32F1, Pic of Pecan
-0x32F2, Pic of Nibbles
-0x32F3, Pic of Agent S
-0x32F4, Pic of Caroline
-0x32F5, Pic of Sally
-0x32F6, Pic of Static
-0x32F7, Pic of Mint
-0x32F8, Pic of Ricky
-0x32F9, Pic of Cally
-0x32FA, Pic of Tasha
-0x32FB, Pic of Sylvana
-0x32FC, Pic of Poppy
-0x32FD, Pic of Sheldon
-0x32FE, Pic of Marshal
-0x32FF, Pic of Hazel
-0x3300, Pic of Cece
-0x3301, Pic of Viché
-0x3302, Pic of Rolf
-0x3303, Pic of Rowan
-0x3304, Pic of Tybalt
-0x3305, Pic of Bangle
-0x3306, Pic of Leonardo
-0x3307, Pic of Claudia
-0x3308, Pic of Bianca
-0x3309, Pic of Chief
-0x330A, Pic of Lobo
-0x330B, Pic of Wolfgang
-0x330C, Pic of Whitney
-0x330D, Pic of Dobie
-0x330E, Pic of Freya
-0x330F, Pic of Fang
-0x3310, Pic of Vivian
-0x3311, Pic of Skye
-0x3312, Pic of Kyle
-0x3313, Pic of Wolf Link
-//Pics (special)
-0x3316, Pic of Cyrus
-0x3317, Pic of Reese
-0x3318, Pic of Chip
-0x3319, Pic of Phineas
-0x331A, Pic of Joan
-0x331B, Pic of Katrina
-0x331C, Pic of Nat
-0x331D, Pic of Saharah
-0x331E, Pic of K.K.
-0x331F, Pic of Redd
-0x3320, Pic of Gracie
-0x3321, Pic of Labelle
-0x3322, Pic of Mabel
-0x3323, Pic of Sable
-0x3324, Pic of Grams
-0x3325, Pic of Leilani
-0x3326, Pic of Kapp'N
-0x3327, Pic of Leila
-0x3328, Pic of Tommy
-0x3329, Pic of Timmy
-0x332A, Pic of Porter
-0x332B, Pic of Don Resetti
-0x332C, Pic of Resetti
-0x332D, Pic of Lyle
-0x332E, Pic of Blathers
-0x332F, Pic of Celeste
-0x3330, Pic of Pavé
-0x3331, Pic of Pelly
-0x3332, Pic of Phyllis
-0x3333, Pic of Brewster
-0x3334, Pic of Jack
-0x3335, Pic of Booker
-0x3336, Pic of Pete
-0x3337, Pic of Copper
-0x3338, Pic of Harriet
-0x3339, Pic of Tom Nook
-0x333A, Pic of Gulliver
-0x333B, Pic of Pascal
-0x333C, Pic of Kicks
-0x333D, Pic of Isabelle
-0x333E, Pic of Tortimer
-0x333F, Pic of Franklin
-0x3340, Pic of Shrunk
-0x3341, Pic of Rover
-0x3342, Pic of Leif
-0x3343, Pic of Blanca
-0x3344, Pic of Luna
-0x3345, Pic of DJ KK
-0x3346, Pic of Katie
-0x3347, Pic of Zipper
-0x3348, Pic of Jingle
-0x3349, Pic of Digby
-0x334A, Pic of Wendell
-0x334B, Pic of Lottie
-//Tools & wearables
+0x3187, Pic Of Cyrano
+0x3188, Pic Of Antonio
+0x3189, Pic Of Pango
+0x318A, Pic Of Anabelle
+0x318B, Pic Of Snooty
+0x318C, Pic Of Annalisa
+0x318D, Pic Of Olaf
+0x318E, Pic Of Teddy
+0x318F, Pic Of Pinky
+0x3190, Pic Of Curt
+0x3191, Pic Of Chow
+0x3192, Pic Of Nate
+0x3193, Pic Of Groucho
+0x3194, Pic Of Tutu
+0x3195, Pic Of Ursala
+0x3196, Pic Of Grizzly
+0x3197, Pic Of Paula
+0x3198, Pic Of Ike
+0x3199, Pic Of Charlise
+0x319A, Pic Of Beardo
+0x319B, Pic Of Klaus
+0x319C, Pic Of Jay
+0x319D, Pic Of Robin
+0x319E, Pic Of Anchovy
+0x319F, Pic Of Twiggy
+0x31A0, Pic Of Jitters
+0x31A1, Pic Of Piper
+0x31A2, Pic Of Admiral
+0x31A3, Pic Of Midge
+0x31A4, Pic Of Jakey
+0x31A5, Pic Of Lucha
+0x31A6, Pic Of Jacques
+0x31A7, Pic Of Peck
+0x31A8, Pic Of Sparro
+0x31A9, Pic Of Medli
+0x31AA, Pic Of Angus
+0x31AB, Pic Of Rodeo
+0x31AC, Pic Of Stu
+0x31AD, Pic Of T-Bone
+0x31AE, Pic Of Coach
+0x31AF, Pic Of Vic
+0x31B0, Pic Of Bob
+0x31B1, Pic Of Mitzi
+0x31B2, Pic Of Rosie
+0x31B3, Pic Of Olivia
+0x31B4, Pic Of Kiki
+0x31B5, Pic Of Tangy
+0x31B6, Pic Of Punchy
+0x31B7, Pic Of Purrl
+0x31B8, Pic Of Moe
+0x31B9, Pic Of Kabuki
+0x31BA, Pic Of Kid Cat
+0x31BB, Pic Of Monique
+0x31BC, Pic Of Tabby
+0x31BD, Pic Of Stinky
+0x31BE, Pic Of Kitty
+0x31BF, Pic Of Tom
+0x31C0, Pic Of Merry
+0x31C1, Pic Of Felicity
+0x31C2, Pic Of Lolly
+0x31C3, Pic Of Ankha
+0x31C4, Pic Of Rudy
+0x31C5, Pic Of Katt
+0x31C6, Pic Of Felyne
+0x31C7, Pic Of Bluebear
+0x31C8, Pic Of Maple
+0x31C9, Pic Of Poncho
+0x31CA, Pic Of Pudge
+0x31CB, Pic Of Kody
+0x31CC, Pic Of Stitches
+0x31CD, Pic Of Vladimir
+0x31CE, Pic Of Murphy
+0x31CF, Pic Of Olive
+0x31D0, Pic Of Cheri
+0x31D1, Pic Of June
+0x31D2, Pic Of Pekoe
+0x31D3, Pic Of Chester
+0x31D4, Pic Of Barold
+0x31D5, Pic Of Tammy
+0x31D6, Pic Of Marty
+0x31D7, Pic Of Goose
+0x31D8, Pic Of Benedict
+0x31D9, Pic Of Egbert
+0x31DA, Pic Of Ava
+0x31DB, Pic Of Becky
+0x31DC, Pic Of Plucky
+0x31DD, Pic Of Knox
+0x31DE, Pic Of Broffina
+0x31DF, Pic Of Ken
+0x31E0, Pic Of Patty
+0x31E1, Pic Of Tipper
+0x31E2, Pic Of Norma
+0x31E3, Pic Of Naomi
+0x31E4, Pic Of Alfonso
+0x31E5, Pic Of Alli
+0x31E6, Pic Of Boots
+0x31E7, Pic Of Del
+0x31E8, Pic Of Sly
+0x31E9, Pic Of Gayle
+0x31EA, Pic Of Drago
+0x31EB, Pic Of Fauna
+0x31EC, Pic Of Bam
+0x31ED, Pic Of Zell
+0x31EE, Pic Of Bruce
+0x31EF, Pic Of Deirdre
+0x31F0, Pic Of Lopez
+0x31F1, Pic Of Fuchsia
+0x31F2, Pic Of Beau
+0x31F3, Pic Of Diana
+0x31F4, Pic Of Erik
+0x31F5, Pic Of Chelsea
+0x31F6, Pic Of Goldie
+0x31F7, Pic Of Butch
+0x31F8, Pic Of Lucky
+0x31F9, Pic Of Biskit
+0x31FA, Pic Of Bones
+0x31FB, Pic Of Portia
+0x31FC, Pic Of Walker
+0x31FD, Pic Of Daisy
+0x31FE, Pic Of Cookie
+0x31FF, Pic Of Maddie
+0x3200, Pic Of Bea
+0x3201, Pic Of Mac
+0x3202, Pic Of Marcel
+0x3203, Pic Of Benjamin
+0x3204, Pic Of Cherry
+0x3205, Pic Of Shep
+0x3206, Pic Of Bill
+0x3207, Pic Of Joey
+0x3208, Pic Of Pate
+0x3209, Pic Of Maelle
+0x320A, Pic Of Deena
+0x320B, Pic Of Pompom
+0x320C, Pic Of Mallary
+0x320D, Pic Of Freckles
+0x320E, Pic Of Derwin
+0x320F, Pic Of Drake
+0x3210, Pic Of Scoot
+0x3211, Pic Of Weber
+0x3212, Pic Of Miranda
+0x3213, Pic Of Ketchup
+0x3214, Pic Of Gloria
+0x3215, Pic Of Molly
+0x3216, Pic Of Quillson
+0x3217, Pic Of Opal
+0x3218, Pic Of Dizzy
+0x3219, Pic Of Big Top
+0x321A, Pic Of Eloise
+0x321B, Pic Of Margie
+0x321C, Pic Of Paolo
+0x321D, Pic Of Axel
+0x321E, Pic Of Ellie
+0x321F, Pic Of Tucker
+0x3220, Pic Of Tia
+0x3221, Pic Of Chai
+0x3222, Pic Of Lily
+0x3223, Pic Of Ribbot
+0x3224, Pic Of Frobert
+0x3225, Pic Of Camofrog
+0x3226, Pic Of Drift
+0x3227, Pic Of Wart Jr.
+0x3228, Pic Of Puddles
+0x3229, Pic Of Jeremiah
+0x322A, Pic Of Tad
+0x322B, Pic Of Cousteau
+0x322C, Pic Of Huck
+0x322D, Pic Of Prince
+0x322E, Pic Of Jambette
+0x322F, Pic Of Raddle
+0x3230, Pic Of Gigi
+0x3231, Pic Of Croque
+0x3232, Pic Of Diva
+0x3233, Pic Of Henry
+0x3234, Pic Of Chevre
+0x3235, Pic Of Nan
+0x3236, Pic Of Billy
+0x3237, Pic Of Gruff
+0x3238, Pic Of Velma
+0x3239, Pic Of Kidd
+0x323A, Pic Of Pashmina
+0x323B, Pic Of Cesar
+0x323C, Pic Of Peewee
+0x323D, Pic Of Boone
+0x323E, Pic Of Louie
+0x323F, Pic Of Boyd
+0x3240, Pic Of Violet
+0x3241, Pic Of Al
+0x3242, Pic Of Rocket
+0x3243, Pic Of Hans
+0x3244, Pic Of Rilla
+0x3245, Pic Of Hamlet
+0x3246, Pic Of Apple
+0x3247, Pic Of Graham
+0x3248, Pic Of Rodney
+0x3249, Pic Of Soleil
+0x324A, Pic Of Clay
+0x324B, Pic Of Flurry
+0x324C, Pic Of Hamphrey
+0x324D, Pic Of Holden (Unused)
+0x324E, Pic Of Rocco
+0x324F, Pic Of Bubbles
+0x3250, Pic Of Bertha
+0x3251, Pic Of Biff
+0x3252, Pic Of Bitty
+0x3253, Pic Of Harry
+0x3254, Pic Of Hippeux
+0x3255, Pic Of Buck
+0x3256, Pic Of Victoria
+0x3257, Pic Of Savannah
+0x3258, Pic Of Elmer
+0x3259, Pic Of Roscoe
+0x325A, Pic Of Winnie
+0x325B, Pic Of Ed
+0x325C, Pic Of Cleo
+0x325D, Pic Of Peaches
+0x325E, Pic Of Annalise
+0x325F, Pic Of Clyde
+0x3260, Pic Of Colton
+0x3261, Pic Of Papi
+0x3262, Pic Of Julian
+0x3263, Pic Of Filly (Unused)
+0x3264, Pic Of Epona
+0x3265, Pic Of Yuka
+0x3266, Pic Of Alice
+0x3267, Pic Of Melba
+0x3268, Pic Of Sydney
+0x3269, Pic Of Gonzo
+0x326A, Pic Of Ozzie
+0x326B, Pic Of Canberra
+0x326C, Pic Of Lyman
+0x326D, Pic Of Eugene
+0x326E, Pic Of Kitt
+0x326F, Pic Of Mathilda
+0x3270, Pic Of Carrie
+0x3271, Pic Of Astrid
+0x3272, Pic Of Sylvia
+0x3273, Pic Of Walt
+0x3274, Pic Of Rooney
+0x3275, Pic Of Marcie
+0x3276, Pic Of Bud
+0x3277, Pic Of Elvis
+0x3278, Pic Of Rex
+0x3279, Pic Of Leopold
+0x327A, Pic Of Mott
+0x327B, Pic Of Rory
+0x327C, Pic Of Lionel
+0x327D, Pic Of Nana
+0x327E, Pic Of Simon
+0x327F, Pic Of Tammi
+0x3280, Pic Of Monty
+0x3281, Pic Of Elise
+0x3282, Pic Of Flip
+0x3283, Pic Of Shari
+0x3284, Pic Of Deli
+0x3285, Pic Of Dora
+0x3286, Pic Of Limberg
+0x3287, Pic Of Bella
+0x3288, Pic Of Bree
+0x3289, Pic Of Samson
+0x328A, Pic Of Rod
+0x328B, Pic Of Candi
+0x328C, Pic Of Rizzo
+0x328D, Pic Of Anicotti
+0x328E, Pic Of Broccolo
+0x328F, Pic Of Moose
+0x3290, Pic Of Bettina
+0x3291, Pic Of Greta
+0x3292, Pic Of Penelope
+0x3293, Pic Of Chadder
+0x3294, Pic Of Octavian
+0x3295, Pic Of Marina
+0x3296, Pic Of Zucker
+0x3297, Pic Of Inkwell
+0x3298, Pic Of Queenie
+0x3299, Pic Of Gladys
+0x329A, Pic Of Sandy
+0x329B, Pic Of Sprocket
+0x329C, Pic Of Julia
+0x329D, Pic Of Cranston
+0x329E, Pic Of Phil
+0x329F, Pic Of Blanche
+0x32A0, Pic Of Flora
+0x32A1, Pic Of Phoebe
+0x32A2, Pic Of Apollo
+0x32A3, Pic Of Amelia
+0x32A4, Pic Of Pierce
+0x32A5, Pic Of Buzz
+0x32A6, Pic Of Avery
+0x32A7, Pic Of Frank
+0x32A8, Pic Of Sterling
+0x32A9, Pic Of Keaton
+0x32AA, Pic Of Celia
+0x32AB, Pic Of Aurora
+0x32AC, Pic Of Roald
+0x32AD, Pic Of Cube
+0x32AE, Pic Of Hopper
+0x32AF, Pic Of Friga
+0x32B0, Pic Of Gwen
+0x32B1, Pic Of Puck
+0x32B2, Pic Of Wade
+0x32B3, Pic Of Boomer
+0x32B4, Pic Of Iggly
+0x32B5, Pic Of Tex
+0x32B6, Pic Of Flo
+0x32B7, Pic Of Sprinkles
+0x32B8, Pic Of Curly
+0x32B9, Pic Of Truffles
+0x32BA, Pic Of Rasher
+0x32BB, Pic Of Hugh
+0x32BC, Pic Of Lucy
+0x32BD, Pic Of Crackle
+0x32BE, Pic Of Cobb
+0x32BF, Pic Of Boris
+0x32C0, Pic Of Maggie
+0x32C1, Pic Of Peggy
+0x32C2, Pic Of Gala
+0x32C3, Pic Of Chops
+0x32C4, Pic Of Kevin
+0x32C5, Pic Of Pancetti
+0x32C6, Pic Of Agnes
+0x32C7, Pic Of Ganon
+0x32C8, Pic Of Bunnie
+0x32C9, Pic Of Dotty
+0x32CA, Pic Of Coco
+0x32CB, Pic Of Snake
+0x32CC, Pic Of Gaston
+0x32CD, Pic Of Gabi
+0x32CE, Pic Of Pippy
+0x32CF, Pic Of Tiffany
+0x32D0, Pic Of Genji
+0x32D1, Pic Of Ruby
+0x32D2, Pic Of Doc
+0x32D3, Pic Of Claude
+0x32D4, Pic Of Francine
+0x32D5, Pic Of Chrissy
+0x32D6, Pic Of Hopkins
+0x32D7, Pic Of O'Hare
+0x32D8, Pic Of Carmen
+0x32D9, Pic Of Bonbon
+0x32DA, Pic Of Cole
+0x32DB, Pic Of Mira
+0x32DC, Pic Of Toby
+0x32DD, Pic Of Tank
+0x32DE, Pic Of Rhonda
+0x32DF, Pic Of Spike
+0x32E0, Pic Of Hornsby
+0x32E1, Pic Of Merengue
+0x32E2, Pic Of Renée
+0x32E3, Pic Of Vesta
+0x32E4, Pic Of Baabara
+0x32E5, Pic Of Eunice
+0x32E6, Pic Of Stella
+0x32E7, Pic Of Cashmere
+0x32E8, Pic Of Willow
+0x32E9, Pic Of Curlos
+0x32EA, Pic Of Wendy
+0x32EB, Pic Of Timbra
+0x32EC, Pic Of Frita
+0x32ED, Pic Of Muffy
+0x32EE, Pic Of Pietro
+0x32EF, Pic Of Étoile
+0x32F0, Pic Of Peanut
+0x32F1, Pic Of Blaire
+0x32F2, Pic Of Filbert
+0x32F3, Pic Of Pecan
+0x32F4, Pic Of Nibbles
+0x32F5, Pic Of Agent S
+0x32F6, Pic Of Caroline
+0x32F7, Pic Of Sally
+0x32F8, Pic Of Static
+0x32F9, Pic Of Mint
+0x32FA, Pic Of Ricky
+0x32FB, Pic Of Cally
+0x32FC, Pic Of Tasha
+0x32FD, Pic Of Sylvana
+0x32FE, Pic Of Poppy
+0x32FF, Pic Of Sheldon
+0x3300, Pic Of Marshal
+0x3301, Pic Of Hazel
+0x3302, Pic Of Cece
+0x3303, Pic Of Viché
+0x3304, Pic Of Rolf
+0x3305, Pic Of Rowan
+0x3306, Pic Of Tybalt
+0x3307, Pic Of Bangle
+0x3308, Pic Of Leonardo
+0x3309, Pic Of Claudia
+0x330A, Pic Of Bianca
+0x330B, Pic Of Chief
+0x330C, Pic Of Lobo
+0x330D, Pic Of Wolfgang
+0x330E, Pic Of Whitney
+0x330F, Pic Of Dobie
+0x3310, Pic Of Freya
+0x3311, Pic Of Fang
+0x3312, Pic Of Vivian
+0x3313, Pic Of Skye
+0x3314, Pic Of Kyle
+0x3315, Pic Of Wolf Link
+//Pics (Special)
+0x3316, Pic Of Cyrus
+0x3317, Pic Of Reese
+0x3318, Pic Of Chip
+0x3319, Pic Of Phineas
+0x331A, Pic Of Joan
+0x331B, Pic Of Katrina
+0x331C, Pic Of Nat
+0x331D, Pic Of Saharah
+0x331E, Pic Of K.K.
+0x331F, Pic Of Redd
+0x3320, Pic Of Gracie
+0x3321, Pic Of Labelle
+0x3322, Pic Of Mabel
+0x3323, Pic Of Sable
+0x3324, Pic Of Grams
+0x3325, Pic Of Leilani
+0x3326, Pic Of Kapp'n
+0x3327, Pic Of Leila
+0x3328, Pic Of Tommy
+0x3329, Pic Of Timmy
+0x332A, Pic Of Porter
+0x332B, Pic Of Don Resetti
+0x332C, Pic Of Resetti
+0x332D, Pic Of Lyle
+0x332E, Pic Of Blathers
+0x332F, Pic Of Celeste
+0x3330, Pic Of Pavé
+0x3331, Pic Of Pelly
+0x3332, Pic Of Phyllis
+0x3333, Pic Of Brewster
+0x3334, Pic Of Jack
+0x3335, Pic Of Booker
+0x3336, Pic Of Pete
+0x3337, Pic Of Copper
+0x3338, Pic Of Harriet
+0x3339, Pic Of Tom Nook
+0x333A, Pic Of Gulliver
+0x333B, Pic Of Pascal
+0x333C, Pic Of Kicks
+0x333D, Pic Of Isabelle
+0x333E, Pic Of Tortimer
+0x333F, Pic Of Franklin
+0x3340, Pic Of Shrunk
+0x3341, Pic Of Rover
+0x3342, Pic Of Leif
+0x3343, Pic Of Blanca
+0x3344, Pic Of Luna
+0x3345, Pic Of DJ KK
+0x3346, Pic Of Katie
+0x3347, Pic Of Zipper
+0x3348, Pic Of Jingle
+0x3349, Pic Of Digby
+0x334A, Pic Of Wendell
+0x334B, Pic Of Lottie
+//Tools & Wearables
 0x334C, Rental Axe
 0x334D, Axe
 0x334E, Silver Axe
@@ -4990,37 +5307,42 @@
 0x33A4, Good Coffee Beans
 0x33A5, Superb Coffee Beans
 0x33A6, Chocolate Coin
-0x33A7, Custom Pattern
-0x33A8, Custom Pattern (Easel)
-0x33A9, Custom Pattern (Frame)
-0x33AA, Custom Pattern (Umbrella)
-0x33AB, Custom Pattern (Male Hat)
-0x33AC, Custom Pattern (Female Hat)
-0x33AD, Custom Pattern (Hat)
-0x33AE, Custom Pattern (Shirt)
-0x33AF, Custom Pattern (Shirt Sleveless)
-0x33B0, Custom Pattern (Shirt PRO)
-0x33B1, Custom Pattern (Shirt Long Sleves)
-0x33B2, Custom Pattern (Dress Sleveless)
-0x33B3, Custom Pattern (Dress)
-0x33B4, Custom Pattern (Dress Long Sleves)
-0x33B5, Custom Pattern (Hanging Shirt)
-0x33B6, Custom Pattern (Hanging Shirt Sleveless)
-0x33B7, Custom Pattern (Hanging Shirt PRO)
-0x33B8, Custom Pattern (Hanging Shirt Long Sleves)
-0x33B9, Custom Pattern (Hanging Dress Sleveless)
-0x33BA, Custom Pattern (Hanging Dress)
-0x33BB, Custom Pattern (Hanging Dress Long Sleves)
-//Uncategorized 3
+//Custom Pattern Items
+0x33A7, Custom Shirt
+0x33A8, Pattern Easel
+0x33A9, Pattern Wall Canvas
+0x33AA, Custom Design Umbrella 
+0x33AB, Custom Design Horned Hat
+0x33AC, Custom Design Female Hat
+0x33AD, Custom Design Knit Hat
+0x33AE, Custom Design T-Shirt
+0x33AF, Custom Design Tank Shirt
+0x33B0, Custom Design T-Shirt (Distorted Sleeves)
+0x33B1, Custom Design Long Sleeve Shirt
+0x33B2, Custom Design Tank Dress
+0x33B3, Custom Design Sleeve Dress
+0x33B4, Custom Design Long Sleeve Dress
+0x33B5, Custom Design T-Shirt (Wall)
+0x33B6, Custom Design Tank Shirt (Wall)
+0x33B7, Custom Design T-Shirt (Distorted Sleeves) (Wall)
+0x33B8, Custom Design Long Sleeve Shirt (Wall)
+0x33B9, Custom Design Tank Dress (Wall)
+0x33BA, Custom Design Sleeve Dress (Wall)
+0x33BB, Custom Design Long Sleeve Dress (Wall)
+//NPC Items
 0x33BC, Signature Sheet
 0x33BD, Petition Form
 0x33BE, Paper Scrap
-0x33BF, Lost Item (Book)
-0x33C0, Lost Item (Pouch)
-0x33C1, Lost Item (Mitten)
-0x33C2, Lost Item (Paper Bag)
-0x33C3, Towel
-//Fortune cookies
+0x33BF, Lost Item [Book]
+0x33C0, Lost Item [Pouch]
+0x33C1, Lost Item [Mitten]
+0x33C2, Lost Item [Paper Bag]
+0x33C3, Book
+0x33C4, Pouch
+0x33C5, Mitten
+0x33C6, Paper Bag
+0x33C7, Towel
+//Fortune Cookies
 0x33C8, Fortune Cookie
 0x33C9, Fortune #1
 0x33CA, Fortune #2
@@ -5090,30 +5412,36 @@
 0x3409, Crackle Ticket
 0x340A, Kaboom Ticket
 0x340B, Pop Ticket
-//In-game events
+//Item Sprites
+0x340C, Bronze Badge (Sprite)
+0x340D, Silver Badge (Sprite)
+0x340E, Gold Badge (Sprite)
+0x340F, Map (Sprite)
+0x3410, TPC (Sprite)
+0x3411, Lost Book (Sprite)
+0x3412, Mail (Sprite)
+0x3413, Flower Seed (Sprite)
+0x3414, Basic Sapling (Sprite)
+0x3415, Cedar Sapling (Sprite)
+0x3416, Palm Sapling (Sprite)
+0x3417, Gold Trophy (Sprite)
+0x3418, Silver Trophy (Sprite)
+0x3419, Bronze Trophy (Sprite)
+//In-Game Events
 0x341A, Bingo Card
 0x341B, Expired Bingo Card
 0x341C, Time Capsule
 0x341D, Scavenger-Hunt List
-//Unused furniture (only inside)
-0x2078, K.K. DJ Table
-0x2079, Museum Stand (Fossil)
-0x207A, Museum Stand (Small)
-0x207B, Museum Stand (Big)
-0x207C, Reese's Stand (Small)
-0x207D, Reese's Stand (Big)
-0x207E, Moving Boxes (1)
-0x207F, Moving Boxes (2)
-0x2080, Moving Boxes (3)
-0x2081, Train Station Locker (1)
-0x2082, Train Station Locker (2)
-0x2083, Sold Out
-0x2084, Sold Out (Gracie)
-0x2085, Sold Out (Reese)
-0x2086, Sold Out (Invisible Spot)
-0x2087, Sold Out (Invisible Spot)
-0x2088, Sold Out (Redd)
-//HRA exhibition (only inside)
+//Item Sprites #2
+0x341E,    Club Tortimer Form (Sprite)
+0x341F,    "Red Flowers" (Sprite)
+0x3420,    "White Flowers" (Sprite)
+0x3421,    "Yellow Flowers" (Sprite)
+0x3422,    "Tulips" (Sprite)
+0x3423,    "Pansies" (Sprite)
+0x3424,    "Cosmos" (Sprite)
+0x3425,    "Roses" (Sprite)
+//HRA Exhibition (Only Inside)
 0x3426, Red Mailbox
 0x3427, Metal Mailbox
 0x3428, Blue Mailbox
@@ -5282,10 +5610,611 @@
 0x34CB, Zen Castle
 0x34CC, Castle
 0x34CD, Modern House
-//Presents
-0x4DE7, Wrapping Paper
+//Shirts (Wall Variants)
+0x34CE, One-Ball Tee (Wall)
+0x34CF, Two-Ball Tee (Wall)
+0x34D0, Three-Ball Tee (Wall)
+0x34D1, Four-Ball Tee (Wall)
+0x34D2, Five-Ball Tee (Wall)
+0x34D3, Six-Ball Tee (Wall)
+0x34D4, Seven-Ball Tee (Wall)
+0x34D5, Eight-Ball Tee (Wall)
+0x34D6, Nine-Ball Tee (Wall)
+0x34D7, Paw Tee (Wall)
+0x34D8, Daisy Tee (Wall)
+0x34D9, Tulip Tee (Wall)
+0x34DA, Cherry Tee (Wall)
+0x34DB, Skull Tee (Wall)
+0x34DC, U-R-Here Tee (Wall)
+0x34DD, Lightning Tee (Wall)
+0x34DE, MVP Tee (Wall)
+0x34DF, BB Tee (Wall)
+0x34E0, Fish Tee (Wall)
+0x34E1, Frog Tee (Wall)
+0x34E2, Bear Tee (Wall)
+0x34E3, Bunny Tee (Wall)
+0x34E4, Bunny Shirt (Wall)
+0x34E5, Elephant Tee (Wall)
+0x34E6, Spade Tee (Wall)
+0x34E7, Diamond Tee (Wall)
+0x34E8, Club Tee (Wall)
+0x34E9, Heart Tee (Wall)
+0x34EA, Big-Star Tee (Wall)
+0x34EB, Bright Tee (Wall)
+0x34EC, A Tee (Wall)
+0x34ED, No. 1 Shirt (Wall)
+0x34EE, No. 2 Shirt (Wall)
+0x34EF, No. 3 Shirt (Wall)
+0x34F0, No. 4 Shirt (Wall)
+0x34F1, No. 5 Shirt (Wall)
+0x34F2, No. 23 Shirt (Wall)
+0x34F3, No. 67 Shirt (Wall)
+0x34F4, Big Bro's Tee (Wall)
+0x34F5, Li'l Bro's Tee (Wall)
+0x34F6, Cloudy Tee (Wall)
+0x34F7, Fresh Tee (Wall)
+0x34F8, Dawn Tee (Wall)
+0x34F9, Misty Tee (Wall)
+0x34FA, Sunset Tee (Wall)
+0x34FB, Deep-Blue Tee (Wall)
+0x34FC, Peachy Tee (Wall)
+0x34FD, Rainbow Tee (Wall)
+0x34FE, Sno-Cone Tee (Wall)
+0x34FF, Orange Tie-Dye Tee (Wall)
+0x3500, Purple Tie-Dye Tee (Wall)
+0x3501, Green Tie-Dye Tee (Wall)
+0x3502, Blue Tie-Dye Tee (Wall)
+0x3503, Red Tie-Dye Tee (Wall)
+0x3504, Bold-Check Tee (Wall)
+0x3505, Café Tee (Wall)
+0x3506, Checkered Tee (Wall)
+0x3507, Blue-Check Tee (Wall)
+0x3508, Red-Check Tee (Wall)
+0x3509, Dogtooth Tee (Wall)
+0x350A, Tan Dogtooth Tee (Wall)
+0x350B, Rugby Tee (Wall)
+0x350C, Green-Bar Tee (Wall)
+0x350D, Yellow-Bar Tee (Wall)
+0x350E, Grape-Stripe Tee (Wall)
+0x350F, Beatnik Tee (Wall)
+0x3510, Red-Bar Tee (Wall)
+0x3511, Blue-Stripe Tee (Wall)
+0x3512, Blue-Stripe Shirt (Wall)
+0x3513, Gelato Tee (Wall)
+0x3514, Chain-Gang Tee (Wall)
+0x3515, Speedway Tee (Wall)
+0x3516, Yellow Tartan Tee (Wall)
+0x3517, Fall Plaid Tee (Wall)
+0x3518, Blue Tartan Tee (Wall)
+0x3519, Dapper Tee (Wall)
+0x351A, Natty Tee (Wall)
+0x351B, Blue-Grid Tee (Wall)
+0x351C, Red-Grid Tee (Wall)
+0x351D, Dazed Tee (Wall)
+0x351E, Checkerboard Tee (Wall)
+0x351F, Toad Tee (Wall)
+0x3520, Dark Polka Tee (Wall)
+0x3521, Lite Polka Tee (Wall)
+0x3522, Bubble-Gum Tee (Wall)
+0x3523, Funky-Dot Tee (Wall)
+0x3524, Gumdrop Tee (Wall)
+0x3525, Big-Dot Tee (Wall)
+0x3526, Aqua Polka Tee (Wall)
+0x3527, Blue-Bar Tee (Wall)
+0x3528, Gold-Bar Tee (Wall)
+0x3529, Brown-Bar Tee (Wall)
+0x352A, Vegetarian Tee (Wall)
+0x352B, Racer Tee (Wall)
+0x352C, Pastel-Stripe Tee (Wall)
+0x352D, Rally Tee (Wall)
+0x352E, Racer 6 Tee (Wall)
+0x352F, Vertigo Tee (Wall)
+0x3530, Barber Tee (Wall)
+0x3531, Jade Plaid Tee (Wall)
+0x3532, Blue Plaid Tee (Wall)
+0x3533, Mint Gingham Tee (Wall)
+0x3534, Picnic Tee (Wall)
+0x3535, Candy Gingham Tee (Wall)
+0x3536, Lemon Gingham Tee (Wall)
+0x3537, Melon Gingham Tee (Wall)
+0x3538, Bad Plaid Tee (Wall)
+0x3539, Pink Tartan Tee (Wall)
+0x353A, Waffle Tee (Wall)
+0x353B, Gray Tartan Tee (Wall)
+0x353C, Gray Tartan Shirt (Wall)
+0x353D, Red Argyle Shirt (Wall)
+0x353E, Red Argyle Tee (Wall)
+0x353F, Blue Argyle Shirt (Wall)
+0x3540, Blue Argyle Tee (Wall)
+0x3541, Pink Argyle Shirt (Wall)
+0x3542, Pink Argyle Tee (Wall)
+0x3543, Cyan Argyle Shirt (Wall)
+0x3544, Cyan Argyle Tee (Wall)
+0x3545, Chevron Shirt (Wall)
+0x3546, Icy Shirt (Wall)
+0x3547, Aurora Knit Shirt (Wall)
+0x3548, Winter Sweater (Wall)
+0x3549, Folk Shirt (Wall)
+0x354A, Argyle Knit Shirt (Wall)
+0x354B, Uncommon Shirt (Wall)
+0x354C, Comfy Sweater (Wall)
+0x354D, Beige Knit Shirt (Wall)
+0x354E, Earthy Knit Shirt (Wall)
+0x354F, Spring Shirt (Wall)
+0x3550, Lively Knit Shirt (Wall)
+0x3551, Deer Shirt (Wall)
+0x3552, Monkey Shirt (Wall)
+0x3553, Chocomint Tee (Wall)
+0x3554, Fern Tee (Wall)
+0x3555, Leaf Tee (Wall)
+0x3556, Fall Leaf Tee (Wall)
+0x3557, Straw Shirt (Wall)
+0x3558, Grass Tee (Wall)
+0x3559, Snow Shirt (Wall)
+0x355A, Lovely Tee (Wall)
+0x355B, Bubble Tee (Wall)
+0x355C, Chichi-Print Tee (Wall)
+0x355D, Coral Tee (Wall)
+0x355E, Groovy Tee (Wall)
+0x355F, Flame Tee (Wall)
+0x3560, Danger Tee (Wall)
+0x3561, Gracie Tank (Wall)
+0x3562, Future Tank (Wall)
+0x3563, Optical Shirt (Wall)
+0x3564, Twinkle Tee (Wall)
+0x3565, Star Tee (Wall)
+0x3566, Night-Sky Tee (Wall)
+0x3567, Amethyst Tank (Wall)
+0x3568, Nebula Tee (Wall)
+0x3569, Dice Tank (Wall)
+0x356A, Kiddie Tee (Wall)
+0x356B, Airy Tee (Wall)
+0x356C, Crossing Shirt (Wall)
+0x356D, Splendid Tee (Wall)
+0x356E, Jagged Tee (Wall)
+0x356F, Subdued-Print Tee (Wall)
+0x3570, Sharp Outfit (Wall)
+0x3571, Painter's Tee (Wall)
+0x3572, Jungle-Camo Tee (Wall)
+0x3573, Arctic-Camo Tee (Wall)
+0x3574, Desert-Camo Tee (Wall)
+0x3575, Circuit Tank (Wall)
+0x3576, Pulse Tank (Wall)
+0x3577, Zebra Tee (Wall)
+0x3578, Tiger Tee (Wall)
+0x3579, Cow Tee (Wall)
+0x357A, Leopard Tee (Wall)
+0x357B, Giraffe Tee (Wall)
+0x357C, Ladybug Tank (Wall)
+0x357D, Spiderweb Tee (Wall)
+0x357E, Caterpillar Tank (Wall)
+0x357F, Fiendish Shirt (Wall)
+0x3580, Citrus Tee (Wall)
+0x3581, Kiwi Tee (Wall)
+0x3582, Watermelon Tee (Wall)
+0x3583, Strawberry Tee (Wall)
+0x3584, Grape Tee (Wall)
+0x3585, Melon Tee (Wall)
+0x3586, Pink Wave Tank (Wall)
+0x3587, Flan Tank (Wall)
+0x3588, Hot-Dog Tank (Wall)
+0x3589, Sandwich Tank (Wall)
+0x358A, Noodle Tee (Wall)
+0x358B, Sundae Tank (Wall)
+0x358C, Dragon Suit (Wall)
+0x358D, Periwinkle Tee (Wall)
+0x358E, Hot Spring Tee (Wall)
+0x358F, New Spring Tee (Wall)
+0x3590, Crewel Tee (Wall)
+0x3591, Tropical Tee (Wall)
+0x3592, Corseted Shirt (Wall)
+0x3593, Noble Shirt (Wall)
+0x3594, Red Aloha Tee (Wall)
+0x3595, Blue Aloha Tee (Wall)
+0x3596, Western Shirt (Wall)
+0x3597, Royal Shirt (Wall)
+0x3598, Firefighter Shirt (Wall)
+0x3599, Doctor's Coat (Wall)
+0x359A, Bone Shirt (Wall)
+0x359B, Zipper Shirt (Wall)
+0x359C, Mummy Shirt (Wall)
+0x359D, Military Uniform (Wall)
+0x359E, Sailor's Tee (Wall)
+0x359F, Reggae Tee (Wall)
+0x35A0, Camel Shirt (Wall)
+0x35A1, Concierge Shirt (Wall)
+0x35A2, Tuxedo (Wall)
+0x35A3, Explorer Tee (Wall)
+0x35A4, Soccer Tee (Wall)
+0x35A5, Red Down Jacket (Wall)
+0x35A6, Blue Down Jacket (Wall)
+0x35A7, Cavalier Shirt (Wall)
+0x35A8, Beaded Shirt (Wall)
+0x35A9, Wrap Shirt (Wall)
+0x35AA, Wrestler Tank (Wall)
+0x35AB, Security Tee (Wall)
+0x35AC, Bear Costume (Wall)
+0x35AD, Frog Costume (Wall)
+0x35AE, Kappa Costume (Wall)
+0x35AF, Imperial Shirt (Wall)
+0x35B0, Racing Shirt (Wall)
+0x35B1, Orange Jacket (Wall)
+0x35B2, Tin Shirt (Wall)
+0x35B3, Scale-Armor Suit (Wall)
+0x35B4, Armor Suit (Wall)
+0x35B5, Gold-Armor Suit (Wall)
+0x35B6, Striking Outfit (Wall)
+0x35B7, Red Warm-Up Suit (Wall)
+0x35B8, Baseball Shirt (Wall)
+0x35B9, Red Gym Tee (Wall)
+0x35BA, Blue Gym Tee (Wall)
+0x35BB, Space Suit (Wall)
+0x35BC, Caveman Tank (Wall)
+0x35BD, Kung-Fu Tee (Wall)
+0x35BE, Pleather Vest (Wall)
+0x35BF, Cycling Shirt (Wall)
+0x35C0, Cycling Tee (Wall)
+0x35C1, Chef's Outfit (Wall)
+0x35C2, Genie Shirt (Wall)
+0x35C3, Folk Tunic (Wall)
+0x35C4, Red-Zap Suit (Wall)
+0x35C5, Blue-Zap Suit (Wall)
+0x35C6, Green-Zap Suit (Wall)
+0x35C7, Samurai Shirt (Wall)
+0x35C8, Patched Shirt (Wall)
+0x35C9, Hero's Clothes (Wall)
+0x35CA, Varia Suit (Wall)
+0x35CB, Team NTDO Tee (Wall)
+0x35CC, Gray Parka (Wall)
+0x35CD, Fishing Vest (Wall)
+0x35CE, Captain's Jacket (Wall)
+0x35CF, Ninja Shirt (Wall)
+0x35D0, Detective Outfit (Wall)
+0x35D1, Santa Coat (Wall)
+0x35D2, Chick Tee (Wall)
+0x35D3, Scale-Print Tee (Wall)
+0x35D4, Jinbei Top (Wall)
+0x35D5, Kanji Tee (Wall)
+0x35D6, Raglan Shirt (Wall)
+0x35D7, Happi Tee (Wall)
+0x35D8, Red Letter Jacket (Wall)
+0x35D9, Blue Letter Jacket (Wall)
+0x35DA, Black Letter Jacket (Wall)
+0x35DB, Tiger Jacket (Wall)
+0x35DC, Dragon Jacket (Wall)
+0x35DD, Red Flannel Shirt (Wall)
+0x35DE, Blue Flannel Shirt (Wall)
+0x35DF, Black Flannel Shirt (Wall)
+0x35E0, Pink-Bud Tank (Wall)
+0x35E1, Garden Tank (Wall)
+0x35E2, Lacy White Tank (Wall)
+0x35E3, Pink Tank (Wall)
+0x35E4, Hanten Shirt (Wall)
+0x35E5, Work Shirt (Wall)
+0x35E6, Tan Puffy Vest (Wall)
+0x35E7, After-School Jacket (Wall)
+0x35E8, Kids' Smock (Wall)
+0x35E9, School Jacket (Wall)
+0x35EA, Mint Shirt (Wall)
+0x35EB, Denim Jacket (Wall)
+0x35EC, Prism Tee (Wall)
+0x35ED, Denim Vest (Wall)
+0x35EE, Green Gym Tee (Wall)
+0x35EF, Green Emblem Blazer (Wall)
+0x35F0, Acid-Washed Jacket (Wall)
+0x35F1, Red Ringmaster Coat (Wall)
+0x35F2, White Tuxedo Jacket (Wall)
+0x35F3, Black-Denim Jacket (Wall)
+0x35F4, Basketball Tank (Wall)
+0x35F5, Iberian Jacket (Wall)
+0x35F6, Pink Parka (Wall)
+0x35F7, Jockey Shirt (Wall)
+0x35F8, Blue Track Jacket (Wall)
+0x35F9, Sweater-Vest (Wall)
+0x35FA, Waistcoat (Wall)
+0x35FB, Black Track Jacket (Wall)
+0x35FC, Beige Emblem Blazer (Wall)
+0x35FD, Clerk's Shirt (Wall)
+0x35FE, Green Warm-Up Jacket (Wall)
+0x35FF, Blue Ringmaster Coat (Wall)
+0x3600, Relay Tank (Wall)
+0x3601, Snowy Sweater (Wall)
+0x3602, Red Jacket (Wall)
+0x3603, Blue Jacket (Wall)
+0x3604, Floral Knit Tee (Wall)
+0x3605, Dreamy Tee (Wall)
+0x3606, Pop Bloom Tee (Wall)
+0x3607, Silk Bloom Tee (Wall)
+0x3608, Blossom Tee (Wall)
+0x3609, Yellow Aloha Tee (Wall)
+0x360A, Loud Bloom Tee (Wall)
+0x360B, Rose-Sky Tee (Wall)
+0x360C, Blue Diamond Shirt (Wall)
+0x360D, Lotus Tee (Wall)
+0x360E, Rose Tee (Wall)
+0x360F, Pep-Squad Tee (Wall)
+0x3610, Jester Shirt (Wall)
+0x3611, Swell Shirt (Wall)
+0x3612, Go-Go Shirt (Wall)
+0x3613, Festivale Tank (Wall)
+0x3614, Pink Pj Shirt (Wall)
+0x3615, Blue Pj Shirt (Wall)
+0x3616, Canary Shirt (Wall)
+0x3617, Flight-Crew Shirt (Wall)
+0x3618, Café Uniform (Wall)
+0x3619, Peacoat (Wall)
+0x361A, Shearling Coat (Wall)
+0x361B, Mod Shirt (Wall)
+0x361C, Tacky Sweater (Wall)
+0x361D, Sunflower Tee (Wall)
+0x361E, Green-Stripe Tank (Wall)
+0x361F, Gray Tank (Wall)
+0x3620, Preppy Shirt (Wall)
+0x3621, Flowery Tee (Wall)
+0x3622, HHA Tee (Wall)
+0x3623, HHA Jacket (Wall)
+0x3624, Dr. Shrunk's Jacket (Wall)
+0x3625, 24-hour-Shop Uniform (Wall)
+0x3626, Swell Tee (Wall)
+0x3627, Blue Diamond Tee (Wall)
+0x3628, Raglan Tee (Wall)
+0x3629, MVP Shirt (Wall)
+0x362A, Jade Plaid Shirt (Wall)
+0x362B, Red-Check Shirt (Wall)
+0x362C, Rugby Shirt (Wall)
+0x362D, Painter's Shirt (Wall)
+0x362E, Pulse Shirt (Wall)
+0x362F, Toad Shirt (Wall)
+0x3630, Sailor's Shirt (Wall)
+0x3631, Frog Shirt (Wall)
+0x3632, Blue-Grid Shirt (Wall)
+0x3633, Kung-Fu Shirt (Wall)
+0x3634, Tan Dogtooth Shirt (Wall)
+0x3635, Bad Plaid Shirt (Wall)
+0x3636, Fern Shirt (Wall)
+0x3637, Arctic-Camo Shirt (Wall)
+0x3638, Fall Leaf Shirt (Wall)
+0x3639, Elephant Shirt (Wall)
+0x363A, Red-Grid Shirt (Wall)
+0x363B, Chain-Gang Shirt (Wall)
+0x363C, Dogtooth Shirt (Wall)
+0x363D, Moldy Shirt (Wall)
+0x363E, Waffle Shirt (Wall)
+0x363F, Vegetarian Shirt (Wall)
+0x3640, Blue-Check Shirt (Wall)
+0x3641, Picnic Shirt (Wall)
+0x3642, Natty Shirt (Wall)
+0x3643, Pink Tartan Shirt (Wall)
+0x3644, Checkerboard Shirt (Wall)
+0x3645, Dark Polka Shirt (Wall)
+0x3646, Lemon Gingham Shirt (Wall)
+0x3647, Brown-Bar Shirt (Wall)
+0x3648, Dazed Shirt (Wall)
+0x3649, Nebula Shirt (Wall)
+0x364A, Bubble-Gum Shirt (Wall)
+0x364B, Blue-Bar Shirt (Wall)
+0x364C, Lite Polka Shirt (Wall)
+0x364D, Yellow-Bar Shirt (Wall)
+0x364E, Yellow Tartan Shirt (Wall)
+0x364F, Amethyst Shirt (Wall)
+0x3650, Soccer Shirt (Wall)
+0x3651, Grape-Stripe Shirt (Wall)
+0x3652, Red-Bar Shirt (Wall)
+0x3653, Candy Gingham Shirt (Wall)
+0x3654, Skull Shirt (Wall)
+0x3655, Flame Shirt (Wall)
+0x3656, Vertigo Shirt (Wall)
+0x3657, Green-Bar Shirt (Wall)
+0x3658, Gelato Shirt (Wall)
+0x3659, Dapper Shirt (Wall)
+0x365A, Desert-Camo Shirt (Wall)
+0x365B, Jungle-Camo Shirt (Wall)
+0x365C, Beatnik Shirt (Wall)
+0x365D, Gold-Bar Shirt (Wall)
+0x365E, Fall Plaid Shirt (Wall)
+0x365F, Blue Tartan Shirt (Wall)
+0x3660, Mint Gingham Shirt (Wall)
+0x3661, Bear Shirt (Wall)
+0x3662, Melon Gingham Shirt (Wall)
+0x3663, Blue Plaid Shirt (Wall)
+0x3664, Melon Shirt (Wall)
+0x3665, Watermelon Shirt (Wall)
+0x3666, Zipper Tank (Wall)
+0x3667, Misty Tank (Wall)
+0x3668, Purple Tie-Dye Tank (Wall)
+0x3669, Jester Tank (Wall)
+0x366A, Grape Tank (Wall)
+0x366B, Sno-Cone Tank (Wall)
+0x366C, Aqua Polka Tank (Wall)
+0x366D, Strawberry Tank (Wall)
+0x366E, Peachy Tank (Wall)
+0x366F, Reggae Tank (Wall)
+0x3670, Blue Argyle Tank (Wall)
+0x3671, Twinkle Tank (Wall)
+0x3672, Green Tie-Dye Tank (Wall)
+0x3673, Cool Tank (Wall)
+0x3674, Optical Tank (Wall)
+0x3675, Jagged Tank (Wall)
+0x3676, Rally Tank (Wall)
+0x3677, Bubble Tank (Wall)
+0x3678, Deep-Blue Tank (Wall)
+0x3679, Beaded Tank (Wall)
+0x367A, Coral Tank (Wall)
+0x367B, Pink Argyle Tank (Wall)
+0x367C, Funky-Dot Tank (Wall)
+0x367D, Groovy Tank (Wall)
+0x367E, Fresh Tank (Wall)
+0x367F, Tropical Tank (Wall)
+0x3680, Sunset Tank (Wall)
+0x3681, Citrus Tank (Wall)
+0x3682, Blue Tie-Dye Tank (Wall)
+0x3683, Giraffe Tank (Wall)
+0x3684, Orange Tie-Dye Tank (Wall)
+0x3685, Zebra Tank (Wall)
+0x3686, Tiger Tank (Wall)
+0x3687, Kiwi Tank (Wall)
+0x3688, Red Tie-Dye Tank (Wall)
+0x3689, Pep-Squad Tank (Wall)
+0x368A, Dawn Tank (Wall)
+0x368B, Beatnik Tank (Wall)
+0x368C, Big-Dot Tank (Wall)
+0x368D, Rainbow Tank (Wall)
+0x368E, Leopard Tank (Wall)
+0x368F, Cow Tank (Wall)
+0x3690, Genie Vest (Wall)
+0x3691, Cyan Argyle Tank (Wall)
+0x3692, Men's Recruit Suit (Wall)
+0x3693, Women's Recruit Suit (Wall)
+0x3694, Stylish Suit (Wall)
+0x3695, Polo Shirt (Wall)
+0x3696, Women's Office Suit (Wall)
+0x3697, Blue Nurse's Uniform (Wall)
+0x3698, Flashy Suit (Wall)
+0x3699, Sushi Chef's Outfit (Wall)
+0x369A, Comedian's Outfit (Wall)
+0x369B, Rubber Apron (Wall)
+0x369C, Frilly Apron (Wall)
+0x369D, Felyne Outfit (Wall)
+0x369E, HHA Women's Jacket (Wall)
+0x369F, Good-Fortune Clothes (Wall)
+0x36A0, Link Outfit (Wall)
+0x36A1, Ganondorf Outfit (Wall)
+0x36A2, Ganon Outfit (Wall)
+0x36A3, Medli Outfit (Wall)
+0x36A4, Epona Outfit (Wall)
+0x36A5, Wolf Link Outfit (Wall)
+0x36A6, New Hero's Outfit (Wall)
+0x36A7, Black Anchor Tee (Wall)
+0x36A8, Cinnamoroll Jacket (Wall)
+0x36A9, Suspenders Shirt (Wall)
+0x36AA, Hello Kitty Outfit (Wall)
+0x36AB, My Melody Outfit (Wall)
+0x36AC, Kiki And Lala Outfit (Wall)
+0x36AD, Pompompurin Outfit (Wall)
+0x36AE, Cinnamoroll Outfit (Wall)
+0x36AF, Kerokerokeroppi Top (Wall)
+0x36B0, HHA Raincoat (Wall)
+0x36B1, Callie Shirt (Wall)
+0x36B2, Marie Shirt (Wall)
+0x36B3, Callie Fashion Top (Wall)
+0x36B4, High-Spirits Shirt (Wall)
+0x36B5, Town-Hall Spring Top (Wall)
+0x36B6, Town-Hall Winter Top (Wall)
+0x36B7, Jacquard Fleece (Wall)
+0x36B9, Sheik Outfit (Wall)
+//Dresses (Wall Variants)
+0x36BB, Festive Dress (Wall)
+0x36BC, Muumuu (Wall)
+0x36BD, Blue Dotted Dress (Wall)
+0x36BE, Tan Dogtooth Dress (Wall)
+0x36BF, Prim Outfit (Wall)
+0x36C0, Overall Dress (Wall)
+0x36C1, Pink Lace-Up Dress (Wall)
+0x36C2, Academy Uniform (Wall)
+0x36C3, Prep-School Uniform (Wall)
+0x36C4, Blue Party Dress (Wall)
+0x36C5, Pink Party Dress (Wall)
+0x36C6, Yellow Dotted Dress (Wall)
+0x36C7, Pinafore (Wall)
+0x36C8, Plaid Cami Dress (Wall)
+0x36C9, Green Dress (Wall)
+0x36CA, Butterfly Dress (Wall)
+0x36CB, Gaudy Dress (Wall)
+0x36CC, Sea Captain's Coat (Wall)
+0x36CD, Pink-Zap Suit (Wall)
+0x36CE, Fleece Dress (Wall)
+0x36CF, Vogue Dress (Wall)
+0x36D0, Citrus Gingham Dress (Wall)
+0x36D1, Floral Knit Dress (Wall)
+0x36D2, Dreamy Tank Dress (Wall)
+0x36D3, Silk Bloom Dress (Wall)
+0x36D4, Pop Bloom Dress (Wall)
+0x36D5, Blossom Dress (Wall)
+0x36D6, Loud Bloom Dress (Wall)
+0x36D7, Rose Tank Dress (Wall)
+0x36D8, Rose-Sky Tank Dress (Wall)
+0x36D9, Lotus Tank Dress (Wall)
+0x36DA, Blue Retro Dress (Wall)
+0x36DB, Orange Retro Dress (Wall)
+0x36DC, Cool Dress (Wall)
+0x36DD, Moldy Dress (Wall)
+0x36DE, Blossoming Dress (Wall)
+0x36DF, Ribbon Dress (Wall)
+0x36E0, Blue Lace-Up Dress (Wall)
+0x36E1, Orange Lace-Up Dress (Wall)
+0x36E2, Green Lace-Up Dress (Wall)
+0x36E3, Lime Dress (Wall)
+0x36E4, Turnip Dress (Wall)
+0x36E5, Yodel Dress (Wall)
+0x36E6, Red Riding Dress (Wall)
+0x36E7, Witch's Robe (Wall)
+0x36E8, Graduation Gown (Wall)
+0x36E9, Sky Dress (Wall)
+0x36EA, Alpinist Dress (Wall)
+0x36EB, Kimono (Wall)
+0x36EC, Milkmaid Dress (Wall)
+0x36ED, Toga (Wall)
+0x36EE, Cake Dress (Wall)
+0x36EF, Waitress Dress (Wall)
+0x36F0, Princess Dress (Wall)
+0x36F1, Fairy-Tale Dress (Wall)
+0x36F2, Pink Polka Dress (Wall)
+0x36F3, Palatial Tank Dress (Wall)
+0x36F4, Poncho (Wall)
+0x36F5, Fluffy Dress (Wall)
+0x36F6, Cat Dress (Wall)
+0x36F7, Plum Coat (Wall)
+0x36F8, Frock Coat (Wall)
+0x36F9, Casual Outfit (Wall)
+0x36FA, Maid Dress (Wall)
+0x36FB, Trench Coat (Wall)
+0x36FC, Pharaoh's Outfit (Wall)
+0x36FD, Bathrobe (Wall)
+0x36FE, Polka-Dot Dress (Wall)
+0x36FF, Patched Dress (Wall)
+0x3700, Black-Velvet Dress (Wall)
+0x3701, Dazed Dress (Wall)
+0x3702, Dogtooth Dress (Wall)
+0x3703, Nurse's Uniform (Wall)
+0x3704, Embroidered Dress (Wall)
+0x3705, Festivale Tank Dress (Wall)
+0x3706, Tartan-Plaid Outfit (Wall)
+0x3707, Sweater Dress (Wall)
+0x3708, Shirtdress (Wall)
+0x3709, Red Dress (Wall)
+0x370A, Yellow Raincoat (Wall)
+0x370B, Dollhouse Dress (Wall)
+0x370C, Festive-Tree Dress (Wall)
+0x370D, Ballet Outfit (Wall)
+0x370E, Classic Dress (Wall)
+0x370F, U-R-Here Dress (Wall)
+0x3710, Natty Dress (Wall)
+0x3711, Dapper Dress (Wall)
+0x3712, Gumdrop Dress (Wall)
+0x3713, Chima Jeogori Dress (Wall)
+0x3714, Spring Kimono (Wall)
+0x3715, Caveman Tank Dress (Wall)
+0x3716, Star Tank Dress (Wall)
+0x3717, Twinkle Tank Dress (Wall)
+0x3718, Pastel-Stripe Dress (Wall)
+0x3719, Cat Tank Dress (Wall)
+0x371A, Cake Tank Dress (Wall)
+0x371B, Fluffy Tank Dress (Wall)
+0x371C, Lovely Dress (Wall)
+0x371D, Blue Ballet Outfit (Wall)
+0x371E, Musician's Outfit (Wall)
+0x371F, Princess Zelda Dress (Wall)
+0x3720, Marie Dress (Wall)
+0x3721, Hello Kitty Dress (Wall)
+0x3722, My Melody Dress (Wall)
+0x3723, Kiki And Lala Dress (Wall)
+0x3724, Pompompurin Dress (Wall)
+0x3725, Flower Fairy Dress (Wall)
 //Special Furniture Items (Welcome Amiibo Update)
 0x3726, Magic Lamp
+0x3727, Retail Customise Giant Item Sign
+0x3728, Retail Customise Giant Item Box
+0x3729, Frying Pan
 0x372A, Ikada Trophy
 //Room Reserved Space
 0x7FFC, Multispace Furniture
