@@ -88,8 +88,8 @@ namespace ACSE.WinForms.Imaging
                     for (var i = 0; i < acre.Items.Length; i++)
                     {
                         var item = acre.Items[i];
-                        if (!acre.IsItemBuried(item, Save.SaveInstance.SaveGeneration) ||
-                            item.Type == ItemType.Empty) continue;
+                        if (!acre.IsItemBuried(item, Save.SaveInstance.SaveGeneration)) continue;
+
                         bitmapGraphics.DrawImage(buriedIcon, (i % 16) * itemSize + 1,
                             (i / 16) * itemSize + 1, itemSize - 1, itemSize - 1);
                     }

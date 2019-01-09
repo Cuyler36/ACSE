@@ -105,7 +105,9 @@ namespace ACSE.Core.Items
             const int width = 16;
             const int height = 16;
             var bmpData = new byte[1024];
-            var itemColor = item == null ? new byte[] { 0xFF, 0xFF, 0x00, 0x00 } : BitConverter.GetBytes(ItemData.GetItemColor(ItemData.GetItemType(item.ItemId, saveType)));
+            var itemColor = item == null
+                ? new byte[] {0xFF, 0xFF, 0x00, 0x00}
+                : BitConverter.GetBytes(ItemData.GetItemColor(ItemData.GetItemType(item.ItemId, saveType)));
 
             for (var i = 0; i < 1024; i+=4)
                 itemColor.CopyTo(bmpData, i);

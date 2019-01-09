@@ -114,6 +114,11 @@ namespace ACSE.Core.Town.Acres
             var itemIdx = Array.IndexOf(Items, item);
             if (itemIdx < 0 || itemIdx > 255) return false;
 
+            if (item.Type == ItemType.Empty)
+            {
+                buried = false; // Don't allow "empty" spots to be buried no matter what.
+            }
+
             int offset;
             switch (generation)
             {

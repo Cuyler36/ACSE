@@ -77,11 +77,7 @@ namespace ACSE.Core.Items
 
         public bool Equals(Item other)
         {
-            if (ReferenceEquals(other, null)) return false;
-            if (ReferenceEquals(other, this)) return true;
-            return other.ItemId == ItemId &&
-                   other.Flag1 == Flag1 &&
-                   other.Flag2 == Flag2;
+            return ReferenceEquals(other, this);
         }
 
         public bool Equals(ushort other) => ItemId == other;
