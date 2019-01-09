@@ -11,7 +11,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using ACSE.Core.BitFields.Catalog;
 using ACSE.Core.BitFields.Encyclopedia;
 using ACSE.Core.BitFields.Museum;
@@ -511,10 +510,10 @@ namespace ACSE.WinForms
 
             if (selectedItem.SelectedValue == null)
             {
-                if (oldSelectedItemId != null)
+                /*if (oldSelectedItemId != null)
                 {
                     selectedItem.SelectedValue = oldSelectedItemId;
-                }
+                }*/
             }
             else
             {
@@ -1266,6 +1265,16 @@ namespace ACSE.WinForms
             {
                 MessageBox.Show("No Player was found on the file!", "Player Find Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+
+                // If no player exists, stop loading & clear save file.
+                progressBar1.Value = 0;
+                SaveFile = null;
+                _loading = false;
+                loadingPanel.Enabled = false;
+                loadingPanel.Visible = false;
+                loadingPanel.SendToBack();
+                SetProgramTitle();
+                return;
             }
 
             SetPlayersEnabled();
