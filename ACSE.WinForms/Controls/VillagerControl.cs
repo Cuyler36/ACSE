@@ -208,6 +208,11 @@ namespace ACSE.WinForms.Controls
                     margin = CalculateControlVerticalMargin(_musicEditor);
                     _musicEditor.Margin = new Padding(0, margin, 10, margin);
 
+                    _musicEditor.ItemChanged += delegate(object sender, ItemChangedEventArgs e)
+                    {
+                        _villager.Data.Song = e.NewItem;
+                    };
+
                     _furnitureEditor = new ItemEditor(_villager.Data.Furniture,
                         _villager.Data.Furniture.Length, 16);
                     margin = CalculateControlVerticalMargin(_furnitureEditor);

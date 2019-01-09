@@ -269,12 +269,6 @@ namespace ACSE.Core.Villagers
         {
             VillagerId = 0,
             Personality = 2,
-            Status = 0x24E4,
-            Catchphrase = 0x24C6,
-            CatchphraseSize = 0x16,
-            TownName = 0x24EE,
-            TownNameSize = 0x12,
-            TownId = -1, // Research
             Shirt = 0x246E,
             Song = 0x2472,
             Wallpaper = 0x2476,
@@ -282,6 +276,12 @@ namespace ACSE.Core.Villagers
             Umbrella = 0x247E,
             Furniture = 0x2482,
             FurnitureCount = 16,
+            Catchphrase = 0x24C6,
+            CatchphraseSize = 0x16,
+            Status = 0x24E4,
+            TownName = 0x24EE,
+            TownNameSize = 0x12,
+            TownId = -1, // Research
             HouseCoordinates = -1,
             Nicknames = -1, //Research
             NameId = -1,
