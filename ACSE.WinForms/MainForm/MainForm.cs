@@ -2245,7 +2245,6 @@ namespace ACSE.WinForms
 
         private void SetSelectedAcre(ushort acreId, bool focusTreeNode = true)
         {
-            if (acreId <= 0) throw new ArgumentOutOfRangeException(nameof(acreId));
             _selectedAcreId = acreId;
 
             if (SaveFile.SaveGeneration == SaveGeneration.N64 || SaveFile.SaveGeneration == SaveGeneration.GCN ||

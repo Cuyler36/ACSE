@@ -412,7 +412,7 @@ namespace ACSE.Core.Patterns
         {
             //Add decoding of "Pro" patterns
             var rawData = importData ?? _saveFile.ReadByteArray(_offset + 0x6C, 0x200); //32x32 doubled up pixels
-            var customPalette = _saveFile.ReadByteArray(_offset + 0x58, 15); //New Leaf user selected palette data
+            var customPalette = _saveFile.ReadByteArray(_offset + 0x58, 16); //New Leaf user selected palette data
             PaletteData = new uint[15];
 
             // Generate Palatte Data
@@ -433,7 +433,7 @@ namespace ACSE.Core.Patterns
 
             //Convert palette color index to argb color
             for (var i = 0; i < 0x400; i++)
-                Buffer.BlockCopy(BitConverter.GetBytes(PaletteData[DecodedData[i]]), 0, PatternBitmapBuffer, i * 4, 4);
+                Buffer.BlockCopy(BitConverter.GetBytes(PaletteData[DecodedData[i] % 15]), 0, PatternBitmapBuffer, i * 4, 4);
             
             //Create new bitmap
             PatternBitmap = new Bitmap(32, 32, PixelFormat.Format32bppArgb);

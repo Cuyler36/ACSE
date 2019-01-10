@@ -284,6 +284,24 @@
 0x007C, Lake Beta Acre
 0x0080, River Beta Acre
 0x039C, Slope Test Beta Acre
+0x0420, Lake Test Acre
+0x0424, Tree Stump Test Acre
+0x0428, Title Screen Villager Acre (Paolo & Bob)
+0x042C, Title Screen Villager Acre (Vesta)
+0x0430, Title Screen Villager Acre (Lobo & Joey)
+0x0434, Lighthouse Test Acre
+0x0438, Title Screen Villager Acre (Carrie)
+0x043C, Title Screen Villager Acre (Tank)
+0x0440, Title Screen Villager Acre (Rasher)
+0x0444, Title Screen Villager Acre (Biff)
+0x0448, Title Screen Villager Acre (Jane)
+0x044C, Title Screen Villager Acre (Tybalt)
+0x0450, Title Screen Villager Acre (Cube)
+0x0454, Multi-Tree Stump Test Acre
+0x046C, Museum Test Acre
+0x0470, Tailor's Test Acre
+0x0474, Suspension Bridge (\) Test Acre
+0x0478, Suspension Bridge (/) Test Acre
 //Misc. Acres
 0x0000, No Acre Data
 0x0020, Miniature Inside of House (Unused)
@@ -305,6 +323,7 @@
 0x0458, Inside of Museum Main Room
 0x045C, Inside of Museum Painting Room
 0x0460, Inside of Museum Fossil Room
+0x0464, Inside of Museum Insect Room
 0x0468, Inside of Museum Fish Room
 0x047C, Inside of Tailor's
 0x0590, Inside of Lighthouse

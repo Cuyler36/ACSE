@@ -20,12 +20,6 @@
 0x0374, Nook's Shop #1
 0x0378, Nook's Shop #2
 0x037C, Nook's Shop #3
-0x0480, Museum #1
-0x0484, Museum #2
-0x0488, Museum #3
-0x048C, Tailor's Shop #1
-0x0490, Tailor's Shop #2
-0x0494, Tailor's Shop #3
 //Border Acres
 0x0324, Upper Border Cliff
 0x0328, Upper Border Cliff (w/ River)
@@ -199,91 +193,18 @@
 0x0404, Oceanfront #8
 0x0408, Oceanfront #9
 0x040C, Oceanfront #10
-0x0498, Oceanfront w/ Dock #1
-0x05AC, Oceanfront w/ Dock #2
-0x05B0, Oceanfront w/ Dock #3
-//Island Acres
-0x04A0, Island (Right) #1
-0x04A4, Island (Left) #1
-0x0594, Island (Right) #2
-0x0598, Island (Left) #2
-0x059C, Island (Right) #3
-0x05A0, Island (Left) #3
-0x05A4, Island (Right) #4
-0x05A8, Island (Left) #4
 //Ocean Acres
 0x03DC, Ocean #1
 0x03E0, Ocean #2
 0x03E4, Ocean #3
 0x03E8, Ocean #4
 0x03EC, Ocean #5
-0x049C, Ocean #6
-0x04A8, Ocean #7
-0x04AC, Ocean #8
-0x04B0, Ocean #9
-0x04B4, Ocean #10
-0x04B8, Ocean #11
-0x04BC, Ocean #12
-0x04C0, Ocean #13
-0x04C4, Ocean #14
-0x04C8, Ocean #15
-0x04CC, Ocean #16
-0x04D0, Ocean #17
-0x04D4, Ocean #18
-0x04D8, Ocean #19
-0x04DC, Ocean #20
-0x04E0, Ocean #21
-0x04E4, Ocean #22
-0x04E8, Ocean #23
-0x04EC, Ocean #24
-0x04F0, Ocean #25
-0x04F4, Ocean #26
-0x04F8, Ocean #27
-0x04FC, Ocean #28
-0x0500, Ocean #29
-0x0504, Ocean #30
-0x0508, Ocean #31
-0x050C, Ocean #32
-0x0510, Ocean #33
-0x0514, Ocean #34
-0x0518, Ocean #35
-0x051C, Ocean #36
-0x0520, Ocean #37
-0x0524, Ocean #38
-0x0528, Ocean #39
-0x052C, Ocean #40
-0x0530, Ocean #41
-0x0534, Ocean #42
-0x0538, Ocean #43
-0x053C, Ocean #44
-0x0540, Ocean #45
-0x0544, Ocean #46
-0x0548, Ocean #47
-0x054C, Ocean #48
-0x0550, Ocean #49
-0x0554, Ocean #50
-0x0558, Ocean #51
-0x055C, Ocean #52
-0x0560, Ocean #53
-0x0564, Ocean #54
-0x0568, Ocean #55
-0x056C, Ocean #56
-0x0570, Ocean #57
-0x0574, Ocean #58
-0x0578, Ocean #59
-0x057C, Ocean #60
-0x0580, Ocean #61
-0x0584, Ocean #62
-0x0588, Ocean #63
-0x058C, Ocean #64
-0x05B4, Ocean #65
-0x05B8, Ocean #66
 //Beta Acres
 0x0074, Grass Beta Acre
 0x0078, Ramp Beta Acre
 0x007C, Lake Beta Acre
 0x0080, River Beta Acre
-0x039C, Slope Test Beta Acre
+0x039C, Slope Test Beta Acre #1
 0x0420, Lake Test Acre
 0x0424, Tree Stump Test Acre
 0x0428, Title Screen Villager Acre (Paolo & Bob)
@@ -298,10 +219,8 @@
 0x044C, Title Screen Villager Acre (Tybalt)
 0x0450, Title Screen Villager Acre (Cube)
 0x0454, Multi-Tree Stump Test Acre
-0x046C, Museum Test Acre
-0x0470, Tailor's Test Acre
-0x0474, Suspension Bridge (\) Test Acre
-0x0478, Suspension Bridge (/) Test Acre
+0x0458, Slope Test Beta Acre #2
+0x045C, Slope Test Beta Acre #3
 //Misc. Acres
 0x0000, No Acre Data
 0x0020, Miniature Inside of House (Unused)
@@ -320,11 +239,3 @@
 0x0300, Inside of Katrina's Tent
 0x0304, Game Loading/Saving Area
 0x0390, Inside of Nookingtons
-0x0458, Inside of Museum Main Room
-0x045C, Inside of Museum Painting Room
-0x0460, Inside of Museum Fossil Room
-0x0464, Inside of Museum Insect Room
-0x0468, Inside of Museum Fish Room
-0x047C, Inside of Tailor's
-0x0590, Inside of Lighthouse
-0x05BC, Inside of Camping Tent

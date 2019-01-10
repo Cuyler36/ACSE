@@ -884,7 +884,9 @@ namespace ACSE.Core.Saves
             {
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DongwuSenlin:
-                case SaveType.AnimalCrossing: // TODO: DnM needs to have a custom list, since the docks/islands don't exist
+                    databaseName = $"DNM_Acres_{language}.txt";
+                    break;
+                case SaveType.AnimalCrossing:
                     databaseName = $"AC_Acres_{language}.txt";
                     break;
                 case SaveType.DoubutsuNoMoriPlus:
@@ -987,7 +989,9 @@ namespace ACSE.Core.Saves
             {
                 case SaveType.DoubutsuNoMori:
                 case SaveType.DongwuSenlin:
-                case SaveType.AnimalCrossing: // TODO: DnM needs to have a custom list, since the docks/islands don't exist
+                    acreDbLocation = Path.Combine(acreDbLocation, $"DNM_Acres_{language}.txt");
+                    break;
+                case SaveType.AnimalCrossing:
                     acreDbLocation = Path.Combine(acreDbLocation, $"AC_Acres_{language}.txt");
                     break;
                 case SaveType.DoubutsuNoMoriPlus:
