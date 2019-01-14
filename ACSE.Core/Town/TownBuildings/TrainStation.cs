@@ -15,7 +15,7 @@ namespace ACSE.Core.Town.TownBuildings
         {
             Image stationImg = null;
             var stationFile = Path.Combine(PathUtility.GetResourcesDirectory(), "Images", "Icons",
-                $"Stations{station + 1}.png");
+                "Stations", $"{station + 1}.png");
 
             if (!File.Exists(stationFile)) return null;
             try
