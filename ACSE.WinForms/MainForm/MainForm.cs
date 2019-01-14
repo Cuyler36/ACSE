@@ -3196,9 +3196,16 @@ namespace ACSE.WinForms
                     }
                     else
                     {
-                        var boxes = island ? (IList<PictureBoxWithInterpolationMode>) _islandItemEditors : _acreMap;
-                        AcreImageManager.CheckReferencesAndDispose(oldImage, boxes,
-                            _selectedAcrePicturebox);
+                        if (island)
+                        {
+                            AcreImageManager.CheckReferencesAndDispose(oldImage, _islandItemEditors,
+                                _selectedAcrePicturebox);
+                        }
+                        else
+                        {
+                            AcreImageManager.CheckReferencesAndDispose(oldImage, _acreMap,
+                                _selectedAcrePicturebox);
+                        }
                     }
 
                     _selectedAcreId = island ? IslandAcres[acreIndex].AcreId : _acres[acreIndex].AcreId;

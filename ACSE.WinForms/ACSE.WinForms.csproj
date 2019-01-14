@@ -125,6 +125,8 @@
     </Compile>
     <Compile Include="ItemColorSettings.Designer.cs">
       <DependentUpon>ItemColorSettings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SecureValueForm\SecureValueForm.cs">
       <SubType>Form</SubType>
@@ -1409,6 +1411,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\DBNM_Plus_Items_en.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\DNM_Acres_en.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\DnM_Items_en.txt">

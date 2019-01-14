@@ -160,6 +160,30 @@ namespace ACSE.WinForms.Managers
             referencedImage.Dispose();
         }
 
+        public static void CheckReferencesAndDispose(Image referencedImage,
+            IList<AcreItemEditor> itemEditors, PictureBoxWithInterpolationMode selectedAcreBox)
+        {
+            if (referencedImage == null || selectedAcreBox.Image == referencedImage
+                                        || itemEditors.Any(
+                                            box => box != null && box.BackgroundImage == referencedImage)) return;
+
+            foreach (var pair in _loadedImageDictionary)
+                if (pair.Value == referencedImage)
+                {
+                    _loadedImageDictionary.Remove(pair.Key);
+                    break;
+                }
+
+            foreach (var pair in _loadedAnimalCrossingMapIcons)
+                if (pair.Value == referencedImage)
+                {
+                    _loadedAnimalCrossingMapIcons.Remove(pair.Key);
+                    break;
+                }
+
+            referencedImage.Dispose();
+        }
+
         public static void DisposeLoadedImages()
         {
             foreach (var i in _loadedImageDictionary.Values)
