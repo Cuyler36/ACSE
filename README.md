@@ -6,6 +6,8 @@
 ## Supported Games
 ### ![N64](https://i.imgur.com/nz2Rdc1.png) Nintendo 64
 * [Dōbutsu no Mori](https://animalcrossing.fandom.com/wiki/D%C5%8Dbutsu_no_Mori_(game))
+### ![iQP](https://i.imgur.com/kwQLeUJ.png) iQue Player
+* [Dòngwù Sēnlín](http://www.iquebrew.org/index.php?title=Animal_Crossing)
 ### ![GCN](https://i.imgur.com/CzocU2O.png) Nintendo GameCube
 * [Dōbutsu no Mori+](https://animalcrossing.fandom.com/wiki/D%C5%8Dbutsu_no_Mori%2B)
 * [Animal Crossing: Population Growing](https://animalcrossing.fandom.com/wiki/Animal_Crossing)
