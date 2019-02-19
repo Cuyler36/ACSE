@@ -211,6 +211,18 @@ namespace ACSE.Core.Villagers
                                 AcString.GetBytes(dataObject,
                                     (int) villagerOffsetData.GetField(field.Name + "Size").GetValue(Offsets)));
                         }
+                        else if (fieldType == typeof(byte))
+                        {
+                            _saveData.Write(dataOffset, (byte)dataObject);
+                        }
+                        else if (fieldType == typeof(ushort))
+                        {
+                            _saveData.Write(dataOffset, (ushort)dataObject, _saveData.IsBigEndian);
+                        }
+                        else if (fieldType == typeof(uint))
+                        {
+                            _saveData.Write(dataOffset, (uint)dataObject, _saveData.IsBigEndian);
+                        }
                         else if (fieldType == typeof(byte[]))
                         {
                             _saveData.Write(dataOffset, dataObject, false);
