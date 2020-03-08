@@ -3,7 +3,11 @@ using System.Linq;
 using System.IO;
 using System.Text;
 using ACSE.Core.Debug;
+using ACSE.Core.Housing;
+using ACSE.Core.Items;
+using ACSE.Core.Players;
 using ACSE.Core.Saves.Checksums;
+using ACSE.Core.Town.Acres;
 using ACSE.Core.Utilities;
 
 namespace ACSE.Core.Saves
@@ -46,9 +50,11 @@ namespace ACSE.Core.Saves
         China
     }
 
-    public class Save
+    public sealed class Save
     {
         public static Save SaveInstance { get; private set; }
+
+        // Publics
 
         public readonly SaveType SaveType;
         public readonly SaveGeneration SaveGeneration;
@@ -63,6 +69,82 @@ namespace ACSE.Core.Saves
         public readonly bool IsBigEndian = true;
         public bool ChangesMade;
         public readonly bool SuccessfullyLoaded = true;
+
+        // Public events
+
+        /// <summary>
+        /// Fires when the currently selected <see cref="Item"/> is changed.
+        /// </summary>
+        public event EventHandler<ItemChangedEventArgs> SelectedItemChanged;
+
+        /// <summary>
+        /// Fires when the currently selected <see cref="Player"/> is changed. The <see cref="EventHandler"/> contains a reference to the previously selected <see cref="Player"/>.
+        /// </summary>
+        public event EventHandler<Player> SelectedPlayerChanged;
+
+        /// <summary>
+        /// Fires when the currently selected <see cref="House"/> is changed. The <see cref="EventHandler"/> contains a reference to the previously selected <see cref="House"/>.
+        /// </summary>
+        public event EventHandler<House> SelectedHouseChanged;
+
+        /// <summary>
+        /// Fires when the currently selected <see cref="Acre"/> is changed. The <see cref="EventHandler"/> contains a reference to the previously selected <see cref="Acre"/>.
+        /// </summary>
+        public event EventHandler<Acre> SelectedAcreChanged;
+
+        // Public Game-related Info
+        public Player[] Players { get; private set; }
+        public Acre[] Acres { get; private set; }
+        public WorldAcre[] WorldAcres { get; private set; }
+        public House[] Houses { get; private set; }
+
+
+        private Item _selectedItem;
+        public Item SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                SelectedItemChanged?.Invoke(this, new ItemChangedEventArgs{ PreviousItem = _selectedItem, NewItem = value});
+                _selectedItem = value;
+            }
+        }
+
+        private Player _selectedPlayer;
+        public Player SelectedPlayer
+        {
+            get => _selectedPlayer;
+            set
+            {
+                SelectedPlayerChanged?.Invoke(this, _selectedPlayer);
+                _selectedPlayer = value;
+            }
+        }
+
+        private House _selectedHouse;
+        public House SelectedHouse
+        {
+            get => _selectedHouse;
+            set
+            {
+                SelectedHouseChanged?.Invoke(this, _selectedHouse);
+                _selectedHouse = value;
+            }
+        }
+
+        private Acre _selectedAcre;
+        public Acre SelectedAcre
+        {
+            get => _selectedAcre;
+            set
+            {
+                SelectedAcreChanged?.Invoke(this, _selectedAcre);
+                _selectedAcre = value;
+            }
+        }
+
+        // Privates
+
         private FileStream _saveFile;
         private readonly BinaryReader _saveReader;
         private BinaryWriter _saveWriter;
@@ -300,6 +382,8 @@ namespace ACSE.Core.Saves
             _saveFile?.Dispose();
         }
 
+        // Data methods
+
         public void Write(int offset, byte value, bool includeStartOffset = false)
         {
             if (includeStartOffset) offset += SaveDataStartOffset;
@@ -494,8 +578,8 @@ namespace ACSE.Core.Saves
             return value;
         }
 
-        public string ReadString(int offset, int length) =>
-            new AcString(ReadByteArray(offset, length), SaveType).Trim();
+        public string ReadString(int offset, int length, bool includeStartOffset = false) =>
+            new AcString(ReadByteArray(offset, length, false, includeStartOffset), SaveType).Trim();
 
         public string ReadAsciiString(int offset, int length = -1, bool includeStartOffset = false)
         {

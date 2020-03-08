@@ -23,6 +23,7 @@ using ACSE.Core.Generators;
 using ACSE.Core.Housing;
 using ACSE.Core.Items;
 using ACSE.Core.Modifiable;
+using ACSE.Core.Quests;
 using ACSE.Core.Patterns;
 using ACSE.Core.Players;
 using ACSE.Core.Saves;
@@ -116,6 +117,7 @@ namespace ACSE.WinForms
         private ItemEditor _islandBoxEditor;
         private HouseControl _houseEditor;
         private HouseControl _islandHouseEditor;
+        private VillagerControl _islanderEditor;
         private StalkMarketEditor _stalkMarketEditor;
         private List<AcreItemEditor> _acreItemEditors = new List<AcreItemEditor>();
         private List<AcreItemEditor> _islandItemEditors = new List<AcreItemEditor>();
@@ -587,6 +589,9 @@ namespace ACSE.WinForms
             reviveGrass.Enabled = true;
             removeGrass.Enabled = true;
             censusMenuEnabled.Enabled = save.SaveType == SaveType.WelcomeAmiibo;
+            PartTimeJobCheckBox.Enabled = save.SaveGeneration == SaveGeneration.N64 ||
+                                          save.SaveGeneration == SaveGeneration.GCN ||
+                                          save.SaveGeneration == SaveGeneration.iQue;
             fillCatalogButton.Enabled = true;
             clearCatalogButton.Enabled = true;
             fillEncyclopediaButton.Enabled = true;
@@ -1098,7 +1103,7 @@ namespace ACSE.WinForms
             houseSizeComboBox.Enabled = houseSizeComboBox.Items.Count > 0;
 
             //Load Villager Database
-            if (SaveFile.SaveType != SaveType.CityFolk) //City Folk has completely editable villagers! That's honestly a pain for editing...
+            //if (SaveFile.SaveType != SaveType.CityFolk) //City Folk has completely editable villagers! That's honestly a pain for editing...
             {
                 _villagerDatabase = VillagerInfo.GetVillagerDatabase(SaveFile.SaveType);
                 _personalityDatabase = VillagerInfo.GetPersonalities(SaveFile.SaveType);
@@ -1248,7 +1253,7 @@ namespace ACSE.WinForms
                 {
                     _players[i] = new Player(SaveFile.SaveDataStartOffset
                                              + CurrentSaveInfo.SaveOffsets.PlayerStart +
-                                             i * CurrentSaveInfo.SaveOffsets.PlayerSize, i, SaveFile);
+                                             i * CurrentSaveInfo.SaveOffsets.PlayerSize, i);
                 }
 
                 _selectedPlayer = _players.FirstOrNull(o => o.Exists);
@@ -1286,7 +1291,7 @@ namespace ACSE.WinForms
 
             // Grass Type Stuff
             grassTypeBox.Items.Clear();
-            grassTypeBox.Enabled = true;
+            grassTypeBox.Enabled = save.SaveGeneration != SaveGeneration.N64 && save.SaveGeneration != SaveGeneration.iQue;
 
             // Load islands if DnMe+
             _selectedIsland = null;
@@ -1392,7 +1397,7 @@ namespace ACSE.WinForms
             }
 
             // Load villagers
-            if (SaveFile.SaveType != SaveType.CityFolk)
+            //if (SaveFile.SaveType != SaveType.CityFolk)
             {
                 await Task.Run(() => { LoadVillagers(save); });
                 CreateVillagerPanelControls();
@@ -1956,6 +1961,7 @@ namespace ACSE.WinForms
             }
 
             resettiCheckBox.Checked = player.Data.Reset;
+            PartTimeJobCheckBox.Checked = PartTimeJobCheckBox.Enabled && player.IsPartTimeJobActive();
 
             if (SaveFile.SaveGeneration == SaveGeneration.N3DS)
             {
@@ -2637,6 +2643,22 @@ namespace ACSE.WinForms
 
                                 islandItemEditor.SetNewBackgroundImage(
                                     GetAcreImage(selectedIslandAcreIds[idx]));
+
+                                // TODO: This is not e+ only.
+                                _islanderEditor?.Dispose();
+                                _islanderEditor = new VillagerControl(this, 15, Save.SaveInstance, _selectedIsland.Islander,
+                                    _villagerDatabase, _villagerNames, _personalityDatabase)
+                                {
+                                    Location = new Point(_townMapTotalSize * 2 + 20, 10)
+                                };
+
+                                // This part is e+ exclusive, though.
+                                _islanderEditor.VillagerChanged += delegate
+                                {
+                                    _selectedIsland?.ResetIslanderHasAppeared();
+                                };
+
+                                islandPanel.Controls.Add(_islanderEditor);
                             }
                             else
                             {
@@ -2747,6 +2769,26 @@ namespace ACSE.WinForms
             _selectedHouse = _houses[houseTabSelect.SelectedIndex];
             if (_selectedHouse != null)
                 ReloadHouse(_selectedHouse);
+        }
+
+        private void HouseOwnerComboBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_loading || !houseOwnerComboBox.Enabled || _selectedHouse == null ||
+                houseOwnerComboBox.SelectedIndex < 0) return;
+
+            switch (houseOwnerComboBox.SelectedIndex)
+            {
+                case 0:
+                    _selectedHouse.Owner = null;
+                    _selectedHouse.Data.OwningPlayerId = 0xFFFF;
+                    _selectedHouse.Data.OwningPlayerName = "";
+                    break;
+                default:
+                    _selectedHouse.Owner = _players[houseOwnerComboBox.SelectedIndex - 1];
+                    _selectedHouse.Data.OwningPlayerId = _selectedHouse.Owner?.Data.Identifier ?? 0xFFFF;
+                    _selectedHouse.Data.OwningPlayerName = _selectedHouse.Owner?.Data.Name ?? "";
+                    break;
+            }
         }
 
         private void ReloadHouse(House selectedHouse)
@@ -4586,6 +4628,12 @@ namespace ACSE.WinForms
             }
         }
 
+        private void PartTimeJobCheckBoxCheckChanged(object sender, EventArgs e)
+        {
+            if (_loading || SaveFile == null || _selectedPlayer == null || !PartTimeJobCheckBox.Enabled) return;
+            _selectedPlayer.SetPartTimeJobStatus(PartTimeJobCheckBox.Checked);
+        }
+
         private void ClearWeedsToolStripMenuItemClick(object sender, EventArgs e)
         {
             ClearWeedsButtonClick();
@@ -5118,6 +5166,9 @@ namespace ACSE.WinForms
             if (_islandHouseEditor == null) return;
             _islandHouseEditor.House = _selectedIsland.Cabana;
 
+
+            if (_islanderEditor == null) return;
+            _islanderEditor.SetVillager(_selectedIsland.Islander);
         }
 
         private void ReloadIslandItemPicture()

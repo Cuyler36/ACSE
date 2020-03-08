@@ -19,16 +19,16 @@ namespace ACSE.Core.Items
 
         public Item[] Items;
 
-        public Inventory(IReadOnlyList<ushort> inventoryData, Save save, Player player)
+        public Inventory(IReadOnlyList<ushort> inventoryData, Player player)
         {
             Items = new Item[inventoryData.Count];
             for(var i = 0; i < inventoryData.Count; i++)
             {
                 var item = new Item(inventoryData[i]);
 
-                if (save.SaveGeneration == SaveGeneration.GCN)
+                if (Save.SaveInstance.SaveGeneration == SaveGeneration.GCN)
                 {
-                    item.ItemFlag = GetItemFlag(save, player, i);
+                    item.ItemFlag = GetItemFlag(player, i);
                 }
 
                 Items[i] = item;
@@ -127,34 +127,34 @@ namespace ACSE.Core.Items
             return ids;
         }
 
-        public static AcItemFlag GetItemFlag(Save saveFile, Player player, int inventoryIdx)
+        public static AcItemFlag GetItemFlag(Player player, int inventoryIdx)
         {
-            switch (saveFile.SaveType)
+            switch (Save.SaveInstance.SaveType)
             {
                 case SaveType.AnimalCrossing:
-                    return (AcItemFlag)(saveFile.ReadUInt32(player.Offset + 0x88, saveFile.IsBigEndian) >> (inventoryIdx << 1) & 3);
+                    return (AcItemFlag)(Save.SaveInstance.ReadUInt32(player.Offset + 0x88, Save.SaveInstance.IsBigEndian) >> (inventoryIdx << 1) & 3);
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                    return (AcItemFlag)(saveFile.ReadUInt32(player.Offset + 0x84, saveFile.IsBigEndian) >> (inventoryIdx << 1) & 3);
+                    return (AcItemFlag)(Save.SaveInstance.ReadUInt32(player.Offset + 0x84, Save.SaveInstance.IsBigEndian) >> (inventoryIdx << 1) & 3);
                 default:
                     return AcItemFlag.None;
             }
         }
 
-        public static void SetItemFlag(Save saveFile, Player player, AcItemFlag flag, int inventoryIdx)
+        public static void SetItemFlag(Player player, AcItemFlag flag, int inventoryIdx)
         {
             var flagIdx = inventoryIdx << 1;
             var flagValue = (uint)flag & 3;
-            switch (saveFile.SaveType)
+            switch (Save.SaveInstance.SaveType)
             {
                 case SaveType.AnimalCrossing:
-                    saveFile.Write(player.Offset + 0x88, (saveFile.ReadUInt32(player.Offset + 0x88, saveFile.IsBigEndian) & ~(3 << flagIdx)) | (flagValue << flagIdx));
+                    Save.SaveInstance.Write(player.Offset + 0x88, (Save.SaveInstance.ReadUInt32(player.Offset + 0x88, Save.SaveInstance.IsBigEndian) & ~(3 << flagIdx)) | (flagValue << flagIdx));
                     break;
                 case SaveType.DoubutsuNoMoriPlus:
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
-                    saveFile.Write(player.Offset + 0x84, (saveFile.ReadUInt32(player.Offset + 0x84, saveFile.IsBigEndian) & ~(3 << flagIdx)) | (flagValue << flagIdx));
+                    Save.SaveInstance.Write(player.Offset + 0x84, (Save.SaveInstance.ReadUInt32(player.Offset + 0x84, Save.SaveInstance.IsBigEndian) & ~(3 << flagIdx)) | (flagValue << flagIdx));
                     break;
             }
         }

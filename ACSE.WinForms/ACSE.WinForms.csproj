@@ -9,12 +9,28 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>ACSE.WinForms</RootNamespace>
     <AssemblyName>ACSE</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -85,6 +101,12 @@
     <Compile Include="Controls\ItemEditor.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MessageEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MessageEditor.Designer.cs">
+      <DependentUpon>MessageEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OffsetablePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -128,6 +150,12 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="MailEditorForm\MailEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MailEditorForm\MailEditorForm.Designer.cs">
+      <DependentUpon>MailEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SecureValueForm\SecureValueForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,8 +189,14 @@
     <EmbeddedResource Include="AboutBox\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MessageEditor.resx">
+      <DependentUpon>MessageEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ItemColorEditor\ItemColorEditor.resx">
       <DependentUpon>ItemColorEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MailEditorForm\MailEditorForm.resx">
+      <DependentUpon>MailEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SecureValueForm\SecureValueForm.resx">
       <DependentUpon>SecureValueForm.cs</DependentUpon>
@@ -1396,6 +1430,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\CF_Items_en.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CF_Villagers_en.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\DBNM_e_Plus_Acres_en.txt">
@@ -5646,6 +5683,18 @@
     <Content Include="Resources\WW_Villagers_en.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -561,7 +561,7 @@
 0x12A8, Billiard Table
 0x12AC, Famous Painting
 0x12B0, Basic Painting
-0x12B4, Scarying Painting
+0x12B4, Scary Painting
 0x12B8, Moving Painting
 0x12BC, Flowery Painting
 0x12C0, Common Painting
@@ -1383,7 +1383,7 @@
 0x1F80, T-rex D
 0x1F84, Bronto D
 0x1F88, Ptera D
-0x1F8C, HUTABAD
+0x1F8C, Plesio D
 0x1F90, Mammoth D
 0x1F94, Stego D
 0x1F98, Stego D2
@@ -2094,7 +2094,7 @@
 0x251F, Present (Golden Net)
 0x2520, Present (Golden Axe)
 0x2521, Present (Golden Shovel)
-0x2522, Present(Golden Rod)
+0x2522, Present (Golden Rod)
 0x2523, Exercise Card
 0x2524, Exercise Card
 0x2525, Exercise Card

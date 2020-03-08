@@ -515,9 +515,9 @@ namespace ACSE.Core.Generators
 
         #region River Variables
         // River Variables
-        private static readonly byte[] river1_album_data   = new byte[7] { 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C };
-        private static readonly byte[] river2_album_data   = new byte[7] { 0x1D, 0x1E, 0x1F, 0x20, 0x21, 0xFF, 0xFF };
-        private static readonly byte[] river3_album_data   = new byte[7] { 0x22, 0xFF, 0xFF, 0x23, 0x24, 0x25, 0x26 };
+        private static readonly byte[] river1_album_data = new byte[7] { 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C };
+        private static readonly byte[] river2_album_data = new byte[7] { 0x1D, 0x1E, 0x1F, 0x20, 0x21, 0xFF, 0xFF };
+        private static readonly byte[] river3_album_data = new byte[7] { 0x22, 0xFF, 0xFF, 0x23, 0x24, 0x25, 0x26 };
         private static readonly byte[] river_no_album_data = new byte[7] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
 
         private static readonly byte[][] river_cliff_album_data = new byte[7][]
@@ -699,6 +699,21 @@ namespace ACSE.Core.Generators
             0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
         };
 
+        // Unused 3-layer town layout found in DnM+. It was removed in the transition to Animal Crossing.
+        private static readonly byte[] step3_blocksD = new byte[70]
+        {
+            0x05, 0x00, 0x00, 0x00, 0x00, 0x01, 0x08,
+            0x09, 0x0c, 0x0c, 0x0b, 0x0c, 0x0d, 0x0a,
+            0x3d, 0x0f, 0x13, 0x0e, 0x2e, 0x2d, 0x04,
+            0x02, 0x27, 0x15, 0x0f, 0x16, 0x0f, 0x3e,
+            0x3d, 0x0f, 0x0f, 0x0f, 0x1a, 0x27, 0x04,
+            0x02, 0x27, 0x27, 0x27, 0x1c, 0x0f, 0x3e,
+            0x50, 0x27, 0x27, 0x27, 0x28, 0x27, 0x51,
+            0x65, 0x65, 0x65, 0x65, 0x65, 0x65, 0x65,
+            0x53, 0x53, 0x53, 0x66, 0x62, 0x63, 0x66,
+            0x53, 0x53, 0x53, 0x67, 0x67, 0x67, 0x67
+        };
+
         private static readonly byte[][] step3_blockss = new byte[10][]
         {
             step3_blocks3, step3_blocks7, step3_blocks7R, step3_blocks8,
@@ -708,45 +723,45 @@ namespace ACSE.Core.Generators
 
         private static readonly Dictionary<byte, ushort[]> TownAcrePool = new Dictionary<byte, ushort[]>
         {
-            { 0x00, new ushort[] {0x0324} },
-            { 0x01, new ushort[] {0x0328} },
-            { 0x02, new ushort[] {0x032C} },
+            { 0x00, new ushort[] {0x0324} }, // Upper Border Cliff
+            { 0x01, new ushort[] {0x0328} }, // Upper Border Cliff w/ River
+            { 0x02, new ushort[] {0x032C} }, // Left Border Cliff
             // 0x03?
-            { 0x04, new ushort[] {0x0338} },
-            { 0x05, new ushort[] {0x0344} },
+            { 0x04, new ushort[] {0x0338} }, // Right Border Cliff
+            { 0x05, new ushort[] {0x0344} }, // Left Border Corner Cliff
             // 0x06?
             // 0x07?
-            { 0x08, new ushort[] {0x0348} },
-            { 0x09, new ushort[] {0x0334} },
-            { 0x0A, new ushort[] {0x0340} },
-            { 0x0B, new ushort[] {0x0154, 0x02F0, 0x02F4} },
+            { 0x08, new ushort[] {0x0348} }, // Right Border Corner Cliff
+            { 0x09, new ushort[] {0x0334} }, // Left Border Cliff w/ Tunnel
+            { 0x0A, new ushort[] {0x0340} }, // Right Border Cliff w/ Tunnel
+            { 0x0B, new ushort[] {0x0154, 0x02F0, 0x02F4} }, // Train Stations
             { 0x0C, new ushort[] {0x0118, 0x0294, 0x0298} }, // Dump Acres
-            { 0x0D, new ushort[] {0x0070, 0x02B8, 0x02BC, 0x02C0, 0x02C4} },
-            { 0x0E, new ushort[] {0x0358, 0x035C, 0x0360} },
-            { 0x0F, new ushort[] {0x009C, 0x015C, 0x0160, 0x0164, 0x0168} },
-            { 0x10, new ushort[] {0x00A8, 0x016C, 0x01F4} },
-            { 0x11, new ushort[] {0x00AC, 0x01A0, 0x01F0} },
-            { 0x12, new ushort[] {0x00B4, 0x01B0, 0x01EC} },
-            { 0x13, new ushort[] {0x00C0, 0x01B4, 0x01E8} },
-            { 0x14, new ushort[] {0x00CC, 0x01B8, 0x0218} },
-            { 0x15, new ushort[] {0x00D4, 0x01A4, 0x021C} },
-            { 0x16, new ushort[] {0x0084, 0x0200, 0x0204} },
-            { 0x17, new ushort[] {0x008C, 0x0210} },
-            { 0x18, new ushort[] {0x00B0, 0x019C} },
-            { 0x19, new ushort[] {0x00B8, 0x01C4} },
-            { 0x1A, new ushort[] {0x006C, 0x0214} },
-            { 0x1B, new ushort[] {0x00D0, 0x0198} },
-            { 0x1C, new ushort[] {0x0138, 0x01CC} },
-            { 0x1D, new ushort[] {0x00A0, 0x01A8, 0x0208} },
-            { 0x1E, new ushort[] {0x0090, 0x0244} },
-            { 0x1F, new ushort[] {0x00F4, 0x0248} },
-            { 0x20, new ushort[] {0x00BC, 0x01C8} },
-            { 0x21, new ushort[] {0x00C4, 0x01D4} },
-            { 0x22, new ushort[] {0x00A4, 0x01AC, 0x020C} },
-            { 0x23, new ushort[] {0x013C, 0x01D8} },
-            { 0x24, new ushort[] {0x00C8, 0x01E4} },
-            { 0x25, new ushort[] {0x00FC} },
-            { 0x26, new ushort[] {0x00F8, 0x0414} },
+            { 0x0D, new ushort[] {0x0070, 0x02B8, 0x02BC, 0x02C0, 0x02C4} }, // Rivers w/ Train Track
+            { 0x0E, new ushort[] {0x0358, 0x035C, 0x0360} }, // Player House Acres
+            { 0x0F, new ushort[] {0x009C, 0x015C, 0x0160, 0x0164, 0x0168} }, // Horizontal Cliffs
+            { 0x10, new ushort[] {0x00A8, 0x016C, 0x01F4} }, // Left Corner Cliffs
+            { 0x11, new ushort[] {0x00AC, 0x01A0, 0x01F0} }, // Left Side Cliffs
+            { 0x12, new ushort[] {0x00B4, 0x01B0, 0x01EC} }, // Left Side Inverted Cliffs
+            { 0x13, new ushort[] {0x00C0, 0x01B4, 0x01E8} }, // Right Side Inverted Cliffs
+            { 0x14, new ushort[] {0x00CC, 0x01B8, 0x0218} }, // Right Side Cliffs
+            { 0x15, new ushort[] {0x00D4, 0x01A4, 0x021C} }, // Right Side Corner Cliffs
+            { 0x16, new ushort[] {0x0084, 0x0200, 0x0204} }, // South Flowing Waterfall w/ Horizontal Cliff
+            { 0x17, new ushort[] {0x008C, 0x0210} }, // South Flowing Waterfall w/ Left Corner Cliff
+            { 0x18, new ushort[] {0x00B0, 0x019C} }, // South Flowing River (Upper) w/ Left Cliff
+            { 0x19, new ushort[] {0x00B8, 0x01C4} }, // South Flowing River (Upper) w/ Left Inverted Corner Cliff
+            { 0x1A, new ushort[] {0x006C, 0x0214} }, // South Flowing Waterfall w/ Right Inverted Corner Cliff
+            { 0x1B, new ushort[] {0x00D0, 0x0198} }, // South Flowing River (Lower) w/ Right Cliff
+            { 0x1C, new ushort[] {0x0138, 0x01CC} }, // South Flowing River (Lower) w/ Right Corner Cliff
+            { 0x1D, new ushort[] {0x00A0, 0x01A8, 0x0208} }, // East Flowing River (Upper) w/ Horizontal Cliff
+            { 0x1E, new ushort[] {0x0090, 0x0244} }, // East Flowing Waterfall w/ Left Corner Cliff
+            { 0x1F, new ushort[] {0x00F4, 0x0248} }, // East Flowing Waterfall w/ Left Cliff
+            { 0x20, new ushort[] {0x00BC, 0x01C8} }, // East Flowing River (Upper) w/ Inverted Left Corner Cliff
+            { 0x21, new ushort[] {0x00C4, 0x01D4} }, // East Flowing River (Upper) w/ Inverted Right Corner Cliff
+            { 0x22, new ushort[] {0x00A4, 0x01AC, 0x020C} }, // West Flowing River (Upper) w/ Horizontal Cliff
+            { 0x23, new ushort[] {0x013C, 0x01D8} }, // West Flowing River (Upper) w/ Inverted Left Corner Cliff
+            { 0x24, new ushort[] {0x00C8, 0x01E4} }, // West Flowing River (Upper) w/ Inverted Right Corner Cliff
+            { 0x25, new ushort[] {0x00FC} }, // West Flowing Waterfall w/ Right Cliff
+            { 0x26, new ushort[] {0x00F8, 0x0414} }, // West Flowing Waterfall w/ Right Corner Cliff
             { 0x27, new ushort[] {0x0094, 0x0098, 0x0274, 0x0278, 0x027C, 0x0280, 0x0284, 0x0288, 0x028C, 0x0290} }, // Grass acres
             { 0x28, new ushort[] {0x00D8, 0x0170, 0x0174, 0x0220} }, // River south
             { 0x29, new ushort[] {0x00DC, 0x01BC, 0x01DC, 0x0224} }, // River east

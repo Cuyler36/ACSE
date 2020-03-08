@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using ACSE.Core.Debug;
@@ -145,6 +146,22 @@ namespace ACSE.Core.Town.Acres
             return IsItemBuried(item, generation);
         }
 
+        public bool FindItem(ushort requestedItem, out int x, out int y)
+        {
+            x = y = -1;
+            if (Items == null || Items.Any(i => i.ItemId == requestedItem) == false) return false;
+
+            for (var i = 0; i < 256; i++)
+                if (Items[i].ItemId == requestedItem)
+                {
+                    x = i % 16;
+                    y = i / 16;
+                    return true;
+                }
+
+            return false;
+        }
+
         /// <summary>
         /// Loads the Acre's default <see cref="Item"/>s from a file.
         /// </summary>
@@ -187,6 +204,16 @@ namespace ACSE.Core.Town.Acres
             }
 
             return false;
+        }
+
+        // TODO: Create an easier to use acre image manager to reduce memory footprint.
+        public Image AcreImage
+        {
+            get
+            {
+                return null;
+            }
+            set { }
         }
     }
 }

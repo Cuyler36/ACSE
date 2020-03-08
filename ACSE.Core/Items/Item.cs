@@ -70,6 +70,8 @@ namespace ACSE.Core.Items
             Type = ItemData.GetItemType(ItemId, Save.SaveInstance?.SaveType ?? SaveType.AnimalCrossing);
         }
 
+        public override string ToString() => Name;
+
         public uint ToUInt32()
         {
             return (uint)((Flag1 << 24) + (Flag2 << 16) + ItemId);

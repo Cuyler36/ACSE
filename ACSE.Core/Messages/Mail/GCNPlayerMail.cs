@@ -1,5 +1,4 @@
 ﻿using ACSE.Core.Items;
-using ACSE.Core.Players;
 using ACSE.Core.Saves;
 
 namespace ACSE.Core.Messages.Mail
@@ -22,13 +21,14 @@ namespace ACSE.Core.Messages.Mail
             public ushort TownId;
             public PersonType PersonType;
 
-            public GCMailName(Save saveFile, int offset)
+            public GCMailName(Save saveFile, int offset, int stringSize = 8)
             {
-                Name = saveFile.ReadString(offset, 8);
-                TownName = saveFile.ReadString(offset + 8, 8);
-                PlayerId = saveFile.ReadUInt16(offset + 0x10, true);
-                TownId = saveFile.ReadUInt16(offset + 0x12, true);
-                PersonType = (PersonType) saveFile.ReadByte(offset + 0x14);
+                var stringSizeDoubled = stringSize * 2;
+                Name = saveFile.ReadString(offset, stringSize);
+                TownName = saveFile.ReadString(offset + stringSize, stringSize);
+                PlayerId = saveFile.ReadUInt16(offset + stringSizeDoubled, true);
+                TownId = saveFile.ReadUInt16(offset + stringSizeDoubled + 2, true);
+                PersonType = (PersonType) saveFile.ReadByte(offset + stringSizeDoubled + 4);
             }
         }
 
@@ -41,33 +41,49 @@ namespace ACSE.Core.Messages.Mail
         public LetterType LetterType;
         public LetterSenderType SenderType;
 
-        public GcnPlayerMail(Save saveFile, Player owner, int index)
+        public GcnPlayerMail(Save saveFile, int offset, int index = -1)
         {
             Index = index;
+            Offset = offset;
+            var stringSize = -1;
+
+
             switch (saveFile.SaveType)
             {
                 case SaveType.DoubutsuNoMoriPlus:
                     break;
                 case SaveType.AnimalCrossing:
-                    Offset = owner.Offset + 0x4E0 + index * 0x12A;
-                    RecipientInfo = new GCMailName(saveFile, Offset);
-                    SenderInfo = new GCMailName(saveFile, Offset + 0x16);
-                    Present = new Item(saveFile.ReadUInt16(Offset + 0x2C, true)); // TODO: There has to be a flag that tells the game if the item is wrapped or a quest item.
-                    LetterType = (LetterType) saveFile.ReadByte(Offset + 0x2E); // "Font"
-                    HeaderReceipiantStartOffset = saveFile.ReadByte(Offset + 0x2F); // How many characters until the recipient's name should be inserted
-                    SenderType = (LetterSenderType) saveFile.ReadByte(Offset + 0x30);
-                    StationaryType = new Item((ushort)(0x2000 | saveFile.ReadByte(Offset + 0x31)));
+                    stringSize = 8;
+
                     Header = saveFile.ReadString(Offset + 0x32, 0x18);
                     Contents = saveFile.ReadString(Offset + 0x4A, 0xC0);
                     Footer = saveFile.ReadString(Offset + 0x10A, 0x20);
                     break;
                 case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
+                    stringSize = 6;
+
+                    Header = saveFile.ReadString(Offset + 0x2A, 0xA);
+                    Contents = saveFile.ReadString(Offset + 0x38, 0x60);
+                    Footer = saveFile.ReadString(Offset + 0xA6, 0x10);
                     break;
             }
+
+            var mailNameSize = stringSize * 2 + 6;
+            RecipientInfo = new GCMailName(saveFile, Offset);
+            SenderInfo = new GCMailName(saveFile, Offset + mailNameSize);
+
+            var mailInfoStart = Offset + mailNameSize * 2;
+            Present = new Item(saveFile.ReadUInt16(mailInfoStart, true));
+            LetterType = (LetterType) saveFile.ReadByte(mailInfoStart + 2);
+            HeaderReceipiantStartOffset = saveFile.ReadByte(mailInfoStart + 3);
+            SenderType = (LetterSenderType) saveFile.ReadByte(mailInfoStart + 4);
+            StationaryType = new Item((ushort) (0x2000 | saveFile.ReadByte(mailInfoStart + 5)));
         }
 
         public string GetFormattedMailString()
-            => string.Format("{0}{1}{2}\n{3}\n{4}",
-                Header.Substring(0, HeaderReceipiantStartOffset), Receipiant, Header.Substring(HeaderReceipiantStartOffset), Contents, Footer);
+            => $"{Header.Substring(0, HeaderReceipiantStartOffset)}{RecipientInfo.Name}{Header.Substring(HeaderReceipiantStartOffset)}\n{Contents}\n{Footer}";
+
+        public bool IsMailUsed => LetterType == LetterType.None;
     }
 }

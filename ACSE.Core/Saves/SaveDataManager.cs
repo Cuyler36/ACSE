@@ -114,7 +114,7 @@ namespace ACSE.Core.Saves
             BuriedData = 0xF43C,
             BuriedDataSize = 0x3C0,
             Checksum = 0x12,
-            GrassType = -1, // Find
+            GrassType = -1, // Has no grass type.
         };
 
         public static readonly Offsets DoubutsuNoMoriPlusOffsets = new Offsets
@@ -242,7 +242,7 @@ namespace ACSE.Core.Saves
             BuriedData = 0xF43C,
             BuriedDataSize = 0x3C0,
             Checksum = 0x12,
-            GrassType = -1, // Find
+            GrassType = -1, // Has no grass types.
         };
 
         public static readonly Offsets WildWorldOffsets = new Offsets
@@ -284,6 +284,8 @@ namespace ACSE.Core.Saves
             SaveSize = 0x40F340,
             PlayerStart = 0,
             PlayerSize = 0x86C0,
+            VillagerData = 0x21B20,
+            VillagerSize = 0x3040,
             Buildings = 0x5EB0A,
             BuildingsCount = 0x33, //Not sure
             AcreData = 0x68414, //Don't forget about the additional acres before?
@@ -307,7 +309,6 @@ namespace ACSE.Core.Saves
             IslandWorldData = -1,
             PastVillagers = -1,
             PublicWorkProjects = -1,
-            VillagerData = -1, //finish this sometime
             IslandAcreData = -1,
             IslandBuildings = -1,
             TrainStationType = -1,

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ACSE.Core.Items;
 using ACSE.Core.Patterns;
 using ACSE.Core.Players;
@@ -603,6 +604,10 @@ namespace ACSE.Core.Housing
             }
         }
 
+        public static Player GetOwner(House house) => Save.SaveInstance?.Players.FirstOrNull(o =>
+            o.Exists && o.Data.Identifier == house.Data.OwningPlayerId &&
+            o.Data.Name == house.Data.OwningPlayerName);
+
         public static House[] LoadHouses(Save saveFile)
         {
             var houseCount = saveFile.SaveGeneration == SaveGeneration.NDS ? 1 : 4;
@@ -612,6 +617,7 @@ namespace ACSE.Core.Housing
             {
                 _houses[i] = new House(i, saveFile.SaveDataStartOffset + saveFile.SaveInfo.SaveOffsets.HouseData + i * saveFile.SaveInfo.SaveOffsets.HouseDataSize);
             }
+
             return _houses;
         }
     }

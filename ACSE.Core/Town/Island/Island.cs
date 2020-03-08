@@ -29,7 +29,15 @@ namespace ACSE.Core.Town.Island
         private const int BuriedData = 0x15A0;
         private const int IslandLeftAcreData = 0x15E0;
         private const int IslandRightAcreData = 0x15E1;
+        private const int IslandGrassType = 0x15F8;
         private const int IslandInfoFlag = 0x15FB;
+        
+        // Info:
+        // 0x00000000 = Haven't spoken to islander yet.
+        // Current Year, Month, Day = Spoke to islander, wll build house on next reload.
+        // 0xFFFFFFFF = House has been built.
+        // 0x80008080 = Reset islander by importing a new islander via the wishing well after house is built.
+        private const int IslanderAppearYearMonthDay = 0x1600;
 
         #endregion
 
@@ -80,8 +88,8 @@ namespace ACSE.Core.Town.Island
             Cabana = new House(-1, offset + CottageData, 1, 0);
             Cabana.Data.Rooms[0].Name = "Cabana";
             
-            FlagPattern = new Pattern(offset + FlagData, 0, saveFile);
-            Islander = new Villager(offset + IslanderData, 0, saveFile);
+            FlagPattern = new Pattern(offset + FlagData, 0);
+            Islander = new Villager(offset + IslanderData, 15, saveFile);
             Purchased = IsPurchased();
 
             IslandLeftAcreIndex = saveFile.ReadByte(offset + IslandLeftAcreData);
@@ -123,9 +131,11 @@ namespace ACSE.Core.Town.Island
             }
         }
 
-        // TODO: Make a toggle to enable/disable the island.
         private bool IsPurchased()
             => (_saveFile.ReadByte(_offset + IslandInfoFlag) & 0x80) == 0x80;
+
+        public void SetPurchased(bool purchased)
+            => _saveFile.Write(_offset + IslandInfoFlag, _saveFile.ReadByte(_offset + IslandInfoFlag).SetBit(7, purchased));
 
         public ushort[] GetAcreIds()
         {
@@ -196,6 +206,31 @@ namespace ACSE.Core.Town.Island
             return IsItemBuried(acre, item, generation);
         }
 
+        private bool FindIslandItem(ushort itemId, out int acreX, out int x, out int y)
+        {
+            acreX = x = y = -1;
+            for (var i = 0; i < 2; i++)
+                if (Acres[i].FindItem(itemId, out x, out y))
+                {
+                    acreX = 4 + i;
+                    return true;
+                }
+
+            return false;
+        }
+
+        // NOTE: The "castaway" islander will not spawn if the house coordinates are not set.
+        public void ResetIslanderHasAppeared()
+        {
+            // Search for Islander House.
+            if (FindIslandItem(0x5851, out var acreX, out var x, out var y))
+                Acres[acreX - 4].Items[y * 16 + x] = new Item(0x5871); // Replace it with the islander sign.
+            else if (FindIslandItem(0x5871, out acreX, out x, out y) == false) return; // If we don't find the sign then return immediately.
+
+            Islander.Data.HouseCoordinates = new byte[] { (byte)acreX, 8, (byte)x, (byte)y }; // Update "House Coordinates", which point to the sign.
+            _saveFile.Write(_offset + IslanderAppearYearMonthDay, 0u, true); // Reset the "appear date" which is actually the date the house is built.
+        }
+
         public void Write()
         {
             if (Owner != null)
@@ -218,7 +253,8 @@ namespace ACSE.Core.Town.Island
             // Save Cottage
             Cabana.Data.Rooms[0].Write();
 
-            // TODO: Save Islander
+            //Save Islander
+            Islander.Write(TownName);
 
             // Save Buried Data
             _saveFile.Write(_offset + BuriedData, BuriedDataArray);

@@ -1415,7 +1415,7 @@
 0x1FC0, T-rex D
 0x1FC4, Bronto D
 0x1FC8, Ptera D
-0x1FCC, HUTABAD
+0x1FCC, Plesio D
 0x1FD0, Mammoth D
 0x1FD4, Stego D
 0x1FD8, Stego D2
@@ -2098,14 +2098,14 @@
 0x24FE, Melon Gingham
 0x24FF, Mannekin Shirt
 0x2500, Quest Letter
-0x2501, Quest Item
-0x2502, Quest Money
-0x2503, Videotape
-0x2504, Organizer
-0x2505, Pokémon Pikachu
-0x2506, Comic Book
-0x2507, Picture Book
-0x2508, Game Boy
+0x2501, Clothes
+0x2502, Fishing Rod
+0x2503, Net
+0x2504, Shovel
+0x2505, Axe
+0x2506, Pinwheel
+0x2507, Fan
+0x2508, Gyroid
 0x2509, Camera
 0x250A, Watch
 0x250B, Handkerchief
@@ -3259,7 +3259,7 @@
 0x586E, Signboard (34)
 0x586F, Signboard (35)
 0x5870, Signboard (36)
-// Probably more Signboards
+0x5871, Islander Signboard
 0x8000, Beta Paper Airplane (Replicates Limitlessly)
 0x8003, Beta Yellow/Brown Rotating Cube
 0xA000, Upper Left House's Mailbox

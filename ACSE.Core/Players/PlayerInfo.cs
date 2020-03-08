@@ -108,6 +108,7 @@ namespace ACSE.Core.Players
         public AcDate RegisterDate;
         public AcDate Birthday;
         public bool Reset;
+        public byte ResetCount;
         public byte Gender;
         public byte HairType;
         public byte HairColor;
@@ -313,7 +314,7 @@ namespace ACSE.Core.Players
             TownIdentifierSize = 2,
             Gender = 0x10, //
             FaceType = 0x11, //
-            // ResetCounter = 0x13
+            ResetCount = 0x13,
             Pockets = 0x64,
             PocketsCount = 15,
             Bells = 0x94,
@@ -322,6 +323,7 @@ namespace ACSE.Core.Players
             HeldItem = 0x874,
             InventoryBackground = 0xFF0,
             Shirt = 0xFF6,
+            // Luck = 0x1014,
             Birthday = 0x1018,
             BirthdaySize = 2,
             Reset = 0x1064,
@@ -357,7 +359,6 @@ namespace ACSE.Core.Players
             NewLeafWallet = -1,
             MeowCoupons = -1,
             IslandMedals = -1,
-            ResetCount = -1,
             IslandBox = -1,
         };
 

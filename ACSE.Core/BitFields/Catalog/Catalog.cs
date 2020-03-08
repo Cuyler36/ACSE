@@ -21,12 +21,33 @@ namespace ACSE.Core.BitFields.Catalog
             { 0x1173, 0xFC }
         };
 
+        public static readonly Dictionary<int, byte> WildWorldCatalogBitmap = new Dictionary<int, byte>
+        {
+            { 0x1BDD, 0x01 },
+            { 0x1BDE, 0x00 },
+            { 0x1BDF, 0x00 },
+            { 0x1BE0, 0x00 },
+            { 0x1BE1, 0x00 },
+            { 0x1BE2, 0x00 },
+            { 0x1BE3, 0x00 },
+            { 0x1BE4, 0x00 },
+            { 0x1BE5, 0x00 },
+            { 0x1BE6, 0x00 },
+            { 0x1BE7, 0x00 },
+            { 0x1BE8, 0x00 },
+            { 0x1BE9, 0x00 },
+            { 0x1BEA, 0x00 },
+            { 0x1BEB, 0xFE }
+        };
+
         private static int GetCatalogBaseOffset(SaveType saveType)
         {
             switch (saveType)
             {
                 case SaveType.AnimalCrossing:
                     return 0x1108;
+                case SaveType.WildWorld:
+                    return 0x1B48;
                 case SaveType.NewLeaf:
                     return 0x6C70;
                 case SaveType.WelcomeAmiibo:
@@ -42,6 +63,8 @@ namespace ACSE.Core.BitFields.Catalog
             {
                 case SaveType.AnimalCrossing:
                     return 0xD4;
+                case SaveType.WildWorld:
+                    return 0x124; // Needs verification.
                 case SaveType.NewLeaf:
                     return 0xE0;
                 case SaveType.WelcomeAmiibo:
@@ -57,6 +80,8 @@ namespace ACSE.Core.BitFields.Catalog
             {
                 case SaveType.AnimalCrossing:
                     return AnimalCrossingCatalogBitmap;
+                case SaveType.WildWorld:
+                    return WildWorldCatalogBitmap;
                 default:
                     return null;
             }

@@ -33,8 +33,7 @@ namespace ACSE.Core.Utilities
             Year = (uint)now.Year;
             IsPm = Hour >= 12;
 
-            DateTimeString =
-                $"{((Hour % 12) == 0 ? 12 : Hour % 12)}:{Minute:D2}:{Second:D2} {(IsPm ? "PM" : "AM")}, {Month}/{Day}/{Year}";
+            DateTimeString = Format("(h):(m):(s) (a), (M)/(d)/(y)");
         }
 
         public AcDate(byte[] dateData)
@@ -78,6 +77,11 @@ namespace ACSE.Core.Utilities
                             Day = dateData[0];
                             Month = dateData[1];
                             break;
+                        case 3:
+                            Day = dateData[0];
+                            Month = dateData[1];
+                            Year = 2000u + dateData[2];
+                            break;
                         case 4:
                         case 8:
                             break;
@@ -101,8 +105,7 @@ namespace ACSE.Core.Utilities
             }
             IsPm = Hour >= 12;
 
-            DateTimeString =
-                $"{((Hour % 12) == 0 ? 12 : Hour % 12)}:{Minute:D2}:{Second:D2} {(IsPm ? "PM" : "AM")}, {Month}/{Day}/{Year}";
+            DateTimeString = Format("(h):(m):(s) (a), (M)/(d)/(y)");
         }
 
         public string Format(string formatString)
@@ -114,11 +117,16 @@ namespace ACSE.Core.Utilities
             formatString = formatString.Replace("(d)", Day.ToString());
             formatString = formatString.Replace("(D)", Day.ToString("D2"));
             formatString = formatString.Replace("(w)", DayOfWeek.ToString());
-            formatString = formatString.Replace("(W)", Enum.GetName(typeof(DayOfWeek), DayOfWeek));
-            formatString = formatString.Replace("(mo)", Months[Month]);
+            formatString = formatString.Replace("(W)", ((DayOfWeek)DayOfWeek).ToString());
+
+            if (formatString.Contains("(mo)"))
+            {
+                formatString = formatString.Replace("(mo)", Months[Month]);
+            }
+
             formatString = formatString.Replace("(M)", Month.ToString("D2"));
             formatString = formatString.Replace("(y)", Year.ToString());
-            formatString = formatString.Replace("(Y)", Year.ToString().Substring(2, 2));
+            formatString = formatString.Replace("(Y)", Year.ToString("D4").Substring(2, 2));
             formatString = formatString.Replace("(a)", IsPm ? "PM" : "AM");
             formatString = formatString.Replace("(A)", IsPm ? "P.M." : "A.M.");
             return formatString;
@@ -158,6 +166,13 @@ namespace ACSE.Core.Utilities
                         (byte)(Year & 0x00FF),
                         (byte)Month,
                         (byte)Day
+                    };
+                case SaveGeneration.NDS:
+                    return new[]
+                    {
+                        (byte)Day,
+                        (byte)Month,
+                        (byte)Year
                     };
                 case SaveGeneration.N3DS:
                     return new[]

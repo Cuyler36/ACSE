@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
+using ACSE.Core.Players;
 using ACSE.Core.Saves;
+using ACSE.Core.Villagers;
 
-namespace ACSE.Core.Villagers.Quests
+namespace ACSE.Core.Quests
 {
     public enum QuestCategory
     {
@@ -51,6 +54,45 @@ namespace ACSE.Core.Villagers.Quests
 
     public static class GCNQuests
     {
+        // TODO: This should be moved to a generic quests class.
+        private static int GetErrandQuestInfoOffset()
+        {
+            switch (Save.SaveInstance.SaveType)
+            {
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DongwuSenlin:
+                    return 0xEE3C;
+
+                case SaveType.DoubutsuNoMoriPlus:
+                    return 0x19804;
+
+                case SaveType.AnimalCrossing:
+                    return 0x20550;
+
+                case SaveType.DoubutsuNoMoriEPlus:
+                case SaveType.AnimalForestEPlus:
+                    return 0x22478;
+
+                default:
+                    return -1;
+            }
+        }
+
+        public static bool IsPartTimeJobActive(this Player player)
+        {
+            var offset = GetErrandQuestInfoOffset();
+            return offset != -1 && Save.SaveInstance.ReadUInt32(offset, true, true).GetBit(player.Index + 2) == 1;
+        }
+
+        public static void SetPartTimeJobStatus(this Player player, bool enabled)
+        {
+            var offset = GetErrandQuestInfoOffset();
+            if (offset == -1) return;
+
+            var currentValue = Save.SaveInstance.ReadUInt32(offset, true, true);
+            Save.SaveInstance.Write(offset, currentValue.SetBit(player.Index + 2, enabled), true, true);
+        }
+
         public static void GetCurrentQuest(Save save, Villager villager)
         {
             byte questInfo;

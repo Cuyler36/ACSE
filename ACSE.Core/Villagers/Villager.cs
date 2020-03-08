@@ -33,6 +33,8 @@ namespace ACSE.Core.Villagers
 
             if (save.SaveType == SaveType.WildWorld)
                 Exists = _saveData.ReadByte(offset + Offsets.VillagerId) != 0 && _saveData.ReadByte(offset + Offsets.VillagerId) != 0xFF;
+            else if (save.SaveType == SaveType.CityFolk)
+                Exists = _saveData.ReadByte(offset) != 0;
             else
                 Exists = _saveData.ReadUInt16(offset + Offsets.VillagerId, save.IsBigEndian) != 0 &&
                          _saveData.ReadUInt16(offset + Offsets.VillagerId, save.IsBigEndian) != 0xFFFF;

@@ -33,12 +33,17 @@ namespace ACSE.WinForms.Controls
         private readonly Button _importDlcButton;
 
         /// <summary>
+        /// This event fires when the villager has been changed to another.
+        /// </summary>
+        public event EventHandler<Villager> VillagerChanged;
+
+        /// <summary>
         /// The index of the control.
         /// </summary>
         public readonly int Index;
 
         private readonly Save _saveFile;
-        private readonly Villager _villager;
+        private Villager _villager;
         private readonly Dictionary<ushort, SimpleVillager> _villagers;
         private readonly string[] _villagerNames;
         private readonly string[] _personalityTypes;
@@ -79,7 +84,7 @@ namespace ACSE.WinForms.Controls
                 AutoSize = false,
                 Size = new Size(45, 32),
                 TextAlign = ContentAlignment.MiddleCenter,
-                Text = index == 15 ? "Islander" : (index + 1).ToString()
+                Text = saveFile.SaveGeneration == SaveGeneration.GCN && index == 15 ? "Islander" : (index + 1).ToString()
             };
 
             var margin = CalculateControlVerticalMargin(_indexLabel);
@@ -246,7 +251,7 @@ namespace ACSE.WinForms.Controls
             }
         }
 
-        private void VillagerSelectionBoxChanged()
+        private void VillagerSelectionBoxChanged(bool fireChangedEvent = true)
         {
             if (_villagerSelectionBox.SelectedIndex < 0) return;
 
@@ -322,6 +327,9 @@ namespace ACSE.WinForms.Controls
                         : new Point(64 * ((_villager.Data.VillagerId & 0xFF) % 10),
                             64 * ((_villager.Data.VillagerId & 0xFF) / 10));
             }
+
+            if (fireChangedEvent)
+                VillagerChanged?.Invoke(this, _villager);
         }
 
         private void PersonalityChanged()
@@ -410,5 +418,12 @@ namespace ACSE.WinForms.Controls
 
         private int CalculateControlVerticalMargin(Control c)
             => (int) (0.5f * (Height - c.Height));
+
+        public void RefreshData() => VillagerSelectionBoxChanged(false);
+        public void SetVillager(Villager villager)
+        {
+            _villager = villager;
+            RefreshData();
+        }
     }
 }

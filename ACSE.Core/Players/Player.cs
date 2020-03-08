@@ -19,15 +19,18 @@ namespace ACSE.Core.Players
         public readonly int Index;
         public readonly int Offset;
         public bool Exists;
-        private readonly Save _saveData;
 
-        public Player(int offset, int idx, Save save)
+        public Player(int index)
         {
-            _saveData = save;
+            Index = index;
+        }
+
+        public Player(int offset, int idx)
+        {
             Index = idx;
             Offset = offset;
-            Offsets = PlayerInfo.GetPlayerInfo(save.SaveType);
-            Exists = _saveData.ReadByte(offset + Offsets.Identifier) != 0 && _saveData.ReadByte(offset + Offsets.Identifier) != 0xFF;
+            Offsets = PlayerInfo.GetPlayerInfo(Save.SaveInstance.SaveType);
+            Exists = Save.SaveInstance.ReadByte(offset + Offsets.Identifier) != 0 && Save.SaveInstance.ReadByte(offset + Offsets.Identifier) != 0xFF;
             if (!Exists) return;
 
             var playerDataType = typeof(PlayerData);
@@ -45,53 +48,53 @@ namespace ACSE.Core.Players
 
                         switch (field.Name)
                         {
-                            case "TownPassCardImage" when save.SaveGeneration == SaveGeneration.N3DS:
-                                playerDataType.GetField("TownPassCardData").SetValue(boxedData, _saveData.ReadByteArray(dataOffset, 0x1400));
+                            case "TownPassCardImage" when Save.SaveInstance.SaveGeneration == SaveGeneration.N3DS:
+                                playerDataType.GetField("TownPassCardData").SetValue(boxedData, Save.SaveInstance.ReadByteArray(dataOffset, 0x1400));
                                 currentField.SetValue(boxedData,
                                     ImageGeneration.GetTpcImage((byte[])playerDataType.GetField("TownPassCardData").GetValue(boxedData)));
                                 break;
-                            case "Reset" when save.SaveGeneration == SaveGeneration.GCN:
-                                currentField.SetValue(boxedData, _saveData.ReadUInt32(dataOffset, _saveData.IsBigEndian) != 0);
+                            case "Reset" when Save.SaveInstance.SaveGeneration == SaveGeneration.GCN:
+                                currentField.SetValue(boxedData, Save.SaveInstance.ReadUInt32(dataOffset, Save.SaveInstance.IsBigEndian) != 0);
                                 break;
                             default:
                                 if (fieldType == typeof(byte))
-                                    currentField.SetValue(boxedData, _saveData.ReadByte(dataOffset));
+                                    currentField.SetValue(boxedData, Save.SaveInstance.ReadByte(dataOffset));
                                 else if (fieldType == typeof(byte[]) && playerSaveInfoType.GetField(field.Name + "Count") != null)
-                                    currentField.SetValue(boxedData, _saveData.ReadByteArray(dataOffset,
+                                    currentField.SetValue(boxedData, Save.SaveInstance.ReadByteArray(dataOffset,
                                         (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(Offsets)));
                                 else if (fieldType == typeof(ushort))
-                                    currentField.SetValue(boxedData, _saveData.ReadUInt16(dataOffset, _saveData.IsBigEndian));
+                                    currentField.SetValue(boxedData, Save.SaveInstance.ReadUInt16(dataOffset, Save.SaveInstance.IsBigEndian));
                                 else if (fieldType == typeof(ushort[]))
-                                    currentField.SetValue(boxedData, _saveData.ReadUInt16Array(dataOffset,
-                                        (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(Offsets), _saveData.IsBigEndian));
+                                    currentField.SetValue(boxedData, Save.SaveInstance.ReadUInt16Array(dataOffset,
+                                        (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(Offsets), Save.SaveInstance.IsBigEndian));
                                 else if (fieldType == typeof(uint))
-                                    currentField.SetValue(boxedData, _saveData.ReadUInt32(dataOffset, _saveData.IsBigEndian));
+                                    currentField.SetValue(boxedData, Save.SaveInstance.ReadUInt32(dataOffset, Save.SaveInstance.IsBigEndian));
                                 else if (fieldType == typeof(string))
-                                    currentField.SetValue(boxedData, new AcString(_saveData.ReadByteArray(dataOffset,
-                                        (int)playerSaveInfoType.GetField(field.Name + "Size").GetValue(Offsets)), _saveData.SaveType).Trim());
+                                    currentField.SetValue(boxedData, new AcString(Save.SaveInstance.ReadByteArray(dataOffset,
+                                        (int)playerSaveInfoType.GetField(field.Name + "Size").GetValue(Offsets)), Save.SaveInstance.SaveType).Trim());
                                 else if (fieldType == typeof(Inventory))
-                                    if (save.SaveGeneration == SaveGeneration.N3DS)
-                                        currentField.SetValue(boxedData, new Inventory(_saveData.ReadUInt32Array(dataOffset,
+                                    if (Save.SaveInstance.SaveGeneration == SaveGeneration.N3DS)
+                                        currentField.SetValue(boxedData, new Inventory(Save.SaveInstance.ReadUInt32Array(dataOffset,
                                             (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(Offsets), false)));
                                     else
-                                        currentField.SetValue(boxedData, new Inventory(_saveData.ReadUInt16Array(dataOffset,
-                                            (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(Offsets), _saveData.IsBigEndian), save, this));
+                                        currentField.SetValue(boxedData, new Inventory(Save.SaveInstance.ReadUInt16Array(dataOffset,
+                                            (int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(Offsets), Save.SaveInstance.IsBigEndian), this));
                                 else if (fieldType == typeof(Item))
-                                    if (save.SaveGeneration == SaveGeneration.N3DS)
-                                        currentField.SetValue(boxedData, new Item(_saveData.ReadUInt32(dataOffset, false)));
+                                    if (Save.SaveInstance.SaveGeneration == SaveGeneration.N3DS)
+                                        currentField.SetValue(boxedData, new Item(Save.SaveInstance.ReadUInt32(dataOffset, false)));
                                     else
-                                        currentField.SetValue(boxedData, new Item(_saveData.ReadUInt16(dataOffset, _saveData.IsBigEndian)));
+                                        currentField.SetValue(boxedData, new Item(Save.SaveInstance.ReadUInt16(dataOffset, Save.SaveInstance.IsBigEndian)));
                                 else if (fieldType == typeof(Item[]))
                                 {
                                     if (field.Name.Equals("Dressers"))
                                     {
-                                        switch (_saveData.SaveGeneration)
+                                        switch (Save.SaveInstance.SaveGeneration)
                                         {
                                             case SaveGeneration.NDS:
-                                                dataOffset = _saveData.SaveDataStartOffset + 0x15430 + 0xB4 * Index; // Terrible hack
+                                                dataOffset = Save.SaveInstance.SaveDataStartOffset + 0x15430 + 0xB4 * Index; // Terrible hack
                                                 break;
                                             case SaveGeneration.Wii:
-                                                dataOffset = _saveData.SaveDataStartOffset + 0x1F3038 + 0x140 * Index;
+                                                dataOffset = Save.SaveInstance.SaveDataStartOffset + 0x1F3038 + 0x140 * Index;
                                                 break;
                                         }
                                     }
@@ -99,28 +102,28 @@ namespace ACSE.Core.Players
                                     var itemArray = new Item[(int)playerSaveInfoType.GetField(field.Name + "Count").GetValue(Offsets)];
                                     for (var i = 0; i < itemArray.Length; i++)
                                     {
-                                        if (save.SaveGeneration == SaveGeneration.N3DS)
-                                            itemArray[i] = new Item(_saveData.ReadUInt32(dataOffset + i * 4, false));
+                                        if (Save.SaveInstance.SaveGeneration == SaveGeneration.N3DS)
+                                            itemArray[i] = new Item(Save.SaveInstance.ReadUInt32(dataOffset + i * 4, false));
                                         else
-                                            itemArray[i] = new Item(_saveData.ReadUInt16(dataOffset + i * 2, _saveData.IsBigEndian));
+                                            itemArray[i] = new Item(Save.SaveInstance.ReadUInt16(dataOffset + i * 2, Save.SaveInstance.IsBigEndian));
                                     }
                                     currentField.SetValue(boxedData, itemArray);
                                 }
                                 else if (fieldType == typeof(NewLeafInt32))
                                 {
-                                    var intData = _saveData.ReadUInt32Array(dataOffset, 2);
+                                    var intData = Save.SaveInstance.ReadUInt32Array(dataOffset, 2);
                                     currentField.SetValue(boxedData, new NewLeafInt32(intData[0], intData[1]));
                                 }
                                 else if (fieldType == typeof(AcDate) && dataOffset > 0)
                                 {
-                                    currentField.SetValue(boxedData, new AcDate(_saveData.ReadByteArray(dataOffset,
+                                    currentField.SetValue(boxedData, new AcDate(Save.SaveInstance.ReadByteArray(dataOffset,
                                         (int)playerSaveInfoType.GetField(field.Name + "Size").GetValue(Offsets))));
                                 }
                                 break;
                         }
                     }
             Data = (PlayerData)boxedData;
-            switch (save.SaveType)
+            switch (Save.SaveInstance.SaveType)
             {
                 case SaveType.WildWorld:
                     var condensedData = Data.HairColor;
@@ -149,24 +152,24 @@ namespace ACSE.Core.Players
             {
                 Data.Patterns = new Pattern[Offsets.PatternCount];
                 for (var i = 0; i < Data.Patterns.Length; i++)
-                    Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, i, save);
+                    Data.Patterns[i] = new Pattern(offset + Offsets.Patterns + Offsets.PatternSize * i, i);
             }
 
-            if (_saveData.SaveType == SaveType.CityFolk)
+            if (Save.SaveInstance.SaveType == SaveType.CityFolk)
             {
-                Data.Reset = (_saveData.ReadByte(Offset + 0x8670) & 0x02) == 0x02;
+                Data.Reset = (Save.SaveInstance.ReadByte(Offset + 0x8670) & 0x02) == 0x02;
             }
-            else if (_saveData.SaveType == SaveType.NewLeaf)
+            else if (Save.SaveInstance.SaveType == SaveType.NewLeaf)
             {
-                Data.Reset = (_saveData.ReadByte(Offset + 0x5702) & 0x02) == 0x02;
+                Data.Reset = (Save.SaveInstance.ReadByte(Offset + 0x5702) & 0x02) == 0x02;
             }
-            else if (_saveData.SaveType == SaveType.WelcomeAmiibo)
+            else if (Save.SaveInstance.SaveType == SaveType.WelcomeAmiibo)
             {
-                Data.Reset = (_saveData.ReadByte(Offset + 0x570A) & 0x02) == 0x02;
+                Data.Reset = (Save.SaveInstance.ReadByte(Offset + 0x570A) & 0x02) == 0x02;
             }
 
             // Get the Player's House
-            House = HouseInfo.GetHouse(this, save.SaveType);
+            House = HouseInfo.GetHouse(this, Save.SaveInstance.SaveType);
             if (House != null)
             {
                 if (House.Data.Bed != null)
@@ -178,11 +181,11 @@ namespace ACSE.Core.Players
             Console.WriteLine($"Player {Index}'s house = {House}");
 
             // Mail Test
-            if (_saveData.SaveGeneration != SaveGeneration.GCN) return;
+            if (Save.SaveInstance.SaveGeneration != SaveGeneration.GCN) return;
             {
                 for (var i = 0; i < 10; i++)
                 {
-                    var mail = new GcnPlayerMail(_saveData, this, i);
+                    //var mail = new GcnPlayerMail(Save.SaveInstance, this, i);
                     //System.Windows.Forms.MessageBox.Show(Mail.GetFormattedMailString());
                 }
             }
@@ -191,7 +194,7 @@ namespace ACSE.Core.Players
         public void Write()
         {
             // Set City Folk Bed first
-            if (_saveData.SaveGeneration == SaveGeneration.Wii && House != null && Data.Bed != null)
+            if (Save.SaveInstance.SaveGeneration == SaveGeneration.Wii && House != null && Data.Bed != null)
             {
                 House.Data.Bed = Data.Bed;
                 Data.Bed = null;
@@ -210,21 +213,21 @@ namespace ACSE.Core.Players
                 var dataOffset = Offset + (int)field.GetValue(Offsets);
                 switch (field.Name)
                 {
-                    case "TownPassCardImage" when _saveData.SaveGeneration == SaveGeneration.N3DS:
-                        _saveData.Write(dataOffset, Data.TownPassCardData);
+                    case "TownPassCardImage" when Save.SaveInstance.SaveGeneration == SaveGeneration.N3DS:
+                        Save.SaveInstance.Write(dataOffset, Data.TownPassCardData);
                         break;
-                    case "Reset" when _saveData.SaveGeneration == SaveGeneration.GCN:
-                        _saveData.Write(dataOffset, Data.Reset ? (uint)0x250C : (uint)0 ,_saveData.IsBigEndian);
+                    case "Reset" when Save.SaveInstance.SaveGeneration == SaveGeneration.GCN:
+                        Save.SaveInstance.Write(dataOffset, Data.Reset ? (uint)0x250C : (uint)0 ,Save.SaveInstance.IsBigEndian);
                         break;
                     default:
                         if (fieldType == typeof(string))
                         {
-                            _saveData.Write(dataOffset, AcString.GetBytes((string)playerDataType.GetField(field.Name).GetValue(Data),
+                            Save.SaveInstance.Write(dataOffset, AcString.GetBytes((string)playerDataType.GetField(field.Name).GetValue(Data),
                                 (int)playerSaveInfoType.GetField(field.Name + "Size").GetValue(Offsets)));
                         }
                         else if (fieldType == typeof(byte))
                         {
-                            if (_saveData.SaveType == SaveType.WildWorld)
+                            if (Save.SaveInstance.SaveType == SaveType.WildWorld)
                             {
                                 switch (field.Name)
                                 {
@@ -232,85 +235,85 @@ namespace ACSE.Core.Players
                                     {
                                         var condensedData = (byte)(Data.HairColor & 0x0F); //Remove upper nibble just incase
                                         condensedData += (byte)((Data.Tan & 0x0F) << 4); //Add in tan to the byte
-                                        _saveData.Write(dataOffset, condensedData);
+                                        Save.SaveInstance.Write(dataOffset, condensedData);
                                         break;
                                     }
                                     case "HairType":
                                     {
                                         var condensedData = (byte)(Data.FaceType & 0x0F);
                                         condensedData += (byte)((Data.HairType & 0x0F) << 4);
-                                        _saveData.Write(dataOffset, condensedData);
+                                        Save.SaveInstance.Write(dataOffset, condensedData);
                                         break;
                                     }
                                     default:
-                                        _saveData.Write(dataOffset, (byte)playerDataType.GetField(field.Name).GetValue(Data));
+                                        Save.SaveInstance.Write(dataOffset, (byte)playerDataType.GetField(field.Name).GetValue(Data));
                                         break;
                                 }
                             }
-                            else if (_saveData.SaveType == SaveType.CityFolk)
+                            else if (Save.SaveInstance.SaveType == SaveType.CityFolk)
                             {
                                 switch (field.Name)
                                 {
                                     case "Tan":
                                         var shiftedData = (byte)(Data.Tan << 1); //ACToolkit does this
-                                        _saveData.Write(dataOffset, shiftedData);
+                                        Save.SaveInstance.Write(dataOffset, shiftedData);
                                         break;
                                     case "FaceType":
-                                        _saveData.Write(dataOffset, (byte)(Data.EyeColor + Data.FaceType));
+                                        Save.SaveInstance.Write(dataOffset, (byte)(Data.EyeColor + Data.FaceType));
                                         break;
                                     default:
-                                        _saveData.Write(dataOffset, (byte)playerDataType.GetField(field.Name).GetValue(Data));
+                                        Save.SaveInstance.Write(dataOffset, (byte)playerDataType.GetField(field.Name).GetValue(Data));
                                         break;
                                 }
                             }
                             else
                             {
-                                _saveData.Write(dataOffset, (byte)playerDataType.GetField(field.Name).GetValue(Data));
+                                Save.SaveInstance.Write(dataOffset, (byte)playerDataType.GetField(field.Name).GetValue(Data));
                             }
                         }
                         else if (fieldType == typeof(ushort))
                         {
-                            _saveData.Write(dataOffset, (ushort)playerDataType.GetField(field.Name).GetValue(Data), _saveData.IsBigEndian);
+                            Save.SaveInstance.Write(dataOffset, (ushort)playerDataType.GetField(field.Name).GetValue(Data), Save.SaveInstance.IsBigEndian);
                         }
                         else if (fieldType == typeof(uint))
                         {
-                            _saveData.Write(dataOffset, (uint)playerDataType.GetField(field.Name).GetValue(Data), _saveData.IsBigEndian);
+                            Save.SaveInstance.Write(dataOffset, (uint)playerDataType.GetField(field.Name).GetValue(Data), Save.SaveInstance.IsBigEndian);
                         }
                         else if (fieldType == typeof(Inventory))
                         {
-                            if (_saveData.SaveGeneration == SaveGeneration.N3DS)
+                            if (Save.SaveInstance.SaveGeneration == SaveGeneration.N3DS)
                             {
                                 var items = new uint[Offsets.PocketsCount];
                                 for (var i = 0; i < items.Length; i++)
                                     items[i] = ItemData.EncodeItem(Data.Pockets.Items[i]);
-                                _saveData.Write(dataOffset, items);
+                                Save.SaveInstance.Write(dataOffset, items);
                             }
                             else
                             {
                                 var items = new ushort[Offsets.PocketsCount];
                                 for (var i = 0; i < items.Length; i++)
                                     items[i] = Data.Pockets.Items[i].ItemId;
-                                _saveData.Write(dataOffset, items, _saveData.IsBigEndian);
+                                Save.SaveInstance.Write(dataOffset, items, Save.SaveInstance.IsBigEndian);
                             }
                         }
                         else if (fieldType == typeof(Item))
                         {
                             var item = (Item)playerDataType.GetField(field.Name).GetValue(Data);
-                            if (_saveData.SaveGeneration == SaveGeneration.N3DS)
+                            if (Save.SaveInstance.SaveGeneration == SaveGeneration.N3DS)
                             {
-                                _saveData.Write(dataOffset, item.ToUInt32());
+                                Save.SaveInstance.Write(dataOffset, item.ToUInt32());
                             }
                             else
                             {
                                 if (field.Name.Equals("Shirt") &&
-                                    (_saveData.SaveGeneration == SaveGeneration.N64 || _saveData.SaveGeneration == SaveGeneration.GCN ||
-                                     _saveData.SaveGeneration == SaveGeneration.iQue)) // For some reason, the shirt lower byte is also stored before the actual item id.
+                                    (Save.SaveInstance.SaveGeneration == SaveGeneration.N64 || Save.SaveInstance.SaveGeneration == SaveGeneration.GCN ||
+                                     Save.SaveInstance.SaveGeneration == SaveGeneration.iQue)) // For some reason, the shirt lower byte is also stored before the actual item id.
                                 {
-                                    _saveData.Write(dataOffset - 1, new[] { (byte)item.ItemId, (byte)(item.ItemId >> 8), (byte)item.ItemId }, _saveData.IsBigEndian);
+                                    Save.SaveInstance.Write(dataOffset - 1, new[] { (byte)item.ItemId, (byte)(item.ItemId >> 8), (byte)item.ItemId }, Save.SaveInstance.IsBigEndian);
                                 }
                                 else
                                 {
-                                    _saveData.Write(dataOffset, item.ItemId, _saveData.IsBigEndian);
+                                    Save.SaveInstance.Write(dataOffset, item.ItemId, Save.SaveInstance.IsBigEndian);
                                 }
                             }
                         }
@@ -319,41 +322,41 @@ namespace ACSE.Core.Players
                             var itemArray = (Item[])playerDataType.GetField(field.Name).GetValue(Data);
                             if (field.Name.Equals("Dressers"))
                             {
-                                switch (_saveData.SaveGeneration)
+                                switch (Save.SaveInstance.SaveGeneration)
                                 {
                                     case SaveGeneration.NDS:
-                                        dataOffset = _saveData.SaveDataStartOffset + 0x15430 + 0xB4 * Index; // Terrible hack
+                                        dataOffset = Save.SaveInstance.SaveDataStartOffset + 0x15430 + 0xB4 * Index; // Terrible hack
                                         break;
                                     case SaveGeneration.Wii:
-                                        dataOffset = _saveData.SaveDataStartOffset + 0x1F3038 + 0x140 * Index;
+                                        dataOffset = Save.SaveInstance.SaveDataStartOffset + 0x1F3038 + 0x140 * Index;
                                         break;
                                 }
                             }
 
                             for (var i = 0; i < itemArray.Length; i++)
                             {
-                                if (_saveData.SaveGeneration == SaveGeneration.N3DS)
-                                    _saveData.Write(dataOffset + i * 4, itemArray[i].ToUInt32());
+                                if (Save.SaveInstance.SaveGeneration == SaveGeneration.N3DS)
+                                    Save.SaveInstance.Write(dataOffset + i * 4, itemArray[i].ToUInt32());
                                 else
-                                    _saveData.Write(dataOffset + i * 2, itemArray[i].ItemId, _saveData.IsBigEndian);
+                                    Save.SaveInstance.Write(dataOffset + i * 2, itemArray[i].ItemId, Save.SaveInstance.IsBigEndian);
                             }
                         }
                         else if (fieldType == typeof(NewLeafInt32))
                         {
-                            if (_saveData.SaveGeneration == SaveGeneration.NDS)
+                            if (Save.SaveInstance.SaveGeneration == SaveGeneration.NDS)
                             {
                                 var encryptedInt = (NewLeafInt32)playerDataType.GetField(field.Name).GetValue(Data);
-                                _saveData.Write(dataOffset, encryptedInt.Int1);
-                                _saveData.Write(dataOffset + 4, encryptedInt.Int2);
+                                Save.SaveInstance.Write(dataOffset, encryptedInt.Int1);
+                                Save.SaveInstance.Write(dataOffset + 4, encryptedInt.Int2);
                             }
                         }
-                        else if (fieldType == typeof(AcDate) && (_saveData.SaveGeneration == SaveGeneration.GCN ||
-                                                                 _saveData.SaveGeneration == SaveGeneration.NDS ||
-                                                                 _saveData.SaveGeneration == SaveGeneration.Wii))
+                        else if (fieldType == typeof(AcDate) && (Save.SaveInstance.SaveGeneration == SaveGeneration.GCN ||
+                                                                 Save.SaveInstance.SaveGeneration == SaveGeneration.NDS ||
+                                                                 Save.SaveInstance.SaveGeneration == SaveGeneration.Wii))
                         {
                             if (field.Name.Equals("Birthday"))
                             {
-                                _saveData.Write(dataOffset, ((AcDate)playerDataType.GetField(field.Name).GetValue(Data)).ToMonthDayDateData());
+                                Save.SaveInstance.Write(dataOffset, ((AcDate)playerDataType.GetField(field.Name).GetValue(Data)).ToMonthDayDateData());
                             }
                         }
 

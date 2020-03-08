@@ -235,12 +235,25 @@ namespace ACSE.Core.Villagers
 
         public static readonly VillagerOffsets CfVillagerOffsets = new VillagerOffsets
         {
-            //Villagers in City Folk are interesting.
-            //The actual data structure is stored in the save file, allowing for customization of the entire villager.
-            //This includes name, textures, and what villager model it uses!
-            //That will mean a lot more work will have to go into this part of the villager editor, though.
-            //I'll have to finish it at a later date. Unfortunately, I can't find the source to NPC Tool, a tool that allowed all of these modifications to be done
-            //This means I'll probably have to reverse engineer the format myself
+            VillagerId = 0x1824,
+            Shirt = 0x1826,
+            Carpet = 0x1828,
+            Wallpaper = 0x182A,
+            Umbrella = 0x182C,
+            Furniture = 0x182E,
+            FurnitureCount = 10,
+            Song = 0x1842,
+            // StoredName = 0x1858 // (US EN)
+            Catchphrase = 0x18EC, // EN US
+            CatchphraseSize = 20,
+            TownId = 0x224C,
+            TownName = 0x224E,
+            TownNameSize = 8,
+            Personality = 0x230A,
+            Status = 0x3030, // Moving State Flags?
+            HouseCoordinates = -1,
+            Nicknames = -1,
+            NameId = -1
         };
 
         public static readonly VillagerOffsets NlVillagerOffsets = new VillagerOffsets
@@ -311,14 +324,13 @@ namespace ACSE.Core.Villagers
                 case SaveType.DongwuSenlin:
                     return AcPersonalities;
                 case SaveType.WildWorld:
+                case SaveType.CityFolk:
                     return WwPersonalities;
                 case SaveType.NewLeaf:
                     return NlPersonalities;
                 case SaveType.WelcomeAmiibo:
                     return NlPersonalities;
                 case SaveType.Unknown:
-                    break;
-                case SaveType.CityFolk:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(saveType), saveType, null);
@@ -349,6 +361,9 @@ namespace ACSE.Core.Villagers
                 case SaveType.WildWorld:
                     databaseFilename = string.Format(databaseFilename, "WW");
                     break;
+                case SaveType.CityFolk:
+                    databaseFilename = string.Format(databaseFilename, "CF");
+                    break;
                 case SaveType.NewLeaf:
                     databaseFilename = string.Format(databaseFilename, "NL");
                     break;
@@ -356,8 +371,6 @@ namespace ACSE.Core.Villagers
                     databaseFilename = string.Format(databaseFilename, "WA");
                     break;
                 case SaveType.Unknown:
-                    break;
-                case SaveType.CityFolk:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(saveType), saveType, null);
@@ -415,6 +428,7 @@ namespace ACSE.Core.Villagers
                 case SaveType.DoubutsuNoMoriEPlus:
                 case SaveType.AnimalForestEPlus:
                 case SaveType.DongwuSenlin:
+                case SaveType.CityFolk:
                     while ((line = contents.ReadLine()) != null)
                     {
                         if (!line.Contains("0x")) continue;
@@ -428,8 +442,6 @@ namespace ACSE.Core.Villagers
 
                     break;
                 case SaveType.Unknown:
-                    break;
-                case SaveType.CityFolk:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(saveType), saveType, null);
@@ -458,13 +470,13 @@ namespace ACSE.Core.Villagers
                     return DoubutsuNoMoriVillagerOffsets; // TEMP
                 case SaveType.WildWorld:
                     return WwVillagerOffsets;
+                case SaveType.CityFolk:
+                    return CfVillagerOffsets;
                 case SaveType.NewLeaf:
                     return NlVillagerOffsets;
                 case SaveType.WelcomeAmiibo:
                     return WaVillagerOffsets;
                 case SaveType.Unknown:
-                    break;
-                case SaveType.CityFolk:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(saveType), saveType, null);
