@@ -2581,6 +2581,10 @@ namespace ACSE.WinForms
 
             if (CurrentSaveInfo.ContainsIsland)
             {
+                for (var i = 0; i < _islandItemEditors.Count; i++)
+                    _islandItemEditors[i].Dispose();
+                _islandItemEditors.Clear();
+
                 IslandAcres = new WorldAcre[CurrentSaveInfo.IslandAcreCount];
                 _islandAcreMap = new PictureBoxWithInterpolationMode[IslandAcres.Length];
                 _newLeafIslandAcreMap = new PictureBoxWithInterpolationMode[16];
@@ -2619,7 +2623,7 @@ namespace ACSE.WinForms
                         IslandAcres[idx] = new WorldAcre(acreId, idx, acreItems);
 
                         if (SaveFile.SaveGeneration == SaveGeneration.GCN ||
-                            ((idx > 4 && idx < 7) || (idx > 8 && idx < 11)))
+                            (SaveFile.SaveGeneration == SaveGeneration.N3DS && ((idx > 4 && idx < 7) || (idx > 8 && idx < 11))))
                         {
                             var ePlus = SaveFile.SaveType == SaveType.DoubutsuNoMoriEPlus ||
                                         SaveFile.SaveType == SaveType.AnimalForestEPlus;
@@ -4100,9 +4104,17 @@ namespace ACSE.WinForms
             // Save Town Ordinances in New Leaf
             UpdateNewLeafOrdinances();
 
-            // Save DnM+/AC Island Cabana
+            // Save DnM+/AC Island and Cabana
             if (SaveFile.SaveType == SaveType.DoubutsuNoMoriPlus || SaveFile.SaveType == SaveType.AnimalCrossing)
             {
+                for (var i = 0; i < _islandItemEditors.Count; i++)
+                {
+                    var items = _islandItemEditors[i].Items;
+                    for (var x = 0; x < 256; x++)
+                    {
+                        SaveFile.Write(CurrentSaveInfo.SaveOffsets.IslandWorldData + + i * 512 + x * 2, items[x].ItemId, SaveFile.IsBigEndian, true);
+                    }
+                }
                 _islandCabana.Data.Rooms[0].Write();
             }
 
