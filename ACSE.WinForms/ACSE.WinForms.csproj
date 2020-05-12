@@ -98,6 +98,12 @@
     <Compile Include="Controls\HouseControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ItemDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ItemDisplay.Designer.cs">
+      <DependentUpon>ItemDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ItemEditor.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -137,7 +143,25 @@
     <Compile Include="Controls\VillagerControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\VillagerDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\VillagerDisplay.Designer.cs">
+      <DependentUpon>VillagerDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ControlExtensions.cs" />
+    <Compile Include="Forms\ItemSelectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ItemSelectionDialog.Designer.cs">
+      <DependentUpon>ItemSelectionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\VillagerSelectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VillagerSelectionDialog.Designer.cs">
+      <DependentUpon>VillagerSelectionDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Imaging\ImageGeneration.cs" />
     <Compile Include="ItemColorEditor\ItemColorEditor.cs">
       <SubType>Form</SubType>
@@ -189,8 +213,20 @@
     <EmbeddedResource Include="AboutBox\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ItemDisplay.resx">
+      <DependentUpon>ItemDisplay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MessageEditor.resx">
       <DependentUpon>MessageEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\VillagerDisplay.resx">
+      <DependentUpon>VillagerDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ItemSelectionDialog.resx">
+      <DependentUpon>ItemSelectionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VillagerSelectionDialog.resx">
+      <DependentUpon>VillagerSelectionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItemColorEditor\ItemColorEditor.resx">
       <DependentUpon>ItemColorEditor.cs</DependentUpon>

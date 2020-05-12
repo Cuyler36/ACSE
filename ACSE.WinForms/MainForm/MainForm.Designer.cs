@@ -34,7 +34,6 @@ namespace ACSE.WinForms
             System.Windows.Forms.TabPage patternsTab;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.patternNameTextBox = new System.Windows.Forms.PlaceholderTextBox();
-            this.paletteColorSelectedPictureBox = new System.Windows.Forms.PictureBox();
             this.paletteIndexLabel = new System.Windows.Forms.Label();
             this.palettePreviousButton = new System.Windows.Forms.Button();
             this.paletteNextButton = new System.Windows.Forms.Button();
@@ -46,6 +45,7 @@ namespace ACSE.WinForms
             this.player2Tab = new System.Windows.Forms.TabPage();
             this.player3Tab = new System.Windows.Forms.TabPage();
             this.player4Tab = new System.Windows.Forms.TabPage();
+            this.paletteColorSelectedPictureBox = new System.Windows.Forms.PictureBox();
             this.paletteSelectionPictureBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,6 +92,7 @@ namespace ACSE.WinForms
             this.unlockHHDItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.playersTab = new System.Windows.Forms.TabPage();
+            this.PartTimeJobCheckBox = new System.Windows.Forms.CheckBox();
             this.badgeGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.clearEmotionsButton = new System.Windows.Forms.Button();
@@ -183,7 +184,6 @@ namespace ACSE.WinForms
             this.townMisc = new System.Windows.Forms.TabPage();
             this.townGateComboBox = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
-            this.townGatePictureBox = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.keepTownBeautifulCheckBox = new System.Windows.Forms.CheckBox();
             this.bellBoomCheckBox = new System.Windows.Forms.CheckBox();
@@ -199,6 +199,7 @@ namespace ACSE.WinForms
             this.grassTypeBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.townNameBox = new System.Windows.Forms.TextBox();
+            this.townGatePictureBox = new System.Windows.Forms.PictureBox();
             this.stationPictureBox = new System.Windows.Forms.PictureBox();
             this.villagerTab = new System.Windows.Forms.TabPage();
             this.caravan2ComboBox = new System.Windows.Forms.ComboBox();
@@ -276,13 +277,13 @@ namespace ACSE.WinForms
             this.itemIdTextBox = new System.Windows.Forms.PlaceholderTextBox();
             this.itemIdLabel = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.TextBox();
-            this.PartTimeJobCheckBox = new System.Windows.Forms.CheckBox();
+            this.itemSelection = new System.Windows.Forms.Button();
             patternsTab = new System.Windows.Forms.TabPage();
             patternsTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
             this.patternEditorPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).BeginInit();
             this.patternGroupTabControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -304,8 +305,8 @@ namespace ACSE.WinForms
             this.acresTab.SuspendLayout();
             this.townTab.SuspendLayout();
             this.townMisc.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.townGatePictureBox)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.townGatePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stationPictureBox)).BeginInit();
             this.villagerTab.SuspendLayout();
             this.villagerPanel.SuspendLayout();
@@ -323,13 +324,13 @@ namespace ACSE.WinForms
             // patternsTab
             // 
             patternsTab.Controls.Add(this.patternNameTextBox);
-            patternsTab.Controls.Add(this.paletteColorSelectedPictureBox);
             patternsTab.Controls.Add(this.paletteIndexLabel);
             patternsTab.Controls.Add(this.palettePreviousButton);
             patternsTab.Controls.Add(this.paletteNextButton);
             patternsTab.Controls.Add(this.patternEditorPanel);
             patternsTab.Controls.Add(this.patternEditorPreviewPanel);
             patternsTab.Controls.Add(this.patternGroupTabControl);
+            patternsTab.Controls.Add(this.paletteColorSelectedPictureBox);
             patternsTab.Controls.Add(this.paletteSelectionPictureBox);
             patternsTab.Location = new System.Drawing.Point(4, 22);
             patternsTab.Name = "patternsTab";
@@ -349,17 +350,6 @@ namespace ACSE.WinForms
             this.patternNameTextBox.Size = new System.Drawing.Size(100, 20);
             this.patternNameTextBox.TabIndex = 0;
             this.patternNameTextBox.TextChanged += new System.EventHandler(this.PatternEditorNameBox_TextChanged);
-            // 
-            // paletteColorSelectedPictureBox
-            // 
-            this.paletteColorSelectedPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.paletteColorSelectedPictureBox.Image = global::ACSE.WinForms.Properties.Resources.PaletteArrow;
-            this.paletteColorSelectedPictureBox.Location = new System.Drawing.Point(114, 21);
-            this.paletteColorSelectedPictureBox.Name = "paletteColorSelectedPictureBox";
-            this.paletteColorSelectedPictureBox.Size = new System.Drawing.Size(16, 32);
-            this.paletteColorSelectedPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.paletteColorSelectedPictureBox.TabIndex = 21;
-            this.paletteColorSelectedPictureBox.TabStop = false;
             // 
             // paletteIndexLabel
             // 
@@ -484,6 +474,17 @@ namespace ACSE.WinForms
             this.player4Tab.TabIndex = 4;
             this.player4Tab.Text = "Player4";
             this.player4Tab.UseVisualStyleBackColor = true;
+            // 
+            // paletteColorSelectedPictureBox
+            // 
+            this.paletteColorSelectedPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.paletteColorSelectedPictureBox.Image = global::ACSE.WinForms.Properties.Resources.PaletteArrow;
+            this.paletteColorSelectedPictureBox.Location = new System.Drawing.Point(114, 21);
+            this.paletteColorSelectedPictureBox.Name = "paletteColorSelectedPictureBox";
+            this.paletteColorSelectedPictureBox.Size = new System.Drawing.Size(16, 32);
+            this.paletteColorSelectedPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.paletteColorSelectedPictureBox.TabIndex = 21;
+            this.paletteColorSelectedPictureBox.TabStop = false;
             // 
             // paletteSelectionPictureBox
             // 
@@ -725,7 +726,7 @@ namespace ACSE.WinForms
             this.exportTownToolStripMenuItem,
             this.generateRandomTownToolStripMenuItem});
             this.tasksToolStripMenuItem.Name = "tasksToolStripMenuItem";
-            this.tasksToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.tasksToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.tasksToolStripMenuItem.Text = "Tasks";
             // 
             // clearWeedsToolStripMenuItem
@@ -816,7 +817,7 @@ namespace ACSE.WinForms
             this.unlockAllPublicWorkProjectsToolStripMenuItem,
             this.unlockHHDItemsToolStripMenuItem});
             this.extrasToolStripMenuItem.Name = "extrasToolStripMenuItem";
-            this.extrasToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.extrasToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.extrasToolStripMenuItem.Text = "Extras";
             // 
             // fillMuseumToolStripMenuItem
@@ -946,6 +947,20 @@ namespace ACSE.WinForms
             this.playersTab.TabIndex = 0;
             this.playersTab.Text = "Players";
             this.playersTab.UseVisualStyleBackColor = true;
+            // 
+            // PartTimeJobCheckBox
+            // 
+            this.PartTimeJobCheckBox.AutoSize = true;
+            this.PartTimeJobCheckBox.Enabled = false;
+            this.PartTimeJobCheckBox.Location = new System.Drawing.Point(772, 38);
+            this.PartTimeJobCheckBox.Name = "PartTimeJobCheckBox";
+            this.PartTimeJobCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.PartTimeJobCheckBox.Size = new System.Drawing.Size(125, 17);
+            this.PartTimeJobCheckBox.TabIndex = 80;
+            this.PartTimeJobCheckBox.Text = ":Doing Part Time Job";
+            this.infoTip.SetToolTip(this.PartTimeJobCheckBox, "Toggles whether or not the Player is doing Nook\'s part time job.");
+            this.PartTimeJobCheckBox.UseVisualStyleBackColor = true;
+            this.PartTimeJobCheckBox.CheckedChanged += new System.EventHandler(this.PartTimeJobCheckBoxCheckChanged);
             // 
             // badgeGroupBox
             // 
@@ -1884,7 +1899,6 @@ namespace ACSE.WinForms
             // 
             this.townMisc.Controls.Add(this.townGateComboBox);
             this.townMisc.Controls.Add(this.label25);
-            this.townMisc.Controls.Add(this.townGatePictureBox);
             this.townMisc.Controls.Add(this.groupBox2);
             this.townMisc.Controls.Add(this.stationTypeComboBox);
             this.townMisc.Controls.Add(this.label47);
@@ -1896,6 +1910,7 @@ namespace ACSE.WinForms
             this.townMisc.Controls.Add(this.grassTypeBox);
             this.townMisc.Controls.Add(this.label1);
             this.townMisc.Controls.Add(this.townNameBox);
+            this.townMisc.Controls.Add(this.townGatePictureBox);
             this.townMisc.Controls.Add(this.stationPictureBox);
             this.townMisc.Location = new System.Drawing.Point(4, 22);
             this.townMisc.Name = "townMisc";
@@ -1925,14 +1940,6 @@ namespace ACSE.WinForms
             this.label25.Size = new System.Drawing.Size(60, 13);
             this.label25.TabIndex = 33;
             this.label25.Text = "Gate Type:";
-            // 
-            // townGatePictureBox
-            // 
-            this.townGatePictureBox.Location = new System.Drawing.Point(390, 43);
-            this.townGatePictureBox.Name = "townGatePictureBox";
-            this.townGatePictureBox.Size = new System.Drawing.Size(32, 32);
-            this.townGatePictureBox.TabIndex = 32;
-            this.townGatePictureBox.TabStop = false;
             // 
             // groupBox2
             // 
@@ -2108,6 +2115,14 @@ namespace ACSE.WinForms
             this.townNameBox.Name = "townNameBox";
             this.townNameBox.Size = new System.Drawing.Size(92, 20);
             this.townNameBox.TabIndex = 20;
+            // 
+            // townGatePictureBox
+            // 
+            this.townGatePictureBox.Location = new System.Drawing.Point(390, 43);
+            this.townGatePictureBox.Name = "townGatePictureBox";
+            this.townGatePictureBox.Size = new System.Drawing.Size(32, 32);
+            this.townGatePictureBox.TabIndex = 32;
+            this.townGatePictureBox.TabStop = false;
             // 
             // stationPictureBox
             // 
@@ -2854,25 +2869,24 @@ namespace ACSE.WinForms
             this.StatusLabel.TabIndex = 16;
             this.StatusLabel.TabStop = false;
             // 
-            // PartTimeJobCheckBox
+            // itemSelection
             // 
-            this.PartTimeJobCheckBox.AutoSize = true;
-            this.PartTimeJobCheckBox.Enabled = false;
-            this.PartTimeJobCheckBox.Location = new System.Drawing.Point(772, 38);
-            this.PartTimeJobCheckBox.Name = "PartTimeJobCheckBox";
-            this.PartTimeJobCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.PartTimeJobCheckBox.Size = new System.Drawing.Size(125, 17);
-            this.PartTimeJobCheckBox.TabIndex = 80;
-            this.PartTimeJobCheckBox.Text = ":Doing Part Time Job";
-            this.infoTip.SetToolTip(this.PartTimeJobCheckBox, "Toggles whether or not the Player is doing Nook\'s part time job.");
-            this.PartTimeJobCheckBox.UseVisualStyleBackColor = true;
-            this.PartTimeJobCheckBox.CheckedChanged += new System.EventHandler(this.PartTimeJobCheckBoxCheckChanged);
+            this.itemSelection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.itemSelection.Enabled = false;
+            this.itemSelection.Location = new System.Drawing.Point(237, 643);
+            this.itemSelection.Name = "itemSelection";
+            this.itemSelection.Size = new System.Drawing.Size(113, 23);
+            this.itemSelection.TabIndex = 81;
+            this.itemSelection.Text = "Item Selection";
+            this.itemSelection.UseVisualStyleBackColor = true;
+            this.itemSelection.Click += new System.EventHandler(this.itemSelection_Click_1);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(963, 695);
+            this.Controls.Add(this.itemSelection);
             this.Controls.Add(this.itemIdTextBox);
             this.Controls.Add(this.itemIdLabel);
             this.Controls.Add(this.label43);
@@ -2897,10 +2911,10 @@ namespace ACSE.WinForms
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
             patternsTab.ResumeLayout(false);
             patternsTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).EndInit();
             this.patternEditorPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.patternEditorPictureBox)).EndInit();
             this.patternGroupTabControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.paletteColorSelectedPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSelectionPictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -2927,9 +2941,9 @@ namespace ACSE.WinForms
             this.townTab.PerformLayout();
             this.townMisc.ResumeLayout(false);
             this.townMisc.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.townGatePictureBox)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.townGatePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stationPictureBox)).EndInit();
             this.villagerTab.ResumeLayout(false);
             this.villagerTab.PerformLayout();
@@ -3198,5 +3212,6 @@ namespace ACSE.WinForms
         private System.Windows.Forms.ToolStripMenuItem openDolphinSaveFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.CheckBox PartTimeJobCheckBox;
+        private System.Windows.Forms.Button itemSelection;
     }
 }

@@ -8,6 +8,7 @@ using ACSE.Core.Items;
 using ACSE.Core.Saves;
 using ACSE.Core.Utilities;
 using ACSE.Core.Villagers;
+using ACSE.WinForms.Forms;
 using ItemChangedEventArgs = ACSE.Core.Items.ItemChangedEventArgs;
 
 namespace ACSE.WinForms.Controls
@@ -19,7 +20,7 @@ namespace ACSE.WinForms.Controls
     public sealed class VillagerControl : FlowLayoutPanel
     {
         private readonly Label _indexLabel;
-        private readonly ComboBox _villagerSelectionBox;
+        private readonly Button _villagerSelectionButton; //opens villager gallery
         private readonly ComboBox _personalityBox;
         private readonly OffsetablePictureBox _villagerPreviewBox;
         private readonly TextBox _catchphraseBox;
@@ -90,24 +91,31 @@ namespace ACSE.WinForms.Controls
             var margin = CalculateControlVerticalMargin(_indexLabel);
             _indexLabel.Margin = new Padding(0, margin, 0, margin);
 
-            _villagerSelectionBox = new ComboBox
+            _villagerSelectionButton = new Button
             {
-                Size = new Size(120, 32),
-                DropDownStyle = ComboBoxStyle.DropDownList
+                Size = new Size(120, 32)
             };
 
-            margin = CalculateControlVerticalMargin(_villagerSelectionBox);
-            _villagerSelectionBox.Margin = new Padding(0, margin, 10, margin);
-            _villagerSelectionBox.Items.AddRange(_villagerNames);
+            //_villagerSelectionBox = new ComboBox
+            //{
+             //   Size = new Size(120, 32),
+              //  DropDownStyle = ComboBoxStyle.DropDownList
+            //};
+
+            margin = CalculateControlVerticalMargin(_villagerSelectionButton);
+            _villagerSelectionButton.Margin = new Padding(0, margin, 10, margin);
+            //_villagerSelectionBox.Items.AddRange(_villagerNames);
 
             for (var i = 0; i < _villagers.Count; i++)
             {
                 if (villagers.ElementAt(i).Key != _villager.Data.VillagerId) continue;
-                _villagerSelectionBox.SelectedIndex = i;
+                //_villagerSelectionBox.SelectedIndex = i;
+                _villagerSelectionButton.Text = villagerNames[i];
+
                 break;
             }
 
-            _villagerSelectionBox.SelectedIndexChanged += (s, e) => VillagerSelectionBoxChanged();
+            _villagerSelectionButton.Click += (s, e) => VillagerSelectionBoxChanged();
 
             _personalityBox = new ComboBox
             {
@@ -150,7 +158,7 @@ namespace ACSE.WinForms.Controls
             // Add controls to flow panel
 
             Controls.Add(_indexLabel);
-            Controls.Add(_villagerSelectionBox);
+            Controls.Add(_villagerSelectionButton);
             Controls.Add(_personalityBox);
             Controls.Add(_catchphraseBox);
             Controls.Add(_shirtEditor);
@@ -253,12 +261,21 @@ namespace ACSE.WinForms.Controls
 
         private void VillagerSelectionBoxChanged(bool fireChangedEvent = true)
         {
-            if (_villagerSelectionBox.SelectedIndex < 0) return;
+            //opens villager gallery
+            VillagerSelectionDialog dialog = new VillagerSelectionDialog(_villagers.Values);
+            if (_villager.Data.VillagerId != 0 && _villagers.TryGetValue(_villager.Data.VillagerId, out var current))
+                dialog.SelectedVillager = current; //set selected villager if applicable
 
-            var kvPair = _villagers.ElementAt(_villagerSelectionBox.SelectedIndex);
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            int selectedIndex = dialog.SelectedIndex;
+            if (selectedIndex < 0) return;
+
+            var kvPair = _villagers.ElementAt(selectedIndex);
             if (_saveFile.SaveType != SaveType.DoubutsuNoMoriEPlus && _saveFile.SaveType != SaveType.AnimalForestEPlus)
             {
-                _villager.Name = _villagerNames[_villagerSelectionBox.SelectedIndex];
+                _villager.Name = _villagerNames[selectedIndex];
             }
 
             _villager.Data.VillagerId = kvPair.Value.VillagerId;
@@ -327,6 +344,7 @@ namespace ACSE.WinForms.Controls
                         : new Point(64 * ((_villager.Data.VillagerId & 0xFF) % 10),
                             64 * ((_villager.Data.VillagerId & 0xFF) / 10));
             }
+            _villagerSelectionButton.Text = _villager.Name;
 
             if (fireChangedEvent)
                 VillagerChanged?.Invoke(this, _villager);
