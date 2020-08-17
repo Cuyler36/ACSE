@@ -690,7 +690,7 @@
 0x146C, Melon Chair
 0x1470, Watermelon Table
 0x1474, Robotic Flagman
-0x1478, Garbage Can
+0x1478, Garbage Pail
 0x147C, Trash Bin
 0x1480, Violin
 0x1484, Bass
@@ -1348,7 +1348,7 @@
 0x1EB4, Lucky Cat
 0x1EB8, Lucky Black Cat
 0x1EBC, Samurai Suit
-0x1EC0, Racoon Obje
+0x1EC0, Tanuki Figurine
 0x1EC4, Lucky Frog
 0x1EC8, Big Festive Tree
 0x1ECC, White Rook

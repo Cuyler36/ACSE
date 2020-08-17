@@ -674,7 +674,7 @@
 0x146C, Melon Chair
 0x1470, Watermelon Table
 0x1474, Robotic Flagman
-0x1478, Garbage Can
+0x1478, Garbage Pail
 0x147C, Trash Bin
 0x1480, Violin
 0x1484, Bass

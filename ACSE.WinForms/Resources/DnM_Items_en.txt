@@ -1217,7 +1217,7 @@
 0x1DC4, Lucky Cat
 0x1DC8, Lucky Black Cat
 0x1DCC, Samurai Suit
-0x1DD0, Racoon Obje
+0x1DD0, Tanuki Figurine
 0x1DD4, Lucky Frog
 0x1DD8, Big Festive Tree
 0x1DDC, White Rook
