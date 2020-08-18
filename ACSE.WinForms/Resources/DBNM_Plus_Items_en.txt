@@ -430,7 +430,7 @@
 0x109C, Zabuton
 0x10A0, Bus Stop
 0x10A4, Froggy Chair
-0x10A8, Lilly-pad Table
+0x10A8, Lily-pad Table
 0x10AC, Refridgerator
 0x10B0, Chest
 0x10B4, Rack
@@ -640,7 +640,7 @@
 0x13E4, Pine Bonsai
 0x13E8, Mugho Bonsai
 0x13EC, Barber's Pole
-0x13F0, Ponderosa Bonsai
+0x13F0, Pondarosa Bonsai
 0x13F4, Plum Bonsai
 0x13F8, Giant Dharma
 0x13FC, Dharma
@@ -654,7 +654,7 @@
 0x141C, Orange Cone
 0x1420, Cola Machine
 0x1424, Maple Bonsai
-0x1428, Hawthorne Bonsai
+0x1428, Hawthorn Bonsai
 0x142C, Holly Bonsai
 0x1430, Barricade
 0x1434, Fence
@@ -669,12 +669,12 @@
 0x1458, Juice Machine
 0x145C, Iron Frame
 0x1460, Trash Can
-0x1464, Grabage Pail
+0x1464, Garbage Pail
 0x1468, Watermelon Chair
 0x146C, Melon Chair
 0x1470, Watermelon Table
 0x1474, Robotic Flagman
-0x1478, Garbage Pail
+0x1478, Garbage Can
 0x147C, Trash Bin
 0x1480, Violin
 0x1484, Bass
@@ -1273,7 +1273,7 @@
 0x1DC8, Baseball
 0x1DCC, Clu Clu Land D
 0x1DD0, Donkey Kong 3
-0x1DD4, Donky Kong Jr
+0x1DD4, Donkey Kong Jr
 0x1DD8, Gomoku Narabe
 0x1DDC, Mahjong
 0x1DE0, Wario's Woods
@@ -1396,7 +1396,7 @@
 0x1FB4, Tribal Mask
 0x1FB8, Matryoshka
 0x1FBC, Legend of Zelda
-0x1FC0, Bottled Shop
+0x1FC0, Bottled Ship
 0x1FC4, Tiger Bobblehead
 0x1FC8, Moai Statue
 0x1FCC, Aerobics Radio
@@ -2603,125 +2603,7 @@
 0x31E0, Sleigh
 0x31E4, Nintendo Bench
 0x31E8, G Logo
-0x31EC, Merge Sign
-0x31F0, Bottle Rocket
-0x31F4, Wet Roadway Sign
-0x31F8, Detour Sign
-0x31FC, Men at Work Sign
-0x3200, Lefty Desk
-0x3204, Righty Desk
-0x3208, School Desk
-0x320C, Flagman Sign
-0x3210, Fishing Trophy
-0x3214, Jersey Barrier
-0x3218, Speed Sign
-0x321C, Golf Trophy
-0x3220, Teacher's Desk
-0x3224, Haz-mat Barrel
-0x3228, Tennis Trophy
-0x322C, Saw Horse
-0x3230, Kart Trophy
-0x3234, Bug Zapper
-0x3238, Telescope
-0x323C, Coffee Machine
-0x3240, Bird Bath
-0x3244, Barbecue
-0x3248, Radiator
-0x324C, Lawn Chair
-0x3250, Chess Table
-0x3254, Candy Machine
-0x3258, Backyard Pool
-0x325C, Cement Mixer
-0x3260, Jackhammer
-0x3264, Tiki Torch
-0x3268, Birdhouse
-0x326C, Potbelly Stove
-0x3270, Bus Stop
-0x3274, Hamster Cage
-0x3278, Flip-top Desk
-0x327C, Festive Flag
-0x3280, Super Tortimer
-0x3284, Bird Feeder
-0x3288, Teacher's Chair
-0x328C, Steam roller
-0x3290, Mr. Flamingo
-0x3294, Mailbox
-0x3298, Festive Candle
-0x329C, Hammock
-0x32A0, Garden Gnome
-0x32A4, Mrs. Flamingo
-0x32A8, Spring Medal (again?)
-0x32AC, Autumn Medal
-0x32B0, Tumbleweed
-0x32B4, Cow Skull
-0x32B8, Oil Drum
-0x32BC, Saddle Fence
-0x32C0, Western Fence
-0x32C4, Watering Trough
-0x32C8, Luigi Trophy
-0x32CC, Mario Trophy
-0x32D0, Harvest Lamp
-0x32D4, Covered Wagon
-0x32D8, Storefront
-0x32DC, Picnic Table
-0x32E0, Harvest Table
-0x32E4, Harvest TV
-0x32E8, Harvest Bed
-0x32EC, Harvest Chair
-0x32F0, Harvest Clock
-0x32F4, Harvest Sofa
-0x32F8, Green Pipe
-0x32FC, Brick Block
-0x3300, Harvest Bureau
-0x3304, Flagpole
-0x3308, Harvest Dresser
-0x330C, Super Mushroom
-0x3310, Harvest Mirror
-0x3314, Coin
-0x3318, ? Block
-0x331C, Starman
-0x3320, Koopa Shell
-0x3324, Cannon
-0x3328, Desert Cactus
-0x332C, Fire Flower
-0x3330, Wagon Wheel
-0x3334, Well
-0x3338, Boxing Barricade
-0x333C, Neutral Corner
-0x3340, Red Corner
-0x3344, Blue Corner
-0x3348, Boxing Mat
-0x334C, Ringside Table
-0x3350, Speed Bag
-0x3354, Sandbag
-0x3358, Weight Bench
-0x335C, Campfire
-0x3360, Bonfire
-0x3364, Kayak
-0x3368, Sprinkler
-0x336C, Tent Model
-0x3370, Backpack
-0x3374, Angler Trophy
-0x3378, Pansy Model 1
-0x337C, Pansy Model 2
-0x3380, Pansy Model 3
-0x3384, Cosmos Model 1
-0x3388, Cosmos Model 2
-0x338C, Cosmos Model 3
-0x3390, Tulip Model 1
-0x3394, Tulip Model 2
-0x3398, Tulip Model 3
-0x339C, Lantern
-0x33A0, Lawn Mower
-0x33A4, Cooler
-0x33A8, Mountain Bike
-0x33AC, Sleeping Bag
-0x33B0, Propane Stove
-0x33B4, Cornucopia
-0x33B8, Judge's Bell
-0x33BC, Noisemaker
-0x33C0, Chowder
-0x33C4, DUMMY
+0x31EC, DUMMY
 0x4000, House Stairs #1
 0x4001, House Stairs #2
 0x4080, Warp Zone

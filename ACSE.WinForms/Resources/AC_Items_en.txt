@@ -430,7 +430,7 @@
 0x109C, Zabuton
 0x10A0, Bus Stop
 0x10A4, Froggy Chair
-0x10A8, Lilly-pad Table
+0x10A8, Lily-pad Table
 0x10AC, Refridgerator
 0x10B0, Chest
 0x10B4, Rack
@@ -640,7 +640,7 @@
 0x13E4, Pine Bonsai
 0x13E8, Mugho Bonsai
 0x13EC, Barber's Pole
-0x13F0, Ponderosa Bonsai
+0x13F0, Pondarosa Bonsai
 0x13F4, Plum Bonsai
 0x13F8, Giant Dharma
 0x13FC, Dharma
@@ -654,7 +654,7 @@
 0x141C, Orange Cone
 0x1420, Cola Machine
 0x1424, Maple Bonsai
-0x1428, Hawthorne Bonsai
+0x1428, Hawthorn Bonsai
 0x142C, Holly Bonsai
 0x1430, Barricade
 0x1434, Fence
@@ -669,12 +669,12 @@
 0x1458, Juice Machine
 0x145C, Iron Frame
 0x1460, Trash Can
-0x1464, Grabage Pail
+0x1464, Garbage Pail
 0x1468, Watermelon Chair
 0x146C, Melon Chair
 0x1470, Watermelon Table
 0x1474, Robotic Flagman
-0x1478, Garbage Pail
+0x1478, Garbage Can
 0x147C, Trash Bin
 0x1480, Violin
 0x1484, Bass
@@ -1273,7 +1273,7 @@
 0x1DC8, Baseball
 0x1DCC, Clu Clu Land D
 0x1DD0, Donkey Kong 3
-0x1DD4, Donky Kong Jr
+0x1DD4, Donkey Kong Jr
 0x1DD8, Soccer
 0x1DDC, Excitebike
 0x1DE0, Wario's Woods
@@ -1396,7 +1396,7 @@
 0x1FB4, Tribal Mask
 0x1FB8, Matryoshka
 0x1FBC, Legend of Zelda
-0x1FC0, Bottled Shop
+0x1FC0, Bottled Ship
 0x1FC4, Tiger Bobblehead
 0x1FC8, Moai Statue
 0x1FCC, Aerobics Radio

@@ -375,7 +375,7 @@
 0x109C, Zabuton
 0x10A0, Bus Stop
 0x10A4, Froggy Chair
-0x10A8, Lilly-pad Table
+0x10A8, Lily-pad Table
 0x10AC, Refridgerator
 0x10B0, Chest
 0x10B4, Rack
@@ -585,7 +585,7 @@
 0x13E4, Pine Bonsai
 0x13E8, Mugho Bonsai
 0x13EC, Barber's Pole
-0x13F0, Ponderosa Bonsai
+0x13F0, Pondarosa Bonsai
 0x13F4, Plum Bonsai
 0x13F8, Giant Dharma
 0x13FC, Dharma
@@ -599,7 +599,7 @@
 0x141C, Orange Cone
 0x1420, Cola Machine
 0x1424, Maple Bonsai
-0x1428, Hawthorne Bonsai
+0x1428, Hawthorn Bonsai
 0x142C, Holly Bonsai
 0x1430, Barricade
 0x1434, Fence
@@ -614,7 +614,7 @@
 0x1458, Juice Machine
 0x145C, Iron Frame
 0x1460, Trash Can
-0x1464, Grabage Pail
+0x1464, Garbage Pail
 0x1468, Watermelon Chair
 0x146C, Melon Chair
 0x1470, Watermelon Table
