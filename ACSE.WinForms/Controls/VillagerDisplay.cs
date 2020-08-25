@@ -48,7 +48,7 @@ namespace ACSE.WinForms.Controls
 
         private void wikiButton_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://animalcrossing.fandom.com/wiki/" + Villager.Name);          
+            System.Diagnostics.Process.Start($"https://nookipedia.com/wiki/{Villager.Name}");          
         }
 
         private void nameLabel_Click(object sender, EventArgs e)
