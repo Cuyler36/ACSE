@@ -43,6 +43,7 @@ using ACSE.WinForms.Managers;
 using ACSE.WinForms.Utilities;
 using ContentAlignment = System.Drawing.ContentAlignment;
 using ItemChangedEventArgs = ACSE.Core.Items.ItemChangedEventArgs;
+using ACSE.WinForms.Forms;
 
 namespace ACSE.WinForms
 {
@@ -122,6 +123,7 @@ namespace ACSE.WinForms
         private List<AcreItemEditor> _acreItemEditors = new List<AcreItemEditor>();
         private List<AcreItemEditor> _islandItemEditors = new List<AcreItemEditor>();
         private bool _loading;
+        private ItemSelectionDialog _itemSelectionDialog;
 
         #region MapSizeVariables
 
@@ -305,7 +307,7 @@ namespace ACSE.WinForms
                     "ACSE Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 System.Diagnostics.Process.Start(updater.UpdateUrl);
-            }
+            }            
         }
 
         #region Settings Changing Functions
@@ -604,6 +606,7 @@ namespace ACSE.WinForms
             clearEmotionsButton.Enabled = fillEmotionsButton.Enabled;
             townGateComboBox.Enabled = SaveFile.SaveGeneration == SaveGeneration.NDS ||
                                        SaveFile.SaveGeneration == SaveGeneration.Wii;
+            itemSelection.Enabled = true;
         }
 
         private void LoadAcres(Save save)
@@ -5094,6 +5097,14 @@ namespace ACSE.WinForms
             nightOwlCheckBox.Checked = (ordinanceFlags & 0x04) == 0x04;
             bellBoomCheckBox.Checked = (ordinanceFlags & 0x08) == 0x08;
             keepTownBeautifulCheckBox.Checked = (ordinanceFlags & 0x10) == 0x10;
+        }
+
+        private void itemSelection_Click_1(object sender, EventArgs e)
+        {
+            if (_itemSelectionDialog == null) // Setup ItemSelector on-demand                
+                _itemSelectionDialog = new ItemSelectionDialog(ItemData.ItemDatabase);
+            if (_itemSelectionDialog.ShowDialog() == DialogResult.OK)
+                SetCurrentItem(_itemSelectionDialog.SelectedItem);
         }
 
         private void UpdateNewLeafOrdinances()
