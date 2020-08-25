@@ -44,6 +44,9 @@ namespace ACSE.Core.BitFields.Catalog
         {
             switch (saveType)
             {
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DongwuSenlin:
+                    return 0xAF0;
                 case SaveType.AnimalCrossing:
                     return 0x1108;
                 case SaveType.WildWorld:
@@ -61,6 +64,9 @@ namespace ACSE.Core.BitFields.Catalog
         {
             switch (saveType)
             {
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DongwuSenlin:
+                    return 0x98;
                 case SaveType.AnimalCrossing:
                     return 0xD4;
                 case SaveType.WildWorld:

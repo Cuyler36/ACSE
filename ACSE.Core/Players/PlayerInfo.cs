@@ -146,10 +146,22 @@ namespace ACSE.Core.Players
             HeldItem = 0x3EC,
             InventoryBackground = 0xA72,
             Shirt = 0xA78,
-            Birthday = -1,
-            BirthdaySize = 2,
+            // foreign_npc_id
+            // destiny
+            Birthday = 0xA90,
+            BirthdaySize = 4, // Year, Month, Day
+            // shop_ftr[5]
+            // mobile_ftr[10]
+            Encyclopedia = 0xABC, // 4 bytes fish, 4 bytes insects
+            // uint[2] md_collect_bit // music collected
+            // Anm_remail_c remail; // remail data
             Reset = 0xAE0,
             ResetSize = 4,
+            // mPr_ranm_c animal_memory;
+            // byte comp_ins_fish; // fish & insect completion byte. 0x2 = fish complete, 0x8 = insect complete, 0xA = both
+            Catalog = 0xAF0, //uint[30] ftr, uint[2] wall, uint[2] carpet, uint[2] paper, uint[2] music
+            // B88 = mPr_map_c map[8];
+            // ulong pad; // end
             Savings = -1, // Does DnM have savings?
             Patterns = -1, // No Patterns in DnM
             PatternCount = 8,
@@ -158,8 +170,6 @@ namespace ACSE.Core.Players
             TownPassCardImage = -1,
             HairType = -1,
             Bed = -1,
-            Catalog = -1, //Actually research
-            Encyclopedia = -1,
             Dressers = -1,
             Emotions = -1,
             EyeColor = -1,

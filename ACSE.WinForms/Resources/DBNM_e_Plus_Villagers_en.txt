@@ -259,3 +259,4 @@
 0xE0FD, DLC Villager #18
 0xE0FE, DLC Villager #19
 0xE0FF, DLC Villager #20
+0xE100, Unknown

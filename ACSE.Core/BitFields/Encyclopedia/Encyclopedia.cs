@@ -6,6 +6,20 @@ namespace ACSE.Core.BitFields.Encyclopedia
 {
     public static class Encyclopedia
     {
+        public static readonly Dictionary<int, byte> DoubutsuNoMoriEncyclopediaBitMap = new Dictionary<int, byte>
+        {
+            // Fish
+            { 0xABC, 0xFF },
+            { 0xABD, 0xFF },
+            { 0xABE, 0xFF },
+            { 0xABF, 0xFF },
+            // Insects
+            { 0xAC0, 0xFF },
+            { 0xAC1, 0xFF },
+            { 0xAC2, 0xFF },
+            { 0xAC3, 0xFF }
+        };
+
         public static readonly Dictionary<int, byte> AnimalCrossingEncyclopediaBitMap = new Dictionary<int, byte>
         {
             { 0x1164, 0xFF },
@@ -268,6 +282,9 @@ namespace ACSE.Core.BitFields.Encyclopedia
         {
             switch (saveType)
             {
+                case SaveType.DoubutsuNoMori:
+                case SaveType.DongwuSenlin:
+                    return DoubutsuNoMoriEncyclopediaBitMap;
                 case SaveType.AnimalCrossing:
                     return AnimalCrossingEncyclopediaBitMap;
                 case SaveType.DoubutsuNoMoriEPlus:
