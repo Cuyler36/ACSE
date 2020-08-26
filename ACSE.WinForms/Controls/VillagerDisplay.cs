@@ -36,7 +36,8 @@ namespace ACSE.WinForms.Controls
                         ? new Point(64 * 6, 64 * 23)
                         : new Point(64 * ((villager.VillagerId & 0xFF) % 10),
                             64 * ((villager.VillagerId & 0xFF) / 10));
-            nameLabel.Text = villager.Name;            
+            nameLabel.Text = villager.Name;
+            wikiButton.Enabled = villager.Name != "Unknown" && !villager.Name.Contains("DLC Villager");
             Villager = villager;
         }
 

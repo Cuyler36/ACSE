@@ -501,7 +501,9 @@ namespace ACSE.WinForms
             var oldSelectedItemId = selectedItem.SelectedValue;
 
             Item.SelectedItem = new Item(newItem); // Clone the item.
-            selectedItem.Enabled = itemFlag1.Enabled = itemFlag2.Enabled = itemIdTextBox.Enabled = true;
+            if (Save.SaveInstance.SaveGeneration == SaveGeneration.N3DS)
+                itemFlag1.Enabled = itemFlag2.Enabled = true;
+            selectedItem.Enabled = itemIdTextBox.Enabled = true;
 
             selectedItem.SelectedValue = newItem.ItemId;
             itemFlag1.Text = newItem.Flag1.ToString("X2");

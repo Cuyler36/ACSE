@@ -423,7 +423,7 @@ namespace ACSE.WinForms.Controls
                         _villager.Data.Personality = decompressedData[0xD];
 
                         // Update controls to reflect changes
-                        _nameBox.Text = _villager.Name;
+                        _nameBox.Text = _villagerSelectionButton.Text = _villager.Name;
                         _catchphraseBox.Text = _villager.Data.Catchphrase;
                         _personalityBox.SelectedIndex = _villager.Data.Personality;
 

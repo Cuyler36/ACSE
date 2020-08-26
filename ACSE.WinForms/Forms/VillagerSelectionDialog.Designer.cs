@@ -94,7 +94,7 @@
             // 
             this._label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._label1.AutoSize = true;
-            this._label1.Location = new System.Drawing.Point(487, 420);
+            this._label1.Location = new System.Drawing.Point(408, 420);
             this._label1.Name = "_label1";
             this._label1.Size = new System.Drawing.Size(52, 13);
             this._label1.TabIndex = 5;
@@ -105,7 +105,7 @@
             this.selectionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.selectionLabel.AutoSize = true;
             this.selectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectionLabel.Location = new System.Drawing.Point(545, 418);
+            this.selectionLabel.Location = new System.Drawing.Point(466, 418);
             this.selectionLabel.Name = "selectionLabel";
             this.selectionLabel.Size = new System.Drawing.Size(49, 15);
             this.selectionLabel.TabIndex = 6;
