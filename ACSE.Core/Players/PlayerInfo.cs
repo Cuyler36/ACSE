@@ -137,8 +137,9 @@ namespace ACSE.Core.Players
             IdentifierSize = 2,
             TownIdentifier = 0xE,
             TownIdentifierSize = 2,
-            Gender = 0x10, //
-            FaceType = 0x11, //
+            Gender = 0x10,
+            FaceType = 0x11,
+            ResetCount = 0x12,
             Pockets = 0x14,
             PocketsCount = 15,
             Bells = 0x38,
@@ -191,7 +192,6 @@ namespace ACSE.Core.Players
             NewLeafWallet = -1,
             MeowCoupons = -1,
             IslandMedals = -1,
-            ResetCount = -1,
             IslandBox = -1,
         };
 
