@@ -176,6 +176,7 @@ namespace ACSE.Core.Housing
             TownNameSize = 6,
             OwningPlayerId = 0xC,
             TownId = 0xE,
+            RoofColor = 0x24,
             RoomStart = 0x38,
             RoomSize = 0x440,
             RoomCount = 1,
@@ -184,7 +185,6 @@ namespace ACSE.Core.Housing
             RoomCarpet = -0x24, // Relative to the start of the house object
             RoomWallpaper = -0x23,
             Bed = -1,
-            RoofColor = -1,
             Song = -1,
         };
 
