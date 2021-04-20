@@ -577,7 +577,7 @@
 0x12A8, Billiard Table
 0x12AC, Famous Painting
 0x12B0, Basic Painting
-0x12B4, Scarying Painting
+0x12B4, Scary Painting
 0x12B8, Moving Painting
 0x12BC, Flowery Painting
 0x12C0, Common Painting

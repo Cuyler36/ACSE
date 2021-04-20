@@ -899,7 +899,7 @@
 0x18CC, Rally Shirt (Furniture)
 0x18D0, Racer Shirt (Furniture)
 0x18D4, Racer 6 Shirt (Furniture)
-0x18D8, Fish Bone Shirt (Furniture)
+0x18D8, Tomato Juice Shirt (Furniture)
 0x18DC, Spiderweb Shirt (Furniture)
 0x18E0, Zipper Shirt (Furniture)
 0x18E4, Bubble Shirt (Furniture)
@@ -929,7 +929,7 @@
 0x1944, Frog Shirt (Furniture)
 0x1948, Moody Blue Shirt (Furniture)
 0x194C, Cloudy Shirt (Furniture)
-0x1950, Fortune Shirt (Furniture)
+0x1950, Familiar Shirt (Furniture)
 0x1954, Skull Shirt (Furniture)
 0x1958, Desert Shirt (Furniture)
 0x195C, Aurora Knit (Furniture)
@@ -1006,7 +1006,7 @@
 0x1A78, BB Shirt (Furniture)
 0x1A7C, Beatnik Shirt (Furniture)
 0x1A80, Moldy Shirt (Furniture)
-0x1A84, Houndstooth Tee (Furniture)
+0x1A84, W Shirt (Furniture)
 0x1A88, Big Star Shirt (Furniture)
 0x1A8C, Orange Pinstripe (Furniture)
 0x1A90, Twinkle Shirt (Furniture)
@@ -1015,7 +1015,7 @@
 0x1A9C, Splendid Shirt (Furniture)
 0x1AA0, Jagged Shirt (Furniture)
 0x1AA4, Denim Shirt (Furniture)
-0x1AA8, Cherry Shirt (Furniture)
+0x1AA8, I Love 64 Shirt (Furniture)
 0x1AAC, Gumdrop Shirt (Furniture)
 0x1AB0, Barber Shirt (Furniture)
 0x1AB4, Concierge Shirt (Furniture)
@@ -1027,7 +1027,7 @@
 0x1ACC, Berry Gingham (Furniture)
 0x1AD0, Lemon Gingham (Furniture)
 0x1AD4, Dragon Suit (Furniture)
-0x1AD8, G Logo Shirt (Furniture)
+0x1AD8, N Logo Shirt (Furniture)
 0x1ADC, Tin Shirt (Furniture)
 0x1AE0, Jester Shirt (Furniture)
 0x1AE4, Pink Tartan (Furniture)
@@ -1491,7 +1491,7 @@
 0x2448, Rally Shirt
 0x2449, Racer Shirt
 0x244A, Racer 6 Shirt
-0x244B, Fish Bone Shirt
+0x244B, Tomato Juice Shirt
 0x244C, Spiderweb Shirt
 0x244D, Zipper Shirt
 0x244E, Bubble Shirt
@@ -1521,7 +1521,7 @@
 0x2466, Frog Shirt
 0x2467, Moody Blue Shirt
 0x2468, Cloudy Shirt
-0x2469, Fortune Shirt
+0x2469, Familiar Shirt
 0x246A, Skull Shirt
 0x246B, Desert Shirt
 0x246C, Aurora Knit
@@ -1598,7 +1598,7 @@
 0x24B3, BB Shirt
 0x24B4, Beatnik Shirt
 0x24B5, Moldy Shirt
-0x24B6, Houndstooth Tee
+0x24B6, W Shirt
 0x24B7, Big Star Shirt
 0x24B8, Orange Pinstripe
 0x24B9, Twinkle Shirt
@@ -1607,7 +1607,7 @@
 0x24BC, Splendid Shirt
 0x24BD, Jagged Shirt
 0x24BE, Denim Shirt
-0x24BF, Cherry Shirt
+0x24BF, I Love 64 Shirt
 0x24C0, Gumdrop Shirt
 0x24C1, Barber Shirt
 0x24C2, Concierge Shirt
@@ -1619,7 +1619,7 @@
 0x24C8, Berry Gingham
 0x24C9, Lemon Gingham
 0x24CA, Dragon Suit
-0x24CB, G Logo Shirt
+0x24CB, N Logo Shirt
 0x24CC, Tin Shirt
 0x24CD, Jester Shirt
 0x24CE, Pink Tartan
