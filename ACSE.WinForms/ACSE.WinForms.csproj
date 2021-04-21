@@ -5741,9 +5741,24 @@
     <Error Condition="!Exists('..\packages\Fody.3.2.16\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.2.16\build\Fody.targets'))" />
   </Target>
   <Import Project="..\packages\Fody.3.2.16\build\Fody.targets" Condition="Exists('..\packages\Fody.3.2.16\build\Fody.targets')" />
-  <PropertyGroup>
-    <PostBuildEvent>del $(TargetDir)Newtonsoft.Json.xml
-del $(TargetDir)$(TargetName).pdb
-del $(TargetDir)$(TargetName).exe.config</PostBuildEvent>
-  </PropertyGroup>
+        
+    <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))'">
+        <PostBuildEvent>del $(TargetDir)Newtonsoft.Json.xml
+                        del $(TargetDir)$(TargetName).pdb
+                        del $(TargetDir)$(TargetName).exe.config
+        </PostBuildEvent>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'">
+       <PostBuildEvent>rm $(TargetDir)Newtonsoft.Json.xml
+                       rm $(TargetDir)$(TargetName).pdb
+                       rm $(TargetDir)$(TargetName).exe.config
+       </PostBuildEvent>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'">
+       <PostBuildEvent>rm $(TargetDir)Newtonsoft.Json.xml
+                       rm $(TargetDir)$(TargetName).pdb
+                       rm $(TargetDir)$(TargetName).exe.config
+       </PostBuildEvent>
+    </PropertyGroup>
+    
 </Project>
