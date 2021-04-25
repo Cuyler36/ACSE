@@ -2127,7 +2127,7 @@
 0x260F, Lunar Surface
 0x2610, Sand Garden
 0x2611, Spooky Carpet
-0x2612, Western Desert
+0x2612, Bathhouse Tile
 0x2613, Green Rug
 0x2614, Blue Flooring
 0x2615, Regal Carpet
@@ -2135,7 +2135,7 @@
 0x2617, Modern Tile
 0x2618, Cabana Flooring
 0x2619, Snowman Carpet
-0x261A, Backyard Lawn
+0x261A, Old Board Floor
 0x261B, Music Room Floor
 0x261C, Plaza Tile
 0x261D, Kitchen Tile
@@ -2173,9 +2173,6 @@
 0x263D, Playroom Rug
 0x263E, Kitschy Tile
 0x263F, Diner Tile
-0x2640, Block Flooring
-0x2641, Boxing Ring Mat
-0x2642, Harvest Rug
 0x2700, Chic Wall
 0x2701, Classic Wall
 0x2702, Parlor Wall
@@ -2194,7 +2191,7 @@
 0x270F, Lunar Horizon
 0x2710, Garden Wall
 0x2711, Spooky Wall
-0x2712, Western Vista
+0x2712, Bathhouse Wall
 0x2713, Green Wall
 0x2714, Blue Wall
 0x2715, Regal Wall
@@ -2202,7 +2199,7 @@
 0x2717, Modern Wall
 0x2718, Cabana Wall
 0x2719, Snowman Wall
-0x271A, Backyard Fence
+0x271A, Worn-Out Mud Wall
 0x271B, Music Room Wall
 0x271C, Plaza Wall
 0x271D, Lattice Wall
@@ -2240,9 +2237,6 @@
 0x273D, Playroom Wall
 0x273E, Kitschy Wall
 0x273F, Groovy Wall
-0x2740, Mushroom Mural
-0x2741, Ringside Seating
-0x2742, Harvest Wall
 0x2800, Apple
 0x2801, Cherry Shirt
 0x2802, Pear
