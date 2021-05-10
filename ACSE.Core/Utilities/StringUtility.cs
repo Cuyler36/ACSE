@@ -689,7 +689,8 @@ namespace ACSE.Core.Utilities
                 {
                     var stringBuffer = new byte[maxSize > 0 ? maxSize : String.Length];
 
-                    for (i = 0; i < String.Length; i++)
+                    int x = 0;
+                    for (i = 0; i < String.Length; i++, x++)
                     {
                         var idx = Array.IndexOf(CharacterSets.DongwuSenlinCharacterSet, String[i].ToString());
                         if (idx > -1)
@@ -699,22 +700,22 @@ namespace ACSE.Core.Utilities
                             {
                                 if (i + 1 < stringBuffer.Length)
                                 {
-                                    stringBuffer[i++] = charIdx;
-                                    stringBuffer[i] = bank;
+                                    stringBuffer[x++] = charIdx;
+                                    stringBuffer[x] = bank;
                                 }
                                 else
                                 {
-                                    stringBuffer[i] = 0x20; // Space
+                                    stringBuffer[x] = 0x20; // Space
                                 }
                             }
                             else
                             {
-                                stringBuffer[i] = charIdx;
+                                stringBuffer[x] = charIdx;
                             }
                         }
                         else
                         {
-                            stringBuffer[i] = 0x20; // Space
+                            stringBuffer[x] = 0x20; // Space
                         }
                     }
 
@@ -725,7 +726,10 @@ namespace ACSE.Core.Utilities
                     var stringBuffer = new byte[maxSize > 0 ? maxSize : String.Length * 2]; //Characters are now unicode
                     var stringBytes = Encoding.Unicode.GetBytes(String);
                     for (i = 0; i < stringBytes.Length; i += 2)
-                        Buffer.BlockCopy(stringBytes.Skip(i).Take(2).Reverse().ToArray(), 0, stringBuffer, i, 2);
+                    {
+                        stringBuffer[i] = stringBytes[i + 1];
+                        stringBuffer[i + 1] = stringBytes[i];
+                    }
                     return stringBuffer;
                 }
                 case SaveType.NewLeaf:
