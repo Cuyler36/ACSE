@@ -2214,7 +2214,7 @@
 0x2641, Boxing Ring Mat
 0x2642, Harvest Rug
 0x2643, Bathhouse Tile
-0x2644, Japanese Floor
+0x2644, Old Board Floor
 0x2700, Chic Wall
 0x2701, Classic Wall
 0x2702, Parlor Wall
@@ -2283,7 +2283,7 @@
 0x2741, Ringside Seating
 0x2742, Harvest Wall
 0x2743, Bathhouse Wall
-0x2744, Japanese Wall
+0x2744, Worn-Out Mud Wall
 0x2800, Apple
 0x2801, Cherry
 0x2802, Pear

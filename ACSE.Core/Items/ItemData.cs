@@ -147,7 +147,7 @@ namespace ACSE.Core.Items
                         return ItemType.Item;
                     else if (id >= 0x2C00 && id <= 0x2C5F)
                         return ItemType.RaffleTicket;
-                    else if ((id >= 0x2600 && id <= 0x2642) || (id >= 0x2700 && id <= 0x2742))
+                    else if ((id >= 0x2600 && id <= 0x263F) || (id >= 0x2700 && id <= 0x273F))
                         return ItemType.WallpaperCarpet;
                     else if (id >= 0x2400 && id <= 0x24FF)
                         return ItemType.Clothes;
